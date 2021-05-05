@@ -1,5 +1,5 @@
-const isDev = (import.meta.env.MODE === 'development');
+const isDev = import.meta.env.MODE === "development";
 
 if (isDev) {
-  import('./../../public/assets/styles.css');
+  import("./../../public/assets/styles.css");
 }
