@@ -73,7 +73,7 @@ const serverEntriesProvider = {
   },
 };
 
-class Browser extends React.Component {
+class BrowserBps1 extends React.Component {
   componentDidMount() {
     const refreshInterval = 20000;
 
@@ -117,6 +117,9 @@ const mapDispatchToProps = {
   updateEntries: browserSlice.actions.updateEntries,
 };
 
-const BrowserComponent = connect(mapStateToProps, mapDispatchToProps)(Browser);
+const BrowserComponent = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BrowserBps1);
 
 export default BrowserComponent;
