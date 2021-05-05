@@ -1,0 +1,9 @@
+.idea/
+.firebase/
+coverage/
+build/
+node_modules/
+public/
+!.gitkeep
+*.log
+.firebaserc

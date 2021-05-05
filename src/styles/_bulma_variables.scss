@@ -1,0 +1,42 @@
+@import "node_modules/bulma/sass/utilities/initial-variables";
+@import "node_modules/bulma/sass/utilities/derived-variables";
+
+// custom
+$shadow-soft: 1px 1px 5px 0 rgba($scheme-invert, .125), 0 2px 1px -1px rgba($scheme-invert, .125);
+$shadow-hard: 0 0 1px 1px rgba($scheme-invert, .05), 0 1px 3px 0 rgba($scheme-invert, .2), 0 1px 1px 0 rgba($scheme-invert, .15);
+$shadow: $shadow-hard;
+
+// core
+$family-primary: "Roboto", BlinkMacSystemFont, -apple-system, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+$family-sans-serif: $family-primary;
+
+$text: #000;
+$text-strong: $text;
+
+$border-light: $grey-lighter;
+
+// layout
+$body-background-color: #f5f7f9;
+$body-line-height: 1.6;
+
+$footer-background-color: none;
+$footer-padding: 0 $size-large $size-large;
+
+// content
+$code-background: #e7e7e7;
+
+$hr-background-color: darken($background, 15);
+$hr-height: 1px;
+
+// components
+$card-shadow: $shadow;
+
+$navbar-breakpoint: $tablet;
+$navbar-padding-horizontal: 0rem;
+$navbar-height: 4rem;
+$navbar-item-img-max-height: 36px;
+$navbar-burger-color: $black;
+
+$panel-shadow: $shadow;
+
+$section-padding: 1.5rem 0;

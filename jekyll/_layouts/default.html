@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+{% include layout/head.html %}
+
+<body id="top">
+    {% include layout/header.html %}
+    {% include layout/main.html %}
+    {% include layout/footer.html %}
+
+    {% unless site.custom.is_development %}
+        {% include scripts/quicklinks.html %}
+    {% endunless %}
+
+    {% include scripts/bulma_navbar.html %}
+</body>
+</html>
+
+<!-- Generated with Jeykll at {{ 'now' | date: '%F %T' }} -->

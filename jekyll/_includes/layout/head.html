@@ -1,0 +1,32 @@
+<head>
+    <meta charset="utf-8">
+
+    {%- if page.url == '/404.html' -%}
+    <meta name="robots" content="noindex, nofollow">
+    {%- endif -%}
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>{{page.title}} - {{site.name}}</title>
+
+    {%- if page.url == '/' -%}
+    <meta name="description" content="{{ site.custom.description }}">
+    {%- endif -%}
+
+    <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.url }}">
+
+    <link rel="preload" as="image" href="{{'/assets/img/logo.svg' | prepend: site.url}}">
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxK.woff2">
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmWUlfBBc4.woff2">
+
+    {%- if site.custom.is_development -%}
+        <script type="module" src="/assets/js/StyleProxy.js"></script>
+    {%- else -%}
+        <link rel="preload" as="style" href="{{site.url | append: '/assets/' | append: site.data.rev-manifest['styles.min.css']}}">
+        <link rel="stylesheet" href="{{site.url | append: '/assets/' | append: site.data.rev-manifest['styles.min.css']}}">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.1/umd/react.production.min.js" integrity="sha512-YMtLFKDKe5a4zi7rJ0y4wdGErKZe3tx7L+AXDTxjNDzkv7jsaNhvumeU1xQvw6UqVwBVmYlO9NhsSuSVPUN/xQ==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.1/umd/react-dom.production.min.js" integrity="sha512-vN6rbu+vWW4Ck3s6RbLZs+0gRl5PWOZRUqap38gZtsheSqA2zDeI3PCshuxfYx7ytkoFMrmd0gA2sZZeP1RZYQ==" crossorigin="anonymous"></script>
+    {%- endif -%}
+
+    <link rel="shortcut icon" type="image/x-icon" href="{{site.url}}/favicon.ico">
+</head>
