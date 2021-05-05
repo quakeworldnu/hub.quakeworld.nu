@@ -1,20 +1,20 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import browserSlice from './slice';
-import {shuffleArray} from './../../common/util';
+import React from "react";
+import { connect } from "react-redux";
+import browserSlice from "./slice";
+import { shuffleArray } from "./../../common/util";
 
 const getClassNames = (server) => {
   const classNames = [];
 
-  classNames.push('item');
+  classNames.push("item");
 
   return classNames;
 };
 
 const Server = (props) => {
   const { server } = props;
-  const classNamesStr = getClassNames(server).join(' ');
-  const gameMode = server.Description.split(', ')[0];
+  const classNamesStr = getClassNames(server).join(" ");
+  const gameMode = server.Description.split(", ")[0];
   const players = server.Players.filter((p) => !p.Spec);
   const spectators = server.Players.filter((p) => p.Spec);
 
@@ -57,18 +57,19 @@ const Server = (props) => {
 
 const serverEntriesProvider = {
   get: () => {
-    const url = '/data/busy.json';
+    const url = "/data/busy.json";
     const options = {
-      method: 'GET',
-      mode: 'cors',
-      cache: 'no-cache',
-      redirect: 'follow',
-
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      redirect: "follow",
     };
-    return fetch(url, options).then(response => response.json()).then(data => {
-      shuffleArray(data);
-      return data;
-    });
+    return fetch(url, options)
+      .then((response) => response.json())
+      .then((data) => {
+        shuffleArray(data);
+        return data;
+      });
   },
 };
 
@@ -77,11 +78,15 @@ class Browser extends React.Component {
     const refreshInterval = 20000;
 
     const fetchAndUpdateEntries = () => {
-      return serverEntriesProvider.get().
-        then(entries => this.props.updateEntries({ entries }));
+      return serverEntriesProvider
+        .get()
+        .then((entries) => this.props.updateEntries({ entries }));
     };
 
-    this.fetchEntriesInterval = setInterval(fetchAndUpdateEntries, refreshInterval);
+    this.fetchEntriesInterval = setInterval(
+      fetchAndUpdateEntries,
+      refreshInterval
+    );
     fetchAndUpdateEntries();
   }
 
@@ -90,18 +95,18 @@ class Browser extends React.Component {
   }
 
   render() {
-    console.log('Browser::render()');
+    console.log("Browser::render()");
 
     return (
       <div className="masonry">
         {this.props.servers &&
-        this.props.servers.entries.map((entry, index) => {
-          return (
-            <div key={index} className="tile is-parent">
-              <Server server={entry} />
-            </div>
-          );
-        })}
+          this.props.servers.entries.map((entry, index) => {
+            return (
+              <div key={index} className="tile is-parent">
+                <Server server={entry} />
+              </div>
+            );
+          })}
       </div>
     );
   }
