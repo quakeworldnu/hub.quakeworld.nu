@@ -28,6 +28,10 @@ $dh-navbar-hseparator-border: 1px solid $grey-lightest;
   display: flex;
   height: $navbar-height;
   padding: 0 1.25rem;
+
+  &.is-active {
+    font-weight: bold;
+  }
 }
 
 .navbar-brand a.navbar-item:hover {

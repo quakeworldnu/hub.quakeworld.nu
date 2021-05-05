@@ -1,0 +1,45 @@
+.xtm1 {
+  .text-small {
+    font-size: .8em;
+  }
+
+  .empty {
+    background-color: #eee;
+    padding: .5em;
+    text-align: center;
+  }
+
+  .tiles {
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: 1fr;
+
+    @media only screen and (min-width: 641px) and (max-width: 960px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media only screen and (min-width: 961px) and (max-width: 1280px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media only screen and (min-width: 1281px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .tile {
+    display: block;
+  }
+
+  .status-canjoin {
+    border: 2px solid rgba(50, 100, 150, 0.6);
+  }
+}
+
+.playercolor {
+  border: 1px solid grey;
+  min-width: 14px;
+  display: inline-block;
+  height: .8em;
+  margin-right: .5em;
+}
