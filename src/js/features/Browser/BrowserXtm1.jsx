@@ -59,7 +59,6 @@ const Server = (props) => {
 
           <div>
             <strong>{gameMode}</strong> on <strong>{server.Settings.map}</strong>
-
             {
               (canJoinGame || !isInProgress) && <div className="text-small">
                 {players.length} of {server.MaxClients} players
@@ -106,7 +105,7 @@ const Server = (props) => {
         </div>
         }
         {
-          !hasPlayers && <div className="empty m-3">(no players)</div>
+          !hasPlayers && <div className="has-text-grey m-3 has-text-centered text-small">(no players)</div>
         }
 
         <hr className="m-0" />
@@ -122,12 +121,14 @@ const Server = (props) => {
           </div>
           <div className="mt-1 columns is-mobile">
             <div className="column">
-              <a href="#" className="button is-light is-link is-fullwidth">
+              <a href="#"
+                 className="button is-light is-link is-fullwidth is-small">
                 Spectate
               </a>
             </div>
             <div className="column">
-              <a href="#" className="button is-light is-link is-fullwidth">
+              <a href="#"
+                 className="button is-light is-link is-fullwidth is-small">
                 QTV
               </a>
             </div>
