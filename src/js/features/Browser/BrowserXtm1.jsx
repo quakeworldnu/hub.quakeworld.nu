@@ -75,7 +75,7 @@ const Server = (props) => {
         </div>
 
         {isInProgress && <div>
-          <div className="columns is-vcentered">
+          <div className="columns is-mobile is-vcentered">
             <div className="column">
               <progress className="progress is-small is-success"
                         style={{ height: '5px' }} value={progressInMinutes}
