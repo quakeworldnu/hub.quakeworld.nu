@@ -25,28 +25,31 @@
     border: 2px solid rgba(50, 100, 150, 0.6);
   }
 
-  .server {
-    .players {
-      display: flex;
-      align-items: center;
-      min-height: 140px;
-      padding: 1em;
-      background-color: black;
-      background-size: cover;
-      text-shadow: black 1px 1px 1px;
-      font-weight: bold;
-      color: white;
+  .players {
+    display: flex;
+    align-items: center;
+    min-height: 140px;
+    padding: 1em;
+    background-color: black;
+    background-size: cover;
+    text-shadow: black 1px 1px 1px;
+    color: white;
 
-      & > div {
-        flex-grow: 1;
+    .player-table th,
+    .player-table td {
+      color: #fff;
+      border: none;
+      padding: 0 4px;
+      vertical-align: middle;
+      text-align: center;
+
+      &:first-child {
+        opacity: .75;
       }
     }
 
-    .player-color {
-      display: inline-flex;
-      flex-direction: column;
-      height: 12px;
-      width: 18px;
+    .player-table th {
+      padding-bottom: 6px;
     }
   }
 
@@ -71,9 +74,13 @@
           13: rgb(47, 47, 127),
   );
 
-  @each $colorValue, $colorHex in $playerColors {
-    .color-#{$colorValue} {
-      background-color: saturate(lighten($colorHex, 15), 10);
+  @each $topValue, $topHex in $playerColors {
+    @each $bottomValue, $bottomHex in $playerColors {
+      .color-#{$topValue}-#{$bottomValue} {
+        $topFixed: saturate(lighten($topHex, 15), 10);
+        $botFixed: saturate(lighten($bottomHex, 15), 10);
+        background: linear-gradient(to bottom, $topFixed, $topFixed 50%, $botFixed 50%, $botFixed 100%);
+      }
     }
   }
 
