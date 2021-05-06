@@ -99,38 +99,40 @@ const Server = (props) => {
 
       <hr className="m-0" />
 
-      <div className="players" style={{ backgroundImage: mapThumbnailSrc }}>
-        {hasPlayers && (
-          <table className="player-table">
-            <thead>
-              <tr className="text-small">
-                <th width="30">ping</th>
-                {isTeamplay && <th width="60">team</th>}
-                <th width="30">frags</th>
-                <th className="pl-3 has-text-left">name</th>
-              </tr>
-            </thead>
-            <tbody>
-              {players.map((player, index) => (
-                <tr key={index}>
-                  <td className="text-small">{player.Ping}</td>
-                  {isTeamplay && <td>{player.Team}</td>}
-                  <td
-                    className={`text-small has-text-weight-bold color-${player.Colors[0]}-${player.Colors[1]}`}
-                  >
-                    {player.Frags}
-                  </td>
-                  <td className="has-text-weight-bold has-text-left pl-3">
-                    {player.Name}
-                  </td>
+      <div className="players-outer">
+        <div className="players" style={{ backgroundImage: mapThumbnailSrc }}>
+          {hasPlayers && (
+            <table className="player-table">
+              <thead>
+                <tr className="text-small">
+                  <th width="30">ping</th>
+                  {isTeamplay && <th width="60">team</th>}
+                  <th width="30">frags</th>
+                  <th className="pl-3 has-text-left">name</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-        {!hasPlayers && (
-          <div className="has-text-centered is-flex-grow-1">(no players)</div>
-        )}
+              </thead>
+              <tbody>
+                {players.map((player, index) => (
+                  <tr key={index}>
+                    <td className="text-small">{player.Ping}</td>
+                    {isTeamplay && <td>{player.Team}</td>}
+                    <td
+                      className={`text-small has-text-weight-bold color-${player.Colors[0]}-${player.Colors[1]}`}
+                    >
+                      {player.Frags}
+                    </td>
+                    <td className="has-text-weight-bold has-text-left pl-3">
+                      {player.Name}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+          {!hasPlayers && (
+            <div className="has-text-centered is-flex-grow-1">(no players)</div>
+          )}
+        </div>
       </div>
 
       <hr className="m-0" />
