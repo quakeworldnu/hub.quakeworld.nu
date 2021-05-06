@@ -1,21 +1,21 @@
-import React from "react";
-import { connect } from "react-redux";
-import browserSlice from "./slice";
-import { shuffleArray } from "./../../common/util";
+import React from 'react';
+import { connect } from 'react-redux';
+import browserSlice from './slice';
+import { shuffleArray } from './../../common/util';
 
 const getClassNames = (server) => {
   const classNames = [];
 
   console.log(server.Settings);
 
-  classNames.push("card");
+  classNames.push('card');
 
-  const isStandby = server.Description.indexOf("min left") === -1;
+  const isStandby = server.Description.indexOf('min left') === -1;
 
   if (isStandby) {
-    classNames.push("status-standby");
+    classNames.push('status-standby');
   } else {
-    classNames.push("status-active");
+    classNames.push('status-active');
   }
 
   return classNames;
@@ -24,36 +24,36 @@ const getClassNames = (server) => {
 const Server = (props) => {
   const { server } = props;
 
-  const gameMode = server.Description.split(", ")[0];
+  const gameMode = server.Description.split(', ')[0];
   const status = server.Settings.status;
   const players = server.Players.filter((p) => !p.Spec);
   const spectators = server.Players.filter((p) => p.Spec);
-  const isStandby = server.Description.indexOf("min left") === -1;
+  const isStandby = server.Description.indexOf('min left') === -1;
   const isInProgress = !isStandby;
   const hasFreeSlots = players.length < server.MaxClients;
   const hasPlayers = players.length > 0;
-  const isFfa = gameMode === "FFA";
+  const isFfa = gameMode === 'FFA';
   const canJoinGame = (isStandby || isFfa) && hasFreeSlots;
   const isTeamplay = /\d+v\d+/gi.test(gameMode);
 
   let progressInMinutes = 0;
 
   if (isInProgress) {
-    const minutesLeft = parseInt(status.replace(" min left", ""));
+    const minutesLeft = parseInt(status.replace(' min left', ''));
     progressInMinutes = server.Settings.timelimit - minutesLeft;
   }
 
-  const classNames = ["server card"];
+  const classNames = ['server card'];
 
   if (canJoinGame) {
-    classNames.push("status-canjoin");
+    classNames.push('status-canjoin');
   } else {
-    classNames.push("status-isfull");
+    classNames.push('status-isfull');
   }
 
-  const classNamesStr = classNames.join(" ");
+  const classNamesStr = classNames.join(' ');
 
-  let mapThumbnailSrc = "none";
+  let mapThumbnailSrc = 'none';
 
   if (server.Map) {
     mapThumbnailSrc = `url(https://quakedemos.blob.core.windows.net/maps/thumbnails/${server.Map.toLowerCase()}.jpg)`;
@@ -84,7 +84,7 @@ const Server = (props) => {
               <div className="column">
                 <progress
                   className="progress is-small is-success"
-                  style={{ height: "5px" }}
+                  style={{ height: '5px' }}
                   value={progressInMinutes}
                   max={server.Settings.timelimit}
                 >
@@ -106,8 +106,8 @@ const Server = (props) => {
               <thead>
                 <tr className="text-small">
                   <th width="30">ping</th>
-                  {isTeamplay && <th width="60">team</th>}
                   <th width="30">frags</th>
+                  {isTeamplay && <th width="60">team</th>}
                   <th className="pl-3 has-text-left">name</th>
                 </tr>
               </thead>
@@ -115,12 +115,12 @@ const Server = (props) => {
                 {players.map((player, index) => (
                   <tr key={index}>
                     <td className="text-small">{player.Ping}</td>
-                    {isTeamplay && <td>{player.Team}</td>}
                     <td
                       className={`text-small has-text-weight-bold color-${player.Colors[0]}-${player.Colors[1]}`}
                     >
                       {player.Frags}
                     </td>
+                    {isTeamplay && <td>{player.Team}</td>}
                     <td className="has-text-weight-bold has-text-left pl-3">
                       {player.Name}
                     </td>
@@ -177,7 +177,7 @@ const Server = (props) => {
               height="11"
               alt="{server.Country.toLowerCase()}"
             />
-          )}{" "}
+          )}{' '}
           {server.Address}
         </div>
       </footer>
@@ -187,16 +187,16 @@ const Server = (props) => {
 
 const serverEntriesProvider = {
   get: () => {
-    const url = "/data/busy.json";
+    const url = '/data/busy.json';
     const options = {
-      method: "GET",
-      mode: "cors",
-      cache: "no-cache",
-      redirect: "follow",
+      method: 'GET',
+      mode: 'cors',
+      cache: 'no-cache',
+      redirect: 'follow',
     };
-    return fetch(url, options)
-      .then((response) => response.json())
-      .then((data) => {
+    return fetch(url, options).
+      then((response) => response.json()).
+      then((data) => {
         shuffleArray(data);
         return data;
       });
@@ -208,9 +208,8 @@ class BrowserBps1 extends React.Component {
     const refreshInterval = 20000;
 
     const fetchAndUpdateEntries = () => {
-      return serverEntriesProvider
-        .get()
-        .then((entries) => this.props.updateEntries({ entries }));
+      return serverEntriesProvider.get().
+        then((entries) => this.props.updateEntries({ entries }));
     };
 
     /*this.fetchEntriesInterval = setInterval(
@@ -228,13 +227,13 @@ class BrowserBps1 extends React.Component {
     return (
       <div className="tiles">
         {this.props.servers &&
-          this.props.servers.entries.map((entry, index) => {
-            return (
-              <div key={index} className="tile">
-                <Server server={entry} />
-              </div>
-            );
-          })}
+        this.props.servers.entries.map((entry, index) => {
+          return (
+            <div key={index} className="tile">
+              <Server server={entry} />
+            </div>
+          );
+        })}
       </div>
     );
   }
@@ -247,7 +246,7 @@ const mapDispatchToProps = {
 
 const BrowserComponent = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(BrowserBps1);
 
 export default BrowserComponent;
