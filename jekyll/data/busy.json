@@ -1,1 +1,1459 @@
-[{"IpAddress":"148.251.10.210","Address":"148.251.10.210:27500","Description":"FFA, 3 min left","Title":"FFA @ qw.servegame.org","Port":27500,"Country":"DE","IsProxy":false,"Map":"dark-terror-ffa","MaxClients":20,"MaxSpectators":10,"Settings":{"maxfps":"77","pm_ktjump":"1","*version":"MVDSV 0.33","*z_ext":"511","maxspectators":"10","*gamedir":"qw","ktxver":"1.38","sv_antilag":"2","needpass":"4","fpd":"142","deathmatch":"3","*progs":"so","maxclients":"20","timelimit":"5","map":"dark-terror-ffa","serverdemo":"ffa_1[dark-terror-ffa]210505-2231.mvd","hostname":"FFA @ qw.servegame.org","status":"3 min left"},"QtvOnly":false,"Players":[{"Colors":[0,4],"Frags":18,"Ping":93,"Spec":false,"Name":"lambda","Team":"d99","Time":2,"IsBot":false,"Flag":""},{"Colors":[11,2],"Frags":-9999,"Ping":36,"Spec":true,"Name":"8{","Team":"","Time":2,"IsBot":false,"Flag":""},{"Colors":[4,0],"Frags":-9999,"Ping":51,"Spec":true,"Name":"Valde","Team":"++++","Time":2,"IsBot":false,"Flag":""},{"Colors":[0,0],"Frags":19,"Ping":39,"Spec":false,"Name":"ocoini","Team":"AvA","Time":2,"IsBot":false,"Flag":""},{"Colors":[0,0],"Frags":5,"Ping":38,"Spec":false,"Name":"snicksnack","Team":"","Time":1,"IsBot":false,"Flag":""},{"Colors":[0,0],"Frags":7,"Ping":38,"Spec":false,"Name":"Myagi","Team":"dojo","Time":2,"IsBot":false,"Flag":""},{"Colors":[3,3],"Frags":5,"Ping":38,"Spec":false,"Name":"praxismo","Team":"muta","Time":2,"IsBot":false,"Flag":""},{"Colors":[4,4],"Frags":13,"Ping":104,"Spec":false,"Name":"someone","Team":"red","Time":2,"IsBot":false,"Flag":""},{"Colors":[3,1],"Frags":19,"Ping":38,"Spec":false,"Name":"luòñ","Team":"muta","Time":2,"IsBot":false,"Flag":""}],"QTV":[]},{"IpAddress":"45.32.235.192","Address":"nl.aye.wtf:28501","Description":"4v4, Standby","Title":"nl.aye.wtf:28501","Port":28501,"Country":"NL","IsProxy":false,"Map":"rock","MaxClients":8,"MaxSpectators":6,"Settings":{"maxfps":"77","pm_ktjump":"1","*version":"MVDSV 0.34-beta","*z_ext":"511","maxspectators":"6","*admin":"STALKERRH","ktxver":"1.40-beta","sv_antilag":"2","hostname":"nl.aye.wtf:28501","status":"Standby","fpd":"206","*gamedir":"qw","*progs":"so","map":"rock","maxclients":"8","timelimit":"20","teamplay":"2","deathmatch":"1"},"QtvOnly":false,"Players":[{"Colors":[1,1],"Frags":0,"Ping":31,"Spec":false,"Name":"rghst","Team":"sÔa","Time":12,"IsBot":false,"Flag":""},{"Colors":[0,4],"Frags":0,"Ping":43,"Spec":false,"Name":"æì\u0016í\u0015ò","Team":"ôèõç","Time":14,"IsBot":false,"Flag":""},{"Colors":[0,4],"Frags":0,"Ping":39,"Spec":false,"Name":"âillyË.","Team":"ôèõç","Time":14,"IsBot":false,"Flag":""},{"Colors":[12,11],"Frags":-9999,"Ping":666,"Spec":true,"Name":"[ServeMe]","Team":"lqwc","Time":14,"IsBot":true,"Flag":""},{"Colors":[2,2],"Frags":0,"Ping":50,"Spec":false,"Name":"shaka","Team":"red","Time":8,"IsBot":false,"Flag":""},{"Colors":[4,4],"Frags":0,"Ping":50,"Spec":false,"Name":"maks","Team":"red","Time":4,"IsBot":false,"Flag":""},{"Colors":[4,4],"Frags":0,"Ping":25,"Spec":false,"Name":"goniec","Team":"red","Time":5,"IsBot":false,"Flag":""},{"Colors":[0,4],"Frags":0,"Ping":50,"Spec":false,"Name":"ÔhundeÒ","Team":"ôèõç","Time":5,"IsBot":false,"Flag":""},{"Colors":[2,1],"Frags":0,"Ping":26,"Spec":false,"Name":"Libanali","Team":"","Time":3,"IsBot":false,"Flag":""},{"Colors":[0,4],"Frags":-9999,"Ping":66,"Spec":true,"Name":"îìë","Team":"wer","Time":1,"IsBot":false,"Flag":""}],"QTV":[{"Host":"nl.aye.wtf QTV (3)","Address":"3@nl.aye.wtf:28000","Specs":0,"SpecList":[]}]},{"IpAddress":"95.216.18.118","Address":"troopers.fi:28001","Description":"2v2, 5 min left","Title":"troopers.fi:28001 (1 vs. swe)","Port":28001,"Country":"FI","IsProxy":false,"Map":"aerowalk","MaxClients":4,"MaxSpectators":6,"Settings":{"maxfps":"77","pm_ktjump":"1","*version":"MVDSV 0.33","*z_ext":"511","maxspectators":"6","*admin":"Milton <milton_fi@yahoo.com>","ktxver":"1.39","sv_antilag":"2","*gamedir":"qw","teamplay":"2","timelimit":"10","deathmatch":"3","*progs":"so","maxclients":"4","map":"aerowalk","serverdemo":"2on2_1_vs_swe[aerowalk]210505-2327.mvd","hostname":"troopers.fi:28001 (1 vs. swe)","fpd":"206","status":"5 min left"},"QtvOnly":false,"Players":[{"Colors":[13,13],"Frags":18,"Ping":18,"Spec":false,"Name":"âïéäéé","Team":"1","Time":5,"IsBot":false,"Flag":""},{"Colors":[13,13],"Frags":-9999,"Ping":50,"Spec":true,"Name":"maglo","Team":"m&m","Time":5,"IsBot":false,"Flag":""},{"Colors":[13,13],"Frags":17,"Ping":26,"Spec":false,"Name":"Panjabi","Team":"1","Time":5,"IsBot":false,"Flag":""},{"Colors":[13,13],"Frags":21,"Ping":40,"Spec":false,"Name":"äáçï","Team":"swe","Time":5,"IsBot":false,"Flag":""},{"Colors":[4,4],"Frags":-9999,"Ping":49,"Spec":true,"Name":"robin","Team":"red","Time":0,"IsBot":false,"Flag":""},{"Colors":[0,0],"Frags":18,"Ping":42,"Spec":false,"Name":"knasty","Team":"swe","Time":5,"IsBot":false,"Flag":""},{"Colors":[0,1],"Frags":-9999,"Ping":33,"Spec":true,"Name":"myztikal","Team":"id","Time":5,"IsBot":false,"Flag":""},{"Colors":[12,11],"Frags":-9999,"Ping":666,"Spec":true,"Name":"[ServeMe]","Team":"lqwc","Time":5,"IsBot":true,"Flag":""}],"QTV":[{"Host":"troopers.fi","Address":"1@troopers.fi:28000","Specs":0,"SpecList":[]}]},{"IpAddress":"212.42.38.88","Address":"qw.playground.ru:27501","Description":"2v2, 8 min left","Title":"PlayGround # 1 (red vs. blue)","Port":27501,"Country":"RU","IsProxy":false,"Map":"aerowalk","MaxClients":4,"MaxSpectators":15,"Settings":{"maxfps":"77","pm_ktjump":"1","*version":"MVDSV 0.33","*z_ext":"511","sv_bigcoords":"1","sv_antilag":"2","*admin":"gLAd (glad@quakeworld.ru)","ktxver":"1.39","maxspectators":"15","*gamedir":"qw","maxclients":"4","timelimit":"10","teamplay":"2","deathmatch":"3","*progs":"so","map":"aerowalk","serverdemo":"2on2_red_vs_blue[aerowalk]050521-2334.mvd","hostname":"PlayGround # 1 (red vs. blue)","fpd":"206","status":"8 min left"},"QtvOnly":false,"Players":[{"Colors":[4,4],"Frags":3,"Ping":12,"Spec":false,"Name":"Ôi","Team":"red","Time":2,"IsBot":false,"Flag":""},{"Colors":[13,13],"Frags":8,"Ping":26,"Spec":false,"Name":"yurik","Team":"blue","Time":2,"IsBot":false,"Flag":""},{"Colors":[4,4],"Frags":4,"Ping":12,"Spec":false,"Name":"Óïìï","Team":"red","Time":2,"IsBot":false,"Flag":""},{"Colors":[12,11],"Frags":-9999,"Ping":666,"Spec":true,"Name":"[ServeMe]","Team":"lqwc","Time":2,"IsBot":true,"Flag":""},{"Colors":[13,13],"Frags":8,"Ping":17,"Spec":false,"Name":"xek","Team":"blue","Time":2,"IsBot":false,"Flag":""}],"QTV":[{"Host":"Suddendeath.nu KTX Qtv","Address":"8@suddendeath.nu:28000","Specs":0,"SpecList":[]}]},{"IpAddress":"40.89.135.153","Address":"fr.predze.dk:28501","Description":"1v1, 3 min left","Title":"fr.predze.dk:28501 - KTX #1","Port":28501,"Country":"","IsProxy":false,"Map":"ztndm3","MaxClients":2,"MaxSpectators":6,"Settings":{"maxfps":"77","pm_ktjump":"1","*version":"MVDSV 0.34-beta","*z_ext":"511","maxspectators":"6","*admin":"Predze <lars_sm@hotmail.com>","ktxver":"1.39","sv_antilag":"2","*gamedir":"qw","*progs":"so","maxclients":"2","timelimit":"10","deathmatch":"3","map":"ztndm3","serverdemo":"duel_mutti_vs_vaddi[ztndm3]210505-2025.mvd","hostname":"fr.predze.dk:28501 - KTX #1","fpd":"206","status":"3 min left"},"QtvOnly":false,"Players":[{"Colors":[4,4],"Frags":22,"Ping":27,"Spec":false,"Name":"Mutti","Team":"red","Time":7,"IsBot":false,"Flag":""},{"Colors":[0,0],"Frags":4,"Ping":39,"Spec":false,"Name":"Vaddi","Team":"","Time":7,"IsBot":false,"Flag":""},{"Colors":[3,3],"Frags":-9999,"Ping":66,"Spec":true,"Name":"panchito","Team":"","Time":7,"IsBot":false,"Flag":""},{"Colors":[12,11],"Frags":-9999,"Ping":666,"Spec":true,"Name":"[ServeMe]","Team":"lqwc","Time":7,"IsBot":true,"Flag":""},{"Colors":[4,4],"Frags":-9999,"Ping":66,"Spec":true,"Name":"Sniket","Team":"RED","Time":5,"IsBot":false,"Flag":""}],"QTV":[{"Host":"fr.predze.dk Qtv","Address":"1@fr.predze.dk:28000","Specs":0,"SpecList":[]}]},{"IpAddress":"78.45.22.20","Address":"78.45.22.20:28501","Description":"FFA, Standby","Title":"qw.kirril.com:28501","Port":28501,"Country":"CZ","IsProxy":false,"Map":"skull","MaxClients":26,"MaxSpectators":6,"Settings":{"maxfps":"77","pm_ktjump":"1","*version":"MVDSV 0.33","*z_ext":"511","maxspectators":"6","*admin":"cuky <cuky@quake.cz>","ktxver":"1.39","sv_antilag":"2","*gamedir":"qw","deathmatch":"3","hostname":"qw.kirril.com:28501","fpd":"142","status":"Standby","*progs":"so","maxclients":"26","timelimit":"8","map":"skull"},"QtvOnly":false,"Players":[{"Colors":[4,4],"Frags":0,"Ping":67,"Spec":false,"Name":"sane","Team":"btac","Time":0,"IsBot":false,"Flag":""},{"Colors":[13,13],"Frags":0,"Ping":206,"Spec":false,"Name":"cake","Team":"Bruh","Time":0,"IsBot":false,"Flag":""},{"Colors":[1,2],"Frags":0,"Ping":62,"Spec":false,"Name":"Tomeke","Team":"","Time":0,"IsBot":false,"Flag":""},{"Colors":[4,10],"Frags":0,"Ping":40,"Spec":false,"Name":"Dong","Team":"red","Time":0,"IsBot":false,"Flag":""},{"Colors":[12,11],"Frags":-9999,"Ping":666,"Spec":true,"Name":"[ServeMe]","Team":"lqwc","Time":0,"IsBot":true,"Flag":""}],"QTV":[{"Host":"Lamicka Qtv","Address":"1@78.45.22.20:28000","Specs":0,"SpecList":[]}]},{"IpAddress":"194.14.206.10","Address":"qw2.irc.ax:27506","Description":"1v1, Standby","Title":"qw2.irc.ax KTX #6","Port":27506,"Country":"SE","IsProxy":false,"Map":"dm4","MaxClients":2,"MaxSpectators":6,"Settings":{"maxfps":"77","pm_ktjump":"1","*version":"MVDSV 0.33","*z_ext":"511","maxspectators":"6","sv_bigcoords":"1","sv_antilag":"2","*admin":"suom1","ktxver":"1.39","needpass":"4","*gamedir":"qw","timelimit":"10","deathmatch":"3","maxclients":"2","hostname":"qw2.irc.ax KTX #6","fpd":"142","status":"Standby","*progs":"so","map":"dm4"},"QtvOnly":false,"Players":[{"Colors":[11,2],"Frags":0,"Ping":25,"Spec":false,"Name":"SpaCEeHoBO","Team":"","Time":0,"IsBot":false,"Flag":""},{"Colors":[11,2],"Frags":0,"Ping":16,"Spec":false,"Name":"Johan C","Team":"","Time":0,"IsBot":false,"Flag":""},{"Colors":[12,11],"Frags":-9999,"Ping":666,"Spec":true,"Name":"[ServeMe]","Team":"lqwc","Time":0,"IsBot":true,"Flag":""}],"QTV":[{"Host":"QW2.IRC.AX QTV (6)","Address":"6@qw2.irc.ax:28000","Specs":0,"SpecList":[]},{"Host":"QW2.IRC.AX QTV (16)","Address":"","Specs":0,"SpecList":[]}]},{"IpAddress":"46.227.68.135","Address":"qw1.irc.ax:27501","Description":"1v1, 8 min left","Title":"QW1 KTX #1","Port":27501,"Country":"","IsProxy":false,"Map":"dm6","MaxClients":2,"MaxSpectators":6,"Settings":{"maxfps":"77","pm_ktjump":"1","*version":"MVDSV 0.33","*z_ext":"511","maxspectators":"6","sv_bigcoords":"1","sv_antilag":"2","*admin":"suom1","ktxver":"1.39","needpass":"4","*gamedir":"qw","timelimit":"10","deathmatch":"3","maxclients":"2","*progs":"so","map":"dm6","serverdemo":"duel_c_vs_skalman[dm6]050521-2230.mvd","hostname":"QW1 KTX #1","fpd":"206","status":"8 min left"},"QtvOnly":false,"Players":[{"Colors":[3,3],"Frags":2,"Ping":57,"Spec":false,"Name":"c","Team":"blue","Time":6,"IsBot":false,"Flag":""},{"Colors":[4,4],"Frags":2,"Ping":13,"Spec":false,"Name":"SkalmaN","Team":"blue","Time":11,"IsBot":false,"Flag":""},{"Colors":[12,11],"Frags":-9999,"Ping":666,"Spec":true,"Name":"[ServeMe]","Team":"lqwc","Time":11,"IsBot":true,"Flag":""}],"QTV":[{"Host":"QW1.IRC.AX QTV","Address":"1@qw1.irc.ax:28000","Specs":0,"SpecList":[]}]},{"IpAddress":"82.196.2.206","Address":"nl2.badplace.eu:28501","Description":"Racing","Title":"nl2.badplace.eu:28501","Port":28501,"Country":"NL","IsProxy":false,"Map":"race17_sdcup","MaxClients":26,"MaxSpectators":6,"Settings":{"maxfps":"77","pm_ktjump":"1","*version":"MVDSV 0.34-beta","*z_ext":"511","maxspectators":"6","sv_bigcoords":"1","*admin":"meag <meag-nospam@badplace.eu>","ktxver":"1.40-beta","sv_antilag":"2","hostname":"nl2.badplace.eu:28501","status":"Standby","fpd":"206","*gamedir":"qw","maxclients":"26","deathmatch":"4","ktxmode":"race","*progs":"so","map":"race17_sdcup","serverdemo":"race_confy[race17_sdcup_r01]210505-2233.mvd"},"QtvOnly":false,"Players":[{"Colors":[2,10],"Frags":0,"Ping":25,"Spec":false,"Name":"Confy","Team":"","Time":7,"IsBot":false,"Flag":""},{"Colors":[12,11],"Frags":-9999,"Ping":666,"Spec":true,"Name":"[ServeMe]","Team":"lqwc","Time":7,"IsBot":true,"Flag":""},{"Colors":[13,13],"Frags":-9999,"Ping":102,"Spec":true,"Name":"bosco","Team":"blue","Time":7,"IsBot":false,"Flag":""}],"QTV":[{"Host":"nl2.badplace.eu Qtv","Address":"4@nl2.badplace.eu:28000","Specs":0,"SpecList":[]}]},{"IpAddress":"140.82.25.90","Address":"140.82.25.90:27600","Description":"2v2, Standby","Title":"#1 DESISTA MIAMI | KTX","Port":27600,"Country":"US","IsProxy":false,"Map":"aerowalk","MaxClients":4,"MaxSpectators":6,"Settings":{"maxfps":"77","pm_ktjump":"1","*version":"MVDSV 0.33-beta","*z_ext":"511","maxspectators":"6","ktxver":"1.39-beta","sv_antilag":"2","hostname":"#1 DESISTA MIAMI | KTX","status":"Standby","*progs":"so","map":"aerowalk","*admin":"zel@fortressone.org","teamplay":"2","*gamedir":"qw","fpd":"206","maxclients":"4","timelimit":"10","deathmatch":"3"},"QtvOnly":false,"Players":[{"Colors":[12,11],"Frags":-9999,"Ping":664,"Spec":true,"Name":"[ServeMe]","Team":"lqwc","Time":1,"IsBot":true,"Flag":""},{"Colors":[0,2],"Frags":-9999,"Ping":95,"Spec":true,"Name":"x1bot","Team":"blue","Time":1,"IsBot":false,"Flag":""}],"QTV":[]},{"IpAddress":"149.28.240.2","Address":"central.usquake.world:28503","Description":"1v1, Standby","Title":"USQW-Central Duels 28503","Port":28503,"Country":"US","IsProxy":false,"Map":"end","MaxClients":2,"MaxSpectators":20,"Settings":{"maxfps":"77","pm_ktjump":"1","*version":"MVDSV 0.34-beta","*z_ext":"511","sv_antilag":"2","*admin":"m3ssia <m3ssia@protonmail.com>","ktxver":"1.40-beta","maxspectators":"20","hostname":"USQW-Central Duels 28503","status":"Standby","fpd":"206","*gamedir":"qw","*progs":"so","maxclients":"2","timelimit":"3","deathmatch":"4","map":"end"},"QtvOnly":false,"Players":[{"Colors":[4,4],"Frags":0,"Ping":25,"Spec":false,"Name":"kiln","Team":"red","Time":0,"IsBot":false,"Flag":""},{"Colors":[12,11],"Frags":-9999,"Ping":666,"Spec":true,"Name":"[ServeMe]","Team":"lqwc","Time":0,"IsBot":true,"Flag":""}],"QTV":[{"Host":"US QuakeWorld-Central","Address":"3@central.usquake.world:28000","Specs":0,"SpecList":[]}]},{"IpAddress":"194.14.206.10","Address":"qw2.irc.ax:27501","Description":"1v1, Standby","Title":"qw2.irc.ax KTX #1","Port":27501,"Country":"SE","IsProxy":false,"Map":"maphub_v1","MaxClients":2,"MaxSpectators":6,"Settings":{"maxfps":"77","pm_ktjump":"1","*version":"MVDSV 0.33","*z_ext":"511","maxspectators":"6","sv_bigcoords":"1","*admin":"suom1","ktxver":"1.39","needpass":"4","sv_antilag":"2","hostname":"qw2.irc.ax KTX #1","status":"Standby","fpd":"206","*progs":"so","map":"maphub_v1","*gamedir":"qw","maxclients":"2","timelimit":"10","deathmatch":"3"},"QtvOnly":false,"Players":[{"Colors":[12,11],"Frags":-9999,"Ping":666,"Spec":true,"Name":"[ServeMe]","Team":"lqwc","Time":77,"IsBot":true,"Flag":""},{"Colors":[2,11],"Frags":-9999,"Ping":999,"Spec":true,"Name":"vreten","Team":"lqwc","Time":77,"IsBot":false,"Flag":""}],"QTV":[{"Host":"QW2.IRC.AX QTV (1)","Address":"1@qw2.irc.ax:28000","Specs":0,"SpecList":[]},{"Host":"QW2.IRC.AX QTV (11)","Address":"","Specs":0,"SpecList":[]}]},{"IpAddress":"194.14.206.10","Address":"qw2.irc.ax:27502","Description":"2v2, Standby","Title":"qw2.irc.ax KTX #2","Port":27502,"Country":"SE","IsProxy":false,"Map":"maphub_v1","MaxClients":4,"MaxSpectators":6,"Settings":{"maxfps":"77","pm_ktjump":"1","*version":"MVDSV 0.33","*z_ext":"511","maxspectators":"6","sv_bigcoords":"1","sv_antilag":"2","*admin":"suom1","ktxver":"1.39","needpass":"4","hostname":"qw2.irc.ax KTX #2","status":"Standby","teamplay":"2","*gamedir":"qw","fpd":"206","*progs":"so","maxclients":"4","timelimit":"10","deathmatch":"3","map":"maphub_v1"},"QtvOnly":false,"Players":[{"Colors":[12,11],"Frags":-9999,"Ping":666,"Spec":true,"Name":"[ServeMe]","Team":"lqwc","Time":19,"IsBot":true,"Flag":""},{"Colors":[4,4],"Frags":-9999,"Ping":50,"Spec":true,"Name":"VNT","Team":"coop","Time":19,"IsBot":false,"Flag":""}],"QTV":[{"Host":"QW2.IRC.AX QTV (2)","Address":"2@qw2.irc.ax:28000","Specs":0,"SpecList":[]},{"Host":"QW2.IRC.AX QTV (12)","Address":"","Specs":0,"SpecList":[]}]},{"IpAddress":"15.206.117.94","Address":"15.206.117.94:27510","Description":"12v12, Normal","Title":"FortressOne Mumbai Staging","Port":27510,"Country":"","IsProxy":false,"Map":"se2","MaxClients":24,"MaxSpectators":8,"Settings":{"maxclients":"24","maxspectators":"8","hostname":"FortressOne Mumbai Staging","deathmatch":"3","*version":"FTE build May  2 2021","*gamedir":"fortress","fraglimit":"0","timelimit":"20","status":"Normal","teamplay":"1","samelevel":"0","maxfps":"77","sv_minping":"0","pm_ktjump":"0.5","pm_bunnyspeedcap":"0","pm_slidefix":"0","pm_airstep":"1","pm_pground":"0","watervis":"1","fpd":"49152","fbskins":"1","override_mapclasses":"1","*csprogs":"0x9a1b2f03","*csprogssize":"0x936b2","map":"se2","fo_rev":"1.0.2","gametype":"fortressone","*entfile":"47303"},"QtvOnly":false,"Players":[{"Colors":[8,3],"Frags":0,"Ping":999,"Spec":false,"Name":"zel","Team":"blue","Time":372,"IsBot":false,"Flag":""}],"QTV":[]}]
+[
+  {
+    "IpAddress": "148.251.10.210",
+    "Address": "148.251.10.210:27500",
+    "Description": "FFA, 3 min left",
+    "Title": "FFA @ qw.servegame.org",
+    "Port": 27500,
+    "Country": "DE",
+    "IsProxy": false,
+    "Map": "dark-terror-ffa",
+    "MaxClients": 20,
+    "MaxSpectators": 10,
+    "Settings": {
+      "maxfps": "77",
+      "pm_ktjump": "1",
+      "*version": "MVDSV 0.33",
+      "*z_ext": "511",
+      "maxspectators": "10",
+      "*gamedir": "qw",
+      "ktxver": "1.38",
+      "sv_antilag": "2",
+      "needpass": "4",
+      "fpd": "142",
+      "deathmatch": "3",
+      "*progs": "so",
+      "maxclients": "20",
+      "timelimit": "5",
+      "map": "dark-terror-ffa",
+      "serverdemo": "ffa_1[dark-terror-ffa]210505-2231.mvd",
+      "hostname": "FFA @ qw.servegame.org",
+      "status": "3 min left"
+    },
+    "QtvOnly": false,
+    "Players": [
+      {
+        "Colors": [
+          0,
+          4
+        ],
+        "Frags": 18,
+        "Ping": 93,
+        "Spec": false,
+        "Name": "lambda",
+        "Team": "d99",
+        "Time": 2,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          11,
+          2
+        ],
+        "Frags": -9999,
+        "Ping": 36,
+        "Spec": true,
+        "Name": "8{",
+        "Team": "",
+        "Time": 2,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          4,
+          0
+        ],
+        "Frags": -9999,
+        "Ping": 51,
+        "Spec": true,
+        "Name": "Valde",
+        "Team": "++++",
+        "Time": 2,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          0,
+          0
+        ],
+        "Frags": 19,
+        "Ping": 39,
+        "Spec": false,
+        "Name": "ocoini",
+        "Team": "AvA",
+        "Time": 2,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          0,
+          0
+        ],
+        "Frags": 5,
+        "Ping": 38,
+        "Spec": false,
+        "Name": "snicksnack",
+        "Team": "",
+        "Time": 1,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          0,
+          0
+        ],
+        "Frags": 7,
+        "Ping": 38,
+        "Spec": false,
+        "Name": "Myagi",
+        "Team": "dojo",
+        "Time": 2,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          3,
+          3
+        ],
+        "Frags": 5,
+        "Ping": 38,
+        "Spec": false,
+        "Name": "praxismo",
+        "Team": "muta",
+        "Time": 2,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          4,
+          4
+        ],
+        "Frags": 13,
+        "Ping": 104,
+        "Spec": false,
+        "Name": "someone",
+        "Team": "red",
+        "Time": 2,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          3,
+          1
+        ],
+        "Frags": 19,
+        "Ping": 38,
+        "Spec": false,
+        "Name": "luòñ",
+        "Team": "muta",
+        "Time": 2,
+        "IsBot": false,
+        "Flag": ""
+      }
+    ],
+    "QTV": []
+  },
+  {
+    "IpAddress": "45.32.235.192",
+    "Address": "nl.aye.wtf:28501",
+    "Description": "4v4, Standby",
+    "Title": "nl.aye.wtf:28501",
+    "Port": 28501,
+    "Country": "NL",
+    "IsProxy": false,
+    "Map": "rock",
+    "MaxClients": 8,
+    "MaxSpectators": 6,
+    "Settings": {
+      "maxfps": "77",
+      "pm_ktjump": "1",
+      "*version": "MVDSV 0.34-beta",
+      "*z_ext": "511",
+      "maxspectators": "6",
+      "*admin": "STALKERRH",
+      "ktxver": "1.40-beta",
+      "sv_antilag": "2",
+      "hostname": "nl.aye.wtf:28501",
+      "status": "Standby",
+      "fpd": "206",
+      "*gamedir": "qw",
+      "*progs": "so",
+      "map": "rock",
+      "maxclients": "8",
+      "timelimit": "20",
+      "teamplay": "2",
+      "deathmatch": "1"
+    },
+    "QtvOnly": false,
+    "Players": [
+      {
+        "Colors": [
+          1,
+          1
+        ],
+        "Frags": 0,
+        "Ping": 31,
+        "Spec": false,
+        "Name": "rghst",
+        "Team": "sÔa",
+        "Time": 12,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          0,
+          4
+        ],
+        "Frags": 0,
+        "Ping": 43,
+        "Spec": false,
+        "Name": "æì\u0016í\u0015ò",
+        "Team": "ôèõç",
+        "Time": 14,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          0,
+          4
+        ],
+        "Frags": 0,
+        "Ping": 39,
+        "Spec": false,
+        "Name": "âillyË.",
+        "Team": "ôèõç",
+        "Time": 14,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          12,
+          11
+        ],
+        "Frags": -9999,
+        "Ping": 666,
+        "Spec": true,
+        "Name": "[ServeMe]",
+        "Team": "lqwc",
+        "Time": 14,
+        "IsBot": true,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          2,
+          2
+        ],
+        "Frags": 0,
+        "Ping": 50,
+        "Spec": false,
+        "Name": "shaka",
+        "Team": "red",
+        "Time": 8,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          4,
+          4
+        ],
+        "Frags": 0,
+        "Ping": 50,
+        "Spec": false,
+        "Name": "maks",
+        "Team": "red",
+        "Time": 4,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          4,
+          4
+        ],
+        "Frags": 0,
+        "Ping": 25,
+        "Spec": false,
+        "Name": "goniec",
+        "Team": "red",
+        "Time": 5,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          0,
+          4
+        ],
+        "Frags": 0,
+        "Ping": 50,
+        "Spec": false,
+        "Name": "ÔhundeÒ",
+        "Team": "ôèõç",
+        "Time": 5,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          2,
+          1
+        ],
+        "Frags": 0,
+        "Ping": 26,
+        "Spec": false,
+        "Name": "Libanali",
+        "Team": "",
+        "Time": 3,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          0,
+          4
+        ],
+        "Frags": -9999,
+        "Ping": 66,
+        "Spec": true,
+        "Name": "îìë",
+        "Team": "wer",
+        "Time": 1,
+        "IsBot": false,
+        "Flag": ""
+      }
+    ],
+    "QTV": [
+      {
+        "Host": "nl.aye.wtf QTV (3)",
+        "Address": "3@nl.aye.wtf:28000",
+        "Specs": 0,
+        "SpecList": []
+      }
+    ]
+  },
+  {
+    "IpAddress": "95.216.18.118",
+    "Address": "troopers.fi:28001",
+    "Description": "2v2, 5 min left",
+    "Title": "troopers.fi:28001 (1 vs. swe)",
+    "Port": 28001,
+    "Country": "FI",
+    "IsProxy": false,
+    "Map": "aerowalk",
+    "MaxClients": 4,
+    "MaxSpectators": 6,
+    "Settings": {
+      "maxfps": "77",
+      "pm_ktjump": "1",
+      "*version": "MVDSV 0.33",
+      "*z_ext": "511",
+      "maxspectators": "6",
+      "*admin": "Milton <milton_fi@yahoo.com>",
+      "ktxver": "1.39",
+      "sv_antilag": "2",
+      "*gamedir": "qw",
+      "teamplay": "2",
+      "timelimit": "10",
+      "deathmatch": "3",
+      "*progs": "so",
+      "maxclients": "4",
+      "map": "aerowalk",
+      "serverdemo": "2on2_1_vs_swe[aerowalk]210505-2327.mvd",
+      "hostname": "troopers.fi:28001 (1 vs. swe)",
+      "fpd": "206",
+      "status": "5 min left"
+    },
+    "QtvOnly": false,
+    "Players": [
+      {
+        "Colors": [
+          13,
+          13
+        ],
+        "Frags": 18,
+        "Ping": 18,
+        "Spec": false,
+        "Name": "âïéäéé",
+        "Team": "1",
+        "Time": 5,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          13,
+          13
+        ],
+        "Frags": -9999,
+        "Ping": 50,
+        "Spec": true,
+        "Name": "maglo",
+        "Team": "m&m",
+        "Time": 5,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          13,
+          13
+        ],
+        "Frags": 17,
+        "Ping": 26,
+        "Spec": false,
+        "Name": "Panjabi",
+        "Team": "1",
+        "Time": 5,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          13,
+          13
+        ],
+        "Frags": 21,
+        "Ping": 40,
+        "Spec": false,
+        "Name": "äáçï",
+        "Team": "swe",
+        "Time": 5,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          4,
+          4
+        ],
+        "Frags": -9999,
+        "Ping": 49,
+        "Spec": true,
+        "Name": "robin",
+        "Team": "red",
+        "Time": 0,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          0,
+          0
+        ],
+        "Frags": 18,
+        "Ping": 42,
+        "Spec": false,
+        "Name": "knasty",
+        "Team": "swe",
+        "Time": 5,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          0,
+          1
+        ],
+        "Frags": -9999,
+        "Ping": 33,
+        "Spec": true,
+        "Name": "myztikal",
+        "Team": "id",
+        "Time": 5,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          12,
+          11
+        ],
+        "Frags": -9999,
+        "Ping": 666,
+        "Spec": true,
+        "Name": "[ServeMe]",
+        "Team": "lqwc",
+        "Time": 5,
+        "IsBot": true,
+        "Flag": ""
+      }
+    ],
+    "QTV": [
+      {
+        "Host": "troopers.fi",
+        "Address": "1@troopers.fi:28000",
+        "Specs": 0,
+        "SpecList": []
+      }
+    ]
+  },
+  {
+    "IpAddress": "212.42.38.88",
+    "Address": "qw.playground.ru:27501",
+    "Description": "2v2, 8 min left",
+    "Title": "PlayGround # 1 (red vs. blue)",
+    "Port": 27501,
+    "Country": "RU",
+    "IsProxy": false,
+    "Map": "aerowalk",
+    "MaxClients": 4,
+    "MaxSpectators": 15,
+    "Settings": {
+      "maxfps": "77",
+      "pm_ktjump": "1",
+      "*version": "MVDSV 0.33",
+      "*z_ext": "511",
+      "sv_bigcoords": "1",
+      "sv_antilag": "2",
+      "*admin": "gLAd (glad@quakeworld.ru)",
+      "ktxver": "1.39",
+      "maxspectators": "15",
+      "*gamedir": "qw",
+      "maxclients": "4",
+      "timelimit": "10",
+      "teamplay": "2",
+      "deathmatch": "3",
+      "*progs": "so",
+      "map": "aerowalk",
+      "serverdemo": "2on2_red_vs_blue[aerowalk]050521-2334.mvd",
+      "hostname": "PlayGround # 1 (red vs. blue)",
+      "fpd": "206",
+      "status": "8 min left"
+    },
+    "QtvOnly": false,
+    "Players": [
+      {
+        "Colors": [
+          4,
+          4
+        ],
+        "Frags": 3,
+        "Ping": 12,
+        "Spec": false,
+        "Name": "Ôi",
+        "Team": "red",
+        "Time": 2,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          13,
+          13
+        ],
+        "Frags": 8,
+        "Ping": 26,
+        "Spec": false,
+        "Name": "yurik",
+        "Team": "blue",
+        "Time": 2,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          4,
+          4
+        ],
+        "Frags": 4,
+        "Ping": 12,
+        "Spec": false,
+        "Name": "Óïìï",
+        "Team": "red",
+        "Time": 2,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          12,
+          11
+        ],
+        "Frags": -9999,
+        "Ping": 666,
+        "Spec": true,
+        "Name": "[ServeMe]",
+        "Team": "lqwc",
+        "Time": 2,
+        "IsBot": true,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          13,
+          13
+        ],
+        "Frags": 8,
+        "Ping": 17,
+        "Spec": false,
+        "Name": "xek",
+        "Team": "blue",
+        "Time": 2,
+        "IsBot": false,
+        "Flag": ""
+      }
+    ],
+    "QTV": [
+      {
+        "Host": "Suddendeath.nu KTX Qtv",
+        "Address": "8@suddendeath.nu:28000",
+        "Specs": 0,
+        "SpecList": []
+      }
+    ]
+  },
+  {
+    "IpAddress": "40.89.135.153",
+    "Address": "fr.predze.dk:28501",
+    "Description": "1v1, 3 min left",
+    "Title": "fr.predze.dk:28501 - KTX #1",
+    "Port": 28501,
+    "Country": "",
+    "IsProxy": false,
+    "Map": "ztndm3",
+    "MaxClients": 2,
+    "MaxSpectators": 6,
+    "Settings": {
+      "maxfps": "77",
+      "pm_ktjump": "1",
+      "*version": "MVDSV 0.34-beta",
+      "*z_ext": "511",
+      "maxspectators": "6",
+      "*admin": "Predze <lars_sm@hotmail.com>",
+      "ktxver": "1.39",
+      "sv_antilag": "2",
+      "*gamedir": "qw",
+      "*progs": "so",
+      "maxclients": "2",
+      "timelimit": "10",
+      "deathmatch": "3",
+      "map": "ztndm3",
+      "serverdemo": "duel_mutti_vs_vaddi[ztndm3]210505-2025.mvd",
+      "hostname": "fr.predze.dk:28501 - KTX #1",
+      "fpd": "206",
+      "status": "3 min left"
+    },
+    "QtvOnly": false,
+    "Players": [
+      {
+        "Colors": [
+          4,
+          4
+        ],
+        "Frags": 22,
+        "Ping": 27,
+        "Spec": false,
+        "Name": "Mutti",
+        "Team": "red",
+        "Time": 7,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          0,
+          0
+        ],
+        "Frags": 4,
+        "Ping": 39,
+        "Spec": false,
+        "Name": "Vaddi",
+        "Team": "",
+        "Time": 7,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          3,
+          3
+        ],
+        "Frags": -9999,
+        "Ping": 66,
+        "Spec": true,
+        "Name": "panchito",
+        "Team": "",
+        "Time": 7,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          12,
+          11
+        ],
+        "Frags": -9999,
+        "Ping": 666,
+        "Spec": true,
+        "Name": "[ServeMe]",
+        "Team": "lqwc",
+        "Time": 7,
+        "IsBot": true,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          4,
+          4
+        ],
+        "Frags": -9999,
+        "Ping": 66,
+        "Spec": true,
+        "Name": "Sniket",
+        "Team": "RED",
+        "Time": 5,
+        "IsBot": false,
+        "Flag": ""
+      }
+    ],
+    "QTV": [
+      {
+        "Host": "fr.predze.dk Qtv",
+        "Address": "1@fr.predze.dk:28000",
+        "Specs": 0,
+        "SpecList": []
+      }
+    ]
+  },
+  {
+    "IpAddress": "78.45.22.20",
+    "Address": "78.45.22.20:28501",
+    "Description": "FFA, Standby",
+    "Title": "qw.kirril.com:28501",
+    "Port": 28501,
+    "Country": "CZ",
+    "IsProxy": false,
+    "Map": "skull",
+    "MaxClients": 26,
+    "MaxSpectators": 6,
+    "Settings": {
+      "maxfps": "77",
+      "pm_ktjump": "1",
+      "*version": "MVDSV 0.33",
+      "*z_ext": "511",
+      "maxspectators": "6",
+      "*admin": "cuky <cuky@quake.cz>",
+      "ktxver": "1.39",
+      "sv_antilag": "2",
+      "*gamedir": "qw",
+      "deathmatch": "3",
+      "hostname": "qw.kirril.com:28501",
+      "fpd": "142",
+      "status": "Standby",
+      "*progs": "so",
+      "maxclients": "26",
+      "timelimit": "8",
+      "map": "skull"
+    },
+    "QtvOnly": false,
+    "Players": [
+      {
+        "Colors": [
+          4,
+          4
+        ],
+        "Frags": 0,
+        "Ping": 67,
+        "Spec": false,
+        "Name": "sane",
+        "Team": "btac",
+        "Time": 0,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          13,
+          13
+        ],
+        "Frags": 0,
+        "Ping": 206,
+        "Spec": false,
+        "Name": "cake",
+        "Team": "Bruh",
+        "Time": 0,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          1,
+          2
+        ],
+        "Frags": 0,
+        "Ping": 62,
+        "Spec": false,
+        "Name": "Tomeke",
+        "Team": "",
+        "Time": 0,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          4,
+          10
+        ],
+        "Frags": 0,
+        "Ping": 40,
+        "Spec": false,
+        "Name": "Dong",
+        "Team": "red",
+        "Time": 0,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          12,
+          11
+        ],
+        "Frags": -9999,
+        "Ping": 666,
+        "Spec": true,
+        "Name": "[ServeMe]",
+        "Team": "lqwc",
+        "Time": 0,
+        "IsBot": true,
+        "Flag": ""
+      }
+    ],
+    "QTV": [
+      {
+        "Host": "Lamicka Qtv",
+        "Address": "1@78.45.22.20:28000",
+        "Specs": 0,
+        "SpecList": []
+      }
+    ]
+  },
+  {
+    "IpAddress": "194.14.206.10",
+    "Address": "qw2.irc.ax:27506",
+    "Description": "1v1, Standby",
+    "Title": "qw2.irc.ax KTX #6",
+    "Port": 27506,
+    "Country": "SE",
+    "IsProxy": false,
+    "Map": "dm4",
+    "MaxClients": 2,
+    "MaxSpectators": 6,
+    "Settings": {
+      "maxfps": "77",
+      "pm_ktjump": "1",
+      "*version": "MVDSV 0.33",
+      "*z_ext": "511",
+      "maxspectators": "6",
+      "sv_bigcoords": "1",
+      "sv_antilag": "2",
+      "*admin": "suom1",
+      "ktxver": "1.39",
+      "needpass": "4",
+      "*gamedir": "qw",
+      "timelimit": "10",
+      "deathmatch": "3",
+      "maxclients": "2",
+      "hostname": "qw2.irc.ax KTX #6",
+      "fpd": "142",
+      "status": "Standby",
+      "*progs": "so",
+      "map": "dm4"
+    },
+    "QtvOnly": false,
+    "Players": [
+      {
+        "Colors": [
+          11,
+          2
+        ],
+        "Frags": 0,
+        "Ping": 25,
+        "Spec": false,
+        "Name": "SpaCEeHoBO",
+        "Team": "",
+        "Time": 0,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          11,
+          2
+        ],
+        "Frags": 0,
+        "Ping": 16,
+        "Spec": false,
+        "Name": "Johan C",
+        "Team": "",
+        "Time": 0,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          12,
+          11
+        ],
+        "Frags": -9999,
+        "Ping": 666,
+        "Spec": true,
+        "Name": "[ServeMe]",
+        "Team": "lqwc",
+        "Time": 0,
+        "IsBot": true,
+        "Flag": ""
+      }
+    ],
+    "QTV": [
+      {
+        "Host": "QW2.IRC.AX QTV (6)",
+        "Address": "6@qw2.irc.ax:28000",
+        "Specs": 0,
+        "SpecList": []
+      },
+      {
+        "Host": "QW2.IRC.AX QTV (16)",
+        "Address": "",
+        "Specs": 0,
+        "SpecList": []
+      }
+    ]
+  },
+  {
+    "IpAddress": "46.227.68.135",
+    "Address": "qw1.irc.ax:27501",
+    "Description": "1v1, 8 min left",
+    "Title": "QW1 KTX #1",
+    "Port": 27501,
+    "Country": "",
+    "IsProxy": false,
+    "Map": "dm6",
+    "MaxClients": 2,
+    "MaxSpectators": 6,
+    "Settings": {
+      "maxfps": "77",
+      "pm_ktjump": "1",
+      "*version": "MVDSV 0.33",
+      "*z_ext": "511",
+      "maxspectators": "6",
+      "sv_bigcoords": "1",
+      "sv_antilag": "2",
+      "*admin": "suom1",
+      "ktxver": "1.39",
+      "needpass": "4",
+      "*gamedir": "qw",
+      "timelimit": "10",
+      "deathmatch": "3",
+      "maxclients": "2",
+      "*progs": "so",
+      "map": "dm6",
+      "serverdemo": "duel_c_vs_skalman[dm6]050521-2230.mvd",
+      "hostname": "QW1 KTX #1",
+      "fpd": "206",
+      "status": "8 min left"
+    },
+    "QtvOnly": false,
+    "Players": [
+      {
+        "Colors": [
+          3,
+          3
+        ],
+        "Frags": 2,
+        "Ping": 57,
+        "Spec": false,
+        "Name": "c",
+        "Team": "blue",
+        "Time": 6,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          4,
+          4
+        ],
+        "Frags": 2,
+        "Ping": 13,
+        "Spec": false,
+        "Name": "SkalmaN",
+        "Team": "blue",
+        "Time": 11,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          12,
+          11
+        ],
+        "Frags": -9999,
+        "Ping": 666,
+        "Spec": true,
+        "Name": "[ServeMe]",
+        "Team": "lqwc",
+        "Time": 11,
+        "IsBot": true,
+        "Flag": ""
+      }
+    ],
+    "QTV": [
+      {
+        "Host": "QW1.IRC.AX QTV",
+        "Address": "1@qw1.irc.ax:28000",
+        "Specs": 0,
+        "SpecList": []
+      }
+    ]
+  },
+  {
+    "IpAddress": "82.196.2.206",
+    "Address": "nl2.badplace.eu:28501",
+    "Description": "Racing",
+    "Title": "nl2.badplace.eu:28501",
+    "Port": 28501,
+    "Country": "NL",
+    "IsProxy": false,
+    "Map": "race17_sdcup",
+    "MaxClients": 26,
+    "MaxSpectators": 6,
+    "Settings": {
+      "maxfps": "77",
+      "pm_ktjump": "1",
+      "*version": "MVDSV 0.34-beta",
+      "*z_ext": "511",
+      "maxspectators": "6",
+      "sv_bigcoords": "1",
+      "*admin": "meag <meag-nospam@badplace.eu>",
+      "ktxver": "1.40-beta",
+      "sv_antilag": "2",
+      "hostname": "nl2.badplace.eu:28501",
+      "status": "Standby",
+      "fpd": "206",
+      "*gamedir": "qw",
+      "maxclients": "26",
+      "deathmatch": "4",
+      "ktxmode": "race",
+      "*progs": "so",
+      "map": "race17_sdcup",
+      "serverdemo": "race_confy[race17_sdcup_r01]210505-2233.mvd"
+    },
+    "QtvOnly": false,
+    "Players": [
+      {
+        "Colors": [
+          2,
+          10
+        ],
+        "Frags": 0,
+        "Ping": 25,
+        "Spec": false,
+        "Name": "Confy",
+        "Team": "",
+        "Time": 7,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          12,
+          11
+        ],
+        "Frags": -9999,
+        "Ping": 666,
+        "Spec": true,
+        "Name": "[ServeMe]",
+        "Team": "lqwc",
+        "Time": 7,
+        "IsBot": true,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          13,
+          13
+        ],
+        "Frags": -9999,
+        "Ping": 102,
+        "Spec": true,
+        "Name": "bosco",
+        "Team": "blue",
+        "Time": 7,
+        "IsBot": false,
+        "Flag": ""
+      }
+    ],
+    "QTV": [
+      {
+        "Host": "nl2.badplace.eu Qtv",
+        "Address": "4@nl2.badplace.eu:28000",
+        "Specs": 0,
+        "SpecList": []
+      }
+    ]
+  },
+  {
+    "IpAddress": "140.82.25.90",
+    "Address": "140.82.25.90:27600",
+    "Description": "2v2, Standby",
+    "Title": "#1 DESISTA MIAMI | KTX",
+    "Port": 27600,
+    "Country": "US",
+    "IsProxy": false,
+    "Map": "aerowalk",
+    "MaxClients": 4,
+    "MaxSpectators": 6,
+    "Settings": {
+      "maxfps": "77",
+      "pm_ktjump": "1",
+      "*version": "MVDSV 0.33-beta",
+      "*z_ext": "511",
+      "maxspectators": "6",
+      "ktxver": "1.39-beta",
+      "sv_antilag": "2",
+      "hostname": "#1 DESISTA MIAMI | KTX",
+      "status": "Standby",
+      "*progs": "so",
+      "map": "aerowalk",
+      "*admin": "zel@fortressone.org",
+      "teamplay": "2",
+      "*gamedir": "qw",
+      "fpd": "206",
+      "maxclients": "4",
+      "timelimit": "10",
+      "deathmatch": "3"
+    },
+    "QtvOnly": false,
+    "Players": [
+      {
+        "Colors": [
+          12,
+          11
+        ],
+        "Frags": -9999,
+        "Ping": 664,
+        "Spec": true,
+        "Name": "[ServeMe]",
+        "Team": "lqwc",
+        "Time": 1,
+        "IsBot": true,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          0,
+          2
+        ],
+        "Frags": -9999,
+        "Ping": 95,
+        "Spec": true,
+        "Name": "x1bot",
+        "Team": "blue",
+        "Time": 1,
+        "IsBot": false,
+        "Flag": ""
+      }
+    ],
+    "QTV": []
+  },
+  {
+    "IpAddress": "149.28.240.2",
+    "Address": "central.usquake.world:28503",
+    "Description": "1v1, Standby",
+    "Title": "USQW-Central Duels 28503",
+    "Port": 28503,
+    "Country": "US",
+    "IsProxy": false,
+    "Map": "end",
+    "MaxClients": 2,
+    "MaxSpectators": 20,
+    "Settings": {
+      "maxfps": "77",
+      "pm_ktjump": "1",
+      "*version": "MVDSV 0.34-beta",
+      "*z_ext": "511",
+      "sv_antilag": "2",
+      "*admin": "m3ssia <m3ssia@protonmail.com>",
+      "ktxver": "1.40-beta",
+      "maxspectators": "20",
+      "hostname": "USQW-Central Duels 28503",
+      "status": "Standby",
+      "fpd": "206",
+      "*gamedir": "qw",
+      "*progs": "so",
+      "maxclients": "2",
+      "timelimit": "3",
+      "deathmatch": "4",
+      "map": "end"
+    },
+    "QtvOnly": false,
+    "Players": [
+      {
+        "Colors": [
+          4,
+          4
+        ],
+        "Frags": 0,
+        "Ping": 25,
+        "Spec": false,
+        "Name": "kiln",
+        "Team": "red",
+        "Time": 0,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          12,
+          11
+        ],
+        "Frags": -9999,
+        "Ping": 666,
+        "Spec": true,
+        "Name": "[ServeMe]",
+        "Team": "lqwc",
+        "Time": 0,
+        "IsBot": true,
+        "Flag": ""
+      }
+    ],
+    "QTV": [
+      {
+        "Host": "US QuakeWorld-Central",
+        "Address": "3@central.usquake.world:28000",
+        "Specs": 0,
+        "SpecList": []
+      }
+    ]
+  },
+  {
+    "IpAddress": "194.14.206.10",
+    "Address": "qw2.irc.ax:27501",
+    "Description": "1v1, Standby",
+    "Title": "qw2.irc.ax KTX #1",
+    "Port": 27501,
+    "Country": "SE",
+    "IsProxy": false,
+    "Map": "maphub_v1",
+    "MaxClients": 2,
+    "MaxSpectators": 6,
+    "Settings": {
+      "maxfps": "77",
+      "pm_ktjump": "1",
+      "*version": "MVDSV 0.33",
+      "*z_ext": "511",
+      "maxspectators": "6",
+      "sv_bigcoords": "1",
+      "*admin": "suom1",
+      "ktxver": "1.39",
+      "needpass": "4",
+      "sv_antilag": "2",
+      "hostname": "qw2.irc.ax KTX #1",
+      "status": "Standby",
+      "fpd": "206",
+      "*progs": "so",
+      "map": "maphub_v1",
+      "*gamedir": "qw",
+      "maxclients": "2",
+      "timelimit": "10",
+      "deathmatch": "3"
+    },
+    "QtvOnly": false,
+    "Players": [
+      {
+        "Colors": [
+          12,
+          11
+        ],
+        "Frags": -9999,
+        "Ping": 666,
+        "Spec": true,
+        "Name": "[ServeMe]",
+        "Team": "lqwc",
+        "Time": 77,
+        "IsBot": true,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          2,
+          11
+        ],
+        "Frags": -9999,
+        "Ping": 999,
+        "Spec": true,
+        "Name": "vreten",
+        "Team": "lqwc",
+        "Time": 77,
+        "IsBot": false,
+        "Flag": ""
+      }
+    ],
+    "QTV": [
+      {
+        "Host": "QW2.IRC.AX QTV (1)",
+        "Address": "1@qw2.irc.ax:28000",
+        "Specs": 0,
+        "SpecList": []
+      },
+      {
+        "Host": "QW2.IRC.AX QTV (11)",
+        "Address": "",
+        "Specs": 0,
+        "SpecList": []
+      }
+    ]
+  },
+  {
+    "IpAddress": "194.14.206.10",
+    "Address": "qw2.irc.ax:27502",
+    "Description": "2v2, Standby",
+    "Title": "qw2.irc.ax KTX #2",
+    "Port": 27502,
+    "Country": "SE",
+    "IsProxy": false,
+    "Map": "maphub_v1",
+    "MaxClients": 4,
+    "MaxSpectators": 6,
+    "Settings": {
+      "maxfps": "77",
+      "pm_ktjump": "1",
+      "*version": "MVDSV 0.33",
+      "*z_ext": "511",
+      "maxspectators": "6",
+      "sv_bigcoords": "1",
+      "sv_antilag": "2",
+      "*admin": "suom1",
+      "ktxver": "1.39",
+      "needpass": "4",
+      "hostname": "qw2.irc.ax KTX #2",
+      "status": "Standby",
+      "teamplay": "2",
+      "*gamedir": "qw",
+      "fpd": "206",
+      "*progs": "so",
+      "maxclients": "4",
+      "timelimit": "10",
+      "deathmatch": "3",
+      "map": "maphub_v1"
+    },
+    "QtvOnly": false,
+    "Players": [
+      {
+        "Colors": [
+          12,
+          11
+        ],
+        "Frags": -9999,
+        "Ping": 666,
+        "Spec": true,
+        "Name": "[ServeMe]",
+        "Team": "lqwc",
+        "Time": 19,
+        "IsBot": true,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          4,
+          4
+        ],
+        "Frags": -9999,
+        "Ping": 50,
+        "Spec": true,
+        "Name": "VNT",
+        "Team": "coop",
+        "Time": 19,
+        "IsBot": false,
+        "Flag": ""
+      }
+    ],
+    "QTV": [
+      {
+        "Host": "QW2.IRC.AX QTV (2)",
+        "Address": "2@qw2.irc.ax:28000",
+        "Specs": 0,
+        "SpecList": []
+      },
+      {
+        "Host": "QW2.IRC.AX QTV (12)",
+        "Address": "",
+        "Specs": 0,
+        "SpecList": []
+      }
+    ]
+  },
+  {
+    "IpAddress": "15.206.117.94",
+    "Address": "15.206.117.94:27510",
+    "Description": "12v12, Normal",
+    "Title": "FortressOne Mumbai Staging",
+    "Port": 27510,
+    "Country": "",
+    "IsProxy": false,
+    "Map": "se2",
+    "MaxClients": 24,
+    "MaxSpectators": 8,
+    "Settings": {
+      "maxclients": "24",
+      "maxspectators": "8",
+      "hostname": "FortressOne Mumbai Staging",
+      "deathmatch": "3",
+      "*version": "FTE build May  2 2021",
+      "*gamedir": "fortress",
+      "fraglimit": "0",
+      "timelimit": "20",
+      "status": "Normal",
+      "teamplay": "1",
+      "samelevel": "0",
+      "maxfps": "77",
+      "sv_minping": "0",
+      "pm_ktjump": "0.5",
+      "pm_bunnyspeedcap": "0",
+      "pm_slidefix": "0",
+      "pm_airstep": "1",
+      "pm_pground": "0",
+      "watervis": "1",
+      "fpd": "49152",
+      "fbskins": "1",
+      "override_mapclasses": "1",
+      "*csprogs": "0x9a1b2f03",
+      "*csprogssize": "0x936b2",
+      "map": "se2",
+      "fo_rev": "1.0.2",
+      "gametype": "fortressone",
+      "*entfile": "47303"
+    },
+    "QtvOnly": false,
+    "Players": [
+      {
+        "Colors": [
+          8,
+          3
+        ],
+        "Frags": 0,
+        "Ping": 999,
+        "Spec": false,
+        "Name": "zel",
+        "Team": "blue",
+        "Time": 372,
+        "IsBot": false,
+        "Flag": ""
+      }
+    ],
+    "QTV": []
+  }
+]
