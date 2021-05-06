@@ -73,7 +73,7 @@
 
   @each $colorValue, $colorHex in $playerColors {
     .color-#{$colorValue} {
-      background-color: $colorHex;
+      background-color: saturate(lighten($colorHex, 15), 10);
     }
   }
 
