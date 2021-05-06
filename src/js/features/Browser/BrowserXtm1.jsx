@@ -105,7 +105,9 @@ const Server = (props) => {
         </div>
         }
         {
-          !hasPlayers && <div className="has-text-grey m-3 has-text-centered text-small">(no players)</div>
+          !hasPlayers &&
+          <div className="has-text-grey m-3 has-text-centered text-small">(no
+            players)</div>
         }
 
         <hr className="m-0" />
@@ -136,8 +138,16 @@ const Server = (props) => {
         </div>
       </div>
 
-      <footer
-        className="card-footer p-3">[{server.Country}] {server.Address}</footer>
+      <footer className="card-footer p-3 text-small">
+        <div>
+          {server.Country && <img
+            src={`https://badplace.eu/images/icons/flags/${server.Country.toLowerCase()}.png`}
+            width="16" height="11"
+            alt="{server.Country.toLowerCase()}"
+          />
+          } {server.Address}
+        </div>
+      </footer>
     </div>
   );
 };
