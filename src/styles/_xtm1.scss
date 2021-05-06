@@ -1,7 +1,5 @@
 .xtm1 {
-  .text-small {
-    font-size: .8em;
-  }
+
 
   .tiles {
     display: grid;
@@ -21,6 +19,17 @@
     }
   }
 
+  .players {
+    display: flex;
+    align-items: center;
+    min-height: 140px;
+    background-color: black;
+    background-size: cover;
+    text-shadow: black 1px 1px 1px;
+    font-weight: bold;
+    color: white;
+  }
+
   .tile {
     display: block;
   }
@@ -28,12 +37,18 @@
   .status-canjoin {
     border: 2px solid rgba(50, 100, 150, 0.6);
   }
+
+  .playercolor {
+    border: 1px solid grey;
+    min-width: 14px;
+    display: inline-block;
+    height: .8em;
+    margin-right: .5em;
+  }
+
+  .text-small {
+    font-size: .8em;
+  }
+
 }
 
-.playercolor {
-  border: 1px solid grey;
-  min-width: 14px;
-  display: inline-block;
-  height: .8em;
-  margin-right: .5em;
-}

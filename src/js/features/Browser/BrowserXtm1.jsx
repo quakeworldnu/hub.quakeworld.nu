@@ -51,6 +51,12 @@ const Server = (props) => {
 
   const classNamesStr = classNames.join(' ');
 
+  let mapThumbnailSrc = 'none';
+
+  if (server.Map) {
+    mapThumbnailSrc = `url(https://quakedemos.blob.core.windows.net/maps/thumbnails/${server.Map.toLowerCase()}.jpg)`;
+  }
+
   return (
     <div className={classNamesStr}>
       <header
@@ -58,7 +64,7 @@ const Server = (props) => {
         <div className="is-flex is-justify-content-space-between">
 
           <div>
-            <strong>{gameMode}</strong> on <strong>{server.Settings.map}</strong>
+            <strong>{gameMode}</strong> on <strong>{server.Map}</strong>
             {
               (canJoinGame || !isInProgress) && <div className="text-small">
                 {players.length} of {server.MaxClients} players
@@ -92,7 +98,7 @@ const Server = (props) => {
 
       <hr className="m-0" />
 
-      <div>
+      <div className="players" style={{ backgroundImage: mapThumbnailSrc }}>
 
         {hasPlayers &&
         <div className="p-3">
@@ -109,8 +115,11 @@ const Server = (props) => {
           <div className="has-text-grey m-3 has-text-centered text-small">(no
             players)</div>
         }
+      </div>
 
-        <hr className="m-0" />
+      <hr className="m-0" />
+
+      <div>
 
         <div className="p-3">
           <div className="text-small">
