@@ -54,8 +54,12 @@
       text-align: center;
 
       &:first-child {
-        opacity: .75;
+        @extend .dim;
       }
+    }
+
+    .dim {
+      opacity: .6;
     }
 
     .player-table th {
