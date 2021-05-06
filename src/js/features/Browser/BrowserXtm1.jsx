@@ -41,7 +41,7 @@ const Server = (props) => {
     progressInMinutes = server.Settings.timelimit - minutesLeft;
   }
 
-  const classNames = ['card'];
+  const classNames = ['server card'];
 
   if (canJoinGame) {
     classNames.push('status-canjoin');
@@ -101,7 +101,7 @@ const Server = (props) => {
       <div className="players" style={{ backgroundImage: mapThumbnailSrc }}>
 
         {hasPlayers &&
-        <div className="p-3">
+        <div>
           {players.map((player, index) => (
             <React.Fragment key={index}>
               <span className="playercolor" /> {player.Name}
@@ -112,8 +112,9 @@ const Server = (props) => {
         }
         {
           !hasPlayers &&
-          <div className="has-text-grey m-3 has-text-centered text-small">(no
-            players)</div>
+          <div className="has-text-centered has-text-grey">
+            (no players)
+          </div>
         }
       </div>
 
