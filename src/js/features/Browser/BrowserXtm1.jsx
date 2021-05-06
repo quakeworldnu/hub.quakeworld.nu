@@ -143,7 +143,7 @@ const Server = (props) => {
         </div>
       </div>
 
-      <footer className="card-footer p-3 text-small">
+      <footer className="card-footer px-3 py-2 text-small">
         <div>
           {server.Country && (
             <img
