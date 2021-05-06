@@ -103,10 +103,14 @@ const Server = (props) => {
         {hasPlayers &&
         <div>
           {players.map((player, index) => (
-            <React.Fragment key={index}>
-              <span className="playercolor" /> {player.Name}
-              <br />
-            </React.Fragment>
+            <div className="player is-flex is-fullwidth is-align-items-center"
+                 key={index}>
+              <div className="player-color mr-2">
+                <span className={`color color-${player.Colors[0]}`} />
+                <span className={`color color-${player.Colors[1]}`} />
+              </div>
+              <div>{player.Name}</div>
+            </div>
           ))}
         </div>
         }
