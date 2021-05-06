@@ -34,6 +34,8 @@ const Server = (props) => {
   const hasPlayers = players.length > 0;
   const isFfa = gameMode === "FFA";
   const canJoinGame = (isStandby || isFfa) && hasFreeSlots;
+  const isTeamplay = /\d+v\d+/gi.test(gameMode);
+
   let progressInMinutes = 0;
 
   if (isInProgress) {
@@ -100,24 +102,30 @@ const Server = (props) => {
       <div className="players" style={{ backgroundImage: mapThumbnailSrc }}>
         {hasPlayers && (
           <table className="player-table">
-            <tr className="text-small">
-              <th width="26">ping</th>
-              <th width="30">frags</th>
-              <th className="pl-3 has-text-left">name</th>
-            </tr>
-            {players.map((player, index) => (
-              <tr key={index}>
-                <td className="text-small">{player.Ping}</td>
-                <td
-                  className={`text-small has-text-weight-bold color-${player.Colors[0]}-${player.Colors[1]}`}
-                >
-                  {player.Frags}
-                </td>
-                <td className="has-text-weight-bold has-text-left pl-3">
-                  {player.Name}
-                </td>
+            <thead>
+              <tr className="text-small">
+                <th width="30">ping</th>
+                {isTeamplay && <th width="60">team</th>}
+                <th width="30">frags</th>
+                <th className="pl-3 has-text-left">name</th>
               </tr>
-            ))}
+            </thead>
+            <tbody>
+              {players.map((player, index) => (
+                <tr key={index}>
+                  <td className="text-small">{player.Ping}</td>
+                  {isTeamplay && <td>{player.Team}</td>}
+                  <td
+                    className={`text-small has-text-weight-bold color-${player.Colors[0]}-${player.Colors[1]}`}
+                  >
+                    {player.Frags}
+                  </td>
+                  <td className="has-text-weight-bold has-text-left pl-3">
+                    {player.Name}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         )}
         {!hasPlayers && (
