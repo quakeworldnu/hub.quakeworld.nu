@@ -15,6 +15,7 @@ const Server = (props) => {
   const missingPlayerCount = server.MaxClients - players.length;
   const hasFreeSlots = missingPlayerCount > 0;
   const hasPlayers = players.length > 0;
+  const hasSpectators = spectators.length > 0;
   const isDuel = gameMode === "1v1";
   const isTeamplay = !isDuel && /\d+v\d+/gi.test(gameMode);
   const isCustomGameMode = !isTeamplay && !isDuel;
@@ -114,15 +115,17 @@ const Server = (props) => {
 
       <div>
         <div className="p-3">
-          <div className="text-small">
-            {spectators.map((spec, index) => (
-              <React.Fragment key={index}>
-                <span className="has-text-grey mr-1">spec</span> {spec.Name}
-                <br />
-              </React.Fragment>
-            ))}
-          </div>
-          <div className="mt-1 columns is-mobile">
+          {hasSpectators && (
+            <div className="text-small mb-3">
+              {spectators.map((spec, index) => (
+                <React.Fragment key={index}>
+                  <span className="has-text-grey mr-1">spec</span> {spec.Name}
+                  <br />
+                </React.Fragment>
+              ))}
+            </div>
+          )}
+          <div className="columns is-mobile">
             <div className="column">
               <a
                 href="#"
