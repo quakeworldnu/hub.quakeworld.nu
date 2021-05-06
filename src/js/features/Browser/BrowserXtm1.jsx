@@ -1,59 +1,36 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import browserSlice from './slice';
-import { shuffleArray } from './../../common/util';
-
-const getClassNames = (server) => {
-  const classNames = [];
-
-  console.log(server.Settings);
-
-  classNames.push('card');
-
-  const isStandby = server.Description.indexOf('min left') === -1;
-
-  if (isStandby) {
-    classNames.push('status-standby');
-  } else {
-    classNames.push('status-active');
-  }
-
-  return classNames;
-};
+import React from "react";
+import { connect } from "react-redux";
+import browserSlice from "./slice";
+import { shuffleArray } from "./../../common/util";
 
 const Server = (props) => {
   const { server } = props;
 
-  const gameMode = server.Description.split(', ')[0];
+  const gameMode = server.Description.split(", ")[0];
   const status = server.Settings.status;
   const players = server.Players.filter((p) => !p.Spec);
   const spectators = server.Players.filter((p) => p.Spec);
-  const isStandby = server.Description.indexOf('min left') === -1;
+  const isStandby = server.Description.indexOf("min left") === -1;
   const isInProgress = !isStandby;
-  const hasFreeSlots = players.length < server.MaxClients;
+  const missingPlayerCount = server.MaxClients - players.length;
+  const hasFreeSlots = missingPlayerCount > 0;
   const hasPlayers = players.length > 0;
-  const isFfa = gameMode === 'FFA';
-  const canJoinGame = (isStandby || isFfa) && hasFreeSlots;
-  const isTeamplay = /\d+v\d+/gi.test(gameMode);
+  const isDuel = gameMode === "1v1";
+  const isTeamplay = !isDuel && /\d+v\d+/gi.test(gameMode);
+  const isCustomGameMode = !isTeamplay && !isDuel;
+  const canJoinGame = (isStandby || isCustomGameMode) && hasFreeSlots;
 
-  let progressInMinutes = 0;
-
-  if (isInProgress) {
-    const minutesLeft = parseInt(status.replace(' min left', ''));
-    progressInMinutes = server.Settings.timelimit - minutesLeft;
-  }
-
-  const classNames = ['server card'];
+  const classNames = ["server card"];
 
   if (canJoinGame) {
-    classNames.push('status-canjoin');
+    classNames.push("status-canjoin");
   } else {
-    classNames.push('status-isfull');
+    classNames.push("status-isfull");
   }
 
-  const classNamesStr = classNames.join(' ');
+  const classNamesStr = classNames.join(" ");
 
-  let mapThumbnailSrc = 'none';
+  let mapThumbnailSrc = "none";
 
   if (server.Map) {
     mapThumbnailSrc = `url(https://quakedemos.blob.core.windows.net/maps/thumbnails/${server.Map.toLowerCase()}.jpg)`;
@@ -65,39 +42,39 @@ const Server = (props) => {
         <div className="is-flex is-justify-content-space-between">
           <div>
             <strong>{gameMode}</strong> on <strong>{server.Map}</strong>
-            {(canJoinGame || !isInProgress) && (
-              <div className="text-small">
-                {players.length} of {server.MaxClients} players
+            <div className="columns is-mobile is-vcentered text-small">
+              <div className="column">
+                {!isCustomGameMode && (
+                  <React.Fragment>
+                    {isInProgress && (
+                      <React.Fragment>In progress, {status}</React.Fragment>
+                    )}
+                    {isStandby && canJoinGame && (
+                      <span>Waiting for {missingPlayerCount} player(s)</span>
+                    )}
+                    {isStandby && !canJoinGame && (
+                      <span>Waiting for players to ready up</span>
+                    )}
+                  </React.Fragment>
+                )}
+                {isCustomGameMode && (
+                  <React.Fragment>In progress</React.Fragment>
+                )}
               </div>
-            )}
+            </div>
           </div>
           {canJoinGame && (
             <a href="#" className="button is-link">
               Join
             </a>
           )}
+          {!canJoinGame && (
+            <a href="#" className="button is-disabled">
+              Join
+            </a>
+          )}
         </div>
-
-        {isInProgress && (
-          <div>
-            <div className="columns is-mobile is-vcentered">
-              <div className="column">
-                <progress
-                  className="progress is-small is-success"
-                  style={{ height: '5px' }}
-                  value={progressInMinutes}
-                  max={server.Settings.timelimit}
-                >
-                  {progressInMinutes}%
-                </progress>
-              </div>
-              <div className="column is-narrow text-small">{status}</div>
-            </div>
-          </div>
-        )}
       </header>
-
-      <hr className="m-0" />
 
       <div className="players-outer">
         <div className="players" style={{ backgroundImage: mapThumbnailSrc }}>
@@ -134,8 +111,6 @@ const Server = (props) => {
           )}
         </div>
       </div>
-
-      <hr className="m-0" />
 
       <div>
         <div className="p-3">
@@ -177,7 +152,7 @@ const Server = (props) => {
               height="11"
               alt="{server.Country.toLowerCase()}"
             />
-          )}{' '}
+          )}{" "}
           {server.Address}
         </div>
       </footer>
@@ -187,16 +162,16 @@ const Server = (props) => {
 
 const serverEntriesProvider = {
   get: () => {
-    const url = '/data/busy.json';
+    const url = "/data/busy.json";
     const options = {
-      method: 'GET',
-      mode: 'cors',
-      cache: 'no-cache',
-      redirect: 'follow',
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      redirect: "follow",
     };
-    return fetch(url, options).
-      then((response) => response.json()).
-      then((data) => {
+    return fetch(url, options)
+      .then((response) => response.json())
+      .then((data) => {
         shuffleArray(data);
         return data;
       });
@@ -208,8 +183,9 @@ class BrowserBps1 extends React.Component {
     const refreshInterval = 20000;
 
     const fetchAndUpdateEntries = () => {
-      return serverEntriesProvider.get().
-        then((entries) => this.props.updateEntries({ entries }));
+      return serverEntriesProvider
+        .get()
+        .then((entries) => this.props.updateEntries({ entries }));
     };
 
     /*this.fetchEntriesInterval = setInterval(
@@ -227,13 +203,13 @@ class BrowserBps1 extends React.Component {
     return (
       <div className="tiles">
         {this.props.servers &&
-        this.props.servers.entries.map((entry, index) => {
-          return (
-            <div key={index} className="tile">
-              <Server server={entry} />
-            </div>
-          );
-        })}
+          this.props.servers.entries.map((entry, index) => {
+            return (
+              <div key={index} className="tile">
+                <Server server={entry} />
+              </div>
+            );
+          })}
       </div>
     );
   }
@@ -246,7 +222,7 @@ const mapDispatchToProps = {
 
 const BrowserComponent = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(BrowserBps1);
 
 export default BrowserComponent;
