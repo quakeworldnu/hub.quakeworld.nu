@@ -132,18 +132,12 @@ const Server = (props) => {
           )}
           <div className="columns is-mobile">
             <div className="column">
-              <a
-                href="#"
-                className="button is-light is-link is-fullwidth is-small"
-              >
+              <a href="#" className="button is-dark is-fullwidth is-small">
                 Spectate
               </a>
             </div>
             <div className="column">
-              <a
-                href="#"
-                className="button is-light is-link is-fullwidth is-small"
-              >
+              <a href="#" className="button is-dark is-fullwidth is-small">
                 QTV
               </a>
             </div>

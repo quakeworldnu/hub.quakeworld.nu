@@ -20,8 +20,18 @@
   display: block;
 }
 
+$app-server-border-width: 5px;
+
+.server {
+  border: $app-server-border-width solid $background;
+  border-radius: $app-server-border-width;
+}
+
 .status-canjoin {
-  border: 2px solid rgba(50, 100, 150, 0.6);
+  border-color: rgba($blue, 0.4);
+}
+.status-isfull {
+  // border-color: red;
 }
 
 .players,

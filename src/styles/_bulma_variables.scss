@@ -8,15 +8,19 @@ $family-sans-serif: $family-primary;
 
 $scheme-main: #111;
 $scheme-invert: findColorInvert($scheme-main);
-$border: lighten($scheme-main, 30);
+$background: lighten($scheme-main, 8);
+$border: lighten($scheme-main, 24);
 
 // custom
 $shadow-soft: 1px 1px 5px 0 rgba($scheme-invert, .125), 0 2px 1px -1px rgba($scheme-invert, .125);
-$shadow-hard: 0 0 1px 1px rgba($scheme-invert, .05), 0 1px 3px 0 rgba($scheme-invert, .2), 0 1px 1px 0 rgba($scheme-invert, .15);
+$shadow-hard: 0 0 1px 1px rgba($scheme-invert, .15), 0 1px 3px 0 rgba($scheme-invert, .3), 0 1px 1px 0 rgba($scheme-invert, .25);
 $shadow: $shadow-hard;
+
+$button-background-color: $background;
 
 $text: darken($scheme-invert, 20);
 $text-strong: $text;
 
 // components
+$card-background-color: $background;
 $card-shadow: $shadow;
