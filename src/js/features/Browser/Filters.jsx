@@ -50,7 +50,7 @@ const FilterForm = (props) => {
             </label>
             <div>[ ] Favorite players</div>
             <div>[ ] Favorite servers</div>
-            <div>[ ] Hide servers with no players</div>
+            <div>[ ] With players</div>
           </div>
         </div>
       </form>
