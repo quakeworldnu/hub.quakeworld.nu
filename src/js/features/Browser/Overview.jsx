@@ -27,7 +27,7 @@ const Overview = (props) => {
 
   return (
     <div>
-      {totalClientCount} players ({totalPlayCount} playing, {totalSpecCount}{" "}
+      {totalClientCount} clients ({totalPlayCount} players, {totalSpecCount}{" "}
       spectators) across {serverCount} servers
     </div>
   );
