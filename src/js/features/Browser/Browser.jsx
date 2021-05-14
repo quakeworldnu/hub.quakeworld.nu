@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import browserSlice from "./slice";
 import { shuffleArray } from "./../../common/util";
+import Overview from "./Overview";
 
 const Server = (props) => {
   const { server } = props;
@@ -181,7 +182,7 @@ const serverEntriesProvider = {
   },
 };
 
-class BrowserBps1 extends React.Component {
+class Browser extends React.Component {
   componentDidMount() {
     const refreshInterval = 20000;
 
@@ -204,16 +205,20 @@ class BrowserBps1 extends React.Component {
 
   render() {
     return (
-      <div className="tiles">
-        {this.props.servers &&
-          this.props.servers.entries.map((entry, index) => {
-            return (
-              <div key={index} className="tile">
-                <Server server={entry} />
-              </div>
-            );
-          })}
-      </div>
+      <React.Fragment>
+        <Overview />
+        <hr />
+        <div className="tiles">
+          {this.props.servers &&
+            this.props.servers.entries.map((entry, index) => {
+              return (
+                <div key={index} className="tile">
+                  <Server server={entry} />
+                </div>
+              );
+            })}
+        </div>
+      </React.Fragment>
     );
   }
 }
@@ -223,9 +228,6 @@ const mapDispatchToProps = {
   updateEntries: browserSlice.actions.updateEntries,
 };
 
-const BrowserComponent = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(BrowserBps1);
+const BrowserComponent = connect(mapStateToProps, mapDispatchToProps)(Browser);
 
 export default BrowserComponent;
