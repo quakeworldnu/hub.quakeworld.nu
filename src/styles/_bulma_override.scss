@@ -1,11 +1,11 @@
 @import "node_modules/bulma/sass/utilities/mixins";
 @import "./bulma_variables";
-@import "node_modules/bulma/bulma";
 
-// section
-@include until($desktop) {
-  .section {
-    padding-left: $size-small;
-    padding-right: $size-small;
-  }
-}
+@import "node_modules/bulma/sass/utilities/_all";
+@import "node_modules/bulma/sass/base/_all";
+@import "node_modules/bulma/sass/elements/button";
+@import "node_modules/bulma/sass/elements/container";
+@import "node_modules/bulma/sass/components/card";
+@import "node_modules/bulma/sass/grid/columns";
+@import "node_modules/bulma/sass/helpers/_all";
+@import "node_modules/bulma/sass/layout/section";
