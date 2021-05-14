@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import browserSlice from "./slice";
 import { shuffleArray } from "./../../common/util";
+import FilterForm from "./Filters";
 import Overview from "./Overview";
 
 const Server = (props) => {
@@ -71,7 +72,10 @@ const Server = (props) => {
             </a>
           )}
           {!canJoinGame && (
-            <a href={`qw://${server.Address}/observe`} className="button is-disabled">
+            <a
+              href={`qw://${server.Address}/observe`}
+              className="button is-disabled"
+            >
               Join
             </a>
           )}
@@ -207,6 +211,8 @@ class Browser extends React.Component {
     return (
       <React.Fragment>
         <Overview />
+        <hr />
+        <FilterForm />
         <hr />
         <div className="app-tiles">
           {this.props.servers &&
