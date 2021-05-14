@@ -195,7 +195,7 @@ const serverEntriesProvider = {
 
 class Browser extends React.Component {
   componentDidMount() {
-    const refreshInterval = 20000;
+    // const refreshInterval = 20000;
 
     const fetchAndUpdateEntries = () => {
       return serverEntriesProvider
@@ -210,9 +210,11 @@ class Browser extends React.Component {
     fetchAndUpdateEntries();
   }
 
+  /*
   componentWillUnmount() {
     clearInterval(this.fetchEntriesInterval);
   }
+   */
 
   render() {
     const { servers } = this.props;
@@ -236,10 +238,18 @@ class Browser extends React.Component {
 
     return (
       <React.Fragment>
-        <Overview />
-        <hr />
-        <FilterForm />
-        <hr />
+        <div className="columns is-vcentered my-0">
+          <div className="column is-narrow">
+            <img src="/assets/img/qtvlogo.png" width="177" height="64" />
+          </div>
+          <div className="column">
+            <Overview />
+          </div>
+          <div className="column is-narrow">
+            <FilterForm />
+          </div>
+        </div>
+
         <div className="app-tiles">
           {filteredServers &&
             filteredServers.map((entry, index) => {

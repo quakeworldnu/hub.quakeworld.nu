@@ -13,46 +13,14 @@ const FilterForm = (props) => {
       validate={onValidate}
       validateOnChange
     >
-      <form>
-        <div className="columns">
-          <div className="field column is-narrow">
-            <label className="label" htmlFor="region">
-              Region
-            </label>
-            <div className="control">
-              <div className="select">
-                <select name="" id="region">
-                  <option value="">(any region)</option>
-                  <option value="eu">Europe</option>
-                  <option value="ru">Russia</option>
-                  <option value="na">North America</option>
-                  <option value="sa">South America</option>
-                  <option value="af">Africa</option>
-                  <option value="as">Asia</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div className="field column is-narrow">
-            <label className="label" htmlFor="keyword">
-              Search
-            </label>
-            <Field
-              type="search"
-              className="input"
-              id="keyword"
-              name="keyword"
-            />
-          </div>
-          <div className="field column is-narrow">
-            <label className="label" htmlFor="keyword">
-              Misc
-            </label>
-            <div>[ ] Favorite players</div>
-            <div>[ ] Favorite servers</div>
-            <div>[ ] With players</div>
-          </div>
-        </div>
+      <form className="form m-0">
+        <Field
+          type="search"
+          className="input"
+          id="keyword"
+          name="keyword"
+          placeholder="Search"
+        />
       </form>
     </Formik>
   );
