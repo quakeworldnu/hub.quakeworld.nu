@@ -1,0 +1,26 @@
+$app-player-colors: (
+        0: rgb(123, 123, 123),
+        1: rgb(83, 59, 27),
+        2: rgb(79, 79, 115),
+        3: rgb(55, 55, 7),
+        4: rgb(71, 0, 0),
+        5: rgb(95, 71, 7),
+        6: rgb(143, 67, 51),
+        7: rgb(127, 83, 63),
+        8: rgb(87, 55, 67),
+        9: rgb(95, 51, 63),
+        10: rgb(107, 87, 71),
+        11: rgb(47, 67, 55),
+        12: rgb(123, 99, 7),
+        13: rgb(47, 47, 127),
+);
+
+@each $topValue, $topHex in $app-player-colors {
+  @each $bottomValue, $bottomHex in $app-player-colors {
+    .app-color-#{$topValue}-#{$bottomValue} {
+      $topFixed: saturate(lighten($topHex, 15), 10);
+      $botFixed: saturate(lighten($bottomHex, 15), 10);
+      background: linear-gradient(to bottom, $topFixed, $topFixed 50%, $botFixed 50%, $botFixed 100%);
+    }
+  }
+}
