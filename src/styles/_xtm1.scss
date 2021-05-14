@@ -1,74 +1,68 @@
-.xtm1 {
-  .tiles {
-    display: grid;
-    grid-gap: 1rem;
-    grid-template-columns: 1fr;
+.app-tiles {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 1fr;
 
-    @media only screen and (min-width: 641px) and (max-width: 960px) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    @media only screen and (min-width: 961px) and (max-width: 1280px) {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    @media only screen and (min-width: 1281px) {
-      grid-template-columns: repeat(4, 1fr);
-    }
+  @media only screen and (min-width: 641px) and (max-width: 960px) {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .tile {
-    display: block;
+  @media only screen and (min-width: 961px) and (max-width: 1280px) {
+    grid-template-columns: repeat(3, 1fr);
   }
 
-  .status-canjoin {
-    border: 2px solid rgba(50, 100, 150, 0.6);
+  @media only screen and (min-width: 1281px) {
+    grid-template-columns: repeat(4, 1fr);
   }
+}
 
-  .players,
-  .players-outer {
-    background-size: cover;
+.app-tile {
+  display: block;
+}
 
-  }
+.status-canjoin {
+  border: 2px solid rgba(50, 100, 150, 0.6);
+}
 
-  .players-outer {
-    background-color: #444;
-    background-image: url(/assets/img/map_default.jpg);
-  }
+.players,
+.players-outer {
+  background-size: cover;
 
-  .players {
-    display: flex;
-    align-items: center;
-    min-height: 140px;
-    padding: 1em;
-    background-size: cover;
-    text-shadow: black 1px 1px 1px;
-    color: white;
+}
 
-    .player-table th,
-    .player-table td {
-      color: #fff;
-      border: none;
-      padding: 0 4px;
-      vertical-align: middle;
-      text-align: center;
+.players-outer {
+  background-color: #444;
+  background-image: url(/assets/img/map_default.jpg);
+}
 
-      &:first-child {
-        @extend .dim;
-      }
-    }
+.players {
+  display: flex;
+  align-items: center;
+  min-height: 140px;
+  padding: 1em;
+  background-size: cover;
+  text-shadow: black 1px 1px 1px;
+  color: white;
 
-    .dim {
-      opacity: .6;
-    }
+  .player-table th,
+  .player-table td {
+    color: #fff;
+    border: none;
+    padding: 0 4px;
+    vertical-align: middle;
+    text-align: center;
 
-    .player-table th {
-      padding-bottom: 6px;
+    &:first-child {
+      @extend .dim;
     }
   }
 
-  .color {
-    flex-grow: 1;
+  .dim {
+    opacity: .6;
+  }
+
+  .player-table th {
+    padding-bottom: 6px;
   }
 
   $playerColors: (

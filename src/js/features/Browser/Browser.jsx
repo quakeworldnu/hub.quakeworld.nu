@@ -208,11 +208,11 @@ class Browser extends React.Component {
       <React.Fragment>
         <Overview />
         <hr />
-        <div className="tiles">
+        <div className="app-tiles">
           {this.props.servers &&
             this.props.servers.entries.map((entry, index) => {
               return (
-                <div key={index} className="tile">
+                <div key={index} className="app-tile">
                   <Server server={entry} />
                 </div>
               );
