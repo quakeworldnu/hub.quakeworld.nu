@@ -44,7 +44,7 @@ const Server = (props) => {
         <div className="is-flex is-justify-content-space-between">
           <div>
             <strong>{gameMode}</strong> on <strong>{server.Map}</strong>
-            <div className="columns is-mobile is-vcentered text-small">
+            <div className="columns is-mobile is-vcentered app-text-small">
               <div className="column">
                 {!isCustomGameMode && (
                   <React.Fragment>
@@ -83,7 +83,7 @@ const Server = (props) => {
           {hasPlayers && (
             <table className="player-table">
               <thead>
-                <tr className="text-small">
+                <tr className="app-text-small">
                   <th width="30">ping</th>
                   <th width="30">frags</th>
                   {isTeamplay && <th width="60">team</th>}
@@ -93,9 +93,9 @@ const Server = (props) => {
               <tbody>
                 {players.map((player, index) => (
                   <tr key={index}>
-                    <td className="text-small">{player.Ping}</td>
+                    <td className="app-text-small">{player.Ping}</td>
                     <td
-                      className={`text-small has-text-weight-bold color-${player.Colors[0]}-${player.Colors[1]}`}
+                      className={`app-text-small has-text-weight-bold color-${player.Colors[0]}-${player.Colors[1]}`}
                     >
                       {player.Frags}
                     </td>
@@ -117,7 +117,7 @@ const Server = (props) => {
       <div>
         <div className="p-3">
           {hasSpectators && (
-            <div className="text-small mb-3">
+            <div className="app-text-small mb-3">
               {spectators.map((spec, index) => (
                 <React.Fragment key={index}>
                   <span className="has-text-grey mr-1">spec</span> {spec.Name}
@@ -147,7 +147,7 @@ const Server = (props) => {
         </div>
       </div>
 
-      <footer className="card-footer px-3 py-2 text-small">
+      <footer className="card-footer px-3 py-2 app-text-small">
         <div>
           {server.Country && (
             <img
