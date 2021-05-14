@@ -35,7 +35,7 @@ const FilterForm = (props) => {
           </div>
           <div className="field column is-narrow">
             <label className="label" htmlFor="keyword">
-              Player
+              Search
             </label>
             <Field
               type="search"
@@ -48,6 +48,8 @@ const FilterForm = (props) => {
             <label className="label" htmlFor="keyword">
               Misc
             </label>
+            <div>[ ] Favorite players</div>
+            <div>[ ] Favorite servers</div>
             <div>[ ] Hide servers with no players</div>
           </div>
         </div>
