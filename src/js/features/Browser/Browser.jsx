@@ -41,7 +41,7 @@ const Server = (props) => {
 
   return (
     <div className={classNamesStr}>
-      <header className="p-3">
+      <header className="p-2">
         <div className="is-flex is-justify-content-space-between">
           <div>
             <strong>{gameMode}</strong> on <strong>{server.Map}</strong>
@@ -91,7 +91,7 @@ const Server = (props) => {
                   <th width="30">ping</th>
                   <th width="30">frags</th>
                   {isTeamplay && <th width="60">team</th>}
-                  <th className="pl-3 has-text-left">name</th>
+                  <th className="pl-2 has-text-left">name</th>
                 </tr>
               </thead>
               <tbody>
@@ -104,7 +104,7 @@ const Server = (props) => {
                       {player.Frags}
                     </td>
                     {isTeamplay && <td>{player.Team}</td>}
-                    <td className="has-text-weight-bold has-text-left pl-3">
+                    <td className="has-text-weight-bold has-text-left pl-2">
                       {player.Name}
                     </td>
                   </tr>
@@ -119,9 +119,9 @@ const Server = (props) => {
       </div>
 
       <div>
-        <div className="p-3">
+        <div className="p-2">
           {hasSpectators && (
-            <div className="app-text-small mb-3">
+            <div className="app-text-small mb-2">
               {spectators.map((spec, index) => (
                 <React.Fragment key={index}>
                   <span className="has-text-grey mr-1">spec</span> {spec.Name}
@@ -145,7 +145,7 @@ const Server = (props) => {
         </div>
       </div>
 
-      <footer className="card-footer px-3 py-2 app-text-small is-block">
+      <footer className="card-footer px-2 py-1 app-text-small is-block">
         <div className="columns is-mobile is-vcentered is-justify-content-space-between">
           <div className="column is-narrow">
             {server.Country && (
