@@ -151,17 +151,24 @@ const Server = (props) => {
         </div>
       </div>
 
-      <footer className="card-footer px-3 py-2 app-text-small">
-        <div>
-          {server.Country && (
-            <img
-              src={`https://badplace.eu/images/icons/flags/${server.Country.toLowerCase()}.png`}
-              width="16"
-              height="11"
-              alt="{server.Country.toLowerCase()}"
-            />
-          )}{" "}
-          {server.Address}
+      <footer className="card-footer px-3 py-2 app-text-small is-block">
+        <div className="columns is-vcentered is-justify-content-space-between">
+          <div className="column is-narrow">
+            {server.Country && (
+              <img
+                src={`https://badplace.eu/images/icons/flags/${server.Country.toLowerCase()}.png`}
+                width="16"
+                height="11"
+                alt="{server.Country.toLowerCase()}"
+              />
+            )}{" "}
+            {server.Address}
+          </div>
+          <div className="column is-narrow ml-auto has-text-grey">
+            {server.Settings.ktxver && (
+              <React.Fragment>KTX {server.Settings.ktxver}</React.Fragment>
+            )}
+          </div>
         </div>
       </footer>
     </div>
