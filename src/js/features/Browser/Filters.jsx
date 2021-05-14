@@ -15,7 +15,12 @@ const FilterForm = (props) => {
     >
       <form>
         <div className="field">
-          <Field type="search" className="input" name="keyword" />
+          <Field
+            type="search"
+            className="input"
+            name="keyword"
+            placeholder="Find player"
+          />
         </div>
       </form>
     </Formik>
