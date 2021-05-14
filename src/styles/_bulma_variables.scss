@@ -7,10 +7,11 @@ $family-primary: "Roboto", BlinkMacSystemFont, -apple-system, "Segoe UI", "Oxyge
 $family-sans-serif: $family-primary;
 
 $scheme-main: #111;
+$scheme-main-bis: $black-bis;
+$scheme-main-ter: $black-ter;
 $scheme-invert: findColorInvert($scheme-main);
 $background: lighten($scheme-main, 8);
 $border: lighten($scheme-main, 24);
-$spacing-values: ("0": 0, "1": 0.5rem, "2": 1rem, "3": 2rem, "4": 4rem);
 
 // custom
 $shadow-soft: 1px 1px 5px 0 rgba($scheme-invert, .125), 0 2px 1px -1px rgba($scheme-invert, .125);
@@ -24,3 +25,4 @@ $text-strong: $text;
 // components
 $card-background-color: $background;
 $card-shadow: $shadow;
+$card-footer-border-top: 1px solid lighten($card-background-color, 10);

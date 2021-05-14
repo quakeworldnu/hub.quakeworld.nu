@@ -1,6 +1,6 @@
 .app-tiles {
   display: grid;
-  grid-gap: 1rem;
+  grid-gap: $gap;
   grid-template-columns: 1fr;
 
   @media only screen and (min-width: 641px) and (max-width: 960px) {

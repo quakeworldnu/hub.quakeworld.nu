@@ -41,7 +41,7 @@ const Server = (props) => {
 
   return (
     <div className={classNamesStr}>
-      <header className="p-2">
+      <header className="p-3">
         <div className="is-flex is-justify-content-space-between">
           <div>
             <strong>{gameMode}</strong> on <strong>{server.Map}</strong>
@@ -118,34 +118,32 @@ const Server = (props) => {
         </div>
       </div>
 
-      <div>
-        <div className="p-2">
-          {hasSpectators && (
-            <div className="app-text-small mb-2">
-              {spectators.map((spec, index) => (
-                <React.Fragment key={index}>
-                  <span className="has-text-grey mr-1">spec</span> {spec.Name}
-                  <br />
-                </React.Fragment>
-              ))}
-            </div>
-          )}
-          <div className="columns is-mobile">
-            <div className="column">
-              <a href="#" className="button is-dark is-fullwidth is-small">
-                Spectate
-              </a>
-            </div>
-            <div className="column">
-              <a href="#" className="button is-dark is-fullwidth is-small">
-                QTV
-              </a>
-            </div>
+      <div className="p-3">
+        {hasSpectators && (
+          <div className="app-text-small mb-2">
+            {spectators.map((spec, index) => (
+              <React.Fragment key={index}>
+                <span className="has-text-grey mr-1">spec</span> {spec.Name}
+                <br />
+              </React.Fragment>
+            ))}
+          </div>
+        )}
+        <div className="columns is-mobile">
+          <div className="column">
+            <a href="#" className="button is-dark is-fullwidth is-small">
+              Spectate
+            </a>
+          </div>
+          <div className="column">
+            <a href="#" className="button is-dark is-fullwidth is-small">
+              QTV
+            </a>
           </div>
         </div>
       </div>
 
-      <footer className="card-footer px-2 py-1 app-text-small is-block">
+      <footer className="card-footer p-2 app-text-small is-block">
         <div className="columns is-mobile is-vcentered is-justify-content-space-between">
           <div className="column is-narrow">
             {server.Country && (
