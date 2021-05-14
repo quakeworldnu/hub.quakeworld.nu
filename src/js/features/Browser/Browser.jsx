@@ -66,12 +66,12 @@ const Server = (props) => {
             </div>
           </div>
           {canJoinGame && (
-            <a href="#" className="button is-link">
+            <a href={`qw://${server.Address}/`} className="button is-link">
               Join
             </a>
           )}
           {!canJoinGame && (
-            <a href="#" className="button is-disabled">
+            <a href={`qw://${server.Address}/observe`} className="button is-disabled">
               Join
             </a>
           )}
