@@ -234,7 +234,9 @@ class Browser extends React.Component {
       <React.Fragment>
         <div className="columns is-vcentered my-0">
           <div className="column is-narrow">
-            <img src="/assets/img/qtvlogo.png" width="177" height="64" />
+            <a href="/">
+              <img src="/assets/img/qtvlogo.png" width="177" height="64" />
+            </a>
           </div>
           <div className="column">
             <Overview />
