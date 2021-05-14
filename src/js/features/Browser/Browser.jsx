@@ -208,6 +208,25 @@ class Browser extends React.Component {
   }
 
   render() {
+    const { servers } = this.props;
+    const keyword = servers.ui.filters.keyword.toLowerCase();
+    const serversEntries = servers.entries;
+
+    let filteredServers;
+
+    if (keyword) {
+      const findPlayer = (keyword, players) =>
+        players
+          .map((p) => p.Name.toLowerCase())
+          .join(" ")
+          .indexOf(keyword) !== -1;
+
+      const filterFunc = (server) => findPlayer(keyword, server.Players);
+      filteredServers = serversEntries.filter(filterFunc);
+    } else {
+      filteredServers = serversEntries;
+    }
+
     return (
       <React.Fragment>
         <Overview />
@@ -215,8 +234,8 @@ class Browser extends React.Component {
         <FilterForm />
         <hr />
         <div className="app-tiles">
-          {this.props.servers &&
-            this.props.servers.entries.map((entry, index) => {
+          {filteredServers &&
+            filteredServers.map((entry, index) => {
               return (
                 <div key={index} className="app-tile">
                   <Server server={entry} />
