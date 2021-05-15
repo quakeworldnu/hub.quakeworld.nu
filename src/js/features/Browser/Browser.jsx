@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import browserSlice from "./slice";
-import { compareServers, quakeTextToHtml } from "../../common/util";
+import { quakeTextToHtml } from "../../common/util";
 import FilterForm from "./Filters";
 import Overview from "./Overview";
 import FavoriteToggle from "./FavoriteToggle";
