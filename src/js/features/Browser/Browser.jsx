@@ -127,10 +127,19 @@ const Server = (props) => {
               Spectate
             </a>
           </div>
+
           <div className="column">
-            <a href="#" className="button is-dark is-fullwidth is-small">
-              QTV
-            </a>
+            {server.meta.hasQtv && (
+              <a
+                href={`qw://${server.meta.qtv.address}/qtvplay`}
+                className="button is-dark is-fullwidth is-small"
+              >
+                QTV
+                <span className="ml-1 has-text-grey">
+                  ({server.meta.qtv.clientCount})
+                </span>
+              </a>
+            )}
           </div>
         </div>
       </div>
