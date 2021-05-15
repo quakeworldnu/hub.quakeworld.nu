@@ -31,7 +31,7 @@ const Server = (props) => {
 
   return (
     <div className={classNamesStr}>
-      <header className="p-3">
+      <header className="p-1 mb-1">
         <div className="is-flex is-justify-content-space-between">
           <div>
             <strong>{server.meta.mode.name}</strong> on{" "}
@@ -101,9 +101,9 @@ const Server = (props) => {
         </div>
       </div>
 
-      <div className="p-3">
+      <div className="py-3 px-1">
         {server.meta.hasSpectators && (
-          <div className="app-text-small mb-2">
+          <div className="app-text-small mb-3">
             {spectators.map((spec, index) => (
               <React.Fragment key={index}>
                 <span className="has-text-grey mr-1">spec</span> {spec.Name}
@@ -126,7 +126,7 @@ const Server = (props) => {
         </div>
       </div>
 
-      <footer className="card-footer p-2 app-text-small is-block">
+      <footer className="card-footer p-1 app-text-small is-block">
         <div className="columns is-mobile is-vcentered is-justify-content-space-between">
           <div className="column is-narrow">
             {server.Country && (

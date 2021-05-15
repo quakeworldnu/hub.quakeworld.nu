@@ -26,7 +26,7 @@ const Overview = (props) => {
   }
 
   return (
-    <div>
+    <div className="app-text-small">
       {totalClientCount} clients ({totalPlayCount} players, {totalSpecCount}{" "}
       spectators) across {serverCount} servers
     </div>

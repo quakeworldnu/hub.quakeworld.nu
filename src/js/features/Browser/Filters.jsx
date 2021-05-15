@@ -13,7 +13,7 @@ const FilterForm = (props) => {
       validate={onValidate}
       validateOnChange
     >
-      <form className="form m-0">
+      <form>
         <div className="field has-addons">
           <p className="control">
             <a className="button is-static px-2">
