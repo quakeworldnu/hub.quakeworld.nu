@@ -31,15 +31,16 @@ export const metaByServer = (server) => {
   const isTeamplay = !isDuel && /\d+v\d+/gi.test(modeName);
   const isRace = "Racing" === server.Description;
   const isFfa = "FFA" === modeName;
-  const isFortress = server.gametype && server.gametype === "fortressone";
+  const isFortress =
+    server.Settings.gametype && server.Settings.gametype === "fortressone";
   const isCustom = !(isDuel || isTeamplay || isRace || isFfa || isFortress);
-
-  const isStarted = server.Description.indexOf("min left") !== -1;
-  const isStandby = !isStarted;
 
   if (isFortress) {
     modeName = "Fortress";
   }
+
+  const isStarted = server.Description.indexOf("min left") !== -1;
+  const isStandby = !isStarted;
 
   return {
     isStandby,
