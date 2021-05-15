@@ -34,6 +34,7 @@ const FilterForm = (props) => {
               className="input"
               id="keyword"
               name="keyword"
+              style={{ width: "160px" }}
             />
           </div>
         </div>
