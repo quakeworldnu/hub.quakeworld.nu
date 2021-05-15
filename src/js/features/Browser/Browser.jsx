@@ -1,7 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import browserSlice from "./slice";
-import { shuffleArray } from "../../common/util";
+import {
+  shuffleArray,
+  quakeTextToHtml,
+  quakeTextToPlainText,
+} from "../../common/util";
 import FilterForm from "./Filters";
 import Overview from "./Overview";
 
@@ -92,10 +96,19 @@ const Server = (props) => {
                     >
                       {player.Frags}
                     </td>
-                    {server.meta.mode.isTeamplay && <td>{player.Team}</td>}
-                    <td className="has-text-weight-bold has-text-left pl-2">
-                      {player.Name}
-                    </td>
+                    {server.meta.mode.isTeamplay && (
+                      <td
+                        dangerouslySetInnerHTML={{
+                          __html: quakeTextToHtml(player.Team),
+                        }}
+                      />
+                    )}
+                    <td
+                      className="has-text-weight-bold has-text-left pl-2"
+                      dangerouslySetInnerHTML={{
+                        __html: quakeTextToHtml(player.Name),
+                      }}
+                    />
                   </tr>
                 ))}
               </tbody>

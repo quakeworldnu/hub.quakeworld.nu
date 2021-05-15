@@ -24,3 +24,11 @@ $app-player-colors: (
     }
   }
 }
+
+.app-text-gold {
+  color: gold;
+}
+
+.app-text-brown {
+  color: lighten(#785223, 20);
+}
