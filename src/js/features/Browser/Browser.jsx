@@ -19,7 +19,7 @@ const ServerFooter = (props) => {
               width="16"
               height="11"
               align="center"
-              alt="{server.Country.toLowerCase()}"
+              alt={server.Country.toLowerCase()}
             />
           )}{" "}
           {server.Address}
