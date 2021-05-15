@@ -39,7 +39,7 @@ const Server = (props) => {
             <div className="columns is-mobile is-vcentered app-text-small">
               <div className="column">
                 <span className="server-status" />
-                [status text]
+                {server.meta.statusText}
               </div>
             </div>
           </div>

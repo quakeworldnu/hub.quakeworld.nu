@@ -23,12 +23,16 @@ export const metaByServer = (server) => {
   const hasSpectators = spectatorCount > 0;
   const playerCount = clientCount - spectatorCount;
   const hasPlayers = playerCount > 0;
-  const freePlayerSlots = server.MaxClients - playerCount;
+  const totalPlayerSlots = server.MaxClients;
+  const freePlayerSlots = totalPlayerSlots - playerCount;
   const hasFreePlayerSlots = freePlayerSlots > 0;
 
-  let modeName = server.Description.split(", ")[0];
+  const descriptionParts = server.Description.split(", ");
+
+  let modeName = descriptionParts[0];
   const isDuel = "1v1" === modeName;
-  const isTeamplay = !isDuel && /\d+v\d+/gi.test(modeName);
+  const isXonX = /\d+v\d+/gi.test(modeName);
+  const isTeamplay = !isDuel && isXonX;
   const isRace = "Racing" === server.Description;
   const isFfa = "FFA" === modeName;
   const isFortress =
@@ -42,13 +46,21 @@ export const metaByServer = (server) => {
   const isStarted = server.Description.indexOf("min left") !== -1;
   const isStandby = !isStarted;
 
-  return {
+  let minutesLeft = "";
+
+  if (isStarted) {
+    minutesLeft = descriptionParts[1];
+  }
+
+  const meta = {
     isStandby,
     isStarted,
+    minutesLeft,
     mode: {
       name: modeName,
       isDuel,
       isTeamplay,
+      isXonX,
       isFfa,
       isRace,
       isFortress,
@@ -59,7 +71,33 @@ export const metaByServer = (server) => {
     hasSpectators,
     playerCount,
     hasPlayers,
+    totalPlayerSlots,
     freePlayerSlots,
     hasFreePlayerSlots,
   };
+
+  meta.statusText = statusTextByMeta(meta);
+
+  return meta;
+};
+
+export const statusTextByMeta = (meta) => {
+  const status = [];
+
+  if (meta.mode.isFfa || meta.mode.isRace || meta.mode.isCustom) {
+    status.push(`${meta.playerCount} of ${meta.totalPlayerSlots} players`);
+    status.push(meta.minutesLeft);
+  } else {
+    if (meta.isStandby) {
+      if (meta.hasFreePlayerSlots) {
+        status.push(`Waiting for ${meta.freePlayerSlots} player(s)`);
+      } else {
+        status.push("Waiting for players to ready up");
+      }
+    } else {
+      status.push(meta.minutesLeft);
+    }
+  }
+
+  return status.filter((p) => p).join(", ");
 };
