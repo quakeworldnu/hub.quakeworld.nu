@@ -26,7 +26,7 @@ const FilterForm = (props) => {
       validateOnChange
     >
       <form>
-        <div className="columns is-vcentered">
+        <div className="columns is-mobile is-vcentered">
           <div className="column is-narrow">
             <label className="checkbox">
               <Field type="checkbox" name="isFavorite" /> Favorites
