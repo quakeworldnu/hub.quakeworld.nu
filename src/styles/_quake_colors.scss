@@ -1,5 +1,5 @@
 $app-player-colors: (
-        0: rgb(123, 123, 123),
+        0: rgb(140, 140, 140),
         1: rgb(83, 59, 27),
         2: rgb(79, 79, 115),
         3: rgb(55, 55, 7),
@@ -17,7 +17,7 @@ $app-player-colors: (
 
 @each $topValue, $topHex in $app-player-colors {
   @each $bottomValue, $bottomHex in $app-player-colors {
-    .app-color-#{$topValue}-#{$bottomValue} {
+    .qw-bgcolor-#{$topValue}-#{$bottomValue} {
       $topFixed: saturate(lighten($topHex, 15), 10);
       $botFixed: saturate(lighten($bottomHex, 15), 10);
       background: linear-gradient(to bottom, $topFixed, $topFixed 50%, $botFixed 50%, $botFixed 100%);
@@ -25,10 +25,10 @@ $app-player-colors: (
   }
 }
 
-.app-text-gold {
+.qw-color-gold {
   color: lighten(map-get($app-player-colors, 12), 25);
 }
 
-.app-text-brown {
+.qw-color-brown {
   color: lighten(map-get($app-player-colors, 1), 25);
 }

@@ -92,7 +92,7 @@ const Server = (props) => {
                   <tr key={index}>
                     <td className="app-text-small">{player.Ping}</td>
                     <td
-                      className={`app-text-small has-text-weight-bold app-color-${player.Colors[0]}-${player.Colors[1]}`}
+                      className={`app-text-small has-text-weight-bold qw-bgcolor-${player.Colors[0]}-${player.Colors[1]}`}
                     >
                       {player.Frags}
                     </td>

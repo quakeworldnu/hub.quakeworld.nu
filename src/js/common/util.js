@@ -163,7 +163,7 @@ export const quakeTextToHtml = (input, maxLength) => {
         str += "</span>";
       }
       if (newType !== "normal") {
-        str += '<span class="app-text-' + newType + '">';
+        str += '<span class="qw-color-' + newType + '">';
       }
       currentType = newType;
     }
