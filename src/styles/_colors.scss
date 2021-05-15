@@ -26,7 +26,7 @@ $app-player-colors: (
 }
 
 .app-text-gold {
-  color: lighten(map-get($app-player-colors, 12), 20);
+  color: lighten(map-get($app-player-colors, 12), 25);
 }
 
 .app-text-brown {
