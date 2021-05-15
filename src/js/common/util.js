@@ -85,8 +85,8 @@ export const statusTextByMeta = (meta) => {
   const status = [];
 
   if (meta.mode.isFfa || meta.mode.isRace || meta.mode.isCustom) {
-    status.push(`${meta.playerCount} of ${meta.totalPlayerSlots} players`);
     status.push(meta.minutesLeft);
+    status.push(`${meta.playerCount} of ${meta.totalPlayerSlots} players`);
   } else {
     if (meta.isStandby) {
       if (meta.hasFreePlayerSlots) {
