@@ -26,20 +26,28 @@ const FilterForm = (props) => {
       validateOnChange
     >
       <form>
-        <div className="field has-addons">
-          <p className="control">
-            <a className="button is-static px-2">
-              <SearchIcon />
-            </a>
-          </p>
-          <div className="control is-expanded">
-            <Field
-              type="search"
-              className="input"
-              id="query"
-              name="query"
-              style={{ width: "160px" }}
-            />
+        <div className="columns is-vcentered">
+          <div className="column is-narrow">
+            <label className="checkbox">
+              <Field type="checkbox" name="isFavorite" /> Favorites
+            </label>
+          </div>
+          <div className="column">
+            <div className="field has-addons">
+              <p className="control">
+                <a className="button is-static px-2">
+                  <SearchIcon />
+                </a>
+              </p>
+              <div className="control is-expanded">
+                <Field
+                  type="search"
+                  className="input"
+                  name="query"
+                  style={{ width: "160px" }}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </form>

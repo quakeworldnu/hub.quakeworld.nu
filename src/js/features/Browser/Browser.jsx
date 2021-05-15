@@ -82,7 +82,11 @@ class Browser extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  servers: filterServers(state.browser.servers, state.browser.ui.filters),
+  servers: filterServers(
+    state.browser.servers,
+    state.browser.ui.filters,
+    state.browser.ui.favorites.servers
+  ),
 });
 const mapDispatchToProps = {
   updateServers: browserSlice.actions.updateServers,

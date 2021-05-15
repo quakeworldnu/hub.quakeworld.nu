@@ -229,8 +229,14 @@ const filterByQuery = (servers, query) => {
   return servers.filter(keywordFilterFunc);
 };
 
-export const filterServers = (servers, filters) => {
-  return filterByQuery(servers, filters.query);
+export const filterServers = (servers, filters, favoriteServers) => {
+  let result = filterByQuery(servers, filters.query);
+
+  if (filters.isFavorite) {
+    result = result.filter((s) => favoriteServers.includes(s.Address));
+  }
+
+  return result;
 };
 
 export const compareServers = (a, b) => {
