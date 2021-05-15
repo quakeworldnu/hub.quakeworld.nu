@@ -32,6 +32,12 @@ const Server = (props) => {
   return (
     <div className={classNamesStr}>
       <header className="p-1 mb-1">
+        {server.meta.hasMatchtag && (
+          <div className="server-matchtag has-text-success has-text-weight-bold has-text-centered py-1 pb-3">
+            {server.meta.matchtag}
+          </div>
+        )}
+
         <div className="is-flex is-justify-content-space-between">
           <div>
             <strong>{server.meta.mode.name}</strong> on{" "}

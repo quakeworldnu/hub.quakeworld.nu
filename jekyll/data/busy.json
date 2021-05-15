@@ -527,6 +527,7 @@
       "teamplay": "2",
       "deathmatch": "3",
       "*progs": "so",
+      "matchtag": "GetQuad 2on2 Final",
       "map": "aerowalk",
       "serverdemo": "2on2_red_vs_blue[aerowalk]050521-2334.mvd",
       "hostname": "PlayGround # 1 (red vs. blue)",

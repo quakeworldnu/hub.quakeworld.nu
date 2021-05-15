@@ -58,10 +58,15 @@ export const metaByServer = (server) => {
     .join(" ")
     .toLowerCase();
 
+  const matchtag = server.Settings.matchtag || "";
+  const hasMatchtag = matchtag !== "";
+
   const meta = {
     isStandby,
     isStarted,
     minutesLeft,
+    matchtag,
+    hasMatchtag,
     keywords,
     mode: {
       name: modeName,
