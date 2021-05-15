@@ -29,7 +29,7 @@ const FilterForm = (props) => {
         <div className="columns is-mobile is-vcentered">
           <div className="column is-narrow">
             <label className="checkbox">
-              <Field type="checkbox" name="isFavorite" /> Favorites
+              <Field type="checkbox" name="isFavorite" /> Favorite servers
             </label>
           </div>
           <div className="column">
