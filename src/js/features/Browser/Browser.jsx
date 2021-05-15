@@ -269,26 +269,14 @@ const BrowserTiles = (props) => {
 
 class Browser extends React.Component {
   componentDidMount() {
-    // const refreshInterval = 20000;
-
     const fetchAndupdateServers = () => {
       return serverEntriesProvider
         .get()
         .then((servers) => this.props.updateServers({ servers }));
     };
 
-    /*this.fetchEntriesInterval = setInterval(
-      fetchAndupdateServers,
-      refreshInterval,
-    );*/
     fetchAndupdateServers();
   }
-
-  /*
-  componentWillUnmount() {
-    clearInterval(this.fetchEntriesInterval);
-  }
-   */
 
   render() {
     const { servers } = this.props;
