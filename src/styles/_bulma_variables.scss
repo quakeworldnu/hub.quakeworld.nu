@@ -7,8 +7,8 @@ $family-primary: "Roboto", BlinkMacSystemFont, -apple-system, "Segoe UI", "Oxyge
 $family-sans-serif: $family-primary;
 
 $scheme-main: #112;
-$scheme-main-bis: $black-bis;
-$scheme-main-ter: $black-ter;
+$scheme-main-bis: lighten($scheme-main, 7);
+$scheme-main-ter: lighten($scheme-main, 14);
 $scheme-invert: findColorInvert($scheme-main);
 $background: #445;
 $border: lighten($scheme-main, 24);
