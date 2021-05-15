@@ -256,6 +256,10 @@ class Browser extends React.Component {
       filteredServers = serversEntries;
     }
 
+    const hasFilterResults = filteredServers.length > 0;
+
+    const sortedFilteredServers = [...filteredServers].sort(compareServers);
+
     return (
       <React.Fragment>
         <div className="columns is-vcentered my-0">
@@ -273,14 +277,17 @@ class Browser extends React.Component {
         </div>
 
         <div className="app-tiles">
-          {filteredServers &&
-            filteredServers.map((entry, index) => {
+          {hasFilterResults &&
+            sortedFilteredServers.map((entry, index) => {
               return (
                 <div key={index} className="app-tile">
                   <Server server={entry} />
                 </div>
               );
             })}
+          {!hasFilterResults && (
+            <span className="has-text-grey">(no results found)</span>
+          )}
         </div>
       </React.Fragment>
     );
