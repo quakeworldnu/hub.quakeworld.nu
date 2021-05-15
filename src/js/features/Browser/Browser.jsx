@@ -132,7 +132,7 @@ const Server = (props) => {
         </div>
       </div>
 
-      <footer className="card-footer p-1 app-text-small is-block">
+      <footer className="card-footer p-1 pt-2 app-text-small is-block">
         <div className="columns is-mobile is-vcentered is-justify-content-space-between">
           <div className="column is-narrow">
             {server.Country && (
