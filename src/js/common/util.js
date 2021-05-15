@@ -55,8 +55,8 @@ export const metaByServer = (server) => {
   const keywords = [modeName, server.Map]
     .concat(server.Players.filter((p) => !p.IsBot).map((p) => p.Name))
     .filter((p) => p !== "")
-    .map((p) => p.toLowerCase())
-    .join(" ");
+    .join(" ")
+    .toLowerCase();
 
   const meta = {
     isStandby,
