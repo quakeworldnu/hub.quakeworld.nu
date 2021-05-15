@@ -12,7 +12,7 @@ $scheme-main-ter: lighten($scheme-main, 14);
 $scheme-invert: findColorInvert($scheme-main);
 
 $text: darken($scheme-invert, 20);
-$text-strong: $text;
+$text-strong: lighten($text, 10);
 
 $border: lighten($scheme-main, 24);
 $border-hover: lighten($border, 12);

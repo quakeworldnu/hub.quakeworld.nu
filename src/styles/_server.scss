@@ -18,13 +18,13 @@ $matchtag-2: yellow;
 .server-matchtag {
   background-color: $matchtag-1;
   color: $matchtag-2;
+  text-shadow: #666 1px 1px 2px;
 }
 
 .server-border.smod-matchtag {
   padding: 2px;
   background: linear-gradient(to bottom, $matchtag-1, $matchtag-2);
   box-shadow: rgba(255, 0, 255, 0.3) 0 0 96px;
-  text-shadow: #666 1px 1px 2px;
 }
 
 .server-players,
