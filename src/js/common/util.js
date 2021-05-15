@@ -1,22 +1,5 @@
 export const deepCopy = (obj) => JSON.parse(JSON.stringify(obj));
 
-export const shuffleArray = (array) => {
-  let currentIndex = array.length,
-    temporaryValue,
-    randomIndex;
-
-  while (0 !== currentIndex) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-};
-
 export const metaByServer = (server) => {
   const clientCount = server.Players.length;
   const spectatorCount = server.Players.filter((p) => p.Spec).length;
@@ -145,6 +128,32 @@ const quakeCharToPlainChar = (char) => {
   } else {
     return String.fromCharCode(charCode);
   }
+};
+
+export const compareServers = (a, b) => {
+  // -1 = a
+  // 1 = b
+  // 0 = unchanged
+
+  if (a.meta.hasMatchtag && !b.meta.hasMatchtag) {
+    return -1;
+  } else if (!a.meta.hasMatchtag && b.meta.hasMatchtag) {
+    return 1;
+  }
+
+  if (a.meta.playerCount > b.meta.playerCount) {
+    return -1;
+  } else if (a.meta.playerCount < b.meta.playerCount) {
+    return 1;
+  }
+
+  if (a.meta.isStarted && !b.meta.isStarted) {
+    return -1;
+  } else if (!a.meta.isStarted && b.meta.isStarted) {
+    return 1;
+  }
+
+  return 0;
 };
 
 export const quakeTextToPlainText = (input) =>

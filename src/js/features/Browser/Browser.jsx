@@ -1,11 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import browserSlice from "./slice";
-import {
-  shuffleArray,
-  quakeTextToHtml,
-  quakeTextToPlainText,
-} from "../../common/util";
+import { quakeTextToHtml } from "../../common/util";
 import FilterForm from "./Filters";
 import Overview from "./Overview";
 
@@ -193,7 +189,6 @@ const serverEntriesProvider = {
     return fetch(url, options)
       .then((response) => response.json())
       .then((data) => {
-        shuffleArray(data);
         return data;
       });
   },

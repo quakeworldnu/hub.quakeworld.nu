@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { metaByServer } from "../../common/util";
+import { metaByServer, compareServers } from "../../common/util";
 
 const getInitialState = () => ({
   ui: {
@@ -24,6 +24,8 @@ export default createSlice({
       for (let i = 0; i < entries.length; i++) {
         entries[i].meta = metaByServer(entries[i]);
       }
+
+      entries.sort(compareServers);
 
       state.entries = entries;
     },
