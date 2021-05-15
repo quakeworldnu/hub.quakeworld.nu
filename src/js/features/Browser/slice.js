@@ -4,7 +4,6 @@ import { metaByServer, compareServers } from "../../common/util";
 const getInitialState = () => ({
   ui: {
     favorites: {
-      players: [],
       servers: [],
     },
     filters: {
