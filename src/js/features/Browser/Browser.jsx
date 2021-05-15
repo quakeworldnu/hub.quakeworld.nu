@@ -232,6 +232,41 @@ const serverEntriesProvider = {
   },
 };
 
+const BrowserHeader = () => (
+  <div className="columns is-vcentered my-0">
+    <div className="column is-narrow">
+      <a href="/">
+        <img src="/assets/img/qtvlogo.png" width="177" height="64" />
+      </a>
+    </div>
+    <div className="column">
+      <Overview />
+    </div>
+    <div className="column is-narrow">
+      <FilterForm />
+    </div>
+  </div>
+);
+
+const BrowserTiles = (props) => {
+  const { servers } = props;
+  const hasServers = servers.length > 0;
+
+  return (
+    <div className="app-tiles">
+      {hasServers &&
+        servers.map((entry, index) => {
+          return (
+            <div key={index} className="app-tile">
+              <Server server={entry} />
+            </div>
+          );
+        })}
+      {!hasServers && <span className="has-text-grey">(no results found)</span>}
+    </div>
+  );
+};
+
 class Browser extends React.Component {
   componentDidMount() {
     // const refreshInterval = 20000;
@@ -257,37 +292,11 @@ class Browser extends React.Component {
 
   render() {
     const { servers } = this.props;
-    const hasServers = servers.length > 0;
 
     return (
       <React.Fragment>
-        <div className="columns is-vcentered my-0">
-          <div className="column is-narrow">
-            <a href="/">
-              <img src="/assets/img/qtvlogo.png" width="177" height="64" />
-            </a>
-          </div>
-          <div className="column">
-            <Overview />
-          </div>
-          <div className="column is-narrow">
-            <FilterForm />
-          </div>
-        </div>
-
-        <div className="app-tiles">
-          {hasServers &&
-            servers.map((entry, index) => {
-              return (
-                <div key={index} className="app-tile">
-                  <Server server={entry} />
-                </div>
-              );
-            })}
-          {!hasServers && (
-            <span className="has-text-grey">(no results found)</span>
-          )}
-        </div>
+        <BrowserHeader />
+        <BrowserTiles servers={servers} />
       </React.Fragment>
     );
   }
