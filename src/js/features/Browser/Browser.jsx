@@ -120,7 +120,10 @@ const Server = (props) => {
         )}
         <div className="columns is-mobile">
           <div className="column">
-            <a href="#" className="button is-dark is-fullwidth is-small">
+            <a
+              href={`qw://${server.Address}/observe`}
+              className="button is-dark is-fullwidth is-small"
+            >
               Spectate
             </a>
           </div>
