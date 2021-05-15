@@ -33,7 +33,7 @@ const getStorage = () => {
     return window[storageType];
   } else {
     const storageMock = {
-      getItem: () => {},
+      getItem: () => "{}",
       setItem: () => {},
     };
 
@@ -43,5 +43,11 @@ const getStorage = () => {
 
 export default {
   save: (values) => getStorage().setItem("ui", JSON.stringify(values)),
-  load: () => JSON.parse(getStorage().getItem("ui")),
+  load: () => {
+    try {
+      return JSON.parse(getStorage().getItem("ui"));
+    } catch (e) {
+      return {};
+    }
+  },
 };
