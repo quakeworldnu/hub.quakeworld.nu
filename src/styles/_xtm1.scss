@@ -73,6 +73,9 @@ $app-server-border-width: 5px;
 }
 
 .app-spectator-prefix {
+  @extend .has-text-grey;
+  @extend .has-text-right;
+
   display: inline-block;
   width: 32px;
   margin-right: .5rem;

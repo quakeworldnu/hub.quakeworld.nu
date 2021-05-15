@@ -122,9 +122,7 @@ const Server = (props) => {
           <div className="app-text-small mb-3">
             {spectators.map((spec, index) => (
               <React.Fragment key={index}>
-                <span className="app-spectator-prefix has-text-grey has-text-right">
-                  spec
-                </span>{" "}
+                <span className="app-spectator-prefix">spec</span>{" "}
                 <span
                   dangerouslySetInnerHTML={{
                     __html: quakeTextToHtml(spec.Name),
@@ -136,10 +134,7 @@ const Server = (props) => {
             {server.meta.hasQtvSpectators &&
               server.QTV[0].SpecList.map((spec, index) => (
                 <React.Fragment key={index}>
-                  <span className="app-spectator-prefix has-text-grey has-text-right">
-                    qtv
-                  </span>{" "}
-                  {spec}
+                  <span className="app-spectator-prefix">qtv</span> {spec}
                   <br />
                 </React.Fragment>
               ))}
