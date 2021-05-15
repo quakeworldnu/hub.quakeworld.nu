@@ -1,16 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { metaByServer, compareServers } from "../../common/util";
+import storage from "../../common/storage";
+
+const getDefaultUiState = () => ({
+  favorites: {
+    servers: [],
+  },
+  filters: {
+    keyword: "",
+    isFavorite: false,
+  },
+});
 
 const getInitialState = () => ({
-  ui: {
-    favorites: {
-      servers: [],
-    },
-    filters: {
-      keyword: "",
-      isFavorite: false,
-    },
-  },
+  ui: Object.assign({}, getDefaultUiState(), storage.load()),
   servers: [],
 });
 
@@ -32,6 +35,8 @@ export default createSlice({
     updateFilters: (state, action) => {
       const { values } = action.payload;
       state.ui.filters = values;
+
+      storage.save(state.ui);
     },
     toggleFavoriteServer: (state, action) => {
       const { serverAddress } = action.payload;
@@ -44,6 +49,8 @@ export default createSlice({
       } else {
         state.ui.favorites.servers.push(serverAddress);
       }
+
+      storage.save(state.ui);
     },
   },
 });
