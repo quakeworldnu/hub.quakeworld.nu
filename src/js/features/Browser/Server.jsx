@@ -118,39 +118,38 @@ const ServerSpectators = (props) => {
 
   return (
     <div className="server-spectators p-3">
-      {(server.meta.hasSpectators || server.meta.hasQtvSpectators) && (
-        <div className="app-text-small mb-3">
-          {spectators.map((spec, index) => (
-            <React.Fragment key={index}>
-              <span className="server-spectator-prefix">spec</span>{" "}
-              <span
-                dangerouslySetInnerHTML={{
-                  __html: quakeTextToHtml(spec.Name),
-                }}
-              />
-              <br />
-            </React.Fragment>
-          ))}
-          {server.meta.hasQtvSpectators &&
-            server.QTV[0].SpecList.map((spec, index) => (
-              <React.Fragment key={index}>
-                <span className="server-spectator-prefix">qtv</span> {spec}
-                <br />
-              </React.Fragment>
-            ))}
-        </div>
-      )}
-      <div className="columns is-mobile">
+      <div className="columns is-narrow">
         <div className="column">
+          {(server.meta.hasSpectators || server.meta.hasQtvSpectators) && (
+            <div className="app-text-small">
+              {spectators.map((spec, index) => (
+                <React.Fragment key={index}>
+                  <span className="server-spectator-prefix">spec</span>{" "}
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: quakeTextToHtml(spec.Name),
+                    }}
+                  />
+                  <br />
+                </React.Fragment>
+              ))}
+              {server.meta.hasQtvSpectators &&
+                server.QTV[0].SpecList.map((spec, index) => (
+                  <React.Fragment key={index}>
+                    <span className="server-spectator-prefix">qtv</span> {spec}
+                    <br />
+                  </React.Fragment>
+                ))}
+            </div>
+          )}
+        </div>
+        <div className="column is-narrow">
           <a
             href={`qw://${server.Address}/observe`}
-            className="button is-dark is-fullwidth is-small"
+            className="button is-dark is-fullwidth is-small mb-2"
           >
             Spectate
           </a>
-        </div>
-
-        <div className="column">
           {server.meta.hasQtv && (
             <a
               href={`qw://${server.QTV[0].address}/qtvplay`}
