@@ -199,13 +199,13 @@ class Browser extends React.Component {
     let filteredServers;
 
     if (keyword.length > 1) {
-      const findPlayer = (keyword, players) =>
-        players
-          .map((p) => p.Name.toLowerCase())
-          .join(" ")
-          .indexOf(keyword) !== -1;
+      const searchKeywordParts = keyword.split(" ");
 
-      const filterFunc = (server) => findPlayer(keyword, server.Players);
+      const filterFunc = (server) => {
+        return searchKeywordParts.every((kw) => {
+          return server.meta.keywords.indexOf(kw) !== -1;
+        });
+      };
       filteredServers = serversEntries.filter(filterFunc);
     } else {
       filteredServers = serversEntries;

@@ -52,10 +52,17 @@ export const metaByServer = (server) => {
     minutesLeft = descriptionParts[1];
   }
 
+  const keywords = [modeName, server.Map]
+    .concat(server.Players.filter((p) => !p.IsBot).map((p) => p.Name))
+    .filter((p) => p !== "")
+    .map((p) => p.toLowerCase())
+    .join(" ");
+
   const meta = {
     isStandby,
     isStarted,
     minutesLeft,
+    keywords,
     mode: {
       name: modeName,
       isDuel,
