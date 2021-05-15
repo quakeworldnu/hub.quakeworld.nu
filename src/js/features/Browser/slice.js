@@ -24,6 +24,8 @@ export default createSlice({
         entries[i].meta = metaByServer(entries[i]);
       }
 
+      entries.sort(compareServers);
+
       state.entries = entries;
     },
     updateFilters: (state, action) => {
