@@ -8,25 +8,26 @@ const getInitialState = () => ({
     },
     filters: {
       keyword: "",
+      isFavorite: false,
     },
   },
-  entries: [],
+  servers: [],
 });
 
 export default createSlice({
   name: "form",
   initialState: getInitialState(),
   reducers: {
-    updateEntries: (state, action) => {
-      const { entries } = action.payload;
+    updateServers: (state, action) => {
+      const { servers } = action.payload;
 
-      for (let i = 0; i < entries.length; i++) {
-        entries[i].meta = metaByServer(entries[i]);
+      for (let i = 0; i < servers.length; i++) {
+        servers[i].meta = metaByServer(servers[i]);
       }
 
-      entries.sort(compareServers);
+      servers.sort(compareServers);
 
-      state.entries = entries;
+      state.servers = servers;
     },
     updateFilters: (state, action) => {
       const { values } = action.payload;

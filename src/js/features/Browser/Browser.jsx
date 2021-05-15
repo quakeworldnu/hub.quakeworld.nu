@@ -236,17 +236,17 @@ class Browser extends React.Component {
   componentDidMount() {
     // const refreshInterval = 20000;
 
-    const fetchAndUpdateEntries = () => {
+    const fetchAndupdateServers = () => {
       return serverEntriesProvider
         .get()
-        .then((entries) => this.props.updateEntries({ entries }));
+        .then((servers) => this.props.updateServers({ servers }));
     };
 
     /*this.fetchEntriesInterval = setInterval(
-      fetchAndUpdateEntries,
+      fetchAndupdateServers,
       refreshInterval,
     );*/
-    fetchAndUpdateEntries();
+    fetchAndupdateServers();
   }
 
   /*
@@ -294,10 +294,10 @@ class Browser extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  servers: filterServers(state.servers.entries, state.servers.ui.filters),
+  servers: filterServers(state.browser.servers, state.browser.ui.filters),
 });
 const mapDispatchToProps = {
-  updateEntries: browserSlice.actions.updateEntries,
+  updateServers: browserSlice.actions.updateServers,
 };
 
 const BrowserComponent = connect(mapStateToProps, mapDispatchToProps)(Browser);

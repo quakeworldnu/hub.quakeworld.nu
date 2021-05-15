@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import slice from "./slice";
 
 const mapStateToProps = (state, ownProps) => ({
-  isEnabled: state.servers.ui.favorites.servers.includes(
+  isEnabled: state.browser.ui.favorites.servers.includes(
     ownProps.serverAddress
   ),
 });

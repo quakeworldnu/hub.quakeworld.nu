@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-const mapStateToProps = (state) => ({ servers: state.servers.entries });
+const mapStateToProps = (state) => ({ servers: state.browser.servers });
 
 const Overview = (props) => {
   const { servers } = props;

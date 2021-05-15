@@ -51,7 +51,7 @@ const Filters = (props) => {
   return <FilterForm values={formValues} onValidate={handleValidate} />;
 };
 const mapStateToProps = (state) => ({
-  formValues: state.servers.ui.filters,
+  formValues: state.browser.ui.filters,
 });
 const mapDispatchToProps = {
   handleFormChange: slice.actions.updateFilters,

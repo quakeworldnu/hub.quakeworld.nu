@@ -2,7 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import formSlice from "./slice";
 
 export const createStore = () => {
-  const reducer = combineReducers({ servers: formSlice.reducer });
+  const reducer = combineReducers({ browser: formSlice.reducer });
   return configureStore({ reducer });
 };
 
