@@ -10,17 +10,14 @@ $scheme-main: #112;
 $scheme-main-bis: lighten($scheme-main, 7);
 $scheme-main-ter: lighten($scheme-main, 14);
 $scheme-invert: findColorInvert($scheme-main);
-$background: #445;
-$border: lighten($scheme-main, 24);
 
-// custom
-$shadow-soft: 1px 1px 5px 0 rgba($scheme-invert, .125), 0 2px 1px -1px rgba($scheme-invert, .125);
-$shadow-hard: 0 0 1px 1px rgba($scheme-invert, .15), 0 1px 3px 0 rgba($scheme-invert, .3), 0 1px 1px 0 rgba($scheme-invert, .25);
-$shadow: $shadow-hard;
-
-$button-background-color: #334;
 $text: darken($scheme-invert, 20);
 $text-strong: $text;
+
+$border: lighten($scheme-main, 24);
+$border-hover: lighten($border, 12);
+
+$link-hover: $scheme-invert;
 
 $section-padding: 0 1rem 2rem;
 $section-padding-medium: 0 0 2rem;

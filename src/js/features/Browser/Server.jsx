@@ -31,7 +31,8 @@ const ServerHeader = (props) => {
         {!server.meta.hasFreePlayerSlots && (
           <a
             href={`qw://${server.Address}/observe`}
-            className="button is-disabled"
+            className="button"
+            disabled="disabled"
           >
             Join
           </a>
@@ -146,14 +147,14 @@ const ServerSpectators = (props) => {
         <div className="column is-narrow">
           <a
             href={`qw://${server.Address}/observe`}
-            className="button is-dark is-fullwidth is-small mb-2"
+            className="button is-fullwidth is-small mb-2"
           >
             Spectate
           </a>
           {server.meta.hasQtv && (
             <a
               href={`qw://${server.QTV[0].address}/qtvplay`}
-              className="button is-dark is-fullwidth is-small"
+              className="button is-fullwidth is-small"
             >
               QTV
               <span className="ml-1 has-text-grey">
