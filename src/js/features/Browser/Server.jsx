@@ -20,13 +20,13 @@ const ServerFooter = (props) => {
           )}{" "}
           {server.Address}
         </div>
-        <div className="column is-narrow">
-          <FavoriteToggle serverAddress={server.Address} />
-        </div>
-        <div className="column is-narrow ml-auto has-text-grey">
+        <div className="column is-narrow has-text-grey">
           {server.Settings.ktxver && (
             <React.Fragment>KTX {server.Settings.ktxver}</React.Fragment>
           )}
+        </div>
+        <div className="column is-narrow">
+          <FavoriteToggle serverAddress={server.Address} />
         </div>
       </div>
     </footer>
