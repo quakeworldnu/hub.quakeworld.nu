@@ -4,6 +4,7 @@ import browserSlice from "./slice";
 import { compareServers, quakeTextToHtml } from "../../common/util";
 import FilterForm from "./Filters";
 import Overview from "./Overview";
+import FavoriteToggle from "./FavoriteToggle";
 
 const Server = (props) => {
   const { server } = props;
@@ -184,6 +185,9 @@ const Server = (props) => {
               />
             )}{" "}
             {server.Address}
+          </div>
+          <div className="column is-narrow">
+            <FavoriteToggle serverAddress={server.Address} />
           </div>
           <div className="column is-narrow ml-auto has-text-grey">
             {server.Settings.ktxver && (

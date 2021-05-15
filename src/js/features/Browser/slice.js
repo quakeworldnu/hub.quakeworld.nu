@@ -30,5 +30,17 @@ export default createSlice({
       const { values } = action.payload;
       state.ui.filters = values;
     },
+    toggleFavoriteServer: (state, action) => {
+      const { serverAddress } = action.payload;
+
+      const index = state.ui.favorites.servers.indexOf(serverAddress);
+      const isFavorite = index !== -1;
+
+      if (isFavorite) {
+        state.ui.favorites.servers.splice(index, 1);
+      } else {
+        state.ui.favorites.servers.push(serverAddress);
+      }
+    },
   },
 });
