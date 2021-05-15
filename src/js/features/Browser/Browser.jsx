@@ -215,7 +215,7 @@ class Browser extends React.Component {
 
     let filteredServers;
 
-    if (keyword) {
+    if (keyword.length > 1) {
       const findPlayer = (keyword, players) =>
         players
           .map((p) => p.Name.toLowerCase())
