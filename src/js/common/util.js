@@ -215,16 +215,17 @@ export const quakeTextToHtml = (input, maxLength) => {
 
 export const filterServers = (servers, filters) => {
   // keyword match
-  const keyword = filters.keyword.toLowerCase();
+  const query = filters.query.toLowerCase();
+  const minQueryLength = 2;
 
-  if (keyword.length < 2) {
+  if (query.length < minQueryLength) {
     return servers;
   }
 
-  const searchKeywordParts = keyword.split(" ");
+  const queryWords = query.split(" ");
   const keywordFilterFunc = (server) => {
-    return searchKeywordParts.every((kw) => {
-      return server.meta.keywords.indexOf(kw) !== -1;
+    return queryWords.every((word) => {
+      return server.meta.keywords.indexOf(word) !== -1;
     });
   };
   return servers.filter(keywordFilterFunc);

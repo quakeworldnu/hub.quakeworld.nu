@@ -36,8 +36,8 @@ const FilterForm = (props) => {
             <Field
               type="search"
               className="input"
-              id="keyword"
-              name="keyword"
+              id="query"
+              name="query"
               style={{ width: "160px" }}
             />
           </div>

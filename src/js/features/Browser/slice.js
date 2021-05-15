@@ -7,7 +7,7 @@ const getDefaultUiState = () => ({
     servers: [],
   },
   filters: {
-    keyword: "",
+    query: "",
     isFavorite: false,
   },
 });
