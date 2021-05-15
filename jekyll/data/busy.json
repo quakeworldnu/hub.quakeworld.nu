@@ -339,10 +339,11 @@
       {
         "Host": "nl.aye.wtf QTV (3)",
         "Address": "3@nl.aye.wtf:28000",
-        "Specs": 2,
+        "Specs": 3,
         "SpecList": [
-          "player",
-          "foo"
+          "Bernkaoch",
+          "\u0010Doomie\u0011",
+          "\u0011\u0014\u0015\u0010"
         ]
       }
     ]

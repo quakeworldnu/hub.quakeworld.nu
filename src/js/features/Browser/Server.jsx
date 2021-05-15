@@ -138,7 +138,12 @@ const ServerSpectators = (props) => {
               {server.meta.hasQtvSpectators &&
                 server.QTV[0].SpecList.map((spec, index) => (
                   <React.Fragment key={index}>
-                    <span className="server-spectator-prefix">qtv</span> {spec}
+                    <span className="server-spectator-prefix">qtv</span>{" "}
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html: quakeTextToHtml(spec),
+                      }}
+                    />
                     <br />
                   </React.Fragment>
                 ))}

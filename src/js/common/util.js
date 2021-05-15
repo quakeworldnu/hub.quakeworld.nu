@@ -35,25 +35,26 @@ export const metaByServer = (server) => {
     minutesLeft = descriptionParts[1];
   }
 
-  let playerNamesAsPlainText = server.Players.filter((p) => !p.IsBot).map((p) =>
-    quakeTextToPlainText(p.Name)
+  let rawClientNames = server.Players.filter((p) => !p.IsBot).map(
+    (p) => p.Name
   );
 
   const hasQtv = server.QTV.length > 0 && server.QTV[0].Address !== "";
   const hasQtvSpectators = hasQtv && server.QTV[0].Specs > 0;
 
   if (hasQtvSpectators) {
-    playerNamesAsPlainText = playerNamesAsPlainText.concat(
-      server.QTV[0].SpecList
-    );
+    rawClientNames = rawClientNames.concat(server.QTV[0].SpecList);
   }
 
-  let keywords = [modeName, server.Map].concat(playerNamesAsPlainText);
+  const plainTextClientNames = rawClientNames.map((n) =>
+    quakeTextToPlainText(n)
+  );
+
+  let keywords = [modeName, server.Map].concat(plainTextClientNames);
 
   if (server.Country) {
     keywords.push(`c:${server.Country}`);
   }
-
   keywords = keywords
     .filter((p) => p !== "")
     .join(" ")
