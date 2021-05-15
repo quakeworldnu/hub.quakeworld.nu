@@ -1,35 +1,30 @@
 import React from "react";
 import { connect } from "react-redux";
 import browserSlice from "./slice";
-import { shuffleArray } from "./../../common/util";
+import { shuffleArray } from "../../common/util";
 import FilterForm from "./Filters";
 import Overview from "./Overview";
 
 const Server = (props) => {
   const { server } = props;
 
-  const gameMode = server.Description.split(", ")[0];
-  const status = server.Settings.status;
   const players = server.Players.filter((p) => !p.Spec);
   const spectators = server.Players.filter((p) => p.Spec);
-  const isStandby = server.Description.indexOf("min left") === -1;
-  const isInProgress = !isStandby;
-  const missingPlayerCount = server.MaxClients - players.length;
-  const hasFreeSlots = missingPlayerCount > 0;
-  const hasPlayers = players.length > 0;
-  const hasSpectators = spectators.length > 0;
-  const isDuel = gameMode === "1v1";
-  const isTeamplay = !isDuel && /\d+v\d+/gi.test(gameMode);
-  const isCustomGameMode = !isTeamplay && !isDuel;
-  const canJoinGame = (isStandby || isCustomGameMode) && hasFreeSlots;
-
   const classNames = ["server card"];
 
-  if (canJoinGame) {
+  /*
+  if (server.meta.canJoinGame) {
     classNames.push("status-canjoin");
   } else {
-    classNames.push("status-isfull");
+    classNames.push("status-cantjoin");
   }
+
+  if (server.meta.isStarted) {
+    classNames.push("status-inprogress");
+  } else {
+    classNames.push("status-notinprogress");
+  }
+   */
 
   const classNamesStr = classNames.join(" ");
 
@@ -44,34 +39,21 @@ const Server = (props) => {
       <header className="p-3">
         <div className="is-flex is-justify-content-space-between">
           <div>
-            <strong>{gameMode}</strong> on <strong>{server.Map}</strong>
+            <strong>{server.meta.mode.name}</strong> on{" "}
+            <strong>{server.Map}</strong>
             <div className="columns is-mobile is-vcentered app-text-small">
               <div className="column">
-                {!isCustomGameMode && (
-                  <React.Fragment>
-                    {isInProgress && (
-                      <React.Fragment>In progress, {status}</React.Fragment>
-                    )}
-                    {isStandby && canJoinGame && (
-                      <span>Waiting for {missingPlayerCount} player(s)</span>
-                    )}
-                    {isStandby && !canJoinGame && (
-                      <span>Waiting for players to ready up</span>
-                    )}
-                  </React.Fragment>
-                )}
-                {isCustomGameMode && (
-                  <React.Fragment>In progress</React.Fragment>
-                )}
+                <span className="server-status" />
+                [status text]
               </div>
             </div>
           </div>
-          {canJoinGame && (
+          {server.meta.hasFreePlayerSlots && (
             <a href={`qw://${server.Address}/`} className="button is-link">
               Join
             </a>
           )}
-          {!canJoinGame && (
+          {!server.meta.hasFreePlayerSlots && (
             <a
               href={`qw://${server.Address}/observe`}
               className="button is-disabled"
@@ -82,15 +64,21 @@ const Server = (props) => {
         </div>
       </header>
 
+      {false && (
+        <div>
+          <pre>{JSON.stringify(server.meta, null, 2)}</pre>
+        </div>
+      )}
+
       <div className="players-outer">
         <div className="players" style={{ backgroundImage: mapThumbnailSrc }}>
-          {hasPlayers && (
+          {server.meta.hasPlayers && (
             <table className="player-table">
               <thead>
                 <tr className="app-text-small">
                   <th width="30">ping</th>
                   <th width="30">frags</th>
-                  {isTeamplay && <th width="60">team</th>}
+                  {server.meta.mode.isTeamplay && <th width="60">team</th>}
                   <th className="pl-2 has-text-left">name</th>
                 </tr>
               </thead>
@@ -103,7 +91,7 @@ const Server = (props) => {
                     >
                       {player.Frags}
                     </td>
-                    {isTeamplay && <td>{player.Team}</td>}
+                    {server.meta.mode.isTeamplay && <td>{player.Team}</td>}
                     <td className="has-text-weight-bold has-text-left pl-2">
                       {player.Name}
                     </td>
@@ -112,14 +100,14 @@ const Server = (props) => {
               </tbody>
             </table>
           )}
-          {!hasPlayers && (
+          {!server.meta.playerCount && (
             <div className="has-text-centered is-flex-grow-1">(no players)</div>
           )}
         </div>
       </div>
 
       <div className="p-3">
-        {hasSpectators && (
+        {server.meta.hasSpectators && (
           <div className="app-text-small mb-2">
             {spectators.map((spec, index) => (
               <React.Fragment key={index}>

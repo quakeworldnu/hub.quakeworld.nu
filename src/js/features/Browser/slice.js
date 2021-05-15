@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { metaByServer } from "../../common/util";
 
 const getInitialState = () => ({
   ui: {
@@ -19,6 +20,11 @@ export default createSlice({
   reducers: {
     updateEntries: (state, action) => {
       const { entries } = action.payload;
+
+      for (let i = 0; i < entries.length; i++) {
+        entries[i].meta = metaByServer(entries[i]);
+      }
+
       state.entries = entries;
     },
     updateFilters: (state, action) => {
