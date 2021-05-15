@@ -23,6 +23,7 @@ $matchtag-2: yellow;
 .server-border.smod-matchtag {
   padding: 2px;
   background: linear-gradient(to bottom, $matchtag-1, $matchtag-2);
+  box-shadow: rgba(255, 0, 255, 0.3) 0 0 96px;
 }
 
 .server-players,
