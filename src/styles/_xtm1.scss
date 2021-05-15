@@ -30,7 +30,7 @@ $app-server-border-width: 5px;
 .players,
 .players-outer {
   background-size: cover;
-
+  background-position-x: center;
 }
 
 .players-outer {
@@ -43,7 +43,6 @@ $app-server-border-width: 5px;
   align-items: center;
   min-height: 140px;
   padding: 1em;
-  background-size: cover;
   text-shadow: black 1px 1px 1px;
   color: white;
 
