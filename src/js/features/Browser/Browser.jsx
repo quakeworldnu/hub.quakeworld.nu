@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import browserSlice from "./slice";
-import { quakeTextToHtml } from "../../common/util";
+import { filterServers, quakeTextToHtml } from "../../common/util";
 import FilterForm from "./Filters";
 import Overview from "./Overview";
 import FavoriteToggle from "./FavoriteToggle";
@@ -256,36 +256,8 @@ class Browser extends React.Component {
    */
 
   render() {
-    const { servers, ui } = this.props;
-    const keyword = ui.filters.keyword.toLowerCase();
-
-    let filteredServers;
-
-    if (keyword.length > 1) {
-      const searchKeywordParts = keyword.split(" ");
-
-      const filterFunc = (server) => {
-        return searchKeywordParts.every((kw) => {
-          return server.meta.keywords.indexOf(kw) !== -1;
-        });
-      };
-      filteredServers = servers.filter(filterFunc);
-    } else {
-      filteredServers = servers;
-    }
-    const hasFilterResults = filteredServers.length > 0;
-
-    const favs = ui.favorites.servers;
-
-    const favoriteSortedServers = [...filteredServers].sort((a, b) => {
-      if (favs.includes(a.Address) && !favs.includes(b.Address)) {
-        return -1;
-      } else if (!favs.includes(a.Address) && favs.includes(b.Address)) {
-        return 1;
-      }
-
-      return 0;
-    });
+    const { servers } = this.props;
+    const hasServers = servers.length > 0;
 
     return (
       <React.Fragment>
@@ -304,15 +276,15 @@ class Browser extends React.Component {
         </div>
 
         <div className="app-tiles">
-          {hasFilterResults &&
-            favoriteSortedServers.map((entry, index) => {
+          {hasServers &&
+            servers.map((entry, index) => {
               return (
                 <div key={index} className="app-tile">
                   <Server server={entry} />
                 </div>
               );
             })}
-          {!hasFilterResults && (
+          {!hasServers && (
             <span className="has-text-grey">(no results found)</span>
           )}
         </div>
@@ -322,8 +294,7 @@ class Browser extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  servers: state.servers.entries,
-  ui: state.servers.ui,
+  servers: filterServers(state.servers.entries, state.servers.ui.filters),
 });
 const mapDispatchToProps = {
   updateEntries: browserSlice.actions.updateEntries,

@@ -213,6 +213,23 @@ export const quakeTextToHtml = (input, maxLength) => {
   return str;
 };
 
+export const filterServers = (servers, filters) => {
+  // keyword match
+  const keyword = filters.keyword.toLowerCase();
+
+  if (keyword.length < 2) {
+    return servers;
+  }
+
+  const searchKeywordParts = keyword.split(" ");
+  const keywordFilterFunc = (server) => {
+    return searchKeywordParts.every((kw) => {
+      return server.meta.keywords.indexOf(kw) !== -1;
+    });
+  };
+  return servers.filter(keywordFilterFunc);
+};
+
 export const compareServers = (a, b) => {
   // -1 = a
   // 1 = b
