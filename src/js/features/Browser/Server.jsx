@@ -154,7 +154,7 @@ const ServerSpectators = (props) => {
           </a>
           {server.meta.hasQtv && (
             <a
-              href={`qw://${server.QTV[0].address}/qtvplay`}
+              href={`qw://${server.QTV[0].Address}/qtvplay`}
               className="button is-fullwidth is-small"
             >
               QTV
