@@ -200,8 +200,14 @@ const ServerFooter = (props) => {
 export const Server = (props) => {
   const { server } = props;
 
+  const modifiers = ["server-border"];
+
+  if (server.meta.hasMatchtag) {
+    modifiers.push("smod-matchtag");
+  }
+
   return (
-    <div className="server-border smod-matchtag">
+    <div className={modifiers.join(" ")}>
       <div className="server">
         <ServerHeader server={server} />
         <ServerPlayers server={server} />
