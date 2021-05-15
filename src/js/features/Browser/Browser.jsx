@@ -21,21 +21,6 @@ const Server = (props) => {
   }
 
   const classNames = ["server card"];
-
-  /*
-  if (server.meta.canJoinGame) {
-    classNames.push("status-canjoin");
-  } else {
-    classNames.push("status-cantjoin");
-  }
-
-  if (server.meta.isStarted) {
-    classNames.push("status-inprogress");
-  } else {
-    classNames.push("status-notinprogress");
-  }
-   */
-
   const classNamesStr = classNames.join(" ");
 
   let mapThumbnailSrc = "none";

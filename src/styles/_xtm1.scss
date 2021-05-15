@@ -27,13 +27,6 @@ $app-server-border-width: 5px;
   border-radius: $app-server-border-width;
 }
 
-.status-canjoin {
-  border-color: rgba($blue, 0.4);
-}
-.status-isfull {
-  // border-color: red;
-}
-
 .players,
 .players-outer {
   background-size: cover;
