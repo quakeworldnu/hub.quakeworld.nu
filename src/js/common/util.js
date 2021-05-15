@@ -213,22 +213,24 @@ export const quakeTextToHtml = (input, maxLength) => {
   return str;
 };
 
-export const filterServers = (servers, filters) => {
-  // keyword match
-  const query = filters.query.toLowerCase();
+const filterByQuery = (servers, query) => {
   const minQueryLength = 2;
 
   if (query.length < minQueryLength) {
     return servers;
   }
 
-  const queryWords = query.split(" ");
+  const queryWords = query.toLowerCase().split(" ");
   const keywordFilterFunc = (server) => {
     return queryWords.every((word) => {
       return server.meta.keywords.indexOf(word) !== -1;
     });
   };
   return servers.filter(keywordFilterFunc);
+};
+
+export const filterServers = (servers, filters) => {
+  return filterByQuery(servers, filters.query);
 };
 
 export const compareServers = (a, b) => {
