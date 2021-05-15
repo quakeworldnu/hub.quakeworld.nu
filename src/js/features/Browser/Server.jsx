@@ -29,11 +29,7 @@ const ServerHeader = (props) => {
           </a>
         )}
         {!server.meta.hasFreePlayerSlots && (
-          <a
-            href={`qw://${server.Address}/observe`}
-            className="button"
-            disabled="disabled"
-          >
+          <a href={`qw://${server.Address}/observe`} className="button app-dim">
             Join
           </a>
         )}
