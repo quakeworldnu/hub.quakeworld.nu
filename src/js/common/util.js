@@ -45,8 +45,7 @@ export const metaByServer = (server) => {
   const hasMatchtag = matchtag !== "";
 
   const hasQtv = server.QTV.length > 0 && server.QTV[0].Address !== "";
-  const qtvAddress = hasQtv ? server.QTV[0].Address : "";
-  const qtvClientCount = hasQtv ? server.QTV[0].Specs : 0;
+  const hasQtvSpectators = hasQtv && server.QTV[0].Specs > 0;
 
   const meta = {
     isStandby,
@@ -74,10 +73,7 @@ export const metaByServer = (server) => {
     freePlayerSlots,
     hasFreePlayerSlots,
     hasQtv,
-    qtv: {
-      address: qtvAddress,
-      clientCount: qtvClientCount,
-    },
+    hasQtvSpectators,
   };
 
   meta.statusText = statusTextByMeta(meta);

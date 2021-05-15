@@ -117,16 +117,34 @@ const Server = (props) => {
       </div>
 
       <div className="py-3 px-1">
-        {server.meta.hasSpectators && (
+        {(server.meta.hasSpectators || server.meta.hasQtvSpectators) && (
           <div className="app-text-small mb-3">
             {spectators.map((spec, index) => (
               <React.Fragment key={index}>
-                <span className="has-text-grey mr-1">spec</span> {spec.Name}
+                <span className="app-spectator-prefix has-text-grey has-text-right">
+                  spec
+                </span>{" "}
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: quakeTextToHtml(spec.Name),
+                  }}
+                />
                 <br />
               </React.Fragment>
             ))}
+            {server.meta.hasQtvSpectators &&
+              server.QTV[0].SpecList.map((spec, index) => (
+                <React.Fragment key={index}>
+                  <span className="app-spectator-prefix has-text-grey has-text-right">
+                    qtv
+                  </span>{" "}
+                  {spec}
+                  <br />
+                </React.Fragment>
+              ))}
           </div>
         )}
+
         <div className="columns is-mobile">
           <div className="column">
             <a
@@ -140,12 +158,12 @@ const Server = (props) => {
           <div className="column">
             {server.meta.hasQtv && (
               <a
-                href={`qw://${server.meta.qtv.address}/qtvplay`}
+                href={`qw://${server.QTV[0].address}/qtvplay`}
                 className="button is-dark is-fullwidth is-small"
               >
                 QTV
                 <span className="ml-1 has-text-grey">
-                  ({server.meta.qtv.clientCount})
+                  ({server.QTV[0].Specs})
                 </span>
               </a>
             )}
