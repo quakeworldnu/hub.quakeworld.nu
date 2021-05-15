@@ -8,11 +8,10 @@ const ServerHeader = (props) => {
   return (
     <div className="server-header">
       {server.meta.hasMatchtag && (
-        <div className="server-matchtag p-3 has-text-success has-text-weight-bold has-text-centered">
+        <div className="server-matchtag p-3 has-text-weight-bold has-text-centered">
           {server.meta.matchtag}
         </div>
       )}
-
       <div className="is-flex is-justify-content-space-between p-3">
         <div>
           <strong>{server.meta.mode.name}</strong> on{" "}
@@ -42,96 +41,6 @@ const ServerHeader = (props) => {
   );
 };
 
-const ServerSpectators = (props) => {
-  const { server } = props;
-
-  let spectators = [];
-
-  if (server.meta.hasSpectators) {
-    spectators = server.Players.filter((p) => p.Spec);
-  }
-
-  return (
-    <div className="server-spectators p-3">
-      {(server.meta.hasSpectators || server.meta.hasQtvSpectators) && (
-        <div className="app-text-small mb-3">
-          {spectators.map((spec, index) => (
-            <React.Fragment key={index}>
-              <span className="server-spectator-prefix">spec</span>{" "}
-              <span
-                dangerouslySetInnerHTML={{
-                  __html: quakeTextToHtml(spec.Name),
-                }}
-              />
-              <br />
-            </React.Fragment>
-          ))}
-          {server.meta.hasQtvSpectators &&
-            server.QTV[0].SpecList.map((spec, index) => (
-              <React.Fragment key={index}>
-                <span className="server-spectator-prefix">qtv</span> {spec}
-                <br />
-              </React.Fragment>
-            ))}
-        </div>
-      )}
-      <div className="columns is-mobile mb-1">
-        <div className="column">
-          <a
-            href={`qw://${server.Address}/observe`}
-            className="button is-dark is-fullwidth is-small"
-          >
-            Spectate
-          </a>
-        </div>
-
-        <div className="column">
-          {server.meta.hasQtv && (
-            <a
-              href={`qw://${server.QTV[0].address}/qtvplay`}
-              className="button is-dark is-fullwidth is-small"
-            >
-              QTV
-              <span className="ml-1 has-text-grey">
-                ({server.QTV[0].Specs})
-              </span>
-            </a>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
-const ServerFooter = (props) => {
-  const { server } = props;
-
-  return (
-    <div className="server-footer app-text-small px-3">
-      <div className="columns is-mobile is-vcentered is-justify-content-space-between">
-        <div className="column is-narrow">
-          {server.Country && (
-            <img
-              src={`https://badplace.eu/images/icons/flags/${server.Country.toLowerCase()}.png`}
-              width="16"
-              height="11"
-              align="center"
-              alt={server.Country.toLowerCase()}
-            />
-          )}{" "}
-          {server.Address}
-        </div>
-        <div className="column is-narrow has-text-grey">
-          {server.Settings.ktxver && (
-            <React.Fragment>KTX {server.Settings.ktxver}</React.Fragment>
-          )}
-        </div>
-        <div className="column is-narrow">
-          <FavoriteToggle serverAddress={server.Address} />
-        </div>
-      </div>
-    </div>
-  );
-};
 const ServerPlayers = (props) => {
   const { server } = props;
 
@@ -197,15 +106,108 @@ const ServerPlayers = (props) => {
     </div>
   );
 };
+
+const ServerSpectators = (props) => {
+  const { server } = props;
+
+  let spectators = [];
+
+  if (server.meta.hasSpectators) {
+    spectators = server.Players.filter((p) => p.Spec);
+  }
+
+  return (
+    <div className="server-spectators p-3">
+      {(server.meta.hasSpectators || server.meta.hasQtvSpectators) && (
+        <div className="app-text-small mb-3">
+          {spectators.map((spec, index) => (
+            <React.Fragment key={index}>
+              <span className="server-spectator-prefix">spec</span>{" "}
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: quakeTextToHtml(spec.Name),
+                }}
+              />
+              <br />
+            </React.Fragment>
+          ))}
+          {server.meta.hasQtvSpectators &&
+            server.QTV[0].SpecList.map((spec, index) => (
+              <React.Fragment key={index}>
+                <span className="server-spectator-prefix">qtv</span> {spec}
+                <br />
+              </React.Fragment>
+            ))}
+        </div>
+      )}
+      <div className="columns is-mobile">
+        <div className="column">
+          <a
+            href={`qw://${server.Address}/observe`}
+            className="button is-dark is-fullwidth is-small"
+          >
+            Spectate
+          </a>
+        </div>
+
+        <div className="column">
+          {server.meta.hasQtv && (
+            <a
+              href={`qw://${server.QTV[0].address}/qtvplay`}
+              className="button is-dark is-fullwidth is-small"
+            >
+              QTV
+              <span className="ml-1 has-text-grey">
+                ({server.QTV[0].Specs})
+              </span>
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+const ServerFooter = (props) => {
+  const { server } = props;
+
+  return (
+    <div className="server-footer app-text-small p-3">
+      <div className="columns is-mobile is-vcentered is-justify-content-space-between">
+        <div className="column is-narrow">
+          {server.Country && (
+            <img
+              src={`https://badplace.eu/images/icons/flags/${server.Country.toLowerCase()}.png`}
+              width="16"
+              height="11"
+              align="center"
+              alt={server.Country.toLowerCase()}
+            />
+          )}{" "}
+          {server.Address}
+        </div>
+        <div className="column is-narrow has-text-grey">
+          {server.Settings.ktxver && (
+            <React.Fragment>KTX {server.Settings.ktxver}</React.Fragment>
+          )}
+        </div>
+        <div className="column is-narrow">
+          <FavoriteToggle serverAddress={server.Address} />
+        </div>
+      </div>
+    </div>
+  );
+};
 export const Server = (props) => {
   const { server } = props;
 
   return (
-    <div className="server">
-      <ServerHeader server={server} />
-      <ServerPlayers server={server} />
-      <ServerSpectators server={server} />
-      <ServerFooter server={server} />
+    <div className="server-border smod-matchtag">
+      <div className="server">
+        <ServerHeader server={server} />
+        <ServerPlayers server={server} />
+        <ServerSpectators server={server} />
+        <ServerFooter server={server} />
+      </div>
     </div>
   );
 };
