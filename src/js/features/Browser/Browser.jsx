@@ -8,8 +8,18 @@ import Overview from "./Overview";
 const Server = (props) => {
   const { server } = props;
 
-  const players = server.Players.filter((p) => !p.Spec);
-  const spectators = server.Players.filter((p) => p.Spec);
+  let players = [];
+
+  if (server.meta.hasPlayers) {
+    players = server.Players.filter((p) => !p.Spec);
+  }
+
+  let spectators = [];
+
+  if (server.meta.hasSpectators) {
+    spectators = server.Players.filter((p) => p.Spec);
+  }
+
   const classNames = ["server card"];
 
   /*
