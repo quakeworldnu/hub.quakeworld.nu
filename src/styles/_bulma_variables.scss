@@ -6,11 +6,11 @@
 $family-primary: "Roboto", BlinkMacSystemFont, -apple-system, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 $family-sans-serif: $family-primary;
 
-$scheme-main: #111;
+$scheme-main: #112;
 $scheme-main-bis: $black-bis;
 $scheme-main-ter: $black-ter;
 $scheme-invert: findColorInvert($scheme-main);
-$background: lighten($scheme-main, 8);
+$background: #445;
 $border: lighten($scheme-main, 24);
 
 // custom
@@ -18,15 +18,10 @@ $shadow-soft: 1px 1px 5px 0 rgba($scheme-invert, .125), 0 2px 1px -1px rgba($sch
 $shadow-hard: 0 0 1px 1px rgba($scheme-invert, .15), 0 1px 3px 0 rgba($scheme-invert, .3), 0 1px 1px 0 rgba($scheme-invert, .25);
 $shadow: $shadow-hard;
 
-$button-background-color: $background;
+$button-background-color: #334;
 $text: darken($scheme-invert, 20);
 $text-strong: $text;
 
 $section-padding: 0 1rem 2rem;
 $section-padding-medium: 0 0 2rem;
 $section-padding-large: 0 0 2rem;
-
-// components
-$card-background-color: $background;
-$card-shadow: $shadow;
-$card-footer-border-top: 1px solid lighten($card-background-color, 10);

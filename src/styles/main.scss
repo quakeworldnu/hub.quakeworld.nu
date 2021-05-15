@@ -1,4 +1,13 @@
 @import "./fonts/roboto";
 @import "./bulma_override";
 @import "./quake_colors";
-@import "./xtm1";
+@import "./tiles";
+@import "./server";
+
+.app-dim {
+  opacity: .6;
+}
+
+.app-text-small {
+  font-size: .8em;
+}

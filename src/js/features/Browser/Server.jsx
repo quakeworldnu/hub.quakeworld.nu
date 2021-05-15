@@ -2,36 +2,46 @@ import FavoriteToggle from "./FavoriteToggle";
 import React from "react";
 import { quakeTextToHtml } from "../../common/util";
 
-const ServerFooter = (props) => {
+const ServerHeader = (props) => {
   const { server } = props;
 
   return (
-    <footer className="card-footer p-1 pt-2 app-text-small is-block">
-      <div className="columns is-mobile is-vcentered is-justify-content-space-between">
-        <div className="column is-narrow">
-          {server.Country && (
-            <img
-              src={`https://badplace.eu/images/icons/flags/${server.Country.toLowerCase()}.png`}
-              width="16"
-              height="11"
-              align="center"
-              alt={server.Country.toLowerCase()}
-            />
-          )}{" "}
-          {server.Address}
+    <div className="server-header">
+      {server.meta.hasMatchtag && (
+        <div className="server-matchtag p-3 has-text-success has-text-weight-bold has-text-centered">
+          {server.meta.matchtag}
         </div>
-        <div className="column is-narrow has-text-grey">
-          {server.Settings.ktxver && (
-            <React.Fragment>KTX {server.Settings.ktxver}</React.Fragment>
-          )}
+      )}
+
+      <div className="is-flex is-justify-content-space-between p-3">
+        <div>
+          <strong>{server.meta.mode.name}</strong> on{" "}
+          <strong>{server.Map}</strong>
+          <div className="columns is-mobile is-vcentered app-text-small">
+            <div className="column">
+              <span className="server-status" />
+              {server.meta.statusText}
+            </div>
+          </div>
         </div>
-        <div className="column is-narrow">
-          <FavoriteToggle serverAddress={server.Address} />
-        </div>
+        {server.meta.hasFreePlayerSlots && (
+          <a href={`qw://${server.Address}/`} className="button is-link">
+            Join
+          </a>
+        )}
+        {!server.meta.hasFreePlayerSlots && (
+          <a
+            href={`qw://${server.Address}/observe`}
+            className="button is-disabled"
+          >
+            Join
+          </a>
+        )}
       </div>
-    </footer>
+    </div>
   );
 };
+
 const ServerSpectators = (props) => {
   const { server } = props;
 
@@ -42,12 +52,12 @@ const ServerSpectators = (props) => {
   }
 
   return (
-    <div className="py-3 px-1">
+    <div className="server-spectators p-3">
       {(server.meta.hasSpectators || server.meta.hasQtvSpectators) && (
         <div className="app-text-small mb-3">
           {spectators.map((spec, index) => (
             <React.Fragment key={index}>
-              <span className="app-spectator-prefix">spec</span>{" "}
+              <span className="server-spectator-prefix">spec</span>{" "}
               <span
                 dangerouslySetInnerHTML={{
                   __html: quakeTextToHtml(spec.Name),
@@ -59,14 +69,13 @@ const ServerSpectators = (props) => {
           {server.meta.hasQtvSpectators &&
             server.QTV[0].SpecList.map((spec, index) => (
               <React.Fragment key={index}>
-                <span className="app-spectator-prefix">qtv</span> {spec}
+                <span className="server-spectator-prefix">qtv</span> {spec}
                 <br />
               </React.Fragment>
             ))}
         </div>
       )}
-
-      <div className="columns is-mobile">
+      <div className="columns is-mobile mb-1">
         <div className="column">
           <a
             href={`qw://${server.Address}/observe`}
@@ -93,43 +102,34 @@ const ServerSpectators = (props) => {
     </div>
   );
 };
-const ServerHeader = (props) => {
+const ServerFooter = (props) => {
   const { server } = props;
 
   return (
-    <header className="p-1 mb-1">
-      {server.meta.hasMatchtag && (
-        <div className="server-matchtag has-text-success has-text-weight-bold has-text-centered py-1 pb-3">
-          {server.meta.matchtag}
+    <div className="server-footer app-text-small px-3">
+      <div className="columns is-mobile is-vcentered is-justify-content-space-between">
+        <div className="column is-narrow">
+          {server.Country && (
+            <img
+              src={`https://badplace.eu/images/icons/flags/${server.Country.toLowerCase()}.png`}
+              width="16"
+              height="11"
+              align="center"
+              alt={server.Country.toLowerCase()}
+            />
+          )}{" "}
+          {server.Address}
         </div>
-      )}
-
-      <div className="is-flex is-justify-content-space-between">
-        <div>
-          <strong>{server.meta.mode.name}</strong> on{" "}
-          <strong>{server.Map}</strong>
-          <div className="columns is-mobile is-vcentered app-text-small">
-            <div className="column">
-              <span className="server-status" />
-              {server.meta.statusText}
-            </div>
-          </div>
+        <div className="column is-narrow has-text-grey">
+          {server.Settings.ktxver && (
+            <React.Fragment>KTX {server.Settings.ktxver}</React.Fragment>
+          )}
         </div>
-        {server.meta.hasFreePlayerSlots && (
-          <a href={`qw://${server.Address}/`} className="button is-link">
-            Join
-          </a>
-        )}
-        {!server.meta.hasFreePlayerSlots && (
-          <a
-            href={`qw://${server.Address}/observe`}
-            className="button is-disabled"
-          >
-            Join
-          </a>
-        )}
+        <div className="column is-narrow">
+          <FavoriteToggle serverAddress={server.Address} />
+        </div>
       </div>
-    </header>
+    </div>
   );
 };
 const ServerPlayers = (props) => {
@@ -148,10 +148,13 @@ const ServerPlayers = (props) => {
   }
 
   return (
-    <div className="players-outer">
-      <div className="players" style={{ backgroundImage: mapThumbnailSrc }}>
+    <div className="server-players-wrapper">
+      <div
+        className="server-players"
+        style={{ backgroundImage: mapThumbnailSrc }}
+      >
         {server.meta.hasPlayers && (
-          <table className="player-table">
+          <table className="servers-player-table">
             <thead>
               <tr className="app-text-small">
                 <th width="30">ping</th>
@@ -198,7 +201,7 @@ export const Server = (props) => {
   const { server } = props;
 
   return (
-    <div className="server card">
+    <div className="server">
       <ServerHeader server={server} />
       <ServerPlayers server={server} />
       <ServerSpectators server={server} />

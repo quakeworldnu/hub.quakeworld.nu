@@ -1,0 +1,72 @@
+$server-bg: #445;
+$spectator-bg: #3c3c4c;
+$footer-bg: #334;
+$footer-color: #ababb9;
+$spec-color: #f9d99db3;
+
+
+.server {
+  background: $server-bg;
+}
+
+.server-header {
+  border-bottom: 1px solid $footer-bg;
+}
+
+.server-players,
+.server-players-wrapper {
+  background-size: cover;
+  background-position-x: center;
+}
+
+.server-players-wrapper {
+  background-color: #444;
+  background-image: url(/assets/img/map_default.jpg);
+}
+
+.server-spectators {
+  background: $spectator-bg;
+}
+
+.server-footer {
+  background: $footer-bg;
+  color: $footer-color;
+}
+
+.server-players {
+  display: flex;
+  align-items: center;
+  min-height: 140px;
+  padding: 1em;
+  text-shadow: black 1px 1px 1px;
+  color: white;
+
+  .servers-player-table th,
+  .servers-player-table td {
+    color: #fff;
+    border: none;
+    padding: 0 4px;
+    vertical-align: middle;
+    text-align: center;
+
+    &:first-child {
+      @extend .app-dim;
+    }
+  }
+
+
+  .servers-player-table th {
+    padding-bottom: 6px;
+  }
+}
+
+
+.server-spectator-prefix {
+  @extend .has-text-right;
+
+  display: inline-block;
+  width: 32px;
+  margin-right: .5rem;
+  color: $spec-color;
+}
+
