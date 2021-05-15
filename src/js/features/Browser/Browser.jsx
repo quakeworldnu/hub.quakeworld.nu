@@ -179,6 +179,7 @@ const Server = (props) => {
                 src={`https://badplace.eu/images/icons/flags/${server.Country.toLowerCase()}.png`}
                 width="16"
                 height="11"
+                align="center"
                 alt="{server.Country.toLowerCase()}"
               />
             )}{" "}
