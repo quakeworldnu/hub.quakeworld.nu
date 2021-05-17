@@ -75,7 +75,6 @@ $matchtag-2: yellow;
   }
 }
 
-
 .server-spectator-prefix {
   @extend .has-text-right;
 
@@ -83,5 +82,11 @@ $matchtag-2: yellow;
   width: 32px;
   margin-right: .5rem;
   color: $spec-color;
+}
+
+.server progress {
+  margin-top: 3px;
+  width: 36px !important;
+  height: 6px !important;
 }
 

@@ -16,10 +16,19 @@ const ServerHeader = (props) => {
         <div>
           <strong className="has-text-white">{server.meta.mode.name}</strong> on{" "}
           <strong className="has-text-white">{server.Map}</strong>
-          <div className="columns is-mobile is-vcentered app-text-small">
-            <div className="column">
-              <span className="server-status" />
-              {server.meta.statusText}
+          <div className="app-text-small level">
+            <div className="level-left">
+              <div className="level-item">
+                <span className="server-status" />
+                <span>{server.meta.statusText}</span>
+                {server.meta.isStarted && server.meta.minutesRemaining && (
+                  <progress
+                    className="progress ml-2"
+                    value={server.meta.minutesElapsed}
+                    max={server.meta.minutesTotal}
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>

@@ -34,11 +34,12 @@ export const metaByServer = (server) => {
   const isStarted = server.Description.indexOf("min left") !== -1;
   const isStandby = !isStarted;
 
-  let minutesLeft = "";
-
+  let minutesRemaining = 0;
   if (isStarted) {
-    minutesLeft = descriptionParts[1];
+    minutesRemaining = parseInt(descriptionParts[1].replace("min left", ""));
   }
+  const minutesTotal = server.Settings.timelimit;
+  const minutesElapsed = minutesTotal - minutesRemaining;
 
   let rawClientNames = server.Players.filter((p) => !p.IsBot).map(
     (p) => p.Name
@@ -71,7 +72,9 @@ export const metaByServer = (server) => {
   const meta = {
     isStandby,
     isStarted,
-    minutesLeft,
+    minutesTotal,
+    minutesElapsed,
+    minutesRemaining,
     matchtag,
     hasMatchtag,
     keywords,
@@ -102,12 +105,20 @@ export const metaByServer = (server) => {
   return meta;
 };
 
+const gameTimeProgress = (minutesRemaining) => {
+  if (minutesRemaining) {
+    return `${minutesRemaining} min left`;
+  } else {
+    return "";
+  }
+};
+
 export const statusTextByMeta = (meta) => {
   const status = [];
 
   if (meta.mode.isFfa || meta.mode.isRace || meta.mode.isCustom) {
-    status.push(meta.minutesLeft);
     status.push(`${meta.playerCount} of ${meta.totalPlayerSlots} players`);
+    status.push(gameTimeProgress(meta.minutesRemaining));
   } else {
     if (meta.isStandby) {
       if (meta.hasFreePlayerSlots) {
@@ -116,7 +127,7 @@ export const statusTextByMeta = (meta) => {
         status.push("Waiting for players to ready up");
       }
     } else {
-      status.push(meta.minutesLeft);
+      status.push(gameTimeProgress(meta.minutesRemaining));
     }
   }
 

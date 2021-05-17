@@ -28,9 +28,13 @@ $section-padding: 0 1rem 2rem;
 $section-padding-medium: 0 0 2rem;
 $section-padding-large: 0 0 2rem;
 
+$progress-bar-background-color: $scheme-main;
+$progress-value-background-color: lighten($progress-bar-background-color, 48);
+$progress-border-radius: 0;
+
 $radius-small: $radius;
 
-// customize buttons
+// buttons
 .button.is-primary:not(.is-outlined, .is-inverted, .is-light) {
   $factor: 5;
   $default-light: lighten($primary, $factor);
@@ -45,4 +49,9 @@ $radius-small: $radius;
   &:hover {
     background: linear-gradient(to bottom, $hover-light, $hover-dark);
   }
+}
+
+// progress
+progress {
+  border: 1px solid $progress-bar-background-color !important;
 }
