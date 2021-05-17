@@ -129,10 +129,10 @@ const ServerSpectators = (props) => {
 
   return (
     <div className="server-spectators p-3">
-      <div className="columns is-narrow">
-        <div className="column">
-          {(server.meta.hasSpectators || server.meta.hasQtvSpectators) && (
-            <div className="app-text-small">
+      {(server.meta.hasSpectators || server.meta.hasQtvSpectators) && (
+        <div className="app-text-small">
+          <div className="columns is-mobile">
+            <div className="column">
               {spectators.map((spec, index) => (
                 <React.Fragment key={index}>
                   <span className="server-spectator-prefix">spec</span>{" "}
@@ -144,6 +144,9 @@ const ServerSpectators = (props) => {
                   <br />
                 </React.Fragment>
               ))}
+            </div>
+
+            <div className="column">
               {server.meta.hasQtvSpectators &&
                 server.QTV[0].SpecList.map((spec, index) => (
                   <React.Fragment key={index}>
@@ -157,15 +160,20 @@ const ServerSpectators = (props) => {
                   </React.Fragment>
                 ))}
             </div>
-          )}
+          </div>
         </div>
-        <div className="column is-narrow">
+      )}
+
+      <div className="columns is-mobile is-vcentered">
+        <div className="column">
           <a
             href={`qw://${server.Address}/observe`}
-            className="button is-fullwidth is-small mb-2 is-dark"
+            className="button is-fullwidth is-small is-dark"
           >
             Spectate
           </a>
+        </div>
+        <div className="column">
           {server.meta.hasQtv && (
             <a
               href={`qw://${server.QTV[0].Address}/qtvplay`}
