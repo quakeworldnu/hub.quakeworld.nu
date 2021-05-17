@@ -35,9 +35,9 @@ const FilterForm = (props) => {
           <div className="column">
             <div className="field has-addons">
               <p className="control">
-                <a className="button is-static px-2">
+                <div className="button is-static px-2">
                   <SearchIcon />
-                </a>
+                </div>
               </p>
               <div className="control is-expanded">
                 <Field

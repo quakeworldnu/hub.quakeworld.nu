@@ -24,7 +24,7 @@ const ServerHeader = (props) => {
           </div>
         </div>
         {server.meta.hasFreePlayerSlots && (
-          <a href={`qw://${server.Address}/`} className="button is-link">
+          <a href={`qw://${server.Address}/`} className="button is-primary">
             Join
           </a>
         )}

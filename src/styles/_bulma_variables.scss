@@ -1,24 +1,45 @@
 @import "node_modules/bulma/sass/utilities/initial-variables";
-@import "node_modules/bulma/sass/utilities/derived-variables";
 
-
-// core
-$family-primary: "Roboto", BlinkMacSystemFont, -apple-system, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-$family-sans-serif: $family-primary;
+$primary: $blue;
 
 $scheme-main: #112;
-$scheme-main-bis: lighten($scheme-main, 7);
-$scheme-main-ter: lighten($scheme-main, 14);
-$scheme-invert: findColorInvert($scheme-main);
+$scheme-main-bis: lighten($scheme-main, 8);
+$scheme-main-ter: lighten($scheme-main, 16);
 
-$text: darken($scheme-invert, 20);
+$background: $scheme-main-ter;
+
+$family-sans-serif: "Roboto", BlinkMacSystemFont, -apple-system, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+
+$text: #ccc;
 $text-strong: lighten($text, 10);
 
-$border: lighten($scheme-main, 24);
-$border-hover: lighten($border, 12);
+$border: lighten($scheme-main, 40);
+$border-hover: lighten($border, 16);
 
-$link-hover: $scheme-invert;
+$link-hover: $white;
+
+$button-border-color: $scheme-main;
+$button-hover-border-color: $button-border-color;
+
+$input-background-color: $scheme-main-bis;
 
 $section-padding: 0 1rem 2rem;
 $section-padding-medium: 0 0 2rem;
 $section-padding-large: 0 0 2rem;
+
+
+// customize buttons
+.button.is-primary:not([disabled],.is-outlined, .is-inverted, .is-light) {
+  $factor: 5;
+  $default-light: lighten($primary, $factor);
+  $default-dark: darken($primary, 2*$factor);
+  $hover-light: darken($default-light, $factor);
+  $hover-dark: darken($default-dark, $factor);
+
+  border: none;
+  background: linear-gradient(to bottom, $default-light, $default-dark);
+
+  &:hover {
+    background: linear-gradient(to bottom, $hover-light, $hover-dark);
+  }
+}
