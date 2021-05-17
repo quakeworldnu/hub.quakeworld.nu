@@ -1,10 +1,11 @@
 @import "node_modules/bulma/sass/utilities/initial-variables";
 
-$primary: $blue;
-
 $scheme-main: #112;
 $scheme-main-bis: lighten($scheme-main, 8);
 $scheme-main-ter: lighten($scheme-main, 16);
+
+$primary: $blue;
+$dark: #222;
 
 $background: $scheme-main-ter;
 
@@ -27,15 +28,17 @@ $section-padding: 0 1rem 2rem;
 $section-padding-medium: 0 0 2rem;
 $section-padding-large: 0 0 2rem;
 
+$radius-small: $radius;
 
 // customize buttons
-.button.is-primary:not([disabled],.is-outlined, .is-inverted, .is-light) {
+.button.is-primary:not(.is-outlined, .is-inverted, .is-light) {
   $factor: 5;
   $default-light: lighten($primary, $factor);
   $default-dark: darken($primary, 2*$factor);
   $hover-light: darken($default-light, $factor);
   $hover-dark: darken($default-dark, $factor);
 
+  box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 4px;
   border: none;
   background: linear-gradient(to bottom, $default-light, $default-dark);
 

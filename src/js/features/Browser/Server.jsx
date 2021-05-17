@@ -153,19 +153,17 @@ const ServerSpectators = (props) => {
         <div className="column is-narrow">
           <a
             href={`qw://${server.Address}/observe`}
-            className="button is-fullwidth is-small mb-2"
+            className="button is-fullwidth is-small mb-2 is-dark"
           >
             Spectate
           </a>
           {server.meta.hasQtv && (
             <a
               href={`qw://${server.QTV[0].Address}/qtvplay`}
-              className="button is-fullwidth is-small"
+              className="button is-fullwidth is-small is-dark"
             >
               QTV
-              <span className="ml-1 has-text-grey">
-                ({server.QTV[0].Specs})
-              </span>
+              <span className="ml-1 app-dim">({server.QTV[0].Specs})</span>
             </a>
           )}
         </div>
