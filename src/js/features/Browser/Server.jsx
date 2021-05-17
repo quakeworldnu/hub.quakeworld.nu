@@ -14,8 +14,8 @@ const ServerHeader = (props) => {
       )}
       <div className="is-flex is-justify-content-space-between p-3">
         <div>
-          <strong>{server.meta.mode.name}</strong> on{" "}
-          <strong>{server.Map}</strong>
+          <strong className="has-text-white">{server.meta.mode.name}</strong> on{" "}
+          <strong className="has-text-white">{server.Map}</strong>
           <div className="columns is-mobile is-vcentered app-text-small">
             <div className="column">
               <span className="server-status" />
