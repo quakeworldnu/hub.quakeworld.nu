@@ -36,6 +36,8 @@ $radius-small: $radius;
 
 $tag-radius: 2px;
 
+$container-max-width: 99999px;
+
 // buttons
 .button.is-primary:not(.is-outlined, .is-inverted, .is-light) {
   $factor: 5;

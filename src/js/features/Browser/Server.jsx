@@ -220,7 +220,7 @@ const ServerFooter = (props) => {
 };
 
 const getModifiers = (meta) => {
-  const modifiers = ["server-border"];
+  const modifiers = ["server-wrapper"];
 
   if (meta.hasMatchtag) {
     modifiers.push("smod-matchtag");

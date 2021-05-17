@@ -1,17 +1,8 @@
 .app-tiles {
   display: grid;
   grid-gap: 32px;
-  grid-template-columns: 1fr;
-
-  @media only screen and (min-width: 641px) and (max-width: 960px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media only screen and (min-width: 961px) and (max-width: 1280px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  @media only screen and (min-width: 1281px) {
-    grid-template-columns: repeat(4, 1fr);
-  }
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+}
+.app-tile {
+  display: flex;
 }
