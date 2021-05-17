@@ -48,7 +48,7 @@ const BrowserTiles = (props) => {
       {hasServers &&
         servers.map((entry, index) => {
           return (
-            <div key={index} className="app-tile">
+            <div key={index}>
               <Server server={entry} />
             </div>
           );
