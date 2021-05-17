@@ -21,9 +21,9 @@ const ServerHeader = (props) => {
               <div className="level-item">
                 <span className="server-status mr-1">
                   {server.meta.isStarted && (
-                    <div className="indicator-started" />
+                    <div className="tag is-danger">LIVE</div>
                   )}{" "}
-                  {server.meta.isWaitingForPlayersToReadyUp && (
+                  {server.meta.isStandby && (
                     <div className="indicator-waiting-container">
                       <div className="indicator-waiting" />
                     </div>
@@ -44,16 +44,6 @@ const ServerHeader = (props) => {
         </div>
         {server.meta.hasFreePlayerSlots && (
           <a href={`qw://${server.Address}/`} className="button is-primary">
-            Join
-          </a>
-        )}
-        {!server.meta.hasFreePlayerSlots && (
-          <a
-            href={`qw://${server.Address}/`}
-            className="button"
-            title="Server is full"
-            disabled="disabled"
-          >
             Join
           </a>
         )}
@@ -228,14 +218,31 @@ const ServerFooter = (props) => {
     </div>
   );
 };
+
+const getModifiers = (meta) => {
+  const modifiers = ["server-border"];
+
+  if (meta.hasMatchtag) {
+    modifiers.push("smod-matchtag");
+  }
+
+  if (meta.isStarted) {
+    modifiers.push("smod-started");
+  }
+
+  if (meta.hasFreePlayerSlots) {
+    modifiers.push("smod-hasfreeplayerslots");
+  } else if (meta.isWaitingForPlayersToReadyUp) {
+    modifiers.push("smod-waitingforready");
+  }
+
+  return modifiers;
+};
+
 export const Server = (props) => {
   const { server } = props;
 
-  const modifiers = ["server-border"];
-
-  if (server.meta.hasMatchtag) {
-    modifiers.push("smod-matchtag");
-  }
+  const modifiers = getModifiers(server.meta);
 
   return (
     <div className={modifiers.join(" ")}>

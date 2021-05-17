@@ -117,9 +117,12 @@ const gameTimeProgress = (minutesRemaining) => {
 export const statusTextByMeta = (meta) => {
   const status = [];
 
-  if (meta.mode.isFfa || meta.mode.isRace || meta.mode.isCustom) {
+  if (meta.mode.isFfa || meta.mode.isRace) {
     status.push(`${meta.playerCount} of ${meta.totalPlayerSlots} players`);
-    status.push(gameTimeProgress(meta.minutesRemaining));
+
+    if (meta.mode.isFfa) {
+      status.push(gameTimeProgress(meta.minutesRemaining));
+    }
   } else {
     if (meta.isStandby) {
       if (meta.hasFreePlayerSlots) {
@@ -128,7 +131,6 @@ export const statusTextByMeta = (meta) => {
         status.push("Waiting for players to ready up");
       }
     } else {
-      status.push("Started");
       status.push(gameTimeProgress(meta.minutesRemaining));
     }
   }

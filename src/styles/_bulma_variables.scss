@@ -29,10 +29,12 @@ $section-padding-medium: 0 0 2rem;
 $section-padding-large: 0 0 2rem;
 
 $progress-bar-background-color: $scheme-main;
-$progress-value-background-color: lighten($progress-bar-background-color, 48);
+$progress-value-background-color: $grey;
 $progress-border-radius: 0;
 
 $radius-small: $radius;
+
+$tag-radius: 2px;
 
 // buttons
 .button.is-primary:not(.is-outlined, .is-inverted, .is-light) {

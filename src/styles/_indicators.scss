@@ -1,33 +1,7 @@
 $size: 6px;
-$color-started: red;
 $color-waiting-fg: #ddd;
 $color-waiting-bg: #888;
 $animation-speed: 1s;
-
-.indicator-dot {
-  width: $size;
-  height: $size;
-  border-radius: ($size/2);
-}
-
-// started
-.indicator-started {
-  @extend .indicator-dot;
-  background-color: $color-started;
-  color: $color-started;
-  animation: dotStarted $animation-speed infinite linear alternate;
-}
-
-@keyframes dotStarted {
-  0% {
-    background-color: $color-started;
-  }
-  50%,
-  100% {
-    background-color: darken($color-started, 15);
-  }
-}
-
 
 // waiting
 .indicator-waiting-container {
@@ -38,7 +12,9 @@ $animation-speed: 1s;
 .indicator-waiting,
 .indicator-waiting:before,
 .indicator-waiting:after {
-  @extend .indicator-dot;
+  width: $size;
+  height: $size;
+  border-radius: ($size/2);
   background-color: $color-waiting-fg;
   color: $color-waiting-fg;
 }
