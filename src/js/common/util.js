@@ -128,7 +128,7 @@ export const statusTextByMeta = (meta) => {
         status.push("Waiting for players to ready up");
       }
     } else {
-      status.push(`Started, ${gameTimeProgress(meta.minutesRemaining)}`);
+      status.push(gameTimeProgress(meta.minutesRemaining));
     }
   }
 
