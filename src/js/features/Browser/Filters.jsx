@@ -25,39 +25,34 @@ const FilterForm = (props) => {
       validate={onValidate}
       validateOnChange
     >
-      <form>
-        <div className="columns is-mobile is-vcentered">
-          <div className="column is-narrow">
-            <div className="field has-addons">
-              <div className="control">
-                <div className="button is-static px-2">
-                  <SearchIcon />
-                </div>
-              </div>
-              <div className="control is-expanded">
-                <Field
-                  type="search"
-                  className="input"
-                  name="query"
-                  style={{ width: "160px" }}
-                />
+      <React.Fragment>
+        <div className="column is-narrow-tablet is-narrow-desktop">
+          <div className="field has-addons">
+            <div className="control">
+              <div className="button is-static px-2">
+                <SearchIcon />
               </div>
             </div>
-          </div>
-
-          <div className="column is-narrow">
-            <label className="checkbox">
-              <Field type="checkbox" name="isFavorite" /> Favorite servers
-            </label>
-          </div>
-
-          <div className="column is-narrow">
-            <label className="checkbox">
-              <Field type="checkbox" name="isStarted" /> Live games
-            </label>
+            <div className="control is-expanded">
+              <Field
+                type="search"
+                className="input"
+                name="query"
+                id="app-filter-query"
+              />
+            </div>
           </div>
         </div>
-      </form>
+
+        <div className="column is-narrow">
+          <label className="checkbox">
+            <Field type="checkbox" name="isFavorite" /> Favorite servers
+          </label>
+          <label className="checkbox ml-4">
+            <Field type="checkbox" name="isStarted" /> Live games
+          </label>
+        </div>
+      </React.Fragment>
     </Formik>
   );
 };

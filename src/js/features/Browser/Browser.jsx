@@ -24,17 +24,17 @@ const serverEntriesProvider = {
 };
 
 const BrowserHeader = () => (
-  <div className="columns is-vcentered my-0">
-    <div className="column is-narrow">
-      <a href="/">
-        <img src="/assets/img/qtvlogo.png" width="177" height="64" />
-      </a>
-    </div>
-    <div className="column">
+  <div className="my-3">
+    <div className="columns is-mobile is-vcentered is-multiline">
+      <div className="column is-narrow">
+        <a href="/">
+          <img src="/assets/img/qtvlogo.png" width="177" height="64" />
+        </a>
+      </div>
       <Filters />
-    </div>
-    <div className="column is-narrow">
-      <Overview />
+      <div className="column has-text-right-desktop">
+        <Overview />
+      </div>
     </div>
   </div>
 );
