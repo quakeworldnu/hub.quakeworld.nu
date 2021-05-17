@@ -50,6 +50,12 @@ const FilterForm = (props) => {
               <Field type="checkbox" name="isFavorite" /> Favorite servers
             </label>
           </div>
+
+          <div className="column is-narrow">
+            <label className="checkbox">
+              <Field type="checkbox" name="isStarted" /> Live games
+            </label>
+          </div>
         </div>
       </form>
     </Formik>

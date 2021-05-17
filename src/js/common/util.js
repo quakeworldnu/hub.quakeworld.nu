@@ -257,6 +257,10 @@ export const filterServers = (servers, filters, favoriteServers) => {
     result = result.filter((s) => favoriteServers.includes(s.Address));
   }
 
+  if (filters.isStarted) {
+    result = result.filter((s) => s.meta.isStarted);
+  }
+
   return result;
 };
 

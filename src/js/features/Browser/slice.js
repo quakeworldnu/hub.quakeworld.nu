@@ -9,6 +9,7 @@ const getDefaultUiState = () => ({
   filters: {
     query: "",
     isFavorite: false,
+    isStarted: false,
   },
 });
 
