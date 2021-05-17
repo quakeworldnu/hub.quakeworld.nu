@@ -44,14 +44,10 @@ const BrowserTiles = (props) => {
   const hasServers = servers.length > 0;
 
   return (
-    <div className="app-tiles">
+    <div className="app-grid">
       {hasServers &&
         servers.map((entry, index) => {
-          return (
-            <div className="app-tile" key={index}>
-              <Server server={entry} />
-            </div>
-          );
+          return <Server key={index} server={entry} />;
         })}
       {!hasServers && <span className="has-text-grey">(no results found)</span>}
     </div>
