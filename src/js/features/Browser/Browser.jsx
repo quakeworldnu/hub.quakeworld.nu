@@ -31,10 +31,10 @@ const BrowserHeader = () => (
       </a>
     </div>
     <div className="column">
-      <Overview />
+      <Filters />
     </div>
     <div className="column is-narrow">
-      <Filters />
+      <Overview />
     </div>
   </div>
 );

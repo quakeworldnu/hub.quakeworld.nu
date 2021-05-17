@@ -28,11 +28,6 @@ const FilterForm = (props) => {
       <form>
         <div className="columns is-mobile is-vcentered">
           <div className="column is-narrow">
-            <label className="checkbox">
-              <Field type="checkbox" name="isFavorite" /> Favorite servers
-            </label>
-          </div>
-          <div className="column">
             <div className="field has-addons">
               <div className="control">
                 <div className="button is-static px-2">
@@ -48,6 +43,12 @@ const FilterForm = (props) => {
                 />
               </div>
             </div>
+          </div>
+
+          <div className="column is-narrow">
+            <label className="checkbox">
+              <Field type="checkbox" name="isFavorite" /> Favorite servers
+            </label>
           </div>
         </div>
       </form>
