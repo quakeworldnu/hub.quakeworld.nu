@@ -14,9 +14,7 @@ const mapDispatchToProps = {
 const FavoriteToggle = (props) => {
   const { toggleFavoriteServer, isEnabled, serverAddress } = props;
 
-  const iconFileName = isEnabled
-    ? "star_black_24dp"
-    : "star_outline_black_24dp";
+  const iconFileName = isEnabled ? "star_fill" : "star_outline";
 
   return (
     <div onClick={() => toggleFavoriteServer({ serverAddress })}>
