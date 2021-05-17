@@ -1,4 +1,5 @@
 @import "node_modules/bulma/sass/utilities/initial-variables";
+@import "node_modules/bulma/sass/utilities/mixins";
 
 $scheme-main: #112;
 $scheme-main-bis: lighten($scheme-main, 8);
@@ -24,9 +25,9 @@ $button-hover-border-color: $button-border-color;
 
 $input-background-color: $scheme-main-bis;
 
-$section-padding: 0 1rem 2rem;
-$section-padding-medium: 0 0 2rem;
-$section-padding-large: 0 0 2rem;
+$section-padding: 0 0 2rem;
+$section-padding-medium: $section-padding;
+$section-padding-large: $section-padding;
 
 $progress-bar-background-color: $scheme-main;
 $progress-value-background-color: $grey;
@@ -36,7 +37,16 @@ $radius-small: $radius;
 
 $tag-radius: 2px;
 
-$container-max-width: 99999px;
+$container-max-width: 9999px;
+
+// container
+.container.is-fluid {
+  padding: 0 $gap/2;
+
+  @include from($desktop) {
+    padding: 0 $gap;
+  }
+}
 
 // buttons
 .button.is-primary:not(.is-outlined, .is-inverted, .is-light) {
