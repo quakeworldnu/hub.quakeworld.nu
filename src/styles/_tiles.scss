@@ -1,7 +1,9 @@
+$width: 320px;
+
 .app-tiles {
   display: grid;
   grid-gap: 32px;
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax($width, 1fr));
 }
 .app-tile {
   display: flex;
