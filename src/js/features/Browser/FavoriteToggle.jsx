@@ -23,6 +23,7 @@ const FavoriteToggle = (props) => {
         width="20"
         height="20"
         align="center"
+        className="is-clickable"
       />
     </div>
   );
