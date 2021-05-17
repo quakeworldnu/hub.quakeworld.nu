@@ -9,7 +9,6 @@ export const metaByServer = (server) => {
   const totalPlayerSlots = server.MaxClients;
   const freePlayerSlots = totalPlayerSlots - playerCount;
   const hasFreePlayerSlots = freePlayerSlots > 0;
-
   const descriptionParts = server.Description.split(", ");
 
   let modeName = descriptionParts[0];
@@ -33,6 +32,7 @@ export const metaByServer = (server) => {
 
   const isStarted = server.Description.indexOf("min left") !== -1;
   const isStandby = !isStarted;
+  const isWaitingForPlayersToReadyUp = isStandby && !hasFreePlayerSlots;
 
   let minutesRemaining = 0;
   if (isStarted) {
@@ -72,6 +72,7 @@ export const metaByServer = (server) => {
   const meta = {
     isStandby,
     isStarted,
+    isWaitingForPlayersToReadyUp,
     minutesTotal,
     minutesElapsed,
     minutesRemaining,
@@ -127,7 +128,7 @@ export const statusTextByMeta = (meta) => {
         status.push("Waiting for players to ready up");
       }
     } else {
-      status.push(gameTimeProgress(meta.minutesRemaining));
+      status.push(`Started, ${gameTimeProgress(meta.minutesRemaining)}`);
     }
   }
 

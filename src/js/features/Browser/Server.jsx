@@ -19,7 +19,17 @@ const ServerHeader = (props) => {
           <div className="app-text-small level">
             <div className="level-left">
               <div className="level-item">
-                <span className="server-status" />
+                <span className="server-status mr-1">
+                  {server.meta.isStarted && (
+                    <div className="indicator-started" />
+                  )}{" "}
+                  {server.meta.isWaitingForPlayersToReadyUp && (
+                    <div className="indicator-waiting-container">
+                      <div className="indicator-waiting" />
+                    </div>
+                  )}
+                </span>
+
                 <span>{server.meta.statusText}</span>
                 {server.meta.isStarted && server.meta.minutesRemaining && (
                   <progress
