@@ -1,6 +1,10 @@
 @import "node_modules/bulma/sass/utilities/initial-variables";
 @import "node_modules/bulma/sass/utilities/mixins";
 
+$family-sans-serif: "Roboto", BlinkMacSystemFont, -apple-system, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+$family-primary: $family-sans-serif;
+$family-secondary: $family-sans-serif;
+
 $scheme-main: #112;
 $scheme-main-bis: lighten($scheme-main, 8);
 $scheme-main-ter: lighten($scheme-main, 16);
@@ -9,8 +13,6 @@ $primary: $blue;
 $dark: #222;
 
 $background: $scheme-main-ter;
-
-$family-sans-serif: "Roboto", BlinkMacSystemFont, -apple-system, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 
 $text: #ccc;
 $text-strong: lighten($text, 10);
