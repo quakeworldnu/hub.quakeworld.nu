@@ -13,8 +13,13 @@ export const metaByServer = (server) => {
   const descriptionParts = server.Description.split(", ");
 
   let modeName = descriptionParts[0];
-  const isDuel = "1v1" === modeName;
   const isXonX = /\d+v\d+/gi.test(modeName);
+
+  if (isXonX) {
+    modeName = modeName.replace("v", "on");
+  }
+
+  const isDuel = "1on1" === modeName;
   const isTeamplay = !isDuel && isXonX;
   const isRace = "Racing" === server.Description;
   const isFfa = "FFA" === modeName;
