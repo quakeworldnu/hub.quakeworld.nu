@@ -34,8 +34,3 @@
 .button.is-dark:not(.is-outlined, .is-inverted, .is-light) {
   @include app-gradient-button(#444554)
 }
-
-// progress
-progress {
-  border: 1px solid $progress-bar-background-color !important;
-}

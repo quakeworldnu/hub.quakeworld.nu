@@ -116,11 +116,46 @@ $matchtag-bg: $red;
   color: $spec-color;
 }
 
-.server progress {
-  margin-top: 3px;
-  width: 36px !important;
-  height: 6px !important;
+.server-progress {
+  $height: 2px;
+  height: $height !important;
+  background-color: $grey;
+
+  .server-progress-bar {
+    position: relative;
+    height: $height;
+    background: linear-gradient(to right, darken($green, 20) 80%, $green);
+    display: flex;
+    align-items: center;
+
+    &:after {
+      $dot: 6px;
+      $color: $green;
+
+      display: block;
+      width: $dot;
+      height: $dot;
+      position: absolute;
+      right: -($dot/2);
+      border-radius: $dot;
+      background-color: $color;
+      content: '';
+      box-shadow: rgba(black, 0.5) 0 0 2px 1px, rgba(lighten($color, 20), 0.4) 0 0 3px 2px;
+      animation: serverProgressDot 0.8s infinite linear alternate;
+
+      @keyframes serverProgressDot {
+        0% {
+          background-color: $color;
+        }
+        50%,
+        100% {
+          background-color: lighten($color, 20);
+        }
+      }
+    }
+  }
 }
+
 
 .server-footer {
   background: $footer-bg;

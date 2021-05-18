@@ -2,6 +2,19 @@ import FavoriteToggle from "./FavoriteToggle";
 import React from "react";
 import { quakeTextToHtml } from "../../common/util";
 
+const ServerProgress = (props) => {
+  const { value, max } = props;
+
+  const progress = 100 * (value / max);
+  const width = `${progress}%`;
+
+  return (
+    <div className="server-progress">
+      <div className="server-progress-bar" style={{ width }} />
+    </div>
+  );
+};
+
 const ServerHeader = (props) => {
   const { server } = props;
 
@@ -26,13 +39,6 @@ const ServerHeader = (props) => {
                 </span>
 
                 <span>{server.meta.statusText}</span>
-                {server.meta.isStarted && server.meta.minutesRemaining && (
-                  <progress
-                    className="progress ml-2"
-                    value={server.meta.minutesElapsed}
-                    max={server.meta.minutesTotal}
-                  />
-                )}
               </div>
             </div>
           </div>
@@ -43,6 +49,13 @@ const ServerHeader = (props) => {
           </a>
         )}
       </div>
+
+      {server.meta.isStarted && server.meta.minutesRemaining && (
+        <ServerProgress
+          value={server.meta.minutesElapsed}
+          max={server.meta.minutesTotal}
+        />
+      )}
 
       {server.meta.hasMatchtag && (
         <div className="server-matchtag">{server.meta.matchtag}</div>
