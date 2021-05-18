@@ -63,15 +63,15 @@ $matchtag-2: #ff8100;
   @mixin smod($color, $color-alt, $glow-width) {
     padding: 2px;
     background: linear-gradient(to bottom, $color, $color-alt);
-    box-shadow: rgba($color, 0.4) 0 0 $glow-width;
+    box-shadow: rgba($color, 0.2) 0 0 $glow-width;
   }
 
   &.smod-matchtag {
-    @include smod($matchtag-1, $matchtag-2, 96px);
+    @include smod($matchtag-1, $matchtag-2, 64px);
   }
 
   &.smod-hasfreeplayerslots {
-    @include smod(#2397d1, #333344, 48px);
+    @include smod(#2397d1, #333344, 32px);
   }
 }
 
