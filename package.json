@@ -14,7 +14,7 @@
     "build:jekyll": "cd jekyll && bundle exec jekyll build",
     "build:assets": "gulp assets:prod",
     "build:apps": "snowpack build",
-    "clean": "cd jekyll && bundle exec jekyll clean",
+    "clean": "rm -rf build && cd jekyll && bundle exec jekyll clean",
     "start:sync": "browser-sync start --config bs-config.js",
     "start": "snowpack dev",
     "gulp": "gulp",
