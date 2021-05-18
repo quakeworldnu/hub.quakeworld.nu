@@ -9,7 +9,7 @@ $scheme-main: #112;
 $scheme-main-bis: lighten($scheme-main, 8);
 $scheme-main-ter: lighten($scheme-main, 16);
 
-$primary: $blue;
+$primary: #398833;
 $dark: #222;
 
 $background: $scheme-main-ter;
@@ -40,34 +40,3 @@ $radius-small: $radius;
 $tag-radius: 2px;
 
 $container-max-width: 9999px;
-
-// container
-.container.is-fluid {
-  padding: 0 $gap/2;
-
-  @include from($desktop) {
-    padding: 0 $gap;
-  }
-}
-
-// buttons
-.button.is-primary:not(.is-outlined, .is-inverted, .is-light) {
-  $factor: 5;
-  $default-light: lighten($primary, $factor);
-  $default-dark: darken($primary, 2*$factor);
-  $hover-light: darken($default-light, $factor);
-  $hover-dark: darken($default-dark, $factor);
-
-  box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 4px;
-  border: none;
-  background: linear-gradient(to bottom, $default-light, $default-dark);
-
-  &:hover {
-    background: linear-gradient(to bottom, $hover-light, $hover-dark);
-  }
-}
-
-// progress
-progress {
-  border: 1px solid $progress-bar-background-color !important;
-}

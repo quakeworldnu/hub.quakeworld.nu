@@ -1,18 +1,41 @@
 @import "./bulma_variables";
 
-// buttons
-.button.is-primary:not(.is-outlined, .is-inverted, .is-light) {
-  $factor: 5;
-  $default-light: lighten($primary, $factor);
-  $default-dark: darken($primary, 2*$factor);
-  $hover-light: darken($default-light, $factor);
-  $hover-dark: darken($default-dark, $factor);
+// container
+.container.is-fluid {
+  padding: 0 $gap/2;
 
+  @include from($desktop) {
+    padding: 0 $gap;
+  }
+}
+
+// buttons
+@mixin app-gradient-button($color) {
+  $factor: 5;
+  $default-top: lighten($color, $factor);
+  $default-bottom: darken($color, $factor);
+  $hover-top: lighten($default-top, $factor);
+  $hover-bottom: lighten($default-bottom, $factor);
+
+  border: 1px solid $default-top;
+  background: linear-gradient(to bottom, $default-top, $default-bottom);
   box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 4px;
-  border: none;
-  background: linear-gradient(to bottom, $default-light, $default-dark);
 
   &:hover {
-    background: linear-gradient(to bottom, $hover-light, $hover-dark);
+    border-color: $hover-top;
+    background: linear-gradient(to bottom, $hover-top, $hover-bottom);
   }
+}
+
+.button.is-primary:not(.is-outlined, .is-inverted, .is-light, .is-dark) {
+  @include app-gradient-button($primary);
+}
+
+.button.is-dark:not(.is-outlined, .is-inverted, .is-light) {
+  @include app-gradient-button(#444554)
+}
+
+// progress
+progress {
+  border: 1px solid $progress-bar-background-color !important;
 }
