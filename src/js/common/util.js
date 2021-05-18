@@ -46,7 +46,8 @@ export const metaByServer = (server) => {
   );
 
   const hasQtv = server.QTV.length > 0 && server.QTV[0].Address !== "";
-  const hasQtvSpectators = hasQtv && server.QTV[0].Specs > 0;
+  const qtvSpectatorCount = hasQtv ? server.QTV[0].Specs : 0;
+  const hasQtvSpectators = qtvSpectatorCount > 0;
 
   if (hasQtvSpectators) {
     rawClientNames = rawClientNames.concat(server.QTV[0].SpecList);
@@ -99,6 +100,7 @@ export const metaByServer = (server) => {
     hasFreePlayerSlots,
     hasQtv,
     hasQtvSpectators,
+    qtvSpectatorCount,
   };
 
   meta.statusText = statusTextByMeta(meta);

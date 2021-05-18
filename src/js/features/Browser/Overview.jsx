@@ -7,28 +7,22 @@ const Overview = (props) => {
   const { servers } = props;
   const serverCount = servers.length;
 
-  let totalClientCount = 0;
-  let totalPlayCount = 0;
-  let totalSpecCount = 0;
-  let clientCount = 0;
-  let playCount = 0;
-  let specCount = 0;
+  let playerCount = 0;
+  let spectatorCount = 0;
+  let meta;
 
   for (let i = 0; i < serverCount; i++) {
-    clientCount = servers[i].Players.length;
-    totalClientCount += clientCount;
-
-    specCount = servers[i].Players.filter((p) => p.Spec).length;
-    totalSpecCount += specCount;
-
-    playCount = clientCount - specCount;
-    totalPlayCount += playCount;
+    meta = servers[i].meta;
+    playerCount += meta.playerCount;
+    spectatorCount += meta.spectatorCount + meta.qtvSpectatorCount;
   }
+
+  const clientCount = playerCount + spectatorCount;
 
   return (
     <div className="app-text-small" id="app-overview">
-      {totalClientCount} clients ({totalPlayCount} players, {totalSpecCount}{" "}
-      spectators) across {serverCount} servers
+      {clientCount} clients ({playerCount} players, {spectatorCount} spectators)
+      across {serverCount} servers
     </div>
   );
 };
