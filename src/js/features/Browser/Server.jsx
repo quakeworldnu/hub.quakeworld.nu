@@ -45,9 +45,7 @@ const ServerHeader = (props) => {
       </div>
 
       {server.meta.hasMatchtag && (
-        <div className="server-matchtag py-1 has-text-weight-bold has-text-centered is-uppercase">
-          {server.meta.matchtag}
-        </div>
+        <div className="server-matchtag">{server.meta.matchtag}</div>
       )}
     </div>
   );
