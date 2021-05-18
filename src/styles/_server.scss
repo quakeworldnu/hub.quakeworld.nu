@@ -60,10 +60,8 @@ $matchtag-2: yellow;
 }
 
 .server-wrapper {
-  $width: 3px;
-
   @mixin smod($color, $color-alt, $glow-width) {
-    padding: $width;
+    padding: 2px;
     background: linear-gradient(to bottom, $color, $color-alt);
     box-shadow: rgba($color, 0.4) 0 0 $glow-width;
   }
