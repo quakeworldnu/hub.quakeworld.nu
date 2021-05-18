@@ -7,11 +7,6 @@ const ServerHeader = (props) => {
 
   return (
     <div className="server-header">
-      {server.meta.hasMatchtag && (
-        <div className="server-matchtag p-3 has-text-weight-bold has-text-centered">
-          {server.meta.matchtag}
-        </div>
-      )}
       <div className="is-flex is-justify-content-space-between p-3">
         <div>
           <strong className="has-text-white">{server.meta.mode.name}</strong> on{" "}
@@ -48,6 +43,12 @@ const ServerHeader = (props) => {
           </a>
         )}
       </div>
+
+      {server.meta.hasMatchtag && (
+        <div className="server-matchtag py-1 has-text-weight-bold has-text-centered is-uppercase">
+          {server.meta.matchtag}
+        </div>
+      )}
     </div>
   );
 };

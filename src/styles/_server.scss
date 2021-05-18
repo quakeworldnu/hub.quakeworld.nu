@@ -3,8 +3,8 @@ $spectator-bg: #3c3c4c;
 $footer-bg: #334;
 $footer-color: #ababb9;
 $spec-color: #f9d99db3;
-$matchtag-1: deeppink;
-$matchtag-2: yellow;
+$matchtag-1: #ffd716;
+$matchtag-2: #ff8100;
 
 
 .server-wrapper {
@@ -54,9 +54,9 @@ $matchtag-2: yellow;
 }
 
 .server-matchtag {
-  background-color: $matchtag-1;
-  color: $matchtag-2;
-  text-shadow: #666 1px 1px 2px;
+  background-color: #ffd818;
+  color: #fff;
+  text-shadow: #000000b0 1px 1px 2px;
 }
 
 .server-wrapper {
@@ -71,7 +71,7 @@ $matchtag-2: yellow;
   }
 
   &.smod-hasfreeplayerslots {
-    @include smod(darken($primary, 5), darken($primary, 20), 48px);
+    @include smod(#2397d1, #333344, 48px);
   }
 }
 
