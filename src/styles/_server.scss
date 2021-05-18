@@ -60,31 +60,20 @@ $matchtag-2: yellow;
 }
 
 .server-wrapper {
-  @mixin smod($color) {
-    border: 3px solid;
-    border-radius: 3px;
-    background-color: rgba($color, 0.2);
-    border-color: rgba(lighten($color, 10), 0.5) rgba($color, 0.5) rgba(darken($color, 10), 0.5) rgba(lighten($color, 5), 0.5);
-    box-shadow: rgba($color, 0.2) 0 0 48px;
-  }
+  $width: 3px;
 
-  &.smod-started {
-    @include smod($matchtag-1);
+  @mixin smod($color, $color-alt, $glow-width) {
+    padding: $width;
+    background: linear-gradient(to bottom, $color, $color-alt);
+    box-shadow: rgba($color, 0.4) 0 0 $glow-width;
   }
 
   &.smod-matchtag {
-    padding: 3px;
-    background: linear-gradient(to bottom, $matchtag-1, $matchtag-2);
-    border: none !important;
-    box-shadow: rgba(255, 0, 255, 0.4) 0 0 96px;
-  }
-
-  &.smod-waitingforready {
-    @include smod(#777);
+    @include smod($matchtag-1, $matchtag-2, 96px);
   }
 
   &.smod-hasfreeplayerslots {
-    @include smod($blue);
+    @include smod(darken($primary, 5), darken($primary, 20), 48px);
   }
 }
 
