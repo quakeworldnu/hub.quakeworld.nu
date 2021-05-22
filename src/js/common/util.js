@@ -41,9 +41,7 @@ export const metaByServer = (server) => {
   const minutesTotal = server.Settings.timelimit;
   const minutesElapsed = minutesTotal - minutesRemaining;
 
-  let rawClientNames = server.Players.filter((p) => !p.IsBot).map(
-    (p) => p.Name
-  );
+  let rawClientNames = server.Players.map((p) => p.Name);
 
   const hasQtv = server.QTV.length > 0 && server.QTV[0].Address !== "";
   const qtvSpectatorCount = hasQtv ? server.QTV[0].Specs : 0;
