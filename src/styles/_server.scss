@@ -98,6 +98,11 @@ $matchtag-bg: $red;
   color: white;
 }
 
+.server-flag {
+  display: inline-block;
+  vertical-align: middle;
+}
+
 .server-spectators {
   background: $spectator-bg;
   line-height: 1.3;

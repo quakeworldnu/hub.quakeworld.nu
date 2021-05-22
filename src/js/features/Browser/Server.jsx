@@ -215,6 +215,7 @@ const ServerFooter = (props) => {
               width="16"
               height="11"
               alt={server.Country.toLowerCase()}
+              className="server-flag"
             />
           )}{" "}
           {server.Address}
