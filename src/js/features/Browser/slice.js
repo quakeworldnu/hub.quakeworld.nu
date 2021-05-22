@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { metaByServer, compareServers } from "../../common/util";
+import { metaByServer, compareServers, sortByProp } from "../../common/util";
 import storage from "../../common/storage";
 
 const getDefaultUiState = () => ({
@@ -33,11 +33,18 @@ export default createSlice({
         );
       }
 
+      // sort players
+      for (let i = 0; i < servers.length; i++) {
+        servers[i].Players.sort(sortByProp("Team", "ASC"));
+        servers[i].Players.sort(sortByProp("Frags", "DESC"));
+      }
+
       // meta
       for (let i = 0; i < servers.length; i++) {
         servers[i].meta = metaByServer(servers[i]);
       }
 
+      // sort servers
       servers.sort(compareServers);
 
       state.servers = servers;

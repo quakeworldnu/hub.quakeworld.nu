@@ -161,18 +161,25 @@ const teamsByPlayers = (players) => {
     delete team.totalPing;
   }
 
-  const sortByFrags = (a, b) => {
-    if (a.frags > b.frags) {
-      return -1;
-    } else if (a.frags < b.frags) {
-      return 1;
+  teams.sort(sortByProp("frags", "DESC"));
+
+  return teams;
+};
+
+export const sortByProp = (prop, dir) => {
+  const compareFunc = (a, b) => {
+    const gtValue = "ASC" === dir ? 1 : -1;
+    const ltValue = -gtValue;
+
+    if (a[prop] > b[prop]) {
+      return gtValue;
+    } else if (a[prop] < b[prop]) {
+      return ltValue;
     }
     return 0;
   };
 
-  teams.sort(sortByFrags);
-
-  return teams;
+  return compareFunc;
 };
 
 const gameTimeProgress = (minutesRemaining) => {
