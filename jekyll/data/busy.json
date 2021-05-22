@@ -1460,5 +1460,76 @@
       }
     ],
     "QTV": []
+  },
+  {
+    "IpAddress": "46.227.68.149",
+    "Address": "qw.irc.ax:27510",
+    "Description": "4v4, 0 min left",
+    "Title": "QW.IRC.AX KTX #10",
+    "Port": 27510,
+    "Country": "",
+    "IsProxy": false,
+    "Map": "bloodfest",
+    "MaxClients": 8,
+    "MaxSpectators": 6,
+    "Settings": {
+      "maxfps": "77",
+      "pm_ktjump": "1",
+      "*version": "MVDSV 0.33",
+      "*z_ext": "511",
+      "maxspectators": "6",
+      "sv_bigcoords": "1",
+      "sv_antilag": "2",
+      "*admin": "suom1#1337",
+      "ktxver": "1.39",
+      "needpass": "4",
+      "*gamedir": "qw",
+      "fpd": "142",
+      "*progs": "so",
+      "maxclients": "8",
+      "teamplay": "2",
+      "map": "bloodfest",
+      "hostname": "QW.IRC.AX KTX #10",
+      "status": "0 min left"
+    },
+    "QtvOnly": false,
+    "Players": [
+      {
+        "Colors": [
+          1,
+          1
+        ],
+        "Frags": 122,
+        "Ping": 102,
+        "Spec": false,
+        "Name": "MoonDrunk",
+        "Team": "coop",
+        "Time": 2,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          12,
+          11
+        ],
+        "Frags": -9999,
+        "Ping": 666,
+        "Spec": true,
+        "Name": "[ServeMe]",
+        "Team": "lqwc",
+        "Time": 2,
+        "IsBot": true,
+        "Flag": ""
+      }
+    ],
+    "QTV": [
+      {
+        "Host": "QW.IRC.AX QTV",
+        "Address": "10@qw.irc.ax:28000",
+        "Specs": 0,
+        "SpecList": []
+      }
+    ]
   }
 ]
