@@ -1531,5 +1531,300 @@
         "SpecList": []
       }
     ]
+  },
+  {
+    "IpAddress": "80.241.209.47",
+    "Address": "80.241.209.47:28501",
+    "Description": "FFA, 2 min left",
+    "Title": "Cargo Bay 5:28501",
+    "Port": 28501,
+    "Country": "DE",
+    "IsProxy": false,
+    "Map": "schloss",
+    "MaxClients": 26,
+    "MaxSpectators": 6,
+    "Settings": {
+      "maxfps": "77",
+      "pm_ktjump": "1",
+      "*version": "MVDSV 0.33",
+      "*z_ext": "511",
+      "maxspectators": "6",
+      "*admin": "engineartist <miika.vihersaari@gmail.com>",
+      "ktxver": "1.39",
+      "sv_antilag": "2",
+      "*gamedir": "qw",
+      "*progs": "so",
+      "maxclients": "26",
+      "deathmatch": "3",
+      "timelimit": "8",
+      "fraglimit": "50",
+      "map": "schloss",
+      "serverdemo": "ffa_7[schloss]210522-2059.mvd",
+      "hostname": "Cargo Bay 5:28501",
+      "fpd": "206",
+      "status": "2 min left"
+    },
+    "QtvOnly": false,
+    "Players": [
+      {
+        "Colors": [
+          11,
+          10
+        ],
+        "Frags": 22,
+        "Ping": 27,
+        "Spec": false,
+        "Name": "Shoxe",
+        "Team": "red",
+        "Time": 7,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          13,
+          13
+        ],
+        "Frags": 14,
+        "Ping": 79,
+        "Spec": false,
+        "Name": "scarface",
+        "Team": "blue",
+        "Time": 7,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          1,
+          3
+        ],
+        "Frags": 22,
+        "Ping": 25,
+        "Spec": false,
+        "Name": "QillBill",
+        "Team": "blue",
+        "Time": 7,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          0,
+          13
+        ],
+        "Frags": 41,
+        "Ping": 25,
+        "Spec": false,
+        "Name": "÷åòîåò",
+        "Team": "red",
+        "Time": 7,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          11,
+          2
+        ],
+        "Frags": 23,
+        "Ping": 29,
+        "Spec": false,
+        "Name": "Aggrominister",
+        "Team": "",
+        "Time": 7,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          9,
+          2
+        ],
+        "Frags": 18,
+        "Ping": 53,
+        "Spec": false,
+        "Name": "[QZ] Scordan",
+        "Team": "red",
+        "Time": 7,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          0,
+          4
+        ],
+        "Frags": 12,
+        "Ping": 25,
+        "Spec": false,
+        "Name": "[QZ] TailZ",
+        "Team": "red",
+        "Time": 7,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          12,
+          11
+        ],
+        "Frags": -9999,
+        "Ping": 666,
+        "Spec": true,
+        "Name": "[ServeMe]",
+        "Team": "lqwc",
+        "Time": 7,
+        "IsBot": true,
+        "Flag": ""
+      }
+    ],
+    "QTV": []
+  },
+  {
+    "IpAddress": "91.102.91.59",
+    "Address": "qw.foppa.dk:27502",
+    "Description": "2v2, 10 min left",
+    "Title": "qw.foppa.dk #2 - ktx (blue vs. red)",
+    "Port": 27502,
+    "Country": "DK",
+    "IsProxy": false,
+    "Map": "anwalk",
+    "MaxClients": 4,
+    "MaxSpectators": 4,
+    "Settings": {
+      "maxfps": "77",
+      "pm_ktjump": "1",
+      "*version": "MVDSV 0.34-beta",
+      "*z_ext": "511",
+      "maxspectators": "4",
+      "sv_bigcoords": "1",
+      "*admin": "spam@foppa.dk",
+      "ktxver": "1.40-beta",
+      "sv_antilag": "2",
+      "needpass": "4",
+      "teamplay": "2",
+      "*gamedir": "qw",
+      "timelimit": "10",
+      "deathmatch": "3",
+      "*progs": "so",
+      "maxclients": "4",
+      "map": "anwalk",
+      "serverdemo": "2on2_blue_vs_red[anwalk]220521-2106.mvd",
+      "hostname": "qw.foppa.dk #2 - ktx (blue vs. red)",
+      "fpd": "206",
+      "status": "10 min left"
+    },
+    "QtvOnly": false,
+    "Players": [
+      {
+        "Colors": [
+          13,
+          13
+        ],
+        "Frags": 0,
+        "Ping": 25,
+        "Spec": false,
+        "Name": "ocoini",
+        "Team": "blue",
+        "Time": 0,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          13,
+          13
+        ],
+        "Frags": -9999,
+        "Ping": 50,
+        "Spec": true,
+        "Name": "myztikal",
+        "Team": "blue",
+        "Time": 0,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          4,
+          4
+        ],
+        "Frags": 0,
+        "Ping": 25,
+        "Spec": false,
+        "Name": "kip",
+        "Team": "red",
+        "Time": 0,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          4,
+          4
+        ],
+        "Frags": 0,
+        "Ping": 38,
+        "Spec": false,
+        "Name": "Milton",
+        "Team": "red",
+        "Time": 0,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          13,
+          13
+        ],
+        "Frags": 3,
+        "Ping": 40,
+        "Spec": false,
+        "Name": "praxismo",
+        "Team": "blue",
+        "Time": 0,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          4,
+          4
+        ],
+        "Frags": -9999,
+        "Ping": 50,
+        "Spec": true,
+        "Name": "maika",
+        "Team": "m&m",
+        "Time": 0,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          12,
+          11
+        ],
+        "Frags": -9999,
+        "Ping": 666,
+        "Spec": true,
+        "Name": "[ServeMe]",
+        "Team": "lqwc",
+        "Time": 0,
+        "IsBot": true,
+        "Flag": ""
+      }
+    ],
+    "QTV": [
+      {
+        "Host": "qw.foppa.dk - qtv (3)",
+        "Address": "3@qw.foppa.dk:28000",
+        "Specs": 1,
+        "SpecList": [
+          "bosco"
+        ]
+      }
+    ]
   }
 ]
