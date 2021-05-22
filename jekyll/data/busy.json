@@ -1842,5 +1842,169 @@
         ]
       }
     ]
+  },
+  {
+    "IpAddress": "80.241.209.47",
+    "Address": "80.241.209.47:28501",
+    "Description": "8v8, 1 min left",
+    "Title": "Cargo Bay 5:28501 (red vs. blue)",
+    "Port": 28501,
+    "Country": "DE",
+    "IsProxy": false,
+    "Map": "ctf1",
+    "MaxClients": 16,
+    "MaxSpectators": 6,
+    "Settings": {
+      "maxfps": "77",
+      "pm_ktjump": "1",
+      "*version": "MVDSV 0.33",
+      "*z_ext": "511",
+      "maxspectators": "6",
+      "*admin": "engineartist <miika.vihersaari@gmail.com>",
+      "ktxver": "1.39",
+      "sv_antilag": "2",
+      "*gamedir": "qw",
+      "deathmatch": "3",
+      "fpd": "142",
+      "teamplay": "4",
+      "*progs": "so",
+      "maxclients": "16",
+      "watervis": "1",
+      "timelimit": "15",
+      "map": "ctf1",
+      "serverdemo": "ctf_red_vs_blue[ctf1]210522-2132.mvd",
+      "hostname": "Cargo Bay 5:28501 (red vs. blue)",
+      "status": "1 min left"
+    },
+    "QtvOnly": false,
+    "Players": [
+      {
+        "Colors": [
+          4,
+          4
+        ],
+        "Frags": 20,
+        "Ping": 34,
+        "Spec": false,
+        "Name": "Shoxe",
+        "Team": "red",
+        "Time": 24,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          13,
+          13
+        ],
+        "Frags": 52,
+        "Ping": 27,
+        "Spec": false,
+        "Name": "trauert um---",
+        "Team": "blue",
+        "Time": 24,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          13,
+          13
+        ],
+        "Frags": 41,
+        "Ping": 111,
+        "Spec": false,
+        "Name": "scarface",
+        "Team": "blue",
+        "Time": 24,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          13,
+          13
+        ],
+        "Frags": 47,
+        "Ping": 25,
+        "Spec": false,
+        "Name": "QillBill",
+        "Team": "blue",
+        "Time": 24,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          13,
+          13
+        ],
+        "Frags": 80,
+        "Ping": 30,
+        "Spec": false,
+        "Name": "÷åòîåò",
+        "Team": "blue",
+        "Time": 24,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          4,
+          4
+        ],
+        "Frags": 28,
+        "Ping": 25,
+        "Spec": false,
+        "Name": "Aggrominister",
+        "Team": "red",
+        "Time": 24,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          4,
+          4
+        ],
+        "Frags": 29,
+        "Ping": 73,
+        "Spec": false,
+        "Name": "[QZ] Scordan",
+        "Team": "red",
+        "Time": 24,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          4,
+          4
+        ],
+        "Frags": 11,
+        "Ping": 26,
+        "Spec": false,
+        "Name": "[QZ] TailZ",
+        "Team": "red",
+        "Time": 24,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          12,
+          11
+        ],
+        "Frags": -9999,
+        "Ping": 666,
+        "Spec": true,
+        "Name": "[ServeMe]",
+        "Team": "lqwc",
+        "Time": 24,
+        "IsBot": true,
+        "Flag": ""
+      }
+    ],
+    "QTV": []
   }
 ]
