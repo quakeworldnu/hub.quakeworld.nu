@@ -230,11 +230,11 @@ export const regions = [
 ];
 
 export const regionNameByCountryCode = (cc) => {
-  regions.forEach((region) => {
-    if (region.country_codes.includes(cc)) {
-      return region;
+  for (let i = 0; i < regions.length; i++) {
+    if (regions[i].country_codes.includes(cc)) {
+      return regions[i].name;
     }
-  });
+  }
 
   return "Undefined";
 };
