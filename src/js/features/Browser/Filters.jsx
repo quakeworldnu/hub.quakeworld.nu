@@ -48,7 +48,7 @@ const FilterForm = (props) => {
 
         <div className="column is-narrow">
           <div className="select">
-            <Field as="select" name="regionName">
+            <Field as="select" name="regionName" className="pr-4">
               <option value="">(any region)</option>
               {regions.map((r, index) => (
                 <option key={index} value={r.name}>
@@ -57,12 +57,14 @@ const FilterForm = (props) => {
               ))}
             </Field>
           </div>
+        </div>
 
-          <label className="checkbox ml-4 p-2">
+        <div className="column is-narrow">
+          <label className="checkbox py-2">
             <Field type="checkbox" name="isFavorite" /> Favorite servers
           </label>
 
-          <label className="checkbox ml-4 p-2">
+          <label className="checkbox ml-4 py-2">
             <Field type="checkbox" name="isStarted" /> Live games
           </label>
         </div>
