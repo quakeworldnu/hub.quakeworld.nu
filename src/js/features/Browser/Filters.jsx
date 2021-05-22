@@ -47,14 +47,6 @@ const FilterForm = (props) => {
         </div>
 
         <div className="column is-narrow">
-          <label className="checkbox p-2">
-            <Field type="checkbox" name="isFavorite" /> Favorite servers
-          </label>
-
-          <label className="checkbox ml-4 p-2">
-            <Field type="checkbox" name="isStarted" /> Live games
-          </label>
-
           <div className="select">
             <Field as="select" name="regionName">
               <option value="">(any region)</option>
@@ -65,6 +57,14 @@ const FilterForm = (props) => {
               ))}
             </Field>
           </div>
+
+          <label className="checkbox ml-4 p-2">
+            <Field type="checkbox" name="isFavorite" /> Favorite servers
+          </label>
+
+          <label className="checkbox ml-4 p-2">
+            <Field type="checkbox" name="isStarted" /> Live games
+          </label>
         </div>
       </React.Fragment>
     </Formik>
