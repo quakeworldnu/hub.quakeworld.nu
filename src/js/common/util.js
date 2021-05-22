@@ -363,6 +363,18 @@ export const compareServers = (a, b) => {
     return 1;
   }
 
+  // spectator count
+  const totalSpectatorCountForA =
+    a.meta.spectatorCount + a.meta.qtvSpectatorCount;
+  const totalSpectatorCountForB =
+    b.meta.spectatorCount + b.meta.qtvSpectatorCount;
+
+  if (totalSpectatorCountForA > totalSpectatorCountForB) {
+    return -1;
+  } else if (totalSpectatorCountForA < totalSpectatorCountForB) {
+    return 1;
+  }
+
   // is started
   if (a.meta.isStarted && !b.meta.isStarted) {
     return -1;
