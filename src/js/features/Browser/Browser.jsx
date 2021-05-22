@@ -5,6 +5,7 @@ import { filterServers } from "../../common/util";
 import Filters from "./Filters";
 import Overview from "./Overview";
 import { Server } from "./Server";
+import ServerDataSource from "./ServerDataSource";
 
 const serverEntriesProvider = {
   get: () => {
@@ -70,6 +71,7 @@ class Browser extends React.Component {
 
     return (
       <React.Fragment>
+        <ServerDataSource />
         <BrowserHeader />
         <BrowserTiles servers={servers} />
       </React.Fragment>
