@@ -37,11 +37,19 @@ export const metaByServer = (server) => {
   const isWaitingForPlayersToReadyUp = isStandby && !hasFreePlayerSlots;
 
   let minutesRemaining = 0;
+  let minutesTotal = 0;
+  let minutesElapsed = 0;
+
   if (isStarted) {
     minutesRemaining = parseInt(descriptionParts[1].replace("min left", ""));
   }
-  const minutesTotal = server.Settings.timelimit;
-  const minutesElapsed = minutesTotal - minutesRemaining;
+
+  if (server.Settings.timelimit) {
+    minutesTotal = server.Settings.timelimit;
+    minutesElapsed = minutesTotal - minutesRemaining;
+  }
+
+  const displayProgress = isStarted && minutesRemaining > 0;
 
   let rawClientNames = server.Players.map((p) => p.Name);
 

@@ -45,7 +45,7 @@ const ServerHeader = (props) => {
           </a>
         )}
       </div>
-      {server.meta.isStarted && server.meta.minutesRemaining && (
+      {server.meta.displayProgress && (
         <ServerProgress
           value={server.meta.minutesElapsed}
           max={server.meta.minutesTotal}
