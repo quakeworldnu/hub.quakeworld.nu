@@ -24,23 +24,19 @@ const ServerHeader = (props) => {
         <div>
           <strong className="has-text-white">{server.meta.mode.name}</strong> on{" "}
           <strong className="has-text-white">{server.Map}</strong>
-          <div className="app-text-small level">
-            <div className="level-left">
-              <div className="level-item">
-                <span className="server-status mr-1">
-                  {server.meta.isStarted && (
-                    <div className="tag is-danger">LIVE</div>
-                  )}{" "}
-                  {server.meta.isStandby && (
-                    <div className="indicator-waiting-container">
-                      <div className="indicator-waiting" />
-                    </div>
-                  )}
-                </span>
+          <div className="app-text-small">
+            <span className="server-status mr-1">
+              {server.meta.isStarted && (
+                <span className="tag is-danger">LIVE</span>
+              )}{" "}
+              {server.meta.isStandby && (
+                <div className="indicator-waiting-container">
+                  <div className="indicator-waiting" />
+                </div>
+              )}
+            </span>
 
-                <span>{server.meta.statusText}</span>
-              </div>
-            </div>
+            <span>{server.meta.statusText}</span>
           </div>
         </div>
         {server.meta.hasFreePlayerSlots && (
