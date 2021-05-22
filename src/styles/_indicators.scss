@@ -6,7 +6,7 @@ $animation-speed: 1s;
 // waiting
 .indicator-waiting-container {
   display: inline-block;
-  width: 4*$size;
+  width: 3*$size;
   margin-left: 2*$size;
   border-bottom: ($size/4) solid transparent;
 }
