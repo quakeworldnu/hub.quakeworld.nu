@@ -161,6 +161,17 @@ const teamsByPlayers = (players) => {
     delete team.totalPing;
   }
 
+  const sortByFrags = (a, b) => {
+    if (a.frags > b.frags) {
+      return -1;
+    } else if (a.frags < b.frags) {
+      return 1;
+    }
+    return 0;
+  };
+
+  teams.sort(sortByFrags);
+
   return teams;
 };
 
