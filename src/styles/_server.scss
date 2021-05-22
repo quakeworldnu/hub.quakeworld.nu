@@ -90,7 +90,8 @@ $matchtag-bg: $red;
 
 .server-players {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
   min-height: 140px;
   height: 100%;
   padding: 1em;

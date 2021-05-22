@@ -83,6 +83,7 @@ export const metaByServer = (server) => {
   const teams = isTeamplay
     ? teamsByPlayers(server.Players.filter((p) => !p.Spec))
     : [];
+  const displayTeams = teams.length > 0 && isStarted;
 
   const meta = {
     isStandby,
@@ -90,6 +91,8 @@ export const metaByServer = (server) => {
     isWaitingForPlayersToReadyUp,
     regionName,
     teams,
+    displayTeams,
+    displayProgress,
     minutesTotal,
     minutesElapsed,
     minutesRemaining,
@@ -151,7 +154,7 @@ const teamsByPlayers = (players) => {
   for (let i = 0; i < teams.length; i++) {
     const team = teams[i];
     if (team.playerCount > 0) {
-      team.avgPing = team.totalPing / team.playerCount;
+      team.avgPing = parseInt(team.totalPing / team.playerCount);
     } else {
       team.avgPing = 0;
     }

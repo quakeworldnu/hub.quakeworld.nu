@@ -79,6 +79,39 @@ const ServerPlayers = (props) => {
         className="server-players"
         style={{ backgroundImage: mapThumbnailSrc }}
       >
+        {server.meta.displayTeams && (
+          <table className="servers-player-table mb-3" style={{ width: "1px" }}>
+            <thead>
+              <tr className="app-text-small">
+                <th width="30" className="app-dim">
+                  ping
+                </th>
+                <th className="pl-2 has-text-left">team</th>
+                <th width="30">frags</th>
+                <th width="30">players</th>
+              </tr>
+            </thead>
+            <tbody>
+              {server.meta.teams.map((team, index) => (
+                <tr key={index}>
+                  <td className="app-text-small app-dim">{team.avgPing}</td>
+
+                  <td
+                    className="has-text-weight-bold has-text-left pl-2"
+                    dangerouslySetInnerHTML={{
+                      __html: quakeTextToHtml(team.name),
+                    }}
+                  />
+                  <td className="app-text-small has-text-weight-bold">
+                    {team.frags}
+                  </td>
+                  <td className="app-text-small">{team.playerCount}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+
         {server.meta.hasPlayers && (
           <table className="servers-player-table">
             <thead>
@@ -118,7 +151,7 @@ const ServerPlayers = (props) => {
             </tbody>
           </table>
         )}
-        {!server.meta.playerCount && (
+        {!server.meta.hasPlayers && (
           <div className="has-text-centered is-flex-grow-1">(no players)</div>
         )}
       </div>
