@@ -152,7 +152,7 @@ const ServerPlayers = (props) => {
           </table>
         )}
         {!server.meta.hasPlayers && (
-          <div className="has-text-centered is-flex-grow-1">(no players)</div>
+          <div className="has-text-centered">(no players)</div>
         )}
       </div>
     </div>
