@@ -266,6 +266,10 @@ export const filterServers = (servers, filters, favoriteServers) => {
     result = result.filter((s) => s.meta.isStarted);
   }
 
+  if (filters.regionName) {
+    result = result.filter((s) => s.meta.regionName === filters.regionName);
+  }
+
   return result;
 };
 

@@ -3,6 +3,8 @@ import { Formik, Field } from "formik";
 import { connect } from "react-redux";
 import slice from "./slice";
 
+import { regions } from "./../../common/geo";
+
 const FilterForm = (props) => {
   const { values, onValidate } = props;
 
@@ -48,9 +50,21 @@ const FilterForm = (props) => {
           <label className="checkbox p-2">
             <Field type="checkbox" name="isFavorite" /> Favorite servers
           </label>
+
           <label className="checkbox ml-4 p-2">
             <Field type="checkbox" name="isStarted" /> Live games
           </label>
+
+          <div className="select">
+            <Field as="select" name="regionName">
+              <option value="">(any region)</option>
+              {regions.map((r, index) => (
+                <option key={index} value={r.name}>
+                  {r.name}
+                </option>
+              ))}
+            </Field>
+          </div>
         </div>
       </React.Fragment>
     </Formik>

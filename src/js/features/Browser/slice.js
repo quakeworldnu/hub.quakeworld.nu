@@ -10,6 +10,7 @@ const getDefaultUiState = () => ({
     query: "",
     isFavorite: false,
     isStarted: false,
+    region: "",
   },
 });
 

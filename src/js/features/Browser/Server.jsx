@@ -20,6 +20,7 @@ const ServerHeader = (props) => {
 
   return (
     <div className="server-header">
+      {server.meta.region}
       <div className="is-flex is-justify-content-space-between p-3">
         <div>
           <strong className="has-text-white">{server.meta.mode.name}</strong> on{" "}
@@ -45,14 +46,12 @@ const ServerHeader = (props) => {
           </a>
         )}
       </div>
-
       {server.meta.isStarted && server.meta.minutesRemaining && (
         <ServerProgress
           value={server.meta.minutesElapsed}
           max={server.meta.minutesTotal}
         />
       )}
-
       {server.meta.hasMatchtag && (
         <div className="server-matchtag">{server.meta.matchtag}</div>
       )}
