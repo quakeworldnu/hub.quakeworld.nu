@@ -25,7 +25,7 @@ const serverEntriesProvider = {
 };
 
 const BrowserHeader = () => (
-  <div className="my-3">
+  <div className="my-2">
     <div className="columns is-mobile is-vcentered is-multiline">
       <div className="column is-narrow">
         <a href="/">
