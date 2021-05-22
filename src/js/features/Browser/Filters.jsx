@@ -45,10 +45,10 @@ const FilterForm = (props) => {
         </div>
 
         <div className="column is-narrow">
-          <label className="checkbox">
+          <label className="checkbox p-2">
             <Field type="checkbox" name="isFavorite" /> Favorite servers
           </label>
-          <label className="checkbox ml-4">
+          <label className="checkbox ml-4 p-2">
             <Field type="checkbox" name="isStarted" /> Live games
           </label>
         </div>
