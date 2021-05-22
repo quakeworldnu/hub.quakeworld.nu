@@ -72,11 +72,16 @@ export const metaByServer = (server) => {
 
   const regionName = regionNameByCountryCode(server.Country);
 
+  const teams = isTeamplay
+    ? teamsByPlayers(server.Players.filter((p) => !p.Spec))
+    : [];
+
   const meta = {
     isStandby,
     isStarted,
     isWaitingForPlayersToReadyUp,
     regionName,
+    teams,
     minutesTotal,
     minutesElapsed,
     minutesRemaining,
@@ -109,6 +114,43 @@ export const metaByServer = (server) => {
   meta.statusText = statusTextByMeta(meta);
 
   return meta;
+};
+
+const teamsByPlayers = (players) => {
+  const teamsObj = {};
+
+  for (let i = 0; i < players.length; i++) {
+    const player = players[i];
+    const teamName = player.Team;
+
+    if (!teamsObj.hasOwnProperty(teamName)) {
+      teamsObj[teamName] = {
+        name: teamName,
+        playerCount: 0,
+        frags: 0,
+        totalPing: 0,
+      };
+    }
+
+    const playerTeam = teamsObj[teamName];
+    playerTeam.playerCount += 1;
+    playerTeam.frags += player.Frags;
+    playerTeam.totalPing += player.Ping;
+  }
+
+  const teams = Object.values(teamsObj);
+
+  for (let i = 0; i < teams.length; i++) {
+    const team = teams[i];
+    if (team.playerCount > 0) {
+      team.avgPing = team.totalPing / team.playerCount;
+    } else {
+      team.avgPing = 0;
+    }
+    delete team.totalPing;
+  }
+
+  return teams;
 };
 
 const gameTimeProgress = (minutesRemaining) => {
