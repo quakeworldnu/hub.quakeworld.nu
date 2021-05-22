@@ -208,7 +208,7 @@ const ServerFooter = (props) => {
   return (
     <div className="server-footer app-text-small p-3">
       <div className="columns is-mobile is-vcentered is-justify-content-space-between">
-        <div className="column is-narrow">
+        <div className="column">
           {server.Country && (
             <img
               src={`https://badplace.eu/images/icons/flags/${server.Country.toLowerCase()}.png`}
