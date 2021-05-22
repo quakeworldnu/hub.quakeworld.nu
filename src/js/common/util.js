@@ -1,3 +1,5 @@
+import { regionNameByCountryCode } from "./geo";
+
 export const deepCopy = (obj) => JSON.parse(JSON.stringify(obj));
 
 export const metaByServer = (server) => {
@@ -68,10 +70,13 @@ export const metaByServer = (server) => {
   const matchtag = server.Settings.matchtag || "";
   const hasMatchtag = matchtag !== "";
 
+  const regionName = regionNameByCountryCode(server.Country);
+
   const meta = {
     isStandby,
     isStarted,
     isWaitingForPlayersToReadyUp,
+    regionName,
     minutesTotal,
     minutesElapsed,
     minutesRemaining,
