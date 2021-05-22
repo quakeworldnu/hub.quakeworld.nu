@@ -25,6 +25,14 @@ export default createSlice({
     updateServers: (state, action) => {
       const { servers } = action.payload;
 
+      // ignore bots
+      for (let i = 0; i < servers.length; i++) {
+        servers[i].Players = servers[i].Players.filter(
+          (p) => !(p.Spec && p.IsBot)
+        );
+      }
+
+      // meta
       for (let i = 0; i < servers.length; i++) {
         servers[i].meta = metaByServer(servers[i]);
       }
