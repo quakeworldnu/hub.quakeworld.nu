@@ -20,7 +20,9 @@ $app-player-colors: (
     .qw-bgcolor-#{$topValue}-#{$bottomValue} {
       $topFixed: saturate(lighten($topHex, 15), 10);
       $botFixed: saturate(lighten($bottomHex, 15), 10);
-      background: linear-gradient(to bottom, $topFixed, $topFixed 50%, $botFixed 50%, $botFixed 100%);
+      $offsetY: 1px;
+      background: linear-gradient(to bottom, transparent 0 $offsetY, $topFixed $offsetY 50%, transparent 50% 100%),
+      linear-gradient(to top, transparent 0 $offsetY, $botFixed $offsetY 50%, transparent 50% 100%);
     }
   }
 }

@@ -89,7 +89,9 @@ const ServerPlayers = (props) => {
           <table className="servers-player-table">
             <thead>
               <tr className="app-text-small">
-                <th width="30">ping</th>
+                <th width="30" className="app-dim">
+                  ping
+                </th>
                 <th width="30">frags</th>
                 {server.meta.mode.isTeamplay && <th width="60">team</th>}
                 <th className="pl-2 has-text-left">name</th>
@@ -98,7 +100,7 @@ const ServerPlayers = (props) => {
             <tbody>
               {players.map((player, index) => (
                 <tr key={index}>
-                  <td className="app-text-small">{player.Ping}</td>
+                  <td className="app-text-small app-dim">{player.Ping}</td>
                   <td
                     className={`app-text-small has-text-weight-bold qw-bgcolor-${player.Colors[0]}-${player.Colors[1]}`}
                   >
