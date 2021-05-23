@@ -119,12 +119,17 @@ $matchtag-bg: $red;
   flex-grow: 1;
 }
 
-.server-mapshot {
+.server-mapshot,
+.server-mapshot-dimmer {
+  height: 100%;
+}
+
+.server-mapshot-dimmer {
   display: flex;
   flex-direction: column;
   justify-content: center;
   min-height: 140px;
-  height: 100%;
+  background-color: rgba($spectator-bg, 0.5);
   text-shadow: black 1px 1px 1px;
   color: white;
 }

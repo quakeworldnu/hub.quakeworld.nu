@@ -262,7 +262,7 @@ const ServerMapshot = (props) => {
         className="server-mapshot"
         style={{ backgroundImage: mapThumbnailSrc }}
       >
-        <div>
+        <div className="server-mapshot-dimmer">
           {server.meta.hasMatchtag && (
             <div className="server-matchtag m-4">{server.meta.matchtag}</div>
           )}
