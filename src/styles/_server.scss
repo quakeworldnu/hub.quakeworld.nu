@@ -18,7 +18,7 @@ $matchtag-bg: $red;
   height: 100%;
   background: $server-bg;
 
-  .servers-player-table {
+  .servers-table {
     th,
     td {
       color: #e7e7e7;
@@ -76,25 +76,24 @@ $matchtag-bg: $red;
   }
 }
 
-.server-players,
-.server-players-wrapper {
+.server-mapshot,
+.server-mapshot-wrapper {
   background-size: cover;
   background-position: center center;
 }
 
-.server-players-wrapper {
+.server-mapshot-wrapper {
   background-color: #444;
   background-image: url(/assets/img/map_default.jpg);
   flex-grow: 1;
 }
 
-.server-players {
+.server-mapshot {
   display: flex;
   flex-direction: column;
   justify-content: center;
   min-height: 140px;
   height: 100%;
-  padding: 1em;
   text-shadow: black 1px 1px 1px;
   color: white;
 }

@@ -51,14 +51,11 @@ const ServerHeader = (props) => {
           max={server.meta.minutesTotal}
         />
       )}
-      {server.meta.hasMatchtag && (
-        <div className="server-matchtag">{server.meta.matchtag}</div>
-      )}
     </div>
   );
 };
 
-const ServerPlayers = (props) => {
+const ServerMapshot = (props) => {
   const { server } = props;
 
   let players = [];
@@ -74,86 +71,92 @@ const ServerPlayers = (props) => {
   }
 
   return (
-    <div className="server-players-wrapper">
+    <div className="server-mapshot-wrapper">
       <div
-        className="server-players"
+        className="server-mapshot"
         style={{ backgroundImage: mapThumbnailSrc }}
       >
-        {server.meta.displayTeams && (
-          <table className="servers-player-table mb-3" style={{ width: "1px" }}>
-            <thead>
-              <tr className="app-text-small">
-                <th width="30" className="app-dim">
-                  ping
-                </th>
-                <th className="pl-2 has-text-left">team</th>
-                <th width="30">frags</th>
-                <th width="30">players</th>
-              </tr>
-            </thead>
-            <tbody>
-              {server.meta.teams.map((team, index) => (
-                <tr key={index}>
-                  <td className="app-text-small app-dim">{team.avgPing}</td>
+        <div>
+          {server.meta.hasMatchtag && (
+            <div className="server-matchtag m-4">{server.meta.matchtag}</div>
+          )}
 
-                  <td
-                    className="has-text-weight-bold has-text-left pl-2"
-                    dangerouslySetInnerHTML={{
-                      __html: quakeTextToHtml(team.name),
-                    }}
-                  />
-                  <td className="app-text-small has-text-weight-bold">
-                    {team.frags}
-                  </td>
-                  <td className="app-text-small">{team.playerCount}</td>
+          {server.meta.displayTeams && (
+            <table className="servers-table m-4" style={{ width: "1px" }}>
+              <thead>
+                <tr className="app-text-small">
+                  <th width="30" className="app-dim">
+                    ping
+                  </th>
+                  <th className="pl-2 has-text-left">team</th>
+                  <th width="30">frags</th>
+                  <th width="30">players</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+              </thead>
+              <tbody>
+                {server.meta.teams.map((team, index) => (
+                  <tr key={index}>
+                    <td className="app-text-small app-dim">{team.avgPing}</td>
 
-        {server.meta.hasPlayers && (
-          <table className="servers-player-table">
-            <thead>
-              <tr className="app-text-small">
-                <th width="30" className="app-dim">
-                  ping
-                </th>
-                <th width="30">frags</th>
-                {server.meta.mode.isTeamplay && <th width="60">team</th>}
-                <th className="pl-2 has-text-left">name</th>
-              </tr>
-            </thead>
-            <tbody>
-              {players.map((player, index) => (
-                <tr key={index}>
-                  <td className="app-text-small app-dim">{player.Ping}</td>
-                  <td
-                    className={`app-text-small has-text-weight-bold qw-bgcolor-${player.Colors[0]}-${player.Colors[1]}`}
-                  >
-                    {player.Frags}
-                  </td>
-                  {server.meta.mode.isTeamplay && (
                     <td
+                      className="has-text-weight-bold has-text-left pl-2"
                       dangerouslySetInnerHTML={{
-                        __html: quakeTextToHtml(player.Team),
+                        __html: quakeTextToHtml(team.name),
                       }}
                     />
-                  )}
-                  <td
-                    className="has-text-weight-bold has-text-left pl-2"
-                    dangerouslySetInnerHTML={{
-                      __html: quakeTextToHtml(player.Name),
-                    }}
-                  />
+                    <td className="app-text-small has-text-weight-bold">
+                      {team.frags}
+                    </td>
+                    <td className="app-text-small">{team.playerCount}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+
+          {server.meta.hasPlayers && (
+            <table className="servers-table m-4">
+              <thead>
+                <tr className="app-text-small">
+                  <th width="30" className="app-dim">
+                    ping
+                  </th>
+                  <th width="30">frags</th>
+                  {server.meta.mode.isTeamplay && <th width="60">team</th>}
+                  <th className="pl-2 has-text-left">name</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-        {!server.meta.hasPlayers && (
-          <div className="has-text-centered">(no players)</div>
-        )}
+              </thead>
+              <tbody>
+                {players.map((player, index) => (
+                  <tr key={index}>
+                    <td className="app-text-small app-dim">{player.Ping}</td>
+                    <td
+                      className={`app-text-small has-text-weight-bold qw-bgcolor-${player.Colors[0]}-${player.Colors[1]}`}
+                    >
+                      {player.Frags}
+                    </td>
+                    {server.meta.mode.isTeamplay && (
+                      <td
+                        dangerouslySetInnerHTML={{
+                          __html: quakeTextToHtml(player.Team),
+                        }}
+                      />
+                    )}
+                    <td
+                      className="has-text-weight-bold has-text-left pl-2"
+                      dangerouslySetInnerHTML={{
+                        __html: quakeTextToHtml(player.Name),
+                      }}
+                    />
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+          {!server.meta.hasPlayers && (
+            <div className="has-text-centered">(no players)</div>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -289,7 +292,7 @@ export const Server = (props) => {
     <div className={modifiers.join(" ")}>
       <div className="server">
         <ServerHeader server={server} />
-        <ServerPlayers server={server} />
+        <ServerMapshot server={server} />
         <ServerSpectators server={server} />
         <ServerFooter server={server} />
       </div>
