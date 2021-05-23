@@ -80,11 +80,11 @@ const PlayersTable = (props) => {
         {players.map((player, index) => (
           <tr key={index}>
             <td className="app-text-small app-dim">{player.Ping}</td>
-            <td
-              className={`app-text-small has-text-weight-bold qw-bgcolor-${player.Colors[0]}-${player.Colors[1]}`}
-            >
-              {player.Frags}
-            </td>
+            <ColoredFrags
+              tag="td"
+              frags={player.Frags}
+              colors={player.Colors}
+            />
             {isTeamplay && (
               <td
                 dangerouslySetInnerHTML={{
@@ -158,7 +158,10 @@ const ColoredFrags = (props) => {
 const TwoTeamsTablePlayerCells = (player) => {
   return [
     <td className="app-text-small app-dim">{player.Ping}</td>,
-    <td dangerouslySetInnerHTML={{ __html: quakeTextToHtml(player.Name) }} />,
+    <td
+      className="has-text-weight-bold"
+      dangerouslySetInnerHTML={{ __html: quakeTextToHtml(player.Name) }}
+    />,
     <ColoredFrags tag="td" frags={player.Frags} colors={player.Colors} />,
   ];
 };
