@@ -162,11 +162,11 @@ $hr-color: darken($footer-bg, 5);
   background-color: $grey;
 
   .server-progress-bar {
+    display: flex;
     position: relative;
     height: $height;
-    background: linear-gradient(to right, darken($green, 20) 80%, $green);
-    display: flex;
     align-items: center;
+    background: linear-gradient(to right, darken($green, 20) 80%, $green);
 
     &:after {
       $dot: 6px;
