@@ -143,6 +143,7 @@ const teamsByPlayers = (players) => {
         players: [],
         frags: 0,
         totalPing: 0,
+        colors: [0, 0],
       };
     }
 
@@ -163,11 +164,35 @@ const teamsByPlayers = (players) => {
       team.avgPing = 0;
     }
     delete team.totalPing;
+
+    team.colors = majorityColors(team.players);
   }
 
   teams.sort(sortByProp("frags", "DESC"));
 
   return teams;
+};
+
+const majorityColors = (players) => {
+  const colorCount = {};
+  const separator = "-";
+  let color;
+
+  for (let i = 0; i < players.length; i++) {
+    color = players[i].Colors.join(separator);
+
+    if (!colorCount.hasOwnProperty(color)) {
+      colorCount[color] = 0;
+    }
+
+    colorCount[color] += 1;
+  }
+
+  const sortedColorCount = Object.keys(colorCount).sort(
+    (a, b) => colorCount[b] - colorCount[a]
+  );
+
+  return sortedColorCount[0].split(separator);
 };
 
 export const sortByProp = (prop, dir) => {

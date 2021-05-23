@@ -55,6 +55,12 @@ const ServerHeader = (props) => {
   );
 };
 
+const TableRowSpacer = () => (
+  <tr>
+    <td className="server-table-spacer" colSpan={99} />
+  </tr>
+);
+
 const PlayersTable = (props) => {
   const { players, isTeamplay } = props;
   return (
@@ -68,6 +74,7 @@ const PlayersTable = (props) => {
           {isTeamplay && <th width="60">team</th>}
           <th className="pl-2 has-text-left">name</th>
         </tr>
+        <TableRowSpacer />
       </thead>
       <tbody>
         {players.map((player, index) => (
@@ -111,6 +118,7 @@ const TeamsTable = (props) => {
           <th width="30">frags</th>
           <th width="30">players</th>
         </tr>
+        <TableRowSpacer />
       </thead>
       <tbody>
         {teams.map((team, index) => (
@@ -134,6 +142,103 @@ const TeamsTable = (props) => {
   );
 };
 
+const ColoredFrags = (props) => {
+  const { tag, frags, colors } = props;
+  const TagName = `${tag}`;
+
+  return (
+    <TagName
+      className={`server-frags app-text-small has-text-weight-bold qw-bgcolor-${colors[0]}-${colors[1]}`}
+    >
+      {frags}
+    </TagName>
+  );
+};
+
+const TwoTeamsTablePlayerCells = (player) => {
+  return [
+    <td className="app-text-small app-dim">{player.Ping}</td>,
+    <td dangerouslySetInnerHTML={{ __html: quakeTextToHtml(player.Name) }} />,
+    <ColoredFrags tag="td" frags={player.Frags} colors={player.Colors} />,
+  ];
+};
+
+const TwoTeamsTableBody = (props) => {
+  const { teamOne, teamTwo } = props;
+
+  const maxTeamSize = Math.max(teamOne.playerCount, teamTwo.playerCount);
+
+  const rows = [];
+  let cells;
+
+  for (let i = 0; i < maxTeamSize; i++) {
+    cells = [];
+
+    if (i <= teamOne.playerCount) {
+      cells = cells.concat(TwoTeamsTablePlayerCells(teamOne.players[i]));
+    }
+
+    cells.push(<td />);
+
+    if (i <= teamTwo.playerCount) {
+      let tmp = TwoTeamsTablePlayerCells(teamTwo.players[i]);
+      tmp.reverse();
+      cells = cells.concat(tmp);
+    }
+
+    rows.push(<tr>{cells}</tr>);
+  }
+
+  return <tbody>{rows}</tbody>;
+};
+
+const TwoTeamsTable = (props) => {
+  const { teams } = props;
+
+  const teamOne = teams[0];
+  const teamTwo = teams[1];
+
+  return (
+    <div className="is-flex is-justify-content-center m-4">
+      <table className="servers-table two-teams">
+        <thead>
+          <tr>
+            <th width="1" className="app-dim app-text-small">
+              {teamOne.avgPing}
+            </th>
+            <th
+              dangerouslySetInnerHTML={{
+                __html: quakeTextToHtml(teamOne.name),
+              }}
+            />
+            <ColoredFrags
+              tag="th"
+              frags={teamOne.frags}
+              colors={teamOne.colors}
+            />
+            <th style={{ width: "1rem" }} />
+            <ColoredFrags
+              tag="th"
+              frags={teamTwo.frags}
+              colors={teamTwo.colors}
+            />
+            <th
+              dangerouslySetInnerHTML={{
+                __html: quakeTextToHtml(teamTwo.name),
+              }}
+            />
+            <th width="1" className="app-dim app-text-small">
+              {teamTwo.avgPing}
+            </th>
+          </tr>
+          <TableRowSpacer />
+        </thead>
+        <TwoTeamsTableBody {...{ teamOne, teamTwo }} />
+      </table>
+    </div>
+  );
+};
+
 const ServerMapshot = (props) => {
   const { server } = props;
 
@@ -149,6 +254,8 @@ const ServerMapshot = (props) => {
     mapThumbnailSrc = `url(https://quakedemos.blob.core.windows.net/maps/thumbnails/${server.Map.toLowerCase()}.jpg)`;
   }
 
+  const hasTwoTeams = 2 === server.meta.teams.length;
+
   return (
     <div className="server-mapshot-wrapper">
       <div
@@ -160,14 +267,23 @@ const ServerMapshot = (props) => {
             <div className="server-matchtag m-4">{server.meta.matchtag}</div>
           )}
 
-          {server.meta.displayTeams && <TeamsTable teams={server.meta.teams} />}
+          {hasTwoTeams && <TwoTeamsTable teams={server.meta.teams} />}
 
-          {server.meta.hasPlayers && (
-            <PlayersTable
-              players={players}
-              isTeamplay={server.meta.mode.isTeamplay}
-            />
+          {!hasTwoTeams && (
+            <React.Fragment>
+              {server.meta.displayTeams && (
+                <TeamsTable teams={server.meta.teams} />
+              )}
+
+              {server.meta.hasPlayers && (
+                <PlayersTable
+                  players={players}
+                  isTeamplay={server.meta.mode.isTeamplay}
+                />
+              )}
+            </React.Fragment>
           )}
+
           {!server.meta.hasPlayers && (
             <div className="has-text-centered">(no players)</div>
           )}
