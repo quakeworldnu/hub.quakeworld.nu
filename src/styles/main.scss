@@ -1,12 +1,3 @@
-@import "./fonts/roboto";
-@import "./bulma";
-@import "./bulma_override";
-@import "./quake_colors";
-@import "./grid";
-@import "./server";
-@import "./indicators";
-@import "./layout";
-
 .app-dim {
   opacity: .6;
 }
@@ -15,6 +6,19 @@
   font-size: .8em;
 }
 
+.app-text-large {
+  font-size: 1.2em;
+}
+
 #app-logo-link {
   padding-top: 5px;
 }
+
+@import "./fonts/roboto";
+@import "./bulma";
+@import "./bulma_override";
+@import "./quake_colors";
+@import "./grid";
+@import "./server";
+@import "./indicators";
+@import "./layout";
