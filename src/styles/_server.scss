@@ -144,8 +144,7 @@ $hr-color: darken($footer-bg, 5);
 }
 
 .server-flag {
-  display: inline-block;
-  vertical-align: middle;
+  line-height: 1;
 }
 
 .spectator-list {

@@ -374,21 +374,23 @@ const ServerFooter = (props) => {
       <SpectatorButtons server={server} />
 
       <div className="columns is-mobile is-vcentered app-text-small is-multiline">
-        <div
-          className="column app-text-nowrap is-clickable"
-          onClick={() => copyToClipBoard(server.Address)}
-          title="Copy IP to clipboard"
-        >
-          {server.Country && (
-            <img
-              src={`https://badplace.eu/images/icons/flags/${server.Country.toLowerCase()}.png`}
-              width="16"
-              height="11"
-              alt={server.Country.toLowerCase()}
-              className="server-flag"
-            />
-          )}{" "}
-          {server.Address}
+        <div className="column">
+          <div
+            className="app-text-nowrap is-clickable"
+            onClick={() => copyToClipBoard(server.Address)}
+            title="Copy IP to clipboard"
+          >
+            {server.Country && (
+              <img
+                src={`https://badplace.eu/images/icons/flags/${server.Country.toLowerCase()}.png`}
+                width="16"
+                height="11"
+                alt={server.Country.toLowerCase()}
+                className="server-flag mr-1"
+              />
+            )}{" "}
+            {server.Address}
+          </div>
         </div>
         {server.Settings.ktxver && (
           <div className="column is-narrow has-text-grey">
