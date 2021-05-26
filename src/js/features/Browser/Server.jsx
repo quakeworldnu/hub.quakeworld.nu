@@ -373,8 +373,8 @@ const ServerFooter = (props) => {
     <div className="server-footer p-3">
       <SpectatorButtons server={server} />
 
-      <div className="columns is-mobile is-vcentered is-justify-content-space-between app-text-small">
-        <div className="column">
+      <div className="columns is-mobile is-vcentered app-text-small is-multiline">
+        <div className="column app-text-nowrap">
           {server.Country && (
             <img
               src={`https://badplace.eu/images/icons/flags/${server.Country.toLowerCase()}.png`}
@@ -386,11 +386,11 @@ const ServerFooter = (props) => {
           )}{" "}
           {server.Address}
         </div>
-        <div className="column is-narrow has-text-grey">
-          {server.Settings.ktxver && (
-            <React.Fragment>KTX {server.Settings.ktxver}</React.Fragment>
-          )}
-        </div>
+        {server.Settings.ktxver && (
+          <div className="column is-narrow has-text-grey">
+            KTX {server.Settings.ktxver}
+          </div>
+        )}
         <div className="column is-narrow">
           <FavoriteToggle serverAddress={server.Address} />
         </div>
