@@ -97,18 +97,18 @@ $hr-color: darken($footer-bg, 5);
 }
 
 .server-wrapper {
-  @mixin smod($color, $glow-width) {
+  @mixin app-smod($color, $glow-width) {
     padding: 2px;
-    background: linear-gradient(to bottom, $color, transparent);
+    background: linear-gradient(to bottom, $color, rgba($color, .3));
     box-shadow: rgba($color, 0.2) 0 0 $glow-width;
   }
 
   &.smod-matchtag {
-    @include smod($matchtag-bg, 64px);
+    @include app-smod($matchtag-bg, 64px);
   }
 
   &.smod-hasfreeplayerslots {
-    @include smod(#2397d1, 32px);
+    @include app-smod(#2397d1, 32px);
   }
 }
 
