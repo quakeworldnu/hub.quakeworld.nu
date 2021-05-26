@@ -214,11 +214,25 @@ $hr-color: darken($footer-bg, 5);
   @extend .app-text-nowrap;
   @extend .is-clickable;
 
-  &:hover {
-    color: $link-hover;
+  .app-icon {
+    display: none;
+    line-height: 1;
+    vertical-align: middle;
+    fill: red;
   }
 
   transition: transform 50ms linear, color 50ms linear;
+
+  &:hover,
+  &:active {
+    .app-icon {
+      display: inline;
+    }
+  }
+
+  &:hover {
+    color: $link-hover;
+  }
 
   &:active {
     color: hotpink !important;

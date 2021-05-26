@@ -391,6 +391,11 @@ const ServerFooter = (props) => {
             )}
             &nbsp;
             {server.Address}
+            <img
+              src="/assets/img/icons/content_paste.svg"
+              width="12"
+              className="app-icon ml-1"
+            />
           </div>
         </div>
         {server.Settings.ktxver && (
