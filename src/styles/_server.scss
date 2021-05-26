@@ -35,9 +35,10 @@ $hr-color: darken($footer-bg, 5);
 
     th,
     td {
-      color: #e7e7e7;
+      @extend .app-text-nowrap;
       padding: 0 .6rem;
       vertical-align: middle;
+      color: #e7e7e7;
 
       &:first-child {
         padding-left: 0;
