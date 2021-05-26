@@ -52,32 +52,9 @@ $hr-color: darken($footer-bg, 5);
       font-size: 0.8rem;
     }
 
-    &.servers-table-two-teams {
-      th:nth-child(n+2):nth-child(-n+6) {
-        @extend .app-text-large;
-      }
-
-      th:nth-child(2) {
-        background: linear-gradient(to right, transparent, rgba(black, 0.5));
-      }
-
-      th:nth-child(6) {
-        background: linear-gradient(to left, transparent, rgba(black, 0.5));
-      }
-
-      th:nth-child(n+1):nth-child(-n+2),
-      td:nth-child(n+1):nth-child(-n+2) {
-        text-align: right;
-      }
-
-      th:nth-child(n+6):nth-child(-n+7),
-      td:nth-child(n+6):nth-child(-n+7) {
-        text-align: left;
-      }
-    }
-
     .server-hspacer {
       padding: 0;
+      min-width: $spacer;
       width: $spacer;
     }
 
@@ -109,6 +86,30 @@ $hr-color: darken($footer-bg, 5);
 
     td.server-frags {
       font-size: .8rem;
+    }
+
+    &.servers-table-two-teams {
+      th:nth-child(n+2):nth-child(-n+6) {
+        @extend .app-text-large;
+      }
+
+      th:nth-child(2) {
+        background: linear-gradient(to right, transparent, rgba(black, 0.5));
+      }
+
+      th:nth-child(6) {
+        background: linear-gradient(to left, transparent, rgba(black, 0.5));
+      }
+
+      th:nth-child(n+1):nth-child(-n+2),
+      td:nth-child(n+1):nth-child(-n+2) {
+        text-align: right !important;
+      }
+
+      th:nth-child(n+6):nth-child(-n+7),
+      td:nth-child(n+6):nth-child(-n+7) {
+        text-align: left !important;
+      }
     }
   }
 
