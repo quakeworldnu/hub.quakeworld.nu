@@ -39,14 +39,6 @@ $hr-color: darken($footer-bg, 5);
       padding: 0 .6rem;
       vertical-align: middle;
       color: #e7e7e7;
-
-      &:first-child {
-        padding-left: 0;
-      }
-
-      &:last-child {
-        padding-right: 0;
-      }
     }
 
     th {
@@ -93,6 +85,14 @@ $hr-color: darken($footer-bg, 5);
 
     &.servers-table-two-teams {
       width: auto;
+
+      th,
+      td {
+        &:first-child,
+        &:last-child {
+          padding: 0;
+        }
+      }
 
       th:nth-child(n+2):nth-child(-n+6) {
         @extend .app-text-large;
