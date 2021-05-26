@@ -62,22 +62,25 @@ const TableRowSpacer = () => (
 );
 
 const PlayersTable = (props) => {
-  const { players, isTeamplay } = props;
+  const { players, isTeamplay, isStarted } = props;
   return (
     <table className="servers-table">
-      <thead>
-        <tr>
-          <th className="server-ping">ping</th>
-          <th className="server-frags">frags</th>
-          {isTeamplay && <th className="server-team">team</th>}
-          <th className="server-name">name</th>
-        </tr>
-        <TableRowSpacer />
-      </thead>
+      {!isStarted && (
+        <thead>
+          <tr>
+            <th className="server-ping">ping</th>
+            <th className="server-frags">frags</th>
+            {isTeamplay && <th className="server-team">team</th>}
+            <th className="server-name">name</th>
+          </tr>
+          <TableRowSpacer />
+        </thead>
+      )}
       <tbody>
         {players.map((player, index) => (
           <tr key={index}>
-            <td className="server-ping">{player.Ping}</td>
+            {!isStarted && <td className="server-ping">{player.Ping}</td>}
+
             <ColoredFrags
               tag="td"
               frags={player.Frags}
@@ -110,7 +113,6 @@ const TeamsTable = (props) => {
     <table className="servers-table mb-4">
       <thead>
         <tr>
-          <th className="server-ping">ping</th>
           <th className="server-frags">frags</th>
           <th className="server-team">team</th>
           <th>players</th>
@@ -272,6 +274,7 @@ const ServerMapshot = (props) => {
                 <PlayersTable
                   players={players}
                   isTeamplay={server.meta.mode.isTeamplay}
+                  isStarted={server.meta.isStarted}
                 />
               )}
             </React.Fragment>
