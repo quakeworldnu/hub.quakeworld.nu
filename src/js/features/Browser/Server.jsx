@@ -149,9 +149,6 @@ const ColoredFrags = (props) => {
 
 const TwoTeamsTablePlayerCells = (player, keyPrefix) => {
   return [
-    <td className="server-ping" key={`${keyPrefix}-ping`}>
-      {player.Ping}
-    </td>,
     <td
       className="server-name"
       dangerouslySetInnerHTML={{ __html: quakeTextToHtml(player.Name) }}
@@ -207,7 +204,6 @@ const TwoTeamsTable = (props) => {
       <table className="servers-table servers-table-two-teams">
         <thead>
           <tr>
-            <th className="server-ping">{teamOne.avgPing}</th>
             <th
               className="server-team"
               dangerouslySetInnerHTML={{
@@ -231,7 +227,6 @@ const TwoTeamsTable = (props) => {
                 __html: quakeTextToHtml(teamTwo.name),
               }}
             />
-            <th className="server-ping">{teamTwo.avgPing}</th>
           </tr>
           <TableRowSpacer />
         </thead>
