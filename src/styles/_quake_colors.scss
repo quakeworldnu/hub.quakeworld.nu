@@ -21,8 +21,8 @@ $app-player-colors: (
       $topFixed: saturate(lighten($topHex, 15), 10);
       $botFixed: saturate(lighten($bottomHex, 15), 10);
       $offsetY: 1px;
-      background: linear-gradient(to bottom, transparent 0 $offsetY, $topFixed $offsetY 50%, transparent 50% 100%),
-      linear-gradient(to top, transparent 0 $offsetY, $botFixed $offsetY 50%, transparent 50% 100%);
+      background: linear-gradient(to bottom, transparent 0 $offsetY, $topFixed $offsetY 50.5%, transparent 49.5% 100%),
+      linear-gradient(to top, transparent 0 $offsetY, $botFixed $offsetY 50.5%, transparent 49.5% 100%);
     }
   }
 }
