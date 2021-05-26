@@ -316,11 +316,11 @@ const SpectatorList = (props) => {
   );
 };
 
-const ServerSpectators = (props) => {
+const SpectatorButtons = (props) => {
   const { server } = props;
 
   return (
-    <div className="server-spectators p-3">
+    <div>
       {false && (
         <div className="">
           <div className="columns is-mobile">
@@ -370,8 +370,10 @@ const ServerFooter = (props) => {
   const { server } = props;
 
   return (
-    <div className="server-footer app-text-small p-3">
-      <div className="columns is-mobile is-vcentered is-justify-content-space-between">
+    <div className="server-footer p-3">
+      <SpectatorButtons server={server} />
+
+      <div className="columns is-mobile is-vcentered is-justify-content-space-between app-text-small">
         <div className="column">
           {server.Country && (
             <img
@@ -428,7 +430,6 @@ export const Server = (props) => {
       <div className="server">
         <ServerHeader server={server} />
         <ServerMapshot server={server} />
-        <ServerSpectators server={server} />
         <ServerFooter server={server} />
       </div>
     </div>

@@ -10,8 +10,7 @@
 }
 
 // buttons
-@mixin app-gradient-button($color) {
-  $factor: 5;
+@mixin app-gradient-button($color, $factor: 5) {
   $default-top: lighten($color, $factor);
   $default-bottom: darken($color, $factor);
   $hover-top: lighten($default-top, $factor);
@@ -32,5 +31,5 @@
 }
 
 .button.is-dark:not(.is-outlined, .is-inverted, .is-light) {
-  @include app-gradient-button(#444554)
+  @include app-gradient-button(#4d4e61)
 }

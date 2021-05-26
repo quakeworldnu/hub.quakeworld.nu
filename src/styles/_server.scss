@@ -148,12 +148,6 @@ $hr-color: darken($footer-bg, 5);
   vertical-align: middle;
 }
 
-.server-spectators {
-  background: $spectator-bg;
-  border: solid $hr-color;
-  border-width: 1px 0;
-}
-
 .spectator-list {
   @extend .app-text-dense;
 }
@@ -215,4 +209,5 @@ $hr-color: darken($footer-bg, 5);
 .server-footer {
   background: $footer-bg;
   color: $footer-color;
+  border-top: 1px solid $hr-color;
 }
