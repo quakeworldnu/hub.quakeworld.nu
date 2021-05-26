@@ -296,7 +296,7 @@ const SpectatorList = (props) => {
   const { spectators } = props;
 
   return (
-    <div className="spectator-list mt-4 ml-2">
+    <div className="spectator-list mt-4">
       {spectators.map((spec, index) => (
         <React.Fragment key={index}>
           <span className="server-spectator-prefix">spec</span>{" "}
