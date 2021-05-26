@@ -108,10 +108,7 @@ const PlayersTable = (props) => {
 const TeamsTable = (props) => {
   const { teams } = props;
   return (
-    <table
-      className="servers-table servers-table-multiple-teams"
-      style={{ width: "1px" }}
-    >
+    <table className="servers-table mb-4" style={{ width: "1px" }}>
       <thead>
         <tr className="app-text-small">
           <th width="30" className="app-dim">
@@ -205,7 +202,7 @@ const TwoTeamsTable = (props) => {
 
   return (
     <div className="is-flex is-justify-content-center">
-      <table className="servers-table servers-table-multiple-teams servers-table-two-teams">
+      <table className="servers-table servers-table-two-teams">
         <thead>
           <tr>
             <th width="1" className="app-dim app-text-small">
