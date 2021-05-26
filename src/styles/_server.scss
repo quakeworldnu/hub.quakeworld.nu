@@ -82,6 +82,7 @@ $hr-color: darken($footer-bg, 5);
     }
 
     .server-ping,
+    .server-team,
     .server-frags {
       @extend .has-text-centered;
     }
