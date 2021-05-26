@@ -244,11 +244,8 @@ const TwoTeamsTable = (props) => {
 const ServerMapshot = (props) => {
   const { server } = props;
 
-  let players = [];
-
-  if (server.meta.hasPlayers) {
-    players = server.Players.filter((p) => !p.Spec);
-  }
+  let players = server.Players.filter((p) => !p.Spec);
+  let spectators = server.Players.filter((p) => p.Spec);
 
   let mapThumbnailSrc = "none";
 
@@ -286,6 +283,10 @@ const ServerMapshot = (props) => {
             </React.Fragment>
           )}
 
+          {server.meta.hasSpectators && (
+            <SpectatorList spectators={spectators} />
+          )}
+
           {!server.meta.hasPlayers && (
             <div className="has-text-centered">(no players)</div>
           )}
@@ -295,34 +296,34 @@ const ServerMapshot = (props) => {
   );
 };
 
+const SpectatorList = (props) => {
+  const { spectators } = props;
+
+  return (
+    <div className="spectator-list mt-4">
+      {spectators.map((spec, index) => (
+        <React.Fragment key={index}>
+          <span className="server-spectator-prefix">spec</span>{" "}
+          <span
+            dangerouslySetInnerHTML={{
+              __html: quakeTextToHtml(spec.Name),
+            }}
+          />
+          <br />
+        </React.Fragment>
+      ))}
+    </div>
+  );
+};
+
 const ServerSpectators = (props) => {
   const { server } = props;
 
-  let spectators = [];
-
-  if (server.meta.hasSpectators) {
-    spectators = server.Players.filter((p) => p.Spec);
-  }
-
   return (
     <div className="server-spectators p-3">
-      {(server.meta.hasSpectators || server.meta.hasQtvSpectators) && (
-        <div className="app-text-small">
+      {false && (
+        <div className="">
           <div className="columns is-mobile">
-            <div className="column">
-              {spectators.map((spec, index) => (
-                <React.Fragment key={index}>
-                  <span className="server-spectator-prefix">spec</span>{" "}
-                  <span
-                    dangerouslySetInnerHTML={{
-                      __html: quakeTextToHtml(spec.Name),
-                    }}
-                  />
-                  <br />
-                </React.Fragment>
-              ))}
-            </div>
-
             <div className="column">
               {server.meta.hasQtvSpectators &&
                 server.QTV[0].SpecList.map((spec, index) => (
@@ -420,9 +421,10 @@ export const Server = (props) => {
   const { server } = props;
 
   const modifiers = getModifiers(server.meta);
+  const wrapperClassNames = modifiers.join(" ");
 
   return (
-    <div className={modifiers.join(" ")}>
+    <div className={wrapperClassNames}>
       <div className="server">
         <ServerHeader server={server} />
         <ServerMapshot server={server} />

@@ -149,17 +149,23 @@ $hr-color: darken($footer-bg, 5);
 }
 
 .server-spectators {
-  line-height: 1.3;
   background: $spectator-bg;
   border: solid $hr-color;
   border-width: 1px 0;
+}
+
+.spectator-list {
+  @extend .app-text-dense;
+}
+
+.smod-started .spectator-list {
+  @extend .app-text-small;
 }
 
 .server-spectator-prefix {
   @extend .has-text-right;
 
   display: inline-block;
-  width: 32px;
   margin-right: .5rem;
   color: $spec-color;
 }

@@ -2008,88 +2008,88 @@
     "QTV": []
   },
   {
-"IpAddress": "34.95.185.13",
-"Address": "34.95.185.13:28504",
-"Description": "1v1, 2 min left",
-"Title": "QW BRASIL:28504",
-"Port": 28504,
-"Country": "BR",
-"IsProxy": false,
-"Map": "end",
-"MaxClients": 2,
-"MaxSpectators": 15,
-"Settings": {
-"maxfps": "77",
-"pm_ktjump": "1",
-"*version": "MVDSV 0.32",
-"*z_ext": "511",
-"*admin": "fantasma <fanta@naodigo.com>",
-"ktxver": "1.38",
-"sv_antilag": "2",
-"maxspectators": "15",
-"*gamedir": "qw",
-"maxclients": "2",
-"timelimit": "3",
-"deathmatch": "4",
-"*progs": "so",
-"map": "end",
-"serverdemo": "duel_beneton_vs_gflip[end]210522-2037.mvd",
-"hostname": "QW BRASIL:28504",
-"fpd": "206",
-"status": "2 min left"
-},
-"QtvOnly": false,
-"Players": [
-{
-"Colors": [
-13,
-13
-],
-"Frags": 6,
-"Ping": 12,
-"Spec": false,
-"Name": "beneton",
-"Team": "pfh",
-"Time": 2,
-"IsBot": false,
-"Flag": ""
-},
-{
-"Colors": [
-12,
-11
-],
-"Frags": -9999,
-"Ping": 666,
-"Spec": true,
-"Name": "[ServeMe]",
-"Team": "lqwc",
-"Time": 2,
-"IsBot": true,
-"Flag": ""
-},
-{
-"Colors": [
-13,
-13
-],
-"Frags": 8,
-"Ping": 52,
-"Spec": false,
-"Name": "gflip",
-"Team": "pf",
-"Time": 2,
-"IsBot": false,
-"Flag": ""
-}
-],
-"QTV": [
-{
-"Host": "QW BRASIL Qtv",
-"Address": "4@34.95.185.13:28000",
-"Specs": 0,
-"SpecList": []
-}
-]
-}
+    "IpAddress": "34.95.185.13",
+    "Address": "34.95.185.13:28504",
+    "Description": "1v1, 2 min left",
+    "Title": "QW BRASIL:28504",
+    "Port": 28504,
+    "Country": "BR",
+    "IsProxy": false,
+    "Map": "end",
+    "MaxClients": 2,
+    "MaxSpectators": 15,
+    "Settings": {
+      "maxfps": "77",
+      "pm_ktjump": "1",
+      "*version": "MVDSV 0.32",
+      "*z_ext": "511",
+      "*admin": "fantasma <fanta@naodigo.com>",
+      "ktxver": "1.38",
+      "sv_antilag": "2",
+      "maxspectators": "15",
+      "*gamedir": "qw",
+      "maxclients": "2",
+      "timelimit": "3",
+      "deathmatch": "4",
+      "*progs": "so",
+      "map": "end",
+      "serverdemo": "duel_beneton_vs_gflip[end]210522-2037.mvd",
+      "hostname": "QW BRASIL:28504",
+      "fpd": "206",
+      "status": "2 min left"
+    },
+    "QtvOnly": false,
+    "Players": [
+      {
+        "Colors": [
+          13,
+          13
+        ],
+        "Frags": 6,
+        "Ping": 12,
+        "Spec": false,
+        "Name": "beneton",
+        "Team": "pfh",
+        "Time": 2,
+        "IsBot": false,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          12,
+          11
+        ],
+        "Frags": -9999,
+        "Ping": 666,
+        "Spec": true,
+        "Name": "[ServeMe]",
+        "Team": "lqwc",
+        "Time": 2,
+        "IsBot": true,
+        "Flag": ""
+      },
+      {
+        "Colors": [
+          13,
+          13
+        ],
+        "Frags": 8,
+        "Ping": 52,
+        "Spec": false,
+        "Name": "gflip",
+        "Team": "pf",
+        "Time": 2,
+        "IsBot": false,
+        "Flag": ""
+      }
+    ],
+    "QTV": [
+      {
+        "Host": "QW BRASIL Qtv",
+        "Address": "4@34.95.185.13:28000",
+        "Specs": 0,
+        "SpecList": []
+      }
+    ]
+  }
 ]
