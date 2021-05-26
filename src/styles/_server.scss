@@ -143,10 +143,6 @@ $hr-color: darken($footer-bg, 5);
   color: white;
 }
 
-.server-flag {
-  line-height: 1;
-}
-
 .spectator-list {
   @extend .app-text-dense;
 }
