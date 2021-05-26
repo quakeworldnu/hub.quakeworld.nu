@@ -147,14 +147,22 @@ const ColoredFrags = (props) => {
   );
 };
 
-const TwoTeamsTablePlayerCells = (player) => {
+const TwoTeamsTablePlayerCells = (player, keyPrefix) => {
   return [
-    <td className="server-ping">{player.Ping}</td>,
+    <td className="server-ping" key={`${keyPrefix}-ping`}>
+      {player.Ping}
+    </td>,
     <td
       className="server-name"
       dangerouslySetInnerHTML={{ __html: quakeTextToHtml(player.Name) }}
+      key={`${keyPrefix}-name`}
     />,
-    <ColoredFrags tag="td" frags={player.Frags} colors={player.Colors} />,
+    <ColoredFrags
+      tag="td"
+      frags={player.Frags}
+      colors={player.Colors}
+      key={`${keyPrefix}-frags`}
+    />,
   ];
 };
 
@@ -170,23 +178,24 @@ const TwoTeamsTableBody = (props) => {
     cells = [];
 
     if (i <= teamOne.playerCount) {
-      cells = cells.concat(TwoTeamsTablePlayerCells(teamOne.players[i]));
+      cells = cells.concat(
+        TwoTeamsTablePlayerCells(teamOne.players[i], `left`)
+      );
     }
 
-    cells.push(<td className="server-hspacer" />);
+    cells.push(<td className="server-hspacer" key={`spacer-${i}`} />);
 
     if (i <= teamTwo.playerCount) {
-      let tmp = TwoTeamsTablePlayerCells(teamTwo.players[i]);
+      let tmp = TwoTeamsTablePlayerCells(teamTwo.players[i], `right`);
       tmp.reverse();
       cells = cells.concat(tmp);
     }
 
-    rows.push(<tr>{cells}</tr>);
+    rows.push(<tr key={`row-${i}`}>{cells}</tr>);
   }
 
   return <tbody>{rows}</tbody>;
 };
-
 const TwoTeamsTable = (props) => {
   const { teams } = props;
 
@@ -231,7 +240,6 @@ const TwoTeamsTable = (props) => {
     </div>
   );
 };
-
 const ServerMapshot = (props) => {
   const { server } = props;
 
@@ -286,7 +294,6 @@ const ServerMapshot = (props) => {
     </div>
   );
 };
-
 const SpectatorList = (props) => {
   const { spectators } = props;
 
@@ -306,7 +313,6 @@ const SpectatorList = (props) => {
     </div>
   );
 };
-
 const SpectatorButtons = (props) => {
   const { server } = props;
 
@@ -400,7 +406,6 @@ const ServerFooter = (props) => {
     </div>
   );
 };
-
 const getModifiers = (meta) => {
   const modifiers = ["server-wrapper"];
 
@@ -420,7 +425,6 @@ const getModifiers = (meta) => {
 
   return modifiers;
 };
-
 export const Server = (props) => {
   const { server } = props;
 
