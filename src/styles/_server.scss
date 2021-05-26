@@ -30,6 +30,7 @@ $hr-color: darken($footer-bg, 5);
   }
 
   .servers-table {
+    width: 100%;
     font-size: .9rem;
 
     th,
@@ -89,6 +90,8 @@ $hr-color: darken($footer-bg, 5);
     }
 
     &.servers-table-two-teams {
+      width: auto;
+
       th:nth-child(n+2):nth-child(-n+6) {
         @extend .app-text-large;
       }
