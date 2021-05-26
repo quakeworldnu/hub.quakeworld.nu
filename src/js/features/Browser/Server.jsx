@@ -283,12 +283,12 @@ const ServerMapshot = (props) => {
             </React.Fragment>
           )}
 
-          {server.meta.hasSpectators && (
-            <SpectatorList spectators={spectators} />
+          {!server.meta.hasClients && (
+            <div className="has-text-centered">(no players)</div>
           )}
 
-          {!server.meta.hasPlayers && (
-            <div className="has-text-centered">(no players)</div>
+          {server.meta.hasSpectators && (
+            <SpectatorList spectators={spectators} />
           )}
         </div>
       </div>

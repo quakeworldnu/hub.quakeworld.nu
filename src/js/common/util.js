@@ -4,6 +4,7 @@ export const deepCopy = (obj) => JSON.parse(JSON.stringify(obj));
 
 export const metaByServer = (server) => {
   const clientCount = server.Players.length;
+  const hasClients = clientCount > 0;
   const spectatorCount = server.Players.filter((p) => p.Spec).length;
   const hasSpectators = spectatorCount > 0;
   const playerCount = clientCount - spectatorCount;
@@ -112,6 +113,7 @@ export const metaByServer = (server) => {
       isCustom,
     },
     clientCount,
+    hasClients,
     spectatorCount,
     hasSpectators,
     playerCount,

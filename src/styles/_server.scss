@@ -160,6 +160,7 @@ $hr-color: darken($footer-bg, 5);
 
 .smod-started .spectator-list {
   @extend .app-text-small;
+  @extend .app-dim-light;
 }
 
 .server-spectator-prefix {
