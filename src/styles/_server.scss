@@ -23,7 +23,7 @@ $hr-color: darken($footer-bg, 5);
     height: .25rem;
   }
 
-  .two-teams .server-table-spacer {
+  .servers-table-multiple-teams .server-table-spacer {
     height: 1rem;
   }
 
@@ -42,7 +42,7 @@ $hr-color: darken($footer-bg, 5);
       text-align: center;
     }
 
-    &.two-teams {
+    &.servers-table-two-teams {
       th:nth-child(n+2):nth-child(-n+6) {
         @extend .app-text-large;
       }
@@ -124,6 +124,10 @@ $hr-color: darken($footer-bg, 5);
   flex-grow: 1;
 }
 
+.server-mapshot {
+  min-height: 140px;
+}
+
 .server-mapshot,
 .server-mapshot-dimmer {
   height: 100%;
@@ -133,7 +137,7 @@ $hr-color: darken($footer-bg, 5);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 140px;
+  padding: 1rem;
   background-color: rgba($spectator-bg, 0.4);
   text-shadow: black 1px 1px 1px;
   color: white;

@@ -64,7 +64,7 @@ const TableRowSpacer = () => (
 const PlayersTable = (props) => {
   const { players, isTeamplay } = props;
   return (
-    <table className="servers-table m-4">
+    <table className="servers-table">
       <thead>
         <tr className="app-text-small">
           <th width="30" className="app-dim">
@@ -108,7 +108,10 @@ const PlayersTable = (props) => {
 const TeamsTable = (props) => {
   const { teams } = props;
   return (
-    <table className="servers-table m-4" style={{ width: "1px" }}>
+    <table
+      className="servers-table servers-table-multiple-teams"
+      style={{ width: "1px" }}
+    >
       <thead>
         <tr className="app-text-small">
           <th width="30" className="app-dim">
@@ -124,7 +127,6 @@ const TeamsTable = (props) => {
         {teams.map((team, index) => (
           <tr key={index}>
             <td className="app-text-small app-dim">{team.avgPing}</td>
-
             <td
               className="has-text-weight-bold has-text-left pl-2"
               dangerouslySetInnerHTML={{
@@ -202,8 +204,8 @@ const TwoTeamsTable = (props) => {
   const teamTwo = teams[1];
 
   return (
-    <div className="is-flex is-justify-content-center m-4">
-      <table className="servers-table two-teams">
+    <div className="is-flex is-justify-content-center">
+      <table className="servers-table servers-table-multiple-teams servers-table-two-teams">
         <thead>
           <tr>
             <th width="1" className="app-dim app-text-small">
@@ -267,7 +269,7 @@ const ServerMapshot = (props) => {
       >
         <div className="server-mapshot-dimmer">
           {server.meta.hasMatchtag && (
-            <div className="server-matchtag m-4">{server.meta.matchtag}</div>
+            <div className="server-matchtag mb-4">{server.meta.matchtag}</div>
           )}
 
           {hasTwoTeams && <TwoTeamsTable teams={server.meta.teams} />}
