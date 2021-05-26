@@ -31,5 +31,14 @@
 }
 
 .button.is-dark:not(.is-outlined, .is-inverted, .is-light) {
-  @include app-gradient-button(#4d4e61)
+  $server-bg: #445;
+  $server-footer-bg: #334;
+
+  background: lighten($server-footer-bg, 4);
+  border: 1px solid lighten($server-bg, 8);
+
+  &:hover {
+    background: $primary;
+    border-color: $primary;
+  }
 }
