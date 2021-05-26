@@ -62,25 +62,12 @@ const TableRowSpacer = () => (
 );
 
 const PlayersTable = (props) => {
-  const { players, isTeamplay, isStarted } = props;
+  const { players, isTeamplay } = props;
   return (
     <table className="servers-table">
-      {!isStarted && (
-        <thead>
-          <tr>
-            <th className="server-ping">ping</th>
-            <th className="server-frags">frags</th>
-            {isTeamplay && <th className="server-team">team</th>}
-            <th className="server-name">name</th>
-          </tr>
-          <TableRowSpacer />
-        </thead>
-      )}
       <tbody>
         {players.map((player, index) => (
           <tr key={index}>
-            {!isStarted && <td className="server-ping">{player.Ping}</td>}
-
             <ColoredFrags
               tag="td"
               frags={player.Frags}
@@ -122,7 +109,6 @@ const TeamsTable = (props) => {
       <tbody>
         {teams.map((team, index) => (
           <tr key={index}>
-            <td className="server-ping">{team.avgPing}</td>
             <ColoredFrags tag="th" frags={team.frags} colors={team.colors} />
             <td
               className="server-team"
@@ -274,7 +260,6 @@ const ServerMapshot = (props) => {
                 <PlayersTable
                   players={players}
                   isTeamplay={server.meta.mode.isTeamplay}
-                  isStarted={server.meta.isStarted}
                 />
               )}
             </React.Fragment>
