@@ -217,4 +217,11 @@ $hr-color: darken($footer-bg, 5);
   &:hover {
     color: $link-hover;
   }
+
+  transition: transform 50ms ease-in-out, color 50ms linear;
+
+  &:active {
+    color: hotpink !important;
+    transform: translateY(2px);
+  }
 }
