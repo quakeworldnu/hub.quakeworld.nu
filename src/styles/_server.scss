@@ -186,10 +186,10 @@ $hr-color: darken($footer-bg, 5);
 
 .spectator-list {
   @extend .app-text-dense;
+  @extend .app-text-small;
 }
 
 .smod-started .spectator-list {
-  @extend .app-text-small;
   @extend .app-dim-light;
 }
 

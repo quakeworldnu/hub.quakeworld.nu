@@ -299,7 +299,7 @@ const SpectatorList = (props) => {
     <div className="spectator-list mt-4">
       {spectators.map((spec, index) => (
         <React.Fragment key={index}>
-          <span className="server-spectator-prefix">spec</span>{" "}
+          <span className="server-spectator-prefix">spectator</span>{" "}
           <span
             dangerouslySetInnerHTML={{
               __html: quakeTextToHtml(spec.Name),
