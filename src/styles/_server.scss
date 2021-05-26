@@ -19,27 +19,37 @@ $hr-color: darken($footer-bg, 5);
   height: 100%;
   background: $server-bg;
 
-  .server-table-spacer {
-    height: .25rem;
+  $spacer: .4rem;
+
+  .server-vspacer {
+    height: $spacer;
   }
 
-  .server-frags {
-    $width: 42px;
-    width: $width;
-    max-width: $width;
-  }
-
-  .servers-table-two-teams .server-table-spacer {
-    height: 1rem;
+  .servers-table-two-teams .server-vspacer {
+    height: 2*$spacer;
   }
 
   .servers-table {
+    font-size: .9rem;
+
     th,
     td {
       color: #e7e7e7;
-      padding: 0 4px;
+      padding: 0 .6rem;
       vertical-align: middle;
-      text-align: center;
+
+      &:first-child {
+        padding-left: 0;
+      }
+
+      &:last-child {
+        padding-right: 0;
+      }
+    }
+
+    th {
+      font-weight: normal;
+      font-size: 0.8rem;
     }
 
     &.servers-table-two-teams {
@@ -58,14 +68,46 @@ $hr-color: darken($footer-bg, 5);
       th:nth-child(n+1):nth-child(-n+2),
       td:nth-child(n+1):nth-child(-n+2) {
         text-align: right;
-        @extend .pr-2;
       }
 
       th:nth-child(n+6):nth-child(-n+7),
       td:nth-child(n+6):nth-child(-n+7) {
         text-align: left;
-        @extend .pl-2;
       }
+    }
+
+    .server-hspacer {
+      padding: 0;
+      min-width: $spacer;
+    }
+
+    .server-ping,
+    .server-frags {
+      @extend .has-text-centered;
+    }
+
+    .server-ping,
+    .server-team {
+      width: 1px;
+    }
+
+    td.server-frags,
+    td.server-name {
+      font-weight: bold;
+    }
+
+    .server-ping {
+      @extend .app-dim;
+      font-size: .7rem;
+    }
+
+    .server-frags {
+      width: 36px;
+      padding: 0;
+    }
+
+    td.server-frags {
+      font-size: .8rem;
     }
   }
 

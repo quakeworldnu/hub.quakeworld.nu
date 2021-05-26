@@ -57,7 +57,7 @@ const ServerHeader = (props) => {
 
 const TableRowSpacer = () => (
   <tr>
-    <td className="server-table-spacer" colSpan={99} />
+    <td className="server-vspacer" colSpan={99} />
   </tr>
 );
 
@@ -66,20 +66,18 @@ const PlayersTable = (props) => {
   return (
     <table className="servers-table">
       <thead>
-        <tr className="app-text-small">
-          <th width="30" className="app-dim">
-            ping
-          </th>
-          <th width="30">frags</th>
-          {isTeamplay && <th width="60">team</th>}
-          <th className="pl-2 has-text-left">name</th>
+        <tr>
+          <th className="server-ping">ping</th>
+          <th className="server-frags">frags</th>
+          {isTeamplay && <th className="server-team">team</th>}
+          <th className="server-name">name</th>
         </tr>
         <TableRowSpacer />
       </thead>
       <tbody>
         {players.map((player, index) => (
           <tr key={index}>
-            <td className="app-text-small app-dim">{player.Ping}</td>
+            <td className="server-ping">{player.Ping}</td>
             <ColoredFrags
               tag="td"
               frags={player.Frags}
@@ -87,13 +85,14 @@ const PlayersTable = (props) => {
             />
             {isTeamplay && (
               <td
+                className="server-team"
                 dangerouslySetInnerHTML={{
                   __html: quakeTextToHtml(player.Team),
                 }}
               />
             )}
             <td
-              className="has-text-weight-bold has-text-left pl-2"
+              className="server-name"
               dangerouslySetInnerHTML={{
                 __html: quakeTextToHtml(player.Name),
               }}
@@ -108,32 +107,28 @@ const PlayersTable = (props) => {
 const TeamsTable = (props) => {
   const { teams } = props;
   return (
-    <table className="servers-table mb-4" style={{ width: "1px" }}>
+    <table className="servers-table mb-4">
       <thead>
-        <tr className="app-text-small">
-          <th width="30" className="app-dim">
-            ping
-          </th>
-          <th className="pl-2 has-text-left">team</th>
-          <th width="30">frags</th>
-          <th width="30">players</th>
+        <tr>
+          <th className="server-ping">ping</th>
+          <th className="server-frags">frags</th>
+          <th className="server-team">team</th>
+          <th>players</th>
         </tr>
         <TableRowSpacer />
       </thead>
       <tbody>
         {teams.map((team, index) => (
           <tr key={index}>
-            <td className="app-text-small app-dim">{team.avgPing}</td>
+            <td className="server-ping">{team.avgPing}</td>
+            <ColoredFrags tag="th" frags={team.frags} colors={team.colors} />
             <td
-              className="has-text-weight-bold has-text-left pl-2"
+              className="server-team"
               dangerouslySetInnerHTML={{
                 __html: quakeTextToHtml(team.name),
               }}
             />
-            <td className="app-text-small has-text-weight-bold">
-              {team.frags}
-            </td>
-            <td className="app-text-small">{team.playerCount}</td>
+            <td>{team.playerCount}</td>
           </tr>
         ))}
       </tbody>
@@ -146,9 +141,7 @@ const ColoredFrags = (props) => {
   const TagName = `${tag}`;
 
   return (
-    <TagName
-      className={`server-frags app-text-small has-text-weight-bold qw-bgcolor-${colors[0]}-${colors[1]}`}
-    >
+    <TagName className={`server-frags qw-bgcolor-${colors[0]}-${colors[1]}`}>
       {frags}
     </TagName>
   );
@@ -156,9 +149,9 @@ const ColoredFrags = (props) => {
 
 const TwoTeamsTablePlayerCells = (player) => {
   return [
-    <td className="app-text-small app-dim">{player.Ping}</td>,
+    <td className="server-ping">{player.Ping}</td>,
     <td
-      className="has-text-weight-bold"
+      className="server-name"
       dangerouslySetInnerHTML={{ __html: quakeTextToHtml(player.Name) }}
     />,
     <ColoredFrags tag="td" frags={player.Frags} colors={player.Colors} />,
@@ -180,7 +173,7 @@ const TwoTeamsTableBody = (props) => {
       cells = cells.concat(TwoTeamsTablePlayerCells(teamOne.players[i]));
     }
 
-    cells.push(<td />);
+    cells.push(<td className="server-hspacer" />);
 
     if (i <= teamTwo.playerCount) {
       let tmp = TwoTeamsTablePlayerCells(teamTwo.players[i]);
@@ -205,10 +198,9 @@ const TwoTeamsTable = (props) => {
       <table className="servers-table servers-table-two-teams">
         <thead>
           <tr>
-            <th width="1" className="app-dim app-text-small">
-              {teamOne.avgPing}
-            </th>
+            <th className="server-ping">{teamOne.avgPing}</th>
             <th
+              className="server-team"
               dangerouslySetInnerHTML={{
                 __html: quakeTextToHtml(teamOne.name),
               }}
@@ -218,20 +210,19 @@ const TwoTeamsTable = (props) => {
               frags={teamOne.frags}
               colors={teamOne.colors}
             />
-            <th style={{ width: "1rem" }} />
+            <th className="server-hspacer" />
             <ColoredFrags
               tag="th"
               frags={teamTwo.frags}
               colors={teamTwo.colors}
             />
             <th
+              className="server-team"
               dangerouslySetInnerHTML={{
                 __html: quakeTextToHtml(teamTwo.name),
               }}
             />
-            <th width="1" className="app-dim app-text-small">
-              {teamTwo.avgPing}
-            </th>
+            <th className="server-ping">{teamTwo.avgPing}</th>
           </tr>
           <TableRowSpacer />
         </thead>
