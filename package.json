@@ -9,7 +9,7 @@
     "dev": "run-s clean dev:*",
     "dev:jekyll": "yarn build:jekyll --config=_config.yml,_config.dev.yml",
     "dev:assets": "gulp assets:dev",
-    "watch": "yarn clean && run-p 'dev:jekyll --watch --incremental' 'gulp watch' start",
+    "watch": "run-p 'dev:jekyll --watch --incremental' 'gulp watch' start",
     "build": "run-s clean build:assets build:jekyll build:apps",
     "build:jekyll": "cd jekyll && bundle exec jekyll build",
     "build:assets": "gulp assets:prod",
