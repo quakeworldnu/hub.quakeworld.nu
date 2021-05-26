@@ -1,6 +1,6 @@
 import FavoriteToggle from "./FavoriteToggle";
 import React from "react";
-import { quakeTextToHtml } from "../../common/util";
+import { quakeTextToHtml, copyToClipBoard } from "../../common/util";
 
 const ServerProgress = (props) => {
   const { value, max } = props;
@@ -374,7 +374,11 @@ const ServerFooter = (props) => {
       <SpectatorButtons server={server} />
 
       <div className="columns is-mobile is-vcentered app-text-small is-multiline">
-        <div className="column app-text-nowrap">
+        <div
+          className="column app-text-nowrap is-clickable"
+          onClick={() => copyToClipBoard(server.Address)}
+          title="Copy IP to clipboard"
+        >
           {server.Country && (
             <img
               src={`https://badplace.eu/images/icons/flags/${server.Country.toLowerCase()}.png`}
