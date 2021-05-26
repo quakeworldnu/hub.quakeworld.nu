@@ -376,7 +376,7 @@ const ServerFooter = (props) => {
       <div className="columns is-mobile is-vcentered app-text-small is-multiline">
         <div className="column">
           <div
-            className="app-text-nowrap is-clickable"
+            className="server-address"
             onClick={() => copyToClipBoard(server.Address)}
             title="Copy IP to clipboard"
           >
