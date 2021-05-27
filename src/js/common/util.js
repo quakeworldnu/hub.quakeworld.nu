@@ -140,20 +140,20 @@ const teamsByPlayers = (players) => {
 
     if (!teamsObj.hasOwnProperty(teamName)) {
       teamsObj[teamName] = {
-        name: teamName,
-        playerCount: 0,
-        players: [],
-        frags: 0,
-        totalPing: 0,
-        colors: [0, 0],
+        Name: teamName,
+        PlayerCount: 0,
+        Players: [],
+        Frags: 0,
+        TotalPing: 0,
+        Colors: [0, 0],
       };
     }
 
     const playerTeam = teamsObj[teamName];
-    playerTeam.playerCount += 1;
-    playerTeam.players.push(player);
-    playerTeam.frags += player.Frags;
-    playerTeam.totalPing += player.Ping;
+    playerTeam.PlayerCount += 1;
+    playerTeam.Players.push(player);
+    playerTeam.Frags += player.Frags;
+    playerTeam.TotalPing += player.Ping;
   }
 
   const teams = Object.values(teamsObj);
@@ -161,16 +161,16 @@ const teamsByPlayers = (players) => {
   for (let i = 0; i < teams.length; i++) {
     const team = teams[i];
     if (team.playerCount > 0) {
-      team.avgPing = parseInt(team.totalPing / team.playerCount);
+      team.AvgPing = parseInt(team.TotalPing / team.PlayerCount);
     } else {
-      team.avgPing = 0;
+      team.AvgPing = 0;
     }
-    delete team.totalPing;
+    delete team.TotalPing;
 
-    team.colors = majorityColors(team.players);
+    team.Colors = majorityColors(team.Players);
   }
 
-  teams.sort(sortByProp("frags", "DESC"));
+  teams.sort(sortByProp("Frags", "DESC"));
 
   return teams;
 };

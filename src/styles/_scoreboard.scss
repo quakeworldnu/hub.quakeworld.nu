@@ -1,0 +1,55 @@
+$frags-width: 32px;
+$spacer: .4rem;
+
+.scoreboard {
+  display: grid;
+  column-gap: $spacer;
+  background-color: rgba(white, 0.1);
+  border: 1px solid red;
+  font-size: .9rem;
+
+  > div {
+    border: 1px solid red;
+    display: block;
+  }
+}
+
+.scoreboard.scoreboard-list {
+  &.sc-noteam {
+    grid-template-columns: $frags-width 1fr;
+  }
+
+  &.sc-team {
+    grid-template-columns: $frags-width auto 1fr;
+  }
+}
+
+.scoreboard.scoreboard-grid {
+  $column-count: 4;
+
+  grid-template-columns: 1fr $frags-width $frags-width 1fr;
+
+  > div {
+    &:nth-child(4n+1) {
+      text-align: right;
+    }
+  }
+}
+
+.sc-name,
+.sc-frags {
+  font-weight: bold;
+}
+
+.sc-name {
+  text-align: left;
+}
+
+.sc-team,
+.sc-frags {
+  text-align: center;
+}
+
+.sc-frags {
+  font-size: .8rem;
+}

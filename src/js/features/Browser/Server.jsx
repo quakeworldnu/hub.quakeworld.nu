@@ -1,6 +1,8 @@
 import FavoriteToggle from "./FavoriteToggle";
+import { ScoreboardGrid, ScoreboardList } from "./Scoreboard";
+import { QuakeText } from "./Common";
 import React from "react";
-import { quakeTextToHtml, copyToClipBoard } from "../../common/util";
+import { copyToClipBoard, quakeTextToHtml } from "../../common/util";
 
 const ServerProgress = (props) => {
   const { value, max } = props;
@@ -55,174 +57,6 @@ const ServerHeader = (props) => {
   );
 };
 
-const TableRowSpacer = () => (
-  <tr>
-    <td className="server-vspacer" colSpan={99} />
-  </tr>
-);
-
-const PlayersTable = (props) => {
-  const { players, isTeamplay } = props;
-  return (
-    <table className="servers-table">
-      <tbody>
-        {players.map((player, index) => (
-          <tr key={index}>
-            <ColoredFrags
-              tag="td"
-              frags={player.Frags}
-              colors={player.Colors}
-            />
-            {isTeamplay && (
-              <td
-                className="server-team"
-                dangerouslySetInnerHTML={{
-                  __html: quakeTextToHtml(player.Team),
-                }}
-              />
-            )}
-            <td
-              className="server-name"
-              dangerouslySetInnerHTML={{
-                __html: quakeTextToHtml(player.Name),
-              }}
-            />
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
-};
-
-const TeamsTable = (props) => {
-  const { teams } = props;
-  return (
-    <table className="servers-table mb-4">
-      <thead>
-        <tr>
-          <th className="server-frags">frags</th>
-          <th className="server-team">team</th>
-          <th>players</th>
-        </tr>
-        <TableRowSpacer />
-      </thead>
-      <tbody>
-        {teams.map((team, index) => (
-          <tr key={index}>
-            <ColoredFrags tag="th" frags={team.frags} colors={team.colors} />
-            <td
-              className="server-team"
-              dangerouslySetInnerHTML={{
-                __html: quakeTextToHtml(team.name),
-              }}
-            />
-            <td>{team.playerCount}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
-};
-
-const ColoredFrags = (props) => {
-  const { tag, frags, colors } = props;
-  const TagName = `${tag}`;
-
-  return (
-    <TagName className={`server-frags qw-bgcolor-${colors[0]}-${colors[1]}`}>
-      {frags}
-    </TagName>
-  );
-};
-
-const TwoTeamsTablePlayerCells = (player, keyPrefix) => {
-  return [
-    <td
-      className="server-name"
-      dangerouslySetInnerHTML={{ __html: quakeTextToHtml(player.Name) }}
-      key={`${keyPrefix}-name`}
-    />,
-    <ColoredFrags
-      tag="td"
-      frags={player.Frags}
-      colors={player.Colors}
-      key={`${keyPrefix}-frags`}
-    />,
-  ];
-};
-
-const TwoTeamsTableBody = (props) => {
-  const { teamOne, teamTwo } = props;
-
-  const maxTeamSize = Math.max(teamOne.playerCount, teamTwo.playerCount);
-
-  const rows = [];
-  let cells;
-
-  for (let i = 0; i < maxTeamSize; i++) {
-    cells = [];
-
-    if (i <= teamOne.playerCount) {
-      cells = cells.concat(
-        TwoTeamsTablePlayerCells(teamOne.players[i], `left`)
-      );
-    }
-
-    cells.push(<td className="server-hspacer" key={`spacer-${i}`} />);
-
-    if (i <= teamTwo.playerCount) {
-      let tmp = TwoTeamsTablePlayerCells(teamTwo.players[i], `right`);
-      tmp.reverse();
-      cells = cells.concat(tmp);
-    }
-
-    rows.push(<tr key={`row-${i}`}>{cells}</tr>);
-  }
-
-  return <tbody>{rows}</tbody>;
-};
-const TwoTeamsTable = (props) => {
-  const { teams } = props;
-
-  const teamOne = teams[0];
-  const teamTwo = teams[1];
-
-  return (
-    <div className="is-flex is-justify-content-center">
-      <table className="servers-table servers-table-two-teams">
-        <thead>
-          <tr>
-            <th
-              className="server-team"
-              dangerouslySetInnerHTML={{
-                __html: quakeTextToHtml(teamOne.name),
-              }}
-            />
-            <ColoredFrags
-              tag="th"
-              frags={teamOne.frags}
-              colors={teamOne.colors}
-            />
-            <th className="server-hspacer" />
-            <ColoredFrags
-              tag="th"
-              frags={teamTwo.frags}
-              colors={teamTwo.colors}
-            />
-            <th
-              className="server-team"
-              dangerouslySetInnerHTML={{
-                __html: quakeTextToHtml(teamTwo.name),
-              }}
-            />
-          </tr>
-          <TableRowSpacer />
-        </thead>
-        <TwoTeamsTableBody {...{ teamOne, teamTwo }} />
-      </table>
-    </div>
-  );
-};
 const ServerMapshot = (props) => {
   const { server } = props;
 
@@ -248,18 +82,14 @@ const ServerMapshot = (props) => {
             <div className="server-matchtag mb-4">{server.meta.matchtag}</div>
           )}
 
-          {hasTwoTeams && <TwoTeamsTable teams={server.meta.teams} />}
+          {hasTwoTeams && <ScoreboardGrid teams={server.meta.teams} />}
 
           {!hasTwoTeams && (
             <React.Fragment>
-              {server.meta.displayTeams && (
-                <TeamsTable teams={server.meta.teams} />
-              )}
-
               {server.meta.hasPlayers && (
-                <PlayersTable
+                <ScoreboardList
                   players={players}
-                  isTeamplay={server.meta.mode.isTeamplay}
+                  displayTeam={server.meta.mode.isTeamplay}
                 />
               )}
             </React.Fragment>
@@ -283,15 +113,10 @@ const SpectatorList = (props) => {
   return (
     <div className="spectator-list mt-4">
       {spectators.map((spec, index) => (
-        <React.Fragment key={index}>
+        <div key={index}>
           <span className="server-spectator-prefix">spectator</span>{" "}
-          <span
-            dangerouslySetInnerHTML={{
-              __html: quakeTextToHtml(spec.Name),
-            }}
-          />
-          <br />
-        </React.Fragment>
+          <QuakeText tag="span" text={spec.Name} />
+        </div>
       ))}
     </div>
   );
@@ -301,27 +126,6 @@ const SpectatorButtons = (props) => {
 
   return (
     <div>
-      {false && (
-        <div className="">
-          <div className="columns is-mobile">
-            <div className="column">
-              {server.meta.hasQtvSpectators &&
-                server.QTV[0].SpecList.map((spec, index) => (
-                  <React.Fragment key={index}>
-                    <span className="server-spectator-prefix">qtv</span>{" "}
-                    <span
-                      dangerouslySetInnerHTML={{
-                        __html: quakeTextToHtml(spec),
-                      }}
-                    />
-                    <br />
-                  </React.Fragment>
-                ))}
-            </div>
-          </div>
-        </div>
-      )}
-
       <div className="columns is-mobile is-vcentered">
         <div className="column">
           <a

@@ -1,45 +1,5 @@
-.app-dim-light {
-  opacity: .8;
-}
-
-.app-dim {
-  opacity: .6;
-}
-
-.app-dimmer {
-  opacity: .4;
-}
-
-.app-text-small {
-  font-size: .8em;
-}
-
-.app-text-smaller {
-  font-size: .7em;
-}
-
-.app-text-large {
-  font-size: 1.2em;
-}
-
-.app-text-dense {
-  line-height: 1.3;
-}
-
-.app-text-nowrap {
-  white-space: nowrap;
-}
-
-.app-text-overflow {
-  @extend .app-text-nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-#app-logo-link {
-  padding-top: 5px;
-}
-
+@import "./app";
+@import "./scoreboard";
 @import "./fonts/roboto";
 @import "./bulma";
 @import "./bulma_override";
