@@ -33,13 +33,19 @@ export const Scoreboard = (props) => {
 const ItemRow = (props) => {
   const { Name, Frags, Colors, Team, showTeam } = props;
 
-  const columns = [<ColoredFrags tag="div" frags={Frags} colors={Colors} />];
+  const columns = [
+    <ColoredFrags tag="div" frags={Frags} colors={Colors} key="frags" />,
+  ];
 
   if (showTeam) {
-    columns.push(<QuakeText tag="div" text={Team} className="sc-team" />);
+    columns.push(
+      <QuakeText tag="div" text={Team} className="sc-team" key="team" />
+    );
   }
 
-  columns.push(<QuakeText tag="div" text={Name} className="sc-name" />);
+  columns.push(
+    <QuakeText tag="div" text={Name} className="sc-name" key="name" />
+  );
 
   return columns;
 };
@@ -57,8 +63,8 @@ export const OneColumnScoreboard = (props) => {
 
   return (
     <div className={className}>
-      {players.map((player) => (
-        <ItemRow {...player} showTeam={showTeam} />
+      {players.map((player, playerIndex) => (
+        <ItemRow {...player} showTeam={showTeam} key={playerIndex} />
       ))}
     </div>
   );
