@@ -10,23 +10,18 @@ export const Scoreboard = (props) => {
 
   let showAsTwoColumns =
     server.meta.mode.isDuel || 2 === server.meta.teams.length;
-  let scoreboardElement;
   let players = server.Players.filter((p) => !p.Spec);
 
   if (showAsTwoColumns) {
-    scoreboardElement = (
-      <TwoColumnScoreboard players={players} teams={server.meta.teams} />
-    );
+    return <TwoColumnScoreboard players={players} teams={server.meta.teams} />;
   } else {
-    scoreboardElement = (
+    return (
       <OneColumnScoreboard
         players={players}
         showTeam={server.meta.mode.isTeamplay}
       />
     );
   }
-
-  return scoreboardElement;
 };
 
 const ItemRow = (props) => {
