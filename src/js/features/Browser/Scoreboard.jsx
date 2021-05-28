@@ -18,7 +18,7 @@ const PlayerRow = (props) => {
 export const OneColumnScoreboard = (props) => {
   const { players, displayTeam } = props;
 
-  let className = "scoreboard scoreboard-list ";
+  let className = "scoreboard scoreboard-one-column ";
 
   if (displayTeam) {
     className += "sc-team";
@@ -70,5 +70,5 @@ export const TwoColumnScoreboard = (props) => {
     rows.push(cells);
   }
 
-  return <div className="scoreboard scoreboard-grid">{rows}</div>;
+  return <div className="scoreboard scoreboard-two-columns">{rows}</div>;
 };

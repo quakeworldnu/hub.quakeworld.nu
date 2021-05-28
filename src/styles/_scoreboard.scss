@@ -14,7 +14,7 @@ $spacer: .4rem;
   }
 }
 
-.scoreboard.scoreboard-list {
+.scoreboard.scoreboard-one-column {
   &.sc-noteam {
     grid-template-columns: $frags-width 1fr;
   }
@@ -24,7 +24,7 @@ $spacer: .4rem;
   }
 }
 
-.scoreboard.scoreboard-grid {
+.scoreboard.scoreboard-two-columns {
   $column-count: 4;
 
   grid-template-columns: 1fr $frags-width $frags-width 1fr;
