@@ -36,7 +36,7 @@ export const ScoreboardList = (props) => {
 };
 
 const GridItemRight = (props) =>
-  ScoreboardRow({ ...props, displayTeams: false });
+  ScoreboardRow({ ...props, displayTeam: false });
 const GridItemLeft = (props) => GridItemRight(props).reverse();
 
 export const ScoreboardGrid = (props) => {
