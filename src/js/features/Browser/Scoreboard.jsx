@@ -4,9 +4,7 @@ import { QuakeText, ColoredFrags } from "./Common";
 const ScoreboardRow = (props) => {
   const { Name, Frags, Colors, Team, displayTeam } = props;
 
-  const columns = [];
-
-  columns.push(<ColoredFrags tag="div" frags={Frags} colors={Colors} />);
+  const columns = [<ColoredFrags tag="div" frags={Frags} colors={Colors} />];
 
   if (displayTeam) {
     columns.push(<QuakeText tag="div" text={Team} className="sc-team" />);
