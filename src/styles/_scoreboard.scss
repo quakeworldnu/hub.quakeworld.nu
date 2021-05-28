@@ -1,15 +1,14 @@
-$frags-width: 32px;
-$spacer: .4rem;
+$frags-width: 36px;
+$spacer: .6rem;
 
 .scoreboard {
   display: grid;
   column-gap: $spacer;
-  background-color: rgba(white, 0.1);
-  border: 1px solid red;
+  color: white;
   font-size: .9rem;
+  text-shadow: black 1px 1px 1px;
 
   > div {
-    border: 1px solid red;
     display: block;
   }
 }
@@ -33,6 +32,12 @@ $spacer: .4rem;
     &:nth-child(4n+1) {
       text-align: right;
     }
+
+    &:nth-child(n+1):nth-child(-n+4) {
+      font-weight: normal;
+      font-size: 1.2em;
+      margin-bottom: 1.5*$spacer;
+    }
   }
 }
 
@@ -45,7 +50,7 @@ $spacer: .4rem;
   text-align: left;
 }
 
-.sc-show-team,
+.sc-team,
 .sc-frags {
   text-align: center;
 }
