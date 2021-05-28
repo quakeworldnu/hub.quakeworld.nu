@@ -1,8 +1,8 @@
 import FavoriteToggle from "./FavoriteToggle";
-import { TwoColumnScoreboard, OneColumnScoreboard } from "./Scoreboard";
+import { Scoreboard } from "./Scoreboard";
 import { QuakeText } from "./Common";
 import React from "react";
-import { copyToClipBoard, quakeTextToHtml } from "../../common/util";
+import { copyToClipBoard } from "../../common/util";
 
 const ServerProgress = (props) => {
   const { value, max } = props;
@@ -60,7 +60,6 @@ const ServerHeader = (props) => {
 const ServerMapshot = (props) => {
   const { server } = props;
 
-  let players = server.Players.filter((p) => !p.Spec);
   let spectators = server.Players.filter((p) => p.Spec);
 
   let mapThumbnailSrc = "none";
@@ -68,8 +67,6 @@ const ServerMapshot = (props) => {
   if (server.Map) {
     mapThumbnailSrc = `url(https://quakedemos.blob.core.windows.net/maps/thumbnails/${server.Map.toLowerCase()}.jpg)`;
   }
-
-  const hasTwoTeams = 2 === server.meta.teams.length;
 
   return (
     <div className="server-mapshot-wrapper">
@@ -82,18 +79,7 @@ const ServerMapshot = (props) => {
             <div className="server-matchtag mb-4">{server.meta.matchtag}</div>
           )}
 
-          {hasTwoTeams && <TwoColumnScoreboard teams={server.meta.teams} />}
-
-          {!hasTwoTeams && (
-            <React.Fragment>
-              {server.meta.hasPlayers && (
-                <OneColumnScoreboard
-                  players={players}
-                  showTeam={server.meta.mode.isTeamplay}
-                />
-              )}
-            </React.Fragment>
-          )}
+          <Scoreboard server={server} />
 
           {!server.meta.hasClients && (
             <div className="has-text-centered">(no players)</div>
@@ -107,8 +93,13 @@ const ServerMapshot = (props) => {
     </div>
   );
 };
+
 const SpectatorList = (props) => {
   const { spectators } = props;
+
+  if (0 === spectators.length) {
+    return null;
+  }
 
   return (
     <div className="spectator-list mt-4">

@@ -1,7 +1,35 @@
 import React from "react";
-import { QuakeText, ColoredFrags } from "./Common";
+import { ColoredFrags, QuakeText } from "./Common";
 
-const PlayerRow = (props) => {
+export const Scoreboard = (props) => {
+  const { server } = props;
+
+  if (!server.meta.hasPlayers) {
+    return null;
+  }
+
+  let showAsTwoColumns =
+    server.meta.mode.isDuel || 2 === server.meta.teams.length;
+  let scoreboardElement;
+  let players = server.Players.filter((p) => !p.Spec);
+
+  if (showAsTwoColumns) {
+    scoreboardElement = (
+      <TwoColumnScoreboard players={players} teams={server.meta.teams} />
+    );
+  } else {
+    scoreboardElement = (
+      <OneColumnScoreboard
+        players={players}
+        showTeam={server.meta.mode.isTeamplay}
+      />
+    );
+  }
+
+  return scoreboardElement;
+};
+
+const ItemRow = (props) => {
   const { Name, Frags, Colors, Team, showTeam } = props;
 
   const columns = [<ColoredFrags tag="div" frags={Frags} colors={Colors} />];
@@ -28,47 +56,49 @@ export const OneColumnScoreboard = (props) => {
 
   return (
     <div className={className}>
-      {players.map((p) => (
-        <PlayerRow {...p} showTeam={showTeam} />
+      {players.map((player) => (
+        <ItemRow {...player} showTeam={showTeam} />
       ))}
     </div>
   );
 };
 
-const RightColumnRow = (props) => PlayerRow({ ...props, showTeam: false });
-const LeftColumnRow = (props) => RightColumnRow(props).reverse();
-
 export const TwoColumnScoreboard = (props) => {
-  const { teams } = props;
+  const { teams, players } = props;
 
-  const teamOne = teams[0];
-  const teamTwo = teams[1];
+  let items = [];
 
-  const rowCount = Math.max(teamOne.PlayerCount, teamTwo.PlayerCount);
+  if (0 === teams.length) {
+    items = players;
+  } else if (teams) {
+    items = items.concat(teams);
 
-  const headerRow = LeftColumnRow(teamOne).concat(RightColumnRow(teamTwo));
-  const rows = [headerRow];
-  const emptyRow = [<div />, <div />];
+    const rowCount = Math.max(...teams.map((t) => t.PlayerCount));
 
-  let cells;
-
-  for (let i = 0; i < rowCount; i++) {
-    cells = [];
-
-    if (i <= teamOne.PlayerCount) {
-      cells = cells.concat(LeftColumnRow(teamOne.Players[i]));
-    } else {
-      cells = cells.concat(emptyRow);
+    for (let rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+      for (let teamIndex = 0; teamIndex < teams.length; teamIndex++) {
+        if (rowIndex < teams[teamIndex].PlayerCount) {
+          items.push(teams[teamIndex].Players[rowIndex]);
+        } else {
+          items.push(null);
+        }
+      }
     }
-
-    if (i <= teamTwo.PlayerCount) {
-      cells = cells.concat(RightColumnRow(teamTwo.Players[i]));
-    } else {
-      cells = cells.concat(emptyRow);
-    }
-
-    rows.push(cells);
   }
 
+  const rows = items.map(itemToRow);
+
   return <div className="scoreboard sc-two-columns">{rows}</div>;
+};
+
+const RightColumnRow = (props) => ItemRow({ ...props, showTeam: false });
+const LeftColumnRow = (props) => RightColumnRow(props).reverse();
+
+const itemToRow = (item, itemIndex) => {
+  if (null === item) {
+    return [<div />, <div />];
+  } else {
+    let formatFunc = 0 === itemIndex % 2 ? LeftColumnRow : RightColumnRow;
+    return formatFunc(item);
+  }
 };

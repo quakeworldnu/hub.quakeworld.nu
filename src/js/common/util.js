@@ -1,5 +1,11 @@
 import { regionNameByCountryCode } from "./geo";
 
+export const pick = (obj, fields) => {
+  return fields.reduce((result, x) => {
+    if (obj.hasOwnProperty(x)) result[x] = obj[x];
+    return result;
+  }, {});
+};
 export const deepCopy = (obj) => JSON.parse(JSON.stringify(obj));
 
 export const metaByServer = (server) => {
