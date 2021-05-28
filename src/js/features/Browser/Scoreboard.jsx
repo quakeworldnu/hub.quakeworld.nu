@@ -13,7 +13,13 @@ export const Scoreboard = (props) => {
   let players = server.Players.filter((p) => !p.Spec);
 
   if (showAsTwoColumns) {
-    return <TwoColumnScoreboard players={players} teams={server.meta.teams} />;
+    return (
+      <TwoColumnScoreboard
+        players={players}
+        teams={server.meta.teams}
+        isTeamplay={server.meta.mode.isTeamplay}
+      />
+    );
   } else {
     return (
       <OneColumnScoreboard
@@ -59,13 +65,11 @@ export const OneColumnScoreboard = (props) => {
 };
 
 export const TwoColumnScoreboard = (props) => {
-  const { teams, players } = props;
+  const { teams, players, isTeamplay } = props;
 
   let items = [];
 
-  if (0 === teams.length) {
-    items = players;
-  } else if (teams) {
+  if (isTeamplay) {
     items = items.concat(teams);
 
     const rowCount = Math.max(...teams.map((t) => t.PlayerCount));
@@ -79,11 +83,19 @@ export const TwoColumnScoreboard = (props) => {
         }
       }
     }
+  } else {
+    items = players;
   }
 
   const rows = items.map(itemToRow);
 
-  return <div className="scoreboard sc-two-columns">{rows}</div>;
+  let className = "scoreboard sc-two-columns ";
+
+  if (isTeamplay) {
+    className += "sc-teamplay";
+  }
+
+  return <div className={className}>{rows}</div>;
 };
 
 const RightColumnRow = (props) => ItemRow({ ...props, showTeam: false });

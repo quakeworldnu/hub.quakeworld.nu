@@ -29,15 +29,15 @@ $spacer: .6rem;
   grid-template-columns: 1fr $frags-width $frags-width 1fr;
 
   > div {
-    &:nth-child(4n+1) {
+    &:nth-child(#{$column-count}n+1) {
       text-align: right;
     }
+  }
 
-    &:nth-child(n+1):nth-child(-n+4) {
-      font-weight: normal;
-      font-size: 1.2em;
-      margin-bottom: 1.5*$spacer;
-    }
+  &.sc-teamplay > div:nth-child(n+1):nth-child(-n+#{$column-count}) {
+    margin-bottom: 1.5*$spacer;
+    font-weight: normal;
+    font-size: 1.2em;
   }
 }
 
