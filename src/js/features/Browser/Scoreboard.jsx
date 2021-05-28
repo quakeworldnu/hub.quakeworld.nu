@@ -54,12 +54,7 @@ export const OneColumnScoreboard = (props) => {
   const { players, showTeam } = props;
 
   let className = "scoreboard sc-one-column ";
-
-  if (showTeam) {
-    className += "sc-show-team";
-  } else {
-    className += "sc-hide-team";
-  }
+  className += showTeam ? "sc-show-team" : "sc-hide-team";
 
   return (
     <div className={className}>
