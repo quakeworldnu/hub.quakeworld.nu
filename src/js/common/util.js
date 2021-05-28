@@ -85,7 +85,7 @@ export const metaByServer = (server) => {
     ? teamsByPlayers(server.Players.filter((p) => !p.Spec))
     : [];
   const hasTeams = teams.length > 0;
-  const displayTeams = hasTeams && isStarted;
+  const showTeams = hasTeams && isStarted;
 
   const meta = {
     isStandby,
@@ -94,7 +94,7 @@ export const metaByServer = (server) => {
     regionName,
     teams,
     hasTeams,
-    displayTeams,
+    showTeams,
     displayProgress,
     minutesTotal,
     minutesElapsed,

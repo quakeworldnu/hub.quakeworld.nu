@@ -89,7 +89,7 @@ const ServerMapshot = (props) => {
               {server.meta.hasPlayers && (
                 <OneColumnScoreboard
                   players={players}
-                  displayTeam={server.meta.mode.isTeamplay}
+                  showTeam={server.meta.mode.isTeamplay}
                 />
               )}
             </React.Fragment>

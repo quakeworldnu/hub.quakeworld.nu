@@ -2,11 +2,11 @@ import React from "react";
 import { QuakeText, ColoredFrags } from "./Common";
 
 const PlayerRow = (props) => {
-  const { Name, Frags, Colors, Team, displayTeam } = props;
+  const { Name, Frags, Colors, Team, showTeam } = props;
 
   const columns = [<ColoredFrags tag="div" frags={Frags} colors={Colors} />];
 
-  if (displayTeam) {
+  if (showTeam) {
     columns.push(<QuakeText tag="div" text={Team} className="sc-team" />);
   }
 
@@ -16,26 +16,26 @@ const PlayerRow = (props) => {
 };
 
 export const OneColumnScoreboard = (props) => {
-  const { players, displayTeam } = props;
+  const { players, showTeam } = props;
 
-  let className = "scoreboard scoreboard-one-column ";
+  let className = "scoreboard sc-one-column ";
 
-  if (displayTeam) {
-    className += "sc-team";
+  if (showTeam) {
+    className += "sc-show-team";
   } else {
-    className += "sc-noteam";
+    className += "sc-hide-team";
   }
 
   return (
     <div className={className}>
       {players.map((p) => (
-        <PlayerRow {...p} displayTeam={displayTeam} />
+        <PlayerRow {...p} showTeam={showTeam} />
       ))}
     </div>
   );
 };
 
-const RightColumnRow = (props) => PlayerRow({ ...props, displayTeam: false });
+const RightColumnRow = (props) => PlayerRow({ ...props, showTeam: false });
 const LeftColumnRow = (props) => RightColumnRow(props).reverse();
 
 export const TwoColumnScoreboard = (props) => {
@@ -70,5 +70,5 @@ export const TwoColumnScoreboard = (props) => {
     rows.push(cells);
   }
 
-  return <div className="scoreboard scoreboard-two-columns">{rows}</div>;
+  return <div className="scoreboard sc-two-columns">{rows}</div>;
 };

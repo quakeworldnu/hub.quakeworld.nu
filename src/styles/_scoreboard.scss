@@ -14,17 +14,17 @@ $spacer: .4rem;
   }
 }
 
-.scoreboard.scoreboard-one-column {
-  &.sc-noteam {
+.scoreboard.sc-one-column {
+  &.sc-hide-team {
     grid-template-columns: $frags-width 1fr;
   }
 
-  &.sc-team {
+  &.sc-show-team {
     grid-template-columns: $frags-width auto 1fr;
   }
 }
 
-.scoreboard.scoreboard-two-columns {
+.scoreboard.sc-two-columns {
   $column-count: 4;
 
   grid-template-columns: 1fr $frags-width $frags-width 1fr;
@@ -45,7 +45,7 @@ $spacer: .4rem;
   text-align: left;
 }
 
-.sc-team,
+.sc-show-team,
 .sc-frags {
   text-align: center;
 }
