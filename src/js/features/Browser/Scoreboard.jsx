@@ -1,7 +1,7 @@
 import React from "react";
 import { QuakeText, ColoredFrags } from "./Common";
 
-const ScoreboardRow = (props) => {
+const PlayerRow = (props) => {
   const { Name, Frags, Colors, Team, displayTeam } = props;
 
   const columns = [<ColoredFrags tag="div" frags={Frags} colors={Colors} />];
@@ -15,7 +15,7 @@ const ScoreboardRow = (props) => {
   return columns;
 };
 
-export const ScoreboardList = (props) => {
+export const OneColumnScoreboard = (props) => {
   const { players, displayTeam } = props;
 
   let className = "scoreboard scoreboard-list ";
@@ -29,17 +29,16 @@ export const ScoreboardList = (props) => {
   return (
     <div className={className}>
       {players.map((p) => (
-        <ScoreboardRow {...p} displayTeam={displayTeam} />
+        <PlayerRow {...p} displayTeam={displayTeam} />
       ))}
     </div>
   );
 };
 
-const GridItemRight = (props) =>
-  ScoreboardRow({ ...props, displayTeam: false });
-const GridItemLeft = (props) => GridItemRight(props).reverse();
+const RightColumnRow = (props) => PlayerRow({ ...props, displayTeam: false });
+const LeftColumnRow = (props) => RightColumnRow(props).reverse();
 
-export const ScoreboardGrid = (props) => {
+export const TwoColumnScoreboard = (props) => {
   const { teams } = props;
 
   const teamOne = teams[0];
@@ -47,9 +46,9 @@ export const ScoreboardGrid = (props) => {
 
   const rowCount = Math.max(teamOne.PlayerCount, teamTwo.PlayerCount);
 
-  const headerRow = GridItemLeft(teamOne).concat(GridItemRight(teamTwo));
+  const headerRow = LeftColumnRow(teamOne).concat(RightColumnRow(teamTwo));
   const rows = [headerRow];
-  const emptyCells = [<div />, <div />];
+  const emptyRow = [<div />, <div />];
 
   let cells;
 
@@ -57,15 +56,15 @@ export const ScoreboardGrid = (props) => {
     cells = [];
 
     if (i <= teamOne.PlayerCount) {
-      cells = cells.concat(GridItemLeft(teamOne.Players[i]));
+      cells = cells.concat(LeftColumnRow(teamOne.Players[i]));
     } else {
-      cells = cells.concat(emptyCells);
+      cells = cells.concat(emptyRow);
     }
 
     if (i <= teamTwo.PlayerCount) {
-      cells = cells.concat(GridItemRight(teamTwo.Players[i]));
+      cells = cells.concat(RightColumnRow(teamTwo.Players[i]));
     } else {
-      cells = cells.concat(emptyCells);
+      cells = cells.concat(emptyRow);
     }
 
     rows.push(cells);

@@ -1,5 +1,5 @@
 import FavoriteToggle from "./FavoriteToggle";
-import { ScoreboardGrid, ScoreboardList } from "./Scoreboard";
+import { TwoColumnScoreboard, OneColumnScoreboard } from "./Scoreboard";
 import { QuakeText } from "./Common";
 import React from "react";
 import { copyToClipBoard, quakeTextToHtml } from "../../common/util";
@@ -82,12 +82,12 @@ const ServerMapshot = (props) => {
             <div className="server-matchtag mb-4">{server.meta.matchtag}</div>
           )}
 
-          {hasTwoTeams && <ScoreboardGrid teams={server.meta.teams} />}
+          {hasTwoTeams && <TwoColumnScoreboard teams={server.meta.teams} />}
 
           {!hasTwoTeams && (
             <React.Fragment>
               {server.meta.hasPlayers && (
-                <ScoreboardList
+                <OneColumnScoreboard
                   players={players}
                   displayTeam={server.meta.mode.isTeamplay}
                 />
