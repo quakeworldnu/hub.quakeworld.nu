@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { metaByServer, compareServers, sortByProp } from "../../common/util";
 import storage from "../../common/storage";
+import { serverCountries } from "./serverCountries";
 
 const getDefaultUiState = () => ({
   favorites: {
@@ -25,6 +26,18 @@ export default createSlice({
   reducers: {
     updateServers: (state, action) => {
       const { servers } = action.payload;
+
+      // assign missing country data
+      for (let i = 0; i < servers.length; i++) {
+        if ("" === servers[i].Country) {
+          const hostname = servers[i].Address.split(":")[0];
+
+          if (hostname in serverCountries) {
+            servers[i].Country = serverCountries[hostname];
+            console.log(servers[i]);
+          }
+        }
+      }
 
       // ignore bots
       for (let i = 0; i < servers.length; i++) {
