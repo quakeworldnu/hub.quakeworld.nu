@@ -173,7 +173,7 @@ const ServerFooter = (props) => {
           </div>
         </div>
         {server.Settings.ktxver && (
-          <div className="column is-narrow has-text-grey">
+          <div className="column is-narrow has-text-grey app-text-small">
             KTX {server.Settings.ktxver}
           </div>
         )}
