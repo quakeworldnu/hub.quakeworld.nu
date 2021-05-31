@@ -5,6 +5,7 @@ $footer-color: #ababb9;
 $spec-color: #f9d99db3;
 $matchtag-bg: $red;
 $hr-color: darken($footer-bg, 5);
+$color-join: #2397d1;
 
 
 .server-wrapper {
@@ -59,7 +60,7 @@ $hr-color: darken($footer-bg, 5);
   }
 
   &.smod-hasfreeplayerslots {
-    @include app-smod(#2397d1, 32px);
+    @include app-smod($color-join, 32px);
   }
 }
 
@@ -183,6 +184,6 @@ $hr-color: darken($footer-bg, 5);
   }
 
   &:active {
-    color: hotpink !important;
+    color: $color-join;
   }
 }
