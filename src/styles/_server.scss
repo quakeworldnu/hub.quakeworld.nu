@@ -169,7 +169,7 @@ $hr-color: darken($footer-bg, 5);
     fill: red;
   }
 
-  transition: transform 50ms linear, color 50ms linear;
+  transition: color 50ms linear;
 
   &:hover,
   &:active {
@@ -184,6 +184,5 @@ $hr-color: darken($footer-bg, 5);
 
   &:active {
     color: hotpink !important;
-    transform: translateY(2px);
   }
 }
