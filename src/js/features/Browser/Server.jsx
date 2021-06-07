@@ -65,7 +65,7 @@ const ServerMapshot = (props) => {
   let mapThumbnailSrc = "none";
 
   if (server.Map) {
-    mapThumbnailSrc = `url(https://quakedemos.blob.core.windows.net/maps/thumbnails/${server.Map.toLowerCase()}.jpg)`;
+    mapThumbnailSrc = `url(https://vikpe.org/qwmapshots/${server.Map}.jpg)`;
   }
 
   return (
