@@ -7,23 +7,6 @@ import Overview from "./Overview";
 import { Server } from "./Server";
 import ServerDataSource from "./ServerDataSource";
 
-const serverEntriesProvider = {
-  get: () => {
-    const url = "/data/busy.json";
-    const options = {
-      method: "GET",
-      mode: "cors",
-      cache: "no-cache",
-      redirect: "follow",
-    };
-    return fetch(url, options)
-      .then((response) => response.json())
-      .then((data) => {
-        return data;
-      });
-  },
-};
-
 const BrowserHeader = () => (
   <div className="my-3">
     <div className="columns is-mobile is-vcentered is-multiline">
@@ -55,29 +38,17 @@ const BrowserTiles = (props) => {
   );
 };
 
-class Browser extends React.Component {
-  componentDidMount() {
-    const fetchAndupdateServers = () => {
-      return serverEntriesProvider
-        .get()
-        .then((servers) => this.props.updateServers({ servers }));
-    };
+const Browser = (props) => {
+  const { servers } = props;
 
-    fetchAndupdateServers();
-  }
-
-  render() {
-    const { servers } = this.props;
-
-    return (
-      <React.Fragment>
-        <ServerDataSource />
-        <BrowserHeader />
-        <BrowserTiles servers={servers} />
-      </React.Fragment>
-    );
-  }
-}
+  return (
+    <React.Fragment>
+      <ServerDataSource />
+      <BrowserHeader />
+      <BrowserTiles servers={servers} />
+    </React.Fragment>
+  );
+};
 
 const mapStateToProps = (state) => ({
   servers: filterServers(
