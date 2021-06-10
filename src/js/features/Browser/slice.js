@@ -34,7 +34,6 @@ export default createSlice({
 
           if (hostname in serverCountries) {
             servers[i].Country = serverCountries[hostname];
-            console.log(servers[i]);
           }
         }
       }
