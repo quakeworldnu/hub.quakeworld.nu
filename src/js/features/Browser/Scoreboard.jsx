@@ -104,7 +104,7 @@ const LeftColumnRow = (props) => RightColumnRow(props).reverse();
 
 const itemToRow = (item, itemIndex) => {
   if (null === item) {
-    return [<div />, <div />];
+    return [<div key="empty-1" />, <div key="empty-2" />];
   } else {
     let formatFunc = 0 === itemIndex % 2 ? LeftColumnRow : RightColumnRow;
     return formatFunc(item);
