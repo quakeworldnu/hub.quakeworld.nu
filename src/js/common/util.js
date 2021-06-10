@@ -8,6 +8,17 @@ export const pick = (obj, fields) => {
 };
 export const deepCopy = (obj) => JSON.parse(JSON.stringify(obj));
 
+export const randomString = (length) => {
+  let result = "";
+  let characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+};
+
 export const metaByServer = (server) => {
   const clientCount = server.Players.length;
   const hasClients = clientCount > 0;
