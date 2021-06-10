@@ -1,16 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
 import browserSlice from "./slice";
+import { randomString } from "./../../common/util";
 
 // const url = "/data/busy.json";
 
 const serverEntriesProvider = {
   get: async () => {
-    const url = "https://badplace.eu/api/v2/serverbrowser/busy";
+    const cacheBurstString = randomString(12);
+    const url = `https://badplace.eu/api/v2/serverbrowser/busy?${cacheBurstString}`;
     const proxiedUrl = `https://api.allorigins.win/raw?url=${url}`;
     const options = {
       method: "GET",
-      cache: "no-cache",
+      cache: "no-store",
     };
     return fetch(proxiedUrl, options)
       .then((response) => {
