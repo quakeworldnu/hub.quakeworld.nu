@@ -133,7 +133,9 @@ const SpectatorButtons = (props) => {
               className="button is-fullwidth is-small is-dark"
             >
               QTV
-              <span className="ml-1 app-dim">({server.QTV[0].Specs})</span>
+              {server.meta.hasQtvSpectators && (
+                <span className="ml-1 app-dim">({server.QTV[0].Specs})</span>
+              )}
             </a>
           )}
         </div>
