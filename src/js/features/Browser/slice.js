@@ -25,7 +25,20 @@ export default createSlice({
   initialState: getInitialState(),
   reducers: {
     updateServers: (state, action) => {
-      const { servers } = action.payload;
+      let { servers } = action.payload;
+
+      // ignore bots
+      const isBot = (p) =>
+        p.IsBot || p.Name.toLowerCase().includes("[serveme]");
+
+      for (let i = 0; i < servers.length; i++) {
+        servers[i].Players = servers[i].Players.filter(
+          (p) => !(p.Spec && isBot)
+        );
+      }
+
+      // ignore empty servers
+      servers = servers.filter((s) => s.Players.length > 0);
 
       // assign missing country data
       for (let i = 0; i < servers.length; i++) {
@@ -36,13 +49,6 @@ export default createSlice({
             servers[i].Country = serverCountries[hostname];
           }
         }
-      }
-
-      // ignore bots
-      for (let i = 0; i < servers.length; i++) {
-        servers[i].Players = servers[i].Players.filter(
-          (p) => !(p.Spec && p.IsBot)
-        );
       }
 
       // sort players
