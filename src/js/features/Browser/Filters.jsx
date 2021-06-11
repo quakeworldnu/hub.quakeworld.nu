@@ -49,7 +49,7 @@ const FilterForm = (props) => {
         <div className="column is-narrow">
           <div className="select">
             <Field as="select" name="regionName" className="pr-4">
-              <option value="">(any region)</option>
+              <option value="">All Regions</option>
               {regions.map((r, index) => (
                 <option key={index} value={r.name}>
                   {r.name}
