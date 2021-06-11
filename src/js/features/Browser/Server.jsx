@@ -81,13 +81,7 @@ const ServerMapshot = (props) => {
 
           <Scoreboard server={server} />
 
-          {!server.meta.hasClients && (
-            <div className="has-text-centered">(no players)</div>
-          )}
-
-          {server.meta.hasSpectators && (
-            <SpectatorList spectators={spectators} />
-          )}
+          <SpectatorList spectators={spectators} />
         </div>
       </div>
     </div>
@@ -102,7 +96,7 @@ const SpectatorList = (props) => {
   }
 
   return (
-    <div className="spectator-list my-4">
+    <div className="spectator-list mt-4">
       {spectators.map((spec, index) => (
         <div key={index}>
           <span className="server-spectator-prefix">spectator</span>{" "}
