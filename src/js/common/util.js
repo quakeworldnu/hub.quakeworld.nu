@@ -19,10 +19,13 @@ export const randomString = (length) => {
   return result;
 };
 
+export const stripNonAscii = (str) => str.replace(/[^ -~]+/g, "").trim();
+
 export const serverAddressTitleByServer = (server) => {
   const hasDistinctHostname = !server.Address.includes(server.IpAddress);
 
-  return hasDistinctHostname ? server.Address : server.Title;
+  const title = hasDistinctHostname ? server.Address : server.Title;
+  return stripNonAscii(title);
 };
 
 export const metaByServer = (server) => {
