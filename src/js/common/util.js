@@ -104,11 +104,17 @@ export const metaByServer = (server) => {
   const hasTeams = teams.length > 0;
   const showTeams = hasTeams && isStarted;
 
+  const hasDistinctHostname = !server.Address.includes(server.IpAddress);
+  const title = hasDistinctHostname
+    ? server.Address
+    : `${server.Title} (${server.Address})`;
+
   const meta = {
     isStandby,
     isStarted,
     isWaitingForPlayersToReadyUp,
     regionName,
+    title,
     teams,
     hasTeams,
     showTeams,
