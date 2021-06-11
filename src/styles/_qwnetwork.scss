@@ -1,0 +1,64 @@
+/*
+Default style for QW Network Bar
+Author: Viktor Persson, Arcsin (http://arcsin.se/)
+*/
+
+/* General */
+#qwnetwork {
+  border-bottom: 1px solid #222;
+  padding: 4px 5px;
+  background: #25273c;
+  color: #FFE;
+  font: normal 12px Verdana, sans-serif;
+  outline: 0;
+}
+
+#qwnet_content {
+  width: max-content;
+  margin: 0 auto;
+}
+
+#qwnetwork a {
+  float: left;
+  width: 48px;
+  height: 13px;
+  margin-right: 4px;
+  background-image: url(https://network.quakeworld.nu/bar/qwnetwork_icons.gif);
+  background-position-x: -49px;
+  outline: 0;
+
+  &:hover {
+    background-position-x: 0;
+  }
+}
+
+#qwnetwork .qwnet_separator {
+  float: left;
+  width: 24px;
+}
+
+#qwnet_clearer {
+  clear: both;
+  display: block;
+  line-height: 0;
+  font-size: 0;
+}
+/* Icons */
+#qwnet_nquake {background-position-y: -14px;}
+#qwnet_ezquake {background-position-y: -28px;}
+#qwnet_qwdrama {background-position-y: -42px;}
+#qwnet_qwnu {background-position-y: -56px;}
+#qwnet_forums {background-position-y: -70px;}
+#qwnet_sd {background-position-y: -84px;}
+#qwnet_eql {background-position-y: -98px;}
+#qwnet_wiki {background-position-y: -112px;}
+#qwnet_quakeservers {background-position-y: -126px;}
+#qwnet_qtv {background-position-y: -140px;}
+#qwnet_schedule {background-position-y: -154px;}
+#qwnet_goldrush {background-position-y: -168px;}
+#qwnet_chtv {background-position-y: -182px;}
+#qwnet_gfx {background-position-y: -196px;}
+#qwnet_videos {background-position-y: -210px;}
+#qwnet_stats {background-position-y: -224px;}
+#qwnet_fusion {background-position-y: -238px;}
+#qwnet_ownage {background-position-y: -252px;}
