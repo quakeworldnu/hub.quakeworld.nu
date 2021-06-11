@@ -5,4 +5,5 @@ export const serverCountries = {
   "qw1.irc.ax": "SE",
   "203.29.241.82": "AU",
   "172.104.164.17": "SG",
+  "51.210.10.181": "FR",
 };
