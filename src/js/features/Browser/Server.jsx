@@ -157,19 +157,21 @@ const ServerFooter = (props) => {
             onClick={() => copyToClipBoard(server.Address)}
             title="Copy IP to clipboard"
           >
-            {server.Country && (
-              <React.Fragment>
-                <img
-                  src={`https://badplace.eu/images/icons/flags/${server.Country.toLowerCase()}.png`}
-                  width="16"
-                  height="11"
-                  style={{ maxHeight: "11px" }}
-                  alt={server.Country.toLowerCase()}
-                />
-                &nbsp;
-              </React.Fragment>
-            )}
-            {server.meta.title}
+            <span className="server-address-title">
+              {server.Country && (
+                <React.Fragment>
+                  <img
+                    src={`https://badplace.eu/images/icons/flags/${server.Country.toLowerCase()}.png`}
+                    width="16"
+                    height="11"
+                    style={{ maxHeight: "11px" }}
+                    alt={server.Country.toLowerCase()}
+                  />
+                  &nbsp;
+                </React.Fragment>
+              )}
+              {server.meta.addressTitle}
+            </span>
             <img
               src="/assets/img/icons/content_paste.svg"
               width="12"
