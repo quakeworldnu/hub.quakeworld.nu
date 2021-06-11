@@ -22,19 +22,7 @@ export const randomString = (length) => {
 export const serverAddressTitleByServer = (server) => {
   const hasDistinctHostname = !server.Address.includes(server.IpAddress);
 
-  let title;
-
-  if (hasDistinctHostname) {
-    title = server.Address;
-  } else {
-    title = server.Title;
-
-    if (!server.Title.includes(server.Port)) {
-      title += ` (${server.IpAddress})`;
-    }
-  }
-
-  return title;
+  return hasDistinctHostname ? server.Address : server.Title;
 };
 
 export const metaByServer = (server) => {
