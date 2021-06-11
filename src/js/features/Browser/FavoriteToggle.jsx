@@ -20,8 +20,8 @@ const FavoriteToggle = (props) => {
     <div onClick={() => toggleFavoriteServer({ serverAddress })}>
       <img
         src={`/assets/img/icons/${iconFileName}.svg`}
-        width="20"
-        height="20"
+        width="24"
+        height="24"
         align="center"
         className="is-clickable"
       />
