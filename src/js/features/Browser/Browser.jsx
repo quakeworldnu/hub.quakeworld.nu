@@ -25,15 +25,16 @@ const BrowserHeader = () => (
 
 const BrowserTiles = (props) => {
   const { servers } = props;
-  const hasServers = servers.length > 0;
+
+  if (0 === servers.length) {
+    return null;
+  }
 
   return (
     <div className="app-grid">
-      {hasServers &&
-        servers.map((entry, index) => {
-          return <Server key={index} server={entry} />;
-        })}
-      {!hasServers && <span className="has-text-grey">(no results found)</span>}
+      {servers.map((entry, index) => {
+        return <Server key={index} server={entry} />;
+      })}
     </div>
   );
 };
