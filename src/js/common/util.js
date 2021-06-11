@@ -19,6 +19,24 @@ export const randomString = (length) => {
   return result;
 };
 
+export const serverAddressTitleByServer = (server) => {
+  const hasDistinctHostname = !server.Address.includes(server.IpAddress);
+
+  let title;
+
+  if (hasDistinctHostname) {
+    title = server.Address;
+  } else {
+    title = server.Title;
+
+    if (!server.Title.includes(server.Port)) {
+      title += ` (${server.IpAddress})`;
+    }
+  }
+
+  return title;
+};
+
 export const metaByServer = (server) => {
   const clientCount = server.Players.length;
   const hasClients = clientCount > 0;
@@ -104,17 +122,14 @@ export const metaByServer = (server) => {
   const hasTeams = teams.length > 0;
   const showTeams = hasTeams && isStarted;
 
-  const hasDistinctHostname = !server.Address.includes(server.IpAddress);
-  const title = hasDistinctHostname
-    ? server.Address
-    : `${server.Title} (${server.IpAddress})`;
+  const addressTitle = serverAddressTitleByServer(server);
 
   const meta = {
     isStandby,
     isStarted,
     isWaitingForPlayersToReadyUp,
     regionName,
-    title,
+    addressTitle,
     teams,
     hasTeams,
     showTeams,

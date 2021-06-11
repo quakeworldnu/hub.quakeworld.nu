@@ -198,7 +198,7 @@ $color-join: #2397d1;
   &:hover,
   &:active {
     .app-icon {
-      display: inline;
+      display: inline-block;
     }
   }
 
@@ -209,4 +209,18 @@ $color-join: #2397d1;
   &:active {
     color: $color-join;
   }
+
+  &::after {
+    content: "";
+    display: inline-block;
+    clear: both;
+  }
+}
+
+.server-address-title {
+  float: left;
+  display: block;
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
