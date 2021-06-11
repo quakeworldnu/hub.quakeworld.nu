@@ -33,7 +33,7 @@ export default createSlice({
 
       for (let i = 0; i < servers.length; i++) {
         servers[i].Players = servers[i].Players.filter(
-          (p) => !(p.Spec && isBot)
+          (p) => !(p.Spec && isBot(p))
         );
       }
 
