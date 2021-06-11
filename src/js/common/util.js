@@ -107,7 +107,7 @@ export const metaByServer = (server) => {
   const hasDistinctHostname = !server.Address.includes(server.IpAddress);
   const title = hasDistinctHostname
     ? server.Address
-    : `${server.Title} (${server.Address})`;
+    : `${server.Title} (${server.IpAddress})`;
 
   const meta = {
     isStandby,
