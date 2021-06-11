@@ -102,7 +102,7 @@ const SpectatorList = (props) => {
   }
 
   return (
-    <div className="spectator-list mt-4">
+    <div className="spectator-list my-4">
       {spectators.map((spec, index) => (
         <div key={index}>
           <span className="server-spectator-prefix">spectator</span>{" "}
@@ -158,15 +158,18 @@ const ServerFooter = (props) => {
             title="Copy IP to clipboard"
           >
             {server.Country && (
-              <img
-                src={`https://badplace.eu/images/icons/flags/${server.Country.toLowerCase()}.png`}
-                width="16"
-                height="11"
-                alt={server.Country.toLowerCase()}
-              />
+              <React.Fragment>
+                <img
+                  src={`https://badplace.eu/images/icons/flags/${server.Country.toLowerCase()}.png`}
+                  width="16"
+                  height="11"
+                  style={{ maxHeight: "11px" }}
+                  alt={server.Country.toLowerCase()}
+                />
+                &nbsp;
+              </React.Fragment>
             )}
-            &nbsp;
-            {server.Address}
+            {server.meta.title}
             <img
               src="/assets/img/icons/content_paste.svg"
               width="12"
@@ -179,7 +182,7 @@ const ServerFooter = (props) => {
             KTX {server.Settings.ktxver}
           </div>
         )}
-        <div className="column is-narrow">
+        <div className="column is-narrow pl-0">
           <FavoriteToggle serverAddress={server.Address} />
         </div>
       </div>
