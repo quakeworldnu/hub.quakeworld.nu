@@ -20,6 +20,8 @@ const getInitialState = () => ({
   servers: [],
 });
 
+const isBot = (p) => p.IsBot || p.Name.toLowerCase().includes("[serveme]");
+
 export default createSlice({
   name: "form",
   initialState: getInitialState(),
@@ -27,10 +29,7 @@ export default createSlice({
     updateServers: (state, action) => {
       let { servers } = action.payload;
 
-      // ignore bots
-      const isBot = (p) =>
-        p.IsBot || p.Name.toLowerCase().includes("[serveme]");
-
+      // ignore bots that are spectators
       for (let i = 0; i < servers.length; i++) {
         servers[i].Players = servers[i].Players.filter(
           (p) => !(p.Spec && isBot(p))
