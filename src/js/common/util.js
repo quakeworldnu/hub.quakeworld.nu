@@ -179,7 +179,6 @@ const teamsByPlayers = (players) => {
         PlayerCount: 0,
         Players: [],
         Frags: 0,
-        TotalPing: 0,
         Colors: [0, 0],
       };
     }
