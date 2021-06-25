@@ -1,12 +1,5 @@
 import { regionNameByCountryCode } from "./regions";
 
-export const pick = (obj, fields) => {
-  return fields.reduce((result, x) => {
-    if (obj.hasOwnProperty(x)) result[x] = obj[x];
-    return result;
-  }, {});
-};
-
 export const randomString = (length) => {
   let result = "";
   let characters =
