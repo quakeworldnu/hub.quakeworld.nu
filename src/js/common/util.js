@@ -473,3 +473,6 @@ export const copyToClipBoard = (textToCopy) => {
     } catch (err) {}
   }
 };
+
+export const isBot = (p) =>
+  p.IsBot || p.Name.toLowerCase().includes("[serveme]");

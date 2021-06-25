@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { metaByServer, compareServers, sortByProp } from "../../common/util";
+import {
+  compareServers,
+  isBot,
+  metaByServer,
+  sortByProp,
+} from "../../common/util";
 import storage from "../../common/storage";
 import countryCodeByIp from "../../common/countryCodeByIp";
 
@@ -19,8 +24,6 @@ const getInitialState = () => ({
   ui: Object.assign({}, getDefaultUiState(), storage.load()),
   servers: [],
 });
-
-const isBot = (p) => p.IsBot || p.Name.toLowerCase().includes("[serveme]");
 
 export default createSlice({
   name: "form",
