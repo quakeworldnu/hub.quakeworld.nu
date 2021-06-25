@@ -93,9 +93,6 @@ export const metaByServer = (server) => {
 
   let keywords = [modeName, server.Map].concat(plainTextClientNames);
 
-  if (server.Country) {
-    keywords.push(`c:${server.Country}`);
-  }
   keywords = keywords
     .filter((p) => p !== "")
     .join(" ")
