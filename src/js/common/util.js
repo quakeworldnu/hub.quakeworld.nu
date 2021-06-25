@@ -6,7 +6,6 @@ export const pick = (obj, fields) => {
     return result;
   }, {});
 };
-export const deepCopy = (obj) => JSON.parse(JSON.stringify(obj));
 
 export const randomString = (length) => {
   let result = "";
