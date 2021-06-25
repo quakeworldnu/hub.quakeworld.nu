@@ -6,10 +6,6 @@
   opacity: .6;
 }
 
-.app-dimmer {
-  opacity: .4;
-}
-
 .app-text-small {
   font-size: .8em;
 }
@@ -34,8 +30,4 @@
   @extend .app-text-nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-#app-logo-link {
-  padding-top: 5px;
 }
