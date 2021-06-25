@@ -188,20 +188,12 @@ const teamsByPlayers = (players) => {
     playerTeam.PlayerCount += 1;
     playerTeam.Players.push(player);
     playerTeam.Frags += player.Frags;
-    playerTeam.TotalPing += player.Ping;
   }
 
   const teams = Object.values(teamsObj);
 
   for (let i = 0; i < teams.length; i++) {
     const team = teams[i];
-    if (team.playerCount > 0) {
-      team.AvgPing = parseInt(team.TotalPing / team.PlayerCount);
-    } else {
-      team.AvgPing = 0;
-    }
-    delete team.TotalPing;
-
     team.Colors = majorityColors(team.Players);
   }
 
