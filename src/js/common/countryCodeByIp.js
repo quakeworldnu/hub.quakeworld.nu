@@ -1,4 +1,4 @@
-export const serverCountries = {
+export default {
   "15.206.117.94": "IN",
   "fr.predze.dk": "FR",
   "qw.irc.ax": "SE",

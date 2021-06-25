@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { metaByServer, compareServers, sortByProp } from "../../common/util";
 import storage from "../../common/storage";
-import { serverCountries } from "./serverCountries";
+import countryCodeByIp from "../../common/countryCodeByIp";
 
 const getDefaultUiState = () => ({
   favorites: {
@@ -45,8 +45,8 @@ export default createSlice({
         if ("" === servers[i].Country) {
           const hostname = servers[i].Address.split(":")[0];
 
-          if (hostname in serverCountries) {
-            servers[i].Country = serverCountries[hostname];
+          if (hostname in countryCodeByIp) {
+            servers[i].Country = countryCodeByIp[hostname];
           }
         }
       }
