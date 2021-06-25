@@ -3,9 +3,13 @@
 
 ## Info
 * **Temporary URL**: https://qwsb-4b8ab.web.app/
-* **Components**: Jekyll website (HTML), Browser App (es6/react/redux/sass)
-* **Proxied source data** (bypass CORS issues): https://api.allorigins.win/raw?url=https://badplace.eu/api/v2/serverbrowser/busy?[CACHE_BUST_KEY]
-* **Original source data**: https://badplace.eu/api/v2/serverbrowser/busy
+* **Components**: 
+  * Website (HTML): Jekyll + Bulma (front-end framework)
+  * JavaScript app: es6/react/redux
+    
+* **Data source**:
+  * **Proxied** (bypass CORS issues): https://api.allorigins.win/raw?url=https://badplace.eu/api/v2/serverbrowser/busy?[CACHE_BUST_KEY]
+  * **Original**: https://badplace.eu/api/v2/serverbrowser/busy
 
 ---
 
