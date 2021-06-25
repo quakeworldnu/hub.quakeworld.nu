@@ -3,7 +3,7 @@
 
 ## Info
 * **Temporary URL**: https://qwsb-4b8ab.web.app/
-* **Components**: `react`, `redux`
+* **Components**: Jekyll website (HTML), Browser App (es6/react/redux)
 * **Proxied source data** (bypass CORS issues): https://api.allorigins.win/raw?url=https://badplace.eu/api/v2/serverbrowser/busy?[CACHE_BUST_KEY]
 * **Original source data**: https://badplace.eu/api/v2/serverbrowser/busy
 
