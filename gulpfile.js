@@ -5,9 +5,8 @@ const concat = require("gulp-concat");
 const { dest, parallel, series, src, task, watch } = require("gulp");
 const imagemin = require("gulp-imagemin");
 const rev = require("gulp-rev");
-const sass = require("gulp-sass");
+const sass = require("gulp-sass")(require("sass"));
 const childProcess = require("child_process");
-sass.compiler = require("sass");
 
 // paths
 const paths = require("./gulpfile.paths");
