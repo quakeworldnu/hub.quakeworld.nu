@@ -1,4 +1,4 @@
-import { regionNameByCountryCode } from "./geo";
+import { regionNameByCountryCode } from "./regions";
 
 export const pick = (obj, fields) => {
   return fields.reduce((result, x) => {

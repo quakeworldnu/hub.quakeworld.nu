@@ -3,7 +3,7 @@ import { Formik, Field } from "formik";
 import { connect } from "react-redux";
 import slice from "./slice";
 
-import { regions } from "./../../common/geo";
+import { regions } from "../../common/regions";
 
 const FilterForm = (props) => {
   const { values, onValidate } = props;
