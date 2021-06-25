@@ -8,6 +8,7 @@ $scheme-main: #112;
 $scheme-main-bis: lighten($scheme-main, 8);
 $scheme-main-ter: lighten($scheme-main, 16);
 
+$blue: hsl(217, 71%,  53%);
 $red: hsl(348, 100%, 56%);
 $primary: $blue;
 $dark: #222;
@@ -30,6 +31,7 @@ $input-background-color: $scheme-main-bis;
 $section-padding: 0 0 2rem;
 $section-padding-medium: $section-padding;
 $section-padding-large: $section-padding;
+$section-padding-desktop: $section-padding;
 
 $progress-bar-background-color: $scheme-main;
 $progress-value-background-color: $grey;
