@@ -1,4 +1,4 @@
-$app-player-colors: (
+$qw-player-colors: (
         0: rgb(140, 140, 140),
         1: rgb(83, 59, 27),
         2: rgb(79, 79, 115),
@@ -15,22 +15,22 @@ $app-player-colors: (
         13: rgb(47, 47, 127),
 );
 
-@each $topValue, $topHex in $app-player-colors {
-  @each $bottomValue, $bottomHex in $app-player-colors {
+@each $topValue, $topHex in $qw-player-colors {
+  @each $bottomValue, $bottomHex in $qw-player-colors {
     .qw-bgcolor-#{$topValue}-#{$bottomValue} {
-      $topFixed: saturate(lighten($topHex, 15), 10);
-      $botFixed: saturate(lighten($bottomHex, 15), 10);
+      $topLight: lighten($topHex, 5);
+      $botLight: lighten($bottomHex, 5);
       $offsetY: 1px;
-      background: linear-gradient(to bottom, transparent 0 $offsetY, $topFixed $offsetY 50.5%, transparent 49.5% 100%),
-      linear-gradient(to top, transparent 0 $offsetY, $botFixed $offsetY 50.5%, transparent 49.5% 100%);
+      background: linear-gradient(to bottom, transparent 0 $offsetY, $topLight $offsetY 50.5%, transparent 49.5% 100%),
+      linear-gradient(to top, transparent 0 $offsetY, $botLight $offsetY 50.5%, transparent 49.5% 100%);
     }
   }
 }
 
 .qw-color-gold {
-  color: lighten(map-get($app-player-colors, 12), 25);
+  color: lighten(map-get($qw-player-colors, 12), 25);
 }
 
 .qw-color-brown {
-  color: lighten(map-get($app-player-colors, 1), 25);
+  color: lighten(map-get($qw-player-colors, 1), 25);
 }
