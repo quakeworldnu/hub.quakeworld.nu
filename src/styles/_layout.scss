@@ -1,3 +1,10 @@
+.app-grid {
+  $column-min-width: 330px;
+  display: grid;
+  grid-gap: 32px;
+  grid-template-columns: repeat(auto-fill, minmax($column-min-width, 1fr));
+}
+
 #app-overview {
   min-width: 160px;
 }
