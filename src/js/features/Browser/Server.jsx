@@ -2,7 +2,7 @@ import FavoriteToggle from "./FavoriteToggle";
 import { Scoreboard } from "./Scoreboard";
 import { QuakeText } from "./Common";
 import React from "react";
-import { copyToClipBoard } from "../../common/util";
+import { copyToClipBoard } from "../../common/copyToClipBoard";
 
 const ServerProgress = (props) => {
   const { value, max } = props;
@@ -64,11 +64,7 @@ const ServerMapshot = (props) => {
     ? `url(https://vikpe.org/qwmapshots/${server.Map}.jpg)`
     : "none";
 
-  let mapThumbnailSrc = "none";
-
-  if (server.Map) {
-    mapThumbnailSrc = `url(https://vikpe.org/qwmapshots/${server.Map}.jpg)`;
-  }
+  const spectators = server.Players.filter((p) => p.Spec);
 
   return (
     <div className="server-mapshot-wrapper">
@@ -81,9 +77,13 @@ const ServerMapshot = (props) => {
             <div className="server-matchtag mb-4">{server.meta.matchtag}</div>
           )}
 
-          <Scoreboard server={server} />
+          <pre>{JSON.stringify(server.meta.rows, null, 2)}</pre>
 
-          <SpectatorList spectators={spectators} />
+          <Scoreboard server={server} />
+          <SpectatorList
+            spectators={spectators}
+            rowLimit={server.meta.rows.spectatorRows.display}
+          />
         </div>
       </div>
     </div>
@@ -91,7 +91,7 @@ const ServerMapshot = (props) => {
 };
 
 const SpectatorList = (props) => {
-  const { spectators } = props;
+  const { spectators, rowLimit } = props;
 
   if (0 === spectators.length) {
     return null;
