@@ -2,13 +2,13 @@ import React from "react";
 import { ColoredFrags, QuakeText } from "./Common";
 
 export const Scoreboard = (props) => {
-  const { server } = props;
+  const { server, limit = 20 } = props;
 
-  if (!server.meta.hasPlayers) {
+  if (!server.meta.hasPlayers || 0 === limit) {
     return null;
   }
 
-  let players = server.Players.filter((p) => !p.Spec);
+  let players = server.Players.filter((p) => !p.Spec).slice(0, limit);
 
   if (server.meta.showAsTwoColumns) {
     return (

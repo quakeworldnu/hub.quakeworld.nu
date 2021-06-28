@@ -77,29 +77,57 @@ const ServerMapshot = (props) => {
             <div className="server-matchtag mb-4">{server.meta.matchtag}</div>
           )}
 
-          <pre>{JSON.stringify(server.meta.rows, null, 2)}</pre>
-
-          <Scoreboard server={server} />
+          <Scoreboard
+            server={server}
+            limit={server.meta.rows.players.itemsVisible}
+          />
           <SpectatorList
             spectators={spectators}
-            rowLimit={server.meta.rows.spectatorRows.display}
+            limit={server.meta.rows.spectators.itemsVisible}
           />
+          <HiddenClients
+            playerCount={server.meta.rows.players.itemsHidden}
+            spectatorCount={server.meta.rows.spectators.itemsHidden}
+          />
+          {false && <pre>{JSON.stringify(server.meta.rows, null, 2)}</pre>}
         </div>
       </div>
     </div>
   );
 };
 
-const SpectatorList = (props) => {
-  const { spectators, rowLimit } = props;
+const HiddenClients = (props) => {
+  const { playerCount, spectatorCount } = props;
 
-  if (0 === spectators.length) {
+  if (0 === playerCount && 0 === spectatorCount) {
+    return null;
+  }
+
+  const textParts = [];
+  const pluralize = (count) => (count > 1 ? "s" : "");
+
+  if (playerCount > 0) {
+    textParts.push(`${playerCount} player${pluralize(playerCount)}`);
+  }
+  if (spectatorCount > 0) {
+    textParts.push(`${spectatorCount} spectator${pluralize(spectatorCount)}`);
+  }
+
+  const hiddenClientText = textParts.join(" and ");
+
+  return <div className="app-text-small app-dim mt-2">+{hiddenClientText}</div>;
+};
+
+const SpectatorList = (props) => {
+  const { spectators, limit = 20 } = props;
+
+  if (0 === spectators.length || 0 === limit) {
     return null;
   }
 
   return (
     <div className="spectator-list mt-4">
-      {spectators.map((spec, index) => (
+      {spectators.slice(0, limit).map((spec, index) => (
         <div key={index}>
           <span className="server-spectator-prefix">spec</span>{" "}
           <QuakeText tag="span" text={spec.Name} />

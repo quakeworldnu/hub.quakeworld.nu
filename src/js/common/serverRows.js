@@ -1,12 +1,14 @@
 const calcRows = (itemsPerRow, itemCount, maxRowCount) => {
-  const total = Math.ceil(itemCount / itemsPerRow);
-  const display = Math.min(maxRowCount, total);
-  const hide = total - display;
+  const rowsTotal = Math.ceil(itemCount / itemsPerRow);
+  const rowsVisible = Math.min(maxRowCount, rowsTotal);
+
+  const itemsVisible = Math.min(itemCount, rowsVisible * itemsPerRow);
+  const itemsHidden = itemCount - itemsVisible;
 
   return {
-    total,
-    display,
-    hide,
+    rowsVisible,
+    itemsHidden,
+    itemsVisible,
   };
 };
 
@@ -21,20 +23,20 @@ const calcSpectatorRows = (serverMeta, maxRows) => {
 };
 
 export const calcServerRows = (meta, maxRows) => {
-  const miscRows = meta.hasMatchtag + meta.showAsTwoColumns;
+  const miscRowCount = meta.hasMatchtag + 2 * meta.showAsTwoColumns;
 
-  const maxPlayerRows = Math.max(0, maxRows - miscRows);
+  const maxPlayerRows = Math.max(0, maxRows - miscRowCount);
   const playerRows = calcPlayerRows(meta, maxPlayerRows);
 
-  const maxSpectatorRows = Math.max(0, maxPlayerRows - playerRows.display);
+  const maxSpectatorRows = Math.max(0, maxPlayerRows - playerRows.rowsVisible);
   const spectatorRows = calcSpectatorRows(meta, maxSpectatorRows);
 
   return {
     maxRows,
-    miscRows,
+    miscRowCount,
     maxPlayerRows,
-    playerRows,
+    players: playerRows,
     maxSpectatorRows,
-    spectatorRows,
+    spectators: spectatorRows,
   };
 };
