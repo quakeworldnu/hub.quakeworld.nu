@@ -122,6 +122,9 @@ $color-join: #2397d1;
 .spectator-list {
   @extend .app-text-dense;
   @extend .app-text-small;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 1.5rem;
 }
 
 .smod-started .spectator-list {
@@ -130,9 +133,7 @@ $color-join: #2397d1;
 
 .server-spectator-prefix {
   @extend .has-text-right;
-
-  display: inline-block;
-  margin-right: .4rem;
+  margin-right: .2rem;
   color: $spec-color;
 }
 
