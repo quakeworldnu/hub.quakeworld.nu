@@ -8,11 +8,9 @@ export const Scoreboard = (props) => {
     return null;
   }
 
-  let showAsTwoColumns =
-    server.meta.mode.isDuel || 2 === server.meta.teams.length;
   let players = server.Players.filter((p) => !p.Spec);
 
-  if (showAsTwoColumns) {
+  if (server.meta.showAsTwoColumns) {
     return (
       <TwoColumnScoreboard
         players={players}

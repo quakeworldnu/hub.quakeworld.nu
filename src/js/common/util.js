@@ -108,6 +108,8 @@ export const metaByServer = (server) => {
     : [];
   const hasTeams = teams.length > 0;
 
+  const showAsTwoColumns = isDuel || 2 === teams.length;
+
   const addressTitle = serverAddressTitleByServer(server);
 
   const meta = {
@@ -125,6 +127,7 @@ export const metaByServer = (server) => {
     matchtag,
     hasMatchtag,
     keywords,
+    showAsTwoColumns,
     mode: {
       name: modeName,
       isDuel,
