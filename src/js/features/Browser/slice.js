@@ -25,6 +25,36 @@ const getInitialState = () => ({
   servers: [],
 });
 
+const filterServers = (servers) => {
+  // ignore bots that are spectators
+  for (let i = 0; i < servers.length; i++) {
+    servers[i].Players = servers[i].Players.filter(
+      (p) => !(p.Spec && isBot(p))
+    );
+  }
+
+  // ignore empty servers
+  servers = servers.filter((s) => s.Players.length > 0);
+
+  // assign missing country data
+  for (let i = 0; i < servers.length; i++) {
+    if ("" === servers[i].Country) {
+      const hostname = servers[i].Address.split(":")[0];
+
+      if (hostname in countryCodeByIp) {
+        servers[i].Country = countryCodeByIp[hostname];
+      }
+    }
+  }
+
+  return servers;
+};
+
+const sortPlayers = (players) => {
+  players.sort(sortByProp("Team", "ASC"));
+  players.sort(sortByProp("Frags", "DESC"));
+};
+
 export default createSlice({
   name: "form",
   initialState: getInitialState(),
@@ -32,39 +62,19 @@ export default createSlice({
     updateServers: (state, action) => {
       let { servers } = action.payload;
 
-      // ignore bots that are spectators
-      for (let i = 0; i < servers.length; i++) {
-        servers[i].Players = servers[i].Players.filter(
-          (p) => !(p.Spec && isBot(p))
-        );
-      }
+      // filter
+      servers = filterServers(servers);
 
-      // ignore empty servers
-      servers = servers.filter((s) => s.Players.length > 0);
-
-      // assign missing country data
-      for (let i = 0; i < servers.length; i++) {
-        if ("" === servers[i].Country) {
-          const hostname = servers[i].Address.split(":")[0];
-
-          if (hostname in countryCodeByIp) {
-            servers[i].Country = countryCodeByIp[hostname];
-          }
-        }
-      }
-
-      // sort players
-      for (let i = 0; i < servers.length; i++) {
-        servers[i].Players.sort(sortByProp("Team", "ASC"));
-        servers[i].Players.sort(sortByProp("Frags", "DESC"));
-      }
-
-      // meta
+      // add meta
       for (let i = 0; i < servers.length; i++) {
         servers[i].meta = metaByServer(servers[i]);
       }
 
-      // sort servers
+      // sort
+      for (let i = 0; i < servers.length; i++) {
+        sortPlayers(servers[i].Players);
+      }
+
       servers.sort(compareServers);
 
       state.servers = servers;
