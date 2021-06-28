@@ -1,12 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
-import {
-  compareServers,
-  isBot,
-  metaByServer,
-  sortByProp,
-} from "../../common/util";
 import storage from "../../common/storage";
-import countryCodeByIp from "../../common/countryCodeByIp";
+import { countryCodeByHostname } from "../../common/geo_ip";
+import { createSlice } from "@reduxjs/toolkit";
+import { metaByServer } from "../../common/serverMeta";
+import { compareServers, sortByProp } from "../../common/sort";
 
 const getDefaultUiState = () => ({
   favorites: {
@@ -25,25 +21,6 @@ const getInitialState = () => ({
   servers: [],
 });
 
-const filterServers = (servers) => {
-  // ignore bots that are spectators
-  for (let i = 0; i < servers.length; i++) {
-    servers[i].Players = servers[i].Players.filter(
-      (p) => !(p.Spec && isBot(p))
-    );
-  }
-
-  // ignore servers without clients
-  servers = servers.filter((s) => s.Players.length > 0);
-
-  return servers;
-};
-
-const sortPlayers = (players) => {
-  players.sort(sortByProp("Team", "ASC"));
-  players.sort(sortByProp("Frags", "DESC"));
-};
-
 export default createSlice({
   name: "form",
   initialState: getInitialState(),
@@ -51,17 +28,24 @@ export default createSlice({
     updateServers: (state, action) => {
       let { servers } = action.payload;
 
-      // filter
-      servers = filterServers(servers);
+      // filter data
+      const isBot = (p) =>
+        p.IsBot || p.Name.toLowerCase().includes("[serveme]");
+
+      for (let i = 0; i < servers.length; i++) {
+        servers[i].Players = servers[i].Players.filter(
+          (p) => !(p.Spec && isBot(p))
+        );
+      }
+
+      // ignore servers without clients
+      servers = servers.filter((s) => s.Players.length > 0);
 
       // add missing country data
       for (let i = 0; i < servers.length; i++) {
         if ("" === servers[i].Country) {
           const hostname = servers[i].Address.split(":")[0];
-
-          if (hostname in countryCodeByIp) {
-            servers[i].Country = countryCodeByIp[hostname];
-          }
+          servers[i].Country = countryCodeByHostname(hostname);
         }
       }
 
@@ -72,7 +56,8 @@ export default createSlice({
 
       // sort
       for (let i = 0; i < servers.length; i++) {
-        sortPlayers(servers[i].Players);
+        servers[i].Players.sort(sortByProp("Team", "ASC"));
+        servers[i].Players.sort(sortByProp("Frags", "DESC"));
       }
 
       servers.sort(compareServers);

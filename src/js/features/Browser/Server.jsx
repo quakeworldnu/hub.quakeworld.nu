@@ -1,8 +1,8 @@
+import React from "react";
 import FavoriteToggle from "./FavoriteToggle";
 import { Scoreboard } from "./Scoreboard";
 import { QuakeText } from "./Common";
-import React from "react";
-import { copyToClipBoard } from "../../common/copyToClipBoard";
+import { copyToClipboard } from "../../common/clipboard";
 
 const ServerProgress = (props) => {
   const { value, max } = props;
@@ -150,7 +150,7 @@ const ServerFooter = (props) => {
         <div className="column">
           <div
             className="server-address"
-            onClick={() => copyToClipBoard(server.Address)}
+            onClick={() => copyToClipboard(server.Address)}
             title="Copy IP to clipboard"
           >
             <span className="server-address-title">

@@ -1,11 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import browserSlice from "./slice";
-import { filterServers } from "../../common/util";
 import Filters from "./Filters";
 import Overview from "./Overview";
 import { Server } from "./Server";
 import ServerDataSource from "./ServerDataSource";
+import { filterServers } from "../../common/filter";
 
 const BrowserHeader = () => (
   <div className="my-3">

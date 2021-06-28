@@ -1,4 +1,4 @@
-export const copyToClipBoard = (textToCopy) => {
+export const copyToClipboard = (textToCopy) => {
   let successUsingApi = false;
 
   try {

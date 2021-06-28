@@ -1,19 +1,7 @@
 import { regionNameByCountryCode } from "./regions";
 import { quakeTextToPlainText, stripNonAscii } from "./text";
-
-export const serverAddressTitleByServer = (server) => {
-  const hasDistinctHostname = !server.Address.includes(server.IpAddress);
-
-  let title;
-
-  if (hasDistinctHostname) {
-    title = server.Address;
-  } else {
-    title = server.Title.replace(/ \(\w+ vs\. \w+\)/, "");
-  }
-
-  return stripNonAscii(title).trim();
-};
+import { sortByProp } from "./sort";
+import { calcServerRows } from "./serverRows";
 
 export const metaByServer = (server) => {
   const clientCount = server.Players.length;
@@ -148,6 +136,20 @@ export const metaByServer = (server) => {
   return meta;
 };
 
+export const serverAddressTitleByServer = (server) => {
+  const hasDistinctHostname = !server.Address.includes(server.IpAddress);
+
+  let title;
+
+  if (hasDistinctHostname) {
+    title = server.Address;
+  } else {
+    title = server.Title.replace(/ \(\w+ vs\. \w+\)/, "");
+  }
+
+  return stripNonAscii(title).trim();
+};
+
 const teamsByPlayers = (players) => {
   const teamsObj = {};
 
@@ -205,22 +207,6 @@ const majorityColors = (players) => {
   return sortedColorCount[0].split(separator);
 };
 
-export const sortByProp = (prop, dir) => {
-  const compareFunc = (a, b) => {
-    const gtValue = "ASC" === dir ? 1 : -1;
-    const ltValue = -gtValue;
-
-    if (a[prop] > b[prop]) {
-      return gtValue;
-    } else if (a[prop] < b[prop]) {
-      return ltValue;
-    }
-    return 0;
-  };
-
-  return compareFunc;
-};
-
 const gameTimeProgress = (minutesRemaining) => {
   if (minutesRemaining) {
     return `${minutesRemaining} min left`;
@@ -251,123 +237,4 @@ export const statusTextByMeta = (meta) => {
   }
 
   return status.filter((p) => p).join(", ");
-};
-
-const filterByQuery = (servers, query) => {
-  const minQueryLength = 2;
-
-  if (query.length < minQueryLength) {
-    return servers;
-  }
-
-  const queryWords = query.toLowerCase().split(" ");
-  const keywordFilterFunc = (server) => {
-    return queryWords.every((word) => {
-      return server.meta.keywords.indexOf(word) !== -1;
-    });
-  };
-  return servers.filter(keywordFilterFunc);
-};
-
-export const filterServers = (servers, filters, favoriteServers) => {
-  let result = filterByQuery(servers, filters.query);
-
-  if (filters.isFavorite) {
-    result = result.filter((s) => favoriteServers.includes(s.Address));
-  }
-
-  if (filters.isStarted) {
-    result = result.filter((s) => s.meta.isStarted);
-  }
-
-  if (filters.regionName) {
-    result = result.filter((s) => s.meta.regionName === filters.regionName);
-  }
-
-  return result;
-};
-
-export const compareServers = (a, b) => {
-  // -1 = a
-  // 1 = b
-  // 0 = unchanged
-
-  // tag
-  if (a.meta.hasMatchtag && !b.meta.hasMatchtag) {
-    return -1;
-  } else if (!a.meta.hasMatchtag && b.meta.hasMatchtag) {
-    return 1;
-  }
-
-  // player count
-  if (a.meta.playerCount > b.meta.playerCount) {
-    return -1;
-  } else if (a.meta.playerCount < b.meta.playerCount) {
-    return 1;
-  }
-
-  // spectator count
-  const totalSpectatorCountForA =
-    a.meta.spectatorCount + a.meta.qtvSpectatorCount;
-  const totalSpectatorCountForB =
-    b.meta.spectatorCount + b.meta.qtvSpectatorCount;
-
-  if (totalSpectatorCountForA > totalSpectatorCountForB) {
-    return -1;
-  } else if (totalSpectatorCountForA < totalSpectatorCountForB) {
-    return 1;
-  }
-
-  // is started
-  if (a.meta.isStarted && !b.meta.isStarted) {
-    return -1;
-  } else if (!a.meta.isStarted && b.meta.isStarted) {
-    return 1;
-  }
-
-  return 0;
-};
-
-export const isBot = (p) =>
-  p.IsBot || p.Name.toLowerCase().includes("[serveme]");
-
-const calcRows = (itemsPerRow, itemCount, maxRowCount) => {
-  const total = Math.ceil(itemCount / itemsPerRow);
-  const display = Math.min(maxRowCount, total);
-  const hide = total - display;
-
-  return {
-    total,
-    display,
-    hide,
-  };
-};
-
-const calcPlayerRows = (serverMeta, maxRowCount) => {
-  const playersPerRow = serverMeta.showAsTwoColumns ? 2 : 1;
-  return calcRows(playersPerRow, serverMeta.playerCount, maxRowCount);
-};
-
-const calcSpectatorRows = (serverMeta, maxRows) => {
-  const spectatorsPerRow = 2;
-  return calcRows(spectatorsPerRow, serverMeta.spectatorCount, maxRows);
-};
-
-const calcServerRows = (meta, maxRows) => {
-  const miscRows = meta.hasMatchtag + meta.showAsTwoColumns;
-
-  const playerMaxRows = Math.max(0, maxRows - miscRows);
-  const playerRows = calcPlayerRows(meta, playerMaxRows);
-
-  const spectatorMaxRows = Math.max(0, playerMaxRows - playerRows.display);
-  const spectatorRows = calcSpectatorRows(meta, spectatorMaxRows);
-
-  return {
-    maxRows,
-    miscRows,
-    playerMaxRows,
-    playerRows,
-    spectatorMaxRows,
-    spectatorRows,
-  };
 };

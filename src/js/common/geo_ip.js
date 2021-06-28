@@ -1,4 +1,4 @@
-export default {
+const hostnames = {
   "15.206.117.94": "IN",
   "fr.predze.dk": "FR",
   "qw.irc.ax": "SE",
@@ -11,4 +11,12 @@ export default {
   "3.106.57.180": "AU",
   "76.101.98.61": "US",
   "144.138.101.141": "AU",
+};
+
+export const countryCodeByHostname = (hostname) => {
+  if (hostname in hostnames) {
+    return hostnames[hostname];
+  } else {
+    return "";
+  }
 };
