@@ -60,7 +60,9 @@ const ServerHeader = (props) => {
 const ServerMapshot = (props) => {
   const { server } = props;
 
-  let spectators = server.Players.filter((p) => p.Spec);
+  const mapThumbnailSrc = server.Map
+    ? `url(https://vikpe.org/qwmapshots/${server.Map}.jpg)`
+    : "none";
 
   let mapThumbnailSrc = "none";
 
