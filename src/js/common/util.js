@@ -154,6 +154,9 @@ export const metaByServer = (server) => {
 
   meta.statusText = statusTextByMeta(meta);
 
+  const maxRowCount = 6;
+  meta.rows = calcServerRows(meta, maxRowCount);
+
   return meta;
 };
 
@@ -458,3 +461,52 @@ export const copyToClipBoard = (textToCopy) => {
 
 export const isBot = (p) =>
   p.IsBot || p.Name.toLowerCase().includes("[serveme]");
+
+const calcRows = (itemsPerRow, itemCount, maxRowCount) => {
+  const total = Math.ceil(itemCount / itemsPerRow);
+  const display = Math.min(maxRowCount, total);
+  const hide = total - display;
+
+  return {
+    total,
+    display,
+    hide,
+  };
+};
+
+const calcPlayerRows = (serverMeta, maxRowCount) => {
+  const playersPerRow = serverMeta.showAsTwoColumns ? 2 : 1;
+  return calcRows(playersPerRow, serverMeta.playerCount, maxRowCount);
+};
+
+const calcSpectatorRows = (serverMeta, maxRows) => {
+  const spectatorsPerRow = 2;
+  return calcRows(spectatorsPerRow, serverMeta.spectatorCount, maxRows);
+};
+
+const calcServerRows = (serverMeta, maxRows) => {
+  let scoreboardRows = 0;
+
+  if (serverMeta.hasMatchtag) {
+    scoreboardRows++;
+  }
+
+  if (serverMeta.showAsTwoColumns) {
+    scoreboardRows++;
+  }
+
+  const playerMaxRows = Math.max(0, maxRows - scoreboardRows);
+  const playerRows = calcPlayerRows(serverMeta, playerMaxRows);
+
+  const spectatorMaxRows = Math.max(0, playerMaxRows - playerRows.display);
+  const spectatorRows = calcSpectatorRows(serverMeta, spectatorMaxRows);
+
+  return {
+    maxRows,
+    scoreboardRows,
+    playerMaxRows,
+    playerRows,
+    spectatorMaxRows,
+    spectatorRows,
+  };
+};
