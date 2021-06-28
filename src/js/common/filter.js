@@ -1,5 +1,5 @@
 export const filterServers = (servers, filters, favoriteServers) => {
-  let result = filterByQuery(servers, filters.query);
+  let result = filterServersByQuery(servers, filters.query);
 
   if (filters.isFavorite) {
     result = result.filter((s) => favoriteServers.includes(s.Address));
@@ -16,7 +16,7 @@ export const filterServers = (servers, filters, favoriteServers) => {
   return result;
 };
 
-export const filterByQuery = (servers, query) => {
+export const filterServersByQuery = (servers, query) => {
   const minQueryLength = 2;
 
   if (query.length < minQueryLength) {
