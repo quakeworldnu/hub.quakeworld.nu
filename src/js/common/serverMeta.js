@@ -130,7 +130,7 @@ export const metaByServer = (server) => {
 
   meta.statusText = statusTextByMeta(meta);
 
-  const maxRowCount = 6;
+  const maxRowCount = 10;
   meta.rows = calcServerRows(meta, maxRowCount);
 
   return meta;
