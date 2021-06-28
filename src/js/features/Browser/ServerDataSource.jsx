@@ -7,14 +7,14 @@ import { randomString } from "../../common/text";
 const serverEntriesProvider = {
   get: async () => {
     const cacheBurstString = randomString(12);
-    const url = `https://badplace.eu/api/v2/serverbrowser/busy?${cacheBurstString}`; // real live data (production)
-    const proxiedUrl = `https://api.allorigins.win/raw?url=${url}`;
-    const fakeDataUrl = "/data/busy.json"; // static/fake data for (development)
+    const url = `https://badplace.eu/api/v2/serverbrowser/busy?${cacheBurstString}`;
+    const proxiedUrl = `https://api.allorigins.win/raw?url=${url}`; // real live data (production)
+    // const fakeDataUrl = "/data/busy.json"; // static/fake data for (development)
     const options = {
       method: "GET",
       cache: "no-store",
     };
-    return fetch(fakeDataUrl, options)
+    return fetch(proxiedUrl, options)
       .then((response) => {
         if (response.ok) {
           return response.json();
