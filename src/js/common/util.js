@@ -484,16 +484,22 @@ const calcSpectatorRows = (serverMeta, maxRows) => {
   return calcRows(spectatorsPerRow, serverMeta.spectatorCount, maxRows);
 };
 
-const calcServerRows = (serverMeta, maxRows) => {
-  let scoreboardRows = 0;
+const calcNumberOfScoreboardRows = (serverMeta) => {
+  let rowCount = 0;
 
   if (serverMeta.hasMatchtag) {
-    scoreboardRows++;
+    rowCount++;
   }
 
   if (serverMeta.showAsTwoColumns) {
-    scoreboardRows++;
+    rowCount++;
   }
+
+  return rowCount;
+};
+
+const calcServerRows = (serverMeta, maxRows) => {
+  const scoreboardRows = calcNumberOfScoreboardRows(serverMeta);
 
   const playerMaxRows = Math.max(0, maxRows - scoreboardRows);
   const playerRows = calcPlayerRows(serverMeta, playerMaxRows);
