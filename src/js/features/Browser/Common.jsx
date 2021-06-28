@@ -1,5 +1,5 @@
 import React from "react";
-import { quakeTextToHtml } from "../../common/util";
+import { quakeTextToHtml } from "../../common/text";
 
 export const QuakeText = (props) => {
   const { text, tag, className } = props;
