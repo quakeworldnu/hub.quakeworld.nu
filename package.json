@@ -21,9 +21,9 @@
     "lint": "yarn prettier --write src/js"
   },
   "devDependencies": {
-    "browser-sync": "^2.27.1",
+    "browser-sync": "^2.27.3",
     "bs-html-injector": "^3.0.3",
-    "prettier": "^2.3.1"
+    "prettier": "^2.3.2"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.0",
