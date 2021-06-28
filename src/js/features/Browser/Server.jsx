@@ -64,8 +64,6 @@ const ServerMapshot = (props) => {
     ? `url(https://vikpe.org/qwmapshots/${server.Map}.jpg)`
     : "none";
 
-  const spectators = server.Players.filter((p) => p.Spec);
-
   return (
     <div className="server-mapshot-wrapper">
       <div
@@ -76,19 +74,14 @@ const ServerMapshot = (props) => {
           {server.meta.hasMatchtag && (
             <div className="server-matchtag mb-4">{server.meta.matchtag}</div>
           )}
-
           <Scoreboard
             server={server}
             limit={server.meta.rows.players.itemsVisible}
           />
-          <SpectatorList
-            spectators={spectators}
-            limit={server.meta.rows.spectators.itemsVisible}
-          />
-          <HiddenClients
-            playerCount={server.meta.rows.players.itemsHidden}
-            spectatorCount={server.meta.rows.spectators.itemsHidden}
-          />
+
+          <HiddenPlayers count={server.meta.rows.players.itemsHidden} />
+          <SpectatorText text={server.meta.spectatorText} />
+
           {false && <pre>{JSON.stringify(server.meta.rows, null, 2)}</pre>}
         </div>
       </div>
@@ -96,43 +89,33 @@ const ServerMapshot = (props) => {
   );
 };
 
-const HiddenClients = (props) => {
-  const { playerCount, spectatorCount } = props;
+const HiddenPlayers = (props) => {
+  const { count } = props;
 
-  if (0 === playerCount && 0 === spectatorCount) {
+  if (0 === count) {
     return null;
   }
 
-  const textParts = [];
   const pluralize = (count) => (count > 1 ? "s" : "");
 
-  if (playerCount > 0) {
-    textParts.push(`${playerCount} player${pluralize(playerCount)}`);
-  }
-  if (spectatorCount > 0) {
-    textParts.push(`${spectatorCount} spectator${pluralize(spectatorCount)}`);
-  }
-
-  const hiddenClientText = textParts.join(" and ");
-
-  return <div className="app-text-small app-dim mt-2">+{hiddenClientText}</div>;
+  return (
+    <div className="mt-1 app-text-small">
+      +{count} player{pluralize(count)}
+    </div>
+  );
 };
 
-const SpectatorList = (props) => {
-  const { spectators, limit = 20 } = props;
+const SpectatorText = (props) => {
+  const { text } = props;
 
-  if (0 === spectators.length || 0 === limit) {
+  if ("" === text) {
     return null;
   }
 
   return (
-    <div className="spectator-list mt-4">
-      {spectators.slice(0, limit).map((spec, index) => (
-        <div key={index}>
-          <span className="server-spectator-prefix">spec</span>{" "}
-          <QuakeText tag="span" text={spec.Name} />
-        </div>
-      ))}
+    <div className="spectator-text app-text-small mt-4">
+      <span className="server-spectator-prefix">specs:</span>{" "}
+      <QuakeText tag="span" text={text} />
     </div>
   );
 };

@@ -88,6 +88,9 @@ export const metaByServer = (server) => {
 
   const addressTitle = serverAddressTitleByServer(server);
 
+  const spectators = server.Players.filter((p) => p.Spec);
+  const spectatorText = calcSpectatorText(spectators);
+
   const meta = {
     isStandby,
     isStarted,
@@ -104,6 +107,7 @@ export const metaByServer = (server) => {
     hasMatchtag,
     keywords,
     showAsTwoColumns,
+    spectatorText,
     mode: {
       name: modeName,
       isDuel,
@@ -134,6 +138,20 @@ export const metaByServer = (server) => {
   meta.rows = calcServerRows(meta, maxRowCount);
 
   return meta;
+};
+
+const calcSpectatorText = (spectators) => {
+  const maxLength = 44;
+  const separator = ", ";
+  const more = "..";
+
+  let text = spectators.map((s) => s.Name).join(separator);
+
+  if (text.length > maxLength) {
+    text = text.slice(0, maxLength - more.length) + more;
+  }
+
+  return text;
 };
 
 const serverAddressTitleByServer = (server) => {

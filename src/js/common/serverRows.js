@@ -17,26 +17,15 @@ const calcPlayerRows = (serverMeta, maxRowCount) => {
   return calcRows(playersPerRow, serverMeta.playerCount, maxRowCount);
 };
 
-const calcSpectatorRows = (serverMeta, maxRows) => {
-  const spectatorsPerRow = 2;
-  return calcRows(spectatorsPerRow, serverMeta.spectatorCount, maxRows);
-};
-
 export const calcServerRows = (meta, maxRows) => {
   const miscRowCount = meta.hasMatchtag + 2 * meta.showAsTwoColumns;
-
   const maxPlayerRows = Math.max(0, maxRows - miscRowCount);
   const playerRows = calcPlayerRows(meta, maxPlayerRows);
-
-  const maxSpectatorRows = Math.max(0, maxPlayerRows - playerRows.rowsVisible);
-  const spectatorRows = calcSpectatorRows(meta, maxSpectatorRows);
 
   return {
     maxRows,
     miscRowCount,
     maxPlayerRows,
     players: playerRows,
-    maxSpectatorRows,
-    spectators: spectatorRows,
   };
 };

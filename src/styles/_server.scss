@@ -119,15 +119,7 @@ $color-join: #2397d1;
   color: white;
 }
 
-.spectator-list {
-  @extend .app-text-dense;
-  @extend .app-text-small;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-column-gap: 1.5rem;
-}
-
-.smod-started .spectator-list {
+.smod-started .spectator-text {
   @extend .app-dim-light;
 }
 
