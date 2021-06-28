@@ -33,19 +33,8 @@ const filterServers = (servers) => {
     );
   }
 
-  // ignore empty servers
+  // ignore servers without clients
   servers = servers.filter((s) => s.Players.length > 0);
-
-  // assign missing country data
-  for (let i = 0; i < servers.length; i++) {
-    if ("" === servers[i].Country) {
-      const hostname = servers[i].Address.split(":")[0];
-
-      if (hostname in countryCodeByIp) {
-        servers[i].Country = countryCodeByIp[hostname];
-      }
-    }
-  }
 
   return servers;
 };
@@ -64,6 +53,17 @@ export default createSlice({
 
       // filter
       servers = filterServers(servers);
+
+      // add missing country data
+      for (let i = 0; i < servers.length; i++) {
+        if ("" === servers[i].Country) {
+          const hostname = servers[i].Address.split(":")[0];
+
+          if (hostname in countryCodeByIp) {
+            servers[i].Country = countryCodeByIp[hostname];
+          }
+        }
+      }
 
       // add meta
       for (let i = 0; i < servers.length; i++) {
