@@ -3,6 +3,7 @@ import { countryCodeByHostname } from "../../common/geo_ip";
 import { createSlice } from "@reduxjs/toolkit";
 import { metaByServer } from "../../common/serverMeta";
 import { compareServers, sortByProp } from "../../common/sort";
+import { ignoreSpectatingBots } from "../../common/filter";
 
 const getDefaultUiState = () => ({
   favorites: {
@@ -29,13 +30,8 @@ export default createSlice({
       let { servers } = action.payload;
 
       // filter data
-      const isBot = (p) =>
-        p.IsBot || p.Name.toLowerCase().includes("[serveme]");
-
       for (let i = 0; i < servers.length; i++) {
-        servers[i].Players = servers[i].Players.filter(
-          (p) => !(p.Spec && isBot(p))
-        );
+        servers[i].Players = ignoreSpectatingBots(servers[i].Players);
       }
 
       // ignore servers without clients
@@ -49,7 +45,7 @@ export default createSlice({
         }
       }
 
-      // add meta
+      // add meta data
       for (let i = 0; i < servers.length; i++) {
         servers[i].meta = metaByServer(servers[i]);
       }
