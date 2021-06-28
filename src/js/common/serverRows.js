@@ -23,18 +23,18 @@ const calcSpectatorRows = (serverMeta, maxRows) => {
 export const calcServerRows = (meta, maxRows) => {
   const miscRows = meta.hasMatchtag + meta.showAsTwoColumns;
 
-  const playerMaxRows = Math.max(0, maxRows - miscRows);
-  const playerRows = calcPlayerRows(meta, playerMaxRows);
+  const maxPlayerRows = Math.max(0, maxRows - miscRows);
+  const playerRows = calcPlayerRows(meta, maxPlayerRows);
 
-  const spectatorMaxRows = Math.max(0, playerMaxRows - playerRows.display);
-  const spectatorRows = calcSpectatorRows(meta, spectatorMaxRows);
+  const maxSpectatorRows = Math.max(0, maxPlayerRows - playerRows.display);
+  const spectatorRows = calcSpectatorRows(meta, maxSpectatorRows);
 
   return {
     maxRows,
     miscRows,
-    playerMaxRows,
+    maxPlayerRows,
     playerRows,
-    spectatorMaxRows,
+    maxSpectatorRows,
     spectatorRows,
   };
 };

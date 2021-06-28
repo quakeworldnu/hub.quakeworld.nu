@@ -136,7 +136,7 @@ export const metaByServer = (server) => {
   return meta;
 };
 
-export const serverAddressTitleByServer = (server) => {
+const serverAddressTitleByServer = (server) => {
   const hasDistinctHostname = !server.Address.includes(server.IpAddress);
 
   let title;
@@ -215,7 +215,7 @@ const gameTimeProgress = (minutesRemaining) => {
   }
 };
 
-export const statusTextByMeta = (meta) => {
+const statusTextByMeta = (meta) => {
   const status = [];
 
   if (meta.mode.isFfa || meta.mode.isRace) {
