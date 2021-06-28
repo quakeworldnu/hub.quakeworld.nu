@@ -99,7 +99,7 @@ const SpectatorList = (props) => {
     <div className="spectator-list mt-4">
       {spectators.map((spec, index) => (
         <div key={index}>
-          <span className="server-spectator-prefix">spectator</span>{" "}
+          <span className="server-spectator-prefix">spec</span>{" "}
           <QuakeText tag="span" text={spec.Name} />
         </div>
       ))}
