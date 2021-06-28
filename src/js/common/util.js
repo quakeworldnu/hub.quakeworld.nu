@@ -487,10 +487,12 @@ const calcSpectatorRows = (serverMeta, maxRows) => {
 const calcNumberOfScoreboardRows = (serverMeta) => {
   let rowCount = 0;
 
+  // match tag
   if (serverMeta.hasMatchtag) {
     rowCount++;
   }
 
+  // team row
   if (serverMeta.showAsTwoColumns) {
     rowCount++;
   }
