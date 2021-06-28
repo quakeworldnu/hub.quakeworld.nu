@@ -2,7 +2,7 @@
 
 // container
 .container.is-fluid {
-  padding: 0 $gap/2;
+  padding: 0 .5*$gap;
 
   @include from($desktop) {
     padding: 0 $gap;

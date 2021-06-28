@@ -156,7 +156,7 @@ $color-join: #2397d1;
       width: $dot;
       height: $dot;
       position: absolute;
-      right: -($dot/2);
+      right: -.5*$dot;
       border-radius: $dot;
       background-color: $color;
       content: '';
