@@ -44,6 +44,6 @@
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.4",
     "sass": "^1.35.1",
-    "snowpack": "^3.6.2"
+    "snowpack": "^3.7.1"
   }
 }
