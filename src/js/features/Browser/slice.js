@@ -45,15 +45,15 @@ export default createSlice({
         }
       }
 
-      // add meta data
-      for (let i = 0; i < servers.length; i++) {
-        servers[i].meta = metaByServer(servers[i]);
-      }
-
       // sort
       for (let i = 0; i < servers.length; i++) {
         servers[i].Players.sort(sortByProp("Team", "ASC"));
         servers[i].Players.sort(sortByProp("Frags", "DESC"));
+      }
+
+      // add meta data
+      for (let i = 0; i < servers.length; i++) {
+        servers[i].meta = metaByServer(servers[i]);
       }
 
       servers.sort(compareServers);
