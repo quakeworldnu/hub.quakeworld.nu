@@ -6,7 +6,7 @@ $spacer: .5rem;
   column-gap: $spacer;
   color: white;
   font-size: .9rem;
-  text-shadow: black 1px 1px 1px;
+  text-shadow: 1px -1px 0 black, -1px -1px 0 black, 1px 1px 0 black, -1px 1px 0 black;
 
   > div {
     display: block;
