@@ -1,7 +1,7 @@
 import { regionNameByCountryCode } from "./regions";
 import { quakeTextToPlainText, stripNonAscii } from "./text";
 import { sortByProp } from "./sort";
-import { calcServerRows } from "./serverRows";
+import { calcPlayerDisplay } from "./playerDisplay";
 
 export const metaByServer = (server) => {
   const clientCount = server.Players.length;
@@ -135,7 +135,7 @@ export const metaByServer = (server) => {
   meta.statusText = statusTextByMeta(meta);
 
   const maxRowCount = 10;
-  meta.rows = calcServerRows(meta, maxRowCount);
+  meta.playerDisplay = calcPlayerDisplay(meta, maxRowCount);
 
   return meta;
 };

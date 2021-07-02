@@ -76,10 +76,10 @@ const ServerMapshot = (props) => {
           )}
           <Scoreboard
             server={server}
-            limit={server.meta.rows.players.itemsVisible}
+            limit={server.meta.playerDisplay.visible}
           />
 
-          <HiddenPlayers count={server.meta.rows.players.itemsHidden} />
+          <HiddenPlayers count={server.meta.playerDisplay.hidden} />
           <SpectatorText text={server.meta.spectatorText} />
 
           {false && <pre>{JSON.stringify(server.meta.rows, null, 2)}</pre>}
