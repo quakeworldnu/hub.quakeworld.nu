@@ -8,17 +8,16 @@ export const Scoreboard = (props) => {
     return null;
   }
 
-  let players = server.Players.filter((p) => !p.Spec).slice(0, limit);
-
   if (server.meta.showAsTwoColumns) {
     return (
       <TwoColumnScoreboard
-        players={players}
         teams={server.meta.teams}
-        isTeamplay={server.meta.mode.isTeamplay}
+        limit={limit}
       />
     );
   } else {
+    const players = server.Players.filter((p) => !p.Spec).slice(0, limit);
+
     return (
       <OneColumnScoreboard
         players={players}
@@ -64,37 +63,28 @@ export const OneColumnScoreboard = (props) => {
 };
 
 export const TwoColumnScoreboard = (props) => {
-  const { teams, players, isTeamplay } = props;
+  const { teams, limit } = props;
 
   let items = [];
 
-  if (isTeamplay) {
-    items = items.concat(teams);
+  items = items.concat(teams);
 
-    const rowCount = Math.max(...teams.map((t) => t.PlayerCount));
+  let rowCount = Math.max(...teams.map((t) => t.PlayerCount));
+  rowCount = Math.min(rowCount, Math.ceil(limit / 2));
 
-    for (let rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-      for (let teamIndex = 0; teamIndex < teams.length; teamIndex++) {
-        if (rowIndex < teams[teamIndex].PlayerCount) {
-          items.push(teams[teamIndex].Players[rowIndex]);
-        } else {
-          items.push(null);
-        }
+  for (let rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+    for (let teamIndex = 0; teamIndex < teams.length; teamIndex++) {
+      if (rowIndex < teams[teamIndex].PlayerCount) {
+        items.push(teams[teamIndex].Players[rowIndex]);
+      } else {
+        items.push(null);
       }
     }
-  } else {
-    items = players;
   }
 
   const rows = items.map(itemToRow);
 
-  let className = "scoreboard sc-two-columns ";
-
-  if (isTeamplay) {
-    className += "sc-teamplay";
-  }
-
-  return <div className={className}>{rows}</div>;
+  return <div className="scoreboard sc-teamplay sc-two-columns">{rows}</div>;
 };
 
 const RightColumnRow = (props) => ItemRow({ ...props, showTeam: false });
