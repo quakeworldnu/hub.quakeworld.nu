@@ -21,7 +21,7 @@
     "lint": "yarn prettier --write src/js"
   },
   "devDependencies": {
-    "browser-sync": "^2.27.3",
+    "browser-sync": "^2.27.4",
     "bs-html-injector": "^3.0.3",
     "prettier": "^2.3.2"
   },
@@ -31,7 +31,7 @@
     "@snowpack/plugin-dotenv": "^2.1.0",
     "@snowpack/plugin-react-refresh": "^2.5.0",
     "bulma": "^0.9.3",
-    "firebase-tools": "^9.14.0",
+    "firebase-tools": "^9.16.0",
     "formik": "^2.2.9",
     "gulp": "^4.0.2",
     "gulp-changed": "^4.0.3",
@@ -43,7 +43,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.4",
-    "sass": "^1.35.1",
+    "sass": "^1.35.2",
     "snowpack": "^3.7.1"
   }
 }
