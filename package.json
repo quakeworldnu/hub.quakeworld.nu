@@ -1,7 +1,7 @@
 {
   "name": "qw-server-browser",
   "version": "0.1.0",
-  "description": "Muh.",
+  "description": "QuakeWorld Server Browser",
   "author": "Viktor Persson",
   "license": "MIT",
   "repository": "vikpe/qw-server-browser",
