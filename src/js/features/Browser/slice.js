@@ -1,5 +1,5 @@
 import storage from "../../common/storage";
-import { countryCodeByHostname } from "../../common/geo_ip";
+import { countryCodeByHostname } from "../../common/geoIp";
 import { createSlice } from "@reduxjs/toolkit";
 import { metaByServer } from "../../common/serverMeta";
 import { compareServers, sortByProp } from "../../common/sort";
