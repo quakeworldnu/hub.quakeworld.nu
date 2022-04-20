@@ -1,29 +1,32 @@
-"use strict";
-
-const changed = require("gulp-changed");
-const concat = require("gulp-concat");
-const { dest, parallel, series, src, task, watch } = require("gulp");
-const imagemin = require("gulp-imagemin");
-const rev = require("gulp-rev");
-const sass = require("gulp-sass")(require("sass"));
-const childProcess = require("child_process");
+import changed from "gulp-changed";
+import childProcess from "child_process";
+import concat from "gulp-concat";
+import gulpPkg from "gulp";
+import gulpSass from "gulp-sass";
+import imagemin from "gulp-imagemin";
+import rev from "gulp-rev";
+import sassCompiler from "sass";
 
 // paths
-const paths = require("./gulpfile.paths");
+import paths from "./gulpfile.paths.js";
+
+// commonJS/instances
+const sass = gulpSass(sassCompiler);
+const {dest, parallel, series, src, task, watch} = gulpPkg;
 
 // errors
-function handleError(e) {
+const handleError = (e) => {
   console.error(e.toString());
   this.emit("end");
-}
+};
 
 // styles
 task("styles:dev", () => {
   return src(paths.src.sassFilesGlob)
-    .pipe(sass({ outputStyle: "expanded" }).on("error", handleError))
+    .pipe(sass({outputStyle: "expanded"}).on("error", handleError))
     .pipe(concat("styles.css"))
     .pipe(
-      changed(paths.public.assetsDir, { hasChanged: changed.compareContents })
+      changed(paths.public.assetsDir, {hasChanged: changed.compareContents})
     )
     .pipe(dest(paths.public.assetsDir))
     .on("error", handleError);
@@ -31,7 +34,7 @@ task("styles:dev", () => {
 
 task("styles:prod", () => {
   return src(paths.src.sassFilesGlob)
-    .pipe(sass({ outputStyle: "compressed" }).on("error", handleError))
+    .pipe(sass({outputStyle: "compressed"}).on("error", handleError))
     .pipe(concat("styles.min.css"))
     .pipe(rev())
     .pipe(dest(paths.public.assetsDir))
@@ -51,7 +54,7 @@ task("images:prod", () => {
 task("images:dev", () => {
   return src(paths.src.imageFilesGlob)
     .pipe(
-      changed(paths.public.assetsDir, { hasChanged: changed.compareContents })
+      changed(paths.public.assetsDir, {hasChanged: changed.compareContents})
     )
     .pipe(dest(paths.public.assetsDir))
     .on("error", handleError);
@@ -61,7 +64,7 @@ task("images:dev", () => {
 task("jekyll:dev", (callback) => {
   const command = "yarn";
   const params = ["run", "dev:jekyll"];
-  const options = { stdio: "inherit" };
+  const options = {stdio: "inherit"};
   return childProcess.spawn(command, params, options).on("close", callback);
 });
 
@@ -73,12 +76,12 @@ task("watch", () => {
   watch([paths.jekyll.dataFilesGlob], series("jekyll:dev"));
   watch(
     [paths.src.imageFilesGlob],
-    { ignoreInitial: false },
+    {ignoreInitial: false},
     series("images:dev")
   );
   watch(
     [paths.src.sassFilesGlob],
-    { ignoreInitial: false },
+    {ignoreInitial: false},
     series("styles:dev")
   );
 });
