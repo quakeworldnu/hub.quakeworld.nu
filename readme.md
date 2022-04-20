@@ -14,7 +14,7 @@
 ---
 
 ## Install
-1. `git clone git@github.com:vikpe/qwsb.git`
+1. `git clone git@github.com:vikpe/qw-server-browser.git`
 1. `cd qwsb`   
 1. `yarn install`
 
