@@ -6,8 +6,10 @@ export const calcPlayerDisplay = (meta, maxRows) => {
   const totalPlayerRows = Math.ceil(meta.playerCount / playersPerRow);
   const visiblePlayerRows = Math.min(maxPlayerRows, totalPlayerRows);
 
-  const visiblePlayers = Math.min(meta.playerCount,
-    visiblePlayerRows * playersPerRow);
+  const visiblePlayers = Math.min(
+    meta.playerCount,
+    visiblePlayerRows * playersPerRow
+  );
   const hiddenPlayers = meta.playerCount - visiblePlayers;
 
   return {

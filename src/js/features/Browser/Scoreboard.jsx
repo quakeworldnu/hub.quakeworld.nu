@@ -9,12 +9,7 @@ export const Scoreboard = (props) => {
   }
 
   if (server.meta.showAsTwoColumns) {
-    return (
-      <TwoColumnScoreboard
-        teams={server.meta.teams}
-        limit={limit}
-      />
-    );
+    return <TwoColumnScoreboard teams={server.meta.teams} limit={limit} />;
   } else {
     const players = server.Players.filter((p) => !p.Spec).slice(0, limit);
 
