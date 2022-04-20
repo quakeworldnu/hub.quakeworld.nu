@@ -3,7 +3,7 @@ name: Build and deploy
 on:
   push:
     branches:
-      - disabled
+      - main
 
 env:
   NODE_ENV: production
@@ -11,6 +11,7 @@ env:
 
 jobs:
   build_and_deploy:
+    timeout-minutes: 5
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
