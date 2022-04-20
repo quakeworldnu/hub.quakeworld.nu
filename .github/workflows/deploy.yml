@@ -11,7 +11,7 @@ env:
 
 jobs:
   build_and_deploy:
-    timeout-minutes: 5
+    timeout-minutes: 8
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
