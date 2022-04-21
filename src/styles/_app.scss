@@ -6,6 +6,12 @@
   opacity: .6;
 }
 
+.app-text-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .app-text-small {
   font-size: .8em;
 }
