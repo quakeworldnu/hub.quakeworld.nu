@@ -8,11 +8,17 @@ export const Scoreboard = (props) => {
     return null;
   }
 
-  if (server.meta.showAsTwoColumns) {
-    return <TwoColumnScoreboard teams={server.meta.teams} limit={limit} />;
-  } else {
-    const players = server.Players.filter((p) => !p.Spec).slice(0, limit);
+  const players = server.Players.filter((p) => !p.Spec).slice(0, limit);
 
+  if (server.meta.showAsTwoColumns) {
+    return (
+      <TwoColumnScoreboard
+        players={players}
+        teams={server.meta.teams}
+        limit={limit}
+      />
+    );
+  } else {
     return (
       <OneColumnScoreboard
         players={players}
@@ -58,23 +64,27 @@ export const OneColumnScoreboard = (props) => {
 };
 
 export const TwoColumnScoreboard = (props) => {
-  const { teams, limit } = props;
+  const { players, teams, limit } = props;
 
   let items = [];
 
-  items = items.concat(teams);
+  if (teams.length > 0) {
+    items = items.concat(teams);
 
-  let rowCount = Math.max(...teams.map((t) => t.PlayerCount));
-  rowCount = Math.min(rowCount, Math.ceil(limit / 2));
+    let rowCount = Math.max(...teams.map((t) => t.PlayerCount));
+    rowCount = Math.min(rowCount, Math.ceil(limit / 2));
 
-  for (let rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-    for (let teamIndex = 0; teamIndex < teams.length; teamIndex++) {
-      if (rowIndex < teams[teamIndex].PlayerCount) {
-        items.push(teams[teamIndex].Players[rowIndex]);
-      } else {
-        items.push(null);
+    for (let rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+      for (let teamIndex = 0; teamIndex < teams.length; teamIndex++) {
+        if (rowIndex < teams[teamIndex].PlayerCount) {
+          items.push(teams[teamIndex].Players[rowIndex]);
+        } else {
+          items.push(null);
+        }
       }
     }
+  } else {
+    items = players;
   }
 
   const rows = items.map(itemToRow);
