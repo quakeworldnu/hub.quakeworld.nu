@@ -61,7 +61,7 @@ const ServerMapshot = (props) => {
   const { server } = props;
 
   const mapThumbnailSrc = server.Map
-    ? `url(https://vikpe.org/qwmapshots/${server.Map}.jpg)`
+    ? `url(https://vikpe.org/qw-mapshots/${server.Map}.jpg)`
     : "none";
 
   return (
