@@ -71,7 +71,7 @@ const statusTextByServer = (server) => {
     }
   } else {
     if ("Standby" === server.Status) {
-      if (server.PlayerSlots.Free) {
+      if (server.PlayerSlots.Free > 0) {
         status.push(`Waiting for ${server.PlayerSlots.Free} player(s)`);
       } else {
         status.push("Waiting for players to ready up");
