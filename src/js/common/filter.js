@@ -6,7 +6,7 @@ export const filterServers = (servers, filters, favoriteServers) => {
   }
 
   if (filters.isStarted) {
-    result = result.filter((s) => s.meta.isStarted);
+    result = result.filter((s) => "Started" === s.Status);
   }
 
   if (filters.regionName) {
@@ -31,9 +31,3 @@ export const filterServersByQuery = (servers, query) => {
   };
   return servers.filter(keywordFilterFunc);
 };
-
-const isBot = (p) => p.IsBot || p.Name.toLowerCase().includes("[serveme]");
-const isSpectatingBot = (client) => isBot(client) && client.Spec;
-
-export const ignoreSpectatingBots = (clients) =>
-  clients.filter((c) => !isSpectatingBot(c));

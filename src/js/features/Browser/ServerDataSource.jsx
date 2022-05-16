@@ -1,20 +1,17 @@
 import React from "react";
 import { connect } from "react-redux";
 import browserSlice from "./slice";
-import { randomString } from "../../common/text";
 
 // const url = "/data/busy.json";
 const serverEntriesProvider = {
   get: async () => {
-    const cacheBurstString = randomString(12);
-    const url = `https://badplace.eu/api/v2/serverbrowser/busy?${cacheBurstString}`;
-    const proxiedUrl = `https://api.allorigins.win/raw?url=${url}`; // real live data (production)
+    const url = "http://localhost:3001/servers";
     // const fakeDataUrl = "/data/busy.json"; // static/fake data for (development)
     const options = {
       method: "GET",
       cache: "no-store",
     };
-    return fetch(proxiedUrl, options)
+    return fetch(url, options)
       .then((response) => {
         if (response.ok) {
           return response.json();

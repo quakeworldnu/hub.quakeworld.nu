@@ -4,35 +4,30 @@ export const compareServers = (a, b) => {
   // 0 = unchanged
 
   // tag
-  if (a.meta.hasMatchtag && !b.meta.hasMatchtag) {
+  if ("matchtag" in a.Settings && !"matchtag" in b.Settings) {
     return -1;
-  } else if (!a.meta.hasMatchtag && b.meta.hasMatchtag) {
+  } else if (!"matchtag" in a.Settings && "matchtag" in b.Settings) {
     return 1;
   }
 
   // player count
-  if (a.meta.playerCount > b.meta.playerCount) {
+  if (a.Players.length > b.Players.length) {
     return -1;
-  } else if (a.meta.playerCount < b.meta.playerCount) {
+  } else if (a.Players.length < b.Players.length) {
     return 1;
   }
 
   // spectator count
-  const totalSpectatorCountForA =
-    a.meta.spectatorCount + a.meta.qtvSpectatorCount;
-  const totalSpectatorCountForB =
-    b.meta.spectatorCount + b.meta.qtvSpectatorCount;
-
-  if (totalSpectatorCountForA > totalSpectatorCountForB) {
+  if (a.SpectatorNames.length > b.SpectatorNames.length) {
     return -1;
-  } else if (totalSpectatorCountForA < totalSpectatorCountForB) {
+  } else if (a.SpectatorNames.length < b.SpectatorNames.length) {
     return 1;
   }
 
   // is started
-  if (a.meta.isStarted && !b.meta.isStarted) {
+  if (a.Status === "Started" && !b.Status === "Started") {
     return -1;
-  } else if (!a.meta.isStarted && b.meta.isStarted) {
+  } else if (!a.Status === "Started" && b.Status === "Started") {
     return 1;
   }
 

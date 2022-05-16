@@ -4,25 +4,23 @@ import { ColoredFrags, QuakeText } from "./Common";
 export const Scoreboard = (props) => {
   const { server, limit = 20 } = props;
 
-  if (!server.meta.hasPlayers || 0 === limit) {
+  if (!server.PlayerSlots.Used || 0 === limit) {
     return null;
   }
-
-  const players = server.Players.filter((p) => !p.Spec).slice(0, limit);
 
   if (server.meta.showAsTwoColumns) {
     return (
       <TwoColumnScoreboard
-        players={players}
-        teams={server.meta.teams}
+        players={server.Players}
+        teams={server.Teams}
         limit={limit}
       />
     );
   } else {
     return (
       <OneColumnScoreboard
-        players={players}
-        showTeam={server.meta.mode.isTeamplay}
+        players={server.Players}
+        showTeam={"teamplay" in server.Settings && server.Settings.teamplay > 0}
       />
     );
   }
@@ -71,12 +69,12 @@ export const TwoColumnScoreboard = (props) => {
   if (teams.length > 0) {
     items = items.concat(teams);
 
-    let rowCount = Math.max(...teams.map((t) => t.PlayerCount));
+    let rowCount = Math.max(...teams.map((t) => t.Players.length));
     rowCount = Math.min(rowCount, Math.ceil(limit / 2));
 
     for (let rowIndex = 0; rowIndex < rowCount; rowIndex++) {
       for (let teamIndex = 0; teamIndex < teams.length; teamIndex++) {
-        if (rowIndex < teams[teamIndex].PlayerCount) {
+        if (rowIndex < teams[teamIndex].Players.length) {
           items.push(teams[teamIndex].Players[rowIndex]);
         } else {
           items.push(null);

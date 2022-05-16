@@ -24,14 +24,14 @@ const ServerHeader = (props) => {
     <div className="server-header">
       <div className="is-flex is-justify-content-space-between p-3">
         <div>
-          <strong className="has-text-white">{server.meta.mode.name}</strong> on{" "}
-          <strong className="has-text-white">{server.Map}</strong>
+          <strong className="has-text-white">{server.Mode}</strong> on{" "}
+          <strong className="has-text-white">{server.Settings.map}</strong>
           <div className="app-text-small">
             <span className="server-status mr-1">
-              {server.meta.isStarted && (
+              {"Started" === server.Status && (
                 <span className="tag is-danger">LIVE</span>
               )}{" "}
-              {server.meta.isStandby && (
+              {"Standby" === server.Status && (
                 <div className="indicator-waiting-container">
                   <div className="indicator-waiting" />
                 </div>
@@ -41,16 +41,16 @@ const ServerHeader = (props) => {
             <span>{server.meta.statusText}</span>
           </div>
         </div>
-        {server.meta.hasFreePlayerSlots && (
+        {(server.PlayerSlots.Free > 0) && (
           <a href={`qw://${server.Address}/`} className="button is-primary">
             Join
           </a>
         )}
       </div>
-      {server.meta.displayProgress && (
+      {server.Time.Total > 0 && "Started" === server.Status && (
         <ServerProgress
-          value={server.meta.minutesElapsed}
-          max={server.meta.minutesTotal}
+          value={server.Time.Elapsed}
+          max={server.Time.Total}
         />
       )}
     </div>
@@ -71,8 +71,9 @@ const ServerMapshot = (props) => {
         style={{ backgroundImage: mapThumbnailSrc }}
       >
         <div className="server-mapshot-dimmer">
-          {server.meta.hasMatchtag && (
-            <div className="server-matchtag mb-4">{server.meta.matchtag}</div>
+          {("matchtag" in server.Settings) && (
+            <div
+              className="server-matchtag mb-4">{server.Settings.matchtag}</div>
           )}
           <Scoreboard
             server={server}
@@ -134,14 +135,15 @@ const SpectatorButtons = (props) => {
           </a>
         </div>
         <div className="column">
-          {server.meta.hasQtv && (
+          {(server.QtvStream !== "") && (
             <a
-              href={`qw://${server.QTV[0].Address}/qtvplay`}
+              href={`qw://${server.QtvStream.Url}/qtvplay`}
               className="button is-fullwidth is-small is-dark"
             >
               QTV
-              {server.meta.hasQtvSpectators && (
-                <span className="ml-1 app-dim">({server.QTV[0].Specs})</span>
+              {(server.QtvStream.NumSpectators > 0) && (
+                <span
+                  className="ml-1 app-dim">({server.QtvStream.NumSpectators})</span>
               )}
             </a>
           )}
@@ -157,7 +159,8 @@ const ServerFooter = (props) => {
     <div className="server-footer p-3">
       <SpectatorButtons server={server} />
 
-      <div className="columns is-mobile is-vcentered app-text-small is-multiline">
+      <div
+        className="columns is-mobile is-vcentered app-text-small is-multiline">
         <div className="column">
           <div
             className="server-address"
@@ -201,20 +204,20 @@ const ServerFooter = (props) => {
     </div>
   );
 };
-const getModifiers = (meta) => {
+const getModifiers = (server) => {
   const modifiers = ["server-wrapper"];
 
-  if (meta.hasMatchtag) {
+  if ("matchtag" in server.Settings) {
     modifiers.push("smod-matchtag");
   }
 
-  if (meta.isStarted) {
+  if ("Started" === server.Status) {
     modifiers.push("smod-started");
   }
 
-  if (meta.hasFreePlayerSlots) {
+  if (server.PlayerSlots.Free > 0) {
     modifiers.push("smod-hasfreeplayerslots");
-  } else if (meta.isWaitingForPlayersToReadyUp) {
+  } else if ("Standby" === server.Status) {
     modifiers.push("smod-waitingforready");
   }
 
@@ -223,7 +226,7 @@ const getModifiers = (meta) => {
 export const Server = (props) => {
   const { server } = props;
 
-  const modifiers = getModifiers(server.meta);
+  const modifiers = getModifiers(server);
   const wrapperClassNames = modifiers.join(" ");
 
   return (
