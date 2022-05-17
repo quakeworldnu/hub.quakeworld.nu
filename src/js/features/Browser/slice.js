@@ -34,6 +34,7 @@ export default createSlice({
 
       // sort
       for (let i = 0; i < servers.length; i++) {
+        servers[i].Teams.sort(sortByProp("Name", "ASC"));
         servers[i].Players.sort(sortByProp("Team", "ASC"));
         servers[i].Players.sort(sortByProp("Frags", "DESC"));
       }
