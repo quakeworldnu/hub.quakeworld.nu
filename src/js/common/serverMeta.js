@@ -15,21 +15,21 @@ export const metaByServer = (server) => {
     .join(" ")
     .toLowerCase();
 
-  const showAsTwoColumns = "1on1" === server.Mode || 2 === server.Teams.length;
   const addressTitle = stripNonAscii(server.Address).trim();
   const spectatorText = calcSpectatorText(server.SpectatorNames);
 
+  const isStarted = "Started" === server.Status;
   const meta = {
+    isStarted,
+    isStandBy: !isStarted,
     addressTitle,
     keywords,
-    showAsTwoColumns,
     spectatorText,
+    statusText: statusTextByServer(server)
   };
 
-  meta.statusText = statusTextByServer(server);
-
   const maxRowCount = 10;
-  meta.playerDisplay = calcPlayerDisplay(meta, server, maxRowCount);
+  meta.playerDisplay = calcPlayerDisplay(server, maxRowCount);
 
   return meta;
 };

@@ -6,11 +6,11 @@ export const filterServers = (servers, filters, favoriteServers) => {
   }
 
   if (filters.isStarted) {
-    result = result.filter((s) => "Started" === s.Status);
+    result = result.filter((s) => s.meta.isStarted);
   }
 
   if (filters.regionName) {
-    result = result.filter((s) => s.meta.regionName === filters.regionName);
+    result = result.filter((s) => s.Geo.Region === filters.regionName);
   }
 
   return result;

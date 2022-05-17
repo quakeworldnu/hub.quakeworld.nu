@@ -25,9 +25,9 @@ export const compareServers = (a, b) => {
   }
 
   // is started
-  if (a.Status === "Started" && !b.Status === "Started") {
+  if (a.meta.isStarted && !b.meta.isStarted) {
     return -1;
-  } else if (!a.Status === "Started" && b.Status === "Started") {
+  } else if (!a.meta.isStarted && b.meta.isStarted) {
     return 1;
   }
 

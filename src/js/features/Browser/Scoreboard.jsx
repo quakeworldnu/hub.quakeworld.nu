@@ -8,7 +8,7 @@ export const Scoreboard = (props) => {
     return null;
   }
 
-  if (server.meta.showAsTwoColumns) {
+  if ("1on1" === server.Mode || 2 === server.Teams.length) {
     return (
       <TwoColumnScoreboard
         players={server.Players}
