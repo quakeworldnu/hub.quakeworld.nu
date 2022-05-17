@@ -28,7 +28,9 @@ export default createSlice({
       let { servers } = action.payload;
 
       // ignore servers without clients
-      servers = servers.filter((s) => s.Players.length > 0);
+      servers = servers.filter(
+        (s) => s.PlayerSlots.Used + s.SpectatorSlots.Used > 0
+      );
 
       // sort
       for (let i = 0; i < servers.length; i++) {
