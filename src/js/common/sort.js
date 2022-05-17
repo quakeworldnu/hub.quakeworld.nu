@@ -11,16 +11,16 @@ export const compareServers = (a, b) => {
   }
 
   // player count
-  if (a.Players.length > b.Players.length) {
+  if (a.PlayerSlots.Used > b.PlayerSlots.Used) {
     return -1;
-  } else if (a.Players.length < b.Players.length) {
+  } else if (a.PlayerSlots.Used < b.PlayerSlots.Used) {
     return 1;
   }
 
   // spectator count
-  if (a.SpectatorNames.length > b.SpectatorNames.length) {
+  if (a.SpectatorSlots.Used > b.SpectatorSlots.Used) {
     return -1;
-  } else if (a.SpectatorNames.length < b.SpectatorNames.length) {
+  } else if (a.SpectatorSlots.Used < b.SpectatorSlots.Used) {
     return 1;
   }
 
