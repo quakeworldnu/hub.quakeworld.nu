@@ -51,8 +51,8 @@ const ServerHeader = (props) => {
 const ServerMapshot = (props) => {
   const { server } = props;
 
-  const mapThumbnailSrc = server.Map
-    ? `url(https://vikpe.org/qw-mapshots/${server.Map}.jpg)`
+  const mapThumbnailSrc = server.Settings.map
+    ? `url(https://vikpe.org/qw-mapshots/${server.Settings.map}.jpg)`
     : "none";
 
   return (<div className="server-mapshot-wrapper">
