@@ -40,7 +40,6 @@ class ServerDataSource extends React.Component {
 
   componentWillUnmount() {
     window.clearTimeout(this.timeout);
-    console.log("bye!");
   }
 
   render() {
