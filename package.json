@@ -32,7 +32,7 @@
     "@snowpack/plugin-dotenv": "^2.2.0",
     "@snowpack/plugin-react-refresh": "^2.5.0",
     "bulma": "^0.9.4",
-    "firebase-tools": "^10.8.0",
+    "firebase-tools": "^10.9.2",
     "formik": "^2.2.9",
     "gulp": "^4.0.2",
     "gulp-changed": "^4.0.3",
