@@ -15,7 +15,7 @@ export const metaByServer = (server) => {
     .join(" ")
     .toLowerCase();
 
-  const addressTitle = stripNonAscii(server.Address).trim();
+  const addressTitle = stripNonAscii(server.Settings.hostname || server.Address).trim();
   const spectatorText = calcSpectatorText(server.SpectatorNames);
 
   const isStarted = "Started" === server.Status;
