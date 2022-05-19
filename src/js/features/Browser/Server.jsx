@@ -3,6 +3,7 @@ import FavoriteToggle from "./FavoriteToggle";
 import { Scoreboard } from "./Scoreboard";
 import { QuakeText } from "./Common";
 import { copyToClipboard } from "../../common/clipboard";
+import { pluralize } from "../../common/text.js";
 
 const ServerProgress = (props) => {
   const { value, max } = props;
@@ -84,10 +85,8 @@ const HiddenPlayers = (props) => {
     return null;
   }
 
-  const pluralize = (count) => (count > 1 ? "s" : "");
-
   return (<div className="mt-1 app-text-small">
-    +{count} player{pluralize(count)}
+    +{count} {pluralize("player", count)}
   </div>);
 };
 

@@ -1,4 +1,4 @@
-import { stripNonAscii } from "./text";
+import { pluralize, stripNonAscii } from "./text";
 import { calcPlayerDisplay } from "./playerDisplay";
 
 export const metaByServer = (server) => {
@@ -72,7 +72,7 @@ const statusTextByServer = (server) => {
   } else {
     if ("Standby" === server.Status) {
       if (server.PlayerSlots.Free > 0) {
-        status.push(`Waiting for ${server.PlayerSlots.Free} player(s)`);
+        status.push(`Waiting for ${server.PlayerSlots.Free} ${pluralize("player", server.PlayerSlots.Free)}`);
       } else {
         status.push("Waiting for players to ready up");
       }

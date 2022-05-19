@@ -1,66 +1,36 @@
 export const stripNonAscii = (str) => str.replace(/[^ -~]+/g, "");
-export const quakeTextToHtml = (input, maxLength) => {
-  let str = "";
-  let currentType = "normal";
+export const pluralize = (value, count) => (count > 1) ? `${value}s` : value;
+export const quakeTextToHtml = (text, color) => {
+  let result = "";
+  let lastColor = ""
 
-  let changeType = function (newType) {
-    if (currentType !== newType) {
-      if (currentType !== "normal") {
-        str += "</span>";
+  for (let i = 0; i < text.length; ++i) {
+    let charColor = color[i]
+
+    if (charColor !== lastColor) {
+      if (i > 0) {
+        result += "</span>"
       }
-      if (newType !== "normal") {
-        str += '<span class="qw-color-' + newType + '">';
-      }
-      currentType = newType;
-    }
-  };
 
-  for (let i = 0; i < input.length; ++i) {
-    if (maxLength >= 0 && i >= maxLength) {
-      break;
+      result += `<span class="qw-color-${charColor}">`;
     }
 
-    let charCode = input.charCodeAt(i);
+    let charValue = text[i]
 
-    if (charCode >= 128) {
-      charCode -= 128;
-    }
-
-    if (charCode < 16 || (charCode >= 29 && charCode <= 31)) {
-      changeType("normal");
-      str += "_";
-    } else if (charCode === 16) {
-      changeType("gold");
-      str += "[";
-    } else if (charCode === 17) {
-      changeType("gold");
-      str += "]";
-    } else if (charCode >= 18 && charCode <= 27) {
-      let num = charCode - 18 + 48;
-      changeType("gold");
-      str += String.fromCharCode(num);
-    } else if (charCode === 28) {
-      changeType("normal");
-      str += "&#8226;";
+    if (charValue === "<") {
+      result += "&lt;";
+    } else if (charValue === ">") {
+      result += "&gt;";
+    } else if (charValue === '"') {
+      result += "&quot;";
     } else {
-      if (input.charCodeAt(i) >= 128 + 32) {
-        changeType("brown");
-      } else {
-        changeType("normal");
-      }
-
-      if (charCode === "<") {
-        str += "&lt;";
-      } else if (charCode === ">") {
-        str += "&gt;";
-      } else if (charCode === '"') {
-        str += "&quot;";
-      } else {
-        str += String.fromCharCode(charCode);
-      }
+      result += charValue
     }
-  }
-  changeType("normal");
 
-  return str;
+    lastColor = charColor
+  }
+
+  result += "</span>"
+
+  return result;
 };
