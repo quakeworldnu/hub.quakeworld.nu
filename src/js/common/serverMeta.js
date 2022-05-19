@@ -3,20 +3,22 @@ import { calcPlayerDisplay } from "./playerDisplay";
 
 export const metaByServer = (server) => {
   let clientNames = server.Players.map((p) => p.Name) + server.SpectatorNames;
+  let spectatorNames = server.SpectatorNames;
 
   if (server.QtvStream !== "") {
-    clientNames += server.QtvStream.SpectatorNames
+    spectatorNames = spectatorNames.concat(server.QtvStream.SpectatorNames)
   }
 
-  let keywords = [server.Mode, server.Map].concat(clientNames);
+  let keywords = [server.Mode, server.Map].concat(clientNames + spectatorNames);
 
   keywords = keywords
     .filter((p) => p !== "")
     .join(" ")
     .toLowerCase();
 
-  const addressTitle = stripNonAscii(server.Settings.hostname || server.Address).trim();
-  const spectatorText = calcSpectatorText(server.SpectatorNames);
+  const addressTitle = stripNonAscii(server.Settings.hostname || server.Address)
+    .trim();
+  const spectatorText = calcSpectatorText(spectatorNames);
 
   const isStarted = "Started" === server.Status;
   const meta = {
@@ -72,7 +74,9 @@ const statusTextByServer = (server) => {
   } else {
     if ("Standby" === server.Status) {
       if (server.PlayerSlots.Free > 0) {
-        status.push(`Waiting for ${server.PlayerSlots.Free} ${pluralize("player", server.PlayerSlots.Free)}`);
+        status.push(
+          `Waiting for ${server.PlayerSlots.Free} ${pluralize("player",
+            server.PlayerSlots.Free)}`);
       } else {
         status.push("Waiting for players to ready up");
       }
