@@ -3,12 +3,7 @@ import { calcPlayerDisplay } from "./playerDisplay";
 
 export const metaByServer = (server) => {
   let clientNames = server.Players.map((p) => p.Name) + server.SpectatorNames;
-  let spectatorNames = server.SpectatorNames;
-
-  if (server.QtvStream !== "") {
-    spectatorNames = spectatorNames.concat(server.QtvStream.SpectatorNames)
-  }
-
+  let spectatorNames = server.SpectatorNames + server.QtvStream.SpectatorNames;
   let keywords = [server.Mode, server.Settings.map].concat(clientNames + spectatorNames);
 
   keywords = keywords

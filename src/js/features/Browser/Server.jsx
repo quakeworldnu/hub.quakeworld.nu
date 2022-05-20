@@ -116,7 +116,7 @@ const SpectatorButtons = (props) => {
         </a>
       </div>
       <div className="column">
-        {(server.QtvStream !== "") && (<a
+        {(server.QtvStream.Address !== "") && (<a
           href={`qw://${server.QtvStream.Url}/qtvplay`}
           className="button is-fullwidth is-small is-dark"
         >
