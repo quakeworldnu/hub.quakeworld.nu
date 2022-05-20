@@ -228,13 +228,3 @@ export const regions = [
     country_codes: [],
   },
 ];
-
-export const regionNameByCountryCode = (cc) => {
-  for (let i = 0; i < regions.length; i++) {
-    if (regions[i].country_codes.includes(cc)) {
-      return regions[i].name;
-    }
-  }
-
-  return "Undefined";
-};

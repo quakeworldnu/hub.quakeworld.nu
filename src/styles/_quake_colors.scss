@@ -27,10 +27,10 @@ $qw-player-colors: (
   }
 }
 
-.qw-color-gold {
+.qw-color-g {
   color: lighten(map-get($qw-player-colors, 12), 25);
 }
 
-.qw-color-brown {
+.qw-color-b {
   color: lighten(map-get($qw-player-colors, 1), 25);
 }

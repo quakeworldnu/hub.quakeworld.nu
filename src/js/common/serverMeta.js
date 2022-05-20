@@ -1,141 +1,37 @@
-import { regionNameByCountryCode } from "./regions";
-import { quakeTextToPlainText, stripNonAscii } from "./text";
-import { sortByProp } from "./sort";
+import { pluralize, stripNonAscii } from "./text";
 import { calcPlayerDisplay } from "./playerDisplay";
 
 export const metaByServer = (server) => {
-  const clientCount = server.Players.length;
-  const hasClients = clientCount > 0;
-  const spectatorCount = server.Players.filter((p) => p.Spec).length;
-  const hasSpectators = spectatorCount > 0;
-  const playerCount = clientCount - spectatorCount;
-  const hasPlayers = playerCount > 0;
-  const totalPlayerSlots = server.MaxClients;
-  const freePlayerSlots = totalPlayerSlots - playerCount;
-  const hasFreePlayerSlots = freePlayerSlots > 0;
-  const descriptionParts = server.Description.split(", ");
+  let clientNames = server.Players.map((p) => p.Name) + server.SpectatorNames;
+  let spectatorNames = server.SpectatorNames;
 
-  let modeName = descriptionParts[0];
-  const isXonX = /\d+v\d+/gi.test(modeName);
-
-  if (isXonX) {
-    modeName = modeName.replace("v", "on");
+  if (server.QtvStream !== "") {
+    spectatorNames = spectatorNames.concat(server.QtvStream.SpectatorNames)
   }
 
-  const isDuel = "1on1" === modeName;
-  const isTeamplay = !isDuel && isXonX;
-  const isRace = "Racing" === server.Description;
-  const isFfa = "FFA" === modeName;
-  const isFortress =
-    server.Settings.gametype && server.Settings.gametype === "fortressone";
-  const isCustom = !(isDuel || isTeamplay || isRace || isFfa || isFortress);
-
-  if (isFortress) {
-    modeName = "Fortress";
-  }
-
-  const isStarted = server.Description.indexOf("min left") !== -1;
-  const isStandby = !isStarted;
-  const isWaitingForPlayersToReadyUp = isStandby && !hasFreePlayerSlots;
-
-  let minutesRemaining = 0;
-  let minutesTotal = 0;
-  let minutesElapsed = 0;
-
-  if (isStarted) {
-    minutesRemaining = parseInt(descriptionParts[1].replace("min left", ""));
-  }
-
-  if (server.Settings.timelimit) {
-    minutesTotal = server.Settings.timelimit;
-    minutesElapsed = minutesTotal - minutesRemaining;
-  }
-
-  const displayProgress = isStarted && minutesRemaining > 0;
-
-  let rawClientNames = server.Players.map((p) => p.Name);
-
-  const hasQtv = server.QTV.length > 0 && server.QTV[0].Address !== "";
-  const qtvSpectatorCount = hasQtv ? server.QTV[0].Specs : 0;
-  const hasQtvSpectators = qtvSpectatorCount > 0;
-
-  if (hasQtvSpectators) {
-    rawClientNames = rawClientNames.concat(server.QTV[0].SpecList);
-  }
-
-  const plainTextClientNames = rawClientNames.map((n) =>
-    quakeTextToPlainText(n)
-  );
-
-  let keywords = [modeName, server.Map].concat(plainTextClientNames);
+  let keywords = [server.Mode, server.Map].concat(clientNames + spectatorNames);
 
   keywords = keywords
     .filter((p) => p !== "")
     .join(" ")
     .toLowerCase();
 
-  const matchtag = server.Settings.matchtag || "";
-  const hasMatchtag = matchtag !== "";
+  const addressTitle = stripNonAscii(server.Settings.hostname || server.Address)
+    .trim();
+  const spectatorText = calcSpectatorText(spectatorNames);
 
-  const regionName = regionNameByCountryCode(server.Country);
-
-  const teams = isTeamplay
-    ? teamsByPlayers(server.Players.filter((p) => !p.Spec))
-    : [];
-  const hasTeams = teams.length > 0;
-
-  const showAsTwoColumns = isDuel || 2 === teams.length;
-
-  const addressTitle = serverAddressTitleByServer(server);
-
-  const spectators = server.Players.filter((p) => p.Spec);
-  const spectatorText = calcSpectatorText(spectators);
-
+  const isStarted = "Started" === server.Status;
   const meta = {
-    isStandby,
     isStarted,
-    isWaitingForPlayersToReadyUp,
-    regionName,
+    isStandBy: !isStarted,
     addressTitle,
-    teams,
-    hasTeams,
-    displayProgress,
-    minutesTotal,
-    minutesElapsed,
-    minutesRemaining,
-    matchtag,
-    hasMatchtag,
     keywords,
-    showAsTwoColumns,
     spectatorText,
-    mode: {
-      name: modeName,
-      isDuel,
-      isTeamplay,
-      isXonX,
-      isFfa,
-      isRace,
-      isFortress,
-      isCustom,
-    },
-    clientCount,
-    hasClients,
-    spectatorCount,
-    hasSpectators,
-    playerCount,
-    hasPlayers,
-    totalPlayerSlots,
-    freePlayerSlots,
-    hasFreePlayerSlots,
-    hasQtv,
-    hasQtvSpectators,
-    qtvSpectatorCount,
+    statusText: statusTextByServer(server)
   };
 
-  meta.statusText = statusTextByMeta(meta);
-
   const maxRowCount = 10;
-  meta.playerDisplay = calcPlayerDisplay(meta, maxRowCount);
+  meta.playerDisplay = calcPlayerDisplay(server, maxRowCount);
 
   return meta;
 };
@@ -145,84 +41,13 @@ const calcSpectatorText = (spectators) => {
   const separator = ", ";
   const more = "..";
 
-  let text = spectators.map((s) => s.Name).join(separator);
+  let text = spectators.join(separator);
 
   if (text.length > maxLength) {
     text = text.slice(0, maxLength - more.length) + more;
   }
 
   return text;
-};
-
-const serverAddressTitleByServer = (server) => {
-  const hasDistinctHostname = !server.Address.includes(server.IpAddress);
-
-  let title;
-
-  if (hasDistinctHostname) {
-    title = server.Address;
-  } else {
-    title = server.Title.replace(/ \(\w+ vs\. \w+\)/, "");
-  }
-
-  return stripNonAscii(title).trim();
-};
-
-const teamsByPlayers = (players) => {
-  const teamsObj = {};
-
-  for (let i = 0; i < players.length; i++) {
-    const player = players[i];
-    const teamName = player.Team;
-
-    if (!teamsObj.hasOwnProperty(teamName)) {
-      teamsObj[teamName] = {
-        Name: teamName,
-        PlayerCount: 0,
-        Players: [],
-        Frags: 0,
-        Colors: [0, 0],
-      };
-    }
-
-    const playerTeam = teamsObj[teamName];
-    playerTeam.PlayerCount += 1;
-    playerTeam.Players.push(player);
-    playerTeam.Frags += player.Frags;
-  }
-
-  const teams = Object.values(teamsObj);
-
-  for (let i = 0; i < teams.length; i++) {
-    const team = teams[i];
-    team.Colors = majorityColors(team.Players);
-  }
-
-  teams.sort(sortByProp("Frags", "DESC"));
-
-  return teams;
-};
-
-const majorityColors = (players) => {
-  const colorCount = {};
-  const separator = "-";
-  let color;
-
-  for (let i = 0; i < players.length; i++) {
-    color = players[i].Colors.join(separator);
-
-    if (!colorCount.hasOwnProperty(color)) {
-      colorCount[color] = 0;
-    }
-
-    colorCount[color] += 1;
-  }
-
-  const sortedColorCount = Object.keys(colorCount).sort(
-    (a, b) => colorCount[b] - colorCount[a]
-  );
-
-  return sortedColorCount[0].split(separator);
 };
 
 const gameTimeProgress = (minutesRemaining) => {
@@ -233,24 +58,30 @@ const gameTimeProgress = (minutesRemaining) => {
   }
 };
 
-const statusTextByMeta = (meta) => {
+const statusTextByServer = (server) => {
   const status = [];
 
-  if (meta.mode.isFfa || meta.mode.isRace) {
-    status.push(`${meta.playerCount} of ${meta.totalPlayerSlots} players`);
+  let isFfa = "ffa" === server.Mode;
+  let isRace = "race" === server.Mode;
 
-    if (meta.mode.isFfa) {
-      status.push(gameTimeProgress(meta.minutesRemaining));
+  if (isFfa || isRace) {
+    status.push(
+      `${server.PlayerSlots.Used} of ${server.PlayerSlots.Total} players`);
+
+    if (isFfa) {
+      status.push(gameTimeProgress(server.Time.Remaining));
     }
   } else {
-    if (meta.isStandby) {
-      if (meta.hasFreePlayerSlots) {
-        status.push(`Waiting for ${meta.freePlayerSlots} player(s)`);
+    if ("Standby" === server.Status) {
+      if (server.PlayerSlots.Free > 0) {
+        status.push(
+          `Waiting for ${server.PlayerSlots.Free} ${pluralize("player",
+            server.PlayerSlots.Free)}`);
       } else {
         status.push("Waiting for players to ready up");
       }
     } else {
-      status.push(gameTimeProgress(meta.minutesRemaining));
+      status.push(gameTimeProgress(server.Time.Remaining));
     }
   }
 

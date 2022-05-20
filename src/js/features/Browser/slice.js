@@ -1,9 +1,7 @@
 import storage from "../../common/storage";
-import { countryCodeByHostname } from "../../common/geoIp";
 import { createSlice } from "@reduxjs/toolkit";
 import { metaByServer } from "../../common/serverMeta";
 import { compareServers, sortByProp } from "../../common/sort";
-import { ignoreSpectatingBots } from "../../common/filter";
 
 const getDefaultUiState = () => ({
   favorites: {
@@ -29,24 +27,14 @@ export default createSlice({
     updateServers: (state, action) => {
       let { servers } = action.payload;
 
-      // filter data
-      for (let i = 0; i < servers.length; i++) {
-        servers[i].Players = ignoreSpectatingBots(servers[i].Players);
-      }
-
       // ignore servers without clients
-      servers = servers.filter((s) => s.Players.length > 0);
-
-      // add missing country data
-      for (let i = 0; i < servers.length; i++) {
-        if ("" === servers[i].Country) {
-          const hostname = servers[i].Address.split(":")[0];
-          servers[i].Country = countryCodeByHostname(hostname);
-        }
-      }
+      servers = servers.filter(
+        (s) => s.PlayerSlots.Used + s.SpectatorSlots.Used > 0
+      );
 
       // sort
       for (let i = 0; i < servers.length; i++) {
+        servers[i].Teams.sort(sortByProp("Name", "ASC"));
         servers[i].Players.sort(sortByProp("Team", "ASC"));
         servers[i].Players.sort(sortByProp("Frags", "DESC"));
       }

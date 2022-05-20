@@ -4,28 +4,23 @@ export const compareServers = (a, b) => {
   // 0 = unchanged
 
   // tag
-  if (a.meta.hasMatchtag && !b.meta.hasMatchtag) {
+  if ("matchtag" in a.Settings && !"matchtag" in b.Settings) {
     return -1;
-  } else if (!a.meta.hasMatchtag && b.meta.hasMatchtag) {
+  } else if (!"matchtag" in a.Settings && "matchtag" in b.Settings) {
     return 1;
   }
 
   // player count
-  if (a.meta.playerCount > b.meta.playerCount) {
+  if (a.PlayerSlots.Used > b.PlayerSlots.Used) {
     return -1;
-  } else if (a.meta.playerCount < b.meta.playerCount) {
+  } else if (a.PlayerSlots.Used < b.PlayerSlots.Used) {
     return 1;
   }
 
   // spectator count
-  const totalSpectatorCountForA =
-    a.meta.spectatorCount + a.meta.qtvSpectatorCount;
-  const totalSpectatorCountForB =
-    b.meta.spectatorCount + b.meta.qtvSpectatorCount;
-
-  if (totalSpectatorCountForA > totalSpectatorCountForB) {
+  if (a.SpectatorSlots.Used > b.SpectatorSlots.Used) {
     return -1;
-  } else if (totalSpectatorCountForA < totalSpectatorCountForB) {
+  } else if (a.SpectatorSlots.Used < b.SpectatorSlots.Used) {
     return 1;
   }
 
@@ -33,6 +28,20 @@ export const compareServers = (a, b) => {
   if (a.meta.isStarted && !b.meta.isStarted) {
     return -1;
   } else if (!a.meta.isStarted && b.meta.isStarted) {
+    return 1;
+  }
+
+  // player slots
+  if (a.PlayerSlots.Free < b.PlayerSlots.Free) {
+    return -1;
+  } else if (a.PlayerSlots.Free > b.PlayerSlots.Free) {
+    return 1;
+  }
+
+  // Address
+  if (a.Address < b.Address) {
+    return -1;
+  } else if (a.Address > b.Address) {
     return 1;
   }
 

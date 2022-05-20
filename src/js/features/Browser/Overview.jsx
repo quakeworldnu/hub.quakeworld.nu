@@ -9,12 +9,15 @@ const Overview = (props) => {
 
   let playerCount = 0;
   let spectatorCount = 0;
-  let meta;
 
   for (let i = 0; i < serverCount; i++) {
-    meta = servers[i].meta;
-    playerCount += meta.playerCount;
-    spectatorCount += meta.spectatorCount + meta.qtvSpectatorCount;
+    let server = servers[i];
+    playerCount += server.PlayerSlots.Used;
+    spectatorCount += server.SpectatorSlots.Used
+
+    if ("" !== server.QtvStream) {
+      spectatorCount += server.QtvStream.NumSpectators
+    }
   }
 
   const clientCount = playerCount + spectatorCount;

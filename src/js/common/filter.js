@@ -10,7 +10,7 @@ export const filterServers = (servers, filters, favoriteServers) => {
   }
 
   if (filters.regionName) {
-    result = result.filter((s) => s.meta.regionName === filters.regionName);
+    result = result.filter((s) => s.Geo.Region === filters.regionName);
   }
 
   return result;
@@ -31,9 +31,3 @@ export const filterServersByQuery = (servers, query) => {
   };
   return servers.filter(keywordFilterFunc);
 };
-
-const isBot = (p) => p.IsBot || p.Name.toLowerCase().includes("[serveme]");
-const isSpectatingBot = (client) => isBot(client) && client.Spec;
-
-export const ignoreSpectatingBots = (clients) =>
-  clients.filter((c) => !isSpectatingBot(c));

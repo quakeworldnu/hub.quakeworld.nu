@@ -35,28 +35,6 @@ $color-join: #2397d1;
   border-bottom: 1px solid $hr-color;
 }
 
-/*
-.server-header {
-  border-bottom: 1px solid $hr-color;
-
-  .server-zzz {
-    height: 64px;
-    $stripe-color: rgba(white, 0.05);
-    background: red; //linear-gradient(135deg, $stripe-color 21.43%, transparent 21.43%, transparent 50%, $stripe-color 50%, $stripe-color 71.43%, transparent 71.43%, transparent 100%);
-    background-size: 9.90px 9.90px;
-    //animation: moveStripes 1s linear infinite;
-  }
-}
-
-@keyframes moveStripes {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: 9.90px 0;
-  }
-}
- */
 
 .server-matchtag {
   padding: 5px 0;
@@ -222,5 +200,5 @@ $color-join: #2397d1;
   @extend .has-text-grey;
   @extend .app-text-small;
   @extend .app-text-truncate;
-  max-width: 100px;
+  max-width: 90px;
 }

@@ -1,21 +1,24 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from 'react-dom/client';
 import { Provider } from "react-redux";
 import Browser from "./features/Browser/Browser";
 import store from "./features/Browser/store";
 
-const targetElement = document.getElementById("root");
-targetElement.className = "";
+const container = document.getElementById("root");
+container.className = "";
 
-ReactDOM.render(
+const root = createRoot(container);
+
+root.render(
   <React.StrictMode>
     <Provider store={store}>
       <Browser />
     </Provider>
-  </React.StrictMode>,
-  targetElement
+  </React.StrictMode>
 );
 
 if (import.meta.hot) {
   import.meta.hot.accept();
 }
+
+
