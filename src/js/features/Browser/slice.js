@@ -32,12 +32,6 @@ export default createSlice({
         (s) => s.PlayerSlots.Used + s.SpectatorSlots.Used > 0
       );
 
-      // sort
-      for (let i = 0; i < servers.length; i++) {
-        servers[i].Teams.sort(sortByProp("Name", "ASC"));
-        servers[i].Players.sort(sortByProp("Team", "ASC"));
-      }
-
       // add meta data
       for (let i = 0; i < servers.length; i++) {
         servers[i].meta = metaByServer(servers[i]);
