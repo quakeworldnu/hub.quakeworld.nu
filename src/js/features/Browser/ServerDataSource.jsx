@@ -5,7 +5,7 @@ import browserSlice from "./slice";
 // const url = "/data/busy.json";
 const serverEntriesProvider = {
   get: async () => {
-    const url = "http://localhost:3001/servers";
+    const url = "http://165.232.89.118/servers";
     // const fakeDataUrl = "/data/busy.json"; // static/fake data for (development)
     const options = {
       method: "GET",
@@ -32,7 +32,7 @@ class ServerDataSource extends React.Component {
         .then((servers) => this.props.updateServers({ servers }));
     };
 
-    const refreshInterval = 4.9 * 1000; // seconds
+    const refreshInterval = 2.9 * 1000; // seconds
     this.timeout = window.setInterval(fetchAndupdateServers, refreshInterval);
 
     fetchAndupdateServers();
