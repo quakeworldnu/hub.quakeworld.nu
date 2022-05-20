@@ -9,7 +9,7 @@ export const metaByServer = (server) => {
     spectatorNames = spectatorNames.concat(server.QtvStream.SpectatorNames)
   }
 
-  let keywords = [server.Mode, server.Settings.Map].concat(clientNames + spectatorNames);
+  let keywords = [server.Mode, server.Settings.map].concat(clientNames + spectatorNames);
 
   keywords = keywords
     .filter((p) => p !== "")
