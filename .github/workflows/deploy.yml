@@ -30,6 +30,10 @@ jobs:
         with:
           node-version: 16
 
+      # Install
+      - name: Build
+        run: yarn install
+
       # Build
       - name: Build
         run: yarn build
