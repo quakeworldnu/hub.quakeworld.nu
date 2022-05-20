@@ -5,7 +5,7 @@ import browserSlice from "./slice";
 // const url = "/data/busy.json";
 const serverEntriesProvider = {
   get: async () => {
-    const url = "https://metaqtv.quake.se/servers";
+    const url = "https://metaqtv.quake.se/v2/servers";
     // const fakeDataUrl = "/data/busy.json"; // static/fake data for (development)
     const options = {
       method: "GET",
