@@ -16,12 +16,15 @@ export const metaByServer = (server) => {
     .join(" ")
     .toLowerCase();
 
-  let addressTitle
+  let addressTitle;
 
   if ("hostname" in server.Settings) {
-    addressTitle = stripNonAscii(server.Settings.hostname).trim().replace(/ \(.+ vs. .+\)$/gm, "").trim();
+    addressTitle = stripNonAscii(server.Settings.hostname)
+      .trim()
+      .replace(/ \(.+ vs. .+\)$/gm, "")
+      .trim();
   } else {
-    addressTitle = server.Address
+    addressTitle = server.Address;
   }
 
   const spectatorText = calcSpectatorText(spectatorNames);
