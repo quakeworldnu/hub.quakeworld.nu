@@ -126,11 +126,12 @@ const SpectatorButtons = (props) => {
             href={`qw://${server.Address}/observe`}
             className="button is-fullwidth is-small is-dark"
           >
-            Spectate {(server.SpectatorSlots.Used > 0) && (
-                <span className="ml-1 app-dim">
-                  ({server.SpectatorSlots.Used})
-                </span>
-              )}
+            Spectate{" "}
+            {server.SpectatorSlots.Used > 0 && (
+              <span className="ml-1 app-dim">
+                ({server.SpectatorSlots.Used})
+              </span>
+            )}
           </a>
         </div>
         <div className="column">
@@ -140,7 +141,7 @@ const SpectatorButtons = (props) => {
               className="button is-fullwidth is-small is-dark"
             >
               QTV
-              {(server.QtvStream.NumSpectators > 0) && (
+              {server.QtvStream.NumSpectators > 0 && (
                 <span className="ml-1 app-dim">
                   ({server.QtvStream.NumSpectators})
                 </span>

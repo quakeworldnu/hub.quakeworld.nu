@@ -1,5 +1,5 @@
 export const regions = {
-  "Europe": [
+  Europe: [
     "AD",
     "AL",
     "AM",
@@ -56,7 +56,8 @@ export const regions = {
     "SM",
     "TR",
     "UA",
-    "VA",],
+    "VA",
+  ],
   "North America": [
     "AG",
     "AI",
@@ -100,7 +101,8 @@ export const regions = {
     "US",
     "VC",
     "VG",
-    "VI",],
+    "VI",
+  ],
   "South America": [
     "AR",
     "BO",
@@ -115,8 +117,9 @@ export const regions = {
     "PE",
     "SR",
     "UY",
-    "VE",],
-  "Oceania": [
+    "VE",
+  ],
+  Oceania: [
     "AS",
     "AU",
     "CK",
@@ -143,8 +146,9 @@ export const regions = {
     "VU",
     "WF",
     "WS",
-    "XX",],
-  "Asia": [
+    "XX",
+  ],
+  Asia: [
     "AF",
     "AZ",
     "BH",
@@ -202,6 +206,7 @@ export const regions = {
     "YE",
     "XE",
     "XD",
-    "XS",],
-  "Undefined": [],
-}
+    "XS",
+  ],
+  Undefined: [],
+};
