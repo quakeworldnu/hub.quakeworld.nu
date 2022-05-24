@@ -48,7 +48,7 @@ const ServerHeader = (props) => {
           </a>
         )}
       </div>
-      {server.Time.Total > 0 && server.meta.isStarted && (
+      {server.Time.Total > 0 && ["Started", "Countdown"].includes(server.Status) && (
         <ServerProgress value={server.Time.Elapsed} max={server.Time.Total} />
       )}
     </div>
