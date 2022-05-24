@@ -47,11 +47,11 @@ const Browser = (props) => {
   const { servers } = props;
 
   return (
-    <React.Fragment>
+    <>
       <ServerDataSource />
       <BrowserHeader />
       <BrowserTiles servers={servers} />
-    </React.Fragment>
+    </>
   );
 };
 
