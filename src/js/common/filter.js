@@ -1,3 +1,5 @@
+import { regions } from "./regions.js";
+
 export const filterServers = (servers, filters, favoriteServers) => {
   let result = filterServersByQuery(servers, filters.query);
 
@@ -10,7 +12,12 @@ export const filterServers = (servers, filters, favoriteServers) => {
   }
 
   if (filters.regionName) {
-    result = result.filter((s) => s.Geo.Region === filters.regionName);
+    if ("Undefined" === filters.regionName) {
+      result = result.filter((s) => "" === s.Geo.Region);
+    } else {
+      const regionCountryCodes = regions[filters.regionName];
+      result = result.filter((s) => regionCountryCodes.includes(s.Geo.CC));
+    }
   }
 
   return result;
