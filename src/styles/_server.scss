@@ -118,6 +118,7 @@ $color-join: #2397d1;
     height: $height;
     align-items: center;
     background: linear-gradient(to right, darken($green, 20) 80%, $green);
+    transition: width 500ms ease-in-out;
 
     &:after {
       $dot: 6px;
