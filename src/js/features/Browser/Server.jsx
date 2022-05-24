@@ -29,7 +29,7 @@ const ServerHeader = (props) => {
           <strong className="has-text-white">{server.Settings.map}</strong>
           <div className="app-text-small">
             <span className="server-status mr-1">
-              {"Started" === server.Status && (
+              {["Started", "Countdown"].includes(server.Status) && (
                 <span className="tag is-danger">LIVE</span>
               )}{" "}
               {"Standby" === server.Status && (
