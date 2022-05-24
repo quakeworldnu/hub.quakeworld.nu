@@ -1,4 +1,4 @@
-# QuakeWorld Server Browser
+# QuakeWorld Server Browser [![Build and deploy](https://github.com/vikpe/qw-server-browser/actions/workflows/deploy.yml/badge.svg)](https://github.com/vikpe/qw-server-browser/actions/workflows/deploy.yml)
 > To the Moon! 🚀
 
 ## Info
