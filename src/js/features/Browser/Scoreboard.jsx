@@ -1,5 +1,5 @@
 import React from "react";
-import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { ColoredFrags, QuakeText } from "./Common";
 
 export const Scoreboard = (props) => {
@@ -36,12 +36,24 @@ const ItemRow = (props) => {
 
   if (showTeam) {
     columns.push(
-      <QuakeText tag="div" text={Team} color={TeamColor} className="sc-team" key="team" />
+      <QuakeText
+        tag="div"
+        text={Team}
+        color={TeamColor}
+        className="sc-team"
+        key="team"
+      />
     );
   }
 
   columns.push(
-    <QuakeText tag="div" text={Name} color={NameColor} className="sc-name" key="name" />
+    <QuakeText
+      tag="div"
+      text={Name}
+      color={NameColor}
+      className="sc-name"
+      key="name"
+    />
   );
 
   return columns;
@@ -53,7 +65,7 @@ export const OneColumnScoreboard = (props) => {
   let className = "scoreboard sc-one-column ";
   className += showTeam ? "sc-show-team" : "sc-hide-team";
 
-  const [parent] = useAutoAnimate()
+  const [parent] = useAutoAnimate();
 
   return (
     <div className={className} ref={parent}>
@@ -89,9 +101,13 @@ export const TwoColumnScoreboard = (props) => {
   }
 
   const rows = items.map(itemToRow);
-  const [parent] = useAutoAnimate()
+  const [parent] = useAutoAnimate();
 
-  return <div className="scoreboard sc-teamplay sc-two-columns" ref={parent}>{rows}</div>;
+  return (
+    <div className="scoreboard sc-teamplay sc-two-columns" ref={parent}>
+      {rows}
+    </div>
+  );
 };
 
 const RightColumnRow = (props) => ItemRow({ ...props, showTeam: false });

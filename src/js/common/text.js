@@ -1,21 +1,21 @@
 export const stripNonAscii = (str) => str.replace(/[^ -~]+/g, "");
-export const pluralize = (value, count) => (count > 1) ? `${value}s` : value;
+export const pluralize = (value, count) => (count > 1 ? `${value}s` : value);
 export const quakeTextToHtml = (text, color) => {
   let result = "";
-  let lastColor = ""
+  let lastColor = "";
 
   for (let i = 0; i < text.length; ++i) {
-    let charColor = color[i]
+    let charColor = color[i];
 
     if (charColor !== lastColor) {
       if (i > 0) {
-        result += "</span>"
+        result += "</span>";
       }
 
       result += `<span class="qw-color-${charColor}">`;
     }
 
-    let charValue = text[i]
+    let charValue = text[i];
 
     if (charValue === "<") {
       result += "&lt;";
@@ -24,13 +24,13 @@ export const quakeTextToHtml = (text, color) => {
     } else if (charValue === '"') {
       result += "&quot;";
     } else {
-      result += charValue
+      result += charValue;
     }
 
-    lastColor = charColor
+    lastColor = charColor;
   }
 
-  result += "</span>"
+  result += "</span>";
 
   return result;
 };

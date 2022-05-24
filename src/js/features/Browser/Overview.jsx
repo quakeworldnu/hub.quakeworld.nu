@@ -13,10 +13,10 @@ const Overview = (props) => {
   for (let i = 0; i < serverCount; i++) {
     let server = servers[i];
     playerCount += server.PlayerSlots.Used;
-    spectatorCount += server.SpectatorSlots.Used
+    spectatorCount += server.SpectatorSlots.Used;
 
     if ("" !== server.QtvStream.Address) {
-      spectatorCount += server.QtvStream.NumSpectators
+      spectatorCount += server.QtvStream.NumSpectators;
     }
   }
 

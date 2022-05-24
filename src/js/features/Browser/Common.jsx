@@ -4,7 +4,7 @@ import { quakeTextToHtml } from "../../common/text";
 export const QuakeText = (props) => {
   const { text, tag, color, className } = props;
   const TagName = `${tag}`;
-  const textAsHtml = color ? quakeTextToHtml(text, color) : text
+  const textAsHtml = color ? quakeTextToHtml(text, color) : text;
 
   return (
     <TagName

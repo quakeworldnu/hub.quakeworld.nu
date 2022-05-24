@@ -3,16 +3,21 @@ import { calcPlayerDisplay } from "./playerDisplay";
 
 export const metaByServer = (server) => {
   let clientNames = server.Players.map((p) => p.Name) + server.SpectatorNames;
-  let spectatorNames = server.SpectatorNames.concat(server.QtvStream.SpectatorNames);
-  let keywords = [server.Mode, server.Settings.map].concat(clientNames).concat(spectatorNames);
+  let spectatorNames = server.SpectatorNames.concat(
+    server.QtvStream.SpectatorNames
+  );
+  let keywords = [server.Mode, server.Settings.map]
+    .concat(clientNames)
+    .concat(spectatorNames);
 
   keywords = keywords
     .filter((p) => p !== "")
     .join(" ")
     .toLowerCase();
 
-  const addressTitle = stripNonAscii(server.Settings.hostname || server.Address)
-    .trim();
+  const addressTitle = stripNonAscii(
+    server.Settings.hostname || server.Address
+  ).trim();
   const spectatorText = calcSpectatorText(spectatorNames);
 
   const isStarted = "Started" === server.Status;
@@ -22,7 +27,7 @@ export const metaByServer = (server) => {
     addressTitle,
     keywords,
     spectatorText,
-    statusText: statusTextByServer(server)
+    statusText: statusTextByServer(server),
   };
 
   const maxRowCount = 10;
@@ -61,7 +66,8 @@ const statusTextByServer = (server) => {
 
   if (isFfa || isRace) {
     status.push(
-      `${server.PlayerSlots.Used} of ${server.PlayerSlots.Total} players`);
+      `${server.PlayerSlots.Used} of ${server.PlayerSlots.Total} players`
+    );
 
     if (isFfa) {
       status.push(gameTimeProgress(server.Time.Remaining));
@@ -70,8 +76,11 @@ const statusTextByServer = (server) => {
     if ("Standby" === server.Status) {
       if (server.PlayerSlots.Free > 0) {
         status.push(
-          `Waiting for ${server.PlayerSlots.Free} ${pluralize("player",
-            server.PlayerSlots.Free)}`);
+          `Waiting for ${server.PlayerSlots.Free} ${pluralize(
+            "player",
+            server.PlayerSlots.Free
+          )}`
+        );
       } else {
         status.push("Waiting for players to ready up");
       }
