@@ -31,7 +31,7 @@ export const metaByServer = (server) => {
     statusText: statusTextByServer(server),
   };
 
-  const maxRowCount = 10;
+  const maxRowCount = 8;
   meta.playerDisplay = calcPlayerDisplay(server, maxRowCount);
 
   return meta;

@@ -2,7 +2,7 @@ export const calcPlayerDisplay = (server, maxRows) => {
   const showAsTwoColumns = "1on1" === server.Mode || 2 === server.Teams.length;
 
   const miscRowCount =
-    Number("matchtag" in server.Settings) + 2 * showAsTwoColumns;
+    Number("matchtag" in server.Settings) + Number(showAsTwoColumns);
   const maxPlayerRows = Math.max(0, maxRows - miscRowCount);
 
   const playersPerRow = showAsTwoColumns ? 2 : 1;

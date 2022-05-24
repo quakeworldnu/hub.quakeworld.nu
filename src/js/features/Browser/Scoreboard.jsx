@@ -20,7 +20,7 @@ export const Scoreboard = (props) => {
   } else {
     return (
       <OneColumnScoreboard
-        players={server.Players}
+        players={server.Players.slice(0, limit)}
         showTeam={"teamplay" in server.Settings && server.Settings.teamplay > 0}
       />
     );
