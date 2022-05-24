@@ -1,12 +1,17 @@
+import { current } from "@reduxjs/toolkit";
+
 export const compareServers = (a, b) => {
   // -1 = a
   // 1 = b
   // 0 = unchanged
 
   // tag
-  if ("matchtag" in a.Settings && !"matchtag" in b.Settings) {
+  const currentHasMatchtag = "matchtag" in a.Settings;
+  const otherHasMatchtag = "matchtag" in b.Settings;
+
+  if (currentHasMatchtag && !otherHasMatchtag) {
     return -1;
-  } else if (!"matchtag" in a.Settings && "matchtag" in b.Settings) {
+  } else if (!currentHasMatchtag && otherHasMatchtag) {
     return 1;
   }
 
