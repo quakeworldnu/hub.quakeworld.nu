@@ -35,7 +35,7 @@ const BrowserTiles = (props) => {
   return (
     <div className="app-grid" ref={parent}>
       {servers.map((server, index) => {
-        return <Server key={index} server={server} />;
+        return <Server key={server.Address} server={server} />;
       })}
     </div>
   );
