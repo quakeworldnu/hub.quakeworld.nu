@@ -68,11 +68,13 @@ export const OneColumnScoreboard = (props) => {
   const [parent] = useAutoAnimate();
 
   return (
-    <div className={className} ref={parent}>
-      {players.map((player, _) => (
-        <ItemRow {...player} showTeam={showTeam} key={player.Name} />
-      ))}
-    </div>
+    <>
+      <div className={className} ref={parent}>
+        {players.map((player, _) => (
+          <ItemRow {...player} showTeam={showTeam} key={player.Name} />
+        ))}
+      </div>
+    </>
   );
 };
 
@@ -104,9 +106,11 @@ export const TwoColumnScoreboard = (props) => {
   const [parent] = useAutoAnimate();
 
   return (
-    <div className="scoreboard sc-teamplay sc-two-columns" ref={parent}>
-      {rows}
-    </div>
+    <>
+      <div className="scoreboard sc-teamplay sc-two-columns" ref={parent}>
+        {rows}
+      </div>
+    </>
   );
 };
 
