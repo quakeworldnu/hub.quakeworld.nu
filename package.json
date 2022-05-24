@@ -22,7 +22,7 @@
     "npx": "npx"
   },
   "devDependencies": {
-    "browser-sync": "^2.27.9",
+    "browser-sync": "^2.27.10",
     "bs-html-injector": "^3.0.3",
     "prettier": "^2.6.2"
   },
@@ -33,7 +33,7 @@
     "@snowpack/plugin-dotenv": "^2.2.0",
     "@snowpack/plugin-react-refresh": "^2.5.0",
     "bulma": "^0.9.4",
-    "firebase-tools": "^10.9.2",
+    "firebase-tools": "^11.0.0",
     "formik": "^2.2.9",
     "gulp": "^4.0.2",
     "gulp-changed": "^4.0.3",
@@ -44,8 +44,8 @@
     "npm-run-all": "^4.1.5",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-redux": "^8.0.1",
-    "sass": "^1.51.0",
+    "react-redux": "^8.0.2",
+    "sass": "^1.52.1",
     "snowpack": "^3.8.8"
   }
 }
