@@ -32,6 +32,16 @@ export default createSlice({
         (s) => s.PlayerSlots.Used + s.SpectatorSlots.Used > 0
       );
 
+      // ignore [ServeMe]
+      for (let i = 0; i < servers.length; i++) {
+        const index = servers[i].SpectatorNames.indexOf("[ServeMe]");
+
+        if (index !== -1) {
+          servers[i].SpectatorNames.splice(index, 1);
+          servers[i].SpectatorSlots.Used--;
+        }
+      }
+
       // add meta data
       for (let i = 0; i < servers.length; i++) {
         servers[i].meta = metaByServer(servers[i]);
