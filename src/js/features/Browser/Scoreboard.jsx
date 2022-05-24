@@ -1,4 +1,5 @@
 import React from "react";
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { ColoredFrags, QuakeText } from "./Common";
 
 export const Scoreboard = (props) => {
@@ -52,10 +53,12 @@ export const OneColumnScoreboard = (props) => {
   let className = "scoreboard sc-one-column ";
   className += showTeam ? "sc-show-team" : "sc-hide-team";
 
+  const [parent] = useAutoAnimate()
+
   return (
-    <div className={className}>
-      {players.map((player, playerIndex) => (
-        <ItemRow {...player} showTeam={showTeam} key={playerIndex} />
+    <div className={className} ref={parent}>
+      {players.map((player, _) => (
+        <ItemRow {...player} showTeam={showTeam} key={player.Name} />
       ))}
     </div>
   );
@@ -86,8 +89,9 @@ export const TwoColumnScoreboard = (props) => {
   }
 
   const rows = items.map(itemToRow);
+  const [parent] = useAutoAnimate()
 
-  return <div className="scoreboard sc-teamplay sc-two-columns">{rows}</div>;
+  return <div className="scoreboard sc-teamplay sc-two-columns" ref={parent}>{rows}</div>;
 };
 
 const RightColumnRow = (props) => ItemRow({ ...props, showTeam: false });
