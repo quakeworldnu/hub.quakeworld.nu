@@ -1,5 +1,6 @@
 import { pluralize, stripNonAscii } from "./text";
 import { calcPlayerDisplay } from "./playerDisplay";
+import add from "@formkit/auto-animate";
 
 export const metaByServer = (server) => {
   let clientNames = server.Players.map((p) => p.Name) + server.SpectatorNames;
@@ -15,9 +16,14 @@ export const metaByServer = (server) => {
     .join(" ")
     .toLowerCase();
 
-  const addressTitle = stripNonAscii(
-    server.Settings.hostname || server.Address
-  ).trim();
+  let addressTitle
+
+  if ("hostname" in server.Settings) {
+    addressTitle = stripNonAscii(server.Settings.hostname).trim().replace(/ \(.+ vs. .+\)$/gm, "").trim();
+  } else {
+    addressTitle = server.Address
+  }
+
   const spectatorText = calcSpectatorText(spectatorNames);
 
   const isStarted = "Started" === server.Status;
