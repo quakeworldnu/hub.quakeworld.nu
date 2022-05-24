@@ -28,10 +28,6 @@ const BrowserTiles = (props) => {
   const { servers } = props;
   const [parent] = useAutoAnimate();
 
-  if (0 === servers.length) {
-    return null;
-  }
-
   return (
     <>
       <div className="app-grid" ref={parent}>
