@@ -81,8 +81,6 @@ const ServerMapshot = (props) => {
 
           <HiddenPlayers count={server.meta.playerDisplay.hidden} />
           <SpectatorText text={server.meta.spectatorText} />
-
-          {false && <pre>{JSON.stringify(server.meta.rows, null, 2)}</pre>}
         </div>
       </div>
     </div>
