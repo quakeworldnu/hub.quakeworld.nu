@@ -56,7 +56,11 @@ const ItemRow = (props) => {
     />
   );
 
-  return columns;
+  return (
+    <div className="sc-row" key={Name}>
+      {columns}
+    </div>
+  );
 };
 
 export const OneColumnScoreboard = (props) => {
@@ -103,25 +107,30 @@ export const TwoColumnScoreboard = (props) => {
   }
 
   const rows = items.map(itemToRow);
+  const leftColumn = [];
+  const rightColumn = [];
+  const columns = [leftColumn, rightColumn];
+
+  for (let i = 0; i < rows.length; i++) {
+    columns[i % 2].push(rows[i]);
+  }
+
   const [parent] = useAutoAnimate();
 
   return (
     <>
       <div className="scoreboard sc-teamplay sc-two-columns" ref={parent}>
-        {rows}
+        <div className="sc-column">{leftColumn}</div>
+        <div className="sc-column">{rightColumn}</div>
       </div>
     </>
   );
 };
 
-const RightColumnRow = (props) => ItemRow({ ...props, showTeam: false });
-const LeftColumnRow = (props) => RightColumnRow(props).reverse();
-
-const itemToRow = (item, itemIndex) => {
+const itemToRow = (item) => {
   if (null === item) {
     return [<div key="empty-1" />, <div key="empty-2" />];
   } else {
-    let formatFunc = 0 === itemIndex % 2 ? LeftColumnRow : RightColumnRow;
-    return formatFunc(item);
+    return ItemRow;
   }
 };

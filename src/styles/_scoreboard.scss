@@ -3,51 +3,48 @@ $spacer: .5rem;
 
 .scoreboard {
   display: grid;
-  column-gap: $spacer;
   color: white;
   font-size: .9rem;
   text-shadow: 1px -1px 0 black, -1px -1px 0 black, 1px 1px 0 black, -1px 1px 0 black;
-
-  > div {
-    display: block;
-  }
 }
 
 .scoreboard.sc-one-column {
-  &.sc-hide-team {
-    grid-template-columns: $frags-width 1fr;
+  &.sc-show-team .sc-row {
+    grid-template-columns: $frags-width auto 1fr;
   }
 
-  &.sc-show-team {
-    grid-template-columns: $frags-width auto 1fr;
+  &.sc-hide-team .sc-row {
+    grid-template-columns: $frags-width 1fr;
   }
 }
 
+.sc-row {
+  display: grid;
+  column-gap: $spacer;
+  align-items: center;
+}
+
 .scoreboard.sc-two-columns {
-  $column-count: 4;
+  grid-template-columns: 1fr 1fr;
+  column-gap: $spacer;
 
-  grid-template-columns: 1fr $frags-width $frags-width 1fr;
+  .sc-column:first-child .sc-row {
+    grid-template-columns: 1fr $frags-width;
 
-  > div {
-    &:nth-child(#{$column-count}n+1) {
+    .sc-name {
+      order: -1;
       text-align: right;
     }
   }
 
-  &.sc-teamplay > div:nth-child(n+1):nth-child(-n+#{$column-count}) {
+  .sc-column:last-child .sc-row {
+    grid-template-columns: $frags-width 1fr;
+  }
+
+  &.sc-teamplay .sc-row:first-child {
     margin-bottom: 1.5*$spacer;
-    font-weight: normal;
     font-size: 1.2em;
   }
-}
-
-.sc-name,
-.sc-frags {
-  font-weight: bold;
-}
-
-.sc-name {
-  text-align: left;
 }
 
 .sc-team,
@@ -56,5 +53,7 @@ $spacer: .5rem;
 }
 
 .sc-frags {
-  font-size: .8rem;
+  font-weight: bold;
+  font-size: .9em;
+  padding: 1px 0;
 }
