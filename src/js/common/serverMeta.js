@@ -27,6 +27,7 @@ export const metaByServer = (server) => {
     addressTitle,
     keywords,
     spectatorText,
+    spectatorCount: spectatorNames.length,
     statusText: statusTextByServer(server),
   };
 

@@ -18,9 +18,9 @@ export const compareServers = (a, b) => {
   }
 
   // spectator count
-  if (a.SpectatorSlots.Used > b.SpectatorSlots.Used) {
+  if (a.meta.spectatorCount > b.meta.spectatorCount) {
     return -1;
-  } else if (a.SpectatorSlots.Used < b.SpectatorSlots.Used) {
+  } else if (a.meta.spectatorCount < b.meta.spectatorCount) {
     return 1;
   }
 
