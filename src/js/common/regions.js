@@ -192,7 +192,6 @@ export const regions = {
     "PH",
     "TL",
     "QA",
-    "RU",
     "SA",
     "SG",
     "VN",
