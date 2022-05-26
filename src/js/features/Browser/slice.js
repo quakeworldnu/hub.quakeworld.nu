@@ -27,11 +27,6 @@ export default createSlice({
     updateServers: (state, action) => {
       let { servers } = action.payload;
 
-      // ignore servers without clients
-      servers = servers.filter(
-        (s) => s.PlayerSlots.Used + s.SpectatorSlots.Used > 0
-      );
-
       // ignore [ServeMe]
       for (let i = 0; i < servers.length; i++) {
         const index = servers[i].SpectatorNames.indexOf("[ServeMe]");
