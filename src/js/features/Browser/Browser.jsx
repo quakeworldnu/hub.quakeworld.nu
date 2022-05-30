@@ -6,6 +6,7 @@ import Overview from "./Overview";
 import { Server } from "./Server";
 import ServerDataSource from "./ServerDataSource";
 import { filterServers } from "../../common/filter";
+import Streams from "./Streams/Streams.jsx";
 
 const BrowserHeader = () => (
   <div className="my-3">
@@ -20,6 +21,8 @@ const BrowserHeader = () => (
         <Overview />
       </div>
     </div>
+
+    <Streams />
   </div>
 );
 

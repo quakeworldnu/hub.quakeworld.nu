@@ -1,7 +1,7 @@
 import storage from "../../common/storage";
 import { createSlice } from "@reduxjs/toolkit";
 import { metaByServer } from "../../common/serverMeta";
-import { compareServers, sortByProp } from "../../common/sort";
+import { compareServers } from "../../common/sort";
 
 const getDefaultUiState = () => ({
   favorites: {
@@ -20,6 +20,19 @@ const getInitialState = () => ({
   servers: [],
 });
 
+const newStream = (player, channel, title) => ({
+  player,
+  channel,
+  title,
+  url: `https://www.twitch.tv/${channel}`,
+});
+
+let twitchStreams = [
+  newStream("twitch.tv/vikpe", "vikpe"),
+  newStream("bps", "bps__"),
+  newStream("suddendeathTV", "suddendeathTV"),
+];
+
 export default createSlice({
   name: "form",
   initialState: getInitialState(),
@@ -35,6 +48,24 @@ export default createSlice({
           servers[i].SpectatorNames.splice(index, 1);
           servers[i].SpectatorSlots.Used--;
         }
+      }
+
+      // twitch streams
+      for (let i = 0; i < servers.length; i++) {
+        let serverStreams = [];
+
+        twitchStreams.forEach((stream) => {
+          if (
+            servers[i].SpectatorNames.includes(stream.player) ||
+            servers[i].QtvStream.SpectatorNames.includes(stream.player)
+          ) {
+            serverStreams = serverStreams.concat(
+              newStream(stream.player, stream.channel, servers[i].Title)
+            );
+          }
+        });
+
+        servers[i].streams = serverStreams;
       }
 
       // add meta data

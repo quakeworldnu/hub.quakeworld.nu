@@ -143,8 +143,9 @@ const SpectatorButtons = (props) => {
             )}
           </a>
         </div>
-        <div className="column">
-          {server.QtvStream.Address !== "" && (
+
+        {server.QtvStream.Address !== "" && (
+          <div className="column">
             <a
               href={`qw://${server.QtvStream.Url}/qtvplay`}
               className="button is-fullwidth is-small is-dark"
@@ -156,8 +157,27 @@ const SpectatorButtons = (props) => {
                 </span>
               )}
             </a>
-          )}
-        </div>
+          </div>
+        )}
+
+        {server.streams.length > 0 &&
+          server.streams.map((stream) => (
+            <div className="column" key={stream.channel}>
+              <a
+                href={stream.url}
+                className="button is-fullwidth is-small is-dark"
+              >
+                <img
+                  src={`/assets/img/icons/twitch_glitch_purple.svg`}
+                  width="16"
+                  height="16"
+                  className="mx-2"
+                />
+                {stream.channel}
+              </a>
+            </div>
+          ))}
+
       </div>
     </div>
   );
@@ -169,7 +189,8 @@ const ServerFooter = (props) => {
     <div className="server-footer p-3">
       <SpectatorButtons server={server} />
 
-      <div className="columns is-mobile is-vcentered app-text-small is-multiline">
+      <div
+        className="columns is-mobile is-vcentered app-text-small is-multiline">
         <div className="column">
           <div
             className="server-address"
