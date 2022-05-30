@@ -1,3 +1,4 @@
+// pulse
 @keyframes pulse {
   $scale-min: 1.0;
   $scale-max: 1.4;
@@ -22,12 +23,13 @@
   display: inline-block;
 }
 
+// blur
 @keyframes blur {
   from {
     filter: none;
   }
 
-  50% {
+  33% {
     filter: blur(3px)
   }
 
