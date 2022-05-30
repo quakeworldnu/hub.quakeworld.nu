@@ -1,6 +1,5 @@
 import { pluralize, stripNonAscii } from "./text";
 import { calcPlayerDisplay } from "./playerDisplay";
-import add from "@formkit/auto-animate";
 
 export const metaByServer = (server) => {
   let clientNames = server.Players.map((p) => p.Name) + server.SpectatorNames;
