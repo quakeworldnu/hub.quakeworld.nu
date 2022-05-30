@@ -56,12 +56,12 @@ const Stream = (props) => {
           className="mr-2"
         />
 
-        <span className="mr-2">
+        <span className="mr-4">
           <strong>{stream.channel}</strong>
         </span>
 
-        <small className="app-dim app-text-smaller">
-          &nbsp; {stream.title}
+        <small className="app-dim app-text-smaller animation-blur">
+          {stream.title}
         </small>
       </a>
     </div>
