@@ -25,8 +25,8 @@ const ServerHeader = (props) => {
     <div className="server-header">
       <div className="is-flex is-justify-content-space-between p-3">
         <div>
-          <strong className="has-text-white">{server.Mode}</strong> on{" "}
-          <strong className="has-text-white">{server.Settings.map}</strong>
+          <strong className="has-text-white animation-blur" key={server.Mode}>{server.Mode}</strong> on{" "}
+          <strong className="has-text-white animation-blur" key={server.Settings.map}>{server.Settings.map}</strong>
           <div className="app-text-small">
             <span className="server-status mr-1">
               {["Started", "Countdown"].includes(server.Status) && (

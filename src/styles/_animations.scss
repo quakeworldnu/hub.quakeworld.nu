@@ -24,3 +24,24 @@
   animation-duration: 500ms;
   display: inline-block;
 }
+
+@keyframes blur {
+  from {
+    filter: none;
+  }
+
+  50% {
+    filter: blur(3px)
+  }
+
+  to {
+    filter: none;
+  }
+}
+
+.animation-blur {
+  animation-name: blur;
+  animation-timing-function: ease-in-out;
+  animation-duration: 500ms;
+  display: inline-block;
+}
