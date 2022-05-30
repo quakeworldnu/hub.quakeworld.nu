@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import browserSlice from "./slice";
 import Filters from "./Filters";
 import Overview from "./Overview";
 import { Server } from "./Server";
@@ -58,10 +57,7 @@ const mapStateToProps = (state) => ({
     state.browser.ui.favorites.servers
   ),
 });
-const mapDispatchToProps = {
-  updateServers: browserSlice.actions.updateServers,
-};
 
-const BrowserComponent = connect(mapStateToProps, mapDispatchToProps)(Browser);
+const BrowserComponent = connect(mapStateToProps)(Browser);
 
 export default BrowserComponent;
