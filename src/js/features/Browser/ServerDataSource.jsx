@@ -32,7 +32,7 @@ class ServerDataSource extends React.Component {
         .then((servers) => this.props.updateServers({ servers }));
     };
 
-    const refreshInterval = 4.9 * 1000; // seconds
+    const refreshInterval = 2.9 * 1000; // seconds
     this.timeout = window.setInterval(fetchAndupdateServers, refreshInterval);
 
     fetchAndupdateServers();
