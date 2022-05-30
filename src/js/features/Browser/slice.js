@@ -29,8 +29,8 @@ const newStream = (player, channel, title) => ({
 
 let twitchStreams = [
   newStream("twitch.tv/vikpe", "vikpe"),
-  newStream("bps", "bps__"),
-  newStream("suddendeathTV", "suddendeathTV"),
+  //newStream("bps", "bps__"),
+  //newStream("suddendeathTV", "suddendeathTV"),
 ];
 
 export default createSlice({
