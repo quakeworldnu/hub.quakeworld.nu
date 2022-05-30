@@ -4,17 +4,14 @@
 
   from {
     transform: scale3d($scale-min, $scale-min, $scale-min);
-    //filter: none;
   }
 
   50% {
     transform: scale3d($scale-max, $scale-max, $scale-max);
-    //filter: blur(3px)
   }
 
   to {
     transform: scale3d($scale-min, $scale-min, $scale-min);
-    //filter: none;
   }
 }
 
@@ -43,5 +40,6 @@
   animation-name: blur;
   animation-timing-function: ease-in-out;
   animation-duration: 500ms;
+  animation-delay: 1s;
   display: inline-block;
 }
