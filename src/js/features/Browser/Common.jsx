@@ -22,7 +22,9 @@ export const ColoredFrags = (props) => {
     <TagName
       className={`sc-frags server-frags qw-bgcolor-${colors[0]}-${colors[1]}`}
     >
-      <span className="animation-pulse" key={frags}>{frags}</span>
+      <span className="animation-pulse" key={frags}>
+        {frags}
+      </span>
     </TagName>
   );
 };
