@@ -44,7 +44,7 @@ const ServerHeader = (props) => {
         </div>
         {server.PlayerSlots.Free > 0 && (
           <a href={`qw://${server.Address}/`} className="button is-primary">
-            Join
+            Play
           </a>
         )}
       </div>
