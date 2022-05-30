@@ -1,10 +1,20 @@
 import React from "react";
 
 import { connect } from "react-redux";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
+
+const sortStreams = (a, b) => {
+  let aLow = a.channel.toLowerCase();
+  let bLow = b.channel.toLowerCase();
+  if (aLow < bLow) {
+    return -1;
+  } else if (aLow > bLow) return 1;
+  return 0;
+};
 
 export const Streams = (props) => {
+  const [parent] = useAutoAnimate();
   const { servers } = props;
-
   let streams = [];
 
   servers.forEach((server) => {
@@ -14,10 +24,16 @@ export const Streams = (props) => {
   });
 
   streams = Array.from(new Set(streams));
+  streams.sort(sortStreams);
 
   return (
     <>
-      <StreamList streams={streams} />
+      <div className="columns is-vcentered" ref={parent}>
+        {streams.length > 0 &&
+          streams.map((stream) => (
+            <Stream key={stream.channel} stream={stream} />
+          ))}
+      </div>
     </>
   );
 };
@@ -27,27 +43,11 @@ const StreamsComponent = connect(mapStateToProps)(Streams);
 
 export default StreamsComponent;
 
-const StreamList = (props) => {
-  const { streams } = props;
-
-  if (0 === streams.length) {
-    return <></>;
-  }
-
-  return (
-    <div className="columns is-vcentered mb-5 is-multiline">
-      {streams.map((stream) => (
-        <Stream key={stream.channel} stream={stream} />
-      ))}
-    </div>
-  );
-};
-
 const Stream = (props) => {
   const { stream } = props;
 
   return (
-    <div className="column is-narrow">
+    <div className="column is-narrow mb-5">
       <a className="button is-dark is-large" href={stream.url}>
         <img
           src={`/assets/img/icons/twitch_glitch_purple.svg`}

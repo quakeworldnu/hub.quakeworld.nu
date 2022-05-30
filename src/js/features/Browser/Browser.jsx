@@ -9,8 +9,6 @@ import { filterServers } from "../../common/filter";
 import Streams from "./Streams/Streams.jsx";
 
 const BrowserHeader = () => {
-  const [parent] = useAutoAnimate()
-
   return (
     <div className="my-3">
       <div className="columns is-mobile is-vcentered is-multiline">
@@ -25,10 +23,10 @@ const BrowserHeader = () => {
         </div>
       </div>
 
-      <Streams ref={parent} />
+      <Streams />
     </div>
   );
-}
+};
 
 const BrowserTiles = (props) => {
   const { servers } = props;

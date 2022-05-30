@@ -177,7 +177,6 @@ const SpectatorButtons = (props) => {
               </a>
             </div>
           ))}
-
       </div>
     </div>
   );
@@ -189,8 +188,7 @@ const ServerFooter = (props) => {
     <div className="server-footer p-3">
       <SpectatorButtons server={server} />
 
-      <div
-        className="columns is-mobile is-vcentered app-text-small is-multiline">
+      <div className="columns is-mobile is-vcentered app-text-small is-multiline">
         <div className="column">
           <div
             className="server-address"
