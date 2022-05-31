@@ -8,7 +8,7 @@ import ServerDataSource from "./ServerDataSource";
 import { filterServers } from "../../common/filter";
 import Streams from "./Streams/Streams.jsx";
 
-const BrowserHeader = () => {
+const BrowserHeader = React.memo(() => {
   return (
     <div className="my-3">
       <div className="columns is-mobile is-vcentered is-multiline">
@@ -26,7 +26,7 @@ const BrowserHeader = () => {
       <Streams />
     </div>
   );
-};
+});
 
 const BrowserTiles = (props) => {
   const { servers } = props;
