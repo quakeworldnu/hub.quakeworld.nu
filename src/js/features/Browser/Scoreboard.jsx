@@ -134,9 +134,9 @@ export const TwoColumnScoreboard = (props) => {
   );
 };
 
-const itemToRow = (item) => {
+const itemToRow = (item, index) => {
   if (null === item) {
-    return <div className="sc-row" key="empty" />;
+    return <div className="sc-row" key={`empty-${index}`} />;
   } else {
     return ItemRow(item);
   }
