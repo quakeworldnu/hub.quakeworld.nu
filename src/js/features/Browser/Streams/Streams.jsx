@@ -30,14 +30,13 @@ export const Streams = (props) => {
   return (
     <>
       <div className="columns is-multiline is-mobile mb-4" ref={parent}>
-        {streams.length > 0 &&
-          streams.map((stream) => (
-            <Stream
-              key={stream.channel}
-              channel={stream.channel}
-              title={stream.title}
-            />
-          ))}
+        {streams.map((stream) => (
+          <Stream
+            key={stream.channel}
+            channel={stream.channel}
+            title={stream.title}
+          />
+        ))}
       </div>
     </>
   );
