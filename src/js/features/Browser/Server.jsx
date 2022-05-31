@@ -4,6 +4,7 @@ import { Scoreboard } from "./Scoreboard";
 import { QuakeText } from "./Common";
 import { copyToClipboard } from "../../common/clipboard";
 import { pluralize } from "../../common/text.js";
+import { TextBlur } from "../Animations/Text.jsx";
 
 const ServerProgress = (props) => {
   const { value, max } = props;
@@ -25,15 +26,12 @@ const ServerHeader = (props) => {
     <div className="server-header">
       <div className="is-flex is-justify-content-space-between p-3">
         <div>
-          <strong className="has-text-white animation-blur" key={server.Mode}>
-            {server.Mode}
+          <strong className="has-text-white">
+            <TextBlur key="mode" value={server.Mode} />
           </strong>{" "}
           on{" "}
-          <strong
-            className="has-text-white animation-blur"
-            key={server.Settings.map}
-          >
-            {server.Settings.map}
+          <strong className="has-text-white">
+            <TextBlur key="map" value={server.Settings.map} />
           </strong>
           <div className="app-text-small">
             <span className="server-status mr-1">

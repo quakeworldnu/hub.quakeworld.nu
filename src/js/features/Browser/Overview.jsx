@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { TextBlur } from "../Animations/Text.jsx";
 
 const mapStateToProps = (state) => ({ servers: state.browser.servers });
 
@@ -24,10 +25,10 @@ const Overview = (props) => {
 
   return (
     <div className="app-text-small" id="app-overview">
-      <span className="animation-blur">{clientCount}</span> clients (
-      <span className="animation-blur">{playerCount}</span> players,{" "}
-      <span className="animation-blur">{spectatorCount}</span> spectators)
-      across <span className="animation-blur">{serverCount}</span> servers
+      <TextBlur key="clientCount" value={clientCount} /> clients (
+      <TextBlur key="playerCount" value={playerCount} /> players,{" "}
+      <TextBlur key="spectatorCount" value={spectatorCount} /> spectators)
+      across <TextBlur key="serverCount" value={serverCount} /> servers
     </div>
   );
 };

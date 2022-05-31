@@ -1,5 +1,6 @@
 import React from "react";
 import { quakeTextToHtml } from "../../common/text";
+import { TextPulse } from "../Animations/Text.jsx";
 
 export const QuakeText = (props) => {
   const { text, tag, color, className } = props;
@@ -22,9 +23,7 @@ export const ColoredFrags = (props) => {
     <TagName
       className={`sc-frags server-frags qw-bgcolor-${colors[0]}-${colors[1]}`}
     >
-      <span className="animation-pulse" key={frags}>
-        {frags}
-      </span>
+      <TextPulse key="frags" value={frags} />
     </TagName>
   );
 };

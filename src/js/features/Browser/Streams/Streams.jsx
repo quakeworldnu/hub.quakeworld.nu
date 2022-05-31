@@ -2,6 +2,7 @@ import React from "react";
 
 import { connect } from "react-redux";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { TextBlur } from "./../../Animations/Text.jsx";
 
 const sortStreams = (a, b) => {
   let aLow = a.channel.toLowerCase();
@@ -60,8 +61,8 @@ const Stream = (props) => {
           <strong>{stream.channel}</strong>
         </span>
 
-        <small className="app-dim app-text-smaller animation-blur">
-          {stream.title}
+        <small className="app-dim app-text-smaller">
+          <TextBlur key="title" value={stream.title} />
         </small>
       </a>
     </div>
