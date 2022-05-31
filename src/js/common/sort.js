@@ -3,34 +3,10 @@ export const compareServers = (a, b) => {
   // 1 = b
   // 0 = unchanged
 
-  // tag
-  const currentHasMatchtag = "matchtag" in a.Settings;
-  const otherHasMatchtag = "matchtag" in b.Settings;
-
-  if (currentHasMatchtag && !otherHasMatchtag) {
+  // score
+  if (a.meta.score > b.meta.score) {
     return -1;
-  } else if (!currentHasMatchtag && otherHasMatchtag) {
-    return 1;
-  }
-
-  // player count
-  if (a.PlayerSlots.Used > b.PlayerSlots.Used) {
-    return -1;
-  } else if (a.PlayerSlots.Used < b.PlayerSlots.Used) {
-    return 1;
-  }
-
-  // spectator count
-  if (a.meta.spectatorCount > b.meta.spectatorCount) {
-    return -1;
-  } else if (a.meta.spectatorCount < b.meta.spectatorCount) {
-    return 1;
-  }
-
-  // is started
-  if (a.meta.isStarted && !b.meta.isStarted) {
-    return -1;
-  } else if (!a.meta.isStarted && b.meta.isStarted) {
+  } else if (a.meta.score < b.meta.score) {
     return 1;
   }
 

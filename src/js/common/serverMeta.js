@@ -4,8 +4,7 @@ import { calcPlayerDisplay } from "./playerDisplay";
 export const metaByServer = (server) => {
   let clientNames = server.Players.map((p) => p.Name) + server.SpectatorNames;
   let spectatorNames = server.SpectatorNames.concat(
-    server.QtvStream.SpectatorNames
-  );
+    server.QtvStream.SpectatorNames);
   let keywords = [server.Mode, server.Settings.map]
     .concat(clientNames)
     .concat(spectatorNames);
@@ -36,6 +35,7 @@ export const metaByServer = (server) => {
     keywords,
     spectatorText,
     spectatorCount: spectatorNames.length,
+    score: 2 * spectatorNames.length + server.Players.length,
     statusText: statusTextByServer(server),
   };
 
@@ -75,8 +75,7 @@ const statusTextByServer = (server) => {
 
   if (isFfa || isRace) {
     status.push(
-      `${server.PlayerSlots.Used} of ${server.PlayerSlots.Total} players`
-    );
+      `${server.PlayerSlots.Used} of ${server.PlayerSlots.Total} players`);
 
     if (isFfa) {
       status.push(gameTimeProgress(server.Time.Remaining));
@@ -85,11 +84,8 @@ const statusTextByServer = (server) => {
     if ("Standby" === server.Status) {
       if (server.PlayerSlots.Free > 0) {
         status.push(
-          `Waiting for ${server.PlayerSlots.Free} ${pluralize(
-            "player",
-            server.PlayerSlots.Free
-          )}`
-        );
+          `Waiting for ${server.PlayerSlots.Free} ${pluralize("player",
+            server.PlayerSlots.Free)}`);
       } else {
         status.push("Waiting for players to ready up");
       }
