@@ -6,7 +6,7 @@ import { copyToClipboard } from "../../common/clipboard";
 import { pluralize } from "../../common/text.js";
 import { TextBlur } from "../Animations/Text.jsx";
 
-const ServerProgress = (props) => {
+const ServerProgress = React.memo((props) => {
   const { value, max } = props;
 
   const progress = 100 * (value / max);
@@ -17,7 +17,7 @@ const ServerProgress = (props) => {
       <div className="server-progress-bar" style={{ width }} />
     </div>
   );
-};
+});
 
 const ServerHeader = (props) => {
   const { server } = props;
@@ -94,7 +94,7 @@ const ServerMapshot = (props) => {
   );
 };
 
-const HiddenPlayers = (props) => {
+const HiddenPlayers = React.memo((props) => {
   const { count } = props;
 
   if (0 === count) {
@@ -106,9 +106,9 @@ const HiddenPlayers = (props) => {
       +{count} {pluralize("player", count)}
     </div>
   );
-};
+});
 
-const SpectatorText = (props) => {
+const SpectatorText = React.memo((props) => {
   const { text } = props;
 
   if ("" === text) {
@@ -121,7 +121,8 @@ const SpectatorText = (props) => {
       <QuakeText tag="span" text={text} />
     </div>
   );
-};
+});
+
 const SpectatorButtons = (props) => {
   const { server } = props;
 
