@@ -1,11 +1,8 @@
 import React from "react";
-import { connect } from "react-redux";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
 import Filters from "./Filters";
 import Overview from "./Overview";
-import { Server } from "./Server";
 import ServerDataSource from "./ServerDataSource";
-import { filterServers } from "../../common/filter";
+import ServerTiles from "./ServerTiles.jsx";
 import Streams from "./Streams/Streams.jsx";
 
 const BrowserHeader = React.memo(() => {
@@ -28,41 +25,12 @@ const BrowserHeader = React.memo(() => {
   );
 });
 
-const BrowserTiles = (props) => {
-  const { servers } = props;
-  const [parent] = useAutoAnimate();
+export const Browser = () => (
+  <>
+    <ServerDataSource />
+    <BrowserHeader />
+    <ServerTiles />
+  </>
+)
 
-  return (
-    <>
-      <div className="app-grid" ref={parent}>
-        {servers.map((server) => (
-          <Server key={server.Address} server={server} />
-        ))}
-      </div>
-    </>
-  );
-};
-
-const Browser = (props) => {
-  const { servers } = props;
-
-  return (
-    <>
-      <ServerDataSource />
-      <BrowserHeader />
-      <BrowserTiles servers={servers} />
-    </>
-  );
-};
-
-const mapStateToProps = (state) => ({
-  servers: filterServers(
-    state.browser.servers,
-    state.browser.ui.filters,
-    state.browser.ui.favorites.servers
-  ),
-});
-
-const BrowserComponent = connect(mapStateToProps)(Browser);
-
-export default BrowserComponent;
+export default Browser;
