@@ -9,11 +9,7 @@ export const TextPulse = React.memo((props) =>
 );
 
 export const TextAnimation = (props) => {
-  const { key, value, name } = props;
+  const { value, name } = props;
 
-  return (
-    <span className={`animation-${name}`} key={`${key}-${value}`}>
-      {value}
-    </span>
-  );
+  return <span className={`animation-${name}`}>{value}</span>;
 };
