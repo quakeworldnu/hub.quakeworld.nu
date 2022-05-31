@@ -172,13 +172,11 @@ const SpectatorButtons = (props) => {
           </div>
         )}
 
-        {server.streams.map(
-          stream => (
-            <div className="column" key={stream.channel}>
-              <StreamButton channel={stream.channel} />
-            </div>
-          )
-        )}
+        {server.streams.map((stream) => (
+          <div className="column" key={stream.channel}>
+            <StreamButton channel={stream.channel} />
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -186,13 +184,10 @@ const SpectatorButtons = (props) => {
 
 const StreamButton = React.memo((props) => {
   const { channel } = props;
-  const url = `https://twitch.tv/${channel}`
+  const url = `https://twitch.tv/${channel}`;
 
   return (
-    <a
-      href={url}
-      className="button is-fullwidth is-small is-dark"
-    >
+    <a href={url} className="button is-fullwidth is-small is-dark">
       <img
         src={`/assets/img/icons/twitch_glitch_purple.svg`}
         width="16"
@@ -202,7 +197,7 @@ const StreamButton = React.memo((props) => {
       />
       {channel}
     </a>
-  )
+  );
 });
 
 const ServerFooter = (props) => {
@@ -212,8 +207,7 @@ const ServerFooter = (props) => {
     <div className="server-footer p-3">
       <SpectatorButtons server={server} />
 
-      <div
-        className="columns is-mobile is-vcentered app-text-small is-multiline">
+      <div className="columns is-mobile is-vcentered app-text-small is-multiline">
         <div className="column">
           <div
             className="server-address"

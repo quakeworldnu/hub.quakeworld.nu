@@ -31,6 +31,6 @@ export const Browser = () => (
     <BrowserHeader />
     <ServerTiles />
   </>
-)
+);
 
 export default Browser;
