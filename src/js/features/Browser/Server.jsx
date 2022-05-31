@@ -186,16 +186,17 @@ const ServerFooter = (props) => {
     <div className="server-footer p-3">
       <SpectatorButtons server={server} />
 
-      <div
-        className="columns is-mobile is-vcentered app-text-small is-multiline">
+      <div className="columns is-mobile is-vcentered app-text-small is-multiline">
         <div className="column">
           <div
             className="server-address"
             onClick={() => copyToClipboard(server.Address)}
             title="Copy IP to clipboard"
           >
-            <ServerAddressTitle cc={server.Geo.CC}
-                                title={server.meta.addressTitle} />
+            <ServerAddressTitle
+              cc={server.Geo.CC}
+              title={server.meta.addressTitle}
+            />
             <img
               src="/assets/img/icons/content_paste.svg"
               width="12"
@@ -203,46 +204,44 @@ const ServerFooter = (props) => {
             />
           </div>
         </div>
-        {server.Settings.ktxver &&
-          <KtxVersion version={server.Settings.ktxver} />}
+        {server.Settings.ktxver && (
+          <KtxVersion version={server.Settings.ktxver} />
+        )}
       </div>
     </div>
   );
 };
 
-const ServerAddressTitle = React.memo(props => {
+const ServerAddressTitle = React.memo((props) => {
   const { cc, title } = props;
 
   return (
     <span className="server-address-title">
-    {cc && (
-      <React.Fragment>
-        <img
-          src={`https://badplace.eu/images/icons/flags/${cc.toLowerCase()}.png`}
-          width="16"
-          height="11"
-          style={{ maxHeight: "11px" }}
-          alt={cc}
-        />
-        &nbsp;
-      </React.Fragment>
-    )}
+      {cc && (
+        <React.Fragment>
+          <img
+            src={`https://badplace.eu/images/icons/flags/${cc.toLowerCase()}.png`}
+            width="16"
+            height="11"
+            style={{ maxHeight: "11px" }}
+            alt={cc}
+          />
+          &nbsp;
+        </React.Fragment>
+      )}
       {title}
     </span>
-  )
-})
+  );
+});
 
-const KtxVersion = React.memo(props => {
-  const { version } = props
+const KtxVersion = React.memo((props) => {
+  const { version } = props;
   return (
-    <div
-      className="column is-narrow server-version"
-      title={`KTX ${version}`}
-    >
+    <div className="column is-narrow server-version" title={`KTX ${version}`}>
       KTX {version}
     </div>
-  )
-})
+  );
+});
 
 const getModifiers = (server) => {
   const modifiers = ["server-wrapper"];

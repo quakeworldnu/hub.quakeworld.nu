@@ -78,7 +78,11 @@ export const OneColumnScoreboard = (props) => {
     <>
       <div className={className} ref={parent}>
         {players.map((player, _) => (
-          <ItemRow {...player} showTeam={showTeam} key={`${player.NameColor}-${player.Name}`} />
+          <ItemRow
+            {...player}
+            showTeam={showTeam}
+            key={`${player.NameColor}-${player.Name}`}
+          />
         ))}
       </div>
     </>

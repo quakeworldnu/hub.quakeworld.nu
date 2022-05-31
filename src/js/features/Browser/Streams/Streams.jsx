@@ -32,7 +32,11 @@ export const Streams = (props) => {
       <div className="columns is-multiline is-mobile mb-4" ref={parent}>
         {streams.length > 0 &&
           streams.map((stream) => (
-            <Stream key={stream.channel} channel={stream.channel} title={stream.title} />
+            <Stream
+              key={stream.channel}
+              channel={stream.channel}
+              title={stream.title}
+            />
           ))}
       </div>
     </>
@@ -49,7 +53,10 @@ const Stream = React.memo((props) => {
 
   return (
     <div className="column is-narrow">
-      <a className="button is-fullwidth is-dark p-3" href={`https://twitch.tv/${channel}`}>
+      <a
+        className="button is-fullwidth is-dark p-3"
+        href={`https://twitch.tv/${channel}`}
+      >
         <img
           src={`/assets/img/icons/twitch_glitch_purple.svg`}
           width="16"
@@ -61,7 +68,10 @@ const Stream = React.memo((props) => {
           <strong>{channel}</strong>
         </span>
 
-        <span className="app-dim-light is-hidden-mobile" style={{fontSize: "13px"}}>
+        <span
+          className="app-dim-light is-hidden-mobile"
+          style={{ fontSize: "13px" }}
+        >
           <TextBlur key="title" value={title} />
         </span>
       </a>
