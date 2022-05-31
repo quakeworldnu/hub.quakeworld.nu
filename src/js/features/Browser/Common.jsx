@@ -2,7 +2,7 @@ import React from "react";
 import { quakeTextToHtml } from "../../common/text";
 import { TextPulse } from "../Animations/Text.jsx";
 
-export const QuakeText = (props) => {
+export const QuakeText = React.memo((props) => {
   const { text, tag, color, className } = props;
   const TagName = `${tag}`;
   const textAsHtml = color ? quakeTextToHtml(text, color) : text;
@@ -13,9 +13,9 @@ export const QuakeText = (props) => {
       dangerouslySetInnerHTML={{ __html: textAsHtml }}
     />
   );
-};
+});
 
-export const ColoredFrags = (props) => {
+export const ColoredFrags = React.memo((props) => {
   const { tag, frags, colors } = props;
   const TagName = `${tag}`;
 
@@ -26,4 +26,4 @@ export const ColoredFrags = (props) => {
       <TextPulse key="frags" value={frags} />
     </TagName>
   );
-};
+});
