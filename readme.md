@@ -7,9 +7,7 @@
   * Website (HTML): Jekyll + Bulma (front-end framework)
   * JavaScript app: es6/react/redux
     
-* **Data source**:
-  * **Proxied** (bypass CORS issues): https://api.allorigins.win/raw?url=https://badplace.eu/api/v2/serverbrowser/busy?[CACHE_BUST_KEY]
-  * **Original**: https://badplace.eu/api/v2/serverbrowser/busy
+* **Data source**: `https://metaqtv.quake.se/v2/`
 
 ---
 
