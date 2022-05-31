@@ -57,7 +57,7 @@ const ItemRow = (props) => {
   );
 
   const keyPrefix = "Players" in props ? "team" : "player";
-  const key = `${keyPrefix}-${Name}`;
+  const key = `${keyPrefix}-${NameColor}-${Name}`;
 
   return (
     <div className="sc-row" key={key}>
