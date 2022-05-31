@@ -29,7 +29,7 @@ export const Streams = (props) => {
 
   return (
     <>
-      <div className="columns is-vcentered" ref={parent}>
+      <div className="columns is-multiline is-mobile mb-4" ref={parent}>
         {streams.length > 0 &&
           streams.map((stream) => (
             <Stream key={stream.channel} stream={stream} />
@@ -48,8 +48,8 @@ const Stream = (props) => {
   const { stream } = props;
 
   return (
-    <div className="column is-narrow mb-5">
-      <a className="button is-dark py-5 p-3" href={stream.url}>
+    <div className="column is-narrow">
+      <a className="button is-fullwidth is-dark p-3" href={stream.url}>
         <img
           src={`/assets/img/icons/twitch_glitch_purple.svg`}
           width="16"
@@ -61,7 +61,7 @@ const Stream = (props) => {
           <strong>{stream.channel}</strong>
         </span>
 
-        <span className="app-dim-light" style={{fontSize: "13px"}}>
+        <span className="app-dim-light is-hidden-mobile" style={{fontSize: "13px"}}>
           <TextBlur key="title" value={stream.title} />
         </span>
       </a>
