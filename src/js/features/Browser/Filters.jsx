@@ -37,6 +37,7 @@ const FilterForm = (props) => {
             </div>
             <div className="control is-expanded">
               <Field
+                autoFocus
                 type="search"
                 className="input"
                 name="query"
