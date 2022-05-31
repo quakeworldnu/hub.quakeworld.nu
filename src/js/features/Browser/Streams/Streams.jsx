@@ -47,8 +47,6 @@ export default StreamsComponent;
 const Stream = React.memo((props) => {
   const { channel, title } = props;
 
-  console.log("Stream.render()", props);
-
   return (
     <div className="column is-narrow">
       <a className="button is-fullwidth is-dark p-3" href={`https://twitch.tv/${channel}`}>
