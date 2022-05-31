@@ -24,8 +24,10 @@ const Overview = (props) => {
 
   return (
     <div className="app-text-small" id="app-overview">
-      {clientCount} clients ({playerCount} players, {spectatorCount} spectators)
-      across {serverCount} servers
+      <span className="animation-blur">{clientCount}</span> clients (
+      <span className="animation-blur">{playerCount}</span> players,{" "}
+      <span className="animation-blur">{spectatorCount}</span> spectators)
+      across <span className="animation-blur">{serverCount}</span> servers
     </div>
   );
 };
