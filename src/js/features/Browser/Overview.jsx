@@ -17,7 +17,7 @@ const Overview = (props) => {
     spectatorCount += server.SpectatorSlots.Used;
 
     if ("" !== server.QtvStream.Address) {
-      spectatorCount += server.QtvStream.NumSpectators;
+      spectatorCount += server.QtvStream.SpectatorCount;
     }
   }
 

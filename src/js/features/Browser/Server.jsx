@@ -149,9 +149,9 @@ const SpectatorButtons = (props) => {
               className="button is-fullwidth is-small is-dark"
             >
               QTV
-              {server.QtvStream.NumSpectators > 0 && (
+              {server.QtvStream.SpectatorCount > 0 && (
                 <span className="ml-1 app-dim">
-                  ({server.QtvStream.NumSpectators})
+                  ({server.QtvStream.SpectatorCount})
                 </span>
               )}
             </a>
