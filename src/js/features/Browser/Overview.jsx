@@ -21,18 +21,25 @@ const Overview = (props) => {
     }
   }
 
-  const clientCount = playerCount + spectatorCount;
-
   return (
-    <div className="app-text-small" id="app-overview">
-      <TextBlur key="clientCount" value={clientCount} /> clients (
-      <TextBlur key="playerCount" value={playerCount} /> players,{" "}
-      <TextBlur key="spectatorCount" value={spectatorCount} /> spectators)
-      across <TextBlur key="serverCount" value={serverCount} /> servers
-    </div>
+    <OverviewStats players={playerCount} spectators={spectatorCount}
+                   servers={serverCount} />
   );
 };
 
 const OverviewComponent = connect(mapStateToProps)(Overview);
 
 export default OverviewComponent;
+
+const OverviewStats = React.memo(props => {
+  const { players, spectators, servers } = props
+
+  return (
+    <div className="app-text-small" id="app-overview">
+      <TextBlur key="clients" value={players + spectators} /> clients (
+      <TextBlur key="players" value={players} /> players,{" "}
+      <TextBlur key="spectators" value={spectators} /> spectators)
+      across <TextBlur key="servers" value={servers} /> servers
+    </div>
+  );
+})
