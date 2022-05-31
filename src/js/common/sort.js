@@ -1,5 +1,3 @@
-import { current } from "@reduxjs/toolkit";
-
 export const compareServers = (a, b) => {
   // -1 = a
   // 1 = b
