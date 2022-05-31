@@ -25,29 +25,12 @@ const ServerHeader = (props) => {
   return (
     <div className="server-header">
       <div className="is-flex is-justify-content-space-between p-3">
-        <div>
-          <strong className="has-text-white">
-            <TextBlur key="mode" value={server.Mode} />
-          </strong>{" "}
-          on{" "}
-          <strong className="has-text-white">
-            <TextBlur key="map" value={server.Settings.map} />
-          </strong>
-          <div className="app-text-small">
-            <span className="server-status mr-1">
-              {["Started", "Countdown"].includes(server.Status) && (
-                <span className="tag is-danger">LIVE</span>
-              )}{" "}
-              {"Standby" === server.Status && (
-                <div className="indicator-waiting-container">
-                  <div className="indicator-waiting" />
-                </div>
-              )}
-            </span>
-
-            <span>{server.meta.statusText}</span>
-          </div>
-        </div>
+        <ServerStatus
+          mode={server.Mode}
+          map={server.Settings.map}
+          status={server.Status}
+          statusText={server.meta.statusText}
+        />
         {server.PlayerSlots.Free > 0 && (
           <a href={`qw://${server.Address}/`} className="button is-primary">
             Play
@@ -61,6 +44,36 @@ const ServerHeader = (props) => {
     </div>
   );
 };
+
+const ServerStatus = React.memo((props) => {
+  const { mode, map, status, statusText } = props;
+
+  return (
+    <div>
+      <strong className="has-text-white">
+        <TextBlur key="mode" value={mode} />
+      </strong>{" "}
+      on{" "}
+      <strong className="has-text-white">
+        <TextBlur key="map" value={map} />
+      </strong>
+      <div className="app-text-small">
+        <span className="server-status mr-1">
+          {["Started", "Countdown"].includes(status) && (
+            <span className="tag is-danger">LIVE</span>
+          )}{" "}
+          {"Standby" === status && (
+            <div className="indicator-waiting-container">
+              <div className="indicator-waiting" />
+            </div>
+          )}
+        </span>
+
+        <span>{statusText}</span>
+      </div>
+    </div>
+  );
+});
 
 const ServerMapshot = (props) => {
   const { server } = props;
