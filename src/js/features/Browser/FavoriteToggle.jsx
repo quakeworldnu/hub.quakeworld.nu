@@ -11,9 +11,8 @@ const mapDispatchToProps = {
   toggleFavoriteServer: slice.actions.toggleFavoriteServer,
 };
 
-const FavoriteToggle = (props) => {
+const FavoriteToggle = React.memo((props) => {
   const { toggleFavoriteServer, isEnabled, serverAddress } = props;
-
   const iconFileName = isEnabled ? "star_fill" : "star_outline";
 
   return (
@@ -27,7 +26,7 @@ const FavoriteToggle = (props) => {
       />
     </div>
   );
-};
+});
 
 const FavoriteToggleComponent = connect(
   mapStateToProps,
