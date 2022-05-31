@@ -32,7 +32,7 @@ export const Streams = (props) => {
       <div className="columns is-multiline is-mobile mb-4" ref={parent}>
         {streams.length > 0 &&
           streams.map((stream) => (
-            <Stream key={stream.channel} stream={stream} />
+            <Stream key={stream.channel} channel={stream.channel} title={stream.title} />
           ))}
       </div>
     </>
@@ -44,12 +44,14 @@ const StreamsComponent = connect(mapStateToProps)(Streams);
 
 export default StreamsComponent;
 
-const Stream = (props) => {
-  const { stream } = props;
+const Stream = React.memo((props) => {
+  const { channel, title } = props;
+
+  console.log("Stream.render()", props);
 
   return (
     <div className="column is-narrow">
-      <a className="button is-fullwidth is-dark p-3" href={stream.url}>
+      <a className="button is-fullwidth is-dark p-3" href={`https://twitch.tv/${channel}`}>
         <img
           src={`/assets/img/icons/twitch_glitch_purple.svg`}
           width="16"
@@ -58,13 +60,13 @@ const Stream = (props) => {
         />
 
         <span className="mr-4">
-          <strong>{stream.channel}</strong>
+          <strong>{channel}</strong>
         </span>
 
         <span className="app-dim-light is-hidden-mobile" style={{fontSize: "13px"}}>
-          <TextBlur key="title" value={stream.title} />
+          <TextBlur key="title" value={title} />
         </span>
       </a>
     </div>
   );
-};
+});
