@@ -29,6 +29,7 @@ const newStream = (player, channel, title) => ({
 
 let twitchStreams = [
   newStream("twitch.tv/vikpe", "vikpe"),
+  newStream("badsebitv/twich", "badsebitv"),
   //newStream("bps", "bps__"),
   //newStream("suddendeathTV", "suddendeathTV"),
 ];
