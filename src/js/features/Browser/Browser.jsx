@@ -7,7 +7,7 @@ import Streams from "./Streams/Streams.jsx";
 
 const BrowserHeader = () => {
   return (
-    <div className="my-3 animation-fade-in">
+    <div className="my-3 animation-fade-in-down">
       <div className="columns is-mobile is-vcentered is-multiline">
         <div className="column is-narrow">
           <a href="/" className="is-flex" id="app-logo-link">

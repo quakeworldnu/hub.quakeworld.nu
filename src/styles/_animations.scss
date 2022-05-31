@@ -45,19 +45,20 @@
   display: inline-block;
 }
 
-// enter
-@keyframes fadeIn {
+// fade in down
+@keyframes fadeInDown {
   from {
     opacity: 0;
+    transform: translate3d(0, -50%, 0)
   }
 
   to {
     opacity: 1;
+    transform: translate3d(0, 0, 0)
   }
 }
 
-.animation-fade-in {
-  animation-name: fadeIn;
-  animation-timing-function: ease-in;
+.animation-fade-in-down {
+  animation-name: fadeInDown;
   animation-duration: 250ms;
 }
