@@ -207,6 +207,10 @@ const ServerFooter = (props) => {
         {server.Settings.ktxver && (
           <KtxVersion version={server.Settings.ktxver} />
         )}
+
+        <div className="column is-narrow pl-0">
+          <FavoriteToggle serverAddress={server.Address} />
+        </div>
       </div>
     </div>
   );
