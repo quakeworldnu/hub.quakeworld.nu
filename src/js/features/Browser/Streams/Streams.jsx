@@ -49,11 +49,11 @@ const Stream = (props) => {
 
   return (
     <div className="column is-narrow mb-5">
-      <a className="button is-dark is-large" href={stream.url}>
+      <a className="button is-dark py-5 p-3" href={stream.url}>
         <img
           src={`/assets/img/icons/twitch_glitch_purple.svg`}
-          width="24"
-          height="24"
+          width="16"
+          height="16"
           className="mr-2"
         />
 
@@ -61,9 +61,9 @@ const Stream = (props) => {
           <strong>{stream.channel}</strong>
         </span>
 
-        <small className="app-dim app-text-smaller">
+        <span className="app-dim-light" style={{fontSize: "13px"}}>
           <TextBlur key="title" value={stream.title} />
-        </small>
+        </span>
       </a>
     </div>
   );
