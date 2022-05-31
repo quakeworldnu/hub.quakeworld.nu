@@ -24,7 +24,7 @@ const serverEntriesProvider = {
   },
 };
 
-class ServerDataSource extends React.Component {
+class ServerDataSource extends React.PureComponent {
   componentDidMount() {
     const fetchAndupdateServers = () => {
       return serverEntriesProvider
