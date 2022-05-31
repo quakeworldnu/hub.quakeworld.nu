@@ -14,7 +14,6 @@ const sortStreams = (a, b) => {
 };
 
 export const Streams = (props) => {
-  const [parent] = useAutoAnimate();
   const { servers } = props;
   let streams = [];
 
@@ -24,21 +23,25 @@ export const Streams = (props) => {
     }
   });
 
+  const [parent] = useAutoAnimate();
+
+  if (0 === streams.length) {
+    return <div ref={parent} />;
+  }
+
   streams = Array.from(new Set(streams));
   streams.sort(sortStreams);
 
   return (
-    <>
-      <div className="columns is-multiline is-mobile mb-4" ref={parent}>
-        {streams.map((stream) => (
-          <Stream
-            key={stream.channel}
-            channel={stream.channel}
-            title={stream.title}
-          />
-        ))}
-      </div>
-    </>
+    <div className="columns is-multiline is-mobile mb-3" ref={parent}>
+      {streams.map((stream) => (
+        <Stream
+          key={stream.channel}
+          channel={stream.channel}
+          title={stream.title}
+        />
+      ))}
+    </div>
   );
 };
 
