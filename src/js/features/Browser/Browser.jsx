@@ -5,7 +5,7 @@ import ServerDataSource from "./ServerDataSource";
 import ServerTiles from "./ServerTiles.jsx";
 import Streams from "./Streams/Streams.jsx";
 
-const BrowserHeader = React.memo(() => {
+const BrowserHeader = () => {
   return (
     <div className="my-3">
       <div className="columns is-mobile is-vcentered is-multiline">
@@ -23,7 +23,7 @@ const BrowserHeader = React.memo(() => {
       <Streams />
     </div>
   );
-});
+};
 
 export const Browser = () => (
   <>
