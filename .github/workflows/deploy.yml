@@ -16,20 +16,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # Node
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      # Install
-      - name: Build
+      - name: Install
         run: yarn install
 
-      # Build
       - name: Build
         run: yarn build
 
-      # Deploy
       - name: Deploy to Firebase
         run: ./node_modules/.bin/firebase deploy --only hosting --project ${{ secrets.FIREBASE_PROJECT }} --token ${{ secrets.FIREBASE_TOKEN }}
