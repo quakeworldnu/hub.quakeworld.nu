@@ -37,7 +37,7 @@ class DataSource extends React.PureComponent {
         .then((streams) => this.props.updateStreams({ streams }))
         .catch((e) => console.log("Error fetching streams", e));
 
-    this.streamsTimeout = window.setInterval(fetchAndUpdateServers, 9.9 * 1000);
+    this.streamsTimeout = window.setInterval(fetchAndUpdateStreams, 9.9 * 1000);
     fetchAndUpdateStreams();
   }
 
