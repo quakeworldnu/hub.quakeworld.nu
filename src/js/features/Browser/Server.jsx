@@ -141,7 +141,7 @@ const SpectatorButtons = (props) => {
 
   return (
     <div>
-      <div className="columns is-mobile is-vcentered">
+      <div className="columns is-mobile is-vcentered is-multiline">
         <div className="column">
           <a
             href={`qw://${server.Address}/observe`}
@@ -173,7 +173,7 @@ const SpectatorButtons = (props) => {
         )}
 
         {server.streams.map((stream) => (
-          <div className="column" key={stream.channel}>
+          <div className="column is-narrow" key={stream.channel}>
             <StreamButton channel={stream.channel} />
           </div>
         ))}
