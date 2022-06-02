@@ -16,7 +16,3 @@ root.render(
     </Provider>
   </React.StrictMode>
 );
-
-if (import.meta.hot) {
-  import.meta.hot.accept();
-}

@@ -1,7 +1,7 @@
 import React from "react";
 import Filters from "./Filters";
 import Overview from "./Overview";
-import ServerDataSource from "./ServerDataSource";
+import DataSource from "./DataSource.jsx";
 import ServerTiles from "./ServerTiles.jsx";
 import Streams from "./Streams/Streams.jsx";
 
@@ -27,7 +27,7 @@ const BrowserHeader = () => {
 
 export const Browser = () => (
   <>
-    <ServerDataSource />
+    <DataSource />
     <BrowserHeader />
     <ServerTiles />
   </>

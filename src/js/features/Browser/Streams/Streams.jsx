@@ -3,6 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { TextBlur } from "./../../Animations/Text.jsx";
+import { previews } from "firebase-tools/lib/previews.js";
 
 const sortStreams = (a, b) => {
   let aLow = a.channel.toLowerCase();
@@ -14,14 +15,7 @@ const sortStreams = (a, b) => {
 };
 
 export const Streams = (props) => {
-  const { servers } = props;
-  let streams = [];
-
-  servers.forEach((server) => {
-    if (server.streams.length > 0) {
-      streams = streams.concat(server.streams);
-    }
-  });
+  const { streams } = props;
 
   const [parent] = useAutoAnimate();
 
@@ -29,29 +23,27 @@ export const Streams = (props) => {
     return <div ref={parent} />;
   }
 
-  streams = Array.from(new Set(streams));
-  streams.sort(sortStreams);
-
   return (
     <div className="columns is-multiline is-mobile mb-3" ref={parent}>
       {streams.map((stream) => (
         <Stream
-          key={stream.channel}
-          channel={stream.channel}
+          key={stream.id}
+          channel={stream.user_login}
           title={stream.title}
+          viewers={stream.viewer_count}
         />
       ))}
     </div>
   );
 };
 
-const mapStateToProps = (state) => ({ servers: state.browser.servers });
+const mapStateToProps = (state) => ({ streams: state.browser.streams });
 const StreamsComponent = connect(mapStateToProps)(Streams);
 
 export default StreamsComponent;
 
 const Stream = React.memo((props) => {
-  const { channel, title } = props;
+  const { channel, title, viewers } = props;
 
   return (
     <div className="column is-narrow">
@@ -74,7 +66,8 @@ const Stream = React.memo((props) => {
           className="app-dim-light is-hidden-mobile"
           style={{ fontSize: "13px" }}
         >
-          <TextBlur key="title" value={title} />
+          <TextBlur key="title" value={title} /> (
+          <TextBlur key="viewers" value={viewers} />)
         </span>
       </a>
     </div>

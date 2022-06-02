@@ -18,6 +18,7 @@ const getDefaultUiState = () => ({
 const getInitialState = () => ({
   ui: Object.assign({}, getDefaultUiState(), storage.load()),
   servers: [],
+  streams: [],
 });
 
 const newStream = (player, channel, title) => ({
@@ -38,6 +39,10 @@ export default createSlice({
   name: "form",
   initialState: getInitialState(),
   reducers: {
+    updateStreams: (state, action) => {
+      let { streams } = action.payload;
+      state.streams = streams;
+    },
     updateServers: (state, action) => {
       let { servers } = action.payload;
 
