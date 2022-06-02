@@ -7,45 +7,27 @@
   "repository": "vikpe/qw-server-browser",
   "type": "module",
   "scripts": {
-    "dev": "run-s clean dev:*",
-    "dev:jekyll": "yarn build:jekyll --config=_config.yml,_config.dev.yml",
-    "dev:assets": "npx gulp assets:dev",
-    "watch": "run-p 'dev:jekyll --watch --incremental' 'npx gulp watch' start",
-    "build": "run-s clean build:assets build:jekyll build:apps",
-    "build:jekyll": "cd jekyll && bundle exec jekyll build",
-    "build:assets": "npx gulp assets:prod",
-    "build:apps": "snowpack build",
-    "clean": "rm -rf build && cd jekyll && bundle exec jekyll clean",
-    "start:sync": "browser-sync start --config bs-config.cjs",
-    "start": "snowpack dev",
-    "lint": "yarn prettier --write src/js",
-    "npx": "npx"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "yarn prettier --write src/js"
   },
   "devDependencies": {
-    "browser-sync": "^2.27.10",
-    "bs-html-injector": "^3.0.3",
-    "prettier": "^2.6.2"
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@vitejs/plugin-react": "^1.3.0",
+    "prettier": "^2.6.2",
+    "sass": "^1.52.1",
+    "vite": "^2.9.9"
   },
   "dependencies": {
     "@formkit/auto-animate": "^1.0.0-beta.1",
     "@reduxjs/toolkit": "^1.8.2",
-    "@snowpack/app-scripts-react": "^2.0.1",
-    "@snowpack/plugin-dotenv": "^2.2.0",
-    "@snowpack/plugin-react-refresh": "^2.5.0",
     "bulma": "^0.9.4",
     "firebase-tools": "^11.0.1",
     "formik": "^2.2.9",
-    "gulp": "^4.0.2",
-    "gulp-changed": "^4.0.3",
-    "gulp-concat": "^2.6.1",
-    "gulp-imagemin": "^8.0.0",
-    "gulp-rev": "^9.0.0",
-    "gulp-sass": "^5.1.0",
-    "npm-run-all": "^4.1.5",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-redux": "^8.0.2",
-    "sass": "^1.52.1",
-    "snowpack": "^3.8.8"
+    "react-redux": "^8.0.2"
   }
 }

@@ -21,7 +21,7 @@
 ## Development
 Launch dev server at `http://localhost:3000` with HMR-enabled.
 ```
-yarn watch
+yarn dev
 ```
 
 ---
