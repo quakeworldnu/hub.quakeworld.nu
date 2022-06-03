@@ -246,10 +246,9 @@ const ServerAddressTitle = React.memo((props) => {
       {cc && (
         <React.Fragment>
           <img
-            src={`/assets/img/flags/${cc.toLowerCase()}.svg`}
+            src={`https://www.quakeworld.nu/images/flags/${cc.toLowerCase()}.gif`}
             width="16"
-            height="12"
-            style={{ maxHeight: "12px" }}
+            height="11"
             alt={cc}
           />
           &nbsp;
