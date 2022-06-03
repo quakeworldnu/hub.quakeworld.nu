@@ -4,10 +4,10 @@
 ## Info
 * **Temporary URL**: https://qwsb-4b8ab.web.app/
 * **Components**: 
-  * Website (HTML): Jekyll + Bulma (front-end framework)
-  * JavaScript app: es6/react/redux
+  * Website: HTML + [Bulma](https://bulma.io/) (front-end framework)
+  * JavaScript app: es6/react/redux, built using [Vite](https://vitejs.dev/)
     
-* **Data source**: `https://metaqtv.quake.se/v2/`
+* **Data source**: `https://metaqtv.quake.se/v2/` (under development)
 
 ---
 
