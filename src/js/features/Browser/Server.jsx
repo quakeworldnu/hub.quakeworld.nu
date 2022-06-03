@@ -207,7 +207,8 @@ const ServerFooter = (props) => {
     <div className="server-footer p-3">
       <SpectatorButtons server={server} />
 
-      <div className="columns is-mobile is-vcentered app-text-small is-multiline">
+      <div
+        className="columns is-mobile is-vcentered app-text-small is-multiline">
         <div className="column">
           <div
             className="server-address"
@@ -245,10 +246,10 @@ const ServerAddressTitle = React.memo((props) => {
       {cc && (
         <React.Fragment>
           <img
-            src={`https://badplace.eu/images/icons/flags/${cc.toLowerCase()}.png`}
+            src={`/assets/img/flags/${cc.toLowerCase()}.svg`}
             width="16"
-            height="11"
-            style={{ maxHeight: "11px" }}
+            height="12"
+            style={{ maxHeight: "12px" }}
             alt={cc}
           />
           &nbsp;
