@@ -24,7 +24,7 @@ class DataSource extends React.PureComponent {
   componentDidMount() {
     // servers
     const fetchAndUpdateServers = () =>
-      fetchGet("http://localhost:4000/v2/mvdsv?limit=50")
+      fetchGet("https://metaqtv.quake.se/v2/mvdsv?limit=50")
         .then((servers) => this.props.updateServers({ servers }))
         .catch((e) => console.log("Error fetching servers", e));
 
@@ -33,7 +33,7 @@ class DataSource extends React.PureComponent {
 
     // streams
     const fetchAndUpdateStreams = () =>
-      fetchGet("http://localhost:4000/v2/streams")
+      fetchGet("https://metaqtv.quake.se/v2/streams")
         .then((streams) => this.props.updateStreams({ streams }))
         .catch((e) => console.log("Error fetching streams", e));
 
