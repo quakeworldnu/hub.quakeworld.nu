@@ -172,7 +172,7 @@ const SpectatorButtons = (props) => {
           </div>
         )}
 
-        {server.streams.map((stream) => (
+        {false && server.streams.map((stream) => (
           <div className="column is-narrow" key={stream.channel}>
             <StreamButton channel={stream.channel} />
           </div>

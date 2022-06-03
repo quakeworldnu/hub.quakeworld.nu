@@ -28,12 +28,23 @@ const newStream = (player, channel, title) => ({
   url: `https://www.twitch.tv/${channel}`,
 });
 
-let twitchStreams = [
-  newStream("twitch.tv/vikpe", "vikpe"),
-  newStream("badsebitv/twich", "badsebitv"),
-  //newStream("bps", "bps__"),
-  //newStream("suddendeathTV", "suddendeathTV"),
-];
+const playerToStream = {
+  "twitch.tv/vikpe": "vikpe",
+  "badsebitv/twich": "badsebitv",
+  "Milton": "miltonizer",
+}
+
+const serverHasClient = (server, clientName) => {
+  let spectator = server.SpectatorNames.includes(clientName);
+  let qtvstream = server.QtvStream.SpectatorNames.includes(clientName);
+  let players = server.Players.map(p => p.Name).includes(clientName);
+
+  return (
+    spectator ||
+    qtvstream ||
+    players
+  );
+}
 
 export default createSlice({
   name: "form",
@@ -54,24 +65,6 @@ export default createSlice({
           servers[i].SpectatorNames.splice(index, 1);
           servers[i].SpectatorSlots.Used--;
         }
-      }
-
-      // twitch streams
-      for (let i = 0; i < servers.length; i++) {
-        let serverStreams = [];
-
-        twitchStreams.forEach((stream) => {
-          if (
-            servers[i].SpectatorNames.includes(stream.player) ||
-            servers[i].QtvStream.SpectatorNames.includes(stream.player)
-          ) {
-            serverStreams = serverStreams.concat(
-              newStream(stream.player, stream.channel, servers[i].Title)
-            );
-          }
-        });
-
-        servers[i].streams = serverStreams;
       }
 
       // add meta data
