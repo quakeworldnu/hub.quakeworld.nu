@@ -4,15 +4,6 @@ import { connect } from "react-redux";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { TextBlur } from "./../../Animations/Text.jsx";
 
-const sortStreams = (a, b) => {
-  let aLow = a.user_login.toLowerCase();
-  let bLow = b.user_login.toLowerCase();
-  if (aLow < bLow) {
-    return -1;
-  } else if (aLow > bLow) return 1;
-  return 0;
-};
-
 export const Streams = (props) => {
   const { streams } = props;
 
@@ -21,8 +12,6 @@ export const Streams = (props) => {
   if (0 === streams.length) {
     return <div ref={parent} />;
   }
-
-  streams.sort(sortStreams);
 
   return (
     <div className="columns is-multiline is-mobile mb-3" ref={parent}>
