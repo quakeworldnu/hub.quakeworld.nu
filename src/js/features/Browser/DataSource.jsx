@@ -30,20 +30,10 @@ class DataSource extends React.PureComponent {
 
     this.serversTimeout = window.setInterval(fetchAndUpdateServers, 2.9 * 1000);
     fetchAndUpdateServers();
-
-    // streams
-    const fetchAndUpdateStreams = () =>
-      fetchGet("https://metaqtv.quake.se/v2/streams")
-        .then((streams) => this.props.updateStreams({ streams }))
-        .catch((e) => console.log("Error fetching streams", e));
-
-    this.streamsTimeout = window.setInterval(fetchAndUpdateStreams, 9.9 * 1000);
-    fetchAndUpdateStreams();
   }
 
   componentWillUnmount() {
     window.clearTimeout(this.serversTimeout);
-    window.clearTimeout(this.streamsTimeout);
   }
 
   render() {
