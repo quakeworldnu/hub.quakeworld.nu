@@ -3,7 +3,7 @@ import { metaByServer } from "../common/serverMeta.js";
 import { compareServers } from "../common/sort.js";
 
 const paramsToString = (params) =>
-  Object.keys(params).lengt > 0
+  Object.keys(params).length > 0
     ? `?${new URLSearchParams(params).toString()}`
     : "";
 
