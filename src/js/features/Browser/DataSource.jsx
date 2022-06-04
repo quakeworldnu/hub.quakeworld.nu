@@ -43,7 +43,6 @@ class DataSource extends React.PureComponent {
 
 const mapDispatchToProps = {
   updateServers: browserSlice.actions.updateServers,
-  updateStreams: browserSlice.actions.updateStreams,
 };
 
 const ServerDataSourceComponent = connect(null, mapDispatchToProps)(DataSource);
