@@ -38,8 +38,7 @@ export const metaByServer = (server) => {
     spectatorCount: spectatorNames.length,
     score:
       //10 * server.streams.length +
-      2 * spectatorNames.length +
-      server.Players.length,
+      2 * spectatorNames.length + server.Players.length,
     statusText: statusTextByServer(server),
   };
 

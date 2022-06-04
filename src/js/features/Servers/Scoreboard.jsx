@@ -1,6 +1,6 @@
 import React from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { ColoredFrags, QuakeText } from "./Common";
+import { ColoredFrags, QuakeText } from "../Browser/Common.jsx";
 
 export const Scoreboard = (props) => {
   const { server, limit = 20 } = props;

@@ -1,7 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { metaByServer } from "../common/serverMeta.js";
+import { compareServers } from "../common/sort.js";
 
 const paramsToString = (params) =>
-  params ? `?${new URLSearchParams(params).toString()}` : "";
+  Object.keys(params).lengt > 0
+    ? `?${new URLSearchParams(params).toString()}`
+    : "";
 
 // Define a service using a base URL and expected endpoints
 export const qwsApi = createApi({
@@ -10,6 +14,28 @@ export const qwsApi = createApi({
   endpoints: (builder) => ({
     getMvdsv: builder.query({
       query: (params) => "mvdsv" + paramsToString(params),
+      transformResponse: (response) => {
+        const servers = response;
+
+        // ignore [ServeMe]
+        for (let i = 0; i < servers.length; i++) {
+          const index = servers[i].SpectatorNames.indexOf("[ServeMe]");
+
+          if (index !== -1) {
+            servers[i].SpectatorNames.splice(index, 1);
+            servers[i].SpectatorSlots.Used--;
+          }
+        }
+
+        // add meta data
+        for (let i = 0; i < servers.length; i++) {
+          servers[i].meta = metaByServer(servers[i]);
+        }
+
+        servers.sort(compareServers);
+
+        return servers;
+      },
     }),
     getStreams: builder.query({
       query: (params) => "streams" + paramsToString(params),

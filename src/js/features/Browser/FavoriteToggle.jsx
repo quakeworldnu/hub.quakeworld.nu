@@ -1,14 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
-import slice from "./slice";
+import { toggleFavoriteServer } from "../UserInterface/slice.js";
 
 const mapStateToProps = (state, ownProps) => ({
-  isEnabled: state.browser.ui.favorites.servers.includes(
+  isEnabled: state.ui.favorites.servers.includes(
     ownProps.serverAddress
   ),
 });
 const mapDispatchToProps = {
-  toggleFavoriteServer: slice.actions.toggleFavoriteServer,
+  toggleFavoriteServer,
 };
 
 const FavoriteToggle = React.memo((props) => {

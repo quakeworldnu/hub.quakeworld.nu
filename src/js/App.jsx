@@ -1,22 +1,21 @@
 import React from "react";
-import Filters from "./Filters";
-import Overview from "./Overview";
-import DataSource from "./DataSource.jsx";
-import ServerTiles from "./ServerTiles.jsx";
-import Streams from "../Streams/Streams.jsx";
+import Filters from "./features/Browser/Filters.jsx";
+import Overview from "./features/Browser/Overview.jsx";
+import ServerTiles from "./features/Servers/Servers.jsx";
+import Streams from "./features/Streams/Streams.jsx";
 
-const BrowserHeader = () => {
+const AppHeader = () => {
   return (
     <div className="my-3 animation-fade-in-down">
       <div className="columns is-mobile is-vcentered is-multiline">
         <div className="column is-narrow">
-          <a href="/" className="is-flex" id="app-logo-link">
+          <a href="/home/vikpe/code/qw-server-browser/public" className="is-flex" id="app-logo-link">
             <img src="/assets/img/qtvlogo.svg" width="82" height="59" />
           </a>
         </div>
         <Filters />
         <div className="column has-text-right-desktop">
-          <Overview />
+          {/*<Overview />*/}
         </div>
       </div>
 
@@ -25,12 +24,11 @@ const BrowserHeader = () => {
   );
 };
 
-export const Browser = () => (
+export const App = () => (
   <>
-    <DataSource />
-    <BrowserHeader />
+    <AppHeader />
     <ServerTiles />
   </>
 );
 
-export default Browser;
+export default App;

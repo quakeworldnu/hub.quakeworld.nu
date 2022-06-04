@@ -1,8 +1,8 @@
 import React from "react";
-import FavoriteToggle from "./FavoriteToggle";
-import { Scoreboard } from "./Scoreboard";
-import { QuakeText } from "./Common";
-import { copyToClipboard } from "../../common/clipboard";
+import FavoriteToggle from "../Browser/FavoriteToggle.jsx";
+import { Scoreboard } from "./Scoreboard.jsx";
+import { QuakeText } from "../Browser/Common.jsx";
+import { copyToClipboard } from "../../common/clipboard.js";
 import { pluralize } from "../../common/text.js";
 import { TextBlur } from "../Animations/Text.jsx";
 
@@ -172,11 +172,12 @@ const SpectatorButtons = (props) => {
           </div>
         )}
 
-        {false && server.streams.map((stream) => (
-          <div className="column is-narrow" key={stream.channel}>
-            <StreamButton channel={stream.channel} />
-          </div>
-        ))}
+        {false &&
+          server.streams.map((stream) => (
+            <div className="column is-narrow" key={stream.channel}>
+              <StreamButton channel={stream.channel} />
+            </div>
+          ))}
       </div>
     </div>
   );
