@@ -3,7 +3,7 @@ import Filters from "./Filters";
 import Overview from "./Overview";
 import DataSource from "./DataSource.jsx";
 import ServerTiles from "./ServerTiles.jsx";
-import Streams from "./Streams/Streams.jsx";
+import Streams from "../Streams/Streams.jsx";
 
 const BrowserHeader = () => {
   return (
