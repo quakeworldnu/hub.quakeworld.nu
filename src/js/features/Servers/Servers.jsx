@@ -15,6 +15,8 @@ export default function Servers() {
     return <div ref={parent} />;
   }
 
+  console.log("Servers");
+
   return (
     <>
       <div className="app-grid" ref={parent}>

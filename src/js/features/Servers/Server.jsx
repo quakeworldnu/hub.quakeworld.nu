@@ -293,6 +293,8 @@ export const Server = (props) => {
   const modifiers = getModifiers(server);
   const wrapperClassNames = modifiers.join(" ");
 
+  console.log("server", server.Address);
+
   return (
     <div className={wrapperClassNames}>
       <div className="server">
