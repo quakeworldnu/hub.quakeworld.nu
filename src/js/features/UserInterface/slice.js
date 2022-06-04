@@ -13,8 +13,8 @@ const getDefaultUiState = () => ({
   },
 });
 
-const getInitialState = () => Object.assign({}, getDefaultUiState(),
-  storage.load());
+const getInitialState = () =>
+  Object.assign({}, getDefaultUiState(), storage.load());
 
 export const uiSlice = createSlice({
   name: "ui",
@@ -43,6 +43,6 @@ export const uiSlice = createSlice({
   },
 });
 
-export const { updateFilters, toggleFavoriteServer } = uiSlice.actions
+export const { updateFilters, toggleFavoriteServer } = uiSlice.actions;
 
-export default uiSlice.reducer
+export default uiSlice.reducer;

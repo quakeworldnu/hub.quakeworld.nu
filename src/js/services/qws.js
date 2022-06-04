@@ -8,8 +8,8 @@ const paramsToString = (params) =>
     : "";
 
 // Define a service using a base URL and expected endpoints
-export const qwsApi = createApi({
-  reducerPath: "qwsApi",
+export const qwsSlice = createApi({
+  reducerPath: "qws",
   baseQuery: fetchBaseQuery({ baseUrl: "https://metaqtv.quake.se/v2/" }),
   endpoints: (builder) => ({
     getMvdsv: builder.query({
@@ -45,4 +45,4 @@ export const qwsApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetMvdsvQuery, useGetStreamsQuery } = qwsApi;
+export const { useGetMvdsvQuery, useGetStreamsQuery } = qwsSlice;

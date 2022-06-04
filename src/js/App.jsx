@@ -9,14 +9,16 @@ const AppHeader = () => {
     <div className="my-3 animation-fade-in-down">
       <div className="columns is-mobile is-vcentered is-multiline">
         <div className="column is-narrow">
-          <a href="/home/vikpe/code/qw-server-browser/public" className="is-flex" id="app-logo-link">
+          <a
+            href="/home/vikpe/code/qw-server-browser/public"
+            className="is-flex"
+            id="app-logo-link"
+          >
             <img src="/assets/img/qtvlogo.svg" width="82" height="59" />
           </a>
         </div>
         <Filters />
-        <div className="column has-text-right-desktop">
-          {/*<Overview />*/}
-        </div>
+        <div className="column has-text-right-desktop">{/*<Overview />*/}</div>
       </div>
 
       <Streams />

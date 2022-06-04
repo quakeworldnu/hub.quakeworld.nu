@@ -4,8 +4,9 @@ import { Server } from "./Server.jsx";
 import { useGetMvdsvQuery } from "../../services/qws.js";
 
 export default function Servers() {
-  const { data, error, isLoading } = useGetMvdsvQuery({},
-    { pollingInterval: 10000, /* ms*/ }
+  const { data, error, isLoading } = useGetMvdsvQuery(
+    {},
+    { pollingInterval: 10000 /* ms*/ }
   );
 
   const [parent] = useAutoAnimate();
