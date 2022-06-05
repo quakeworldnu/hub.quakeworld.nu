@@ -13,4 +13,3 @@ export const QuakeText = React.memo((props) => {
     />
   );
 });
-
