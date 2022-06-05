@@ -1,9 +1,9 @@
 import React from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { TextBlur } from "./TextAnimations.jsx";
-import { selectAllStreams, selectStreamById } from "../services/qws/streams.js";
+import { selectAllStreams, selectStreamById } from "./services/qws/streams.js";
 import { useSelector } from "react-redux";
-import { pluralize } from "../util/text.js";
+import { pluralize } from "./util/text.js";
 
 export default function Streams() {
   const [parent] = useAutoAnimate();

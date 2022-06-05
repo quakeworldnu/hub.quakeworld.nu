@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Field, Formik } from "formik";
-import { regions } from "../../data/regions.js";
+import { regions } from "../data/regions.js";
 import { updateFilters } from "./filtersSlice.js";
 
 const FilterForm = (props) => {

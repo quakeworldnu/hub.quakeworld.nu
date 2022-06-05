@@ -1,5 +1,5 @@
 import React from "react";
-import { TextPulse } from "./../TextAnimations.jsx";
+import { TextPulse } from "../TextAnimations.jsx";
 
 export const ColoredFrags = React.memo((props) => {
   const { tag, frags, colors } = props;

@@ -1,7 +1,7 @@
 import React from "react";
 import { TextBlur } from "../TextAnimations.jsx";
 import { useSelector } from "react-redux";
-import { selectAllServers } from "../../services/qws/servers.js";
+import { selectAllServers } from "../services/qws/servers.js";
 
 export default function Overview() {
   const servers = useSelector(selectAllServers);

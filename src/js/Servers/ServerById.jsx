@@ -2,11 +2,11 @@ import React from "react";
 import FavoriteToggle from "./FavoriteToggle.jsx";
 import { Scoreboard } from "./Scoreboard.jsx";
 import { QuakeText } from "./QuakeText.jsx";
-import { copyToClipboard } from "../../util/clipboard.js";
-import { pluralize } from "../../util/text.js";
+import { copyToClipboard } from "../util/clipboard.js";
+import { pluralize } from "../util/text.js";
 import { TextBlur } from "../TextAnimations.jsx";
 import { useSelector } from "react-redux";
-import { selectServerById } from "../../services/qws/servers.js";
+import { selectServerById } from "../services/qws/servers.js";
 
 const ServerProgress = React.memo((props) => {
   const { value, max } = props;

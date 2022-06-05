@@ -1,11 +1,11 @@
 import React from "react";
-import ServerFilters from "./features/Servers/Filters.jsx";
-import ServerOverview from "./features/Servers/Overview.jsx";
-import Streams from "./features/Streams.jsx";
+import ServerFilters from "./Servers/Filters.jsx";
+import ServerOverview from "./Servers/Overview.jsx";
+import Streams from "./Streams.jsx";
 import { streamsSlice } from "./services/qws/streams.js";
 import store from "./store.js";
 import { serversSlice } from "./services/qws/servers.js";
-import Servers from "./features/Servers/Servers";
+import Servers from "./Servers/Servers";
 
 const AppHeader = () => {
   return (
