@@ -3,6 +3,7 @@ import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
 
 const streamsAdapter = createEntityAdapter({
   selectId: (stream) => stream.channel,
+  sortComparer: (a, b) => a.channel.localeCompare(b.channel),
 });
 
 const initialState = streamsAdapter.getInitialState();
