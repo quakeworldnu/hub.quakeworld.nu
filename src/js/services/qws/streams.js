@@ -20,8 +20,8 @@ export const streamsSlice = qwsSlice.injectEndpoints({
   }),
 });
 
-export const selectStreamsResult = streamsSlice.endpoints.getStreams.select({});
-export const selectStreamsData = createSelector(
+const selectStreamsResult = streamsSlice.endpoints.getStreams.select({});
+const selectStreamsData = createSelector(
   selectStreamsResult,
   (result) => result.data
 );
