@@ -1,6 +1,6 @@
 import { qwsSlice } from "./qws.js";
 import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
-import { metaByServer } from "./serverMeta.js";
+import { metaByServer } from "./serverTransforms.js";
 import { filterServers } from "./serverFilters.js";
 import { selectUi } from "./../../uiSlice.js";
 
