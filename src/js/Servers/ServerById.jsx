@@ -2,7 +2,7 @@ import React from "react";
 import FavoriteToggle from "./FavoriteToggle.jsx";
 import { Scoreboard } from "./Scoreboard.jsx";
 import { QuakeText } from "./QuakeText.jsx";
-import { copyToClipboard } from "../util/clipboard.js";
+import copyToClipboard from "copy-text-to-clipboard";
 import { pluralize } from "../util/text.js";
 import { TextBlur } from "../TextAnimations.jsx";
 import { useSelector } from "react-redux";
