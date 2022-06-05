@@ -7,7 +7,7 @@ import {
 } from "../../services/qws/streams.js";
 import { useSelector } from "react-redux";
 
-export default function StreamsComponent() {
+export default function Streams() {
   const [parent] = useAutoAnimate();
   const streams = useSelector(selectAllStreams);
 
