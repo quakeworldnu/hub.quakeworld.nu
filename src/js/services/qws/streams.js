@@ -20,13 +20,10 @@ export const streamsSlice = qwsSlice.injectEndpoints({
   }),
 });
 
-export const { useGetStreamsQuery } = streamsSlice;
-
 export const selectStreamsResult = streamsSlice.endpoints.getStreams.select({});
-
 export const selectStreamsData = createSelector(
   selectStreamsResult,
-  (StreamsResult) => StreamsResult.data
+  (result) => result.data
 );
 
 export const { selectAll: selectAllStreams, selectById: selectStreamById } =
