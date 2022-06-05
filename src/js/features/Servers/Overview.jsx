@@ -1,5 +1,5 @@
 import React from "react";
-import { TextBlur } from "../Animations/Text.jsx";
+import { TextBlur } from "../TextAnimations.jsx";
 import { useSelector } from "react-redux";
 import { selectAllServers } from "../../services/qws/servers.js";
 

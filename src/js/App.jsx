@@ -1,7 +1,7 @@
 import React from "react";
 import ServerFilters from "./features/Servers/Filters.jsx";
 import ServerOverview from "./features/Servers/Overview.jsx";
-import Streams from "./features/Streams/Streams.jsx";
+import Streams from "./features/Streams.jsx";
 import { streamsSlice } from "./services/qws/streams.js";
 import store from "./store.js";
 import { serversSlice } from "./services/qws/servers.js";

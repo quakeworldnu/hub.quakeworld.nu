@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import { toggleFavoriteServer } from "./../../uiSlice.js";
+import { toggleFavoriteServer } from "./filtersSlice.js";
 
 const mapStateToProps = (state, ownProps) => ({
-  isEnabled: state.ui.favorites.servers.includes(ownProps.serverAddress),
+  isEnabled: state.filters.favoriteServers.includes(ownProps.serverAddress),
 });
 const mapDispatchToProps = {
   toggleFavoriteServer,

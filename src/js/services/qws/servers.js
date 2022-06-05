@@ -1,6 +1,5 @@
 import { qwsSlice } from "./qws.js";
 import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
-import { selectUi } from "./../../uiSlice.js";
 import { transformResponseData } from "./serverTransforms.js";
 import { filterServers } from "./serverFilters.js";
 import { compareServers } from "./serverSort.js";
@@ -40,6 +39,6 @@ export const { selectAll: selectAllServers, selectById: selectServerById } =
   );
 
 export const selectFilteredServers = createSelector(
-  [selectAllServers, selectUi],
-  (servers, ui) => filterServers(servers, ui.filters, ui.favorites.servers)
+  [selectAllServers, (state) => state.filters],
+  (servers, filters) => filterServers(servers, filters)
 );

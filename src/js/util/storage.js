@@ -42,10 +42,10 @@ const getStorage = () => {
 };
 
 export default {
-  save: (values) => getStorage().setItem("ui", JSON.stringify(values)),
-  load: () => {
+  save: (key, values) => getStorage().setItem(key, JSON.stringify(values)),
+  load: (key) => {
     try {
-      return JSON.parse(getStorage().getItem("ui"));
+      return JSON.parse(getStorage().getItem(key));
     } catch (e) {
       return {};
     }

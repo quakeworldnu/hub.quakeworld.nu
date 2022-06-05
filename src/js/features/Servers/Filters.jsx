@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Field, Formik } from "formik";
 import { regions } from "../../data/regions.js";
-import { updateFilters } from "./../../uiSlice.js";
+import { updateFilters } from "./filtersSlice.js";
 
 const FilterForm = (props) => {
   const { values, onValidate } = props;
@@ -81,7 +81,7 @@ const Filters = (props) => {
   return <FilterForm values={formValues} onValidate={handleValidate} />;
 };
 const mapStateToProps = (state) => ({
-  formValues: state.ui.filters,
+  formValues: state.filters,
 });
 const mapDispatchToProps = {
   handleFormChange: updateFilters,
