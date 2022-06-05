@@ -1,10 +1,10 @@
 import { regions } from "./../../data/regions.js";
 
-export const filterServers = (servers, filters, favoriteServers) => {
+export const filterServers = (servers, filters, favorites) => {
   let result = filterServersByQuery(servers, filters.query);
 
   if (filters.isFavorite) {
-    result = result.filter((s) => favoriteServers.includes(s.Address));
+    result = result.filter((s) => favorites.includes(s.Address));
   }
 
   if (filters.isStarted) {

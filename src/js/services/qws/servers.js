@@ -77,5 +77,5 @@ export const { selectAll: selectAllServers, selectById: selectServerById } =
 
 export const selectFilteredServers = createSelector(
   [selectAllServers, selectUi],
-  (servers, ui) => filterServers(servers, ui.filters, ui.favorites)
+  (servers, ui) => filterServers(servers, ui.filters, ui.favorites.servers)
 );
