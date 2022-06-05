@@ -1,8 +1,10 @@
 import React from "react";
 import ServerFilters from "./features/Servers/Filters.jsx";
 //import Overview from "./features/Servers/Overview.jsx";
-import ServerTiles from "./features/Servers/Servers.jsx";
+//import ServerTiles from "./features/Servers/Servers.jsx";
 import Streams from "./features/Streams/Streams.jsx";
+import { streamsSlice } from "./services/qws/streams.js";
+import store from "./store.js";
 
 const AppHeader = () => {
   return (
@@ -26,11 +28,24 @@ const AppHeader = () => {
   );
 };
 
-export const App = () => (
-  <>
-    <AppHeader />
-    <ServerTiles />
-  </>
-);
+function startPollingDataSources() {
+  store.dispatch(
+    streamsSlice.endpoints.getStreams.initiate(
+      {},
+      { subscriptionOptions: { pollingInterval: 5000 } }
+    )
+  );
+}
+
+export const App = () => {
+  startPollingDataSources();
+
+  return (
+    <>
+      <AppHeader />
+      {/*<ServerTiles />*/}
+    </>
+  );
+};
 
 export default App;

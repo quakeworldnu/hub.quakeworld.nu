@@ -37,12 +37,9 @@ export const qwsSlice = createApi({
         return servers;
       },
     }),
-    getStreams: builder.query({
-      query: (params) => "streams" + paramsToString(params),
-    }),
   }),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetMvdsvQuery, useGetStreamsQuery } = qwsSlice;
+export const { useGetMvdsvQuery } = qwsSlice;

@@ -1,37 +1,34 @@
 import React from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { TextBlur } from "../Animations/Text.jsx";
-import { useGetStreamsQuery } from "../../services/qws/qws.js";
+import {
+  selectAllStreams,
+  selectStreamById,
+} from "../../services/qws/streams.js";
+import { useSelector } from "react-redux";
 
-export default function Streams() {
-  const { data, error, isLoading } = useGetStreamsQuery(
-    {},
-    {
-      pollingInterval: 15000, // ms
-    }
-  );
-
+export default function StreamsComponent() {
   const [parent] = useAutoAnimate();
+  const streams = useSelector(selectAllStreams);
 
-  if (error || isLoading || 0 === data.length) {
+  if (0 === streams.length) {
     return <div ref={parent} />;
   }
 
-  console.log("streams.render");
-
   return (
     <div className="columns is-multiline is-mobile mb-3" ref={parent}>
-      {data.map((stream) => (
-        <Stream key={stream.player} {...stream} />
+      {streams.map((stream) => (
+        <StreamById key={stream.channel} id={stream.channel} />
       ))}
     </div>
   );
 }
 
-const Stream = React.memo((props) => {
-  const { title, channel, viewers, url } = props;
+const StreamById = ({ id }) => {
+  const stream = useSelector((state) => selectStreamById(state, id));
+  const { title, channel, viewers, url } = stream;
 
-  console.log("stream.render", channel);
+  console.log("stream.render", stream);
 
   return (
     <div className="column is-narrow">
@@ -56,4 +53,4 @@ const Stream = React.memo((props) => {
       </a>
     </div>
   );
-});
+};
