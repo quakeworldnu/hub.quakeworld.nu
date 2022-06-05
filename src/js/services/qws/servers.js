@@ -1,34 +1,13 @@
 import { qwsSlice } from "./qws.js";
 import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
+import { selectUi } from "./../../uiSlice.js";
 import { transformResponseData } from "./serverTransforms.js";
 import { filterServers } from "./serverFilters.js";
-import { selectUi } from "./../../uiSlice.js";
+import { compareServers } from "./serverSort.js";
 
 const serversAdapter = createEntityAdapter({
   selectId: (server) => server.Address,
-  sortComparer: (a, b) => {
-    if (a.meta.score > b.meta.score) {
-      return -1;
-    } else if (a.meta.score < b.meta.score) {
-      return 1;
-    }
-
-    // player slots
-    if (a.PlayerSlots.Free < b.PlayerSlots.Free) {
-      return -1;
-    } else if (a.PlayerSlots.Free > b.PlayerSlots.Free) {
-      return 1;
-    }
-
-    // Address
-    if (a.Address < b.Address) {
-      return -1;
-    } else if (a.Address > b.Address) {
-      return 1;
-    }
-
-    return 0;
-  },
+  sortComparer: compareServers,
 });
 const initialState = serversAdapter.getInitialState();
 
