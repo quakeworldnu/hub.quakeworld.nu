@@ -1,27 +1,22 @@
 import React from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { Server } from "./Server.jsx";
-import { useGetMvdsvQuery } from "../../services/qws/qws.js";
+import { ServerById } from "./ServerById.jsx";
+import { useSelector } from "react-redux";
+import { selectAllServers } from "../../services/qws/servers.js";
 
 export default function Servers() {
-  const { data, error, isLoading } = useGetMvdsvQuery(
-    {},
-    { pollingInterval: 10000 /* ms*/ }
-  );
-
   const [parent] = useAutoAnimate();
+  const servers = useSelector(selectAllServers);
 
-  if (error || isLoading || 0 === data.length) {
+  if (0 === servers.length) {
     return <div ref={parent} />;
   }
-
-  //console.log("Servers");
 
   return (
     <>
       <div className="app-grid" ref={parent}>
-        {data.map((server) => (
-          <Server key={server.Address} server={server} />
+        {servers.map((server) => (
+          <ServerById key={server.Address} id={server.Address} />
         ))}
       </div>
     </>

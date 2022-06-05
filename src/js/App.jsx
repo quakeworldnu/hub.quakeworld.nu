@@ -1,10 +1,11 @@
 import React from "react";
 import ServerFilters from "./features/Servers/Filters.jsx";
-//import Overview from "./features/Servers/Overview.jsx";
-//import ServerTiles from "./features/Servers/Servers.jsx";
+import ServerOverview from "./features/Servers/Overview.jsx";
 import Streams from "./features/Streams/Streams.jsx";
 import { streamsSlice } from "./services/qws/streams.js";
 import store from "./store.js";
+import { serversSlice } from "./services/qws/servers.js";
+import Servers from "./features/Servers/Servers";
 
 const AppHeader = () => {
   return (
@@ -20,7 +21,9 @@ const AppHeader = () => {
           </a>
         </div>
         <ServerFilters />
-        <div className="column has-text-right-desktop">{/*<Overview />*/}</div>
+        <div className="column has-text-right-desktop">
+          <ServerOverview />
+        </div>
       </div>
 
       <Streams />
@@ -29,8 +32,16 @@ const AppHeader = () => {
 };
 
 function startPollingDataSources() {
+  console.log("startPollingDataSources");
   store.dispatch(
     streamsSlice.endpoints.getStreams.initiate(
+      {},
+      { subscriptionOptions: { pollingInterval: 5000 } }
+    )
+  );
+
+  store.dispatch(
+    serversSlice.endpoints.getMvdsv.initiate(
       {},
       { subscriptionOptions: { pollingInterval: 5000 } }
     )
@@ -43,7 +54,7 @@ export const App = () => {
   return (
     <>
       <AppHeader />
-      {/*<ServerTiles />*/}
+      <Servers />
     </>
   );
 };

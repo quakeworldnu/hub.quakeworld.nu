@@ -5,6 +5,8 @@ import { QuakeText } from "../Quake/QuakeText.jsx";
 import { copyToClipboard } from "../../util/clipboard.js";
 import { pluralize } from "../../util/text.js";
 import { TextBlur } from "../Animations/Text.jsx";
+import { useSelector } from "react-redux";
+import { selectServerById } from "../../services/qws/servers.js";
 
 const ServerProgress = React.memo((props) => {
   const { value, max } = props;
@@ -286,13 +288,13 @@ const getModifiers = (server) => {
 
   return modifiers;
 };
-export const Server = (props) => {
-  const { server } = props;
 
+export function ServerById({ id }) {
+  const server = useSelector((state) => selectServerById(state, id));
   const modifiers = getModifiers(server);
   const wrapperClassNames = modifiers.join(" ");
 
-  //console.log("server", server.Address);
+  console.log("server.render", server.Address);
 
   return (
     <div className={wrapperClassNames}>
@@ -303,4 +305,4 @@ export const Server = (props) => {
       </div>
     </div>
   );
-};
+}

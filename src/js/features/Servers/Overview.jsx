@@ -1,11 +1,10 @@
 import React from "react";
-import { connect } from "react-redux";
 import { TextBlur } from "../Animations/Text.jsx";
+import { useSelector } from "react-redux";
+import { selectAllServers } from "../../services/qws/servers.js";
 
-const mapStateToProps = (state) => ({ servers: state.browser.servers });
-
-const Overview = (props) => {
-  const { servers } = props;
+export default function Overview() {
+  const servers = useSelector(selectAllServers);
   const serverCount = servers.length;
 
   let playerCount = 0;
@@ -28,11 +27,7 @@ const Overview = (props) => {
       servers={serverCount}
     />
   );
-};
-
-const OverviewComponent = connect(mapStateToProps)(Overview);
-
-export default OverviewComponent;
+}
 
 const OverviewStats = React.memo((props) => {
   const { players, spectators, servers } = props;
