@@ -49,6 +49,11 @@ const metaByServer = (server) => {
   const spectatorText = calcSpectatorText(spectatorNames);
 
   const isStarted = "Started" === server.Status;
+  const score =
+    "ffa" === server.Mode
+      ? server.Players.length
+      : 2 * server.Players.length + 6 * spectatorNames.length;
+
   const meta = {
     isStarted,
     isStandBy: !isStarted,
@@ -56,9 +61,7 @@ const metaByServer = (server) => {
     keywords,
     spectatorText,
     spectatorCount: spectatorNames.length,
-    score:
-      //10 * server.streams.length +
-      2 * spectatorNames.length + server.Players.length,
+    score,
     statusText: statusTextByServer(server),
   };
 
