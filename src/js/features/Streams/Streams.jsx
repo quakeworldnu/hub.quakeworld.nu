@@ -1,7 +1,7 @@
 import React from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { TextBlur } from "../Animations/Text.jsx";
-import { useGetStreamsQuery } from "../../services/qws.js";
+import { useGetStreamsQuery } from "../../services/qws/qws.js";
 
 export default function Streams() {
   const { data, error, isLoading } = useGetStreamsQuery(

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { metaByServer } from "../util/serverMeta.js";
-import { compareServers } from "../util/sort.js";
+import { metaByServer } from "../../util/serverMeta.js";
+import { compareServers } from "../../util/sort.js";
 
 const paramsToString = (params) =>
   Object.keys(params).length > 0

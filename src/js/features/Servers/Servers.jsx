@@ -1,7 +1,7 @@
 import React from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { Server } from "./Server.jsx";
-import { useGetMvdsvQuery } from "../../services/qws.js";
+import { useGetMvdsvQuery } from "../../services/qws/qws.js";
 
 export default function Servers() {
   const { data, error, isLoading } = useGetMvdsvQuery(

@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 //import { setupListeners } from '@reduxjs/toolkit/query'
-import { qwsSlice } from "./services/qws";
+import { qwsSlice } from "./services/qws/qws.js";
 import uiSlice from "./uiSlice.js";
 
 export const store = configureStore({
