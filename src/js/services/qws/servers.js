@@ -30,7 +30,6 @@ const serversAdapter = createEntityAdapter({
     return 0;
   },
 });
-
 const initialState = serversAdapter.getInitialState();
 
 // Define a service using a base URL and expected endpoints
@@ -64,8 +63,8 @@ export const serversSlice = qwsSlice.injectEndpoints({
   }),
 });
 
-export const selectServersResult = serversSlice.endpoints.getMvdsv.select({});
-export const selectServersData = createSelector(
+const selectServersResult = serversSlice.endpoints.getMvdsv.select({});
+const selectServersData = createSelector(
   [selectServersResult],
   (result) => result.data
 );
