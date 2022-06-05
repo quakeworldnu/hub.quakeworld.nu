@@ -6,6 +6,7 @@ import {
   selectStreamById,
 } from "../../services/qws/streams.js";
 import { useSelector } from "react-redux";
+import { pluralize } from "../../util/text.js";
 
 export default function Streams() {
   const [parent] = useAutoAnimate();
@@ -45,7 +46,8 @@ const StreamById = ({ id }) => {
         </span>
 
         <span className="app-dim-light" style={{ fontSize: "13px" }}>
-          (<TextBlur key="viewers" value={viewers} /> viewers)
+          (<TextBlur key="viewers" value={viewers} />{" "}
+          {pluralize("viewer", viewers)})
           <span className="ml-3 is-hidden-mobile">
             <TextBlur key="title" value={title} />
           </span>

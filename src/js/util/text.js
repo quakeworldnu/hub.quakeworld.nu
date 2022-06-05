@@ -1,5 +1,5 @@
 export const stripNonAscii = (str) => str.replace(/[^ -~]+/g, "");
-export const pluralize = (value, count) => (count > 1 ? `${value}s` : value);
+export const pluralize = (value, count) => (1 === count ? value : `${value}s`);
 export const quakeTextToHtml = (text, color) => {
   let result = "";
   let lastColor = "";
