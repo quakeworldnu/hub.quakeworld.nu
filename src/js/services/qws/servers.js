@@ -1,6 +1,6 @@
 import { qwsSlice } from "./qws.js";
 import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
-import { metaByServer } from "./serverTransforms.js";
+import { transformResponseData } from "./serverTransforms.js";
 import { filterServers } from "./serverFilters.js";
 import { selectUi } from "./../../uiSlice.js";
 
@@ -40,24 +40,10 @@ export const serversSlice = qwsSlice.injectEndpoints({
       query: () => "mvdsv",
       transformResponse: (responseData) => {
         console.log("serversSlice.transformResponse");
-        const servers = responseData;
-
-        // ignore [ServeMe]
-        for (let i = 0; i < servers.length; i++) {
-          const index = servers[i].SpectatorNames.indexOf("[ServeMe]");
-
-          if (index !== -1) {
-            servers[i].SpectatorNames.splice(index, 1);
-            servers[i].SpectatorSlots.Used--;
-          }
-        }
-
-        // add meta data
-        for (let i = 0; i < servers.length; i++) {
-          servers[i].meta = metaByServer(servers[i]);
-        }
-
-        return serversAdapter.setAll(initialState, servers);
+        return serversAdapter.setAll(
+          initialState,
+          transformResponseData(responseData)
+        );
       },
     }),
   }),

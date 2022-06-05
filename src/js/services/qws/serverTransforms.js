@@ -1,6 +1,27 @@
 import { pluralize, stripNonAscii } from "./../../util/text";
 
-export const metaByServer = (server) => {
+export const transformResponseData = (data) => {
+  const servers = data;
+
+  // ignore [ServeMe]
+  for (let i = 0; i < servers.length; i++) {
+    const index = servers[i].SpectatorNames.indexOf("[ServeMe]");
+
+    if (index !== -1) {
+      servers[i].SpectatorNames.splice(index, 1);
+      servers[i].SpectatorSlots.Used--;
+    }
+  }
+
+  // add meta data
+  for (let i = 0; i < servers.length; i++) {
+    servers[i].meta = metaByServer(servers[i]);
+  }
+
+  return servers;
+};
+
+const metaByServer = (server) => {
   let clientNames = server.Players.map((p) => p.Name) + server.SpectatorNames;
   let spectatorNames = server.SpectatorNames.concat(
     server.QtvStream.SpectatorNames
