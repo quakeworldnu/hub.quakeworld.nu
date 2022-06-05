@@ -1,4 +1,4 @@
-import { pluralize, stripNonAscii } from "./../../util/text";
+import { pluralize } from "./../../util/text";
 
 export const transformResponseData = (data) => {
   const servers = data;
@@ -67,6 +67,8 @@ const metaByServer = (server) => {
 
   return meta;
 };
+
+const stripNonAscii = (str) => str.replace(/[^ -~]+/g, "");
 
 const calcSpectatorText = (spectators) => {
   const maxLength = 44;
