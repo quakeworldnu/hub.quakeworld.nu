@@ -1,8 +1,6 @@
 import { regions } from "./../../data/regions.js";
 
 export const filterServers = (servers, filters) => {
-  console.log(filters);
-
   let result = filterServersByQuery(servers, filters.query);
 
   if (filters.isFavorite) {

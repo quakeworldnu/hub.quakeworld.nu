@@ -32,7 +32,6 @@ const AppHeader = () => {
 };
 
 function startPollingDataSources() {
-  console.log("startPollingDataSources");
   store.dispatch(
     streamsSlice.endpoints.getStreams.initiate(
       {},

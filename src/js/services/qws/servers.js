@@ -17,7 +17,6 @@ export const serversSlice = qwsSlice.injectEndpoints({
     getMvdsv: builder.query({
       query: () => "mvdsv",
       transformResponse: (responseData) => {
-        console.log("serversSlice.transformResponse");
         return serversAdapter.setAll(
           initialState,
           transformResponseData(responseData)

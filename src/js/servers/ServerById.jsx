@@ -294,8 +294,6 @@ export function ServerById({ id }) {
   const modifiers = getModifiers(server);
   const wrapperClassNames = modifiers.join(" ");
 
-  console.log("server.render", server.Address);
-
   return (
     <div className={wrapperClassNames}>
       <div className="server">

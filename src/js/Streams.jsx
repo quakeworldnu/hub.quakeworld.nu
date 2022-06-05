@@ -26,8 +26,6 @@ const StreamById = ({ id }) => {
   const stream = useSelector((state) => selectStreamById(state, id));
   const { title, channel, viewers, url } = stream;
 
-  console.log("stream.render", stream.url);
-
   return (
     <div className="column is-narrow">
       <a className="button is-fullwidth is-dark p-3" href={url}>

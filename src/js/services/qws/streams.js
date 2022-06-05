@@ -14,7 +14,6 @@ export const streamsSlice = qwsSlice.injectEndpoints({
     getStreams: builder.query({
       query: () => "streams",
       transformResponse: (responseData) => {
-        console.log("streamsSlice.transformResponse");
         return streamsAdapter.setAll(initialState, responseData);
       },
     }),
