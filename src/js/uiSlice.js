@@ -1,4 +1,4 @@
-import storage from "../../common/storage.js";
+import storage from "./util/storage.js";
 import { createSlice } from "@reduxjs/toolkit";
 
 const getDefaultUiState = () => ({
@@ -45,4 +45,4 @@ export const uiSlice = createSlice({
 
 export const { updateFilters, toggleFavoriteServer } = uiSlice.actions;
 
-export default uiSlice.reducer;
+export default uiSlice;

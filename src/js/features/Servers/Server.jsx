@@ -1,9 +1,9 @@
 import React from "react";
-import FavoriteToggle from "../Browser/FavoriteToggle.jsx";
+import FavoriteToggle from "./FavoriteToggle.jsx";
 import { Scoreboard } from "./Scoreboard.jsx";
-import { QuakeText } from "../Browser/Common.jsx";
-import { copyToClipboard } from "../../common/clipboard.js";
-import { pluralize } from "../../common/text.js";
+import { QuakeText } from "../Quake/Quake.jsx";
+import { copyToClipboard } from "../../util/clipboard.js";
+import { pluralize } from "../../util/text.js";
 import { TextBlur } from "../Animations/Text.jsx";
 
 const ServerProgress = React.memo((props) => {
@@ -293,7 +293,7 @@ export const Server = (props) => {
   const modifiers = getModifiers(server);
   const wrapperClassNames = modifiers.join(" ");
 
-  console.log("server", server.Address);
+  //console.log("server", server.Address);
 
   return (
     <div className={wrapperClassNames}>

@@ -1,5 +1,5 @@
 import React from "react";
-import { quakeTextToHtml } from "../../common/text";
+import { quakeTextToHtml } from "../../util/text";
 import { TextPulse } from "../Animations/Text.jsx";
 
 export const QuakeText = React.memo((props) => {

@@ -17,6 +17,8 @@ export default function Streams() {
     return <div ref={parent} />;
   }
 
+  console.log("streams.render");
+
   return (
     <div className="columns is-multiline is-mobile mb-3" ref={parent}>
       {data.map((stream) => (
@@ -28,6 +30,8 @@ export default function Streams() {
 
 const Stream = React.memo((props) => {
   const { title, channel, viewers, url } = props;
+
+  console.log("stream.render", channel);
 
   return (
     <div className="column is-narrow">

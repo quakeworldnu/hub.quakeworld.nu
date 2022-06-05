@@ -1,6 +1,6 @@
 import React from "react";
-import Filters from "./features/Browser/Filters.jsx";
-import Overview from "./features/Browser/Overview.jsx";
+import ServerFilters from "./features/Servers/Filters.jsx";
+//import Overview from "./features/Servers/Overview.jsx";
 import ServerTiles from "./features/Servers/Servers.jsx";
 import Streams from "./features/Streams/Streams.jsx";
 
@@ -17,7 +17,7 @@ const AppHeader = () => {
             <img src="/assets/img/qtvlogo.svg" width="82" height="59" />
           </a>
         </div>
-        <Filters />
+        <ServerFilters />
         <div className="column has-text-right-desktop">{/*<Overview />*/}</div>
       </div>
 

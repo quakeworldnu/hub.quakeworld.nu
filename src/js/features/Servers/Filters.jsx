@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Field, Formik } from "formik";
-import { regions } from "../../common/regions";
-import { updateFilters } from "./../UserInterface/slice.js";
+import { regions } from "../../util/regions";
+import { updateFilters } from "./../../uiSlice.js";
 
 const FilterForm = (props) => {
   const { values, onValidate } = props;

@@ -15,7 +15,7 @@ export default function Servers() {
     return <div ref={parent} />;
   }
 
-  console.log("Servers");
+  //console.log("Servers");
 
   return (
     <>
