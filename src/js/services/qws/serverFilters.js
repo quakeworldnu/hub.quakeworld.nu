@@ -1,4 +1,4 @@
-import { regions } from "./regions.js";
+import { regions } from "./../../data/regions.js";
 
 export const filterServers = (servers, filters, favoriteServers) => {
   let result = filterServersByQuery(servers, filters.query);
@@ -23,7 +23,7 @@ export const filterServers = (servers, filters, favoriteServers) => {
   return result;
 };
 
-export const filterServersByQuery = (servers, query) => {
+const filterServersByQuery = (servers, query) => {
   const minQueryLength = 2;
 
   if (query.length < minQueryLength) {

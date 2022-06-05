@@ -45,4 +45,6 @@ export const uiSlice = createSlice({
 
 export const { updateFilters, toggleFavoriteServer } = uiSlice.actions;
 
+export const selectUi = (state) => state.ui;
+
 export default uiSlice;
