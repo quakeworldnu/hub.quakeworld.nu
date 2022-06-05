@@ -1,7 +1,27 @@
-import { pluralize, stripNonAscii } from "./text";
-import { calcPlayerDisplay } from "./playerDisplay";
+import { pluralize } from "../../common/text";
 
-export const metaByServer = (server) => {
+export const transformResponseData = (data) => {
+  const servers = data;
+
+  // ignore [ServeMe]
+  for (let i = 0; i < servers.length; i++) {
+    const index = servers[i].SpectatorNames.indexOf("[ServeMe]");
+
+    if (index !== -1) {
+      servers[i].SpectatorNames.splice(index, 1);
+      servers[i].SpectatorSlots.Used--;
+    }
+  }
+
+  // add meta data
+  for (let i = 0; i < servers.length; i++) {
+    servers[i].meta = metaByServer(servers[i]);
+  }
+
+  return servers;
+};
+
+const metaByServer = (server) => {
   let clientNames = server.Players.map((p) => p.Name) + server.SpectatorNames;
   let spectatorNames = server.SpectatorNames.concat(
     server.QtvStream.SpectatorNames
@@ -38,8 +58,7 @@ export const metaByServer = (server) => {
     spectatorCount: spectatorNames.length,
     score:
       //10 * server.streams.length +
-      2 * spectatorNames.length +
-      server.Players.length,
+      2 * spectatorNames.length + server.Players.length,
     statusText: statusTextByServer(server),
   };
 
@@ -48,6 +67,8 @@ export const metaByServer = (server) => {
 
   return meta;
 };
+
+const stripNonAscii = (str) => str.replace(/[^ -~]+/g, "");
 
 const calcSpectatorText = (spectators) => {
   const maxLength = 44;
@@ -61,6 +82,29 @@ const calcSpectatorText = (spectators) => {
   }
 
   return text;
+};
+
+const calcPlayerDisplay = (server, maxRows) => {
+  const showAsTwoColumns = "1on1" === server.Mode || 2 === server.Teams.length;
+
+  const miscRowCount =
+    Number("matchtag" in server.Settings) + Number(showAsTwoColumns);
+  const maxPlayerRows = Math.max(0, maxRows - miscRowCount);
+
+  const playersPerRow = showAsTwoColumns ? 2 : 1;
+  const totalPlayerRows = Math.ceil(server.PlayerSlots.Used / playersPerRow);
+  const visiblePlayerRows = Math.min(maxPlayerRows, totalPlayerRows);
+
+  const visiblePlayers = Math.min(
+    server.PlayerSlots.Used,
+    visiblePlayerRows * playersPerRow
+  );
+  const hiddenPlayers = server.PlayerSlots.Used - visiblePlayers;
+
+  return {
+    visible: visiblePlayers,
+    hidden: hiddenPlayers,
+  };
 };
 
 const gameTimeProgress = (minutesRemaining) => {

@@ -1,9 +1,8 @@
 import React from "react";
-import { Formik, Field } from "formik";
 import { connect } from "react-redux";
-import slice from "./slice";
-
-import { regions } from "../../common/regions";
+import { Field, Formik } from "formik";
+import { regions } from "../data/regions.js";
+import { updateFilters } from "./filtersSlice.js";
 
 const FilterForm = (props) => {
   const { values, onValidate } = props;
@@ -82,10 +81,10 @@ const Filters = (props) => {
   return <FilterForm values={formValues} onValidate={handleValidate} />;
 };
 const mapStateToProps = (state) => ({
-  formValues: state.browser.ui.filters,
+  formValues: state.filters,
 });
 const mapDispatchToProps = {
-  handleFormChange: slice.actions.updateFilters,
+  handleFormChange: updateFilters,
 };
 const FilterFormComponent = connect(
   mapStateToProps,

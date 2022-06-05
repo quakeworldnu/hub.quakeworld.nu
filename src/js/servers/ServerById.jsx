@@ -1,14 +1,15 @@
 import React from "react";
-import FavoriteToggle from "./FavoriteToggle";
-import { Scoreboard } from "./Scoreboard";
-import { QuakeText } from "./Common";
-import { copyToClipboard } from "../../common/clipboard";
-import { pluralize } from "../../common/text.js";
-import { TextBlur } from "../Animations/Text.jsx";
+import FavoriteToggle from "./FavoriteToggle.jsx";
+import { Scoreboard } from "./Scoreboard.jsx";
+import { QuakeText } from "./QuakeText.jsx";
+import copyToClipboard from "copy-text-to-clipboard";
+import { pluralize } from "../common/text.js";
+import { TextBlur } from "../TextAnimations.jsx";
+import { useSelector } from "react-redux";
+import { selectServerById } from "../services/qws/servers.js";
 
 const ServerProgress = React.memo((props) => {
   const { value, max } = props;
-
   const progress = 100 * (value / max);
   const width = `${progress}%`;
 
@@ -172,11 +173,12 @@ const SpectatorButtons = (props) => {
           </div>
         )}
 
-        {false && server.streams.map((stream) => (
-          <div className="column is-narrow" key={stream.channel}>
-            <StreamButton channel={stream.channel} />
-          </div>
-        ))}
+        {false &&
+          server.streams.map((stream) => (
+            <div className="column is-narrow" key={stream.channel}>
+              <StreamButton channel={stream.channel} />
+            </div>
+          ))}
       </div>
     </div>
   );
@@ -207,8 +209,7 @@ const ServerFooter = (props) => {
     <div className="server-footer p-3">
       <SpectatorButtons server={server} />
 
-      <div
-        className="columns is-mobile is-vcentered app-text-small is-multiline">
+      <div className="columns is-mobile is-vcentered app-text-small is-multiline">
         <div className="column">
           <div
             className="server-address"
@@ -287,9 +288,9 @@ const getModifiers = (server) => {
 
   return modifiers;
 };
-export const Server = (props) => {
-  const { server } = props;
 
+export function ServerById({ id }) {
+  const server = useSelector((state) => selectServerById(state, id));
   const modifiers = getModifiers(server);
   const wrapperClassNames = modifiers.join(" ");
 
@@ -302,4 +303,4 @@ export const Server = (props) => {
       </div>
     </div>
   );
-};
+}

@@ -1,10 +1,10 @@
-import { regions } from "./regions.js";
+import { regions } from "./../../data/regions.js";
 
-export const filterServers = (servers, filters, favoriteServers) => {
+export const filterServers = (servers, filters) => {
   let result = filterServersByQuery(servers, filters.query);
 
   if (filters.isFavorite) {
-    result = result.filter((s) => favoriteServers.includes(s.Address));
+    result = result.filter((s) => filters.favoriteServers.includes(s.Address));
   }
 
   if (filters.isStarted) {
@@ -23,7 +23,7 @@ export const filterServers = (servers, filters, favoriteServers) => {
   return result;
 };
 
-export const filterServersByQuery = (servers, query) => {
+const filterServersByQuery = (servers, query) => {
   const minQueryLength = 2;
 
   if (query.length < minQueryLength) {
