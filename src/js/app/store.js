@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 //import { setupListeners } from '@reduxjs/toolkit/query'
-import { qwsSlice } from "./services/qws/qws.js";
-import filtersSlice from "./Servers/filtersSlice.js";
+import { qwsSlice } from "../services/qws/qws.js";
+import filtersSlice from "../servers/filtersSlice.js";
 
 export const store = configureStore({
   reducer: {

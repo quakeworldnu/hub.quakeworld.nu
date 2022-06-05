@@ -1,4 +1,4 @@
-import { pluralize } from "./../../util/text";
+import { pluralize } from "../../common/text";
 
 export const transformResponseData = (data) => {
   const servers = data;

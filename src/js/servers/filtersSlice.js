@@ -1,4 +1,4 @@
-import storage from "../util/storage.js";
+import storage from "../common/storage.js";
 import { createSlice } from "@reduxjs/toolkit";
 
 const getDefaultState = () => ({
