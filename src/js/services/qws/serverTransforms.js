@@ -38,10 +38,17 @@ const metaByServer = (server) => {
   let addressTitle;
 
   if ("hostname" in server.Settings) {
-    addressTitle = stripNonAscii(server.Settings.hostname)
-      .trim()
-      .replace(/ \(.+ vs. .+\)$/gm, "")
-      .trim();
+    if (
+      "hostname_parsed" in server.Settings &&
+      server.Settings["hostname_parsed"] !== server.Address
+    ) {
+      addressTitle = server.Settings["hostname_parsed"];
+    } else {
+      addressTitle = stripNonAscii(server.Settings.hostname)
+        .trim()
+        .replace(/ \(.+ vs. .+\)$/gm, "")
+        .trim();
+    }
   } else {
     addressTitle = server.Address;
   }
