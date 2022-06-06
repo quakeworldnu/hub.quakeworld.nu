@@ -35,7 +35,7 @@ function startPollingDataSources() {
   store.dispatch(
     streamsSlice.endpoints.getStreams.initiate(
       {},
-      { subscriptionOptions: { pollingInterval: 15000 } }
+      { subscriptionOptions: { pollingInterval: 15500 } }
     )
   );
 
