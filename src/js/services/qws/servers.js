@@ -15,7 +15,7 @@ export const serversSlice = qwsSlice.injectEndpoints({
   overrideExisting: true,
   endpoints: (builder) => ({
     getMvdsv: builder.query({
-      query: () => "mvdsv",
+      query: () => "mvdsv?limit=30",
       transformResponse: (responseData) => {
         return serversAdapter.setAll(
           initialState,
