@@ -213,7 +213,7 @@ const ServerFooter = (props) => {
         <div className="column">
           <div
             className="server-address"
-            onClick={() => copyToClipboard(server.Address)}
+            onClick={() => copyToClipboard(server.Settings.hostname_parsed)}
             title="Copy IP to clipboard"
           >
             <ServerAddressTitle
