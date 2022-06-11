@@ -13,7 +13,7 @@ const AppHeader = () => {
       <div className="columns is-mobile is-vcentered is-multiline">
         <div className="column is-narrow">
           <a
-            href="/home/vikpe/code/qw-server-browser/public"
+            href="/"
             className="is-flex"
             id="app-logo-link"
           >
