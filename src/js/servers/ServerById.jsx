@@ -29,8 +29,8 @@ const ServerHeader = (props) => {
         <ServerStatus
           mode={server.mode}
           map={server.settings.map}
-          status={server.status}
-          statusText={server.meta.statusText}
+          statusName={server.status.name}
+          statusDescription={server.status.description}
         />
         {server.player_slots.free > 0 && (
           <a href={`qw://${server.address}/`} className="button is-primary">
@@ -39,7 +39,7 @@ const ServerHeader = (props) => {
         )}
       </div>
       {server.time.total > 0 &&
-        ["Started", "Countdown"].includes(server.status) && (
+        ["Started", "Countdown"].includes(server.status.name) && (
           <ServerProgress value={server.time.elapsed} max={server.time.total} />
         )}
     </div>
@@ -47,7 +47,7 @@ const ServerHeader = (props) => {
 };
 
 const ServerStatus = React.memo((props) => {
-  const { mode, map, status, statusText } = props;
+  const { mode, map, statusName, statusDescription } = props;
 
   return (
     <div>
@@ -60,17 +60,17 @@ const ServerStatus = React.memo((props) => {
       </strong>
       <div className="app-text-small">
         <span className="server-status mr-1">
-          {["Started", "Countdown"].includes(status) && (
+          {["Started", "Countdown"].includes(statusName) && (
             <span className="tag is-danger">LIVE</span>
           )}{" "}
-          {"Standby" === status && (
+          {"Standby" === statusName && (
             <div className="indicator-waiting-container">
               <div className="indicator-waiting" />
             </div>
           )}
         </span>
 
-        <span>{statusText}</span>
+        <span>{statusDescription}</span>
       </div>
     </div>
   );

@@ -55,7 +55,7 @@ const metaByServer = (server) => {
 
   const spectatorText = calcSpectatorText(spectator_names);
 
-  const isStarted = "Started" === server.status;
+  const isStarted = "Started" === server.status.name;
   const score =
     "ffa" === server.mode
       ? server.players.length
@@ -69,7 +69,6 @@ const metaByServer = (server) => {
     spectatorText,
     spectator_count: spectator_names.length,
     score,
-    statusText: statusTextByServer(server),
   };
 
   const maxRowCount = 8;
@@ -115,46 +114,4 @@ const calcPlayerDisplay = (server, maxRows) => {
     visible: visiblePlayers,
     hidden: hiddenPlayers,
   };
-};
-
-const gameTimeProgress = (minutesRemaining) => {
-  if (minutesRemaining) {
-    return `${minutesRemaining} min left`;
-  } else {
-    return "";
-  }
-};
-
-const statusTextByServer = (server) => {
-  const status = [];
-
-  let isFfa = "ffa" === server.mode;
-  let isRace = "race" === server.mode;
-
-  if (isFfa || isRace) {
-    status.push(
-      `${server.player_slots.used} of ${server.player_slots.total} players`
-    );
-
-    if (isFfa) {
-      status.push(gameTimeProgress(server.time.remaining));
-    }
-  } else {
-    if ("Standby" === server.status) {
-      if (server.player_slots.free > 0) {
-        status.push(
-          `Waiting for ${server.player_slots.free} ${pluralize(
-            "player",
-            server.player_slots.free
-          )}`
-        );
-      } else {
-        status.push("Waiting for players to ready up");
-      }
-    } else {
-      status.push(gameTimeProgress(server.time.remaining));
-    }
-  }
-
-  return status.filter((p) => p).join(", ");
 };
