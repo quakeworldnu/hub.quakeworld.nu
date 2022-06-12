@@ -5,9 +5,9 @@ export const compareServers = (a, b) => {
     return 1;
   }
 
-  if (a.Address < b.Address) {
+  if (a.address < b.address) {
     return -1;
-  } else if (a.Address > b.Address) {
+  } else if (a.address > b.address) {
     return 1;
   }
 

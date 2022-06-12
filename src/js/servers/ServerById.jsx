@@ -27,20 +27,20 @@ const ServerHeader = (props) => {
     <div className="server-header">
       <div className="is-flex is-justify-content-space-between p-3">
         <ServerStatus
-          mode={server.Mode}
-          map={server.Settings.map}
-          status={server.Status}
+          mode={server.mode}
+          map={server.settings.map}
+          status={server.status}
           statusText={server.meta.statusText}
         />
-        {server.PlayerSlots.Free > 0 && (
-          <a href={`qw://${server.Address}/`} className="button is-primary">
+        {server.player_slots.free > 0 && (
+          <a href={`qw://${server.address}/`} className="button is-primary">
             Play
           </a>
         )}
       </div>
-      {server.Time.Total > 0 &&
-        ["Started", "Countdown"].includes(server.Status) && (
-          <ServerProgress value={server.Time.Elapsed} max={server.Time.Total} />
+      {server.time.total > 0 &&
+        ["Started", "Countdown"].includes(server.status) && (
+          <ServerProgress value={server.time.elapsed} max={server.time.total} />
         )}
     </div>
   );
@@ -79,8 +79,8 @@ const ServerStatus = React.memo((props) => {
 const ServerMapshot = (props) => {
   const { server } = props;
 
-  const mapThumbnailSrc = server.Settings.map
-    ? `url(https://vikpe.org/qw-mapshots/${server.Settings.map}.jpg)`
+  const mapThumbnailSrc = server.settings.map
+    ? `url(https://vikpe.org/qw-mapshots/${server.settings.map}.jpg)`
     : "none";
 
   return (
@@ -90,9 +90,9 @@ const ServerMapshot = (props) => {
         style={{ backgroundImage: mapThumbnailSrc }}
       >
         <div className="server-mapshot-dimmer">
-          {"matchtag" in server.Settings && (
+          {"matchtag" in server.settings && (
             <div className="server-matchtag mb-4">
-              {server.Settings.matchtag}
+              {server.settings.matchtag}
             </div>
           )}
           <Scoreboard
@@ -145,28 +145,28 @@ const SpectatorButtons = (props) => {
       <div className="columns is-mobile is-vcentered is-multiline">
         <div className="column">
           <a
-            href={`qw://${server.Address}/observe`}
+            href={`qw://${server.address}/observe`}
             className="button is-fullwidth is-small is-dark"
           >
             Spectate{" "}
-            {server.SpectatorSlots.Used > 0 && (
+            {server.spectator_slots.used > 0 && (
               <span className="ml-1 app-dim">
-                ({server.SpectatorSlots.Used})
+                ({server.spectator_slots.used})
               </span>
             )}
           </a>
         </div>
 
-        {server.QtvStream.Address !== "" && (
+        {server.qtv_stream.address !== "" && (
           <div className="column">
             <a
-              href={`qw://${server.QtvStream.Url}/qtvplay`}
+              href={`qw://${server.qtv_stream.url}/qtvplay`}
               className="button is-fullwidth is-small is-dark"
             >
               QTV
-              {server.QtvStream.SpectatorCount > 0 && (
+              {server.qtv_stream.spectator_count > 0 && (
                 <span className="ml-1 app-dim">
-                  ({server.QtvStream.SpectatorCount})
+                  ({server.qtv_stream.spectator_count})
                 </span>
               )}
             </a>
@@ -213,11 +213,11 @@ const ServerFooter = (props) => {
         <div className="column">
           <div
             className="server-address"
-            onClick={() => copyToClipboard(server.Settings.hostname_parsed)}
+            onClick={() => copyToClipboard(server.settings.hostname_parsed)}
             title="Copy IP to clipboard"
           >
             <ServerAddressTitle
-              cc={server.Geo.CC}
+              cc={server.geo.cc}
               title={server.meta.addressTitle}
             />
             <img
@@ -227,12 +227,12 @@ const ServerFooter = (props) => {
             />
           </div>
         </div>
-        {server.Settings.ktxver && (
-          <KtxVersion version={server.Settings.ktxver} />
+        {server.settings.ktxver && (
+          <KtxVersion version={server.settings.ktxver} />
         )}
 
         <div className="column is-narrow pl-0">
-          <FavoriteToggle serverAddress={server.Address} />
+          <FavoriteToggle serverAddress={server.address} />
         </div>
       </div>
     </div>
@@ -272,7 +272,7 @@ const KtxVersion = React.memo((props) => {
 const getModifiers = (server) => {
   const modifiers = ["server-wrapper"];
 
-  if ("matchtag" in server.Settings) {
+  if ("matchtag" in server.settings) {
     modifiers.push("smod-matchtag");
   }
 
@@ -280,8 +280,8 @@ const getModifiers = (server) => {
     modifiers.push("smod-started");
   }
 
-  if (server.PlayerSlots.Free > 0) {
-    modifiers.push("smod-hasfreeplayerslots");
+  if (server.player_slots.free > 0) {
+    modifiers.push("smod-hasfreeplayer_slots");
   } else if (server.meta.isStandBy) {
     modifiers.push("smod-waitingforready");
   }

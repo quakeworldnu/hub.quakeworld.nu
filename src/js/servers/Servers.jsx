@@ -16,7 +16,7 @@ export default function Servers() {
     <>
       <div className="app-grid" ref={parent}>
         {servers.map((server) => (
-          <ServerById key={server.Address} id={server.Address} />
+          <ServerById key={server.address} id={server.address} />
         ))}
       </div>
     </>

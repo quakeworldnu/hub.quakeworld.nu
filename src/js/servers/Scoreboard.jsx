@@ -6,41 +6,41 @@ import { ColoredFrags } from "./ColoredFrags.jsx";
 export const Scoreboard = (props) => {
   const { server, limit = 20 } = props;
 
-  if (!server.PlayerSlots.Used || 0 === limit) {
+  if (!server.player_slots.used || 0 === limit) {
     return null;
   }
 
-  if ("1on1" === server.Mode || 2 === server.Teams.length) {
+  if ("1on1" === server.mode || 2 === server.teams.length) {
     return (
       <TwoColumnScoreboard
-        players={server.Players}
-        teams={server.Teams}
+        players={server.players}
+        teams={server.teams}
         limit={limit}
       />
     );
   } else {
     return (
       <OneColumnScoreboard
-        players={server.Players.slice(0, limit)}
-        showTeam={"teamplay" in server.Settings && server.Settings.teamplay > 0}
+        players={server.players.slice(0, limit)}
+        showTeam={"teamplay" in server.settings && server.settings.teamplay > 0}
       />
     );
   }
 };
 
 const ItemRow = (props) => {
-  const { Name, NameColor, Frags, Colors, Team, TeamColor, showTeam } = props;
+  const { name, name_color, frags, colors, team, team_color, showTeam } = props;
 
   const columns = [
-    <ColoredFrags tag="div" frags={Frags} colors={Colors} key="frags" />,
+    <ColoredFrags tag="div" frags={frags} colors={colors} key="frags" />,
   ];
 
   if (showTeam) {
     columns.push(
       <QuakeText
         tag="div"
-        text={Team}
-        color={TeamColor}
+        text={team}
+        color={team_color}
         className="sc-team"
         key="team"
       />
@@ -50,15 +50,15 @@ const ItemRow = (props) => {
   columns.push(
     <QuakeText
       tag="div"
-      text={Name}
-      color={NameColor}
+      text={name}
+      color={name_color}
       className="sc-name"
       key="name"
     />
   );
 
   const keyPrefix = "Players" in props ? "team" : "player";
-  const key = `${keyPrefix}-${NameColor}-${Name}`;
+  const key = `${keyPrefix}-${name_color}-${name}`;
 
   return (
     <div className="sc-row" key={key}>
@@ -82,7 +82,7 @@ export const OneColumnScoreboard = (props) => {
           <ItemRow
             {...player}
             showTeam={showTeam}
-            key={`${player.NameColor}-${player.Name}`}
+            key={`${player.name_color}-${player.name}`}
           />
         ))}
       </div>
@@ -98,13 +98,13 @@ export const TwoColumnScoreboard = (props) => {
   if (teams.length > 0) {
     items = items.concat(teams);
 
-    let rowCount = Math.max(...teams.map((t) => t.Players.length));
+    let rowCount = Math.max(...teams.map((t) => t.players.length));
     rowCount = Math.min(rowCount, Math.ceil(limit / 2));
 
     for (let rowIndex = 0; rowIndex < rowCount; rowIndex++) {
       for (let teamIndex = 0; teamIndex < teams.length; teamIndex++) {
-        if (rowIndex < teams[teamIndex].Players.length) {
-          items.push(teams[teamIndex].Players[rowIndex]);
+        if (rowIndex < teams[teamIndex].players.length) {
+          items.push(teams[teamIndex].players[rowIndex]);
         } else {
           items.push(null);
         }

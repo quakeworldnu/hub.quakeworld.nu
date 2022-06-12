@@ -5,7 +5,7 @@ import { filterServers } from "./serverFilters.js";
 import { compareServers } from "./serverSort.js";
 
 const serversAdapter = createEntityAdapter({
-  selectId: (server) => server.Address,
+  selectId: (server) => server.address,
   sortComparer: compareServers,
 });
 const initialState = serversAdapter.getInitialState();
@@ -15,7 +15,7 @@ export const serversSlice = qwsSlice.injectEndpoints({
   overrideExisting: true,
   endpoints: (builder) => ({
     getMvdsv: builder.query({
-      query: () => "mvdsv?limit=50",
+      query: () => "mvdsv",
       transformResponse: (responseData) => {
         return serversAdapter.setAll(
           initialState,

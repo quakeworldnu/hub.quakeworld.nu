@@ -8,22 +8,22 @@ export default function Overview() {
   const serverCount = servers.length;
 
   let playerCount = 0;
-  let spectatorCount = 0;
+  let spectator_count = 0;
 
   for (let i = 0; i < serverCount; i++) {
     let server = servers[i];
-    playerCount += server.PlayerSlots.Used;
-    spectatorCount += server.SpectatorSlots.Used;
+    playerCount += server.player_slots.used;
+    spectator_count += server.spectator_slots.used;
 
-    if ("" !== server.QtvStream.Address) {
-      spectatorCount += server.QtvStream.SpectatorCount;
+    if ("" !== server.qtv_stream.address) {
+      spectator_count += server.qtv_stream.spectator_count;
     }
   }
 
   return (
     <OverviewStats
       players={playerCount}
-      spectators={spectatorCount}
+      spectators={spectator_count}
       servers={serverCount}
     />
   );

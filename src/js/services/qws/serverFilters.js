@@ -4,7 +4,7 @@ export const filterServers = (servers, filters) => {
   let result = filterServersByQuery(servers, filters.query);
 
   if (filters.isFavorite) {
-    result = result.filter((s) => filters.favoriteServers.includes(s.Address));
+    result = result.filter((s) => filters.favoriteServers.includes(s.address));
   }
 
   if (filters.isStarted) {
@@ -13,10 +13,10 @@ export const filterServers = (servers, filters) => {
 
   if (filters.regionName) {
     if ("Undefined" === filters.regionName) {
-      result = result.filter((s) => "" === s.Geo.Region);
+      result = result.filter((s) => "" === s.geo.region);
     } else {
       const regionCountryCodes = regions[filters.regionName];
-      result = result.filter((s) => regionCountryCodes.includes(s.Geo.CC));
+      result = result.filter((s) => regionCountryCodes.includes(s.geo.cc));
     }
   }
 

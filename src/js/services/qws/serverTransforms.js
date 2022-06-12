@@ -5,11 +5,11 @@ export const transformResponseData = (data) => {
 
   // ignore [ServeMe]
   for (let i = 0; i < servers.length; i++) {
-    const index = servers[i].SpectatorNames.indexOf("[ServeMe]");
+    const index = servers[i].spectator_names.indexOf("[ServeMe]");
 
     if (index !== -1) {
-      servers[i].SpectatorNames.splice(index, 1);
-      servers[i].SpectatorSlots.Used--;
+      servers[i].spectator_names.splice(index, 1);
+      servers[i].spectator_slots.used--;
     }
   }
 
@@ -22,13 +22,13 @@ export const transformResponseData = (data) => {
 };
 
 const metaByServer = (server) => {
-  let clientNames = server.Players.map((p) => p.Name) + server.SpectatorNames;
-  let spectatorNames = server.SpectatorNames.concat(
-    server.QtvStream.SpectatorNames
+  let clientNames = server.players.map((p) => p.name) + server.spectator_names;
+  let spectator_names = server.spectator_names.concat(
+    server.qtv_stream.spectator_names
   );
-  let keywords = [server.Mode, server.Settings.map]
+  let keywords = [server.mode, server.settings.map]
     .concat(clientNames)
-    .concat(spectatorNames);
+    .concat(spectator_names);
 
   keywords = keywords
     .filter((p) => p !== "")
@@ -37,29 +37,29 @@ const metaByServer = (server) => {
 
   let addressTitle;
 
-  if ("hostname" in server.Settings) {
+  if ("hostname" in server.settings) {
     if (
-      "hostname_parsed" in server.Settings &&
-      server.Settings["hostname_parsed"] !== server.Address
+      "hostname_parsed" in server.settings &&
+      server.settings["hostname_parsed"] !== server.address
     ) {
-      addressTitle = server.Settings["hostname_parsed"];
+      addressTitle = server.settings["hostname_parsed"];
     } else {
-      addressTitle = stripNonAscii(server.Settings.hostname)
+      addressTitle = stripNonAscii(server.settings.hostname)
         .trim()
         .replace(/ \(.+ vs. .+\)$/gm, "")
         .trim();
     }
   } else {
-    addressTitle = server.Address;
+    addressTitle = server.address;
   }
 
-  const spectatorText = calcSpectatorText(spectatorNames);
+  const spectatorText = calcSpectatorText(spectator_names);
 
-  const isStarted = "Started" === server.Status;
+  const isStarted = "Started" === server.status;
   const score =
-    "ffa" === server.Mode
-      ? server.Players.length
-      : 2 * server.Players.length + 6 * spectatorNames.length;
+    "ffa" === server.mode
+      ? server.players.length
+      : 2 * server.players.length + 6 * spectator_names.length;
 
   const meta = {
     isStarted,
@@ -67,7 +67,7 @@ const metaByServer = (server) => {
     addressTitle,
     keywords,
     spectatorText,
-    spectatorCount: spectatorNames.length,
+    spectator_count: spectator_names.length,
     score,
     statusText: statusTextByServer(server),
   };
@@ -95,21 +95,21 @@ const calcSpectatorText = (spectators) => {
 };
 
 const calcPlayerDisplay = (server, maxRows) => {
-  const showAsTwoColumns = "1on1" === server.Mode || 2 === server.Teams.length;
+  const showAsTwoColumns = "1on1" === server.mode || 2 === server.teams.length;
 
   const miscRowCount =
-    Number("matchtag" in server.Settings) + Number(showAsTwoColumns);
+    Number("matchtag" in server.settings) + Number(showAsTwoColumns);
   const maxPlayerRows = Math.max(0, maxRows - miscRowCount);
 
   const playersPerRow = showAsTwoColumns ? 2 : 1;
-  const totalPlayerRows = Math.ceil(server.PlayerSlots.Used / playersPerRow);
+  const totalPlayerRows = Math.ceil(server.player_slots.used / playersPerRow);
   const visiblePlayerRows = Math.min(maxPlayerRows, totalPlayerRows);
 
   const visiblePlayers = Math.min(
-    server.PlayerSlots.Used,
+    server.player_slots.used,
     visiblePlayerRows * playersPerRow
   );
-  const hiddenPlayers = server.PlayerSlots.Used - visiblePlayers;
+  const hiddenPlayers = server.player_slots.used - visiblePlayers;
 
   return {
     visible: visiblePlayers,
@@ -128,31 +128,31 @@ const gameTimeProgress = (minutesRemaining) => {
 const statusTextByServer = (server) => {
   const status = [];
 
-  let isFfa = "ffa" === server.Mode;
-  let isRace = "race" === server.Mode;
+  let isFfa = "ffa" === server.mode;
+  let isRace = "race" === server.mode;
 
   if (isFfa || isRace) {
     status.push(
-      `${server.PlayerSlots.Used} of ${server.PlayerSlots.Total} players`
+      `${server.player_slots.used} of ${server.player_slots.total} players`
     );
 
     if (isFfa) {
-      status.push(gameTimeProgress(server.Time.Remaining));
+      status.push(gameTimeProgress(server.time.remaining));
     }
   } else {
-    if ("Standby" === server.Status) {
-      if (server.PlayerSlots.Free > 0) {
+    if ("Standby" === server.status) {
+      if (server.player_slots.free > 0) {
         status.push(
-          `Waiting for ${server.PlayerSlots.Free} ${pluralize(
+          `Waiting for ${server.player_slots.free} ${pluralize(
             "player",
-            server.PlayerSlots.Free
+            server.player_slots.free
           )}`
         );
       } else {
         status.push("Waiting for players to ready up");
       }
     } else {
-      status.push(gameTimeProgress(server.Time.Remaining));
+      status.push(gameTimeProgress(server.time.remaining));
     }
   }
 

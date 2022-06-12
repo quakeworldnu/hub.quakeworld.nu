@@ -61,7 +61,7 @@ $color-join: #2397d1;
     @include app-smod($matchtag-bg, 64px);
   }
 
-  &.smod-hasfreeplayerslots {
+  &.smod-hasfreeplayer_slots {
     @include app-smod($color-join, 32px);
   }
 }
