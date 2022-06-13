@@ -19,26 +19,6 @@ export default function Streams() {
           <StreamById key={stream.channel} id={stream.channel} />
         </div>
       ))}
-      {streams.map((stream) => (
-        <div className="column is-narrow my-2 mr-3">
-          <StreamById key={stream.channel} id={stream.channel} />
-        </div>
-      ))}
-      {streams.map((stream) => (
-        <div className="column is-narrow my-2 mr-3">
-          <StreamById key={stream.channel} id={stream.channel} />
-        </div>
-      ))}
-      {streams.map((stream) => (
-        <div className="column is-narrow my-2 mr-3">
-          <StreamById key={stream.channel} id={stream.channel} />
-        </div>
-      ))}
-      {streams.map((stream) => (
-        <div className="column is-narrow my-2 mr-3">
-          <StreamById key={stream.channel} id={stream.channel} />
-        </div>
-      ))}
     </div>
   );
 }
@@ -65,7 +45,7 @@ const StreamById = ({ id }) => {
       </span>
 
       <span className="app-dim-light app-text-small app-stream-title ml-2">
-        <TextBlur key="title" value={title} /> {title}
+        <TextBlur key="title" value={title} />
       </span>
     </a>
   );
