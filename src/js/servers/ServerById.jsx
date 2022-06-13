@@ -83,10 +83,6 @@ const ServerMapshot = (props) => {
     ? `url(https://vikpe.org/qw-mapshots/${server.settings.map}.jpg)`
     : "none";
 
-  const showMatchtag =
-    "matchtag" in server.settings &&
-    server.title.includes(server.settings.matchtag);
-
   return (
     <div className="server-mapshot-wrapper">
       <div
@@ -94,7 +90,7 @@ const ServerMapshot = (props) => {
         style={{ backgroundImage: mapThumbnailSrc }}
       >
         <div className="server-mapshot-dimmer">
-          {showMatchtag && (
+          {server.meta.showMatchtag && (
             <div className="server-matchtag mb-4">
               {server.settings.matchtag}
             </div>
@@ -276,7 +272,7 @@ const KtxVersion = React.memo((props) => {
 const getModifiers = (server) => {
   const modifiers = ["server-wrapper"];
 
-  if ("matchtag" in server.settings) {
+  if (server.meta.showMatchtag) {
     modifiers.push("smod-matchtag");
   }
 

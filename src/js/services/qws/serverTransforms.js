@@ -68,6 +68,8 @@ const metaByServer = (server) => {
     keywords,
     spectatorText,
     spectator_count: spectator_names.length,
+    showMatchtag: "matchtag" in server.settings &&
+      server.title.includes(server.settings.matchtag),
     score,
   };
 
