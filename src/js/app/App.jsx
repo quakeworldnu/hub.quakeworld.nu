@@ -15,12 +15,13 @@ const AppHeader = () => {
             <img src="/assets/img/qtvlogo.svg" width="82" height="59" />
           </a>
         </div>
-        <div className="column has-text-right-desktop">
+        <div className="column is-8-mobile is-9-tablet is-10-desktop is-10-widescreen is-narrow-fullhd">
           <ServerOverview />
         </div>
+        <div className="column">
+          <Streams />
+        </div>
       </div>
-
-      <Streams />
     </div>
   );
 };
