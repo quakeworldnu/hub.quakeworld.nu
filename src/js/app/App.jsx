@@ -1,10 +1,9 @@
 import React from "react";
-import ServerFilters from "../servers/Filters.jsx";
+import store from "./store.js";
+import { streamsSlice } from "../services/qws/streams.js";
+import { serversSlice } from "../services/qws/servers.js";
 import ServerOverview from "../servers/Overview.jsx";
 import Streams from "../Streams.jsx";
-import { streamsSlice } from "../services/qws/streams.js";
-import store from "./store.js";
-import { serversSlice } from "../services/qws/servers.js";
 import Servers from "../servers/Servers.jsx";
 
 const AppHeader = () => {
@@ -16,7 +15,6 @@ const AppHeader = () => {
             <img src="/assets/img/qtvlogo.svg" width="82" height="59" />
           </a>
         </div>
-        <ServerFilters />
         <div className="column has-text-right-desktop">
           <ServerOverview />
         </div>

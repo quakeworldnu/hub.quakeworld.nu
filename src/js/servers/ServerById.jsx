@@ -1,12 +1,11 @@
 import React from "react";
-import FavoriteToggle from "./FavoriteToggle.jsx";
+import { useSelector } from "react-redux";
+import copyToClipboard from "copy-text-to-clipboard";
+import { selectServerById } from "../services/qws/servers.js";
 import { Scoreboard } from "./Scoreboard.jsx";
 import { QuakeText } from "./QuakeText.jsx";
-import copyToClipboard from "copy-text-to-clipboard";
 import { pluralize } from "../common/text.js";
 import { TextBlur } from "../TextAnimations.jsx";
-import { useSelector } from "react-redux";
-import { selectServerById } from "../services/qws/servers.js";
 
 const ServerProgress = React.memo((props) => {
   const { value, max } = props;
@@ -209,7 +208,8 @@ const ServerFooter = (props) => {
     <div className="server-footer p-3">
       <SpectatorButtons server={server} />
 
-      <div className="columns is-mobile is-vcentered app-text-small is-multiline">
+      <div
+        className="columns is-mobile is-vcentered app-text-small is-multiline">
         <div className="column">
           <div
             className="server-address"
@@ -230,10 +230,6 @@ const ServerFooter = (props) => {
         {server.settings.ktxver && (
           <KtxVersion version={server.settings.ktxver} />
         )}
-
-        <div className="column is-narrow pl-0">
-          <FavoriteToggle serverAddress={server.address} />
-        </div>
       </div>
     </div>
   );

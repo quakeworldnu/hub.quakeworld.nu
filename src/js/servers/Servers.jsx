@@ -1,12 +1,12 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { ServerById } from "./ServerById.jsx";
-import { useSelector } from "react-redux";
-import { selectFilteredServers } from "../services/qws/servers.js";
+import { selectAllServers } from "../services/qws/servers.js";
 
 export default function Servers() {
   const [parent] = useAutoAnimate();
-  const servers = useSelector(selectFilteredServers);
+  const servers = useSelector(selectAllServers);
 
   if (0 === servers.length) {
     return <div ref={parent} />;

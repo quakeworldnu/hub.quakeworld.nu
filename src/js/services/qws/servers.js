@@ -1,7 +1,6 @@
 import { qwsSlice } from "./qws.js";
 import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
 import { transformResponseData } from "./serverTransforms.js";
-import { filterServers } from "./serverFilters.js";
 import { compareServers } from "./serverSort.js";
 
 const serversAdapter = createEntityAdapter({
@@ -36,8 +35,3 @@ export const { selectAll: selectAllServers, selectById: selectServerById } =
   serversAdapter.getSelectors(
     (state) => selectServersData(state) ?? initialState
   );
-
-export const selectFilteredServers = createSelector(
-  [selectAllServers, (state) => state.filters],
-  (servers, filters) => filterServers(servers, filters)
-);

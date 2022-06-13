@@ -1,5 +1,3 @@
-import { pluralize } from "../../common/text";
-
 export const transformResponseData = (data) => {
   const servers = data;
 
@@ -22,18 +20,9 @@ export const transformResponseData = (data) => {
 };
 
 const metaByServer = (server) => {
-  let clientNames = server.players.map((p) => p.name) + server.spectator_names;
   let spectator_names = server.spectator_names.concat(
     server.qtv_stream.spectator_names
   );
-  let keywords = [server.mode, server.settings.map]
-    .concat(clientNames)
-    .concat(spectator_names);
-
-  keywords = keywords
-    .filter((p) => p !== "")
-    .join(" ")
-    .toLowerCase();
 
   let addressTitle;
 
@@ -65,10 +54,10 @@ const metaByServer = (server) => {
     isStarted,
     isStandBy: !isStarted,
     addressTitle,
-    keywords,
     spectatorText,
     spectator_count: spectator_names.length,
-    showMatchtag: "matchtag" in server.settings &&
+    showMatchtag:
+      "matchtag" in server.settings &&
       server.title.includes(server.settings.matchtag),
     score,
   };

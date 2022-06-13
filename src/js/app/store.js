@@ -1,12 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 //import { setupListeners } from '@reduxjs/toolkit/query'
 import { qwsSlice } from "../services/qws/qws.js";
-import filtersSlice from "../servers/filtersSlice.js";
 
 export const store = configureStore({
   reducer: {
     // Add the generated reducer as a specific top-level slice
-    [filtersSlice.name]: filtersSlice.reducer,
     [qwsSlice.reducerPath]: qwsSlice.reducer,
   },
   // Adding the api middleware enables caching, invalidation, polling,
