@@ -83,6 +83,10 @@ const ServerMapshot = (props) => {
     ? `url(https://vikpe.org/qw-mapshots/${server.settings.map}.jpg)`
     : "none";
 
+  const showMatchtag =
+    "matchtag" in server.settings &&
+    server.title.includes(server.settings.matchtag);
+
   return (
     <div className="server-mapshot-wrapper">
       <div
@@ -90,7 +94,7 @@ const ServerMapshot = (props) => {
         style={{ backgroundImage: mapThumbnailSrc }}
       >
         <div className="server-mapshot-dimmer">
-          {"matchtag" in server.settings && (
+          {showMatchtag && (
             <div className="server-matchtag mb-4">
               {server.settings.matchtag}
             </div>
