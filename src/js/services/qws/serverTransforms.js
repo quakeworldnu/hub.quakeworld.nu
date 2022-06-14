@@ -43,12 +43,7 @@ const metaByServer = (server) => {
   }
 
   const spectatorText = calcSpectatorText(spectator_names);
-
   const isStarted = "Started" === server.status.name;
-  const score =
-    "ffa" === server.mode
-      ? server.players.length
-      : 2 * server.players.length + 6 * spectator_names.length;
 
   const meta = {
     isStarted,
@@ -59,7 +54,6 @@ const metaByServer = (server) => {
     showMatchtag:
       "matchtag" in server.settings &&
       server.title.includes(server.settings.matchtag),
-    score,
   };
 
   const maxRowCount = 8;

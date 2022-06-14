@@ -1,10 +1,21 @@
 export const compareServers = (a, b) => {
-  if (a.meta.score > b.meta.score) {
+  // score
+  if (a.score > b.score) {
     return -1;
-  } else if (a.meta.score < b.meta.score) {
+  } else if (a.score < b.score) {
     return 1;
   }
 
+  // geo
+  let aIsInEurope = a.geo.region === "Europe";
+  let bIsInEurope = b.geo.region === "Europe";
+  if (aIsInEurope && !bIsInEurope) {
+    return -1;
+  } else if (!aIsInEurope && bIsInEurope) {
+    return 1;
+  }
+
+  // address
   if (a.address < b.address) {
     return -1;
   } else if (a.address > b.address) {
