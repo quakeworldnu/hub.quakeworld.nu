@@ -15,8 +15,8 @@ export default function Streams() {
   return (
     <div className="columns is-multiline is-gapless" ref={parent}>
       {streams.map((stream) => (
-        <div className="column is-narrow my-2 mr-3">
-          <StreamById key={stream.channel} id={stream.channel} />
+        <div className="column is-narrow my-2 mr-3" key={stream.channel}>
+          <StreamById id={stream.channel} />
         </div>
       ))}
     </div>
