@@ -1,19 +1,18 @@
 import React from "react";
 
 export const QuakeText = React.memo((props) => {
-  const { text, tag, color, className } = props;
+  const { text, tag, className } = props;
   const TagName = `${tag}`;
-  const textAsHtml = color ? quakeTextToHtml(text, color) : text;
 
   return (
-    <TagName
-      {...{ className }}
-      dangerouslySetInnerHTML={{ __html: textAsHtml }}
-    />
+    <TagName {...{ className }} dangerouslySetInnerHTML={{ __html: text }} />
   );
 });
 
-const quakeTextToHtml = (text, color) => {
+export const coloredQuakeName = (name, color) =>
+  color ? quakeTextToHtml(name, color) : name;
+
+export const quakeTextToHtml = (text, color) => {
   let result = "";
   let lastColor = "";
 

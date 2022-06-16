@@ -33,7 +33,7 @@ $spacer: .5rem;
 
     .sc-name {
       order: -1;
-      text-align: right;
+      justify-content: end;
     }
   }
 
@@ -48,9 +48,15 @@ $spacer: .5rem;
 }
 
 .sc-name {
-  max-width: 140px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+
+  & > span:first-child {
+    max-width: 140px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 }
 
 .sc-team,
@@ -66,4 +72,15 @@ $spacer: .5rem;
   font-weight: bold;
   font-size: .9em;
   padding: 1px 0;
+}
+
+.sc-label {
+  padding: 2px 3px;
+  margin-left: 3px;
+  border-radius: 3px;
+  background: #222;
+  color: #fff;
+  text-shadow: none;
+  font-size: 10px;
+  font-family: monospace;
 }

@@ -1,12 +1,12 @@
 import React from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { QuakeText } from "./QuakeText.jsx";
+import { coloredQuakeName, QuakeText, quakeTextToHtml } from "./QuakeText.jsx";
 import { ColoredFrags } from "./ColoredFrags.jsx";
 
 export const Scoreboard = (props) => {
   const { server, limit = 20 } = props;
 
-  if (!server.player_slots.used || 0 === limit) {
+  if (0 === server.player_slots.used || 0 === limit) {
     return null;
   }
 
@@ -29,7 +29,16 @@ export const Scoreboard = (props) => {
 };
 
 const ItemRow = (props) => {
-  const { name, name_color, frags, colors, team, team_color, showTeam } = props;
+  const {
+    name,
+    name_color,
+    frags,
+    colors,
+    team,
+    team_color,
+    is_bot,
+    showTeam,
+  } = props;
 
   const columns = [
     <ColoredFrags tag="div" frags={frags} colors={colors} key="frags" />,
@@ -39,22 +48,21 @@ const ItemRow = (props) => {
     columns.push(
       <QuakeText
         tag="div"
-        text={team}
-        color={team_color}
+        text={coloredQuakeName(team, team_color)}
         className="sc-team"
         key="team"
       />
     );
   }
 
+  let nameHtml = coloredQuakeName(name, name_color);
+
+  if (is_bot) {
+    nameHtml = `${nameHtml} <span class="sc-label">bot</span>`;
+  }
+
   columns.push(
-    <QuakeText
-      tag="div"
-      text={name}
-      color={name_color}
-      className="sc-name"
-      key="name"
-    />
+    <QuakeText tag="div" text={nameHtml} className="sc-name" key="name" />
   );
 
   const keyPrefix = "Players" in props ? "team" : "player";
