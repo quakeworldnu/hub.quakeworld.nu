@@ -1,5 +1,6 @@
 $frags-width: 36px;
 $spacer: .5rem;
+$bot-color: #be9888;
 
 .scoreboard {
   display: grid;
@@ -57,6 +58,14 @@ $spacer: .5rem;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
+
+  &.sc-bot {
+    color: $bot-color !important;
+
+    .qw-color-g, .qw-color-b, .qw-color-w {
+      color: $bot-color !important;
+    }
+  }
 }
 
 .sc-team,
@@ -79,7 +88,7 @@ $spacer: .5rem;
   margin-left: 3px;
   border-radius: 3px;
   background: #222;
-  color: #fff;
+  color: $bot-color;
   text-shadow: none;
   font-size: 10px;
   font-family: monospace;

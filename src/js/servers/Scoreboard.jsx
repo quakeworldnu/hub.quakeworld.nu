@@ -55,14 +55,21 @@ const ItemRow = (props) => {
     );
   }
 
+  const nameColumnClassNames = ["sc-name"];
   let nameHtml = coloredQuakeName(name, name_color);
 
   if (is_bot) {
     nameHtml = `${nameHtml} <span class="sc-label">bot</span>`;
+    nameColumnClassNames.push("sc-bot");
   }
 
   columns.push(
-    <QuakeText tag="div" text={nameHtml} className="sc-name" key="name" />
+    <QuakeText
+      tag="div"
+      text={nameHtml}
+      className={nameColumnClassNames.join(" ")}
+      key="name"
+    />
   );
 
   const keyPrefix = "Players" in props ? "team" : "player";
