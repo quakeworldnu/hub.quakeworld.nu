@@ -33,3 +33,4 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_QWSB_4B8AB }}'
           projectId: qwsb-4b8ab
+          channelId: live
