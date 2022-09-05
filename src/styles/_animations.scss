@@ -62,3 +62,22 @@
   animation-name: fadeInDown;
   animation-duration: 250ms;
 }
+
+// fade in delayed
+@keyframes fadeInDelayed {
+  0% {
+    opacity: 0;
+  }
+  66% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.animation-fade-in-delayed {
+  animation-name: fadeInDelayed;
+  animation-duration: 750ms;
+  animation-fill-mode: forwards;
+}

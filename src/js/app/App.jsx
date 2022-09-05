@@ -69,10 +69,12 @@ export const App = () => {
     <>
       <AppHeader />
       <Servers />
-      <hr className="my-6" />
-      <Events />
-      <hr />
-      <AppFooter />
+      <div className="animation-fade-in-delayed">
+        <hr className="my-6" />
+        <Events />
+        <hr />
+        <AppFooter />
+      </div>
     </>
   );
 };
