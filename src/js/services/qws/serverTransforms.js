@@ -53,6 +53,7 @@ const metaByServer = (server) => {
     spectator_count: spectator_names.length,
     showMatchtag:
       "matchtag" in server.settings &&
+      !server.settings.matchtag.includes("prac") &&
       server.title.includes(server.settings.matchtag),
   };
 
