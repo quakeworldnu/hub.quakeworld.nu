@@ -11,7 +11,7 @@ $scheme-main-ter: lighten($scheme-main, 16);
 $blue: hsl(217, 71%, 53%);
 $red: hsl(348, 100%, 56%);
 $primary: $blue;
-$dark: #222;
+$dark: desaturate(lighten($scheme-main-bis, 30), 20);
 
 $background: $scheme-main-bis;
 

@@ -2,7 +2,9 @@ import React from "react";
 import store from "./store.js";
 import { streamsSlice } from "../services/qws/streams.js";
 import { serversSlice } from "../services/qws/servers.js";
+import { eventsSlice } from "../services/qws/events.js";
 import ServerOverview from "../servers/Overview.jsx";
+import Events from "../Events.jsx";
 import Streams from "../Streams.jsx";
 import Servers from "../servers/Servers.jsx";
 
@@ -26,6 +28,22 @@ const AppHeader = () => {
   );
 };
 
+const AppFooter = () => {
+  return (
+    <div className="has-text-dark columns is-gapless">
+      <div className="mb-3">
+        <a href="https://www.quakeworld.nu/">QuakeWorld.nu</a><span className="px-1"> • </span>
+        <a href="https://discord.quake.world/">Discord</a><span className="px-1"> • </span>
+        <a href="https://www.twitch.tv/quakeworld/">Twitch</a><span className="px-1"> • </span>
+        <a href="https://www.quakeworld.nu/wiki/Overview/">Wiki</a>
+      </div>
+      <div className="ml-auto">
+        <a href="https://github.com/vikpe/qw-hub">View on GitHub</a>
+      </div>
+    </div>
+  )
+}
+
 function startPollingDataSources() {
   store.dispatch(
     streamsSlice.endpoints.getStreams.initiate(
@@ -40,6 +58,8 @@ function startPollingDataSources() {
       { subscriptionOptions: { pollingInterval: 5000 } }
     )
   );
+
+  store.dispatch(eventsSlice.endpoints.getEvents.initiate({}));
 }
 
 export const App = () => {
@@ -49,6 +69,10 @@ export const App = () => {
     <>
       <AppHeader />
       <Servers />
+      <hr className="my-6" />
+      <Events />
+      <hr />
+      <AppFooter />
     </>
   );
 };
