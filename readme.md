@@ -2,7 +2,7 @@
 > To the Moon! 🚀
 
 ## Info
-* **Temporary URL**: https://qwsb-4b8ab.web.app/
+* **URL**: https://hub.quakeworld.nu/
 * **Components**: 
   * Website: HTML + [Bulma](https://bulma.io/) (front-end framework)
   * JavaScript app: es6/react/redux, built using [Vite](https://vitejs.dev/)
