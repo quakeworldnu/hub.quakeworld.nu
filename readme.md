@@ -1,4 +1,4 @@
-# QuakeWorld Server Browser [![Build and deploy](https://github.com/vikpe/qw-server-browser/actions/workflows/deploy.yml/badge.svg)](https://github.com/vikpe/qw-server-browser/actions/workflows/deploy.yml)
+# QuakeWorld Hub [![Build and deploy](https://github.com/vikpe/qw-hub/actions/workflows/deploy.yml/badge.svg)](https://github.com/vikpe/qw-hub/actions/workflows/deploy.yml)
 > To the Moon! 🚀
 
 ## Info
@@ -12,7 +12,7 @@
 ---
 
 ## Install
-1. `git clone git@github.com:vikpe/qw-server-browser.git`
+1. `git clone git@github.com:vikpe/qw-hub.git`
 1. `cd qwsb`   
 1. `yarn install`
 
