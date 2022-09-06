@@ -42,7 +42,7 @@ const AppFooter = () => {
         <span className="px-1"> • </span>
         <a href="https://www.twitch.tv/quakeworld/">Twitch</a>
         <span className="px-1"> • </span>
-        <a href="https://www.quakeworld.nu/wiki/Overview/">Wiki</a>
+        <a href="https://www.quakeworld.nu/wiki/Overview">Wiki</a>
       </div>
       <div className="ml-auto">
         <a href="https://github.com/vikpe/qw-hub">View on GitHub</a>
