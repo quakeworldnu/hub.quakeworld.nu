@@ -1,10 +1,12 @@
 import React from "react";
 import store from "./store.js";
-import { streamsSlice } from "../services/qws/streams.js";
-import { serversSlice } from "../services/qws/servers.js";
 import { eventsSlice } from "../services/qws/events.js";
+import { newsSlice } from "../services/qws/news.js";
+import { serversSlice } from "../services/qws/servers.js";
+import { streamsSlice } from "../services/qws/streams.js";
 import ServerOverview from "../servers/Overview.jsx";
 import Events from "../Events.jsx";
+import News from "../News.jsx";
 import Streams from "../Streams.jsx";
 import Servers from "../servers/Servers.jsx";
 
@@ -59,7 +61,8 @@ function startPollingDataSources() {
     )
   );
 
-  store.dispatch(eventsSlice.endpoints.getEvents.initiate({}));
+  store.dispatch(eventsSlice.endpoints.getEvents.initiate({}, { subscriptionOptions: { pollingInterval: 900 } }));
+  store.dispatch(newsSlice.endpoints.getNews.initiate({}, { subscriptionOptions: { pollingInterval: 900 } }));
 }
 
 export const App = () => {
@@ -71,7 +74,12 @@ export const App = () => {
       <Servers />
       <div className="animation-fade-in-delayed">
         <hr className="my-6" />
-        <Events />
+        <div className="columns is-desktop">
+          <div className="column">
+            <News />
+          </div>
+          <Events />
+        </div>
         <hr />
         <AppFooter />
       </div>
