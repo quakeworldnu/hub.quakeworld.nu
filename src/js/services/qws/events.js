@@ -19,9 +19,11 @@ export const eventsSlice = qwsSlice.injectEndpoints({
 });
 
 const selectEventsResult = eventsSlice.endpoints.getEvents.select({});
-const selectEventsData = createSelector(selectEventsResult, (result) => result.data);
+const selectEventsData = createSelector(
+  selectEventsResult,
+  (result) => result.data
+);
 
-export const { selectAll: selectAllEvents } =
-  eventsAdapter.getSelectors(
-    (state) => selectEventsData(state) ?? initialState
-  );
+export const { selectAll: selectAllEvents } = eventsAdapter.getSelectors(
+  (state) => selectEventsData(state) ?? initialState
+);

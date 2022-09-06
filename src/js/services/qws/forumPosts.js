@@ -18,8 +18,13 @@ export const forumPostsSlice = qwsSlice.injectEndpoints({
   }),
 });
 
-const selectForumPostsResult = forumPostsSlice.endpoints.getForumPosts.select({});
-const selectForumPostsData = createSelector(selectForumPostsResult, (result) => result.data);
+const selectForumPostsResult = forumPostsSlice.endpoints.getForumPosts.select(
+  {}
+);
+const selectForumPostsData = createSelector(
+  selectForumPostsResult,
+  (result) => result.data
+);
 
 export const { selectAll: selectAllForumPosts } =
   forumPostsAdapter.getSelectors(

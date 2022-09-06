@@ -36,17 +36,20 @@ const AppFooter = () => {
   return (
     <div className="has-text-dark columns is-gapless">
       <div className="mb-3">
-        <a href="https://www.quakeworld.nu/">QuakeWorld.nu</a><span className="px-1"> • </span>
-        <a href="https://discord.quake.world/">Discord</a><span className="px-1"> • </span>
-        <a href="https://www.twitch.tv/quakeworld/">Twitch</a><span className="px-1"> • </span>
+        <a href="https://www.quakeworld.nu/">QuakeWorld.nu</a>
+        <span className="px-1"> • </span>
+        <a href="https://discord.quake.world/">Discord</a>
+        <span className="px-1"> • </span>
+        <a href="https://www.twitch.tv/quakeworld/">Twitch</a>
+        <span className="px-1"> • </span>
         <a href="https://www.quakeworld.nu/wiki/Overview/">Wiki</a>
       </div>
       <div className="ml-auto">
         <a href="https://github.com/vikpe/qw-hub">View on GitHub</a>
       </div>
     </div>
-  )
-}
+  );
+};
 
 function startPollingDataSources() {
   store.dispatch(
@@ -64,10 +67,14 @@ function startPollingDataSources() {
   );
 
   const MINUTE = 1000 * 60;
-  const scrapeOptions = { subscriptionOptions: { pollingInterval: 15 * MINUTE } };
+  const scrapeOptions = {
+    subscriptionOptions: { pollingInterval: 15 * MINUTE },
+  };
   store.dispatch(eventsSlice.endpoints.getEvents.initiate({}, scrapeOptions));
   store.dispatch(newsSlice.endpoints.getNews.initiate({}, scrapeOptions));
-  store.dispatch(forumPostsSlice.endpoints.getForumPosts.initiate({}, scrapeOptions));
+  store.dispatch(
+    forumPostsSlice.endpoints.getForumPosts.initiate({}, scrapeOptions)
+  );
 }
 
 export const App = () => {

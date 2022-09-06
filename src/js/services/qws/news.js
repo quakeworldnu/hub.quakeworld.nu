@@ -19,9 +19,11 @@ export const newsSlice = qwsSlice.injectEndpoints({
 });
 
 const selectNewsResult = newsSlice.endpoints.getNews.select({});
-const selectNewsData = createSelector(selectNewsResult, (result) => result.data);
+const selectNewsData = createSelector(
+  selectNewsResult,
+  (result) => result.data
+);
 
-export const { selectAll: selectAllNews } =
-  newsAdapter.getSelectors(
-    (state) => selectNewsData(state) ?? initialState
-  );
+export const { selectAll: selectAllNews } = newsAdapter.getSelectors(
+  (state) => selectNewsData(state) ?? initialState
+);
