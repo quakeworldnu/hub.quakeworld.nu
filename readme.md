@@ -1,11 +1,9 @@
 # QuakeWorld Hub [![Build and deploy](https://github.com/vikpe/hub.quakeworld.nu/actions/workflows/deploy.yml/badge.svg)](https://github.com/vikpe/hub.quakeworld.nu/actions/workflows/deploy.yml)
 > To the Moon! 🚀
 
-## Info
-* **Components**: 
-  * Website: HTML + [Bulma](https://bulma.io/) (front-end framework)
-  * JavaScript app: es6/react/redux, built using [Vite](https://vitejs.dev/)
-* **Backend API**: `https://metaqtv.quake.se/v2/` (under development)
+## Stack
+* **Website**: HTML + [Bulma](https://bulma.io/) (front-end framework)
+* **JavaScript app**: es6/react/redux, built using [Vite](https://vitejs.dev/)
 
 ## Data sources
 The backend API is located at https://metaqtv.quake.se/v2/ (will be moved to quakeworld.nu soon)
