@@ -40,7 +40,7 @@ const AppFooter = () => {
         <span className="px-1"> • </span>
         <a href="https://discord.quake.world/">Discord</a>
         <span className="px-1"> • </span>
-        <a href="https://www.twitch.tv/quakeworld/">Twitch</a>
+        <a href="https://www.twitch.tv/quakeworld">Twitch</a>
         <span className="px-1"> • </span>
         <a href="https://www.quakeworld.nu/wiki/Overview">Wiki</a>
       </div>
