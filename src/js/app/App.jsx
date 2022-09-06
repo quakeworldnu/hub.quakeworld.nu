@@ -4,8 +4,10 @@ import { eventsSlice } from "../services/qws/events.js";
 import { newsSlice } from "../services/qws/news.js";
 import { serversSlice } from "../services/qws/servers.js";
 import { streamsSlice } from "../services/qws/streams.js";
+import { forumPostsSlice } from "../services/qws/forumPosts.js";
 import ServerOverview from "../servers/Overview.jsx";
 import Events from "../Events.jsx";
+import ForumPosts from "../ForumPosts.jsx";
 import News from "../News.jsx";
 import Streams from "../Streams.jsx";
 import Servers from "../servers/Servers.jsx";
@@ -61,8 +63,11 @@ function startPollingDataSources() {
     )
   );
 
-  store.dispatch(eventsSlice.endpoints.getEvents.initiate({}, { subscriptionOptions: { pollingInterval: 900 } }));
-  store.dispatch(newsSlice.endpoints.getNews.initiate({}, { subscriptionOptions: { pollingInterval: 900 } }));
+  const MINUTE = 1000 * 60;
+  const scrapeOptions = { subscriptionOptions: { pollingInterval: 15 * MINUTE } };
+  store.dispatch(eventsSlice.endpoints.getEvents.initiate({}, scrapeOptions));
+  store.dispatch(newsSlice.endpoints.getNews.initiate({}, scrapeOptions));
+  store.dispatch(forumPostsSlice.endpoints.getForumPosts.initiate({}, scrapeOptions));
 }
 
 export const App = () => {
@@ -77,6 +82,9 @@ export const App = () => {
         <div className="columns is-desktop">
           <div className="column">
             <News />
+          </div>
+          <div className="column">
+            <ForumPosts />
           </div>
           <Events />
         </div>
