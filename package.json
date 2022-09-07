@@ -5,7 +5,6 @@
   "author": "Viktor Persson",
   "license": "MIT",
   "repository": "vikpe/qw-server-browser",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -21,13 +20,15 @@
     "@formkit/auto-animate": "^1.0.0-beta.3",
     "@reduxjs/toolkit": "^1.8.5",
     "@vitejs/plugin-react": "^2.1.0",
-    "bulma": "^0.9.4",
+    "autoprefixer": "^10.4.8",
     "copy-text-to-clipboard": "^3.0.1",
     "lodash.groupby": "^4.6.0",
+    "postcss": "^8.4.16",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.2",
     "sass": "^1.54.8",
+    "tailwindcss": "^3.1.8",
     "vite": "^3.1.0"
   }
 }
