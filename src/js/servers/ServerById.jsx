@@ -144,11 +144,11 @@ const SpectatorButtons = (props) => {
       <div className="flex items-center space-x-4">
         <a
           href={`qw://${server.address}/observe`}
-          className="bg-gray-100/10 border border-gray-600 w-full block p-1 rounded-md text-center"
+          className="bg-gray-100/10 border border-gray-600 w-full p-1 rounded-md text-center flex items-center justify-center hover:bg-blue-600"
         >
           Spectate{" "}
           {server.spectator_slots.used > 0 && (
-            <span className="ml-1 app-dim">
+            <span className="ml-1 text-gray-400 text-xs">
                 ({server.spectator_slots.used})
               </span>
           )}
@@ -157,11 +157,11 @@ const SpectatorButtons = (props) => {
         {server.qtv_stream.address !== "" && (
           <a
             href={`qw://${server.qtv_stream.url}/qtvplay`}
-            className="bg-gray-100/10 border border-gray-600 w-full block p-1 rounded-md text-center"
+            className="bg-gray-100/10 border border-gray-600 w-full p-1 rounded-md text-center flex items-center justify-center hover:bg-blue-600"
           >
             QTV
             {server.qtv_stream.spectator_count > 0 && (
-              <span className="ml-1 app-dim">
+              <span className="ml-1 text-gray-400 text-xs">
                   ({server.qtv_stream.spectator_count})
                 </span>
             )}
