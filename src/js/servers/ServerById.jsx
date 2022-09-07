@@ -234,7 +234,7 @@ const ServerAddressTitle = React.memo((props) => {
   const { cc, title } = props;
 
   return (
-    <span className="block float-left overflow-hidden max-w-[260px] text-ellipsis">
+    <span className="block float-left max-w-[260px] truncate">
       {cc && (
         <React.Fragment>
           <img
