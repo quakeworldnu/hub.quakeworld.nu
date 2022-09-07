@@ -1,8 +1,3 @@
-$matchtag-bg: #ff0000;
-$color-join: #2397d1;
-$green: #008800;
-
-
 .server-wrapper {
   @mixin app-smod($color, $glow-width) {
     padding: 2px;
@@ -11,11 +6,11 @@ $green: #008800;
   }
 
   &.smod-matchtag {
-    @include app-smod($matchtag-bg, 64px);
+    @include app-smod(#ff0, 64px);
   }
 
   &.smod-hasfreeplayer_slots {
-    @include app-smod($color-join, 32px);
+    @include app-smod(#2397d1, 32px);
   }
 }
 
@@ -24,6 +19,7 @@ $green: #008800;
   @apply bg-gray-400 h-[#{$height}];
 
   .server-progress-bar {
+    $green: hsl(153, 53%, 53%);
     @apply flex relative h-[#{$height}] items-center;
     background: linear-gradient(to right, darken($green, 20) 80%, $green);
     transition: width 500ms ease-in-out;
