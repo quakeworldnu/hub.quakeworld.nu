@@ -136,15 +136,26 @@ const SpectatorText = React.memo((props) => {
   );
 });
 
+const SpectatorButton = props => {
+  const { href, children } = props;
+  return (
+    <a
+      href={href}
+      className="bg-gray-100/10 border border-gray-600 w-full p-1 rounded-md text-center flex items-center justify-center hover:bg-blue-600"
+    >
+      {children}
+    </a>
+  )
+}
+
 const SpectatorButtons = (props) => {
   const { server } = props;
 
   return (
     <div>
       <div className="flex items-center space-x-4">
-        <a
+        <SpectatorButton
           href={`qw://${server.address}/observe`}
-          className="bg-gray-100/10 border border-gray-600 w-full p-1 rounded-md text-center flex items-center justify-center hover:bg-blue-600"
         >
           Spectate{" "}
           {server.spectator_slots.used > 0 && (
@@ -152,12 +163,11 @@ const SpectatorButtons = (props) => {
                 ({server.spectator_slots.used})
               </span>
           )}
-        </a>
+        </SpectatorButton>
 
         {server.qtv_stream.address !== "" && (
-          <a
+          <SpectatorButton
             href={`qw://${server.qtv_stream.url}/qtvplay`}
-            className="bg-gray-100/10 border border-gray-600 w-full p-1 rounded-md text-center flex items-center justify-center hover:bg-blue-600"
           >
             QTV
             {server.qtv_stream.spectator_count > 0 && (
@@ -165,7 +175,7 @@ const SpectatorButtons = (props) => {
                   ({server.qtv_stream.spectator_count})
                 </span>
             )}
-          </a>
+          </SpectatorButton>
         )}
 
         {false &&
