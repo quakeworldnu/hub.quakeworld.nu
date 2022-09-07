@@ -14,19 +14,20 @@ import Servers from "../servers/Servers.jsx";
 
 const AppHeader = () => {
   return (
-    <div className="my-3 animation-fade-in-down">
-      <div className="flex items-center space-x-4">
-        <div className="column is-narrow">
-          <a href="/" className="flex pt-1">
-            <img src="/assets/img/qtvlogo.svg" width="82" height="59" />
+    <div className="my-4 animation-fade-in-down">
+      <div className="space-y-2 lg:flex">
+        <div className="flex items-center space-x-4">
+          <a href="/" className="lg:pt-2 min-w-[82px] lg:mr-4">
+            <img src="/assets/img/qtvlogo.svg" width="82" height="59" alt="QuakeWorld Hub" />
           </a>
+          <div className="lg:hidden">
+            <ServerOverview />
+          </div>
         </div>
-        <div className="column is-8-mobile is-9-tablet is-10-desktop is-10-widescreen is-narrow-fullhd">
-          <ServerOverview />
-        </div>
-        <div className="column">
-          <Streams />
-        </div>
+        <Streams />
+      </div>
+      <div className="hidden lg:block lg:my-3">
+        <ServerOverview />
       </div>
     </div>
   );
@@ -85,13 +86,13 @@ export const App = () => {
       <AppHeader />
       <Servers />
       <div className="animation-fade-in-delayed">
-        <hr className="my-12 border-blue-600/50" />
+        <hr className="my-6 sm:my-10 border-blue-600/50" />
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
           <News />
           <ForumPosts />
           <Events />
         </div>
-        <hr className="my-6 border-blue-600/50" />
+        <hr className="my-4 sm:my-6 border-blue-600/50" />
         <AppFooter />
       </div>
     </>

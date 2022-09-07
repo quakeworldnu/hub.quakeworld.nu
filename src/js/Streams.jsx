@@ -13,11 +13,9 @@ export default function Streams() {
   }
 
   return (
-    <div className="columns is-multiline is-gapless" ref={parent}>
+    <div className="space-y-4 sm:space-y-0 sm:flex sm:space-x-4" ref={parent}>
       {streams.map((stream) => (
-        <div className="column is-narrow my-2 mr-3" key={stream.channel}>
-          <StreamById id={stream.channel} />
-        </div>
+        <StreamById id={stream.channel} key={stream.channel} />
       ))}
     </div>
   );
@@ -28,20 +26,23 @@ const StreamById = ({ id }) => {
   const { title, channel, viewers, url } = stream;
 
   return (
-    <a href={url} className="p-3 rounded-md border border-blue-600/20 bg-blue-800/20 hover:bg-blue-800/40 hover:border-blue-600/40">
-      <img
-        src={`/assets/img/icons/twitch_glitch_purple.svg`}
-        width="16"
-        height="16"
-        className="inline mr-2"
-      />
-
-      <span className="mr-1 font-bold">{channel}</span>
-
-      <span className="text-gray-300/50 text-sm space-x-2">
-        (<TextBlur key="viewers" value={viewers} />)
-        <TextBlur key="title" value={title} />
+    <a href={url}
+       title={title}
+       className="block py-2 px-3 rounded-md border border-blue-600/20 bg-blue-800/20 hover:bg-blue-800/40 hover:border-blue-600/40">
+      <span className="whitespace-nowrap space-x-1">
+        <img
+          src={`/assets/img/icons/twitch_glitch_purple.svg`}
+          width="16"
+          height="16"
+          className="inline"
+        />
+        <strong>{channel}</strong>
+        <span className="text-gray-400 text-xs">(<TextBlur key="viewers" value={viewers} />)</span>
       </span>
+
+      <div className="text-gray-400 text-sm mt-1 sm:max-w-[420px] truncate">
+        <TextBlur key="title" value={title} />
+      </div>
     </a>
   );
 };
