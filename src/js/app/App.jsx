@@ -35,7 +35,7 @@ const AppHeader = () => {
 
 const AppFooter = () => {
   return (
-    <div className="columns-2 my-6 footer text-gray-600">
+    <div className="sm:columns-2 my-6 footer text-gray-600">
       <div className="mb-3">
         <a href="https://www.quakeworld.nu/">QuakeWorld.nu</a>
         <span className="px-1"> • </span>
@@ -45,7 +45,7 @@ const AppFooter = () => {
         <span className="px-1"> • </span>
         <a href="https://www.quakeworld.nu/wiki/Overview">Wiki</a>
       </div>
-      <div className="text-right">
+      <div className="sm:text-right">
         <a href="https://github.com/vikpe/qw-hub">View on GitHub</a>
       </div>
     </div>
