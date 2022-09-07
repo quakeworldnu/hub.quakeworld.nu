@@ -35,7 +35,7 @@ const AppHeader = () => {
 
 const AppFooter = () => {
   return (
-    <div className="columns-2 my-6 footer">
+    <div className="columns-2 my-6 footer text-gray-600">
       <div className="mb-3">
         <a href="https://www.quakeworld.nu/">QuakeWorld.nu</a>
         <span className="px-1"> • </span>
