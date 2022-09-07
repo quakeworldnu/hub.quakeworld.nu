@@ -11,16 +11,14 @@ export default function News() {
   }
 
   return (
-    <>
-      <div className="has-text-weight-bold has-text-info mb-2">NEWS</div>
+    <div>
+      <div className="font-bold text-gray-300/50 mb-2">NEWS</div>
       {news.slice(0, limit).map((item, index) => (
-        <div className="is-flex is-vcentered mb-1" key={index}>
-          <a href={item.url} className="p-1">
-            {item.title}
-            <span className="ml-2 has-text-dark">({item.date})</span>
-          </a>
-        </div>
+        <a href={item.url} className="footer-link" key={index}>
+          {item.title}
+          <span className="ml-2 text-gray-500">({item.date})</span>
+        </a>
       ))}
-    </>
+    </div>
   );
 }

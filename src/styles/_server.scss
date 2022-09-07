@@ -1,54 +1,7 @@
-$server-bg: #445;
-$spectator-bg: #3c3c4c;
-$footer-bg: #334;
-$footer-color: #ababb9;
-$spec-color: #f9d99db3;
-$matchtag-bg: $red;
-$hr-color: darken($footer-bg, 5);
+$matchtag-bg: #ff0000;
 $color-join: #2397d1;
+$green: #008800;
 
-
-.server-wrapper {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  max-height: 420px;
-}
-
-.server {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  background: $server-bg;
-
-  .tag {
-    height: 1.2rem;
-    padding: 0 0.4rem;
-    line-height: 1;
-    font-size: 10px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    text-shadow: rgba(black, 0.5) 1px 1px 1px;
-  }
-}
-
-.server-header {
-  border-bottom: 1px solid $hr-color;
-}
-
-
-.server-matchtag {
-  padding: 5px 0;
-  background: linear-gradient(to right, transparent, rgba($matchtag-bg, 0.8) 30% 70%, transparent);
-  color: #fff;
-  font-size: 11px;
-  font-weight: bold;
-  letter-spacing: 3px;
-  text-align: center;
-  text-shadow: #000000b0 1px 1px 2px;
-  text-transform: uppercase;
-  width: 100%;
-}
 
 .server-wrapper {
   @mixin app-smod($color, $glow-width) {
@@ -66,73 +19,24 @@ $color-join: #2397d1;
   }
 }
 
-.server-mapshot,
-.server-mapshot-wrapper {
-  background-size: cover;
-  background-position: center center;
-}
-
-.server-mapshot-wrapper {
-  background-color: #444;
-  background-image: url(/assets/img/default_mapshot.jpg);
-  flex-grow: 1;
-}
-
-.server-mapshot {
-  min-height: 200px;
-}
-
-.server-mapshot,
-.server-mapshot-dimmer {
-  height: 100%;
-}
-
-.server-mapshot-dimmer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 1.5rem 1rem;
-  background-color: rgba($spectator-bg, 0.4);
-  text-shadow: black 1px 1px 1px;
-  color: white;
-}
-
-.smod-started .spectator-text {
-  @extend .app-dim-light;
-}
-
-.server-spectator-prefix {
-  @extend .has-text-right;
-  margin-right: .2rem;
-  color: $spec-color;
-}
-
 .server-progress {
   $height: 2px;
-  height: $height !important;
-  background-color: $grey;
+  @apply bg-gray-400 h-[#{$height}];
 
   .server-progress-bar {
-    display: flex;
-    position: relative;
-    height: $height;
-    align-items: center;
+    @apply flex relative h-[#{$height}] items-center;
     background: linear-gradient(to right, darken($green, 20) 80%, $green);
     transition: width 500ms ease-in-out;
 
     &:after {
-      $dot: 6px;
+      @apply block absolute content-[''];
+      $dotSize: 6px;
       $color: $green;
-
-      display: block;
-      width: $dot;
-      height: $dot;
-      position: absolute;
-      right: -.5*$dot;
-      border-radius: $dot;
+      width: $dotSize;
+      height: $dotSize;
+      right: -.5*$dotSize;
+      border-radius: $dotSize;
       background-color: $color;
-      content: '';
       box-shadow: rgba(black, 0.5) 0 0 2px 1px, rgba(lighten($color, 20), 0.4) 0 0 3px 2px;
       animation: serverProgressDot 0.8s infinite linear alternate;
 
@@ -149,24 +53,13 @@ $color-join: #2397d1;
   }
 }
 
-.server-footer {
-  background: $footer-bg;
-  color: $footer-color;
-  border-top: 1px solid $hr-color;
-}
-
 .server-address {
-  @extend .app-text-nowrap;
-  @extend .is-clickable;
-
   .app-icon {
     display: none;
     line-height: 1;
     vertical-align: middle;
     fill: red;
   }
-
-  transition: color 150ms linear;
 
   &:hover,
   &:active {
@@ -175,32 +68,9 @@ $color-join: #2397d1;
     }
   }
 
-  &:hover {
-    color: $link-hover;
-  }
-
-  &:active {
-    color: $color-join;
-  }
-
   &::after {
     content: "";
     display: inline-block;
     clear: both;
   }
-}
-
-.server-address-title {
-  float: left;
-  display: block;
-  max-width: 260px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.server-version {
-  @extend .has-text-grey;
-  @extend .app-text-small;
-  @extend .app-text-truncate;
-  max-width: 74px;
 }

@@ -28,23 +28,18 @@ const StreamById = ({ id }) => {
   const { title, channel, viewers, url } = stream;
 
   return (
-    <a className="button is-dark app-stream" href={url}>
+    <a href={url} className="p-3 rounded-md border border-blue-600/20 bg-blue-800/20 hover:bg-blue-800/40 hover:border-blue-600/40">
       <img
         src={`/assets/img/icons/twitch_glitch_purple.svg`}
         width="16"
         height="16"
-        className="mr-2"
+        className="inline mr-2"
       />
 
-      <span className="mr-1">
-        <strong>{channel}</strong>
-      </span>
+      <span className="mr-1 font-bold">{channel}</span>
 
-      <span className="app-dim-light app-text-small">
+      <span className="text-gray-300/50 text-sm space-x-2">
         (<TextBlur key="viewers" value={viewers} />)
-      </span>
-
-      <span className="app-dim-light app-text-small app-stream-title ml-2">
         <TextBlur key="title" value={title} />
       </span>
     </a>

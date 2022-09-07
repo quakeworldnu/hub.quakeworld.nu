@@ -13,3 +13,11 @@
     border: 1px solid yellow;
   }
 }
+
+.footer-link {
+  @apply block py-1 text-blue-600 hover:text-white;
+}
+
+.app-text-shadow {
+  text-shadow: rgba(black, 0.5) 1px 1px 1px
+}

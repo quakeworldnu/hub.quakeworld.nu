@@ -7,7 +7,7 @@ export const ColoredFrags = React.memo((props) => {
 
   return (
     <TagName
-      className={`sc-frags server-frags qw-bgcolor-${colors[0]}-${colors[1]}`}
+      className={`sc-frags qw-bgcolor-${colors[0]}-${colors[1]}`}
     >
       <TextPulse key="frags" value={frags} />
     </TagName>

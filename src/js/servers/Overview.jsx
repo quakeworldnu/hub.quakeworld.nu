@@ -33,7 +33,7 @@ const OverviewStats = React.memo((props) => {
   const { players, spectators, servers } = props;
 
   return (
-    <div className="app-text-small" id="app-overview">
+    <div className="text-sm text-gray-400">
       <TextBlur key="clients" value={players + spectators} /> clients (
       <TextBlur key="players" value={players} /> players,{" "}
       <TextBlur key="spectators" value={spectators} /> spectators) across{" "}

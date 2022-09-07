@@ -15,9 +15,9 @@ import Servers from "../servers/Servers.jsx";
 const AppHeader = () => {
   return (
     <div className="my-3 animation-fade-in-down">
-      <div className="columns is-mobile is-vcentered is-multiline">
+      <div className="flex items-center space-x-4">
         <div className="column is-narrow">
-          <a href="/" className="is-flex" id="app-logo-link">
+          <a href="/" className="flex pt-1">
             <img src="/assets/img/qtvlogo.svg" width="82" height="59" />
           </a>
         </div>
@@ -34,7 +34,7 @@ const AppHeader = () => {
 
 const AppFooter = () => {
   return (
-    <div className="has-text-dark columns is-gapless">
+    <div className="columns-2 my-6">
       <div className="mb-3">
         <a href="https://www.quakeworld.nu/">QuakeWorld.nu</a>
         <span className="px-1"> • </span>
@@ -44,7 +44,7 @@ const AppFooter = () => {
         <span className="px-1"> • </span>
         <a href="https://www.quakeworld.nu/wiki/Overview">Wiki</a>
       </div>
-      <div className="ml-auto">
+      <div className="text-right">
         <a href="https://github.com/vikpe/qw-hub">View on GitHub</a>
       </div>
     </div>
@@ -85,17 +85,13 @@ export const App = () => {
       <AppHeader />
       <Servers />
       <div className="animation-fade-in-delayed">
-        <hr className="my-6" />
-        <div className="columns is-desktop">
-          <div className="column">
-            <News />
-          </div>
-          <div className="column">
-            <ForumPosts />
-          </div>
+        <hr className="my-12 border-blue-600/50" />
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+          <News />
+          <ForumPosts />
           <Events />
         </div>
-        <hr />
+        <hr className="my-6 border-blue-600/50" />
         <AppFooter />
       </div>
     </>
