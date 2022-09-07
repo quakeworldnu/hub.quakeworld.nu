@@ -14,8 +14,16 @@
   }
 }
 
-.footer-link {
-  @apply block py-1 text-blue-600 hover:text-white;
+#app-footer a {
+  @apply py-1 text-blue-600 hover:text-white;
+
+  & > span {
+    @apply ml-2 text-gray-600;
+  }
+
+  &:hover > span {
+    @apply text-gray-400;
+  }
 }
 
 .app-text-shadow {

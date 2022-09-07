@@ -35,7 +35,7 @@ const AppHeader = () => {
 
 const AppFooter = () => {
   return (
-    <div className="columns-2 my-6">
+    <div className="columns-2 my-6 footer">
       <div className="mb-3">
         <a href="https://www.quakeworld.nu/">QuakeWorld.nu</a>
         <span className="px-1"> • </span>
@@ -85,7 +85,7 @@ export const App = () => {
     <>
       <AppHeader />
       <Servers />
-      <div className="animation-fade-in-delayed">
+      <div id="app-footer" className="animation-fade-in-delayed">
         <hr className="my-6 sm:my-10 border-blue-600/50" />
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
           <News />

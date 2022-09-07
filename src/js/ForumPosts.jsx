@@ -16,9 +16,9 @@ export default function News() {
         FORUM ACTIVITY
       </div>
       {forumPosts.slice(0, limit).map((item, index) => (
-        <a href={item.url} className="footer-link" key={index}>
+        <a href={item.url} className="block" key={index}>
           {item.title}
-          <span className="ml-2 text-gray-500">({item.date})</span>
+          <span>({item.date})</span>
         </a>
       ))}
     </div>

@@ -22,7 +22,7 @@ export default function Events() {
           {Object.values(eventsByStatus[k])
             .slice(0, 5)
             .map((e, index) => (
-              <a href={e.wiki_url} className="footer-link" key={index}>
+              <a href={e.wiki_url} className="block" key={index}>
                 <img
                   src={e.logo_url}
                   width={16}
@@ -30,7 +30,7 @@ export default function Events() {
                   className="inline mr-1"
                 />{" "}
                 {e.title}
-                <span className="ml-2 text-gray-500">({e.date})</span>
+                <span>({e.date})</span>
               </a>
             ))}
         </div>
