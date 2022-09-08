@@ -51,14 +51,14 @@ const ServerStatus = React.memo((props) => {
 
   return (
     <div>
-      <strong className="has-text-white">
+      <strong>
         <TextBlur key="mode" value={mode} />
       </strong>{" "}
       on{" "}
-      <strong className="has-text-white">
+      <strong>
         <TextBlur key="map" value={map} />
       </strong>
-      <div className="text-sm">
+      <div>
         <span className="server-status mr-1">
           {["Started", "Countdown"].includes(statusName) && (
             <span className="px-1 py-0.5 rounded-sm font-mono text-xs bg-red-600 app-text-shadow">LIVE</span>
@@ -116,7 +116,7 @@ const HiddenPlayers = React.memo((props) => {
   }
 
   return (
-    <div className="mt-1 text-sm">
+    <div className="mt-1">
       +{count} {pluralize("player", count)}
     </div>
   );
@@ -250,7 +250,9 @@ const KtxVersion = React.memo((props) => {
   const label = `KTX ${version}`;
 
   return (
-    <div className="w-20 overflow-hidden whitespace-nowrap text-ellipsis text-white/40" title={label}>{label}</div>
+    <div className="text-right w-20 overflow-hidden whitespace-nowrap text-ellipsis text-white/40"
+         title={label}>{label}
+    </div>
   );
 });
 

@@ -72,7 +72,7 @@ const ItemRow = (props) => {
     />
   );
 
-  const keyPrefix = "Players" in props ? "team" : "player";
+  const keyPrefix = "players" in props ? "team" : "player";
   const key = `${keyPrefix}-${name_color}-${name}`;
 
   return (

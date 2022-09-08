@@ -1,6 +1,7 @@
 $frags-width: 36px;
 
 .scoreboard {
+  @apply text-sm;
   @extend .app-text-outline;
 
   &.sc-one-column {
