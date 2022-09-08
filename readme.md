@@ -2,7 +2,7 @@
 > To the Moon! 🚀
 
 ## Stack
-* **Website**: HTML + [Bulma](https://bulma.io/) (front-end framework)
+* **Website**: HTML + [TailWind CSS](https://tailwindcss.com/)
 * **JavaScript app**: es6/react/redux, built using [Vite](https://vitejs.dev/)
 
 ## Data sources
