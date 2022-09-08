@@ -60,7 +60,7 @@ const ItemRow = (props) => {
 
   if (is_bot) {
     nameHtml = `${nameHtml} <span class="rounded bg-black px-1 ml-1 font-mono text-xs">bot</span>`;
-    nameColumnClassNames.push("text-yellow-200/80 font-mono");
+    nameColumnClassNames.push("text-yellow-200/80");
   }
 
   columns.push(
@@ -142,7 +142,7 @@ export const TwoColumnScoreboard = (props) => {
 
   return (
     <>
-      <div className="scoreboard app-text-outline sc-teamplay sc-two-columns" ref={parent}>
+      <div className="scoreboard app-text-outline sc-teamplay sc-two-columns gap-2" ref={parent}>
         <div className="sc-column">{leftColumn}</div>
         <div className="sc-column">{rightColumn}</div>
       </div>

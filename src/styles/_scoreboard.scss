@@ -1,5 +1,4 @@
 $frags-width: 36px;
-$bot-color: #be9888;
 
 .scoreboard {
   @apply grid text-white text-sm;
@@ -13,31 +12,30 @@ $bot-color: #be9888;
       grid-template-columns: $frags-width 1fr;
     }
   }
+
+  &.sc-two-columns {
+    grid-template-columns: 1fr 1fr;
+
+    .sc-column:first-child .sc-row {
+      grid-template-columns: 1fr $frags-width;
+
+      .sc-name {
+        @apply justify-end -order-1;
+      }
+    }
+
+    .sc-column:last-child .sc-row {
+      grid-template-columns: $frags-width 1fr;
+    }
+
+    &.sc-teamplay .sc-row:first-child {
+      @apply text-lg mb-3;
+    }
+  }
 }
 
 .sc-row {
   @apply grid items-center gap-2;
-}
-
-.scoreboard.sc-two-columns {
-  @apply gap-2;
-  grid-template-columns: 1fr 1fr;
-
-  .sc-column:first-child .sc-row {
-    grid-template-columns: 1fr $frags-width;
-
-    .sc-name {
-      @apply justify-end -order-1;
-    }
-  }
-
-  .sc-column:last-child .sc-row {
-    grid-template-columns: $frags-width 1fr;
-  }
-
-  &.sc-teamplay .sc-row:first-child {
-    @apply text-lg mb-3;
-  }
 }
 
 .sc-name {
