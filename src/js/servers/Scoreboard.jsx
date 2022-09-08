@@ -1,6 +1,6 @@
 import React from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { coloredQuakeName, QuakeText, quakeTextToHtml } from "./QuakeText.jsx";
+import { coloredQuakeName, QuakeText } from "./QuakeText.jsx";
 import { ColoredFrags } from "./ColoredFrags.jsx";
 
 export const Scoreboard = (props) => {
@@ -49,18 +49,18 @@ const ItemRow = (props) => {
       <QuakeText
         tag="div"
         text={coloredQuakeName(team, team_color)}
-        className="sc-team"
+        className="w-[46px]"
         key="team"
       />
     );
   }
 
-  const nameColumnClassNames = ["sc-name"];
+  const nameColumnClassNames = ["sc-name flex items-center truncate max-w-[140px]"];
   let nameHtml = coloredQuakeName(name, name_color);
 
   if (is_bot) {
-    nameHtml = `${nameHtml} <span class="sc-label">bot</span>`;
-    nameColumnClassNames.push("sc-bot");
+    nameHtml = `${nameHtml} <span class="rounded bg-black px-1 ml-1 font-mono text-xs">bot</span>`;
+    nameColumnClassNames.push("text-amber-300/80");
   }
 
   columns.push(
@@ -72,11 +72,11 @@ const ItemRow = (props) => {
     />
   );
 
-  const keyPrefix = "Players" in props ? "team" : "player";
+  const keyPrefix = "players" in props ? "team" : "player";
   const key = `${keyPrefix}-${name_color}-${name}`;
 
   return (
-    <div className="sc-row" key={key}>
+    <div className="sc-row grid items-center gap-2" key={key}>
       {columns}
     </div>
   );
@@ -85,7 +85,7 @@ const ItemRow = (props) => {
 export const OneColumnScoreboard = (props) => {
   const { players, showTeam } = props;
 
-  let className = "scoreboard sc-one-column ";
+  let className = "scoreboard grid sc-one-column ";
   className += showTeam ? "sc-show-team" : "sc-hide-team";
 
   const [parent] = useAutoAnimate();
@@ -142,7 +142,7 @@ export const TwoColumnScoreboard = (props) => {
 
   return (
     <>
-      <div className="scoreboard sc-teamplay sc-two-columns" ref={parent}>
+      <div className="scoreboard grid gap-2 sc-teamplay sc-two-columns" ref={parent}>
         <div className="sc-column">{leftColumn}</div>
         <div className="sc-column">{rightColumn}</div>
       </div>

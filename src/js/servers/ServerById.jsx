@@ -6,6 +6,7 @@ import { Scoreboard } from "./Scoreboard.jsx";
 import { QuakeText } from "./QuakeText.jsx";
 import { pluralize } from "../common/text.js";
 import { TextBlur } from "../TextAnimations.jsx";
+import { PrimaryButton, SpectatorButton } from "../Buttons";
 
 const ServerProgress = React.memo((props) => {
   const { value, max } = props;
@@ -23,8 +24,8 @@ const ServerHeader = (props) => {
   const { server } = props;
 
   return (
-    <div className="server-header">
-      <div className="is-flex is-justify-content-space-between p-3">
+    <div className="border-b border-black">
+      <div className="flex justify-between p-3">
         <ServerStatus
           mode={server.mode}
           map={server.settings.map}
@@ -32,9 +33,9 @@ const ServerHeader = (props) => {
           statusDescription={server.status.description}
         />
         {server.player_slots.free > 0 && (
-          <a href={`qw://${server.address}/`} className="button is-primary">
+          <PrimaryButton href={`qw://${server.address}/`} className="flex items-center px-5 rounded-lg">
             Play
-          </a>
+          </PrimaryButton>
         )}
       </div>
       {server.time.total > 0 &&
@@ -50,17 +51,17 @@ const ServerStatus = React.memo((props) => {
 
   return (
     <div>
-      <strong className="has-text-white">
+      <strong>
         <TextBlur key="mode" value={mode} />
       </strong>{" "}
       on{" "}
-      <strong className="has-text-white">
+      <strong>
         <TextBlur key="map" value={map} />
       </strong>
-      <div className="app-text-small">
+      <div>
         <span className="server-status mr-1">
           {["Started", "Countdown"].includes(statusName) && (
-            <span className="tag is-danger">LIVE</span>
+            <span className="px-1 py-0.5 rounded-sm font-mono text-xs bg-red-600 app-text-shadow">LIVE</span>
           )}{" "}
           {"Standby" === statusName && (
             <div className="indicator-waiting-container">
@@ -69,7 +70,7 @@ const ServerStatus = React.memo((props) => {
           )}
         </span>
 
-        <span>{statusDescription}</span>
+        <span className="text-gray-300 text-xs">{statusDescription}</span>
       </div>
     </div>
   );
@@ -83,14 +84,15 @@ const ServerMapshot = (props) => {
     : "none";
 
   return (
-    <div className="server-mapshot-wrapper">
+    <div className="grow bg-cover bg-center bg-[url(/assets/img/default_mapshot.jpg)]">
       <div
-        className="server-mapshot"
+        className="h-full min-h-[200px] bg-cover bg-center"
         style={{ backgroundImage: mapThumbnailSrc }}
       >
-        <div className="server-mapshot-dimmer">
+        <div className="flex flex-col justify-center items-center bg-gray-700/40 h-full px-4 py-2">
           {server.meta.showMatchtag && (
-            <div className="server-matchtag mb-4">
+            <div
+              className="py-1.5 mb-4 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r from-red-600/0 via-red-600 app-text-shadow">
               {server.settings.matchtag}
             </div>
           )}
@@ -98,7 +100,6 @@ const ServerMapshot = (props) => {
             server={server}
             limit={server.meta.playerDisplay.visible}
           />
-
           <HiddenPlayers count={server.meta.playerDisplay.hidden} />
           <SpectatorText text={server.meta.spectatorText} />
         </div>
@@ -115,7 +116,7 @@ const HiddenPlayers = React.memo((props) => {
   }
 
   return (
-    <div className="mt-1 app-text-small">
+    <div className="mt-1">
       +{count} {pluralize("player", count)}
     </div>
   );
@@ -129,8 +130,8 @@ const SpectatorText = React.memo((props) => {
   }
 
   return (
-    <div className="spectator-text app-text-small mt-4">
-      <span className="server-spectator-prefix">specs:</span>{" "}
+    <div className="text-sm mt-4 text-white/60 app-text-shadow">
+      <span className="qw-color-b">specs:</span>{" "}
       <QuakeText tag="span" text={text} />
     </div>
   );
@@ -141,35 +142,24 @@ const SpectatorButtons = (props) => {
 
   return (
     <div>
-      <div className="columns is-mobile is-vcentered is-multiline">
-        <div className="column">
-          <a
-            href={`qw://${server.address}/observe`}
-            className="button is-fullwidth is-small is-dark"
-          >
-            Spectate{" "}
-            {server.spectator_slots.used > 0 && (
-              <span className="ml-1 app-dim">
-                ({server.spectator_slots.used})
-              </span>
-            )}
-          </a>
-        </div>
+      <div className="flex items-center space-x-4">
+        <SpectatorButton
+          className="p-1 px-2 w-full rounded-lg"
+          href={`qw://${server.address}/observe`}
+          count={server.spectator_slots.used}
+        >
+          Spectate{" "}
+
+        </SpectatorButton>
 
         {server.qtv_stream.address !== "" && (
-          <div className="column">
-            <a
-              href={`qw://${server.qtv_stream.url}/qtvplay`}
-              className="button is-fullwidth is-small is-dark"
-            >
-              QTV
-              {server.qtv_stream.spectator_count > 0 && (
-                <span className="ml-1 app-dim">
-                  ({server.qtv_stream.spectator_count})
-                </span>
-              )}
-            </a>
-          </div>
+          <SpectatorButton
+            className="p-1 px-2 w-full rounded-lg"
+            href={`qw://${server.qtv_stream.url}/qtvplay`}
+            count={server.qtv_stream.spectator_count}
+          >
+            QTV
+          </SpectatorButton>
         )}
 
         {false &&
@@ -205,27 +195,27 @@ const ServerFooter = (props) => {
   const { server } = props;
 
   return (
-    <div className="server-footer p-3">
+    <div className="p-3 border-t border-t-black bg-[#334] text-sm space-y-3">
       <SpectatorButtons server={server} />
 
-      <div className="columns is-mobile is-vcentered app-text-small is-multiline">
-        <div className="column">
-          <div
-            className="server-address"
-            onClick={() => copyToClipboard(server.settings.hostname_parsed)}
-            title="Copy IP to clipboard"
-          >
-            <ServerAddressTitle
-              cc={server.geo.cc}
-              title={server.meta.addressTitle}
-            />
-            <img
-              src="/assets/img/icons/content_paste.svg"
-              width="12"
-              className="app-icon ml-1"
-            />
-          </div>
+      <div className="flex items-center text-xs justify-between">
+        <div
+          className="server-address cursor-pointer text-white/60"
+          onClick={() => copyToClipboard(server.settings.hostname_parsed)}
+          title="Copy IP to clipboard"
+        >
+          <ServerAddressTitle
+            cc={server.geo.cc}
+            title={server.meta.addressTitle}
+          />
+          <img
+            src="/assets/img/icons/content_paste.svg"
+            width="12"
+            alt=""
+            className="app-icon ml-1 inline"
+          />
         </div>
+
         {server.settings.ktxver && (
           <KtxVersion version={server.settings.ktxver} />
         )}
@@ -238,7 +228,7 @@ const ServerAddressTitle = React.memo((props) => {
   const { cc, title } = props;
 
   return (
-    <span className="server-address-title">
+    <span className="block float-left max-w-[260px] truncate">
       {cc && (
         <React.Fragment>
           <img
@@ -246,8 +236,8 @@ const ServerAddressTitle = React.memo((props) => {
             width="16"
             height="11"
             alt={cc}
+            className="inline mr-1"
           />
-          &nbsp;
         </React.Fragment>
       )}
       {title}
@@ -257,9 +247,11 @@ const ServerAddressTitle = React.memo((props) => {
 
 const KtxVersion = React.memo((props) => {
   const { version } = props;
+  const label = `KTX ${version}`;
+
   return (
-    <div className="column is-narrow server-version" title={`KTX ${version}`}>
-      KTX {version}
+    <div className="text-right w-20 overflow-hidden whitespace-nowrap text-ellipsis text-white/40"
+         title={label}>{label}
     </div>
   );
 });
@@ -269,10 +261,6 @@ const getModifiers = (server) => {
 
   if (server.meta.showMatchtag) {
     modifiers.push("smod-matchtag");
-  }
-
-  if (server.meta.isStarted) {
-    modifiers.push("smod-started");
   }
 
   if (server.player_slots.free > 0) {
@@ -290,8 +278,8 @@ export function ServerById({ id }) {
   const wrapperClassNames = modifiers.join(" ");
 
   return (
-    <div className={wrapperClassNames}>
-      <div className="server">
+    <div className={`w-full flex flex-col ${wrapperClassNames}`}>
+      <div className="server flex flex-col h-full bg-[#445]">
         <ServerHeader server={server} />
         <ServerMapshot server={server} />
         <ServerFooter server={server} />

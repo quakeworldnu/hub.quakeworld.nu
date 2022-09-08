@@ -1,15 +1,10 @@
-@import "bulma_variables";
-@import "./app";
 @import "./scoreboard";
-@import "./fonts/roboto";
-@import "./bulma";
-@import "./bulma_override";
+@import "./font_roboto";
 @import "./animations";
 @import "./quake_colors";
 @import "./server";
 @import "./indicators";
-@import "./layout";
-@import "./stream";
+@import "./tailwind";
 
 .debug {
   border: 1px solid red;
@@ -17,4 +12,24 @@
   > * {
     border: 1px solid yellow;
   }
+}
+
+#app-footer a {
+  @apply py-1 text-blue-600 hover:text-white;
+
+  & > span {
+    @apply ml-2 text-gray-600;
+  }
+
+  &:hover > span {
+    @apply text-gray-400;
+  }
+}
+
+.app-text-outline {
+  text-shadow: 1px -1px 0 black, -1px -1px 0 black, 1px 1px 0 black, -1px 1px 0 black
+}
+
+.app-text-shadow {
+  text-shadow: rgba(black, 0.5) 1px 1px 1px
 }

@@ -15,25 +15,23 @@ export default function Events() {
   return (
     <>
       {Object.keys(eventsByStatus).map((k) => (
-        <div className="column" key={k}>
-          <div className="has-text-weight-bold has-text-info mb-2">
+        <div key={k}>
+          <div className="font-bold text-gray-300/50 mb-2">
             {k.toLocaleUpperCase()} EVENTS
           </div>
           {Object.values(eventsByStatus[k])
             .slice(0, 5)
             .map((e, index) => (
-              <div className="is-flex is-vcentered mb-1" key={index}>
-                <a href={e.wiki_url} className="p-1">
-                  <img
-                    src={e.logo_url}
-                    width={16}
-                    height={16}
-                    className="mr-2"
-                  />{" "}
-                  {e.title}
-                  <span className="ml-2 has-text-dark">({e.date})</span>
-                </a>
-              </div>
+              <a href={e.wiki_url} className="block" key={index}>
+                <img
+                  src={e.logo_url}
+                  width={16}
+                  height={16}
+                  className="inline mr-1"
+                />{" "}
+                {e.title}
+                <span>({e.date})</span>
+              </a>
             ))}
         </div>
       ))}

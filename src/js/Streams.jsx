@@ -1,8 +1,8 @@
 import React from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { TextBlur } from "./TextAnimations.jsx";
 import { selectAllStreams, selectStreamById } from "./services/qws/streams.js";
 import { useSelector } from "react-redux";
+import { TwitchButton } from "./Buttons";
 
 export default function Streams() {
   const [parent] = useAutoAnimate();
@@ -13,11 +13,9 @@ export default function Streams() {
   }
 
   return (
-    <div className="columns is-multiline is-gapless" ref={parent}>
+    <div className="space-y-4 sm:space-y-0 sm:flex sm:space-x-4" ref={parent}>
       {streams.map((stream) => (
-        <div className="column is-narrow my-2 mr-3" key={stream.channel}>
-          <StreamById id={stream.channel} />
-        </div>
+        <StreamById id={stream.channel} key={stream.channel} />
       ))}
     </div>
   );
@@ -25,28 +23,8 @@ export default function Streams() {
 
 const StreamById = ({ id }) => {
   const stream = useSelector((state) => selectStreamById(state, id));
-  const { title, channel, viewers, url } = stream;
 
   return (
-    <a className="button is-dark app-stream" href={url}>
-      <img
-        src={`/assets/img/icons/twitch_glitch_purple.svg`}
-        width="16"
-        height="16"
-        className="mr-2"
-      />
-
-      <span className="mr-1">
-        <strong>{channel}</strong>
-      </span>
-
-      <span className="app-dim-light app-text-small">
-        (<TextBlur key="viewers" value={viewers} />)
-      </span>
-
-      <span className="app-dim-light app-text-small app-stream-title ml-2">
-        <TextBlur key="title" value={title} />
-      </span>
-    </a>
+    <TwitchButton {...stream} className="block px-3 py-1.5" />
   );
 };
