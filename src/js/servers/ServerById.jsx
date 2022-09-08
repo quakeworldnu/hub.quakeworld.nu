@@ -6,6 +6,7 @@ import { Scoreboard } from "./Scoreboard.jsx";
 import { QuakeText } from "./QuakeText.jsx";
 import { pluralize } from "../common/text.js";
 import { TextBlur } from "../TextAnimations.jsx";
+import { PrimaryButton, SpectatorButton } from "../Buttons";
 
 const ServerProgress = React.memo((props) => {
   const { value, max } = props;
@@ -32,9 +33,9 @@ const ServerHeader = (props) => {
           statusDescription={server.status.description}
         />
         {server.player_slots.free > 0 && (
-          <a href={`qw://${server.address}/`} className="bg-blue-600 flex items-center px-5 rounded-lg">
+          <PrimaryButton href={`qw://${server.address}/`} className="flex items-center px-5 rounded-lg">
             Play
-          </a>
+          </PrimaryButton>
         )}
       </div>
       {server.time.total > 0 &&
@@ -136,18 +137,6 @@ const SpectatorText = React.memo((props) => {
   );
 });
 
-const SpectatorButton = props => {
-  const { href, children } = props;
-  return (
-    <a
-      href={href}
-      className="bg-gray-100/10 border border-gray-600 w-full p-1 rounded-md text-center flex items-center justify-center hover:bg-blue-600"
-    >
-      {children}
-    </a>
-  )
-}
-
 const SpectatorButtons = (props) => {
   const { server } = props;
 
@@ -155,26 +144,21 @@ const SpectatorButtons = (props) => {
     <div>
       <div className="flex items-center space-x-4">
         <SpectatorButton
+          className="p-1 px-2 w-full rounded-lg"
           href={`qw://${server.address}/observe`}
+          count={server.spectator_slots.used}
         >
           Spectate{" "}
-          {server.spectator_slots.used > 0 && (
-            <span className="ml-1 text-gray-400 text-xs">
-                ({server.spectator_slots.used})
-              </span>
-          )}
+
         </SpectatorButton>
 
         {server.qtv_stream.address !== "" && (
           <SpectatorButton
+            className="p-1 px-2 w-full rounded-lg"
             href={`qw://${server.qtv_stream.url}/qtvplay`}
+            count={server.qtv_stream.spectator_count}
           >
             QTV
-            {server.qtv_stream.spectator_count > 0 && (
-              <span className="ml-1 text-gray-400 text-xs">
-                  ({server.qtv_stream.spectator_count})
-                </span>
-            )}
           </SpectatorButton>
         )}
 
