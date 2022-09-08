@@ -91,7 +91,8 @@ const ServerMapshot = (props) => {
       >
         <div className="flex flex-col justify-center items-center bg-gray-700/40 h-full px-4 py-2">
           {server.meta.showMatchtag && (
-            <div className="px-5 mb-4 uppercase font-bold tracking-widest text-center w-full">
+            <div
+              className="py-1.5 mb-4 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r from-red-600/0 via-red-600 app-text-shadow">
               {server.settings.matchtag}
             </div>
           )}
@@ -99,7 +100,6 @@ const ServerMapshot = (props) => {
             server={server}
             limit={server.meta.playerDisplay.visible}
           />
-
           <HiddenPlayers count={server.meta.playerDisplay.hidden} />
           <SpectatorText text={server.meta.spectatorText} />
         </div>
