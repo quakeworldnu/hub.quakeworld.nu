@@ -1,40 +1,33 @@
 $frags-width: 36px;
-$spacer: .5rem;
 $bot-color: #be9888;
 
 .scoreboard {
-  display: grid;
-  color: white;
-  font-size: .9rem;
-  text-shadow: 1px -1px 0 black, -1px -1px 0 black, 1px 1px 0 black, -1px 1px 0 black;
-}
+  @apply grid text-white text-sm;
 
-.scoreboard.sc-one-column {
-  &.sc-show-team .sc-row {
-    grid-template-columns: $frags-width auto 1fr;
-  }
+  &.sc-one-column {
+    &.sc-show-team .sc-row {
+      grid-template-columns: $frags-width auto 1fr;
+    }
 
-  &.sc-hide-team .sc-row {
-    grid-template-columns: $frags-width 1fr;
+    &.sc-hide-team .sc-row {
+      grid-template-columns: $frags-width 1fr;
+    }
   }
 }
 
 .sc-row {
-  display: grid;
-  column-gap: $spacer;
-  align-items: center;
+  @apply grid items-center gap-2;
 }
 
 .scoreboard.sc-two-columns {
+  @apply gap-2;
   grid-template-columns: 1fr 1fr;
-  column-gap: $spacer;
 
   .sc-column:first-child .sc-row {
     grid-template-columns: 1fr $frags-width;
 
     .sc-name {
-      order: -1;
-      justify-content: end;
+      @apply justify-end -order-1;
     }
   }
 
@@ -43,53 +36,15 @@ $bot-color: #be9888;
   }
 
   &.sc-teamplay .sc-row:first-child {
-    margin-bottom: 1.5*$spacer;
-    font-size: 1.2em;
+    @apply text-lg mb-3;
   }
 }
 
 .sc-name {
-  display: flex;
-  align-items: center;
+  @apply flex items-center;
 
   & > span:first-child {
+    @apply truncate;
     max-width: 140px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
   }
-
-  &.sc-bot {
-    color: $bot-color !important;
-
-    .qw-color-g, .qw-color-b, .qw-color-w {
-      color: $bot-color !important;
-    }
-  }
-}
-
-.sc-team,
-.sc-frags {
-  text-align: center;
-}
-
-.sc-team {
-  width: 46px;
-}
-
-.sc-frags {
-  font-weight: bold;
-  font-size: .9em;
-  padding: 1px 0;
-}
-
-.sc-label {
-  padding: 0 3px;
-  margin-left: 3px;
-  border-radius: 3px;
-  background: #222;
-  color: $bot-color;
-  text-shadow: none;
-  font-size: 10px;
-  font-family: monospace;
 }

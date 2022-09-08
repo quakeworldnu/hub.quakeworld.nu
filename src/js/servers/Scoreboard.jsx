@@ -49,7 +49,7 @@ const ItemRow = (props) => {
       <QuakeText
         tag="div"
         text={coloredQuakeName(team, team_color)}
-        className="sc-team"
+        className="w-[46px]"
         key="team"
       />
     );
@@ -59,8 +59,8 @@ const ItemRow = (props) => {
   let nameHtml = coloredQuakeName(name, name_color);
 
   if (is_bot) {
-    nameHtml = `${nameHtml} <span class="sc-label">bot</span>`;
-    nameColumnClassNames.push("sc-bot");
+    nameHtml = `${nameHtml} <span class="rounded bg-black px-1 ml-1 font-mono text-xs">bot</span>`;
+    nameColumnClassNames.push("text-yellow-200/80 font-mono");
   }
 
   columns.push(
@@ -85,7 +85,7 @@ const ItemRow = (props) => {
 export const OneColumnScoreboard = (props) => {
   const { players, showTeam } = props;
 
-  let className = "scoreboard sc-one-column ";
+  let className = "scoreboard app-text-outline sc-one-column ";
   className += showTeam ? "sc-show-team" : "sc-hide-team";
 
   const [parent] = useAutoAnimate();
@@ -142,7 +142,7 @@ export const TwoColumnScoreboard = (props) => {
 
   return (
     <>
-      <div className="scoreboard sc-teamplay sc-two-columns" ref={parent}>
+      <div className="scoreboard app-text-outline sc-teamplay sc-two-columns" ref={parent}>
         <div className="sc-column">{leftColumn}</div>
         <div className="sc-column">{rightColumn}</div>
       </div>
