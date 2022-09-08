@@ -1,7 +1,7 @@
 $frags-width: 36px;
 
 .scoreboard {
-  @apply grid text-white text-sm;
+  @extend .app-text-outline;
 
   &.sc-one-column {
     &.sc-show-team .sc-row {
@@ -27,22 +27,5 @@ $frags-width: 36px;
     .sc-column:last-child .sc-row {
       grid-template-columns: $frags-width 1fr;
     }
-
-    &.sc-teamplay .sc-row:first-child {
-      @apply text-lg mb-3;
-    }
-  }
-}
-
-.sc-row {
-  @apply grid items-center gap-2;
-}
-
-.sc-name {
-  @apply flex items-center;
-
-  & > span:first-child {
-    @apply truncate;
-    max-width: 140px;
   }
 }
