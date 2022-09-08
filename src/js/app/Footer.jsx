@@ -1,4 +1,3 @@
-import React from "@types/react";
 import Events from "../Events";
 import ForumPosts from "../ForumPosts";
 import News from "../News";

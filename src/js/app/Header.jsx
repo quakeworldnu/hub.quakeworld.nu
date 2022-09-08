@@ -1,4 +1,3 @@
-import React from "@types/react";
 import ServerOverview from "../servers/Overview";
 import Streams from "../Streams";
 
