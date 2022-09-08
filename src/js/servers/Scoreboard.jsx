@@ -55,7 +55,7 @@ const ItemRow = (props) => {
     );
   }
 
-  const nameColumnClassNames = ["sc-name flex items-center truncate max-w-[140px]"];
+  const nameColumnClassNames = ["sc-name"];
   let nameHtml = coloredQuakeName(name, name_color);
 
   if (is_bot) {
@@ -76,7 +76,7 @@ const ItemRow = (props) => {
   const key = `${keyPrefix}-${name_color}-${name}`;
 
   return (
-    <div className="sc-row grid items-center gap-2" key={key}>
+    <div className="sc-row" key={key}>
       {columns}
     </div>
   );
@@ -85,7 +85,7 @@ const ItemRow = (props) => {
 export const OneColumnScoreboard = (props) => {
   const { players, showTeam } = props;
 
-  let className = "scoreboard grid sc-one-column ";
+  let className = "scoreboard sc-one-column ";
   className += showTeam ? "sc-show-team" : "sc-hide-team";
 
   const [parent] = useAutoAnimate();
@@ -142,7 +142,7 @@ export const TwoColumnScoreboard = (props) => {
 
   return (
     <>
-      <div className="scoreboard grid gap-2 sc-teamplay sc-two-columns" ref={parent}>
+      <div className="scoreboard sc-two-columns" ref={parent}>
         <div className="sc-column">{leftColumn}</div>
         <div className="sc-column">{rightColumn}</div>
       </div>

@@ -92,7 +92,7 @@ const ServerMapshot = (props) => {
         <div className="flex flex-col justify-center items-center bg-gray-700/40 h-full px-4 py-2">
           {server.meta.showMatchtag && (
             <div
-              className="py-1.5 mb-4 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r from-red-600/0 via-red-600 app-text-shadow">
+              className="py-1.5 mb-3 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r from-red-600/0 via-red-600 app-text-shadow">
               {server.settings.matchtag}
             </div>
           )}
@@ -130,7 +130,7 @@ const SpectatorText = React.memo((props) => {
   }
 
   return (
-    <div className="text-xs mt-4 text-white/60 app-text-shadow">
+    <div className="text-xs mt-3 text-white/60 app-text-shadow">
       <span className="qw-color-b">specs:</span>{" "}
       <QuakeText tag="span" text={text} />
     </div>

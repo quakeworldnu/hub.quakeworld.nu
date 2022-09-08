@@ -1,8 +1,16 @@
 $frags-width: 36px;
 
 .scoreboard {
-  @apply text-sm;
+  @apply grid text-sm;
   @extend .app-text-outline;
+
+  .sc-row {
+    @apply grid items-center gap-2;
+  }
+
+  .sc-name {
+    @apply flex items-center truncate max-w-[140px];
+  }
 
   &.sc-one-column {
     &.sc-show-team .sc-row {
@@ -15,7 +23,11 @@ $frags-width: 36px;
   }
 
   &.sc-two-columns {
-    grid-template-columns: 1fr 1fr;
+    @apply grid-cols-2 gap-2;
+
+    .sc-row:first-child {
+      @apply text-base mb-2;
+    }
 
     .sc-column:first-child .sc-row {
       grid-template-columns: 1fr $frags-width;
