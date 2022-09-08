@@ -16,7 +16,7 @@ export const SpectatorButton = props => {
   return (
     <a
       href={href}
-      className={`p-1 text-center w-full rounded text-white shadow-md border border-gray-600 bg-gradient-to-b from-gray-600 to-gray-700 ${hoverClasses}`}
+      className={`p-1 text-center shadow-md w-full rounded text-white shadow-md border border-gray-600 bg-gradient-to-b from-gray-600 to-gray-700 ${hoverClasses}`}
     >
       {children}
 
