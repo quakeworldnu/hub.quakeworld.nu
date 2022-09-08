@@ -18,6 +18,7 @@ export const TwitchButton = props => {
 
   return (
     <a href={`https://www.twitch.tv/${channel}`}
+       rel="nofollow"
        className={`text-white rounded-lg border border-violet-600/60 bg-gradient-to-b from-violet-700/40 to-violet-900/40 hover:from-violet-700/60 hover:to-violet-900/60 ${className}`}>
        <span className="whitespace-nowrap space-x-1">
         <img
