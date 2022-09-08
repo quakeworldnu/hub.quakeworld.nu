@@ -61,7 +61,7 @@ const ServerStatus = React.memo((props) => {
       <div className="text-sm">
         <span className="server-status mr-1">
           {["Started", "Countdown"].includes(statusName) && (
-            <span className="px-1 py-0.5 rounded font-mono text-xs bg-red-600 app-text-shadow">LIVE</span>
+            <span className="px-1 py-0.5 rounded-sm font-mono text-xs bg-red-600 app-text-shadow">LIVE</span>
           )}{" "}
           {"Standby" === statusName && (
             <div className="indicator-waiting-container">
