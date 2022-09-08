@@ -1,9 +1,11 @@
+const hoverClasses = "hover:from-blue-500 hover:to-blue-600 hover:border-blue-400"
+
 export const PrimaryButton = props => {
   const { href = "#", children, className = "" } = props;
 
   return (
     <a href={href}
-       className={`text-white shadow-md border border-blue-500 bg-gradient-to-b from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 hover:border-blue-400 ${className}`}>
+       className={`text-white shadow-md border border-blue-500 bg-gradient-to-b from-blue-600 to-blue-700 ${hoverClasses}  ${className}`}>
       {children}
     </a>
   )
@@ -14,7 +16,7 @@ export const SpectatorButton = props => {
   return (
     <a
       href={href}
-      className="bg-gray-100/10 border border-gray-600 w-full p-1 rounded-md text-center flex items-center justify-center hover:bg-blue-600"
+      className={`p-1 text-center w-full rounded text-white shadow-md border border-gray-600 bg-gradient-to-b from-gray-600 to-gray-700 ${hoverClasses}`}
     >
       {children}
 
