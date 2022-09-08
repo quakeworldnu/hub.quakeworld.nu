@@ -4,7 +4,7 @@ import News from "../News";
 
 export const AppFooter = () => {
   return (
-    <div id="app-footer" className="animation-fade-in-delayed">
+    <div id="app-footer" className="animation-fade-in-delayed text-sm">
       <hr className="my-6 sm:my-10 border-blue-600/50" />
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         <News />
