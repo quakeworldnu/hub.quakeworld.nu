@@ -206,15 +206,13 @@ const ServerAddressTitle = React.memo((props) => {
   return (
     <div className="flex items-center max-w-[260px] truncate">
       {cc && (
-        <React.Fragment>
-          <img
-            src={`https://www.quakeworld.nu/images/flags/${cc.toLowerCase()}.gif`}
-            width="16"
-            height="11"
-            alt={cc}
-            className="inline mr-1"
-          />
-        </React.Fragment>
+        <img
+          src={`https://www.quakeworld.nu/images/flags/${cc.toLowerCase()}.gif`}
+          width="16"
+          height="11"
+          alt={cc}
+          className="inline mr-1 mb-[1px]"
+        />
       )}
       {title}
     </div>
