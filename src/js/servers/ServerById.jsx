@@ -7,6 +7,7 @@ import { QuakeText } from "./QuakeText.jsx";
 import { pluralize } from "../common/text.js";
 import { TextBlur } from "../TextAnimations.jsx";
 import { PrimaryButton, SecondaryButton } from "../Buttons";
+import ServerStreams from "../ServerStreams";
 
 const ServerProgress = React.memo((props) => {
   const { value, max } = props;
@@ -158,6 +159,9 @@ const SpectatorButtons = (props) => {
             QTV
           </SecondaryButton>
         )}
+        {
+          <ServerStreams address={server.address} />
+        }
       </div>
     </div>
   );
