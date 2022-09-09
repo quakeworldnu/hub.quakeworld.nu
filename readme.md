@@ -1,5 +1,5 @@
 # QuakeWorld Hub [![Build and deploy](https://github.com/vikpe/hub.quakeworld.nu/actions/workflows/deploy.yml/badge.svg)](https://github.com/vikpe/hub.quakeworld.nu/actions/workflows/deploy.yml)
-> To the Moon! 🚀
+> Website with QuakeWorld info
 
 ## Stack
 * **Website**: HTML + [TailWind CSS](https://tailwindcss.com/)
@@ -12,25 +12,19 @@ The backend API is located at https://metaqtv.quake.se/v2/ (will be moved to qua
 * **Events**: Scraped from [QuakeWorld Wiki](https://www.quakeworld.nu/wiki/Overview) main page.
 * **News** and **forum posts**: Scraped from [QuakeWorld.nu](https://www.quakeworld.nu) main page.
 
----
-
 ## Install
 1. `git clone git@github.com:vikpe/qw-hub.git`
 1. `cd qwsb`   
 1. `yarn install`
 
----
-
 ## Development
-Launch dev server at `http://localhost:3000` with HMR-enabled.
+Launch dev server at `http://localhost:5173` with HMR-enabled.
 ```
 yarn dev
 ```
 
----
-
 ## Production
-Build app to `/build`
+Build app to `/dist`
 ```
 yarn build
 ```
