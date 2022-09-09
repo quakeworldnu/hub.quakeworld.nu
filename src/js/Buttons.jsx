@@ -1,13 +1,13 @@
 import { TextBlur } from "./TextAnimations";
 
-const hoverClasses = "hover:from-blue-500 hover:to-blue-600 hover:border-blue-400"
+const primaryHoverClasses = "hover:from-blue-500 hover:to-blue-600 hover:border-blue-400"
 
 export const PrimaryButton = props => {
   const { href = "#", children, className = "" } = props;
 
   return (
     <a href={href}
-       className={`text-white shadow-md border border-blue-500 bg-gradient-to-b from-blue-600 to-blue-700 ${hoverClasses}  ${className}`}>
+       className={`text-white shadow-md border border-blue-500 bg-gradient-to-b from-blue-600 to-blue-700 ${primaryHoverClasses}  ${className}`}>
       {children}
     </a>
   )
@@ -20,7 +20,7 @@ export const TwitchButton = props => {
     <a href={`https://www.twitch.tv/${channel}`}
        title={title}
        rel="nofollow"
-       className={`text-white rounded-lg border border-violet-600/60 bg-gradient-to-b from-violet-700/40 to-violet-900/40 hover:from-violet-700/60 hover:to-violet-900/60 ${className}`}>
+       className={`text-white border border-violet-600/60 bg-gradient-to-b from-violet-700/40 to-violet-900/40 hover:from-violet-700/60 hover:to-violet-900/60 ${className}`}>
        <span className="whitespace-nowrap space-x-1">
         <img
           src={`/assets/img/icons/twitch_glitch_purple.svg`}
@@ -44,7 +44,7 @@ export const SpectatorButton = props => {
   return (
     <a
       href={href}
-      className={`p-1 flex items-center justify-center shadow-md w-full rounded text-white shadow-md border border-gray-600 bg-gradient-to-b from-gray-600 to-gray-700 ${hoverClasses}`}
+      className={`p-1 flex items-center justify-center shadow-md w-full rounded text-white shadow-md border border-gray-600 bg-gradient-to-b from-gray-600 to-gray-700 ${primaryHoverClasses}`}
     >
       {children}
 

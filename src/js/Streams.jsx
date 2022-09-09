@@ -25,6 +25,6 @@ const StreamById = ({ id }) => {
   const stream = useSelector((state) => selectStreamById(state, id));
 
   return (
-    <TwitchButton {...stream} className="block px-3 py-1.5" />
+    <TwitchButton {...stream} className="block px-3 py-1.5 rounded-lg" />
   );
 };
