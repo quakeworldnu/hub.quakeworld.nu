@@ -6,7 +6,7 @@ import { Scoreboard } from "./Scoreboard.jsx";
 import { QuakeText } from "./QuakeText.jsx";
 import { pluralize } from "../common/text.js";
 import { TextBlur } from "../TextAnimations.jsx";
-import { PrimaryButton, SpectatorButton } from "../Buttons";
+import { PrimaryButton, SecondaryButton } from "../Buttons";
 
 const ServerProgress = React.memo((props) => {
   const { value, max } = props;
@@ -33,7 +33,7 @@ const ServerHeader = (props) => {
           statusDescription={server.status.description}
         />
         {server.player_slots.free > 0 && (
-          <PrimaryButton href={`qw://${server.address}/`} className="flex items-center px-5 rounded-lg">
+          <PrimaryButton href={`qw://${server.address}/`} className="flex items-center px-5 text-lg rounded-lg">
             Play
           </PrimaryButton>
         )}
@@ -142,54 +142,26 @@ const SpectatorButtons = (props) => {
 
   return (
     <div>
-      <div className="flex items-center space-x-4">
-        <SpectatorButton
-          className="p-1 px-2 w-full rounded-lg"
+      <div className="grid grid-cols-2 gap-2">
+        <SecondaryButton
           href={`qw://${server.address}/observe`}
           count={server.spectator_slots.used}
         >
-          Spectate{" "}
-
-        </SpectatorButton>
+          Spectate
+        </SecondaryButton>
 
         {server.qtv_stream.address !== "" && (
-          <SpectatorButton
-            className="p-1 px-2 w-full rounded-lg"
+          <SecondaryButton
             href={`qw://${server.qtv_stream.url}/qtvplay`}
             count={server.qtv_stream.spectator_count}
           >
             QTV
-          </SpectatorButton>
+          </SecondaryButton>
         )}
-
-        {false &&
-          server.streams.map((stream) => (
-            <div className="column is-narrow" key={stream.channel}>
-              <StreamButton channel={stream.channel} />
-            </div>
-          ))}
       </div>
     </div>
   );
 };
-
-const StreamButton = React.memo((props) => {
-  const { channel } = props;
-  const url = `https://twitch.tv/${channel}`;
-
-  return (
-    <a href={url} className="button is-fullwidth is-small is-dark">
-      <img
-        src={`/assets/img/icons/twitch_glitch_purple.svg`}
-        width="16"
-        height="16"
-        className="mx-2"
-        alt={url}
-      />
-      {channel}
-    </a>
-  );
-});
 
 const ServerFooter = (props) => {
   const { server } = props;

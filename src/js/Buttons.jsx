@@ -1,50 +1,36 @@
 import { TextBlur } from "./TextAnimations";
 
-const primaryHoverClasses = "hover:from-blue-500 hover:to-blue-600 hover:border-blue-400"
+const themeBaseDefault = "text-white rounded shadow-md border bg-gradient-to-b"
+
+const themePrimary = {
+  default: `${themeBaseDefault} from-blue-600 to-blue-700 border-blue-500`,
+  hover: "hover:from-blue-500 hover:to-blue-600 hover:border-blue-400",
+};
+
+const themeTwitch = {
+  default: `${themeBaseDefault} from-violet-700/40 to-violet-900/40 hover:from-violet-700/80 hover:to-violet-900/80 border-violet-600/60`,
+  hover: "hover:from-violet-700/80 hover:to-violet-900/80 hover:border-violet-500",
+}
+
+const themeSecondary = {
+  default: `${themeBaseDefault} from-gray-600 to-gray-700 border-gray-600`,
+  hover: themePrimary.hover
+}
 
 export const PrimaryButton = props => {
   const { href = "#", children, className = "" } = props;
 
   return (
-    <a href={href}
-       className={`text-white shadow-md border border-blue-500 bg-gradient-to-b from-blue-600 to-blue-700 ${primaryHoverClasses}  ${className}`}>
-      {children}
-    </a>
+    <a href={href} className={`${themePrimary.default} ${themePrimary.hover} ${className}`}>{children}</a>
   )
 }
 
-export const TwitchButton = props => {
-  const { channel, title, viewers, className = "" } = props;
-
-  return (
-    <a href={`https://www.twitch.tv/${channel}`}
-       title={title}
-       rel="nofollow"
-       className={`text-white border border-violet-600/60 bg-gradient-to-b from-violet-700/40 to-violet-900/40 hover:from-violet-700/60 hover:to-violet-900/60 ${className}`}>
-       <span className="whitespace-nowrap space-x-1">
-        <img
-          src={`/assets/img/icons/twitch_glitch_purple.svg`}
-          width="16"
-          height="16"
-          className="inline"
-        />
-        <strong>{channel}</strong>
-        <span className="text-gray-400 text-xs">(<TextBlur key="viewers" value={viewers} />)</span>
-      </span>
-
-      <div className="text-violet-200 text-sm mt-1 sm:max-w-[420px] truncate">
-        <TextBlur key="title" value={title} />
-      </div>
-    </a>
-  )
-}
-
-export const SpectatorButton = props => {
-  const { href, children, count = 0 } = props;
+export const SecondaryButton = props => {
+  const { href, children, count = 0, className = "" } = props;
   return (
     <a
       href={href}
-      className={`p-1 flex items-center justify-center shadow-md w-full rounded text-white shadow-md border border-gray-600 bg-gradient-to-b from-gray-600 to-gray-700 ${primaryHoverClasses}`}
+      className={`flex items-center justify-center p-1 ${themeSecondary.default} ${themeSecondary.hover} ${className}`}
     >
       {children}
 
@@ -56,3 +42,37 @@ export const SpectatorButton = props => {
     </a>
   )
 }
+
+export const TwitchButton = props => {
+  const { channel = "", title = "", viewers = 0, className = "" } = props;
+
+  return (
+    <a href={`https://www.twitch.tv/${channel}`}
+       title={title}
+       rel="nofollow"
+       className={`flex items-center justify-center p-1 ${themeTwitch.default} ${themeTwitch.hover} ${className}`}>
+       <span className="whitespace-nowrap space-x-1">
+        <img
+          src={`/assets/img/icons/twitch_glitch_purple.svg`}
+          width="16" height="16"
+          className="inline"
+        />
+        <strong>{channel}</strong>
+         {
+           (viewers > 0) && (
+             <span className="text-gray-400 text-xs">(<TextBlur key="viewers" value={viewers} />)</span>
+           )
+         }
+      </span>
+
+      {
+        (title.length > 0) && (
+          <div className="text-violet-200 text-sm mt-1 sm:max-w-[420px] truncate">
+            <TextBlur key="title" value={title} />
+          </div>
+        )
+      }
+    </a>
+  )
+}
+
