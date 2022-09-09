@@ -1,3 +1,4 @@
+import React from "react";
 import { TextBlur } from "./TextAnimations";
 
 const themeBaseDefault = "text-white rounded shadow-md border bg-gradient-to-b"
@@ -17,15 +18,15 @@ const themeSecondary = {
   hover: themePrimary.hover
 }
 
-export const PrimaryButton = props => {
+export const PrimaryButton = React.memo(props => {
   const { href = "#", children, className = "" } = props;
 
   return (
     <a href={href} className={`${themePrimary.default} ${themePrimary.hover} ${className}`}>{children}</a>
   )
-}
+});
 
-export const SecondaryButton = props => {
+export const SecondaryButton = React.memo(props => {
   const { href, children, count = 0, className = "" } = props;
   return (
     <a
@@ -41,16 +42,16 @@ export const SecondaryButton = props => {
       )}
     </a>
   )
-}
+});
 
-export const TwitchButton = props => {
+export const TwitchButton = React.memo(props => {
   const { channel = "", title = "", viewers = 0, className = "" } = props;
 
   return (
     <a href={`https://www.twitch.tv/${channel}`}
        title={title}
        rel="nofollow"
-       className={`flex items-center justify-center p-1 ${themeTwitch.default} ${themeTwitch.hover} ${className}`}>
+       className={`items-center justify-center p-1 ${themeTwitch.default} ${themeTwitch.hover} ${className}`}>
        <span className="whitespace-nowrap space-x-1">
         <img
           src={`/assets/img/icons/twitch_glitch_purple.svg`}
@@ -74,5 +75,5 @@ export const TwitchButton = props => {
       }
     </a>
   )
-}
+});
 
