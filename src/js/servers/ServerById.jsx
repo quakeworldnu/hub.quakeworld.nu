@@ -174,9 +174,9 @@ const ServerFooter = (props) => {
     <div className="p-3 border-t border-t-black bg-[#334] text-sm space-y-3">
       <SpectatorButtons server={server} />
 
-      <div className="flex items-center text-xs justify-between">
+      <div className="flex text-xs justify-between">
         <div
-          className="server-address cursor-pointer text-white/60"
+          className="server-address flex items-center cursor-pointer text-white/60"
           onClick={() => copyToClipboard(server.settings.hostname_parsed)}
           title="Copy IP to clipboard"
         >
@@ -204,7 +204,7 @@ const ServerAddressTitle = React.memo((props) => {
   const { cc, title } = props;
 
   return (
-    <span className="block float-left max-w-[260px] truncate">
+    <div className="flex items-center max-w-[260px] truncate">
       {cc && (
         <React.Fragment>
           <img
@@ -217,7 +217,7 @@ const ServerAddressTitle = React.memo((props) => {
         </React.Fragment>
       )}
       {title}
-    </span>
+    </div>
   );
 });
 
