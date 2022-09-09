@@ -68,7 +68,7 @@ export const TwitchButton = React.memo(props => {
 
       {
         (title.length > 0) && (
-          <div className="text-violet-200 text-sm mt-1 sm:max-w-[420px] truncate">
+          <div className="text-violet-200 text-xs mt-0.5 sm:max-w-[420px] truncate">
             <TextBlur key="title" value={title} />
           </div>
         )
