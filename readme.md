@@ -12,18 +12,20 @@ The backend API is located at https://metaqtv.quake.se/v2/ (will be moved to qua
 * **Events**: Scraped from [QuakeWorld Wiki](https://www.quakeworld.nu/wiki/Overview) main page.
 * **News** and **forum posts**: Scraped from [QuakeWorld.nu](https://www.quakeworld.nu) main page.
 
-## Install
-1. `git clone git@github.com:vikpe/hub.quakeworld.nu.git`
-1. `cd hub.quakeworld.nu`   
-1. `yarn install`
-
 ## Development
+
+### Setup
+1. `git clone git@github.com:vikpe/hub.quakeworld.nu.git`
+3. `cd hub.quakeworld.nu`   
+3. `yarn install`
+
+### Local development
 Launch dev server at `http://localhost:5173` with HMR-enabled.
 ```
 yarn dev
 ```
 
-## Production
+### Build
 Build app to `/dist`
 ```
 yarn build
