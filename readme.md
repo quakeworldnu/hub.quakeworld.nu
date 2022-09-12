@@ -30,3 +30,8 @@ Build app to `/dist`
 ```
 yarn build
 ```
+
+## Related projects
+* [QW Hub API](https://github.com/vikpe/qw-hub-api)
+* [serverstat](https://github.com/vikpe/serverstat)
+* [masterstat](https://github.com/vikpe/masterstat)
