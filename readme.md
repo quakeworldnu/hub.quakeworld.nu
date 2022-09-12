@@ -6,7 +6,7 @@
 * **JavaScript app**: es6/react/redux, built using [Vite](https://vitejs.dev/)
 
 ## Data sources
-The backend API is located at https://metaqtv.quake.se/v2/ (will be moved to quakeworld.nu soon)
+The backend API is located at https://hubapi.quakeworld.nu/v2/ ([source code](https://github.com/vikpe/qw-hub-api))
 
 * **Server info**: Queried using [serverstat](https://github.com/vikpe/serverstat)
 * **Events**: Scraped from [QuakeWorld Wiki](https://www.quakeworld.nu/wiki/Overview) main page.
