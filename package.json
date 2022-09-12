@@ -12,7 +12,7 @@
     "lint": "yarn prettier --write src/js"
   },
   "devDependencies": {
-    "@types/react": "^18.0.18",
+    "@types/react": "^18.0.19",
     "@types/react-dom": "^18.0.6",
     "prettier": "^2.7.1"
   },
@@ -20,7 +20,7 @@
     "@formkit/auto-animate": "^1.0.0-beta.3",
     "@reduxjs/toolkit": "^1.8.5",
     "@vitejs/plugin-react": "^2.1.0",
-    "autoprefixer": "^10.4.8",
+    "autoprefixer": "^10.4.9",
     "copy-text-to-clipboard": "^3.0.1",
     "lodash.groupby": "^4.6.0",
     "postcss": "^8.4.16",
