@@ -1,5 +1,5 @@
-# QuakeWorld Hub [![Build and deploy](https://github.com/vikpe/hub.quakeworld.nu/actions/workflows/deploy.yml/badge.svg)](https://github.com/vikpe/hub.quakeworld.nu/actions/workflows/deploy.yml)
-> Website with QuakeWorld info
+# QuakeWorld Hub [![Build and deploy](https://github.com/quakeworldnu/hub.quakeworld.nu/actions/workflows/deploy.yml/badge.svg)](https://github.com/quakeworldnu/hub.quakeworld.nu/actions/workflows/deploy.yml)
+> Live games, streams, news and more.
 
 ## Stack
 * **Website**: HTML + [TailWind CSS](https://tailwindcss.com/)
@@ -15,7 +15,7 @@ The backend API is located at https://hubapi.quakeworld.nu/v2/ ([source code](ht
 ## Development
 
 ### Setup
-1. `git clone git@github.com:vikpe/hub.quakeworld.nu.git`
+1. `git clone git@github.com:quakeworldnu/hub.quakeworld.nu.git`
 3. `cd hub.quakeworld.nu`   
 3. `yarn install`
 
