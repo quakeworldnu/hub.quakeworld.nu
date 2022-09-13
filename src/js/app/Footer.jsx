@@ -28,7 +28,7 @@ export const AppFooter = () => {
           <a href="https://www.quakeworld.nu/wiki/Overview">Wiki</a>
         </div>
         <div className="sm:text-right">
-          <a href="https://github.com/vikpe/qw-hub">View on GitHub</a>
+          <a href="https://github.com/quakeworldnu/hub.quakeworld.nu">View on GitHub</a>
         </div>
       </div>
     </div>
