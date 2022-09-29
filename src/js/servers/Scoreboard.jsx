@@ -142,7 +142,7 @@ export const TwoColumnScoreboard = (props) => {
 
   return (
     <>
-      <div className="scoreboard sc-two-columns" ref={parent}>
+      <div className={`scoreboard sc-two-columns sc-teams-${teams.length}`} ref={parent}>
         <div className="sc-column">{leftColumn}</div>
         <div className="sc-column">{rightColumn}</div>
       </div>

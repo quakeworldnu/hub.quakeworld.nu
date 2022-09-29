@@ -26,7 +26,11 @@ $frags-width: 36px;
     @apply grid-cols-2 gap-2;
 
     .sc-row:first-child {
-      @apply text-base mb-2;
+      @apply text-base;
+    }
+
+    &.sc-teams-2 .sc-row:first-child {
+       @apply p-1 -mx-1 mb-1 bg-black/60;
     }
 
     .sc-column:first-child .sc-row {
