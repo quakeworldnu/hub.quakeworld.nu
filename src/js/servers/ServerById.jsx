@@ -117,7 +117,7 @@ const HiddenPlayers = React.memo((props) => {
   }
 
   return (
-    <div className="mt-1">
+    <div className="mt-1 text-xs text-gray-300">
       +{count} {pluralize("player", count)}
     </div>
   );
