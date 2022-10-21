@@ -23,6 +23,7 @@ const ServerProgress = React.memo((props) => {
 
 const ServerHeader = (props) => {
   const { server } = props;
+  const JoinButtonEl = server.player_slots.free > 0 ? PrimaryButton : SecondaryButton;
 
   return (
     <div className="border-b border-black">
@@ -33,16 +34,9 @@ const ServerHeader = (props) => {
           statusName={server.status.name}
           statusDescription={server.status.description}
         />
-        {server.player_slots.free > 0 && (
-          <PrimaryButton href={`qw://${server.address}/`} className="flex items-center px-5 text-lg rounded-lg">
-            Join
-          </PrimaryButton>
-        )}
-        {0 === server.player_slots.free && (
-          <SecondaryButton href={`qw://${server.address}/`} className="flex items-center px-5 text-lg rounded-lg">
-            Join
-          </SecondaryButton>
-        )}
+        <JoinButtonEl href={`qw://${server.address}/`} className="flex items-center px-5 text-lg rounded-lg">
+          Join
+        </JoinButtonEl>
       </div>
       {server.time.total > 0 &&
         ["Started", "Countdown"].includes(server.status.name) && (
