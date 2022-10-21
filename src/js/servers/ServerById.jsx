@@ -35,8 +35,13 @@ const ServerHeader = (props) => {
         />
         {server.player_slots.free > 0 && (
           <PrimaryButton href={`qw://${server.address}/`} className="flex items-center px-5 text-lg rounded-lg">
-            Play
+            Join
           </PrimaryButton>
+        )}
+        {0 === server.player_slots.free && (
+          <SecondaryButton href={`qw://${server.address}/`} className="flex items-center px-5 text-lg rounded-lg">
+            Join
+          </SecondaryButton>
         )}
       </div>
       {server.time.total > 0 &&
