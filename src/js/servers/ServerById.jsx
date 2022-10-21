@@ -130,7 +130,7 @@ const SpectatorText = React.memo((props) => {
   }
 
   return (
-    <div className="text-xs mt-3 text-white/60 app-text-shadow">
+    <div className="text-xs mt-3 text-white/70 app-text-shadow">
       <span className="qw-color-b">specs:</span>{" "}
       <QuakeText tag="span" text={text} />
     </div>
