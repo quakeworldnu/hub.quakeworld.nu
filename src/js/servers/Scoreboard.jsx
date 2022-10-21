@@ -35,7 +35,7 @@ export const Scoreboard = (props) => {
         )
       }
 
-      {server.players.map(player => (
+      {server.players.slice(0, limit).map(player => (
         <PlayerRow
           {...player}
           showTeam={showTeamColumn}

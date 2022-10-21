@@ -57,8 +57,14 @@ const metaByServer = (server) => {
       server.title.includes(server.settings.matchtag),
   };
 
-  const maxRowCount = 8;
-  meta.playerDisplay = calcPlayerDisplay(server, maxRowCount);
+  let maxPlayerCount = 8;
+  const isTeamplay = "teamplay" in server.settings && server.settings.teamplay > 0;
+
+  if (!isTeamplay) {
+    maxPlayerCount += 2;
+  }
+
+  meta.playerDisplay = calcPlayerDisplay(server.player_slots.used, maxPlayerCount);
 
   return meta;
 };
@@ -79,18 +85,8 @@ const calcSpectatorText = (spectators) => {
   return text;
 };
 
-const calcPlayerDisplay = (server, maxRows) => {
-  const miscRowCount = Number("matchtag" in server.settings);
-  const maxPlayerRows = Math.max(0, maxRows - miscRowCount);
-
-  const totalPlayerRows = Math.ceil(server.player_slots.used);
-  const visiblePlayerRows = Math.min(maxPlayerRows, totalPlayerRows);
-
-  const visiblePlayers = Math.min(server.player_slots.used, visiblePlayerRows);
-  const hiddenPlayers = server.player_slots.used - visiblePlayers;
-
-  return {
-    visible: visiblePlayers,
-    hidden: hiddenPlayers,
-  };
+const calcPlayerDisplay = (playerCount, maxPlayers) => {
+  const visible = Math.min(maxPlayers, playerCount);
+  const hidden = playerCount - visible;
+  return { visible, hidden, };
 };
