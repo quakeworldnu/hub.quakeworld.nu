@@ -86,7 +86,7 @@ const PlayerRow = (props) => {
     pingText = is_bot ? "(bot)" : `${Math.min(666, ping)} ms`;
   }
 
-  let nameColumnClassNames = "truncate max-w-[160px] w-12";
+  let nameColumnClassNames = "truncate max-w-[160px]";
 
   if (is_bot) {
     nameColumnClassNames += "text-amber-300/80";
