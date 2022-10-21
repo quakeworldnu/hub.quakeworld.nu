@@ -30,7 +30,7 @@ export const Scoreboard = (props) => {
               />
             ))}
 
-            <div className="my-2 h-0.5 bg-gradient-to-r from-red-400/20 via-orange-400 from-orange-400/20" />
+            <div className="my-1.5 h-0.5 bg-gradient-to-r from-red-400/20 via-orange-400 from-orange-400/20" />
           </>
         )
       }
