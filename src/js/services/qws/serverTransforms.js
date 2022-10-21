@@ -80,20 +80,13 @@ const calcSpectatorText = (spectators) => {
 };
 
 const calcPlayerDisplay = (server, maxRows) => {
-  const showAsTwoColumns = "1on1" === server.mode || 2 === server.teams.length;
-
-  const miscRowCount =
-    Number("matchtag" in server.settings) + Number(showAsTwoColumns);
+  const miscRowCount = Number("matchtag" in server.settings);
   const maxPlayerRows = Math.max(0, maxRows - miscRowCount);
 
-  const playersPerRow = showAsTwoColumns ? 2 : 1;
-  const totalPlayerRows = Math.ceil(server.player_slots.used / playersPerRow);
+  const totalPlayerRows = Math.ceil(server.player_slots.used);
   const visiblePlayerRows = Math.min(maxPlayerRows, totalPlayerRows);
 
-  const visiblePlayers = Math.min(
-    server.player_slots.used,
-    visiblePlayerRows * playersPerRow
-  );
+  const visiblePlayers = Math.min(server.player_slots.used, visiblePlayerRows);
   const hiddenPlayers = server.player_slots.used - visiblePlayers;
 
   return {

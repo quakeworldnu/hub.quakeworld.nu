@@ -10,25 +10,59 @@ export const Scoreboard = (props) => {
     return null;
   }
 
-  if ("1on1" === server.mode || 2 === server.teams.length) {
-    return (
-      <TwoColumnScoreboard
-        players={server.players}
-        teams={server.teams}
-        limit={limit}
-      />
-    );
-  } else {
-    return (
-      <OneColumnScoreboard
-        players={server.players.slice(0, limit)}
-        showTeam={"teamplay" in server.settings && server.settings.teamplay > 0}
-      />
-    );
-  }
+  const showTeams = "teamplay" in server.settings && server.settings.teamplay > 0;
+
+  let className = "scoreboard ";
+  className += showTeams ? "sc-show-team" : "sc-hide-team";
+
+  const [parent] = useAutoAnimate();
+
+  return (
+    <div className={className} ref={parent}>
+      {
+        showTeams && (
+          <>
+            {server.teams.map((team, _) => (
+              <TeamRow
+                {...team}
+                key={`team-${team.name_color}-${team.name}`}
+              />
+            ))}
+
+            <div className="my-2 h-0.5 bg-gradient-to-r from-red-400/20 via-orange-400 from-orange-400/20" />
+          </>
+        )
+      }
+
+      {server.players.map((player, _) => (
+        <PlayerRow
+          {...player}
+          showTeam={showTeams}
+          key={`player-${player.name_color}-${player.name}`}
+        />
+      ))}
+    </div>
+  );
 };
 
-const ItemRow = (props) => {
+const TeamRow = (props) => {
+  const {
+    name,
+    frags,
+    colors,
+    ping,
+  } = props;
+
+  return (
+    <div className="sc-row sc-row-team">
+      <ColoredFrags tag="div" frags={frags} colors={colors} />
+      <div>{name}</div>
+      <Ping value={`${ping} ms`} />
+    </div>
+  )
+}
+
+const PlayerRow = (props) => {
   const {
     name,
     name_color,
@@ -50,13 +84,13 @@ const ItemRow = (props) => {
       <QuakeText
         tag="div"
         text={coloredQuakeName(team, team_color)}
-        className="w-[46px]"
+        className="text-center w-[46px]"
         key="team"
       />
     );
   }
 
-  const nameColumnClassNames = ["sc-name"];
+  const nameColumnClassNames = ["flex items-center truncate max-w-[140px]"];
   let nameHtml = coloredQuakeName(name, name_color);
 
   if (is_bot) {
@@ -73,94 +107,24 @@ const ItemRow = (props) => {
   );
 
   let pingText = "";
-
   if (ping > 0) {
-    pingText = is_bot ? "(bot)" : `${ping} ms`;
+    pingText = is_bot ? "(bot)" : `${Math.min(666, ping)} ms`;
   }
-  columns.push(<span className="sc-ping text-xs opacity-50">{pingText}</span>);
-
-  const keyPrefix = "players" in props ? "team" : "player";
-  const key = `${keyPrefix}-${name_color}-${name}`;
+  columns.push(<Ping value={pingText} />)
 
   return (
-    <div className="sc-row" key={key}>
+    <div className="sc-row sc-row-player">
       {columns}
     </div>
   );
 };
 
-export const OneColumnScoreboard = (props) => {
-  const { players, showTeam } = props;
-
-  let className = "scoreboard sc-one-column ";
-  className += showTeam ? "sc-show-team" : "sc-hide-team";
-
-  const [parent] = useAutoAnimate();
+const Ping = props => {
+  const { value } = props;
 
   return (
-    <>
-      <div className={className} ref={parent}>
-        {players.map((player, _) => (
-          <ItemRow
-            {...player}
-            showTeam={showTeam}
-            key={`${player.name_color}-${player.name}`}
-          />
-        ))}
-      </div>
-    </>
-  );
-};
+    <span className="text-right text-xs opacity-50">{value}</span>
+  )
+}
 
-export const TwoColumnScoreboard = (props) => {
-  const { players, teams, limit } = props;
 
-  let items = [];
-
-  if (teams.length > 0) {
-    items = items.concat(teams);
-
-    let rowCount = Math.max(...teams.map((t) => t.players.length));
-    rowCount = Math.min(rowCount, Math.ceil(limit / 2));
-
-    for (let rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-      for (let teamIndex = 0; teamIndex < teams.length; teamIndex++) {
-        if (rowIndex < teams[teamIndex].players.length) {
-          items.push(teams[teamIndex].players[rowIndex]);
-        } else {
-          items.push(null);
-        }
-      }
-    }
-  } else {
-    items = players;
-  }
-
-  const rows = items.map(itemToRow);
-  const leftColumn = [];
-  const rightColumn = [];
-  const columns = [leftColumn, rightColumn];
-
-  for (let i = 0; i < rows.length; i++) {
-    columns[i % 2].push(rows[i]);
-  }
-
-  const [parent] = useAutoAnimate();
-
-  return (
-    <>
-      <div className={`scoreboard sc-two-columns sc-teams-${teams.length}`} ref={parent}>
-        <div className="sc-column">{leftColumn}</div>
-        <div className="sc-column">{rightColumn}</div>
-      </div>
-    </>
-  );
-};
-
-const itemToRow = (item, index) => {
-  if (null === item) {
-    return <div className="sc-row" key={`empty-${index}`} />;
-  } else {
-    return ItemRow(item);
-  }
-};
