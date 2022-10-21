@@ -36,7 +36,7 @@ const ItemRow = (props) => {
     colors,
     team,
     team_color,
-    ping,
+    ping = 0,
     is_bot,
     showTeam,
   } = props;
@@ -72,7 +72,11 @@ const ItemRow = (props) => {
     />
   );
 
-  const pingText = is_bot ? "(bot)" : `${ping} ms`;
+  let pingText = "";
+
+  if (ping > 0) {
+    pingText = is_bot ? "(bot)" : `${ping} ms`;
+  }
   columns.push(<span className="sc-ping text-xs opacity-50">{pingText}</span>);
 
   const keyPrefix = "players" in props ? "team" : "player";
