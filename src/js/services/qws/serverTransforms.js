@@ -66,7 +66,7 @@ const metaByServer = (server) => {
 const stripNonAscii = (str) => str.replace(/[^ -~]+/g, "");
 
 const calcSpectatorText = (spectators) => {
-  const maxLength = 44;
+  const maxLength = 88;
   const separator = ", ";
   const more = "..";
 
