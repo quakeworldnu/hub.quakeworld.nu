@@ -1,4 +1,6 @@
 $frags-width: 36px;
+$ping-width: 42px;
+$team-width: 40px;
 
 .scoreboard {
   @apply grid text-sm;
@@ -13,36 +15,48 @@ $frags-width: 36px;
   }
 
   &.sc-one-column {
+    .sc-ping {
+      @apply text-right;
+    }
+
     &.sc-show-team .sc-row {
-      grid-template-columns: $frags-width auto 1fr;
+      grid-template-columns: $frags-width $team-width auto $ping-width;
     }
 
     &.sc-hide-team .sc-row {
-      grid-template-columns: $frags-width 1fr;
+      grid-template-columns: $frags-width auto $ping-width;
     }
   }
 
   &.sc-two-columns {
     @apply grid-cols-2 gap-2;
 
+    .sc-ping {
+      @apply text-right;
+    }
+
     .sc-row:first-child {
       @apply text-base;
     }
 
     &.sc-teams-2 .sc-row:first-child {
-       @apply p-1 -mx-1 mb-1 border-b-2 border-b-amber-800;
+      @apply p-1 -mx-1 mb-1 border-b-2 border-b-amber-800;
     }
 
     .sc-column:first-child .sc-row {
-      grid-template-columns: 1fr $frags-width;
+      grid-template-columns: $ping-width auto $frags-width;
 
       .sc-name {
         @apply justify-end -order-1;
       }
+
+      .sc-ping {
+        @apply -order-2 text-left;
+      }
     }
 
     .sc-column:last-child .sc-row {
-      grid-template-columns: $frags-width 1fr;
+      grid-template-columns: $frags-width auto $ping-width;
     }
   }
 }

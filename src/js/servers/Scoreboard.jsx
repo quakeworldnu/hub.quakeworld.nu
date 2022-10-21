@@ -36,6 +36,7 @@ const ItemRow = (props) => {
     colors,
     team,
     team_color,
+    ping,
     is_bot,
     showTeam,
   } = props;
@@ -59,7 +60,6 @@ const ItemRow = (props) => {
   let nameHtml = coloredQuakeName(name, name_color);
 
   if (is_bot) {
-    nameHtml = `${nameHtml} <span class="rounded bg-black px-1 ml-1 font-mono text-xs">bot</span>`;
     nameColumnClassNames.push("text-amber-300/80");
   }
 
@@ -71,6 +71,9 @@ const ItemRow = (props) => {
       key="name"
     />
   );
+
+  const pingText = is_bot ? "(bot)" : `${ping} ms`;
+  columns.push(<span className="sc-ping text-xs text-white/70">{pingText}</span>);
 
   const keyPrefix = "players" in props ? "team" : "player";
   const key = `${keyPrefix}-${name_color}-${name}`;
