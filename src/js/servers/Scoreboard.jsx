@@ -10,10 +10,11 @@ export const Scoreboard = (props) => {
     return null;
   }
 
-  const showTeams = "teamplay" in server.settings && server.settings.teamplay > 0;
+  const showTeamColumn = "teamplay" in server.settings && server.settings.teamplay > 0;
+  const showTeams = showTeamColumn && (server.teams.length < server.player_slots.used) && server.teams.length <= 3;
 
   let className = "scoreboard ";
-  className += showTeams ? "sc-show-team" : "sc-hide-team";
+  className += showTeamColumn ? "sc-show-team" : "sc-hide-team";
 
   const [parent] = useAutoAnimate();
 
@@ -22,7 +23,7 @@ export const Scoreboard = (props) => {
       {
         showTeams && (
           <>
-            {server.teams.map((team, _) => (
+            {server.teams.map(team => (
               <TeamRow
                 {...team}
                 key={`team-${team.name_color}-${team.name}`}
@@ -34,10 +35,10 @@ export const Scoreboard = (props) => {
         )
       }
 
-      {server.players.map((player, _) => (
+      {server.players.map(player => (
         <PlayerRow
           {...player}
-          showTeam={showTeams}
+          showTeam={showTeamColumn}
           key={`player-${player.name_color}-${player.name}`}
         />
       ))}
@@ -48,6 +49,7 @@ export const Scoreboard = (props) => {
 const TeamRow = (props) => {
   const {
     name,
+    name_color,
     frags,
     colors,
     ping,
@@ -56,9 +58,12 @@ const TeamRow = (props) => {
   return (
     <div className="sc-row sc-row-team">
       <Ping value={`${ping} ms`} />
-      <ColoredFrags tag="div" frags={frags} colors={colors} />
-      <div className="text-center w-12">{name}</div>
-      <div></div>
+      <ColoredFrags frags={frags} colors={colors} />
+      <QuakeText
+        text={coloredQuakeName(name, name_color)}
+        className="w-12 text-center"
+      />
+      <div />
     </div>
   )
 }
@@ -71,51 +76,36 @@ const PlayerRow = (props) => {
     colors,
     team,
     team_color,
-    ping = 0,
+    ping,
     is_bot,
     showTeam,
   } = props;
 
-  let pingText = "";
+  let pingText = `${Math.min(666, ping)} ms`;
   if (ping > 0) {
     pingText = is_bot ? "(bot)" : `${Math.min(666, ping)} ms`;
   }
 
-  const columns = [
-    <Ping value={pingText} />,
-    <ColoredFrags tag="div" frags={frags} colors={colors} key="frags" />,
-  ];
-
-  if (showTeam) {
-    columns.push(
-      <QuakeText
-        tag="div"
-        text={coloredQuakeName(team, team_color)}
-        className="text-center w-12"
-        key="team"
-      />
-    );
-  }
-
-  const nameColumnClassNames = ["flex items-center truncate max-w-[140px]"];
-  let nameHtml = coloredQuakeName(name, name_color);
+  let nameColumnClassNames = "truncate max-w-[160px] w-12";
 
   if (is_bot) {
-    nameColumnClassNames.push("text-amber-300/80");
+    nameColumnClassNames += "text-amber-300/80";
   }
-
-  columns.push(
-    <QuakeText
-      tag="div"
-      text={nameHtml}
-      className={nameColumnClassNames.join(" ")}
-      key="name"
-    />
-  );
 
   return (
     <div className="sc-row sc-row-player">
-      {columns}
+      <Ping value={pingText} />
+      <ColoredFrags frags={frags} colors={colors} />
+      {showTeam && (
+        <QuakeText
+          text={coloredQuakeName(team, team_color)}
+          className="w-12 text-center"
+        />
+      )}
+      <QuakeText
+        text={coloredQuakeName(name, name_color)}
+        className={nameColumnClassNames}
+      />
     </div>
   );
 };
@@ -127,5 +117,3 @@ const Ping = props => {
     <span className="text-right text-xs opacity-50">{value}</span>
   )
 }
-
-
