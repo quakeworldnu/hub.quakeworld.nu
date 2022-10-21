@@ -73,7 +73,7 @@ const ItemRow = (props) => {
   );
 
   const pingText = is_bot ? "(bot)" : `${ping} ms`;
-  columns.push(<span className="sc-ping text-xs text-white/70">{pingText}</span>);
+  columns.push(<span className="sc-ping text-xs opacity-50">{pingText}</span>);
 
   const keyPrefix = "players" in props ? "team" : "player";
   const key = `${keyPrefix}-${name_color}-${name}`;
