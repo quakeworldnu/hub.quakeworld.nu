@@ -7,10 +7,10 @@ $team-width: 40px;
 
   .sc-row {
     @apply grid items-center gap-2;
-    grid-template-columns: $frags-width $team-width auto $ping-width;
+    grid-template-columns: $ping-width $frags-width $team-width auto;
   }
 
   &.sc-hide-team .sc-row {
-    grid-template-columns: $frags-width auto $ping-width;
+    grid-template-columns: $ping-width $frags-width auto;
   }
 }

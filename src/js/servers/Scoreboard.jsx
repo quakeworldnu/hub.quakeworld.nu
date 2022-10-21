@@ -55,9 +55,10 @@ const TeamRow = (props) => {
 
   return (
     <div className="sc-row sc-row-team">
-      <ColoredFrags tag="div" frags={frags} colors={colors} />
-      <div>{name}</div>
       <Ping value={`${ping} ms`} />
+      <ColoredFrags tag="div" frags={frags} colors={colors} />
+      <div className="text-center w-12">{name}</div>
+      <div></div>
     </div>
   )
 }
@@ -75,7 +76,13 @@ const PlayerRow = (props) => {
     showTeam,
   } = props;
 
+  let pingText = "";
+  if (ping > 0) {
+    pingText = is_bot ? "(bot)" : `${Math.min(666, ping)} ms`;
+  }
+
   const columns = [
+    <Ping value={pingText} />,
     <ColoredFrags tag="div" frags={frags} colors={colors} key="frags" />,
   ];
 
@@ -84,7 +91,7 @@ const PlayerRow = (props) => {
       <QuakeText
         tag="div"
         text={coloredQuakeName(team, team_color)}
-        className="text-center w-[46px]"
+        className="text-center w-12"
         key="team"
       />
     );
@@ -105,12 +112,6 @@ const PlayerRow = (props) => {
       key="name"
     />
   );
-
-  let pingText = "";
-  if (ping > 0) {
-    pingText = is_bot ? "(bot)" : `${Math.min(666, ping)} ms`;
-  }
-  columns.push(<Ping value={pingText} />)
 
   return (
     <div className="sc-row sc-row-player">
