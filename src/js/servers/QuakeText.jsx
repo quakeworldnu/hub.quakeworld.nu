@@ -1,7 +1,7 @@
 import React from "react";
 
 export const QuakeText = React.memo((props) => {
-  const { text, tag, className } = props;
+  const { text, tag = "div", className } = props;
   const TagName = `${tag}`;
 
   return (
