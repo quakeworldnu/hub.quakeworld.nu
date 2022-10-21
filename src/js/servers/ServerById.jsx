@@ -76,7 +76,7 @@ const ServerStatus = React.memo((props) => {
   );
 });
 
-const ServerMapshot = (props) => {
+const ServerBody = (props) => {
   const { server } = props;
 
   const mapThumbnailSrc = server.settings.map
@@ -254,7 +254,7 @@ export function ServerById({ id }) {
     <div className={`w-full flex flex-col ${wrapperClassNames}`}>
       <div className="server flex flex-col h-full bg-[#445]">
         <ServerHeader server={server} />
-        <ServerMapshot server={server} />
+        <ServerBody server={server} />
         <ServerFooter server={server} />
       </div>
     </div>
