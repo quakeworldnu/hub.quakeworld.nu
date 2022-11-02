@@ -29,7 +29,6 @@ const selectStreamsData = createSelector(
 const entitySelectors = streamsAdapter.getSelectors((state) => selectStreamsData(state) ?? initialState);
 
 export const {
-  selectAll: selectAllStreams,
   selectById: selectStreamByChannel,
   selectIds: selectStreamChannels,
 } = entitySelectors;
