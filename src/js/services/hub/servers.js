@@ -31,7 +31,12 @@ const selectServersData = createSelector(
   (result) => result.data
 );
 
-export const { selectAll: selectAllServers, selectById: selectServerByAddress } =
-  serversAdapter.getSelectors(
-    (state) => selectServersData(state) ?? initialState
-  );
+const entitySelectors = serversAdapter.getSelectors(
+  (state) => selectServersData(state) ?? initialState
+);
+
+export const {
+  selectAll: selectAllServers,
+  selectById: selectServerByAddress,
+  selectIds: selectAllServerAddresses,
+} = entitySelectors;

@@ -24,7 +24,8 @@ const ServerProgress = React.memo((props) => {
 
 const ServerHeader = (props) => {
   console.log("ServerHeader.render");
-  const { server } = props;
+  const { address } = props;
+  const server = useSelector((state) => selectServerByAddress(state, address));
   const JoinButtonEl = server.player_slots.free > 0 ? PrimaryButton : SecondaryButton;
 
   return (
@@ -81,7 +82,8 @@ const ServerStatus = React.memo((props) => {
 
 const ServerBody = (props) => {
   console.log("ServerBody.render");
-  const { server } = props;
+  const { address } = props;
+  const server = useSelector((state) => selectServerByAddress(state, address));
 
   const mapThumbnailSrc = server.settings.map
     ? `url(https://raw.githubusercontent.com/vikpe/qw-mapshots/main/${server.settings.map}.jpg)`
@@ -174,7 +176,8 @@ const SpectatorButtons = (props) => {
 
 const ServerFooter = (props) => {
   console.log("ServerFooter.render");
-  const { server } = props;
+  const { address } = props;
+  const server = useSelector((state) => selectServerByAddress(state, address));
 
   return (
     <div className="p-3 border-t border-t-black bg-[#334] text-sm space-y-3">
@@ -263,9 +266,9 @@ export const Server = (props) => {
   return (
     <div className={`w-full flex flex-col ${wrapperClassNames}`}>
       <div className="server flex flex-col h-full bg-[#445]">
-        <ServerHeader server={server} />
-        <ServerBody server={server} />
-        <ServerFooter server={server} />
+        <ServerHeader address={address} />
+        <ServerBody address={address} />
+        <ServerFooter address={address} />
       </div>
     </div>
   );

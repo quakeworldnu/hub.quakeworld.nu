@@ -2,12 +2,12 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { Server } from "./Server.jsx";
-import { selectAllServers } from "../services/hub/servers.js";
+import { selectAllServerAddresses } from "../services/hub/servers.js";
 
 export default function Servers() {
   const [parent] = useAutoAnimate();
-  const servers = useSelector(selectAllServers);
-  const hasServers = servers.length > 0;
+  const serverAddresses = useSelector(selectAllServerAddresses);
+  const hasServers = serverAddresses.length > 0;
 
   return (
     <div className="my-6">
@@ -17,8 +17,8 @@ export default function Servers() {
       )}
 
       <div className="grid grid-cols-servers gap-4 sm:gap-8" ref={parent}>
-        {hasServers && servers.map((server) => (
-          <Server key={server.address} address={server.address} />
+        {hasServers && serverAddresses.map((address) => (
+          <Server key={address} address={address} />
         ))}
       </div>
     </div>
