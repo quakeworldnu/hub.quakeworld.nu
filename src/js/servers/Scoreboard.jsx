@@ -55,7 +55,7 @@ const TeamRow = React.memo((props) => {
         text={coloredQuakeName(name, name_color)}
         className="w-12 text-center"
       />
-      <div />
+      <div></div>
     </div>
   )
 });
@@ -102,10 +102,10 @@ const PlayerRow = (props) => {
   );
 };
 
-const Ping = props => {
+const Ping = React.memo(props => {
   const { value } = props;
 
   return (
     <span className="text-right text-xs opacity-50">{value}</span>
   )
-}
+});
