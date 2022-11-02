@@ -54,3 +54,4 @@ const createSelectorFuncByProp = (prop, defaultValue) => createSelector(
 
 export const selectPlayersByAddress = createSelectorFuncByProp("players");
 export const selectTeamsByAddress = createSelectorFuncByProp("teams");
+export const selectMetaByAddress = createSelectorFuncByProp("meta");

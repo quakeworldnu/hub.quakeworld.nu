@@ -3,27 +3,31 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { coloredQuakeName, QuakeText } from "./QuakeText.jsx";
 import { ColoredFrags } from "./ColoredFrags.jsx";
 import { useSelector } from "react-redux";
-import { selectPlayersByAddress, selectServerByAddress, selectTeamsByAddress } from "../services/hub/servers";
+import {
+  selectMetaByAddress,
+  selectPlayersByAddress,
+  selectTeamsByAddress
+} from "../services/hub/servers";
 
 export const Scoreboard = (props) => {
   const { address, limit = 20 } = props;
-  const server = useSelector((state) => selectServerByAddress(state, address));
+  const serverMeta = useSelector((state) => selectMetaByAddress(state, address));
   let className = "scoreboard ";
-  className += server.meta.showTeamColumn ? "sc-show-team" : "sc-hide-team";
+  className += serverMeta.showTeamColumn ? "sc-show-team" : "sc-hide-team";
 
   const [parent] = useAutoAnimate();
 
   return (
     <div className={className} ref={parent}>
       {
-        server.meta.showTeams && (
+        serverMeta.showTeams && (
           <>
-            <Teams address={server.address} />
+            <Teams address={address} />
             <div className="my-1.5 h-[1px] bg-gradient-to-r from-red-400/20 via-orange-400 from-orange-400/20" />
           </>
         )
       }
-      <Players address={server.address} showTeam={server.meta.showTeamColumn} limit={limit} />
+      <Players address={address} showTeam={serverMeta.showTeamColumn} limit={limit} />
     </div>
   );
 };
