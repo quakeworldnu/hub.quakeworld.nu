@@ -245,7 +245,7 @@ const getModifiers = (server) => {
   return modifiers;
 };
 
-export function ServerById({ id }) {
+export function Server({ id }) {
   const server = useSelector((state) => selectServerById(state, id));
   const modifiers = getModifiers(server);
   const wrapperClassNames = modifiers.join(" ");
