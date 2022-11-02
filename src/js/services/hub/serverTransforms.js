@@ -58,7 +58,7 @@ const metaByServer = (server) => {
     addressTitle,
     spectatorText,
     mapName: server.settings["map"],
-    matchTag: showMatchTag ? server.settings.matchtag : "",
+    matchtag: showMatchTag ? server.settings.matchtag : "",
     showTeams,
     showTeamColumn,
   };
