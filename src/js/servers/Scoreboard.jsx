@@ -1,5 +1,4 @@
 import React from "react";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { coloredQuakeName, QuakeText } from "./QuakeText.jsx";
 import { ColoredFrags } from "./ColoredFrags.jsx";
 import { useSelector } from "react-redux";
@@ -15,10 +14,8 @@ export const Scoreboard = (props) => {
   let className = "scoreboard ";
   className += serverMeta.showTeamColumn ? "sc-show-team" : "sc-hide-team";
 
-  const [parent] = useAutoAnimate();
-
   return (
-    <div className={className} ref={parent}>
+    <div className={className}>
       {
         serverMeta.showTeams && (
           <>
