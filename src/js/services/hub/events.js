@@ -1,4 +1,4 @@
-import { qwsSlice } from "./qws.js";
+import { qwsSlice } from "./hub.js";
 import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
 
 const eventsAdapter = createEntityAdapter({

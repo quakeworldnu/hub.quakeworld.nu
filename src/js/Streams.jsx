@@ -1,6 +1,6 @@
 import React from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { selectAllStreams, selectStreamById } from "./services/qws/streams.js";
+import { selectAllStreams, selectStreamById } from "./services/hub/streams.js";
 import { useSelector } from "react-redux";
 import { TwitchButton } from "./Buttons";
 

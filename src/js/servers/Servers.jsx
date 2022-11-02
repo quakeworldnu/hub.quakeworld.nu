@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { Server } from "./Server.jsx";
-import { selectAllServers } from "../services/qws/servers.js";
+import { selectAllServers } from "../services/hub/servers.js";
 
 export default function Servers() {
   const [parent] = useAutoAnimate();

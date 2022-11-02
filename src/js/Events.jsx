@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { selectAllEvents } from "./services/qws/events.js";
+import { selectAllEvents } from "./services/hub/events.js";
 import _groupby from "lodash.groupby";
 
 export default function Events() {

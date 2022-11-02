@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { selectAllForumPosts } from "./services/qws/forumPosts.js";
+import { selectAllForumPosts } from "./services/hub/forumPosts.js";
 
 export default function News() {
   const forumPosts = useSelector(selectAllForumPosts);

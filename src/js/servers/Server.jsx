@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import copyToClipboard from "copy-text-to-clipboard";
-import { selectServerById } from "../services/qws/servers.js";
+import { selectServerById } from "../services/hub/servers.js";
 import { Scoreboard } from "./Scoreboard.jsx";
 import { QuakeText } from "./QuakeText.jsx";
 import { pluralize } from "../common/text.js";

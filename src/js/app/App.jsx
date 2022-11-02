@@ -1,10 +1,10 @@
 import React from "react";
 import store from "./store.js";
-import { eventsSlice } from "../services/qws/events.js";
-import { newsSlice } from "../services/qws/news.js";
-import { serversSlice } from "../services/qws/servers.js";
-import { streamsSlice } from "../services/qws/streams.js";
-import { forumPostsSlice } from "../services/qws/forumPosts.js";
+import { eventsSlice } from "../services/hub/events.js";
+import { newsSlice } from "../services/hub/news.js";
+import { serversSlice } from "../services/hub/servers.js";
+import { streamsSlice } from "../services/hub/streams.js";
+import { forumPostsSlice } from "../services/hub/forumPosts.js";
 import Servers from "../servers/Servers.jsx";
 import { AppFooter } from "./Footer";
 import { AppHeader } from "./Header";

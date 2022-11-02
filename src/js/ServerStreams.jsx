@@ -1,5 +1,5 @@
 import React from "react";
-import { selectStreamsByServerAddress } from "./services/qws/streams.js";
+import { selectStreamsByServerAddress } from "./services/hub/streams.js";
 import { useSelector } from "react-redux";
 import { TwitchButton } from "./Buttons";
 

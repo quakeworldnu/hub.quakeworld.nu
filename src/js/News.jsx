@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { selectAllNews } from "./services/qws/news.js";
+import { selectAllNews } from "./services/hub/news.js";
 
 export default function News() {
   const news = useSelector(selectAllNews);

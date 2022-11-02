@@ -1,4 +1,4 @@
-import { qwsSlice } from "./qws.js";
+import { qwsSlice } from "./hub.js";
 import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
 import { transformResponseData } from "./serverTransforms.js";
 import { compareServers } from "./serverSort.js";
