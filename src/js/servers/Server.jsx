@@ -99,7 +99,7 @@ const ServerBody = (props) => {
             </div>
           )}
           <Scoreboard
-            server={server}
+            address={server.address}
             limit={server.meta.playerDisplay.visible}
           />
           <HiddenPlayers count={server.meta.playerDisplay.hidden} />

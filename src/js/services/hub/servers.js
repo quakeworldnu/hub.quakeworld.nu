@@ -40,3 +40,19 @@ export const {
   selectById: selectServerByAddress,
   selectIds: selectAllServerAddresses,
 } = entitySelectors;
+
+export const selectPlayersByAddress = createSelector(
+  [
+    state => state,
+    (state, address) => address,
+  ],
+  (state, address) => entitySelectors.selectById(state, address)?.players,
+);
+
+export const selectTeamsByAddress = createSelector(
+  [
+    state => state,
+    (state, address) => address,
+  ],
+  (state, address) => entitySelectors.selectById(state, address)?.teams,
+);

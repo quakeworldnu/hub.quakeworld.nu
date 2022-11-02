@@ -2,9 +2,12 @@ import React from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { coloredQuakeName, QuakeText } from "./QuakeText.jsx";
 import { ColoredFrags } from "./ColoredFrags.jsx";
+import { useSelector } from "react-redux";
+import { selectPlayersByAddress, selectServerByAddress, selectTeamsByAddress } from "../services/hub/servers";
 
 export const Scoreboard = (props) => {
-  const { server, limit = 20 } = props;
+  const { address, limit = 20 } = props;
+  const server = useSelector((state) => selectServerByAddress(state, address));
   let className = "scoreboard ";
   className += server.meta.showTeamColumn ? "sc-show-team" : "sc-hide-team";
 
@@ -15,28 +18,31 @@ export const Scoreboard = (props) => {
       {
         server.meta.showTeams && (
           <>
-            {server.teams.map(team => (
-              <TeamRow
-                {...team}
-                key={`team-${team.name_color}-${team.name}`}
-              />
-            ))}
-
+            <Teams address={server.address} />
             <div className="my-1.5 h-[1px] bg-gradient-to-r from-red-400/20 via-orange-400 from-orange-400/20" />
           </>
         )
       }
-
-      {server.players.slice(0, limit).map(player => (
-        <PlayerRow
-          {...player}
-          showTeam={server.meta.showTeamColumn}
-          key={`player-${player.name_color}-${player.name}`}
-        />
-      ))}
+      <Players address={server.address} showTeam={server.meta.showTeamColumn} limit={limit} />
     </div>
   );
 };
+
+const Teams = props => {
+  const { address } = props;
+  const teams = useSelector((state) => selectTeamsByAddress(state, address));
+
+  return (
+    <>
+      {teams && teams.map(team => (
+        <TeamRow
+          {...team}
+          key={`team-${team.name_color}-${team.name}`}
+        />
+      ))}
+    </>
+  )
+}
 
 const TeamRow = React.memo((props) => {
   const {
@@ -59,6 +65,25 @@ const TeamRow = React.memo((props) => {
     </div>
   )
 });
+
+const Players = props => {
+  const { address, showTeam, limit = 20 } = props;
+  const players = useSelector((state) => selectPlayersByAddress(state, address));
+
+  return (
+    <>
+      {
+        players && players.slice(0, limit).map(player => (
+          <PlayerRow
+            {...player}
+            showTeam={showTeam}
+            key={`player-${player.name_color}-${player.name}`}
+          />
+        ))
+      }
+    </>
+  )
+}
 
 const PlayerRow = (props) => {
   const {
