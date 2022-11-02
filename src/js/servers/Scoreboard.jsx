@@ -89,7 +89,7 @@ const PlayerRow = (props) => {
   let nameColumnClassNames = "truncate max-w-[160px]";
 
   if (is_bot) {
-    nameColumnClassNames += "text-amber-300/80";
+    nameColumnClassNames += " text-amber-300/80";
   }
 
   return (
