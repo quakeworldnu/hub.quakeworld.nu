@@ -41,18 +41,16 @@ export const {
   selectIds: selectAllServerAddresses,
 } = entitySelectors;
 
-export const selectPlayersByAddress = createSelector(
+const createSelectorFuncByProp = (prop, defaultValue) => createSelector(
   [
     state => state,
     (state, address) => address,
   ],
-  (state, address) => entitySelectors.selectById(state, address)?.players,
+  (state, address) => {
+    const server = entitySelectors.selectById(state, address);
+    return server.hasOwnProperty(prop) ? server[prop] : defaultValue;
+  },
 );
 
-export const selectTeamsByAddress = createSelector(
-  [
-    state => state,
-    (state, address) => address,
-  ],
-  (state, address) => entitySelectors.selectById(state, address)?.teams,
-);
+export const selectPlayersByAddress = createSelectorFuncByProp("players");
+export const selectTeamsByAddress = createSelectorFuncByProp("teams");
