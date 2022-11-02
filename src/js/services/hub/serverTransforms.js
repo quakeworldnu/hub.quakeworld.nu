@@ -48,16 +48,17 @@ const metaByServer = (server) => {
   const showTeamColumn = "teamplay" in server.settings && server.settings.teamplay > 0;
   const showTeams = showTeamColumn && (server.teams.length < server.player_slots.used) && server.teams.length <= 3;
 
+  const showMatchTag = "matchtag" in server.settings &&
+    !server.settings.matchtag.includes("prac") &&
+    server.title.includes(server.settings.matchtag);
+
   const meta = {
     isStarted,
     isStandBy: !isStarted,
     addressTitle,
     spectatorText,
-    spectator_count: spectator_names.length,
-    showMatchtag:
-      "matchtag" in server.settings &&
-      !server.settings.matchtag.includes("prac") &&
-      server.title.includes(server.settings.matchtag),
+    mapName: server.settings["map"],
+    matchTag: showMatchTag ? server.settings.matchtag : "",
     showTeams,
     showTeamColumn,
   };
@@ -70,6 +71,17 @@ const metaByServer = (server) => {
   }
 
   meta.playerDisplay = calcPlayerDisplay(server.player_slots.used, maxPlayerCount);
+
+  // wrapper class names
+  meta.wrapperClassNames = "server-wrapper";
+
+  if (showMatchTag) {
+    meta.wrapperClassNames += " smod-matchtag";
+  }
+
+  if (server.player_slots.free > 0) {
+    meta.wrapperClassNames += " smod-hasfreeplayer_slots";
+  }
 
   return meta;
 };
@@ -95,3 +107,4 @@ const calcPlayerDisplay = (playerCount, maxPlayers) => {
   const hidden = playerCount - visible;
   return { visible, hidden, };
 };
+

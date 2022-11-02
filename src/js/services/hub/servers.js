@@ -41,7 +41,7 @@ export const {
   selectIds: selectAllServerAddresses,
 } = entitySelectors;
 
-const createSelectorFuncByProp = (prop, defaultValue) => createSelector(
+const createSelectorFuncByProp = (prop, defaultValue = null) => createSelector(
   [
     state => state,
     (state, address) => address,

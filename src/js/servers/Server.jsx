@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import copyToClipboard from "copy-text-to-clipboard";
-import { selectServerByAddress } from "../services/hub/servers.js";
+import { selectMetaByAddress, selectServerByAddress } from "../services/hub/servers.js";
 import { Scoreboard } from "./Scoreboard.jsx";
 import { QuakeText } from "./QuakeText.jsx";
 import { pluralize } from "../common/text.js";
@@ -35,7 +35,7 @@ const ServerHeader = (props) => {
           statusName={server.status.name}
           statusDescription={server.status.description}
         />
-        <JoinButtonEl href={`qw://${server.address}/`} className="flex items-center px-5 text-lg rounded-lg">
+        <JoinButtonEl href={`qw://${address}/`} className="flex items-center px-5 text-lg rounded-lg">
           Join
         </JoinButtonEl>
       </div>
@@ -79,10 +79,10 @@ const ServerStatus = React.memo((props) => {
 
 const ServerBody = (props) => {
   const { address } = props;
-  const server = useSelector((state) => selectServerByAddress(state, address));
+  const serverMeta = useSelector((state) => selectMetaByAddress(state, address));
 
-  const mapThumbnailSrc = server.settings.map
-    ? `url(https://raw.githubusercontent.com/vikpe/qw-mapshots/main/${server.settings.map}.jpg)`
+  const mapThumbnailSrc = serverMeta.mapName
+    ? `url(https://raw.githubusercontent.com/vikpe/qw-mapshots/main/${serverMeta.mapName}.jpg)`
     : "none";
 
   return (
@@ -92,18 +92,18 @@ const ServerBody = (props) => {
         style={{ backgroundImage: mapThumbnailSrc }}
       >
         <div className="flex flex-col justify-center items-center bg-gray-700/40 h-full px-2 py-4">
-          {server.meta.showMatchtag && (
+          {serverMeta.matchtag && (
             <div
               className="py-1.5 mb-3 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r from-red-600/0 via-red-600 app-text-shadow">
-              {server.settings.matchtag}
+              {serverMeta.matchtag}
             </div>
           )}
           <Scoreboard
-            address={server.address}
-            limit={server.meta.playerDisplay.visible}
+            address={address}
+            limit={serverMeta.playerDisplay.visible}
           />
-          <HiddenPlayers count={server.meta.playerDisplay.hidden} />
-          <SpectatorText text={server.meta.spectatorText} />
+          <HiddenPlayers count={serverMeta.playerDisplay.hidden} />
+          <SpectatorText text={serverMeta.spectatorText} />
         </div>
       </div>
     </div>
@@ -232,30 +232,12 @@ const KtxVersion = React.memo((props) => {
   );
 });
 
-const getModifiers = (server) => {
-  const modifiers = ["server-wrapper"];
-
-  if (server.meta.showMatchtag) {
-    modifiers.push("smod-matchtag");
-  }
-
-  if (server.player_slots.free > 0) {
-    modifiers.push("smod-hasfreeplayer_slots");
-  } else if (server.meta.isStandBy) {
-    modifiers.push("smod-waitingforready");
-  }
-
-  return modifiers;
-};
-
 export const Server = (props) => {
   const { address } = props;
-  const server = useSelector((state) => selectServerByAddress(state, address));
-  const modifiers = getModifiers(server);
-  const wrapperClassNames = modifiers.join(" ");
+  const serverMeta = useSelector((state) => selectMetaByAddress(state, address));
 
   return (
-    <div className={`w-full flex flex-col ${wrapperClassNames}`}>
+    <div className={`w-full flex flex-col ${serverMeta.wrapperClassNames}`}>
       <div className="server flex flex-col h-full bg-[#445]">
         <ServerHeader address={address} />
         <ServerBody address={address} />
