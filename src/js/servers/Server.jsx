@@ -89,7 +89,7 @@ const ServerBody = (props) => {
         className="h-full min-h-[200px] bg-cover bg-center"
         style={{ backgroundImage: mapThumbnailSrc }}
       >
-        <div className="flex flex-col justify-center items-center bg-gray-700/40 h-full px-4 py-2">
+        <div className="flex flex-col justify-center items-center bg-gray-700/40 h-full px-2 py-4">
           {server.meta.showMatchtag && (
             <div
               className="py-1.5 mb-3 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r from-red-600/0 via-red-600 app-text-shadow">
