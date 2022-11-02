@@ -11,11 +11,6 @@ export default function Servers() {
 
   return (
     <div className="my-6">
-      {!hasServers && (
-        <div className="w-full flex flex-col py-6 bg-white/5 rounded-lg text-gray-300 text-center text-">no active
-          servers found</div>
-      )}
-
       <div className="grid grid-cols-servers gap-4 sm:gap-8" ref={parent}>
         {hasServers && serverAddresses.map((address) => (
           <Server key={address} address={address} />
