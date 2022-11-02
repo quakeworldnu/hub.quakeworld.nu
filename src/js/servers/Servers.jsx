@@ -7,12 +7,20 @@ import { selectAllServers } from "../services/qws/servers.js";
 export default function Servers() {
   const [parent] = useAutoAnimate();
   const servers = useSelector(selectAllServers);
+  const hasServers = servers.length > 0;
 
   return (
-    <div className="my-6 grid grid-cols-servers gap-4 sm:gap-8" ref={parent}>
-      {(servers.length > 0) && servers.map((server) => (
-        <Server key={server.address} id={server.address} />
-      ))}
+    <div className="my-6">
+      {!hasServers && (
+        <div className="w-full flex flex-col py-6 bg-white/5 rounded-lg text-gray-300 text-center text-">no active
+          servers found</div>
+      )}
+
+      <div className="grid grid-cols-servers gap-4 sm:gap-8" ref={parent}>
+        {hasServers && servers.map((server) => (
+          <Server key={server.address} id={server.address} />
+        ))}
+      </div>
     </div>
   );
 }
