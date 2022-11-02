@@ -2,26 +2,20 @@ import React from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { coloredQuakeName, QuakeText } from "./QuakeText.jsx";
 import { ColoredFrags } from "./ColoredFrags.jsx";
+import { useSelector } from "react-redux";
+import { selectServerById } from "../services/qws/servers";
 
 export const Scoreboard = (props) => {
   const { server, limit = 20 } = props;
-
-  if (0 === server.player_slots.used || 0 === limit) {
-    return null;
-  }
-
-  const showTeamColumn = "teamplay" in server.settings && server.settings.teamplay > 0;
-  const showTeams = showTeamColumn && (server.teams.length < server.player_slots.used) && server.teams.length <= 3;
-
   let className = "scoreboard ";
-  className += showTeamColumn ? "sc-show-team" : "sc-hide-team";
+  className += server.meta.showTeamColumn ? "sc-show-team" : "sc-hide-team";
 
   const [parent] = useAutoAnimate();
 
   return (
     <div className={className} ref={parent}>
       {
-        showTeams && (
+        server.meta.showTeams && (
           <>
             {server.teams.map(team => (
               <TeamRow
@@ -38,7 +32,7 @@ export const Scoreboard = (props) => {
       {server.players.slice(0, limit).map(player => (
         <PlayerRow
           {...player}
-          showTeam={showTeamColumn}
+          showTeam={server.meta.showTeamColumn}
           key={`player-${player.name_color}-${player.name}`}
         />
       ))}
@@ -46,7 +40,7 @@ export const Scoreboard = (props) => {
   );
 };
 
-const TeamRow = (props) => {
+const TeamRow = React.memo((props) => {
   const {
     name,
     name_color,
@@ -66,7 +60,7 @@ const TeamRow = (props) => {
       <div />
     </div>
   )
-}
+});
 
 const PlayerRow = (props) => {
   const {

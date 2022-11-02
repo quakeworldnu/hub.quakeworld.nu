@@ -10,6 +10,7 @@ import { PrimaryButton, SecondaryButton } from "../Buttons";
 import ServerStreams from "../ServerStreams";
 
 const ServerProgress = React.memo((props) => {
+  console.log("ServerProgress.render");
   const { value, max } = props;
   const progress = 100 * (value / max);
   const width = `${progress}%`;
@@ -22,6 +23,7 @@ const ServerProgress = React.memo((props) => {
 });
 
 const ServerHeader = (props) => {
+  console.log("ServerHeader.render");
   const { server } = props;
   const JoinButtonEl = server.player_slots.free > 0 ? PrimaryButton : SecondaryButton;
 
@@ -48,6 +50,7 @@ const ServerHeader = (props) => {
 
 const ServerStatus = React.memo((props) => {
   const { mode, map, statusName, statusDescription } = props;
+  console.log("ServerStatus.render");
 
   return (
     <div>
@@ -77,6 +80,7 @@ const ServerStatus = React.memo((props) => {
 });
 
 const ServerBody = (props) => {
+  console.log("ServerBody.render");
   const { server } = props;
 
   const mapThumbnailSrc = server.settings.map
@@ -123,6 +127,7 @@ const HiddenPlayers = React.memo((props) => {
 });
 
 const SpectatorText = React.memo((props) => {
+  console.log("SpectatorText.render");
   const { text } = props;
 
   if ("" === text) {
@@ -138,6 +143,7 @@ const SpectatorText = React.memo((props) => {
 });
 
 const SpectatorButtons = (props) => {
+  console.log("SpectatorButtons.render");
   const { server } = props;
 
   return (
@@ -167,6 +173,7 @@ const SpectatorButtons = (props) => {
 };
 
 const ServerFooter = (props) => {
+  console.log("ServerFooter.render");
   const { server } = props;
 
   return (
@@ -219,6 +226,7 @@ const ServerAddressTitle = React.memo((props) => {
 });
 
 const KtxVersion = React.memo((props) => {
+  console.log("KtxVersion.render");
   const { version } = props;
   const label = `KTX ${version}`;
 
@@ -246,6 +254,7 @@ const getModifiers = (server) => {
 };
 
 export function Server({ id }) {
+  console.log("Server.render", id);
   const server = useSelector((state) => selectServerById(state, id));
   const modifiers = getModifiers(server);
   const wrapperClassNames = modifiers.join(" ");

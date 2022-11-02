@@ -45,6 +45,9 @@ const metaByServer = (server) => {
   const spectatorText = calcSpectatorText(spectator_names);
   const isStarted = "Started" === server.status.name;
 
+  const showTeamColumn = "teamplay" in server.settings && server.settings.teamplay > 0;
+  const showTeams = showTeamColumn && (server.teams.length < server.player_slots.used) && server.teams.length <= 3;
+
   const meta = {
     isStarted,
     isStandBy: !isStarted,
@@ -55,6 +58,8 @@ const metaByServer = (server) => {
       "matchtag" in server.settings &&
       !server.settings.matchtag.includes("prac") &&
       server.title.includes(server.settings.matchtag),
+    showTeams,
+    showTeamColumn,
   };
 
   let maxPlayerCount = 8;
