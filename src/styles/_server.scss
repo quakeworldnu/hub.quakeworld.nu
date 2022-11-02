@@ -25,26 +25,15 @@
     transition: width 500ms ease-in-out;
 
     &:after {
-      @apply block absolute content-[''];
-      $dotSize: 6px;
+      @apply block absolute shadow content-[''];
+      $dotSize: 8px;
       $color: $green;
       width: $dotSize;
       height: $dotSize;
       right: -.5*$dotSize;
       border-radius: $dotSize;
       background-color: $color;
-      box-shadow: rgba(black, 0.5) 0 0 2px 1px, rgba(lighten($color, 20), 0.4) 0 0 3px 2px;
-      animation: serverProgressDot 0.8s infinite linear alternate;
-
-      @keyframes serverProgressDot {
-        0% {
-          background-color: $color;
-        }
-        50%,
-        100% {
-          background-color: lighten($color, 20);
-        }
-      }
+      border: 1px solid rgba(0, 0, 0, .5);
     }
   }
 }
