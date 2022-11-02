@@ -1,4 +1,4 @@
-import { qwsSlice } from "./hub.js";
+import { hubSlice } from "./hub.js";
 import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
 
 const forumPostsAdapter = createEntityAdapter({
@@ -6,7 +6,7 @@ const forumPostsAdapter = createEntityAdapter({
 });
 const initialState = forumPostsAdapter.getInitialState();
 
-export const forumPostsSlice = qwsSlice.injectEndpoints({
+export const forumPostsSlice = hubSlice.injectEndpoints({
   overrideExisting: true,
   endpoints: (builder) => ({
     getForumPosts: builder.query({

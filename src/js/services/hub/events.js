@@ -1,4 +1,4 @@
-import { qwsSlice } from "./hub.js";
+import { hubSlice } from "./hub.js";
 import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
 
 const eventsAdapter = createEntityAdapter({
@@ -6,7 +6,7 @@ const eventsAdapter = createEntityAdapter({
 });
 const initialState = eventsAdapter.getInitialState();
 
-export const eventsSlice = qwsSlice.injectEndpoints({
+export const eventsSlice = hubSlice.injectEndpoints({
   overrideExisting: true,
   endpoints: (builder) => ({
     getEvents: builder.query({

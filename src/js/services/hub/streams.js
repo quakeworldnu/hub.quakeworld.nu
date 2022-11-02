@@ -1,4 +1,4 @@
-import { qwsSlice } from "./hub.js";
+import { hubSlice } from "./hub.js";
 import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
 
 const streamsAdapter = createEntityAdapter({
@@ -8,7 +8,7 @@ const streamsAdapter = createEntityAdapter({
 
 const initialState = streamsAdapter.getInitialState();
 
-export const streamsSlice = qwsSlice.injectEndpoints({
+export const streamsSlice = hubSlice.injectEndpoints({
   overrideExisting: true,
   endpoints: (builder) => ({
     getStreams: builder.query({
