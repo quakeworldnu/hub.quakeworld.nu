@@ -31,7 +31,7 @@ const selectServersData = createSelector(
   (result) => result.data
 );
 
-export const { selectAll: selectAllServers, selectById: selectServerById } =
+export const { selectAll: selectAllServers, selectById: selectServerByAddress } =
   serversAdapter.getSelectors(
     (state) => selectServersData(state) ?? initialState
   );

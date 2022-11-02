@@ -18,7 +18,7 @@ export default function Servers() {
 
       <div className="grid grid-cols-servers gap-4 sm:gap-8" ref={parent}>
         {hasServers && servers.map((server) => (
-          <Server key={server.address} id={server.address} />
+          <Server key={server.address} address={server.address} />
         ))}
       </div>
     </div>

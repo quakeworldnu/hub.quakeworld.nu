@@ -2,8 +2,6 @@ import React from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { coloredQuakeName, QuakeText } from "./QuakeText.jsx";
 import { ColoredFrags } from "./ColoredFrags.jsx";
-import { useSelector } from "react-redux";
-import { selectServerById } from "../services/hub/servers";
 
 export const Scoreboard = (props) => {
   const { server, limit = 20 } = props;
