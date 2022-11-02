@@ -1,28 +1,3 @@
-// pulse
-@keyframes pulse {
-  $scale-min: 1.0;
-  $scale-max: 1.3;
-
-  from {
-    transform: scale3d($scale-min, $scale-min, $scale-min);
-  }
-
-  50% {
-    transform: scale3d($scale-max, $scale-max, $scale-max);
-  }
-
-  to {
-    transform: scale3d($scale-min, $scale-min, $scale-min);
-  }
-}
-
-.animation-pulse {
-  animation-name: pulse;
-  animation-timing-function: ease-in-out;
-  animation-duration: 500ms;
-  display: inline-block;
-}
-
 // blur
 @keyframes blur {
   from {

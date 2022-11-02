@@ -1,5 +1,4 @@
 import React from "react";
-import { TextPulse } from "../TextAnimations.jsx";
 
 export const ColoredFrags = React.memo((props) => {
   const { tag = "div", frags, colors } = props;
@@ -9,7 +8,7 @@ export const ColoredFrags = React.memo((props) => {
     <TagName
       className={`font-bold text-center qw-bgcolor-${colors[0]}-${colors[1]}`}
     >
-      <TextPulse key="frags" value={frags} />
+      {frags}
     </TagName>
   );
 });
