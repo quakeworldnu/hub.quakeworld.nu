@@ -8,17 +8,11 @@ export default function Servers() {
   const [parent] = useAutoAnimate();
   const servers = useSelector(selectAllServers);
 
-  if (0 === servers.length) {
-    return <div ref={parent} />;
-  }
-
   return (
-    <>
-      <div className="my-6 grid grid-cols-servers gap-4 sm:gap-8" ref={parent}>
-        {servers.map((server) => (
-          <ServerById key={server.address} id={server.address} />
-        ))}
-      </div>
-    </>
+    <div className="my-6 grid grid-cols-servers gap-4 sm:gap-8" ref={parent}>
+      {(servers.length > 0) && servers.map((server) => (
+        <ServerById key={server.address} id={server.address} />
+      ))}
+    </div>
   );
 }
