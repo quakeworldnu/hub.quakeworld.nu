@@ -53,17 +53,12 @@ const TeamRow = React.memo((props) => {
     colors,
     ping,
   } = props;
-  
-  const nameMaxLength = 4;
 
   return (
     <div className="sc-row sc-row-team">
       <Ping value={`${ping} ms`} />
       <ColoredFrags frags={frags} colors={colors} />
-      <QuakeText
-        text={coloredQuakeName(name.substring(0, nameMaxLength), name_color.substring(0, nameMaxLength))}
-        className="w-12 text-center"
-      />
+      <TeamName name={name} name_color={name_color} />
       <div></div>
     </div>
   )
@@ -117,10 +112,7 @@ const PlayerRow = (props) => {
       <Ping value={pingText} />
       <ColoredFrags frags={frags} colors={colors} />
       {showTeam && (
-        <QuakeText
-          text={coloredQuakeName(team, team_color)}
-          className="w-12 text-center"
-        />
+        <TeamName name={team} name_color={team_color} />
       )}
       <QuakeText
         text={coloredQuakeName(name, name_color)}
@@ -129,6 +121,18 @@ const PlayerRow = (props) => {
     </div>
   );
 };
+
+const TeamName = React.memo(props => {
+  const { name, name_color } = props;
+  const maxLen = 4;
+  
+  return (
+    <QuakeText
+      text={coloredQuakeName(team.substring(0, maxLen), team_color.substring(0, maxLen))}
+      className="w-12 text-center"
+    />
+  );
+});
 
 const Ping = React.memo(props => {
   const { value } = props;
