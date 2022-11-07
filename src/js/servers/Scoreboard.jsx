@@ -64,6 +64,19 @@ const TeamRow = React.memo((props) => {
   )
 });
 
+
+const TeamName = React.memo(props => {
+    const { name, name_color } = props;
+    const maxLen = 4;
+
+    return (
+        <QuakeText
+        text={coloredQuakeName(name.substring(0, maxLen), name_color.substring(0, maxLen))}
+        className="w-12 text-center"
+        />
+    );
+});
+
 const Players = props => {
   const { address, showTeam, limit = 20 } = props;
   const players = useSelector((state) => selectPlayersByAddress(state, address));
@@ -122,17 +135,6 @@ const PlayerRow = (props) => {
   );
 };
 
-const TeamName = React.memo(props => {
-  const { name, name_color } = props;
-  const maxLen = 4;
-  
-  return (
-    <QuakeText
-      text={coloredQuakeName(team.substring(0, maxLen), team_color.substring(0, maxLen))}
-      className="w-12 text-center"
-    />
-  );
-});
 
 const Ping = React.memo(props => {
   const { value } = props;
