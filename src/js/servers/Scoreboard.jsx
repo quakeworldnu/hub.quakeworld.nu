@@ -53,13 +53,15 @@ const TeamRow = React.memo((props) => {
     colors,
     ping,
   } = props;
+  
+  const nameMaxLength = 4;
 
   return (
     <div className="sc-row sc-row-team">
       <Ping value={`${ping} ms`} />
       <ColoredFrags frags={frags} colors={colors} />
       <QuakeText
-        text={coloredQuakeName(name, name_color)}
+        text={coloredQuakeName(name.substring(0, nameMaxLength), name_color.substring(0, nameMaxLength))}
         className="w-12 text-center"
       />
       <div></div>
