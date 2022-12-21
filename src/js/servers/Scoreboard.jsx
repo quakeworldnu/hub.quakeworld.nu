@@ -83,18 +83,19 @@ const Players = props => {
 
   return (
     <>
-      {
-        players && players.slice(0, limit).map(player => (
-          <PlayerRow
-            {...player}
-            showTeam={showTeam}
-            key={`player-${player.name_color}-${player.name}`}
-          />
-        ))
-      }
+      {players &&
+        players
+          .slice(0, limit)
+          .map((player, index) => (
+            <PlayerRow
+              {...player}
+              showTeam={showTeam}
+              key={`player-${index}`}
+            />
+          ))}
     </>
-  )
-}
+  );
+};
 
 const PlayerRow = (props) => {
   const {
