@@ -12,9 +12,7 @@ export default function News() {
 
   return (
     <div>
-      <div className="font-bold text-gray-300/50 mb-2">
-        FORUM ACTIVITY
-      </div>
+      <div className="font-bold text-gray-300/50 mb-2">FORUM ACTIVITY</div>
       {forumPosts.slice(0, limit).map((item, index) => (
         <a href={item.url} className="block" key={index}>
           {item.title}

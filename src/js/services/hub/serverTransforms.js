@@ -45,10 +45,15 @@ const metaByServer = (server) => {
   const spectatorText = calcSpectatorText(spectator_names);
   const isStarted = "Started" === server.status.name;
 
-  const showTeamColumn = "teamplay" in server.settings && server.settings.teamplay > 0;
-  const showTeams = showTeamColumn && (server.teams.length < server.player_slots.used) && server.teams.length <= 3;
+  const showTeamColumn =
+    "teamplay" in server.settings && server.settings.teamplay > 0;
+  const showTeams =
+    showTeamColumn &&
+    server.teams.length < server.player_slots.used &&
+    server.teams.length <= 3;
 
-  const showMatchTag = "matchtag" in server.settings &&
+  const showMatchTag =
+    "matchtag" in server.settings &&
     !server.settings.matchtag.includes("prac") &&
     server.title.includes(server.settings.matchtag);
 
@@ -64,13 +69,17 @@ const metaByServer = (server) => {
   };
 
   let maxPlayerCount = 8;
-  const isTeamplay = "teamplay" in server.settings && server.settings.teamplay > 0;
+  const isTeamplay =
+    "teamplay" in server.settings && server.settings.teamplay > 0;
 
   if (!isTeamplay) {
     maxPlayerCount += 2;
   }
 
-  meta.playerDisplay = calcPlayerDisplay(server.player_slots.used, maxPlayerCount);
+  meta.playerDisplay = calcPlayerDisplay(
+    server.player_slots.used,
+    maxPlayerCount
+  );
 
   // wrapper class names
   meta.wrapperClassNames = "server-wrapper";
@@ -105,6 +114,5 @@ const calcSpectatorText = (spectators) => {
 const calcPlayerDisplay = (playerCount, maxPlayers) => {
   const visible = Math.min(maxPlayers, playerCount);
   const hidden = playerCount - visible;
-  return { visible, hidden, };
+  return { visible, hidden };
 };
-

@@ -12,9 +12,10 @@ export default function Servers() {
   return (
     <div className="my-6">
       <div className="grid grid-cols-servers gap-4 sm:gap-8" ref={parent}>
-        {hasServers && serverAddresses.map((address) => (
-          <Server key={address} address={address} />
-        ))}
+        {hasServers &&
+          serverAddresses.map((address) => (
+            <Server key={address} address={address} />
+          ))}
       </div>
     </div>
   );

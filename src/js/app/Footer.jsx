@@ -2,7 +2,7 @@ import Events from "../Events";
 import ForumPosts from "../ForumPosts";
 import News from "../News";
 
-const HorizontalSeparator = () => (<hr className="border-blue-600/40" />);
+const HorizontalSeparator = () => <hr className="border-blue-600/40" />;
 
 export const AppFooter = () => {
   const delimiter = <span> • </span>;
@@ -33,7 +33,9 @@ export const AppFooter = () => {
           <a href="https://vikpe.org/qw-demos/">Recent demos</a>
         </div>
         <div className="sm:text-right">
-          <a href="https://github.com/quakeworldnu/hub.quakeworld.nu">View on GitHub</a>
+          <a href="https://github.com/quakeworldnu/hub.quakeworld.nu">
+            View on GitHub
+          </a>
         </div>
       </div>
     </div>

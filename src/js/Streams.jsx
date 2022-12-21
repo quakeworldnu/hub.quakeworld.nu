@@ -1,6 +1,9 @@
 import React from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { selectStreamChannels, selectStreamByChannel } from "./services/hub/streams.js";
+import {
+  selectStreamChannels,
+  selectStreamByChannel,
+} from "./services/hub/streams.js";
 import { useSelector } from "react-redux";
 import { TwitchButton } from "./Buttons";
 
@@ -24,7 +27,5 @@ export default function Streams() {
 const Stream = ({ channel }) => {
   const stream = useSelector((state) => selectStreamByChannel(state, channel));
 
-  return (
-    <TwitchButton {...stream} className="block px-3 py-1.5 rounded-lg" />
-  );
+  return <TwitchButton {...stream} className="block px-3 py-1.5 rounded-lg" />;
 };

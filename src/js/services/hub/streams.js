@@ -26,7 +26,9 @@ const selectStreamsData = createSelector(
   (result) => result.data
 );
 
-const entitySelectors = streamsAdapter.getSelectors((state) => selectStreamsData(state) ?? initialState);
+const entitySelectors = streamsAdapter.getSelectors(
+  (state) => selectStreamsData(state) ?? initialState
+);
 
 export const {
   selectById: selectStreamByChannel,
@@ -34,9 +36,7 @@ export const {
 } = entitySelectors;
 
 export const selectStreamsByServerAddress = createSelector(
-  [
-    entitySelectors.selectAll,
-    (state, serverAddress) => serverAddress
-  ],
-  (streams, serverAddress) => streams.filter(stream => stream.server_address === serverAddress)
-)
+  [entitySelectors.selectAll, (state, serverAddress) => serverAddress],
+  (streams, serverAddress) =>
+    streams.filter((stream) => stream.server_address === serverAddress)
+);

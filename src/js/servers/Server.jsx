@@ -1,7 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import copyToClipboard from "copy-text-to-clipboard";
-import { selectMetaByAddress, selectServerByAddress } from "../services/hub/servers.js";
+import {
+  selectMetaByAddress,
+  selectServerByAddress,
+} from "../services/hub/servers.js";
 import { Scoreboard } from "./Scoreboard.jsx";
 import { QuakeText } from "./QuakeText.jsx";
 import { pluralize } from "../common/text.js";
@@ -24,7 +27,8 @@ const ServerProgress = React.memo((props) => {
 const ServerHeader = (props) => {
   const { address } = props;
   const server = useSelector((state) => selectServerByAddress(state, address));
-  const JoinButtonEl = server.player_slots.free > 0 ? PrimaryButton : SecondaryButton;
+  const JoinButtonEl =
+    server.player_slots.free > 0 ? PrimaryButton : SecondaryButton;
 
   return (
     <div className="border-b border-black">
@@ -35,7 +39,10 @@ const ServerHeader = (props) => {
           statusName={server.status.name}
           statusDescription={server.status.description}
         />
-        <JoinButtonEl href={`qw://${address}/`} className="flex items-center px-5 text-lg rounded-lg">
+        <JoinButtonEl
+          href={`qw://${address}/`}
+          className="flex items-center px-5 text-lg rounded-lg"
+        >
           Join
         </JoinButtonEl>
       </div>
@@ -62,7 +69,9 @@ const ServerStatus = React.memo((props) => {
       <div>
         <span className="server-status mr-1">
           {["Started", "Countdown"].includes(statusName) && (
-            <span className="px-1 py-0.5 rounded-sm font-mono text-xs bg-red-600 app-text-shadow">LIVE</span>
+            <span className="px-1 py-0.5 rounded-sm font-mono text-xs bg-red-600 app-text-shadow">
+              LIVE
+            </span>
           )}{" "}
           {"Standby" === statusName && (
             <div className="indicator-waiting-container">
@@ -79,7 +88,9 @@ const ServerStatus = React.memo((props) => {
 
 const ServerBody = (props) => {
   const { address } = props;
-  const serverMeta = useSelector((state) => selectMetaByAddress(state, address));
+  const serverMeta = useSelector((state) =>
+    selectMetaByAddress(state, address)
+  );
 
   const mapThumbnailSrc = serverMeta.mapName
     ? `url(https://raw.githubusercontent.com/vikpe/qw-mapshots/main/${serverMeta.mapName}.jpg)`
@@ -93,8 +104,7 @@ const ServerBody = (props) => {
       >
         <div className="flex flex-col justify-center items-center bg-gray-700/40 h-full px-2 py-4">
           {serverMeta.matchtag && (
-            <div
-              className="py-1.5 mb-3 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r from-red-600/0 via-red-600 app-text-shadow">
+            <div className="py-1.5 mb-3 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r from-red-600/0 via-red-600 app-text-shadow">
               {serverMeta.matchtag}
             </div>
           )}
@@ -160,9 +170,7 @@ const SpectatorButtons = (props) => {
             QTV
           </SecondaryButton>
         )}
-        {
-          <ServerStreams address={server.address} />
-        }
+        {<ServerStreams address={server.address} />}
       </div>
     </div>
   );
@@ -226,15 +234,20 @@ const KtxVersion = React.memo((props) => {
   const label = `KTX ${version}`;
 
   return (
-    <div className="text-right w-20 overflow-hidden whitespace-nowrap text-ellipsis text-white/40"
-         title={label}>{label}
+    <div
+      className="text-right w-20 overflow-hidden whitespace-nowrap text-ellipsis text-white/40"
+      title={label}
+    >
+      {label}
     </div>
   );
 });
 
 export const Server = (props) => {
   const { address } = props;
-  const serverMeta = useSelector((state) => selectMetaByAddress(state, address));
+  const serverMeta = useSelector((state) =>
+    selectMetaByAddress(state, address)
+  );
 
   return (
     <div className={`w-full flex flex-col ${serverMeta.wrapperClassNames}`}>
@@ -245,4 +258,4 @@ export const Server = (props) => {
       </div>
     </div>
   );
-}
+};
