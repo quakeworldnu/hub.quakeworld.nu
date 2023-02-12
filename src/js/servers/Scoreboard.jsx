@@ -106,6 +106,7 @@ const PlayerRow = (props) => {
     team,
     team_color,
     ping,
+    cc,
     is_bot,
     showTeam,
   } = props;
@@ -126,10 +127,22 @@ const PlayerRow = (props) => {
       <Ping value={pingText} />
       <ColoredFrags frags={frags} colors={colors} />
       {showTeam && <TeamName name={team} name_color={team_color} />}
-      <QuakeText
-        text={coloredQuakeName(name, name_color)}
-        className={nameColumnClassNames}
-      />
+      <span className="flex items-center">
+        {cc && (
+          <img
+            src={`https://www.quakeworld.nu/images/flags/${cc}.gif`}
+            alt={cc}
+            width="16"
+            height="11"
+            className="mr-1"
+          />
+        )}
+        <QuakeText
+          tag="span"
+          text={coloredQuakeName(name, name_color)}
+          className={nameColumnClassNames}
+        />
+      </span>
     </div>
   );
 };
