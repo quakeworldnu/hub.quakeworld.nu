@@ -34,7 +34,7 @@ export const AppFooter = () => {
         </div>
         <div className="sm:text-right">
           <a href="https://github.com/quakeworldnu/hub.quakeworld.nu">
-            View on GitHub
+            Source on GitHub
           </a>
         </div>
       </div>

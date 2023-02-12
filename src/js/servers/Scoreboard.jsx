@@ -130,7 +130,7 @@ const PlayerRow = (props) => {
       <span className="flex items-center">
         {cc && (
           <img
-            src={`https://www.quakeworld.nu/images/flags/${cc}.gif`}
+            src={`https://www.quakeworld.nu/images/flags/${cc.toLowerCase()}.gif`}
             alt={cc}
             width="16"
             height="11"
