@@ -28,9 +28,9 @@ export const AppFooter = () => {
           {delimiter}
           <a href="https://www.quakeworld.nu/wiki/Overview">Wiki</a>
           {delimiter}
-          <a href="https://vikpe.org/qw-server-overview/">Servers</a>
+          <a href="https://tools.quake.world/servers/">Servers</a>
           {delimiter}
-          <a href="https://vikpe.org/qw-demos/">Recent demos</a>
+          <a href="https://tools.quake.world/recent-demos/">Recent demos</a>
         </div>
         <div className="sm:text-right">
           <a href="https://github.com/quakeworldnu/hub.quakeworld.nu">
