@@ -102,18 +102,33 @@ export const ServerBody = (props) => {
         className="h-full min-h-[200px] bg-cover bg-center"
         style={{ backgroundImage: mapThumbnailSrc }}
       >
-        <div className="flex flex-col justify-center items-center bg-gray-700/40 h-full px-2 py-4">
-          {serverMeta.matchtag && (
-            <div className="py-1.5 mb-3 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r from-red-600/0 via-red-600 app-text-shadow">
-              {serverMeta.matchtag}
-            </div>
-          )}
-          <Scoreboard
-            address={address}
-            limit={serverMeta.playerDisplay.visible}
-          />
-          <HiddenPlayers count={serverMeta.playerDisplay.hidden} />
-          <SpectatorText text={serverMeta.spectatorText} />
+        <div className="bg-gray-700/40 flex flex-col h-full group">
+          <a
+            href={`scoreboard/?address=${address}`}
+            className="transition-opacity opacity-0 group-hover:opacity-80 ml-auto -mb-2 mt-1 mr-1"
+            title="Show scoreboard in separate window"
+          >
+            <img
+              src="/assets/img/icons/launch.svg"
+              width={20}
+              height={20}
+              alt=""
+            />
+          </a>
+
+          <div className="flex flex-col justify-center items-center h-full px-2 pb-4">
+            {serverMeta.matchtag && (
+              <div className="py-1.5 mb-3 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r from-red-600/0 via-red-600 app-text-shadow">
+                {serverMeta.matchtag}
+              </div>
+            )}
+            <Scoreboard
+              address={address}
+              limit={serverMeta.playerDisplay.visible}
+            />
+            <HiddenPlayers count={serverMeta.playerDisplay.hidden} />
+            <SpectatorText text={serverMeta.spectatorText} />
+          </div>
         </div>
       </div>
     </div>
