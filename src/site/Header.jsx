@@ -1,7 +1,7 @@
 import ServerOverview from "../servers/Overview";
 import Streams from "../Streams";
 
-export const AppHeader = () => {
+export const SiteHeader = () => {
   return (
     <div className="mt-2 mb-4 animation-fade-in-down">
       <div className="space-y-2 lg:flex">

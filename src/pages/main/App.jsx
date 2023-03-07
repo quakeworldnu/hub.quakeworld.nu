@@ -6,8 +6,8 @@ import { serversSlice } from "@/services/hub/servers";
 import { streamsSlice } from "@/services/hub/streams";
 import { forumPostsSlice } from "@/services/hub/forumPosts";
 import Servers from "@/servers/Servers";
-import { AppFooter } from "@/site/Footer";
-import { AppHeader } from "@/site/Header";
+import { SiteFooter } from "@/site/Footer";
+import { SiteHeader } from "@/site/Header";
 
 function startPollingDataSources() {
   store.dispatch(
@@ -40,9 +40,9 @@ export const App = () => {
 
   return (
     <>
-      <AppHeader />
+      <SiteHeader />
       <Servers />
-      <AppFooter />
+      <SiteFooter />
     </>
   );
 };
