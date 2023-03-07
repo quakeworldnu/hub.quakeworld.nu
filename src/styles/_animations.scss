@@ -5,7 +5,7 @@
   }
 
   33% {
-    filter: blur(3px)
+    filter: blur(3px);
   }
 
   to {
@@ -24,12 +24,12 @@
 @keyframes fadeInDown {
   from {
     opacity: 0;
-    transform: translate3d(0, -50%, 0)
+    transform: translate3d(0, -50%, 0);
   }
 
   to {
     opacity: 1;
-    transform: translate3d(0, 0, 0)
+    transform: translate3d(0, 0, 0);
   }
 }
 

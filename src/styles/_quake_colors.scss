@@ -1,18 +1,18 @@
 $qw-player-colors: (
-        0: rgb(140, 140, 140),
-        1: rgb(83, 59, 27),
-        2: rgb(79, 79, 115),
-        3: rgb(55, 55, 7),
-        4: rgb(71, 0, 0),
-        5: rgb(95, 71, 7),
-        6: rgb(143, 67, 51),
-        7: rgb(127, 83, 63),
-        8: rgb(87, 55, 67),
-        9: rgb(95, 51, 63),
-        10: rgb(107, 87, 71),
-        11: rgb(47, 67, 55),
-        12: rgb(123, 99, 7),
-        13: rgb(47, 47, 127),
+  0: rgb(140, 140, 140),
+  1: rgb(83, 59, 27),
+  2: rgb(79, 79, 115),
+  3: rgb(55, 55, 7),
+  4: rgb(71, 0, 0),
+  5: rgb(95, 71, 7),
+  6: rgb(143, 67, 51),
+  7: rgb(127, 83, 63),
+  8: rgb(87, 55, 67),
+  9: rgb(95, 51, 63),
+  10: rgb(107, 87, 71),
+  11: rgb(47, 67, 55),
+  12: rgb(123, 99, 7),
+  13: rgb(47, 47, 127),
 );
 
 @each $topValue, $topHex in $qw-player-colors {
@@ -21,8 +21,18 @@ $qw-player-colors: (
       $topLight: lighten($topHex, 5);
       $botLight: lighten($bottomHex, 5);
       $offsetY: 1px;
-      background: linear-gradient(to bottom, transparent 0 $offsetY, $topLight $offsetY 50.5%, transparent 49.5% 100%),
-      linear-gradient(to top, transparent 0 $offsetY, $botLight $offsetY 50.5%, transparent 49.5% 100%);
+      background: linear-gradient(
+          to bottom,
+          transparent 0 $offsetY,
+          $topLight $offsetY 50.5%,
+          transparent 49.5% 100%
+        ),
+        linear-gradient(
+          to top,
+          transparent 0 $offsetY,
+          $botLight $offsetY 50.5%,
+          transparent 49.5% 100%
+        );
     }
   }
 }

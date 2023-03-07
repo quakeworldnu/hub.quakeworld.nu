@@ -1,7 +1,7 @@
 .server-wrapper {
   @mixin app-smod($color, $glow-width) {
     padding: 2px;
-    background: linear-gradient(to bottom, $color, rgba($color, .3));
+    background: linear-gradient(to bottom, $color, rgba($color, 0.3));
     box-shadow: rgba($color, 0.2) 0 0 $glow-width;
   }
 
@@ -30,10 +30,10 @@
       $color: $green;
       width: $dotSize;
       height: $dotSize;
-      right: -.5*$dotSize;
+      right: -0.5 * $dotSize;
       border-radius: $dotSize;
       background-color: $color;
-      border: 1px solid rgba(0, 0, 0, .5);
+      border: 1px solid rgba(0, 0, 0, 0.5);
     }
   }
 }
