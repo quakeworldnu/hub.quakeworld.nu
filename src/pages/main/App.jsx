@@ -18,7 +18,7 @@ function startPollingDataSources() {
   );
 
   store.dispatch(
-    serversSlice.endpoints.getMvdsv.initiate(
+    serversSlice.endpoints.getServers.initiate(
       {},
       { subscriptionOptions: { pollingInterval: 5000 } }
     )

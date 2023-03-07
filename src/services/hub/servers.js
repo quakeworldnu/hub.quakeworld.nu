@@ -13,7 +13,7 @@ const initialState = serversAdapter.getInitialState();
 export const serversSlice = hubApi.injectEndpoints({
   overrideExisting: true,
   endpoints: (builder) => ({
-    getMvdsv: builder.query({
+    getServers: builder.query({
       query: () => "servers/mvdsv",
       transformResponse: (responseData) => {
         return serversAdapter.setAll(
@@ -25,7 +25,7 @@ export const serversSlice = hubApi.injectEndpoints({
   }),
 });
 
-const selectServersResult = serversSlice.endpoints.getMvdsv.select({});
+const selectServersResult = serversSlice.endpoints.getServers.select({});
 const selectServersData = createSelector(
   [selectServersResult],
   (result) => result.data
