@@ -1,11 +1,11 @@
 import React from "react";
-import store from "../../store.js";
+import store from "@/store";
 import { eventsSlice } from "@/services/hub/events";
 import { newsSlice } from "@/services/hub/news";
 import { serversSlice } from "@/services/hub/servers";
 import { streamsSlice } from "@/services/hub/streams";
 import { forumPostsSlice } from "@/services/hub/forumPosts";
-import Servers from "../../servers/Servers.jsx";
+import Servers from "@/servers/Servers";
 import { AppFooter } from "@/site/Footer";
 import { AppHeader } from "@/site/Header";
 
