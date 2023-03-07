@@ -1,4 +1,4 @@
-import { hubSlice } from "./hub.js";
+import { hubApi } from "./hub.js";
 import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
 import { transformServerData } from "./serverTransforms.js";
 import { compareServers } from "./serverSort.js";
@@ -10,7 +10,7 @@ const serversAdapter = createEntityAdapter({
 const initialState = serversAdapter.getInitialState();
 
 // Define a service using a base URL and expected endpoints
-export const serversSlice = hubSlice.injectEndpoints({
+export const serversSlice = hubApi.injectEndpoints({
   overrideExisting: true,
   endpoints: (builder) => ({
     getMvdsv: builder.query({

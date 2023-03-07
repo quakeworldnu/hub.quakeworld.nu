@@ -1,4 +1,4 @@
-import { hubSlice } from "./hub.js";
+import { hubApi } from "./hub.js";
 import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
 
 const forumPostsAdapter = createEntityAdapter({
@@ -6,7 +6,7 @@ const forumPostsAdapter = createEntityAdapter({
 });
 const initialState = forumPostsAdapter.getInitialState();
 
-export const forumPostsSlice = hubSlice.injectEndpoints({
+export const forumPostsSlice = hubApi.injectEndpoints({
   overrideExisting: true,
   endpoints: (builder) => ({
     getForumPosts: builder.query({
