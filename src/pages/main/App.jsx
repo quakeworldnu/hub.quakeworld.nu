@@ -1,13 +1,13 @@
 import React from "react";
-import store from "./store.js";
-import { eventsSlice } from "../services/hub/events.js";
-import { newsSlice } from "../services/hub/news.js";
-import { serversSlice } from "../services/hub/servers.js";
-import { streamsSlice } from "../services/hub/streams.js";
-import { forumPostsSlice } from "../services/hub/forumPosts.js";
-import Servers from "../servers/Servers.jsx";
-import { AppFooter } from "./Footer";
-import { AppHeader } from "./Header";
+import store from "../../app/store.js";
+import { eventsSlice } from "../../services/hub/events.js";
+import { newsSlice } from "../../services/hub/news.js";
+import { serversSlice } from "../../services/hub/servers.js";
+import { streamsSlice } from "../../services/hub/streams.js";
+import { forumPostsSlice } from "../../services/hub/forumPosts.js";
+import Servers from "../../servers/Servers.jsx";
+import { AppFooter } from "../../app/Footer";
+import { AppHeader } from "../../app/Header";
 
 function startPollingDataSources() {
   store.dispatch(
