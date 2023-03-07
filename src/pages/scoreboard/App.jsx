@@ -31,10 +31,10 @@ export const SingleServer = () => {
   selectedServer = selectedServer.length > 0 ? selectedServer[0] : false;
 
   return (
-    <div className="grid grid-cols-servers gap-4 sm:gap-8">
+    <>
       {selectedServer && <ServerBody address={selectedServer.address} />}
       {!selectedServer && "Server has no players."}
-    </div>
+    </>
   );
 };
 
