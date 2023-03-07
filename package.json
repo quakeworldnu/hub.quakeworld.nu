@@ -9,7 +9,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "yarn prettier --write src/js"
+    "format": "yarn prettier --write src"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
