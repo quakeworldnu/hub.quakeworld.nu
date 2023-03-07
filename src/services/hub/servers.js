@@ -1,6 +1,6 @@
 import { hubSlice } from "./hub.js";
 import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
-import { transformResponseData } from "./serverTransforms.js";
+import { transformServerData } from "./serverTransforms.js";
 import { compareServers } from "./serverSort.js";
 
 const serversAdapter = createEntityAdapter({
@@ -18,7 +18,7 @@ export const serversSlice = hubSlice.injectEndpoints({
       transformResponse: (responseData) => {
         return serversAdapter.setAll(
           initialState,
-          transformResponseData(responseData)
+          responseData.map(transformServerData)
         );
       },
     }),
