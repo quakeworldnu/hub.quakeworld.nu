@@ -4,7 +4,7 @@ import News from "../News";
 
 const HorizontalSeparator = () => <hr className="border-blue-600/40" />;
 
-export const AppFooter = () => {
+export const SiteFooter = () => {
   const delimiter = <span> • </span>;
   return (
     <div id="app-footer" className="animation-fade-in-delayed text-sm">

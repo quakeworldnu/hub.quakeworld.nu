@@ -6,9 +6,9 @@ $animation-speed: 1s;
 // waiting
 .indicator-waiting-container {
   display: inline-block;
-  width: 3*$size;
-  margin-left: 2*$size;
-  border-bottom: .25*$size solid transparent;
+  width: 3 * $size;
+  margin-left: 2 * $size;
+  border-bottom: 0.25 * $size solid transparent;
 }
 
 .indicator-waiting,
@@ -16,7 +16,7 @@ $animation-speed: 1s;
 .indicator-waiting:after {
   width: $size;
   height: $size;
-  border-radius: .5*$size;
+  border-radius: 0.5 * $size;
   background-color: $color-waiting-fg;
   color: $color-waiting-fg;
 }
@@ -24,7 +24,7 @@ $animation-speed: 1s;
 .indicator-waiting:before,
 .indicator-waiting:after {
   animation: dotWaiting $animation-speed infinite alternate;
-  content: '';
+  content: "";
   display: inline-block;
   position: absolute;
   top: 0;
@@ -33,16 +33,16 @@ $animation-speed: 1s;
 .indicator-waiting {
   position: relative;
   animation: dotWaiting $animation-speed infinite linear alternate;
-  animation-delay: .25s;
+  animation-delay: 0.25s;
 }
 
 .indicator-waiting::before {
-  left: -($size*1.5);
+  left: -($size * 1.5);
   animation-delay: 0s;
 }
 
 .indicator-waiting::after {
-  left: ($size*1.5);
+  left: ($size * 1.5);
   animation-delay: 0.5s;
 }
 

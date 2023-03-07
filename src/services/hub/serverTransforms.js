@@ -1,22 +1,16 @@
-export const transformResponseData = (data) => {
-  const servers = data;
+export const transformServerData = (server) => {
+  // exclude [ServeMe]
+  const index = server.spectator_names.indexOf("[ServeMe]");
 
-  // ignore [ServeMe]
-  for (let i = 0; i < servers.length; i++) {
-    const index = servers[i].spectator_names.indexOf("[ServeMe]");
-
-    if (index !== -1) {
-      servers[i].spectator_names.splice(index, 1);
-      servers[i].spectator_slots.used--;
-    }
+  if (index !== -1) {
+    server.spectator_names.splice(index, 1);
+    server.spectator_slots.used--;
   }
 
   // add meta data
-  for (let i = 0; i < servers.length; i++) {
-    servers[i].meta = metaByServer(servers[i]);
-  }
+  server.meta = metaByServer(server);
 
-  return servers;
+  return server;
 };
 
 const metaByServer = (server) => {

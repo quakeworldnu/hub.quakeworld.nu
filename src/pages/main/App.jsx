@@ -1,13 +1,13 @@
 import React from "react";
-import store from "./store.js";
-import { eventsSlice } from "../services/hub/events.js";
-import { newsSlice } from "../services/hub/news.js";
-import { serversSlice } from "../services/hub/servers.js";
-import { streamsSlice } from "../services/hub/streams.js";
-import { forumPostsSlice } from "../services/hub/forumPosts.js";
-import Servers from "../servers/Servers.jsx";
-import { AppFooter } from "./Footer";
-import { AppHeader } from "./Header";
+import store from "@/store";
+import { eventsSlice } from "@/services/hub/events";
+import { newsSlice } from "@/services/hub/news";
+import { serversSlice } from "@/services/hub/servers";
+import { streamsSlice } from "@/services/hub/streams";
+import { forumPostsSlice } from "@/services/hub/forumPosts";
+import Servers from "@/servers/Servers";
+import { SiteFooter } from "@/site/Footer";
+import { SiteHeader } from "@/site/Header";
 
 function startPollingDataSources() {
   store.dispatch(
@@ -18,7 +18,7 @@ function startPollingDataSources() {
   );
 
   store.dispatch(
-    serversSlice.endpoints.getMvdsv.initiate(
+    serversSlice.endpoints.getServers.initiate(
       {},
       { subscriptionOptions: { pollingInterval: 5000 } }
     )
@@ -40,9 +40,9 @@ export const App = () => {
 
   return (
     <>
-      <AppHeader />
+      <SiteHeader />
       <Servers />
-      <AppFooter />
+      <SiteFooter />
     </>
   );
 };

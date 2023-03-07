@@ -1,4 +1,4 @@
-import { hubSlice } from "./hub.js";
+import { hubApi } from "./hub.js";
 import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
 
 const eventsAdapter = createEntityAdapter({
@@ -6,7 +6,7 @@ const eventsAdapter = createEntityAdapter({
 });
 const initialState = eventsAdapter.getInitialState();
 
-export const eventsSlice = hubSlice.injectEndpoints({
+export const eventsSlice = hubApi.injectEndpoints({
   overrideExisting: true,
   endpoints: (builder) => ({
     getEvents: builder.query({

@@ -27,9 +27,10 @@
 }
 
 .app-text-outline {
-  text-shadow: 1px -1px 0 black, -1px -1px 0 black, 1px 1px 0 black, -1px 1px 0 black
+  text-shadow: 1px -1px 0 black, -1px -1px 0 black, 1px 1px 0 black,
+    -1px 1px 0 black;
 }
 
 .app-text-shadow {
-  text-shadow: rgba(black, 0.5) 1px 1px 1px
+  text-shadow: rgba(black, 0.5) 1px 1px 1px;
 }

@@ -86,7 +86,7 @@ const ServerStatus = React.memo((props) => {
   );
 });
 
-const ServerBody = (props) => {
+export const ServerBody = (props) => {
   const { address } = props;
   const serverMeta = useSelector((state) =>
     selectMetaByAddress(state, address)

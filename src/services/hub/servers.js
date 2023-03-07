@@ -1,6 +1,6 @@
-import { hubSlice } from "./hub.js";
+import { hubApi } from "./hub.js";
 import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
-import { transformResponseData } from "./serverTransforms.js";
+import { transformServerData } from "./serverTransforms.js";
 import { compareServers } from "./serverSort.js";
 
 const serversAdapter = createEntityAdapter({
@@ -10,22 +10,22 @@ const serversAdapter = createEntityAdapter({
 const initialState = serversAdapter.getInitialState();
 
 // Define a service using a base URL and expected endpoints
-export const serversSlice = hubSlice.injectEndpoints({
+export const serversSlice = hubApi.injectEndpoints({
   overrideExisting: true,
   endpoints: (builder) => ({
-    getMvdsv: builder.query({
+    getServers: builder.query({
       query: () => "servers/mvdsv",
       transformResponse: (responseData) => {
         return serversAdapter.setAll(
           initialState,
-          transformResponseData(responseData)
+          responseData.map(transformServerData)
         );
       },
     }),
   }),
 });
 
-const selectServersResult = serversSlice.endpoints.getMvdsv.select({});
+const selectServersResult = serversSlice.endpoints.getServers.select({});
 const selectServersData = createSelector(
   [selectServersResult],
   (result) => result.data
