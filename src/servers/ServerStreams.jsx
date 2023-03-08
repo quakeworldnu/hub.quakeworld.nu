@@ -1,6 +1,6 @@
 import React from "react";
 import { useGetStreamsQuery } from "@/services/hub/hub";
-import { TwitchButton } from "../Buttons";
+import { TwitchButton } from "@/Buttons";
 
 const ServersStreams = React.memo((props) => {
   const { address } = props;

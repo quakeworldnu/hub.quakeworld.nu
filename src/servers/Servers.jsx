@@ -1,20 +1,21 @@
 import React from "react";
-import { useSelector } from "react-redux";
 //import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { Server } from "./Server.jsx";
-import { selectAllServerAddresses } from "@/services/hub/servers";
+import { Server } from "./Server";
+import { useGetServersQuery } from "@/services/hub/hub";
 
 export default function Servers() {
-  const serverAddresses = useSelector(selectAllServerAddresses);
-  const hasServers = serverAddresses.length > 0;
+  const { data: servers = [] } = useGetServersQuery(null, {
+    pollingInterval: 5000,
+  });
 
   return (
     <div className="my-6">
       <div className="grid grid-cols-servers gap-4 sm:gap-8">
-        {hasServers &&
-          serverAddresses.map((address) => (
-            <Server key={address} address={address} />
-          ))}
+        {
+          servers.map((server) => (
+            <Server key={server.address} server={server} />
+          ))
+        }
       </div>
     </div>
   );
