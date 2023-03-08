@@ -87,10 +87,8 @@ const ServerStatus = React.memo((props) => {
 });
 
 export const ServerBody = (props) => {
-  const { address } = props;
-  const serverMeta = useSelector((state) =>
-    selectMetaByAddress(state, address)
-  );
+  const { server } = props;
+  const serverMeta = server.meta;
 
   const mapThumbnailSrc = serverMeta.mapName
     ? `url(https://raw.githubusercontent.com/vikpe/qw-mapshots/main/${serverMeta.mapName}.jpg)`
@@ -104,7 +102,7 @@ export const ServerBody = (props) => {
       >
         <div className="bg-gray-700/40 flex flex-col h-full group">
           <a
-            href={`/scoreboard/?address=${address}`}
+            href={`/scoreboard/?address=${server.address}`}
             className="transition-opacity opacity-0 group-hover:opacity-80 ml-auto -mb-2 mt-1 mr-1"
             title="Show scoreboard in separate window"
           >
@@ -123,7 +121,7 @@ export const ServerBody = (props) => {
               </div>
             )}
             <Scoreboard
-              address={address}
+              server={server}
               limit={serverMeta.playerDisplay.visible}
             />
             <HiddenPlayers count={serverMeta.playerDisplay.hidden} />
