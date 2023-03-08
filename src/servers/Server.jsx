@@ -104,7 +104,7 @@ export const ServerBody = (props) => {
       >
         <div className="bg-gray-700/40 flex flex-col h-full group">
           <a
-            href={`scoreboard/?address=${address}`}
+            href={`/scoreboard/?address=${address}`}
             className="transition-opacity opacity-0 group-hover:opacity-80 ml-auto -mb-2 mt-1 mr-1"
             title="Show scoreboard in separate window"
           >
