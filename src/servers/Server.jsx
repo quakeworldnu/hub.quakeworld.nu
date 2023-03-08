@@ -97,7 +97,7 @@ export const ServerBody = (props) => {
     : "none";
 
   return (
-    <div className="grow bg-cover bg-center bg-[url(/assets/img/default_mapshot.jpg)]">
+    <div className="h-full bg-cover bg-center bg-[url(/assets/img/default_mapshot.jpg)]">
       <div
         className="h-full min-h-[200px] bg-cover bg-center"
         style={{ backgroundImage: mapThumbnailSrc }}

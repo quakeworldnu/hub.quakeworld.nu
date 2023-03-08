@@ -14,10 +14,8 @@ export const App = () => {
   );
 
   return (
-    <div className="my-6">
-      <div className="grid grid-cols-servers gap-4 sm:gap-8">
-        <SingleServer />
-      </div>
+    <div className="my-6 h-[400px] max-w-[480px]">
+      <SingleServer />
     </div>
   );
 };
