@@ -1,14 +1,9 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { selectAllForumPosts } from "./services/hub/forumPosts.js";
+import { useGetForumPostsQuery } from "@/services/hub/hub";
 
 export default function News() {
-  const forumPosts = useSelector(selectAllForumPosts);
+  const { data: forumPosts } = useGetForumPostsQuery();
   const limit = 5;
-
-  if (0 === forumPosts.length) {
-    return <></>;
-  }
 
   return (
     <div>
