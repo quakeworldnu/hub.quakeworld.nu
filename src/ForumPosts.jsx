@@ -2,7 +2,7 @@ import React from "react";
 import { useGetForumPostsQuery } from "@/services/hub/hub";
 
 export default function News() {
-  const { data: forumPosts } = useGetForumPostsQuery();
+  const { data: forumPosts = [] } = useGetForumPostsQuery();
   const limit = 5;
 
   return (

@@ -2,7 +2,7 @@ import React from "react";
 import { useGetNewsQuery } from "@/services/hub/hub";
 
 export default function News() {
-  const { data: news } = useGetNewsQuery();
+  const { data: news = [] } = useGetNewsQuery();
   const limit = 5;
 
   return (
