@@ -109,8 +109,7 @@ export const ServerBody = (props) => {
 
           <div className="flex flex-col justify-center items-center h-full px-2 pb-4">
             {serverMeta.matchtag && (
-              <div
-                className="py-1.5 mb-3 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r from-red-600/0 via-red-600 app-text-shadow">
+              <div className="py-1.5 mb-3 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r from-red-600/0 via-red-600 app-text-shadow">
                 {serverMeta.matchtag}
               </div>
             )}
@@ -136,7 +135,7 @@ const HiddenPlayers = React.memo((props) => {
 
   return (
     <div className="mt-1 text-xs text-gray-300">
-      +{count} {(1 === count ? "player" : "players")}
+      +{count} {1 === count ? "player" : "players"}
     </div>
   );
 });

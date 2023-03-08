@@ -4,8 +4,12 @@ import { TwitchButton } from "@/Buttons";
 
 const ServersStreams = React.memo((props) => {
   const { address } = props;
-  const { data: allStreams = [] } = useGetStreamsQuery(null, { pollingInterval: 15500 });
-  const streamsOnServer = allStreams.filter(s => s.server_address === address);
+  const { data: allStreams = [] } = useGetStreamsQuery(null, {
+    pollingInterval: 15500,
+  });
+  const streamsOnServer = allStreams.filter(
+    (s) => s.server_address === address
+  );
 
   if (0 === streamsOnServer.length) {
     return null;

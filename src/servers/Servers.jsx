@@ -11,11 +11,9 @@ export default function Servers() {
   return (
     <div className="my-6">
       <div className="grid grid-cols-servers gap-4 sm:gap-8">
-        {
-          servers.map((server) => (
-            <Server key={server.address} server={server} />
-          ))
-        }
+        {servers.map((server) => (
+          <Server key={server.address} server={server} />
+        ))}
       </div>
     </div>
   );

@@ -1,10 +1,12 @@
 import React from "react";
 //import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { useGetStreamsQuery, } from "@/services/hub/hub";
+import { useGetStreamsQuery } from "@/services/hub/hub";
 import { TwitchButton } from "./Buttons";
 
 export default function Streams() {
-  const { data: streams = [] } = useGetStreamsQuery(null, { pollingInterval: 15500 });
+  const { data: streams = [] } = useGetStreamsQuery(null, {
+    pollingInterval: 15500,
+  });
 
   return (
     <div className="space-y-4 sm:space-y-0 sm:flex sm:space-x-4">

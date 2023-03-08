@@ -6,7 +6,7 @@ export default function Overview() {
   const { data: servers = [] } = useGetServersQuery(null, {
     pollingInterval: 5000,
   });
-  
+
   const serverCount = servers.length;
   let playerCount = 0;
   let spectator_count = 0;
