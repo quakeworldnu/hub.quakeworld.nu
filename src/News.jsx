@@ -1,14 +1,9 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { selectAllNews } from "./services/hub/news.js";
+import { useGetNewsQuery } from "@/services/hub/hub";
 
 export default function News() {
-  const news = useSelector(selectAllNews);
+  const { data: news = [] } = useGetNewsQuery();
   const limit = 5;
-
-  if (0 === news.length) {
-    return <></>;
-  }
 
   return (
     <div>

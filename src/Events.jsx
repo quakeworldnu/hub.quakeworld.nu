@@ -1,15 +1,9 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { selectAllEvents } from "./services/hub/events.js";
+import { useGetEventsQuery } from "@/services/hub/hub";
 import _groupby from "lodash.groupby";
 
 export default function Events() {
-  const events = useSelector(selectAllEvents);
-
-  if (0 === events.length) {
-    return <></>;
-  }
-
+  const { data: events = [] } = useGetEventsQuery("bulbasaur");
   const eventsByStatus = _groupby(events, "status");
 
   return (

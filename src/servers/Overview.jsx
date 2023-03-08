@@ -1,12 +1,13 @@
 import React from "react";
-import { TextBlur } from "../TextAnimations.jsx";
-import { useSelector } from "react-redux";
-import { selectAllServers } from "../services/hub/servers.js";
+import { TextBlur } from "@/TextAnimations";
+import { useGetServersQuery } from "@/services/hub/hub";
 
 export default function Overview() {
-  const servers = useSelector(selectAllServers);
-  const serverCount = servers.length;
+  const { data: servers = [] } = useGetServersQuery(null, {
+    pollingInterval: 5000,
+  });
 
+  const serverCount = servers.length;
   let playerCount = 0;
   let spectator_count = 0;
 

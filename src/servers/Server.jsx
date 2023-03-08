@@ -1,16 +1,10 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import copyToClipboard from "copy-text-to-clipboard";
-import {
-  selectMetaByAddress,
-  selectServerByAddress,
-} from "../services/hub/servers.js";
-import { Scoreboard } from "./Scoreboard.jsx";
-import { QuakeText } from "./QuakeText.jsx";
-import { pluralize } from "../common/text.js";
-import { TextBlur } from "../TextAnimations.jsx";
-import { PrimaryButton, SecondaryButton } from "../Buttons";
-import ServerStreams from "../ServerStreams";
+import { Scoreboard } from "./Scoreboard";
+import { QuakeText } from "./QuakeText";
+import { TextBlur } from "@/TextAnimations";
+import { PrimaryButton, SecondaryButton } from "@/Buttons";
+import ServerStreams from "./ServerStreams";
 
 const ServerProgress = React.memo((props) => {
   const { value, max } = props;
@@ -25,8 +19,7 @@ const ServerProgress = React.memo((props) => {
 });
 
 const ServerHeader = (props) => {
-  const { address } = props;
-  const server = useSelector((state) => selectServerByAddress(state, address));
+  const { server } = props;
   const JoinButtonEl =
     server.player_slots.free > 0 ? PrimaryButton : SecondaryButton;
 
@@ -40,7 +33,7 @@ const ServerHeader = (props) => {
           statusDescription={server.status.description}
         />
         <JoinButtonEl
-          href={`qw://${address}/`}
+          href={`qw://${server.address}/`}
           className="flex items-center px-5 text-lg rounded-lg"
         >
           Join
@@ -87,10 +80,8 @@ const ServerStatus = React.memo((props) => {
 });
 
 export const ServerBody = (props) => {
-  const { address } = props;
-  const serverMeta = useSelector((state) =>
-    selectMetaByAddress(state, address)
-  );
+  const { server } = props;
+  const serverMeta = server.meta;
 
   const mapThumbnailSrc = serverMeta.mapName
     ? `url(https://raw.githubusercontent.com/vikpe/qw-mapshots/main/${serverMeta.mapName}.jpg)`
@@ -104,7 +95,7 @@ export const ServerBody = (props) => {
       >
         <div className="bg-gray-700/40 flex flex-col h-full group">
           <a
-            href={`/scoreboard/?address=${address}`}
+            href={`/scoreboard/?address=${server.address}`}
             className="transition-opacity opacity-0 group-hover:opacity-80 ml-auto -mb-2 mt-1 mr-1"
             title="Show scoreboard in separate window"
           >
@@ -123,7 +114,7 @@ export const ServerBody = (props) => {
               </div>
             )}
             <Scoreboard
-              address={address}
+              server={server}
               limit={serverMeta.playerDisplay.visible}
             />
             <HiddenPlayers count={serverMeta.playerDisplay.hidden} />
@@ -144,7 +135,7 @@ const HiddenPlayers = React.memo((props) => {
 
   return (
     <div className="mt-1 text-xs text-gray-300">
-      +{count} {pluralize("player", count)}
+      +{count} {1 === count ? "player" : "players"}
     </div>
   );
 });
@@ -192,8 +183,7 @@ const SpectatorButtons = (props) => {
 };
 
 const ServerFooter = (props) => {
-  const { address } = props;
-  const server = useSelector((state) => selectServerByAddress(state, address));
+  const { server } = props;
 
   return (
     <div className="p-3 border-t border-t-black bg-[#334] text-sm space-y-3">
@@ -259,17 +249,14 @@ const KtxVersion = React.memo((props) => {
 });
 
 export const Server = (props) => {
-  const { address } = props;
-  const serverMeta = useSelector((state) =>
-    selectMetaByAddress(state, address)
-  );
+  const { server } = props;
 
   return (
-    <div className={`w-full flex flex-col ${serverMeta.wrapperClassNames}`}>
+    <div className={`w-full flex flex-col ${server.meta.wrapperClassNames}`}>
       <div className="server flex flex-col h-full bg-[#445]">
-        <ServerHeader address={address} />
-        <ServerBody address={address} />
-        <ServerFooter address={address} />
+        <ServerHeader server={server} />
+        <ServerBody server={server} />
+        <ServerFooter server={server} />
       </div>
     </div>
   );

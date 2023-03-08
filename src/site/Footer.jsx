@@ -1,6 +1,6 @@
-import Events from "../Events";
-import ForumPosts from "../ForumPosts";
-import News from "../News";
+import Events from "@/Events";
+import ForumPosts from "@/ForumPosts";
+import News from "@/News";
 
 const HorizontalSeparator = () => <hr className="border-blue-600/40" />;
 

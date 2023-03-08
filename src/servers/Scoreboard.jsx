@@ -1,18 +1,10 @@
 import React from "react";
-import { coloredQuakeName, QuakeText } from "./QuakeText.jsx";
-import { ColoredFrags } from "./ColoredFrags.jsx";
-import { useSelector } from "react-redux";
-import {
-  selectMetaByAddress,
-  selectPlayersByAddress,
-  selectTeamsByAddress,
-} from "../services/hub/servers";
+import { coloredQuakeName, QuakeText } from "./QuakeText";
+import { ColoredFrags } from "./ColoredFrags";
 
 export const Scoreboard = (props) => {
-  const { address, limit = 20 } = props;
-  const serverMeta = useSelector((state) =>
-    selectMetaByAddress(state, address)
-  );
+  const { server, limit = 20 } = props;
+  const serverMeta = server.meta;
   let className = "scoreboard ";
   className += serverMeta.showTeamColumn ? "sc-show-team" : "sc-hide-team";
 
@@ -20,12 +12,12 @@ export const Scoreboard = (props) => {
     <div className={className}>
       {serverMeta.showTeams && (
         <>
-          <Teams address={address} />
+          <Teams teams={server.teams} />
           <div className="my-1.5 h-[1px] bg-gradient-to-r from-red-400/20 via-orange-400 from-orange-400/20" />
         </>
       )}
       <Players
-        address={address}
+        players={server.players}
         showTeam={serverMeta.showTeamColumn}
         limit={limit}
       />
@@ -34,8 +26,7 @@ export const Scoreboard = (props) => {
 };
 
 const Teams = (props) => {
-  const { address } = props;
-  const teams = useSelector((state) => selectTeamsByAddress(state, address));
+  const { teams } = props;
 
   return (
     <>
@@ -76,10 +67,7 @@ const TeamName = React.memo((props) => {
 });
 
 const Players = (props) => {
-  const { address, showTeam, limit = 20 } = props;
-  const players = useSelector((state) =>
-    selectPlayersByAddress(state, address)
-  );
+  const { players, showTeam, limit = 20 } = props;
 
   return (
     <>
