@@ -1,15 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import copyToClipboard from "copy-text-to-clipboard";
-import {
-  selectMetaByAddress,
-  selectServerByAddress,
-} from "../services/hub/servers.js";
+import { selectMetaByAddress, selectServerByAddress, } from "@/services/hub/servers";
 import { Scoreboard } from "./Scoreboard.jsx";
 import { QuakeText } from "./QuakeText.jsx";
-import { pluralize } from "../common/text.js";
-import { TextBlur } from "../TextAnimations.jsx";
-import { PrimaryButton, SecondaryButton } from "../Buttons";
+import { TextBlur } from "@/TextAnimations";
+import { PrimaryButton, SecondaryButton } from "@/Buttons";
 import ServerStreams from "../ServerStreams";
 
 const ServerProgress = React.memo((props) => {
@@ -116,7 +112,8 @@ export const ServerBody = (props) => {
 
           <div className="flex flex-col justify-center items-center h-full px-2 pb-4">
             {serverMeta.matchtag && (
-              <div className="py-1.5 mb-3 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r from-red-600/0 via-red-600 app-text-shadow">
+              <div
+                className="py-1.5 mb-3 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r from-red-600/0 via-red-600 app-text-shadow">
                 {serverMeta.matchtag}
               </div>
             )}
@@ -142,7 +139,7 @@ const HiddenPlayers = React.memo((props) => {
 
   return (
     <div className="mt-1 text-xs text-gray-300">
-      +{count} {pluralize("player", count)}
+      +{count} {(1 === count ? "player" : "players")}
     </div>
   );
 });
