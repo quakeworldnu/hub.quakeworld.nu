@@ -1,5 +1,5 @@
-import ServerOverview from "../servers/Overview";
-import Streams from "../Streams";
+import ServerOverview from "@/servers/Overview";
+import Streams from "@/Streams";
 
 export const SiteHeader = () => {
   return (
