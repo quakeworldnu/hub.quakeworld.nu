@@ -7,6 +7,7 @@ export const hubApi = createApi({
     getEvents: build.query({ query: () => "events", }),
     getForumPosts: build.query({ query: () => "forum_posts", }),
     getNews: build.query({ query: () => "news", }),
+    getStreams: build.query({ query: () => "streams", }),
   }),
 });
 
@@ -14,4 +15,5 @@ export const {
   useGetEventsQuery,
   useGetForumPostsQuery,
   useGetNewsQuery,
+  useGetStreamsQuery,
 } = hubApi
