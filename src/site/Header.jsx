@@ -3,7 +3,7 @@ import Streams from "@/Streams";
 
 export const SiteHeader = () => {
   return (
-    <div className="mt-2 mb-4 animation-fade-in-down">
+    <div className="mt-2 mb-4">
       <div className="space-y-2 lg:flex">
         <div className="flex items-center space-x-4">
           <a href="/" className="lg:pt-2 min-w-[95px] lg:mr-4">

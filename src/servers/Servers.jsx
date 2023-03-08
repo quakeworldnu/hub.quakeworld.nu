@@ -1,5 +1,4 @@
 import React from "react";
-//import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { Server } from "./Server";
 import { useGetServersQuery } from "@/services/hub/hub";
 

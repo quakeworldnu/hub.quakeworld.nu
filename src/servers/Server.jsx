@@ -60,19 +60,11 @@ const ServerStatus = React.memo((props) => {
         <TextBlur key="map" value={map} />
       </strong>
       <div>
-        <span className="server-status mr-1">
-          {["Started", "Countdown"].includes(statusName) && (
-            <span className="px-1 py-0.5 rounded-sm font-mono text-xs bg-red-600 app-text-shadow">
-              LIVE
-            </span>
-          )}{" "}
-          {"Standby" === statusName && (
-            <div className="indicator-waiting-container">
-              <div className="indicator-waiting" />
-            </div>
-          )}
-        </span>
-
+        {["Started", "Countdown"].includes(statusName) && (
+          <span className="mr-1 px-1 py-0.5 rounded-sm font-mono text-xs bg-red-600 app-text-shadow">
+            LIVE
+          </span>
+        )}{" "}
         <span className="text-gray-300 text-xs">{statusDescription}</span>
       </div>
     </div>
