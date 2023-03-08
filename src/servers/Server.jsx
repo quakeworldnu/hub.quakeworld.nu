@@ -6,7 +6,7 @@ import { Scoreboard } from "./Scoreboard.jsx";
 import { QuakeText } from "./QuakeText.jsx";
 import { TextBlur } from "@/TextAnimations";
 import { PrimaryButton, SecondaryButton } from "@/Buttons";
-import ServerStreams from "../ServerStreams";
+import ServerStreams from "./ServerStreams";
 
 const ServerProgress = React.memo((props) => {
   const { value, max } = props;
