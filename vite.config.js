@@ -8,6 +8,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
+        players: resolve(__dirname, 'players/index.html'),
         scoreboard: resolve(__dirname, 'scoreboard/index.html'),
       }
     }
