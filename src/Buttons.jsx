@@ -66,7 +66,7 @@ export const TwitchButton = React.memo((props) => {
         />
         <strong>{channel}</strong>
         {viewers > 0 && (
-          <span className="text-gray-400 text-xs">{viewers}</span>
+          <span className="text-gray-400 text-xs">({viewers})</span>
         )}
       </span>
 
