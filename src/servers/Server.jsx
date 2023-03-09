@@ -1,7 +1,7 @@
 import React from "react";
 import copyToClipboard from "copy-text-to-clipboard";
 import { Scoreboard } from "./Scoreboard";
-import { QuakeText } from "./QuakeText";
+import { QuakeText } from "../QuakeText";
 import { PrimaryButton, SecondaryButton } from "@/Buttons";
 import ServerStreams from "./ServerStreams";
 
@@ -175,27 +175,32 @@ const ServerFooter = (props) => {
       <SpectatorButtons server={server} />
 
       <div className="flex text-xs justify-between">
-        <div
-          className="server-address flex items-center cursor-pointer text-white/60"
-          onClick={() => copyToClipboard(server.settings.hostname_parsed)}
-          title="Copy IP to clipboard"
-        >
-          <ServerAddressTitle
-            cc={server.geo.cc}
-            title={server.meta.addressTitle}
-          />
-          <img
-            src="/assets/img/icons/content_paste.svg"
-            width="12"
-            alt=""
-            className="app-icon ml-1 inline"
-          />
-        </div>
+        <ServerAddress server={server} />
 
         {server.settings.ktxver && (
           <KtxVersion version={server.settings.ktxver} />
         )}
       </div>
+    </div>
+  );
+};
+
+export const ServerAddress = (props) => {
+  const { server } = props;
+
+  return (
+    <div
+      className="server-address flex items-center cursor-pointer text-white/60"
+      onClick={() => copyToClipboard(server.settings.hostname_parsed)}
+      title="Copy IP to clipboard"
+    >
+      <ServerAddressTitle cc={server.geo.cc} title={server.meta.addressTitle} />
+      <img
+        src="/assets/img/icons/content_paste.svg"
+        width="12"
+        alt=""
+        className="app-icon ml-1 inline"
+      />
     </div>
   );
 };
