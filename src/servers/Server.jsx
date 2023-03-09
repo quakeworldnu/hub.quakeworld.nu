@@ -2,7 +2,6 @@ import React from "react";
 import copyToClipboard from "copy-text-to-clipboard";
 import { Scoreboard } from "./Scoreboard";
 import { QuakeText } from "./QuakeText";
-import { TextBlur } from "@/TextAnimations";
 import { PrimaryButton, SecondaryButton } from "@/Buttons";
 import ServerStreams from "./ServerStreams";
 
@@ -52,13 +51,7 @@ const ServerStatus = React.memo((props) => {
 
   return (
     <div>
-      <strong>
-        <TextBlur key="mode" value={mode} />
-      </strong>{" "}
-      on{" "}
-      <strong>
-        <TextBlur key="map" value={map} />
-      </strong>
+      <strong>{mode}</strong> on <strong>{map}</strong>
       <div>
         {["Started", "Countdown"].includes(statusName) && (
           <span className="mr-1 px-1 py-0.5 rounded-sm font-mono text-xs bg-red-600 app-text-shadow">

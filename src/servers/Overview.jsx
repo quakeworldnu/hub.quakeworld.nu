@@ -1,5 +1,4 @@
 import React from "react";
-import { TextBlur } from "@/TextAnimations";
 import { useGetServersQuery } from "@/services/hub/hub";
 
 export default function Overview() {
@@ -35,10 +34,8 @@ const OverviewStats = React.memo((props) => {
 
   return (
     <div className="text-sm text-gray-400">
-      <TextBlur key="clients" value={players + spectators} /> clients (
-      <TextBlur key="players" value={players} /> players,{" "}
-      <TextBlur key="spectators" value={spectators} /> spectators) across{" "}
-      <TextBlur key="servers" value={servers} /> servers
+      {players + spectators} clients ({players} players, {spectators}{" "}
+      spectators) across {servers} servers
     </div>
   );
 });
