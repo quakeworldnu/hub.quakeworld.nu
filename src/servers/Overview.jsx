@@ -34,8 +34,15 @@ const OverviewStats = React.memo((props) => {
 
   return (
     <div className="text-sm text-gray-400">
-      {players + spectators} clients ({players} players, {spectators}{" "}
-      spectators) across {servers} servers
+      <a href="/players/" className="hover:text-white">
+        {" "}
+        {players + spectators} clients ({players} players, {spectators}{" "}
+        spectators)
+      </a>{" "}
+      across{" "}
+      <a href="/" className="hover:text-white">
+        {servers} servers
+      </a>
     </div>
   );
 });

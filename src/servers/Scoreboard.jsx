@@ -1,5 +1,5 @@
 import React from "react";
-import { coloredQuakeName, QuakeText } from "./QuakeText";
+import { coloredQuakeName, QuakeText } from "../QuakeText";
 import { ColoredFrags } from "./ColoredFrags";
 
 export const Scoreboard = (props) => {
