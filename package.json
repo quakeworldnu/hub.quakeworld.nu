@@ -19,7 +19,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",
     "@vitejs/plugin-react": "^3.1.0",
-    "autoprefixer": "^10.4.13",
+    "autoprefixer": "^10.4.14",
     "copy-text-to-clipboard": "^3.0.1",
     "firebase-tools": "^11.24.1",
     "lodash.groupby": "^4.6.0",
