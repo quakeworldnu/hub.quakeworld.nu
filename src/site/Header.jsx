@@ -1,4 +1,4 @@
-import ServerOverview from "@/servers/Overview";
+import SiteNavigation from "@/site/Navigation";
 import Streams from "@/Streams";
 
 export const SiteHeader = () => {
@@ -15,13 +15,13 @@ export const SiteHeader = () => {
             />
           </a>
           <div className="lg:hidden">
-            <ServerOverview />
+            <SiteNavigation />
           </div>
         </div>
         <Streams />
       </div>
       <div className="hidden lg:block lg:my-3">
-        <ServerOverview />
+        <SiteNavigation />
       </div>
     </div>
   );
