@@ -25,13 +25,13 @@ export default function SiteNavigation() {
     { title: "Servers", description: serverCount, url: "/" },
     {
       title: "Players",
-      description: `${playerCount} players, ${spectatorCount} spectators`,
+      description: playerCount,
       url: "/players/",
     },
   ];
 
   return (
-    <div className="text-sm text-gray-400 space-x-4">
+    <div className="text-xs sm:text-sm text-gray-400 space-x-4">
       {pageLinks.map((p) => (
         <NavLink
           key={p.url}
