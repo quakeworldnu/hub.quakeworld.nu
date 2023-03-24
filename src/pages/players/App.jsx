@@ -52,13 +52,13 @@ export const App = () => {
       <SiteHeader />
 
       <div className="my-6">
-        <table cellPadding="5" className="text-left">
-          <thead>
+        <table cellPadding="10" className="text-left w-full lg:w-auto">
+          <thead className="text-gray-600">
             <tr>
               <th className="w-48">Name</th>
-              <th className="w-32">Status</th>
-              <th className="w-[260px]">Server</th>
-              <th className="w-[260px]"></th>
+              <th className="w-28 hidden md:table-cell">Status</th>
+              <th className="min-w-[160px]">Server</th>
+              <th className="min-w-[160px] hidden sm:table-cell"></th>
               <th></th>
             </tr>
           </thead>
@@ -84,13 +84,21 @@ const ClientRow = (props) => {
     <tr className="odd:bg-white/5 hover:bg-white/10">
       <td>
         <QuakeText text={coloredQuakeName(client.name, client.name_color)} />
+        <div className="md:hidden text-xs text-gray-500">{client.status}</div>
       </td>
-      <td className="text-sm">{client.status}</td>
+      <td className="text-xs text-gray-500 hidden md:table-cell">
+        {client.status}
+      </td>
       <td className="text-sm">
         <ServerAddress server={server} />
+        <div className="md:hidden mt-1 text-xs text-gray-500">
+          {server.title}
+        </div>
       </td>
-      <td className="text-xs text-gray-400">{server.title}</td>
-      <td className="text-sm text-right space-x-2">
+      <td className="text-xs text-gray-500 hidden md:table-cell">
+        {server.title}
+      </td>
+      <td className="text-sm text-right space-x-2 hidden sm:table-cell">
         {server.qtv_stream.address && (
           <a
             href={`qw://${server.qtv_stream.url}/qtvplay`}
