@@ -29,7 +29,7 @@ const ServerHeader = (props) => {
           mode={server.mode}
           map={server.settings.map}
           statusName={server.status.name}
-          statusDescription={server.status.description}
+          statusDescription={server.status.shortDescription}
         />
         <JoinButtonEl
           href={`qw://${server.address}/`}

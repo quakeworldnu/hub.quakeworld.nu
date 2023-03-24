@@ -22,10 +22,16 @@ export default function SiteNavigation() {
   }
 
   const pageLinks = [
-    { title: "Servers", description: serverCount, url: "/" },
+    {
+      title: "Servers",
+      shortDescription: serverCount,
+      longDescription: serverCount,
+      url: "/",
+    },
     {
       title: "Players",
-      description: playerCount,
+      shortDescription: playerCount + spectatorCount,
+      longDescription: `${playerCount} players, ${spectatorCount} spectators`,
       url: "/players/",
     },
   ];
@@ -36,7 +42,8 @@ export default function SiteNavigation() {
         <NavLink
           key={p.url}
           title={p.title}
-          description={p.description}
+          shortDescription={p.shortDescription}
+          longDescription={p.longDescription}
           url={p.url}
         />
       ))}
@@ -44,7 +51,7 @@ export default function SiteNavigation() {
   );
 }
 
-const NavLink = ({ title, description, url }) => {
+const NavLink = ({ title, shortDescription, longDescription, url }) => {
   const isSelected = url === location.pathname;
 
   const cls = classNames(
@@ -55,7 +62,9 @@ const NavLink = ({ title, description, url }) => {
 
   return (
     <a href={url} className={cls}>
-      <strong>{title}</strong> <span className="text-xs">({description})</span>
+      <strong>{title}</strong>{" "}
+      <span className="text-xs sm:hidden">({shortDescription})</span>{" "}
+      <span className="text-xs hidden sm:inline">({longDescription})</span>
     </a>
   );
 };
