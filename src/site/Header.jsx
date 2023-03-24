@@ -4,7 +4,7 @@ import Streams from "@/Streams";
 export const SiteHeader = () => {
   return (
     <div className="mt-2 mb-4">
-      <div className="space-y-2 lg:flex">
+      <div className="space-y-4 lg:space-y-2 lg:flex">
         <div className="flex items-center space-x-4">
           <a href="/" className="min-w-[48px] lg:pt-2 lg:mr-4">
             <img
