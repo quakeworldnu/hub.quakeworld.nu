@@ -13,7 +13,7 @@ export default function SiteNavigation() {
 
   for (let i = 0; i < serverCount; i++) {
     const server = servers[i];
-    playerCount += server.players.filter(p => !p.is_bot).length;
+    playerCount += server.players.filter((p) => !p.is_bot).length;
     spectatorCount += server.spectator_slots.used;
 
     if ("" !== server.qtv_stream.address) {
