@@ -21,7 +21,13 @@ export const hubApi = createApi({
         return servers;
       },
     }),
-    getStreams: build.query({ query: () => "streams" }),
+    getStreams: build.query({
+      query: () => "streams",
+      transformResponse: (servers) => {
+        servers.sort((a, b) => a.channel.localeCompare(b.channel));
+        return servers;
+      },
+    }),
   }),
 });
 
