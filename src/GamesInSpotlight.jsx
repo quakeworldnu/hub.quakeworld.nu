@@ -23,10 +23,16 @@ export default function GamesInSpotlight() {
         )}
       </div>
       {games.slice(0, LIMIT).map((g, index) => (
-        <a href={g.event.url} className="block" key={index}>
-          <EventImage title={g.event.title} events={events} /> {g.event.title} -{" "}
-          {g.participants}
-          <span>({g.date})</span>
+        <a href={g.event.url} className="flex items-center mb-1" key={index}>
+          <EventImage title={g.event.title} events={events} />
+          <div>
+            <div>
+              {g.event.title} - {g.participants}
+            </div>
+            <span>
+              {g.description} ({g.date})
+            </span>
+          </div>
         </a>
       ))}
 
@@ -50,10 +56,10 @@ function EventImage({ title = "", events = [] }) {
       return (
         <img
           src={event.logo_url}
-          width={16}
-          height={16}
+          width={32}
+          height={32}
           alt={event.title}
-          className="inline mr-1"
+          className="block mr-2 w-8 h-8"
         />
       );
     }
