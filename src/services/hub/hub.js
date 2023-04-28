@@ -8,6 +8,7 @@ export const hubApi = createApi({
   endpoints: (build) => ({
     getEvents: build.query({ query: () => "events" }),
     getForumPosts: build.query({ query: () => "forum_posts" }),
+    getGamesInSpotlight: build.query({ query: () => "games_in_spotlight" }),
     getNews: build.query({ query: () => "news" }),
     getServer: build.query({
       query: (address) => `servers/${address}`,
@@ -34,6 +35,7 @@ export const hubApi = createApi({
 export const {
   useGetEventsQuery,
   useGetForumPostsQuery,
+  useGetGamesInSpotlightQuery,
   useGetNewsQuery,
   useGetServerQuery,
   useGetServersQuery,
