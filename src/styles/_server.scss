@@ -2,7 +2,6 @@
   @mixin app-smod($color, $glow-width) {
     padding: 2px;
     background: linear-gradient(to bottom, $color, rgba($color, 0.3));
-    box-shadow: rgba($color, 0.2) 0 0 $glow-width;
   }
 
   &.smod-matchtag {
