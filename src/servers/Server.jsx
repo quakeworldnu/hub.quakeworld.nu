@@ -78,7 +78,7 @@ export const ServerBody = (props) => {
         className="h-full min-h-[200px] bg-cover bg-center"
         style={{ backgroundImage: mapThumbnailSrc }}
       >
-        <div className="bg-gray-700/40 flex flex-col h-full group">
+        <div className="bg-gray-700/20 flex flex-col h-full group">
           <a
             href={`/scoreboard/?address=${server.address}`}
             className="transition-opacity opacity-0 group-hover:opacity-80 ml-auto -mb-2 mt-1 mr-1"
