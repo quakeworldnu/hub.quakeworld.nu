@@ -1,5 +1,6 @@
 import React from "react";
 import { useGetNewsQuery } from "@/services/hub/hub";
+import { Heading } from "./Common";
 
 export default function News() {
   const { data: news = [] } = useGetNewsQuery();
@@ -7,7 +8,7 @@ export default function News() {
 
   return (
     <div className="app-links my-6">
-      <div className="font-bold text-gray-300/50 mb-2">NEWS</div>
+      <Heading text="NEWS" icon="article" />
       {news.slice(0, limit).map((item, index) => (
         <a href={item.url} className="block" key={index}>
           {item.title}

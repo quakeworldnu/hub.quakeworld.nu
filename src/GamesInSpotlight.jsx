@@ -3,6 +3,7 @@ import {
   useGetEventsQuery,
   useGetGamesInSpotlightQuery,
 } from "@/services/hub/hub";
+import { Heading } from "./Common";
 
 const LIMIT = 5;
 const pollingInterval = 1000 * 1800; // every 30 minutes
@@ -18,15 +19,15 @@ export default function GamesInSpotlight() {
   }
 
   const hasMoreGamesToShow = games.length > LIMIT;
+  let headingText = "GAMES IN SPOTLIGHT";
+
+  if (hasMoreGamesToShow) {
+    headingText += ` (${games.length})`;
+  }
 
   return (
     <div className="my-6">
-      <div className="font-bold text-gray-300/50 mb-2">
-        GAMES IN SPOTLIGHT{" "}
-        {hasMoreGamesToShow && (
-          <React.Fragment> ({games.length})</React.Fragment>
-        )}
-      </div>
+      <Heading text={headingText} icon="whatshot" />
       {games.slice(0, LIMIT).map((g, index) => (
         <a
           href={g.event.url}
@@ -48,7 +49,7 @@ export default function GamesInSpotlight() {
       {hasMoreGamesToShow && (
         <a
           href="https://www.quakeworld.nu/wiki/Overview"
-          className="block mt-2"
+          className="block mt-2 app-link"
         >
           View all at Wiki &rarr;
         </a>

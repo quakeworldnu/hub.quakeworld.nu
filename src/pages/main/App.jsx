@@ -21,7 +21,7 @@ export const App = () => {
           <HorizontalSeparator />
         </div>
 
-        <div className="sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:block 3xl:w-96">
+        <div className="md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:block 3xl:w-96">
           <GamesInSpotlight />
           <Events />
           <div className="3xl:hidden">
@@ -35,7 +35,7 @@ export const App = () => {
 
       <div className="hidden 3xl:block">
         <HorizontalSeparator />
-        <div className="3xl:grid 3xl:grid-cols-4">
+        <div className="3xl:grid 3xl:grid-cols-5">
           <News />
           <ForumPosts />
         </div>

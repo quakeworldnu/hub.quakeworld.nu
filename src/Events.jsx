@@ -1,6 +1,7 @@
 import React from "react";
 import { useGetEventsQuery } from "@/services/hub/hub";
 import _groupby from "lodash.groupby";
+import { Heading } from "./Common";
 
 export default function Events() {
   const { data: events = [] } = useGetEventsQuery();
@@ -13,9 +14,7 @@ export default function Events() {
     <>
       {eventKeys.map((k) => (
         <div key={k} className="app-links my-6">
-          <div className="font-bold text-gray-300/50 mb-2">
-            {k.toLocaleUpperCase()} EVENTS
-          </div>
+          <Heading text={`${k.toLocaleUpperCase()} EVENTS`} icon="event" />
           {Object.values(eventsByStatus[k])
             .slice(0, 5)
             .map((e, index) => (
