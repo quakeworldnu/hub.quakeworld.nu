@@ -12,9 +12,9 @@ export function SvgIcon({ filename, size = 24 }) {
   );
 }
 
-export function Heading({ text = "", icon = "" }) {
+export function Heading({ text = "", icon = "", color = "text-gray-400" }) {
   return (
-    <div className="flex items-center font-bold mb-2 text-gray-400">
+    <div className={`flex items-center font-bold mb-2 ${color}`}>
       {text && <SvgIcon filename={icon} />} {text}
     </div>
   );
