@@ -21,7 +21,10 @@ export const SiteFooter = () => {
           <a href="https://tools.quake.world/recent-demos/">Recent demos</a>
         </div>
         <div className="sm:text-right">
-          <a href="https://github.com/quakeworldnu/hub.quakeworld.nu" className="app-link">
+          <a
+            href="https://github.com/quakeworldnu/hub.quakeworld.nu"
+            className="app-link"
+          >
             Source on GitHub
           </a>
         </div>
