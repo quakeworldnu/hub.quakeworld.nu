@@ -3,7 +3,7 @@ import Streams from "@/Streams";
 
 export const SiteHeader = () => {
   return (
-    <div className="mt-2 mb-4">
+    <div className="mt-2">
       <div className="space-y-4 lg:space-y-2 lg:flex">
         <div className="flex items-center space-x-4">
           <a href="/" className="min-w-[48px] lg:pt-2 lg:mr-4">
@@ -21,7 +21,7 @@ export const SiteHeader = () => {
         </div>
         <Streams />
       </div>
-      <div className="hidden lg:block lg:my-3">
+      <div className="hidden lg:block lg:mt-3">
         <SiteNavigation />
       </div>
     </div>

@@ -12,7 +12,8 @@
   }
 }
 
-#app-footer a {
+.app-links > a,
+.app-link {
   @apply py-1 text-blue-600 hover:text-white;
 
   & span {

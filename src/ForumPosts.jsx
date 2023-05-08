@@ -6,7 +6,7 @@ export default function News() {
   const limit = 5;
 
   return (
-    <div>
+    <div className="app-links my-6">
       <div className="font-bold text-gray-300/50 mb-2">FORUM ACTIVITY</div>
       {forumPosts.slice(0, limit).map((item, index) => (
         <a href={item.url} className="block" key={index}>

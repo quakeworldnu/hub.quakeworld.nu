@@ -3,13 +3,16 @@ import { useGetEventsQuery } from "@/services/hub/hub";
 import _groupby from "lodash.groupby";
 
 export default function Events() {
-  const { data: events = [] } = useGetEventsQuery("bulbasaur");
+  const { data: events = [] } = useGetEventsQuery();
   const eventsByStatus = _groupby(events, "status");
+  const eventKeys = Object.keys(eventsByStatus);
+  eventKeys.sort();
+  eventKeys.reverse();
 
   return (
     <>
-      {Object.keys(eventsByStatus).map((k) => (
-        <div key={k}>
+      {eventKeys.map((k) => (
+        <div key={k} className="app-links my-6">
           <div className="font-bold text-gray-300/50 mb-2">
             {k.toLocaleUpperCase()} EVENTS
           </div>
