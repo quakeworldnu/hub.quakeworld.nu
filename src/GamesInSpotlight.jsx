@@ -1,8 +1,5 @@
 import React from "react";
-import {
-  useGetEventsQuery,
-  useGetGamesInSpotlightQuery,
-} from "@/services/hub/hub";
+import { useGetEventsQuery, useGetGamesInSpotlightQuery, } from "@/services/hub/hub";
 
 const LIMIT = 5;
 const pollingInterval = 1000 * 1800; // every 30 minutes
@@ -12,6 +9,11 @@ export default function GamesInSpotlight() {
     pollingInterval,
   });
   const { data: events = [] } = useGetEventsQuery(null);
+
+  if (0 === games.length) {
+    return <React.Fragment />
+  }
+
   const hasMoreGamesToShow = games.length > LIMIT;
 
   return (
