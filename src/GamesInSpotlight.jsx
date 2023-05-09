@@ -36,10 +36,9 @@ export default function GamesInSpotlight() {
         >
           <EventImage title={g.event.title} events={events} />
           <div>
-            <div>
-              {g.participants} - {g.event.title}
-            </div>
+            <div className="font-bold">{g.participants}</div>
             <span>
+              <span className="font-bold">{g.event.title}</span> -{" "}
               {g.description} ({g.date})
             </span>
           </div>
