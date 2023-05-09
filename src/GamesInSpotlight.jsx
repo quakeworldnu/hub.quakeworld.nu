@@ -35,7 +35,7 @@ export default function GamesInSpotlight() {
           key={index}
         >
           <EventImage title={g.event.title} events={events} />
-          <div>
+          <div className="leading-5">
             <div className="font-bold">{g.participants}</div>
             <span>
               <span className="font-bold">{g.event.title}</span> -{" "}
