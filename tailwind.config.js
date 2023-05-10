@@ -14,7 +14,7 @@ module.exports = {
         "servers": "repeat(auto-fill, minmax(340px, 1fr))"
       },
       screens: {
-        '3xl': '1951px',
+        '3xl': '1890px',
       }
     },
   },
