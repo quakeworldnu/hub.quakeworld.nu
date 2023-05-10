@@ -12,10 +12,15 @@ export function SvgIcon({ filename, size = 24 }) {
   );
 }
 
-export function Heading({ text = "", icon = "", color = "text-gray-400" }) {
+export function Heading({
+  text = "",
+  icon = "",
+  iconSize = 24,
+  color = "text-gray-400",
+}) {
   return (
-    <div className={`flex items-center font-bold mb-2 ${color}`}>
-      {text && <SvgIcon filename={icon} />} {text}
+    <div className={`flex items-center font-bold mb-1 ${color}`}>
+      {text && <SvgIcon filename={icon} size={iconSize} />} {text}
     </div>
   );
 }

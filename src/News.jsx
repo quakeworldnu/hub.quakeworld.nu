@@ -7,7 +7,7 @@ export default function News() {
   const limit = 5;
 
   return (
-    <div className="app-links my-6">
+    <div className="app-links my-8">
       <Heading text="NEWS" icon="article" />
       {news.slice(0, limit).map((item, index) => (
         <a href={item.url} className="block" key={index}>

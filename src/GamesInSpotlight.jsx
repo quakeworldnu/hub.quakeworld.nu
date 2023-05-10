@@ -27,7 +27,12 @@ export default function GamesInSpotlight() {
 
   return (
     <div className="my-6">
-      <Heading text={headingText} icon="whatshot" color={"text-amber-300"} />
+      <Heading
+        text={headingText}
+        icon="whatshot"
+        iconSize={32}
+        color={"text-amber-300"}
+      />
       {games.slice(0, LIMIT).map((g, index) => (
         <a
           href={g.event.url}

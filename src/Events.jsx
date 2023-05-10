@@ -13,16 +13,16 @@ export default function Events() {
   return (
     <>
       {eventKeys.map((k) => (
-        <div key={k} className="app-links my-6">
+        <div key={k} className="app-links my-8">
           <Heading text={`${k.toLocaleUpperCase()} EVENTS`} icon="event" />
           {Object.values(eventsByStatus[k])
             .slice(0, 5)
             .map((e, index) => (
-              <a href={e.wiki_url} className="block" key={index}>
+              <a href={e.wiki_url} className="block ml-1.5" key={index}>
                 <img
                   src={e.logo_url}
-                  width={16}
-                  height={16}
+                  width={18}
+                  height={18}
                   className="inline mr-1"
                 />{" "}
                 {e.title}
