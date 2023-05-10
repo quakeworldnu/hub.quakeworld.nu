@@ -102,20 +102,20 @@ const ClientRow = (props) => {
         {server.qtv_stream.address && (
           <a
             href={`qw://${server.qtv_stream.url}/qtvplay`}
-            className="text-blue-600 hover:text-white"
+            className="text-blue-500 hover:text-white"
           >
             QTV
           </a>
         )}
         <a
           href={`qw://${server.address}/observe`}
-          className="text-blue-600 hover:text-white"
+          className="text-blue-500 hover:text-white"
         >
           Spectate
         </a>
         <a
           href={`qw://${server.address}/`}
-          className="text-blue-600 hover:text-white"
+          className="text-blue-500 hover:text-white"
         >
           Join
         </a>
