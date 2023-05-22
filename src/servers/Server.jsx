@@ -1,7 +1,7 @@
-import React from "react";
+import React, { Fragment } from "react";
 import copyToClipboard from "copy-text-to-clipboard";
 import { Scoreboard } from "./Scoreboard";
-import { QuakeText } from "../QuakeText";
+import { QuakeText } from "@/QuakeText";
 import { PrimaryButton, SecondaryButton } from "@/Buttons";
 import ServerStreams from "./ServerStreams";
 
@@ -24,19 +24,21 @@ const ServerHeader = (props) => {
 
   return (
     <div className="border-b border-black">
-      <div className="flex justify-between p-3">
+      <div className="flex justify-between p-2 sm:p-3">
         <ServerStatus
           mode={server.mode}
           map={server.settings.map}
           statusName={server.status.name}
           statusDescription={server.status.description}
         />
-        <JoinButtonEl
-          href={`qw://${server.address}/`}
-          className="flex items-center px-5 text-lg rounded-lg"
-        >
-          Join
-        </JoinButtonEl>
+        <div className="hidden sm:flex">
+          <JoinButtonEl
+            href={`qw://${server.address}/`}
+            className="flex items-center px-5 text-lg rounded-lg"
+          >
+            Join
+          </JoinButtonEl>
+        </div>
       </div>
       {server.time.total > 0 &&
         ["Started", "Countdown"].includes(server.status.name) && (
@@ -50,8 +52,10 @@ const ServerStatus = React.memo((props) => {
   const { mode, map, statusName, statusDescription } = props;
 
   return (
-    <div>
-      <strong>{mode}</strong> on <strong>{map}</strong>
+    <div className="flex grow justify-between sm:block">
+      <div>
+        <strong>{mode}</strong> on <strong>{map}</strong>
+      </div>
       <div>
         {["Started", "Countdown"].includes(statusName) && (
           <span className="mr-1 px-1 py-0.5 rounded-sm font-mono text-xs bg-red-600 app-text-shadow">
@@ -144,26 +148,28 @@ const SpectatorButtons = (props) => {
   const { server } = props;
 
   return (
-    <div>
-      <div className="grid grid-cols-2 gap-2">
+    <Fragment>
+      <div className="hidden sm:block">
         <SecondaryButton
           href={`qw://${server.address}/observe`}
           count={server.spectator_slots.used}
         >
           Spectate
         </SecondaryButton>
+      </div>
 
-        {server.qtv_stream.address !== "" && (
+      {server.qtv_stream.address !== "" && (
+        <div className="hidden sm:block">
           <SecondaryButton
             href={`qw://${server.qtv_stream.url}/qtvplay`}
             count={server.qtv_stream.spectator_count}
           >
             QTV
           </SecondaryButton>
-        )}
-        {<ServerStreams address={server.address} />}
-      </div>
-    </div>
+        </div>
+      )}
+      {<ServerStreams address={server.address} />}
+    </Fragment>
   );
 };
 
@@ -171,15 +177,17 @@ const ServerFooter = (props) => {
   const { server } = props;
 
   return (
-    <div className="p-3 border-t border-t-black bg-[#334] text-sm space-y-3">
+    <div className="p-2 sm:p-3 border-t border-t-black bg-[#334] text-sm grid grid-cols-2 gap-2">
       <SpectatorButtons server={server} />
 
-      <div className="flex text-xs justify-between">
-        <ServerAddress server={server} />
+      <div className="col-span-2">
+        <div className="flex text-xs justify-between">
+          <ServerAddress server={server} />
 
-        {server.settings.ktxver && (
-          <KtxVersion version={server.settings.ktxver} />
-        )}
+          {server.settings.ktxver && (
+            <KtxVersion version={server.settings.ktxver} />
+          )}
+        </div>
       </div>
     </div>
   );
