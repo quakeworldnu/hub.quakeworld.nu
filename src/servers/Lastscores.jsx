@@ -9,7 +9,7 @@ export const Lastscores = ({ address, onClose }) => {
   return (
     <div className="text-xs h-full">
       <div
-        className="p-2 bg-black/50 shadow flex items-center cursor-pointer hover:bg-black/70"
+        className="p-3 bg-black/50 shadow flex items-center cursor-pointer hover:bg-black/70 hover:text-sky-300"
         onClick={onClose}
       >
         <img
@@ -21,13 +21,11 @@ export const Lastscores = ({ address, onClose }) => {
         />
         <div>Back to scoreboard</div>
       </div>
-      <div className="h-full max-h-[214px] overflow-y-auto">
-        {isError && (
-          <div className="h-full">Error: unable to fetch lastscores</div>
-        )}
+      <div className="h-full max-h-[500px] pb-8">
+        {isError && <span>Error: unable to fetch lastscores</span>}
         {isSuccess && 0 === data.length && (
           <div className="flex h-full items-center justify-center text-gray-300">
-            <div>no lastscores found</div>
+            no lastscores found
           </div>
         )}
         {isLoading && (
@@ -55,7 +53,7 @@ const Result = ({ title }) => {
 
   return (
     <div
-      className="py-0.5 cursor-pointer hover:text-red-400"
+      className="py-0.5 cursor-pointer hover:text-sky-300 odd:bg-black/5"
       onClick={() => setIsRevealed(true)}
     >
       {allButResult}: <Spoiler text={result} isRevealed={isRevealed} />
