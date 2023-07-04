@@ -53,7 +53,9 @@ const Result = ({ title, defaultRevealed = false }) => {
 
   return (
     <div
-      className="py-0.5 cursor-pointer hover:text-sky-300 odd:bg-black/5"
+      className={classNames("py-0.5", {
+        "cursor-pointer hover:text-sky-300 odd:bg-black/5": !isRevealed,
+      })}
       onClick={() => setIsRevealed(true)}
     >
       {allButResult}: <Spoiler text={result} isRevealed={isRevealed} />
