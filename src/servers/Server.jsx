@@ -1,9 +1,15 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import copyToClipboard from "copy-text-to-clipboard";
 import { Scoreboard } from "./Scoreboard";
 import { QuakeText } from "@/QuakeText";
 import { PrimaryButton, SecondaryButton } from "@/Buttons";
 import ServerStreams from "./ServerStreams";
+import { Lastscores } from "@/servers/Lastscores";
+
+const VIEWS = {
+  Scoreboard: "Scoreboard",
+  Lastscores: "Lastscores",
+};
 
 const ServerProgress = React.memo((props) => {
   const { value, max } = props;
@@ -72,47 +78,73 @@ export const ServerBody = (props) => {
   const { server } = props;
   const serverMeta = server.meta;
 
+  const [view, setView] = useState(VIEWS.Scoreboard);
+
   const mapThumbnailSrc = serverMeta.mapName
     ? `url(https://raw.githubusercontent.com/vikpe/qw-mapshots/main/${serverMeta.mapName}.jpg)`
     : "none";
 
-  return (
-    <div className="h-full bg-cover bg-center bg-[url(/assets/img/default_mapshot.jpg)]">
-      <div
-        className="h-full min-h-[96px] sm:min-h-[200px] bg-cover bg-center"
-        style={{ backgroundImage: mapThumbnailSrc }}
-      >
-        <div className="bg-gray-700/20 flex flex-col h-full group">
-          <a
-            href={`/scoreboard/?address=${server.address}`}
-            className="transition-opacity opacity-0 group-hover:opacity-80 ml-auto -mb-2 mt-1 mr-1"
-            title="Show scoreboard in separate window"
-          >
-            <img
-              src="/assets/img/icons/launch.svg"
-              width={20}
-              height={20}
-              alt=""
-            />
-          </a>
-
-          <div className="flex flex-col justify-center items-center h-full px-2 pb-4">
-            {serverMeta.matchtag && (
-              <div className="py-1.5 mb-3 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r from-red-600/0 via-red-600 app-text-shadow">
-                {serverMeta.matchtag}
-              </div>
-            )}
-            <Scoreboard
-              server={server}
-              limit={serverMeta.playerDisplay.visible}
-            />
-            <HiddenPlayers count={serverMeta.playerDisplay.hidden} />
-            <SpectatorText text={serverMeta.spectatorText} />
+  if (view === VIEWS.Lastscores) {
+    return (
+      <Lastscores
+        address={server.address}
+        onClose={() => setView(VIEWS.Scoreboard)}
+      />
+    );
+  } else if (view === VIEWS.Scoreboard) {
+    return (
+      <div className="h-full bg-cover bg-center bg-[url(/assets/img/default_mapshot.jpg)]">
+        <div
+          className="h-full min-h-[96px] sm:min-h-[200px] bg-cover bg-center"
+          style={{ backgroundImage: mapThumbnailSrc }}
+        >
+          <div className="bg-gray-700/20 flex flex-col h-full group py-4">
+            <div className="flex transition-opacity opacity-0 group-hover:opacity-100 ml-4 space-x-2 absolute">
+              <a
+                href={`/scoreboard/?address=${server.address}`}
+                title="Show scoreboard in separate window"
+                className="p-1 opacity-60 hover:opacity-100"
+              >
+                <img
+                  src="/assets/img/icons/launch.svg"
+                  width={24}
+                  height={24}
+                  alt=""
+                />
+              </a>
+              {server.meta.supportsLastscores && (
+                <div
+                  className="p-1 cursor-pointer opacity-60 hover:opacity-100"
+                  onClick={() => setView(VIEWS.Lastscores)}
+                >
+                  <img
+                    src="/assets/img/icons/history.svg"
+                    width={24}
+                    height={24}
+                    alt=""
+                    title="Show lastscores"
+                  />
+                </div>
+              )}
+            </div>
+            <div className="flex flex-col justify-center items-center h-full px-2">
+              {serverMeta.matchtag && (
+                <div className="py-1.5 mb-3 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r from-red-600/0 via-red-600 app-text-shadow">
+                  {serverMeta.matchtag}
+                </div>
+              )}
+              <Scoreboard
+                server={server}
+                limit={serverMeta.playerDisplay.visible}
+              />
+              <HiddenPlayers count={serverMeta.playerDisplay.hidden} />
+              <SpectatorText text={serverMeta.spectatorText} />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 const HiddenPlayers = React.memo((props) => {

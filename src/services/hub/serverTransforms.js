@@ -60,6 +60,7 @@ const metaByServer = (server) => {
     matchtag: showMatchTag ? server.settings.matchtag : "",
     showTeams,
     showTeamColumn,
+    supportsLastscores: supportsLastscores(server.settings["*version"]),
   };
 
   let maxPlayerCount = 8;
@@ -109,4 +110,19 @@ const calcPlayerDisplay = (playerCount, maxPlayers) => {
   const visible = Math.min(maxPlayers, playerCount);
   const hidden = playerCount - visible;
   return { visible, hidden };
+};
+
+const supportsLastscores = (version) => {
+  const MIN_SUPPORTED_VERSION = 0.36;
+
+  try {
+    if (!version.includes("MVDSV")) {
+      return false;
+    }
+    const parts = version.split(" ");
+    const releaseNumber = parseFloat(parts[1]);
+    return releaseNumber >= MIN_SUPPORTED_VERSION;
+  } catch (e) {
+    return false;
+  }
 };
