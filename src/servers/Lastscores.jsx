@@ -45,8 +45,8 @@ export const Lastscores = ({ address, onClose }) => {
   );
 };
 
-const Result = ({ title }) => {
-  const [isRevealed, setIsRevealed] = useState(false);
+const Result = ({ title, defaultRevealed = false }) => {
+  const [isRevealed, setIsRevealed] = useState(defaultRevealed);
   const parts = title.split(" ");
   const result = parts.slice(-1);
   const allButResult = parts.slice(0, parts.length - 1).join(" ");

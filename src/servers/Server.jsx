@@ -103,7 +103,7 @@ export const ServerBody = (props) => {
               <a
                 href={`/scoreboard/?address=${server.address}`}
                 title="Show scoreboard in separate window"
-                className="p-1 opacity-60 hover:opacity-100"
+                className="p-1 rounded-full bg-black/70 opacity-60 hover:opacity-100"
               >
                 <img
                   src="/assets/img/icons/launch.svg"
@@ -114,7 +114,7 @@ export const ServerBody = (props) => {
               </a>
               {server.meta.supportsLastscores && (
                 <div
-                  className="p-1 cursor-pointer opacity-60 hover:opacity-100"
+                  className="p-1 rounded-full bg-black/70 cursor-pointer opacity-60 hover:opacity-100"
                   onClick={() => setView(VIEWS.Lastscores)}
                 >
                   <img
