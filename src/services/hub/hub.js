@@ -29,6 +29,9 @@ export const hubApi = createApi({
         return servers;
       },
     }),
+    getLastscores: build.query({
+      query: (address) => `servers/${address}/lastscores`,
+    }),
   }),
 });
 
@@ -40,4 +43,5 @@ export const {
   useGetServerQuery,
   useGetServersQuery,
   useGetStreamsQuery,
+  useGetLastscoresQuery,
 } = hubApi;
