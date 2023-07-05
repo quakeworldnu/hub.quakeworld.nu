@@ -113,14 +113,13 @@ const calcPlayerDisplay = (playerCount, maxPlayers) => {
 };
 
 const supportsLastscores = (version) => {
-  const MIN_SUPPORTED_VERSION = 0.36;
-
   try {
     if (!version.includes("MVDSV")) {
       return false;
     }
-    const parts = version.split(" ");
+    const parts = version.substring(0, "MVDSV 0.xx".length).split(" ");
     const releaseNumber = parseFloat(parts[1]);
+    const MIN_SUPPORTED_VERSION = 0.36;
     return releaseNumber >= MIN_SUPPORTED_VERSION;
   } catch (e) {
     return false;
