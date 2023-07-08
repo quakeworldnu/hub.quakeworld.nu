@@ -124,11 +124,11 @@ const LastscoresRow = ({ lastscores, showAllScores = false, address = "" }) => {
           <td colSpan={5}>
             <Mapshot map={map}>
               {demoUrls && (
-                <div className="flex transition-opacity ml-2 mt-3 space-x-1 absolute">
+                <div className="flex transition-opacity ml-2 mt-3 space-x-2 absolute">
                   <a
                     href={demoUrls.download}
                     title="Download demo"
-                    className="p-1 rounded-full bg-black/70 opacity-60 hover:opacity-100"
+                    className="p-1 rounded-full bg-gray-950 opacity-60 hover:opacity-100 "
                   >
                     <img
                       src="/assets/img/icons/download.svg"
@@ -139,7 +139,7 @@ const LastscoresRow = ({ lastscores, showAllScores = false, address = "" }) => {
                   <a
                     href={demoUrls.stream}
                     title="Stream demo"
-                    className="p-1 rounded-full bg-black/70 opacity-60 hover:opacity-100"
+                    className="p-1 rounded-full bg-gray-950 opacity-60 hover:opacity-100"
                   >
                     <img
                       src="/assets/img/icons/play_arrow.svg"
