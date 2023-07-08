@@ -1,9 +1,8 @@
 import React from "react";
-import { coloredQuakeName, QuakeText } from "../QuakeText";
+import { coloredQuakeName, QuakeText } from "@/QuakeText";
 import { ColoredFrags } from "./ColoredFrags";
 
-export const Scoreboard = (props) => {
-  const { server, limit = 20 } = props;
+export const Scoreboard = ({ server, limit = 20 }) => {
   const serverMeta = server.meta;
   let className = "scoreboard ";
   className += serverMeta.showTeamColumn ? "sc-show-team" : "sc-hide-team";
@@ -25,9 +24,7 @@ export const Scoreboard = (props) => {
   );
 };
 
-const Teams = (props) => {
-  const { teams } = props;
-
+export const Teams = ({ teams = [] }) => {
   return (
     <>
       {teams &&
@@ -66,9 +63,7 @@ const TeamName = React.memo((props) => {
   );
 });
 
-const Players = (props) => {
-  const { players, showTeam, limit = 20 } = props;
-
+export const Players = ({ players, showTeam, limit = 20 }) => {
   return (
     <>
       {players &&

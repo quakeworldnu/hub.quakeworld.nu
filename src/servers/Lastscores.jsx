@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useGetLastscoresQuery } from "@/services/hub/hub";
 import classNames from "classnames";
+import { LastscoresScoreboard } from "@/servers/LastscoresScoreboard";
 
 export const Lastscores = ({ address, onClose }) => {
   const { data, isLoading, isSuccess, isError } =
@@ -33,22 +34,14 @@ export const Lastscores = ({ address, onClose }) => {
         )}
       </div>
       <div>
-        {isError && (
-          <div className="my-4 text-gray-300 text-center">
-            Error: unable to fetch lastscores
-          </div>
-        )}
+        {isError && <Placeholder text="Error: unable to fetch lastscores" />}
         {isSuccess && 0 === data.length && (
-          <div className="my-4 text-gray-300 text-center">
-            no lastscores found
-          </div>
+          <Placeholder text="no lastscores found" />
         )}
-        {isLoading && (
-          <div className="my-4 text-gray-300 text-center">Loading...</div>
-        )}
+        {isLoading && <Placeholder text="Loading..." />}
 
         {data && (
-          <div className="max-h-[320px]">
+          <div className="max-h-[320px] overflow-y-auto">
             <table className="w-full text-left">
               <thead className="bg-black/20 text-white">
                 <tr className="border-b border-black/20">
@@ -57,7 +50,6 @@ export const Lastscores = ({ address, onClose }) => {
                   <th className="p-1">participants</th>
                   <th className="p-1">map</th>
                   <th className="p-1">scores</th>
-                  <th className="p-1">#</th>
                 </tr>
               </thead>
               <tbody>
@@ -65,7 +57,7 @@ export const Lastscores = ({ address, onClose }) => {
                   <LastscoresRow
                     key={index}
                     lastscores={lastscores}
-                    showScores={showAllScores}
+                    showAllScores={showAllScores}
                   />
                 ))}
               </tbody>
@@ -77,41 +69,62 @@ export const Lastscores = ({ address, onClose }) => {
   );
 };
 
-const LastscoresRow = ({ lastscores, showScores = false }) => {
-  const { timestamp, mode, participants, map, scores } = lastscores;
-
+const Placeholder = ({ text }) => {
   return (
-    <tr className="odd:bg-black/10 hover:bg-black/20">
-      <td className="p-1">{timestamp}</td>
-      <td className="p-1">{mode}</td>
-      <td className="p-1">{participants}</td>
-      <td className="p-1">{map}</td>
-      <ScoresCell text={scores} showScores={showScores} />
-      <td>asd</td>
-    </tr>
+    <div className="flex min-h-[96px] text-gray-300 justify-center items-center">
+      {text}
+    </div>
   );
 };
 
-const ScoresCell = ({ text, showScores = false }) => {
-  const [_showScores, setShowScores] = useState(showScores);
+const LastscoresRow = ({ lastscores, showAllScores = false }) => {
+  const { timestamp, mode, participants, map, scores } = lastscores;
+  const [showScoreboard, setShowScoreboard] = useState(false);
+  const [showScores, setShowScores] = useState(showAllScores);
+
+  function toggleScoreboard() {
+    setShowScoreboard(!showScoreboard);
+    setShowScores(true);
+  }
 
   useEffect(() => {
-    setShowScores(showScores);
-  }, [showScores]);
+    if (showAllScores) {
+      setShowScores(true);
+    }
+  }, [showAllScores]);
 
   return (
-    <td
-      className={classNames("p-1", {
-        "cursor-pointer": !_showScores,
-      })}
-      onClick={() => setShowScores(true)}
-    >
-      <span
-        className={classNames({ "blur-sm": !_showScores })}
-        title="Reveal scores"
+    <>
+      <tr
+        className="odd:bg-black/10 hover:bg-black/20 cursor-pointer"
+        onClick={toggleScoreboard}
       >
-        {text}
-      </span>
-    </td>
+        <td className="p-1">{timestamp}</td>
+        <td className="p-1">{mode}</td>
+        <td className="p-1">{participants}</td>
+        <td className="p-1">{map}</td>
+        <td className="p-1">
+          <TextSpoiler text={scores} isRevealed={showScores} />
+        </td>
+      </tr>
+      {showScoreboard && (
+        <tr>
+          <td colSpan={5}>
+            <LastscoresScoreboard lastscores={lastscores} />
+          </td>
+        </tr>
+      )}
+    </>
+  );
+};
+
+const TextSpoiler = ({ text, isRevealed = false }) => {
+  return (
+    <span
+      className={classNames({ "blur-sm": !isRevealed })}
+      title="Reveal scores"
+    >
+      {text}
+    </span>
   );
 };
