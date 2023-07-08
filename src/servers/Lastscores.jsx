@@ -116,10 +116,10 @@ const LastscoresRow = ({ lastscores, showAllScores = false, address = "" }) => {
       </tr>
       {showScoreboard && (
         <tr>
-          <td colSpan={5} className="group">
+          <td colSpan={5}>
             <Mapshot map={map}>
               {demoUrls && (
-                <div className="flex transition-opacity opacity-0 group-hover:opacity-100 ml-4 mt-4 space-x-2 absolute">
+                <div className="flex transition-opacity ml-4 mt-4 space-x-2 absolute">
                   <a
                     href={demoUrls.download}
                     title="Download demo"
@@ -127,8 +127,8 @@ const LastscoresRow = ({ lastscores, showAllScores = false, address = "" }) => {
                   >
                     <img
                       src="/assets/img/icons/download.svg"
-                      width={24}
-                      height={24}
+                      width={20}
+                      height={20}
                     />
                   </a>
                   <a
@@ -138,8 +138,8 @@ const LastscoresRow = ({ lastscores, showAllScores = false, address = "" }) => {
                   >
                     <img
                       src="/assets/img/icons/play_arrow.svg"
-                      width={24}
-                      height={24}
+                      width={20}
+                      height={20}
                     />
                   </a>
                 </div>
