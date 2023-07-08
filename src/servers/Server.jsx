@@ -91,7 +91,7 @@ export const ServerBody = (props) => {
     return (
       <Mapshot map={serverMeta.mapName}>
         <div className="flex flex-col h-full group py-4 min-h-[96px] sm:min-h-[200px] bg-gray-700/20">
-          <div className="flex transition-opacity opacity-40 group-hover:opacity-100 ml-4 space-x-2 absolute">
+          <div className="flex transition-opacity opacity-0 group-hover:opacity-100 ml-4 space-x-2 absolute">
             <a
               href={`/scoreboard/?address=${server.address}`}
               title="Show scoreboard in separate window"
