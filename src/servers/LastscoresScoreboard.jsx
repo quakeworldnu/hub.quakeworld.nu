@@ -1,8 +1,7 @@
 import { Scoreboard } from "@/servers/Scoreboard";
-import { Mapshot } from "@/servers/Mapshot";
 
 export const LastscoresScoreboard = ({ lastscores }) => {
-  const { teams = [], players = [], map } = lastscores;
+  const { teams = [], players = [] } = lastscores;
   let _players = [...players];
 
   if (teams.length > 0) {
@@ -22,11 +21,5 @@ export const LastscoresScoreboard = ({ lastscores }) => {
     },
   };
 
-  return (
-    <Mapshot map={map}>
-      <div className="flex justify-center py-4 bg-gray-700/20">
-        <Scoreboard server={server} />
-      </div>
-    </Mapshot>
-  );
+  return <Scoreboard server={server} />;
 };

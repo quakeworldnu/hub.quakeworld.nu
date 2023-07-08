@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useGetLastscoresQuery } from "@/services/hub/hub";
 import classNames from "classnames";
 import { LastscoresScoreboard } from "@/servers/LastscoresScoreboard";
+import { Mapshot } from "@/servers/Mapshot";
 
 export const Lastscores = ({ address, onClose }) => {
   const { data, isLoading, isSuccess, isError } =
@@ -24,7 +25,7 @@ export const Lastscores = ({ address, onClose }) => {
           />
           Back to scoreboard
         </div>
-        {data && !showAllScores && (
+        {data && data.length > 0 && !showAllScores && (
           <div
             className="py-3 px-5 cursor-pointer hover:bg-black/70 hover:text-sky-300"
             onClick={() => setShowAllScores(true)}
@@ -40,7 +41,7 @@ export const Lastscores = ({ address, onClose }) => {
         )}
         {isLoading && <Placeholder text="Loading..." />}
 
-        {data && (
+        {data && data.length > 0 && (
           <div className="max-h-[320px] overflow-y-auto">
             <table className="w-full text-left">
               <thead className="bg-black/20 text-white">
@@ -49,7 +50,10 @@ export const Lastscores = ({ address, onClose }) => {
                   <th className="p-1">mode</th>
                   <th className="p-1">participants</th>
                   <th className="p-1">map</th>
-                  <th className="p-1">scores</th>
+                  <th className="p-1" width={1}>
+                    scores
+                  </th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -76,6 +80,11 @@ const Placeholder = ({ text }) => {
     </div>
   );
 };
+
+function cancelEvent(e) {
+  e.preventDefault();
+  e.stopPropagation();
+}
 
 const LastscoresRow = ({ lastscores, showAllScores = false }) => {
   const { timestamp, mode, participants, map, scores } = lastscores;
@@ -110,7 +119,11 @@ const LastscoresRow = ({ lastscores, showAllScores = false }) => {
       {showScoreboard && (
         <tr>
           <td colSpan={5}>
-            <LastscoresScoreboard lastscores={lastscores} />
+            <Mapshot map={map}>
+              <div className="flex justify-center py-4 bg-gray-700/20 border-y border-gray-900">
+                <LastscoresScoreboard lastscores={lastscores} />
+              </div>
+            </Mapshot>
           </td>
         </tr>
       )}
