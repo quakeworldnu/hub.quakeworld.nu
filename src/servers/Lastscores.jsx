@@ -62,6 +62,7 @@ export const Lastscores = ({ address, onClose }) => {
                     key={index}
                     lastscores={lastscores}
                     showAllScores={showAllScores}
+                    address={address}
                   />
                 ))}
               </tbody>
@@ -81,8 +82,8 @@ const Placeholder = ({ text }) => {
   );
 };
 
-const LastscoresRow = ({ lastscores, showAllScores = false }) => {
-  const { timestamp, mode, participants, map, scores } = lastscores;
+const LastscoresRow = ({ lastscores, showAllScores = false, address = "" }) => {
+  const { timestamp, mode, participants, map, scores, demo } = lastscores;
   const [showScoreboard, setShowScoreboard] = useState(false);
   const [showScores, setShowScores] = useState(showAllScores);
 
@@ -96,6 +97,8 @@ const LastscoresRow = ({ lastscores, showAllScores = false }) => {
       setShowScores(true);
     }
   }, [showAllScores]);
+
+  const demoUrls = toDemoUrls(demo, address);
 
   return (
     <>
@@ -113,8 +116,35 @@ const LastscoresRow = ({ lastscores, showAllScores = false }) => {
       </tr>
       {showScoreboard && (
         <tr>
-          <td colSpan={5}>
+          <td colSpan={5} className="group">
             <Mapshot map={map}>
+              {demoUrls && (
+                <div className="flex transition-opacity opacity-0 group-hover:opacity-100 ml-4 mt-4 space-x-2 absolute">
+                  <a
+                    href={demoUrls.download}
+                    title="Download demo"
+                    className="p-1 rounded-full bg-black/70 opacity-60 hover:opacity-100"
+                  >
+                    <img
+                      src="/assets/img/icons/download.svg"
+                      width={24}
+                      height={24}
+                    />
+                  </a>
+                  <a
+                    href={demoUrls.stream}
+                    title="Stream demo"
+                    className="p-1 rounded-full bg-black/70 opacity-60 hover:opacity-100"
+                  >
+                    <img
+                      src="/assets/img/icons/play_arrow.svg"
+                      width={24}
+                      height={24}
+                    />
+                  </a>
+                </div>
+              )}
+
               <div className="flex justify-center py-4 bg-gray-700/20 border-y border-gray-900">
                 <LastscoresScoreboard lastscores={lastscores} />
               </div>
@@ -125,6 +155,18 @@ const LastscoresRow = ({ lastscores, showAllScores = false }) => {
     </>
   );
 };
+
+function toDemoUrls(demoFilename, serverAddress) {
+  if (!demoFilename || !serverAddress.includes(":")) {
+    return null;
+  }
+  const qtvAddress = `${serverAddress.split(":")[0]}:28000`;
+
+  return {
+    download: `http://${qtvAddress}/dl/demos/${demoFilename}`,
+    stream: `qw://qtvplay file:${demoFilename}@${qtvAddress}`,
+  };
+}
 
 const TextSpoiler = ({ text, isRevealed = false }) => {
   return (
