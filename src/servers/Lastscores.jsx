@@ -83,7 +83,8 @@ const Placeholder = ({ text }) => {
 };
 
 const LastscoresRow = ({ lastscores, showAllScores = false, address = "" }) => {
-  const { timestamp, mode, participants, map, scores, demo } = lastscores;
+  const { timestamp, mode, participants, map, scores, demo, players } =
+    lastscores;
   const [showScoreboard, setShowScoreboard] = useState(false);
   const [showScores, setShowScores] = useState(showAllScores);
 
@@ -108,10 +109,14 @@ const LastscoresRow = ({ lastscores, showAllScores = false, address = "" }) => {
       >
         <td className="p-1">{timestamp}</td>
         <td className="p-1">{mode}</td>
-        <td className="p-1">{participants}</td>
+        <td className="p-1">
+          {mode === "ffa" ? `${players.length} players` : participants}
+        </td>
         <td className="p-1">{map}</td>
         <td className="p-1">
-          <TextSpoiler text={scores} isRevealed={showScores} />
+          {mode !== "ffa" && (
+            <TextSpoiler text={scores} isRevealed={showScores} />
+          )}
         </td>
       </tr>
       {showScoreboard && (
