@@ -124,7 +124,7 @@ const LastscoresRow = ({ lastscores, showAllScores = false, address = "" }) => {
           <td colSpan={5}>
             <Mapshot map={map}>
               {demoUrls && (
-                <div className="flex transition-opacity ml-4 mt-4 space-x-2 absolute">
+                <div className="flex transition-opacity ml-2 mt-3 space-x-1 absolute">
                   <a
                     href={demoUrls.download}
                     title="Download demo"
