@@ -8,7 +8,7 @@ const ServersStreams = React.memo((props) => {
     pollingInterval: 15500,
   });
   const streamsOnServer = allStreams.filter(
-    (s) => s.server_address === address
+    (s) => s.server_address === address,
   );
 
   if (0 === streamsOnServer.length) {

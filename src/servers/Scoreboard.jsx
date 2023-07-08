@@ -59,7 +59,7 @@ const TeamName = React.memo((props) => {
     <QuakeText
       text={coloredQuakeName(
         name.substring(0, maxLen),
-        name_color.substring(0, maxLen)
+        name_color.substring(0, maxLen),
       )}
       className="w-12 text-center"
     />

@@ -57,7 +57,7 @@ const NavLink = ({ title, shortDescription, longDescription, url }) => {
   const cls = classNames(
     "hover:text-white underline underline-offset-8 decoration-2",
     { "decoration-sky-600": isSelected },
-    { "decoration-gray-700 hover:decoration-gray-500": !isSelected }
+    { "decoration-gray-700 hover:decoration-gray-500": !isSelected },
   );
 
   return (

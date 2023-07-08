@@ -15,7 +15,7 @@ export const transformServerData = (server) => {
 
 const metaByServer = (server) => {
   let spectator_names = server.spectator_names.concat(
-    server.qtv_stream.spectator_names
+    server.qtv_stream.spectator_names,
   );
 
   let addressTitle;
@@ -73,7 +73,7 @@ const metaByServer = (server) => {
 
   meta.playerDisplay = calcPlayerDisplay(
     server.player_slots.used,
-    maxPlayerCount
+    maxPlayerCount,
   );
 
   // wrapper class names
