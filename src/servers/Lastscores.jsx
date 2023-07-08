@@ -81,11 +81,6 @@ const Placeholder = ({ text }) => {
   );
 };
 
-function cancelEvent(e) {
-  e.preventDefault();
-  e.stopPropagation();
-}
-
 const LastscoresRow = ({ lastscores, showAllScores = false }) => {
   const { timestamp, mode, participants, map, scores } = lastscores;
   const [showScoreboard, setShowScoreboard] = useState(false);
