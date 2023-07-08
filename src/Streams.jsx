@@ -10,7 +10,7 @@ export default function Streams() {
   return (
     <div className="space-y-4 sm:space-y-0 sm:flex sm:space-x-4">
       {streams.map((stream) => (
-        <Stream key={stream} stream={stream} />
+        <Stream key={stream.channel} stream={stream} />
       ))}
     </div>
   );
