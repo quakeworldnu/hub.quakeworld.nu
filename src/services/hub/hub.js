@@ -31,6 +31,10 @@ export const hubApi = createApi({
     }),
     getLastscores: build.query({
       query: (address) => `servers/${address}/lastscores`,
+      transformResponse: (lastscores) => {
+        lastscores.reverse();
+        return lastscores;
+      },
     }),
   }),
 });
