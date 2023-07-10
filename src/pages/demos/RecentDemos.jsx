@@ -2,7 +2,9 @@ import React from "react";
 import { AgGridReact } from "ag-grid-react";
 import { useGetDemosQuery } from "@/services/hub/hub";
 import { columnDefs, defaultColDef, gridOptions } from "@/pages/demos/grid";
-import "./ag_grid.scss";
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
+import "./ag_theme.scss";
 
 export const RecentDemos = () => {
   const { data = [], isLoading } = useGetDemosQuery(null, {
@@ -19,7 +21,7 @@ export const RecentDemos = () => {
 
   return (
     <div
-      className="ag-theme-alpine ag-theme-alpine-dark max-w-4xl"
+      className="ag-theme-alpine-dark ag-theme-qwhub max-w-4xl"
       style={{ height: "100%" }}
     >
       <AgGridReact
