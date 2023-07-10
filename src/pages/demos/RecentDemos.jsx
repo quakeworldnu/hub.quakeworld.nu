@@ -13,7 +13,7 @@ export const RecentDemos = () => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center h-full justify-center">
+      <div className="flex items-center h-full justify-center max-w-4xl">
         loading demos..
       </div>
     );
