@@ -13,7 +13,7 @@ export const hubApi = createApi({
     getNews: build.query({ query: () => "news" }),
     getServer: build.query({
       query: (address) => `servers/${address}`,
-      transformResponse: (server) => transformServerData(server),
+      transformResponse: (server) => transformServer(server),
     }),
     getServers: build.query({
       query: () => "servers/mvdsv",
