@@ -13,12 +13,11 @@ export const Lastscores = ({ address, onClose }) => {
     <div className="h-full text-xs">
       <div className="bg-black/50 shadow flex items-center">
         <div
-          className="grow p-3 cursor-pointer hover:bg-black/70 hover:text-sky-300"
+          className="flex grow p-3 cursor-pointer hover:bg-black/70 hover:text-sky-300"
           onClick={onClose}
         >
           <img
             src="/assets/img/icons/chevron_forward.svg"
-            alt=""
             width={12}
             height={12}
             className="mr-1 rotate-180 inline"
@@ -27,7 +26,7 @@ export const Lastscores = ({ address, onClose }) => {
         </div>
         {data && data.length > 0 && !showAllScores && (
           <div
-            className="py-3 px-5 cursor-pointer hover:bg-black/70 hover:text-sky-300"
+            className="p-3 cursor-pointer hover:bg-black/70 hover:text-sky-300"
             onClick={() => setShowAllScores(true)}
           >
             Reveal all scores
@@ -50,7 +49,7 @@ export const Lastscores = ({ address, onClose }) => {
                   <th className="p-1">mode</th>
                   <th className="p-1">participants</th>
                   <th className="p-1">map</th>
-                  <th className="p-1" width={1}>
+                  <th className="p-1 text-center" width={1}>
                     scores
                   </th>
                   <th></th>
@@ -99,8 +98,6 @@ const LastscoresRow = ({ lastscores, showAllScores = false, address = "" }) => {
     }
   }, [showAllScores]);
 
-  const demoUrls = toDemoUrls(demo, address);
-
   return (
     <>
       <tr
@@ -113,7 +110,7 @@ const LastscoresRow = ({ lastscores, showAllScores = false, address = "" }) => {
           {mode === "ffa" ? `${players.length} players` : participants}
         </td>
         <td className="p-1">{map}</td>
-        <td className="p-1">
+        <td className="p-1 text-center">
           {mode !== "ffa" && (
             <TextSpoiler text={scores} isRevealed={showScores} />
           )}
@@ -123,41 +120,54 @@ const LastscoresRow = ({ lastscores, showAllScores = false, address = "" }) => {
         <tr>
           <td colSpan={5}>
             <Mapshot map={map}>
-              {demoUrls && (
-                <div className="flex transition-opacity ml-2 mt-3 space-x-2 absolute">
-                  <a
-                    href={demoUrls.download}
-                    title="Download demo"
-                    className="p-1 rounded-full bg-gray-950 opacity-60 hover:opacity-100 "
-                  >
-                    <img
-                      src="/assets/img/icons/download.svg"
-                      width={20}
-                      height={20}
-                    />
-                  </a>
-                  <a
-                    href={demoUrls.stream}
-                    title="Stream demo"
-                    className="p-1 rounded-full bg-gray-950 opacity-60 hover:opacity-100"
-                  >
-                    <img
-                      src="/assets/img/icons/play_arrow.svg"
-                      width={20}
-                      height={20}
-                    />
-                  </a>
-                </div>
-              )}
+              <div className="border-y border-gray-900 py-6">
+                <DemoButtons address={address} demo={demo} />
 
-              <div className="flex justify-center py-4 bg-gray-700/20 border-y border-gray-900">
-                <LastscoresScoreboard lastscores={lastscores} />
+                <div className="flex justify-center bg-gray-700/20 -mt-4">
+                  <LastscoresScoreboard lastscores={lastscores} />
+                </div>
               </div>
             </Mapshot>
           </td>
         </tr>
       )}
     </>
+  );
+};
+
+const DemoButtons = ({ demo, address }) => {
+  const demoUrls = toDemoUrls(demo, address);
+
+  if (!demoUrls) {
+    return <></>;
+  }
+
+  const links = [
+    {
+      url: demoUrls.download,
+      icon: "download.svg",
+      title: "",
+    },
+    {
+      url: demoUrls.stream,
+      icon: "play_arrow.svg",
+      title: "",
+    },
+  ];
+
+  return (
+    <div className="flex transition-opacity ml-2 -mt-4 space-x-1.5">
+      {links.map((link) => (
+        <a
+          key={link.title}
+          href={link.url}
+          title={link.title}
+          className="p-1 rounded-full bg-gray-950 opacity-60 hover:opacity-100 "
+        >
+          <img src={`/assets/img/icons/${link.icon}`} width={20} height={20} />
+        </a>
+      ))}
+    </div>
   );
 };
 
