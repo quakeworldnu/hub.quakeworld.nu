@@ -61,9 +61,9 @@ const NavLink = ({ title, shortDescription, longDescription, url }) => {
   const isSelected = url === location.pathname;
 
   const cls = classNames(
-    "hover:text-white underline underline-offset-8 decoration-2",
-    { "decoration-sky-600": isSelected },
-    { "decoration-gray-700 hover:decoration-gray-500": !isSelected },
+    "hover:text-white border-b-2 py-1.5",
+    { "border-sky-600": isSelected },
+    { "border-gray-700 hover:border-gray-500": !isSelected },
   );
 
   const hasDescription = `${shortDescription}${longDescription}`.length > 0;
