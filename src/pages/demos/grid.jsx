@@ -3,6 +3,7 @@ import React from "react";
 export const defaultColDef = {
   filter: true,
   floatingFilter: true,
+  sortable: true,
   suppressMenu: true,
   flex: 1,
 };
@@ -54,6 +55,7 @@ export const columnDefs = [
   { field: "map", minWidth: 100, maxWidth: 140 },
   {
     headerName: "Actions",
+    sortable: false,
     field: "",
     minWidth: 100,
     maxWidth: 100,
