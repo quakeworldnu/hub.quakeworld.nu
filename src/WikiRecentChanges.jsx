@@ -8,7 +8,7 @@ export default function WikiRecentChanges() {
 
   return (
     <div className="app-links my-8">
-      <Heading text="RECENT WIKI CHANGES" icon="forum" />
+      <Heading text="RECENT WIKI CHANGES" icon="article" />
       {forumPosts.slice(0, limit).map((item, index) => (
         <a href={item.url} className="block" key={index}>
           {item.title}
