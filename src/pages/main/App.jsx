@@ -7,6 +7,7 @@ import Events from "@/Events";
 import { HorizontalSeparator } from "@/site/Common";
 import News from "@/News";
 import ForumPosts from "@/ForumPosts";
+import WikiRecentChanges from "@/WikiRecentChanges";
 
 export const App = () => {
   return (
@@ -30,14 +31,18 @@ export const App = () => {
           <div className="3xl:hidden">
             <ForumPosts />
           </div>
+          <div className="3xl:hidden">
+            <WikiRecentChanges />
+          </div>
         </div>
       </div>
 
       <div className="hidden 3xl:block">
         <HorizontalSeparator />
-        <div className="3xl:grid 3xl:grid-cols-5">
+        <div className="3xl:grid 3xl:grid-cols-4">
           <News />
           <ForumPosts />
+          <WikiRecentChanges />
         </div>
       </div>
 

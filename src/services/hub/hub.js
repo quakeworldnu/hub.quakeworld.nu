@@ -41,6 +41,9 @@ export const hubApi = createApi({
         return lastscores.filter((e) => e.teams.length + e.players.length > 0);
       },
     }),
+    getWikiRecentChanges: build.query({
+      query: () => "wiki_recent_changes",
+    }),
   }),
 });
 
@@ -54,4 +57,5 @@ export const {
   useGetServersQuery,
   useGetStreamsQuery,
   useGetLastscoresQuery,
+  useGetWikiRecentChangesQuery,
 } = hubApi;
