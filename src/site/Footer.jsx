@@ -19,8 +19,6 @@ export const SiteFooter = () => {
         {delimiter}
         <a href="https://tools.quake.world/servers/">Servers</a>
         {delimiter}
-        <a href="https://tools.quake.world/recent-demos/">Recent demos</a>
-        {delimiter}
         <a href="https://tools.quake.world/">Tools</a>
         {delimiter}
         <a
