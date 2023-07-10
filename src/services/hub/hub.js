@@ -33,7 +33,7 @@ export const hubApi = createApi({
       query: (address) => `servers/${address}/lastscores`,
       transformResponse: (lastscores) => {
         lastscores.reverse();
-        return lastscores;
+        return lastscores.filter((e) => e.teams.length + e.players.length > 0);
       },
     }),
   }),
