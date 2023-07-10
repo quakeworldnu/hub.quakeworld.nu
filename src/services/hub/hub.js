@@ -6,6 +6,7 @@ export const hubApi = createApi({
   reducerPath: "hub",
   baseQuery: fetchBaseQuery({ baseUrl: "https://hubapi.quakeworld.nu/v2/" }),
   endpoints: (build) => ({
+    getDemos: build.query({ query: () => "demos" }),
     getEvents: build.query({ query: () => "events" }),
     getForumPosts: build.query({ query: () => "forum_posts" }),
     getGamesInSpotlight: build.query({ query: () => "games_in_spotlight" }),
@@ -40,6 +41,7 @@ export const hubApi = createApi({
 });
 
 export const {
+  useGetDemosQuery,
   useGetEventsQuery,
   useGetForumPostsQuery,
   useGetGamesInSpotlightQuery,
