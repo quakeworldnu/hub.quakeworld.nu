@@ -2,6 +2,7 @@ import React from "react";
 import { AgGridReact } from "ag-grid-react";
 import { useGetDemosQuery } from "@/services/hub/hub";
 import { columnDefs, defaultColDef, gridOptions } from "@/pages/demos/grid";
+import "./ag_grid.scss";
 
 export const RecentDemos = () => {
   const { data = [], isLoading } = useGetDemosQuery(null, {
