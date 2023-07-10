@@ -4,8 +4,8 @@ import Streams from "@/Streams";
 export const SiteHeader = () => {
   return (
     <div className="mt-2">
-      <div className="space-y-4 lg:space-y-2 lg:flex">
-        <div className="flex items-center space-x-4">
+      <div className="lg:space-y-2 lg:flex">
+        <div className="flex items-center space-x-4 mb-2">
           <a href="/" className="min-w-[48px] lg:pt-2 lg:mr-4">
             <img
               src="/assets/img/quakeworld_hub_logo.png"
@@ -15,7 +15,7 @@ export const SiteHeader = () => {
               className="w-16 sm:w-auto"
             />
           </a>
-          <div className="lg:hidden">
+          <div className="lg:hidden pb-1">
             <SiteNavigation />
           </div>
         </div>

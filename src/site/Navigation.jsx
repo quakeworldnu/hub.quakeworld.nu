@@ -35,7 +35,7 @@ export default function SiteNavigation() {
       url: "/players/",
     },
     {
-      title: "Recent Demos",
+      title: "Demos",
       shortDescription: "",
       longDescription: "",
       url: "/demos/",
@@ -74,7 +74,7 @@ const NavLink = ({ title, shortDescription, longDescription, url }) => {
       {hasDescription && (
         <>
           {" "}
-          <span className="text-xs sm:hidden">({shortDescription})</span>{" "}
+          <span className="text-xs sm:hidden">({shortDescription})</span>
           <span className="text-xs hidden sm:inline">({longDescription})</span>
         </>
       )}
