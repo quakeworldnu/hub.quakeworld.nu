@@ -34,6 +34,12 @@ export default function SiteNavigation() {
       longDescription: `${playerCount} players, ${spectatorCount} spectators`,
       url: "/players/",
     },
+    {
+      title: "Recent Demos",
+      shortDescription: "",
+      longDescription: "",
+      url: "/demos/",
+    },
   ];
 
   return (
@@ -60,11 +66,18 @@ const NavLink = ({ title, shortDescription, longDescription, url }) => {
     { "decoration-gray-700 hover:decoration-gray-500": !isSelected },
   );
 
+  const hasDescription = `${shortDescription}${longDescription}`.length > 0;
+
   return (
     <a href={url} className={cls}>
-      <strong>{title}</strong>{" "}
-      <span className="text-xs sm:hidden">({shortDescription})</span>{" "}
-      <span className="text-xs hidden sm:inline">({longDescription})</span>
+      <strong>{title}</strong>
+      {hasDescription && (
+        <>
+          {" "}
+          <span className="text-xs sm:hidden">({shortDescription})</span>{" "}
+          <span className="text-xs hidden sm:inline">({longDescription})</span>
+        </>
+      )}
     </a>
   );
 };

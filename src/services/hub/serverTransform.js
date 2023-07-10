@@ -1,4 +1,4 @@
-export const transformServerData = (server) => {
+export const transformServer = (server) => {
   // exclude [ServeMe]
   const index = server.spectator_names.indexOf("[ServeMe]");
 

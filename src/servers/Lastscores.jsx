@@ -146,12 +146,12 @@ const DemoButtons = ({ demo, address }) => {
     {
       url: demoUrls.download,
       icon: "download.svg",
-      title: "",
+      title: "Download demo",
     },
     {
       url: demoUrls.stream,
       icon: "play_arrow.svg",
-      title: "",
+      title: "Stream demo via QTV",
     },
   ];
 
