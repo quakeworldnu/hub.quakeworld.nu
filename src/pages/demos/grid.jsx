@@ -13,6 +13,9 @@ export const columnDefs = [
     minWidth: 150,
     maxWidth: 150,
     initialSort: "desc",
+    cellRenderer: (params) => (
+      <span className="text-gray-400 text-xs">{params.value}</span>
+    ),
     valueGetter: (params) => {
       return params.data.time
         .substring(0, "yyyy-mm-dd hh:ii".length)
@@ -28,14 +31,21 @@ export const columnDefs = [
       return (
         <a
           href={`http://${params.value}/demos/`}
-          className="text-blue-500 hover:text-white"
+          className="text-xs text-blue-500 hover:text-white"
         >
           {params.value.replace(":28000", "")}
         </a>
       );
     },
   },
-  { field: "mode", minWidth: 120, maxWidth: 120 },
+  {
+    field: "mode",
+    minWidth: 120,
+    maxWidth: 120,
+    cellRenderer: (params) => {
+      return <span className="text-gray-400">{params.value}</span>;
+    },
+  },
   {
     field: "participants",
     headerName: "Players / Teams",

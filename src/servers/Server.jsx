@@ -221,7 +221,7 @@ export const ServerAddress = (props) => {
 
   return (
     <div
-      className="server-address flex items-center cursor-pointer text-white/60"
+      className="server-address flex items-center cursor-pointer text-gray-400"
       onClick={() => copyToClipboard(server.settings.hostname_parsed)}
       title="Copy IP to clipboard"
     >
