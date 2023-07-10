@@ -21,7 +21,7 @@ export const App = () => {
           <HorizontalSeparator />
         </div>
 
-        <div className="md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:block 3xl:w-96">
+        <div className="md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:block 3xl:w-80">
           <GamesInSpotlight />
           <Events />
           <div className="3xl:hidden">
