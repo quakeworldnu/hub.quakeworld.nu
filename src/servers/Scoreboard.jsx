@@ -1,14 +1,18 @@
 import React from "react";
+import classNames from "classnames";
 import { coloredQuakeName, QuakeText } from "@/QuakeText";
 import { ColoredFrags } from "./ColoredFrags";
 
 export const Scoreboard = ({ server, limit = 20 }) => {
   const serverMeta = server.meta;
-  let className = "scoreboard ";
-  className += serverMeta.showTeamColumn ? "sc-show-team" : "sc-hide-team";
 
   return (
-    <div className={className}>
+    <div
+      className={classNames("scoreboard", {
+        "sc-show-team": serverMeta.showTeamColumn,
+        "sc-hide-team": !serverMeta.showTeamColumn,
+      })}
+    >
       {serverMeta.showTeams && (
         <>
           <Teams teams={server.teams} />
