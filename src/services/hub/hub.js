@@ -20,7 +20,8 @@ export const hubApi = createApi({
       transformResponse: (server) => transformServer(server),
     }),
     getServers: build.query({
-      query: () => "servers/mvdsv",
+      query: (query = "") =>
+        query ? `servers/mvdsv?${query}` : "servers/mvdsv",
       transformResponse: (servers) => {
         servers = servers.map(transformServer);
         servers.sort(compareServers);
