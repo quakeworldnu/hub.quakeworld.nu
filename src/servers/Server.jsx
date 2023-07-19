@@ -98,7 +98,7 @@ export const ServerBody = (props) => {
               className="p-1 rounded-full bg-gray-950 opacity-60 hover:opacity-100"
             >
               <img
-                src="/assets/img/icons/launch.svg"
+                src="https://hub.quakeworld.nu/assets/img/icons/launch.svg"
                 width={24}
                 height={24}
                 alt=""
@@ -110,7 +110,7 @@ export const ServerBody = (props) => {
                 onClick={() => setView(VIEWS.Lastscores)}
               >
                 <img
-                  src="/assets/img/icons/history.svg"
+                  src="https://hub.quakeworld.nu/assets/img/icons/history.svg"
                   width={24}
                   height={24}
                   alt=""
@@ -227,7 +227,7 @@ export const ServerAddress = (props) => {
     >
       <ServerAddressTitle cc={server.geo.cc} title={server.meta.addressTitle} />
       <img
-        src="/assets/img/icons/content_paste.svg"
+        src="https://hub.quakeworld.nu/assets/img/icons/content_paste.svg"
         width="12"
         alt=""
         className="app-icon ml-1 inline"

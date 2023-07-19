@@ -59,7 +59,7 @@ export const TwitchButton = React.memo((props) => {
     >
       <span className="whitespace-nowrap space-x-1">
         <img
-          src={`/assets/img/icons/twitch_glitch_purple.svg`}
+          src={`https://hub.quakeworld.nu/assets/img/icons/twitch_glitch_purple.svg`}
           width="16"
           height="16"
           className="inline"
