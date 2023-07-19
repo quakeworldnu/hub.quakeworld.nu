@@ -1,4 +1,4 @@
-import { HorizontalSeparator } from "@/site/Common";
+import { HorizontalSeparator } from "@qwhub/site/Common";
 
 export const SiteFooter = () => {
   const delimiter = <span> • </span>;

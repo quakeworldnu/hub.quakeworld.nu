@@ -1,11 +1,11 @@
 import React, { Fragment, useState } from "react";
 import copyToClipboard from "copy-text-to-clipboard";
 import { Scoreboard } from "./Scoreboard";
-import { QuakeText } from "@/QuakeText";
-import { PrimaryButton, SecondaryButton } from "@/Buttons";
+import { QuakeText } from "@qwhub/QuakeText";
+import { PrimaryButton, SecondaryButton } from "@qwhub/Buttons";
 import ServerStreams from "./ServerStreams";
-import { Lastscores } from "@/servers/Lastscores";
-import { Mapshot } from "@/servers/Mapshot";
+import { Lastscores } from "@qwhub/servers/Lastscores";
+import { Mapshot } from "@qwhub/servers/Mapshot";
 
 const VIEWS = {
   Scoreboard: "Scoreboard",

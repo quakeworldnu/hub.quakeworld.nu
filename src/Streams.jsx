@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetStreamsQuery } from "@/services/hub/hub";
+import { useGetStreamsQuery } from "@qwhub/services/hub/hub";
 import { TwitchButton } from "./Buttons";
 
 export default function Streams() {

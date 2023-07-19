@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetEventsQuery } from "@/services/hub/hub";
+import { useGetEventsQuery } from "@qwhub/services/hub/hub";
 import _groupby from "lodash.groupby";
 import { Heading } from "./Common";
 

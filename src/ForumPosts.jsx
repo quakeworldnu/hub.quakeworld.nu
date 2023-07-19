@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetForumPostsQuery } from "@/services/hub/hub";
+import { useGetForumPostsQuery } from "@qwhub/services/hub/hub";
 import { Heading } from "./Common";
 
 export default function News() {

@@ -1,7 +1,7 @@
 import React from "react";
-import { SiteHeader } from "@/site/Header";
-import { SiteFooter } from "@/site/Footer";
-import { RecentDemos } from "@/pages/demos/RecentDemos";
+import { SiteHeader } from "@qwhub/site/Header";
+import { SiteFooter } from "@qwhub/site/Footer";
+import { RecentDemos } from "@qwhub/pages/demos/RecentDemos";
 
 export const App = () => {
   return (

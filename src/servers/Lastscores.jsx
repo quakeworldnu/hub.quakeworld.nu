@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useGetLastscoresQuery } from "@/services/hub/hub";
+import { useGetLastscoresQuery } from "@qwhub/services/hub/hub";
 import classNames from "classnames";
-import { LastscoresScoreboard } from "@/servers/LastscoresScoreboard";
-import { Mapshot } from "@/servers/Mapshot";
+import { LastscoresScoreboard } from "@qwhub/servers/LastscoresScoreboard";
+import { Mapshot } from "@qwhub/servers/Mapshot";
 
 export const Lastscores = ({ address, onClose }) => {
   const { data, isLoading, isSuccess, isError } =

@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetWikiRecentChangesQuery } from "@/services/hub/hub";
+import { useGetWikiRecentChangesQuery } from "@qwhub/services/hub/hub";
 import { Heading } from "./Common";
 
 export default function WikiRecentChanges() {

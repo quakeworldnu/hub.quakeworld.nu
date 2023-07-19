@@ -1,9 +1,9 @@
 import React from "react";
-import { useGetServersQuery } from "@/services/hub/hub";
-import { SiteHeader } from "@/site/Header";
-import { SiteFooter } from "@/site/Footer";
-import { coloredQuakeName, QuakeText } from "@/QuakeText";
-import { ServerAddress } from "@/servers/Server";
+import { useGetServersQuery } from "@qwhub/services/hub/hub";
+import { SiteHeader } from "@qwhub/site/Header";
+import { SiteFooter } from "@qwhub/site/Footer";
+import { coloredQuakeName, QuakeText } from "@qwhub/QuakeText";
+import { ServerAddress } from "@qwhub/servers/Server";
 
 export const App = () => {
   const { data: servers = [] } = useGetServersQuery(null, {

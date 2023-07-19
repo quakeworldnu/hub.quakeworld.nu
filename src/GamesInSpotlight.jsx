@@ -2,7 +2,7 @@ import React from "react";
 import {
   useGetEventsQuery,
   useGetGamesInSpotlightQuery,
-} from "@/services/hub/hub";
+} from "@qwhub/services/hub/hub";
 import { Heading } from "./Common";
 
 const LIMIT = 5;

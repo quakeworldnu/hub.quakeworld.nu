@@ -1,4 +1,4 @@
-import { Scoreboard } from "@/servers/Scoreboard";
+import { Scoreboard } from "@qwhub/servers/Scoreboard";
 
 export const LastscoresScoreboard = ({ lastscores }) => {
   const { teams = [], players = [] } = lastscores;

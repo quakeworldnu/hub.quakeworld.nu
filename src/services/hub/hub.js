@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { transformDemos } from "./demoTransform";
 import { transformServer } from "./serverTransform";
-import { compareServers } from "@/services/hub/serverSort";
+import { compareServers } from "@qwhub/services/hub/serverSort";
 
 export const hubApi = createApi({
   reducerPath: "hub",

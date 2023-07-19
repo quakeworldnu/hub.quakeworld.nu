@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import { coloredQuakeName, QuakeText } from "@/QuakeText";
+import { coloredQuakeName, QuakeText } from "@qwhub/QuakeText";
 import { ColoredFrags } from "./ColoredFrags";
 
 export const Scoreboard = ({ server, limit = 20 }) => {

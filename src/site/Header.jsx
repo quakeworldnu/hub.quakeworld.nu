@@ -1,5 +1,5 @@
-import SiteNavigation from "@/site/Navigation";
-import Streams from "@/Streams";
+import SiteNavigation from "@qwhub/site/Navigation";
+import Streams from "@qwhub/Streams";
 
 export const SiteHeader = () => {
   return (

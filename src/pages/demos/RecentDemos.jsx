@@ -1,7 +1,11 @@
 import React from "react";
 import { AgGridReact } from "ag-grid-react";
-import { useGetDemosQuery } from "@/services/hub/hub";
-import { columnDefs, defaultColDef, gridOptions } from "@/pages/demos/grid";
+import { useGetDemosQuery } from "@qwhub/services/hub/hub";
+import {
+  columnDefs,
+  defaultColDef,
+  gridOptions,
+} from "@qwhub/pages/demos/grid";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import "./ag_theme.scss";

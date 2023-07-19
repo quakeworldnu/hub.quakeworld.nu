@@ -1,6 +1,6 @@
 import React from "react";
 import { Server } from "./Server";
-import { useGetServersQuery } from "@/services/hub/hub";
+import { useGetServersQuery } from "@qwhub/services/hub/hub";
 
 export default function Servers() {
   const { data: servers = [] } = useGetServersQuery(null, {

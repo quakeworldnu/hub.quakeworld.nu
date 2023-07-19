@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetServersQuery } from "@/services/hub/hub";
+import { useGetServersQuery } from "@qwhub/services/hub/hub";
 import classNames from "classnames";
 
 export default function SiteNavigation() {

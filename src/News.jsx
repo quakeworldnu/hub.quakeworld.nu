@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetNewsQuery } from "@/services/hub/hub";
+import { useGetNewsQuery } from "@qwhub/services/hub/hub";
 import { Heading } from "./Common";
 
 export default function News() {
