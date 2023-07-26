@@ -14,6 +14,7 @@
   "devDependencies": {
     "@types/react": "^18.2.16",
     "@types/react-dom": "^18.2.7",
+    "lightningcss": "^1.21.5",
     "prettier": "^3.0.0"
   },
   "dependencies": {
