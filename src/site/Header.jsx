@@ -8,7 +8,7 @@ export const SiteHeader = () => {
         <div className="flex items-center space-x-4 mb-2">
           <a href="/" className="min-w-[48px] lg:pt-2 lg:mr-4">
             <img
-              src="https://hub.quakeworld.nu/assets/img/quakeworld_hub_logo.png"
+              src="/assets/img/quakeworld_hub_logo.png"
               width="95"
               height="50"
               alt="QuakeWorld Hub"

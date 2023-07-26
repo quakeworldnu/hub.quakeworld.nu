@@ -7,7 +7,7 @@
   "repository": "vikpe/qw-server-browser",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build --base=https://hub.quakeworld.nu/",
     "preview": "vite preview",
     "format": "yarn prettier --write src"
   },

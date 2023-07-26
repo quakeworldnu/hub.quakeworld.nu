@@ -64,7 +64,7 @@ export const TwitchButton = (props) => {
       <span className="whitespace-nowrap space-x-1">
         {!isTwitchExtensionEmbedded() && (
           <img
-            src={`https://hub.quakeworld.nu/assets/img/icons/twitch_glitch_purple.svg`}
+            src={`/assets/img/icons/twitch_glitch_purple.svg`}
             width="16"
             height="16"
             className="inline"

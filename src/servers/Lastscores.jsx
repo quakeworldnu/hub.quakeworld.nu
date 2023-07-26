@@ -17,7 +17,7 @@ export const Lastscores = ({ address, onClose }) => {
           onClick={onClose}
         >
           <img
-            src="https://hub.quakeworld.nu/assets/img/icons/chevron_forward.svg"
+            src="/assets/img/icons/chevron_forward.svg"
             width={12}
             height={12}
             className="mr-1 rotate-180 inline"
@@ -165,11 +165,7 @@ const DemoButtons = ({ demo, address }) => {
           target="_top"
           className="p-1 rounded-full bg-gray-950 opacity-60 hover:opacity-100 "
         >
-          <img
-            src={`https://hub.quakeworld.nu/assets/img/icons/${link.icon}`}
-            width={20}
-            height={20}
-          />
+          <img src={`/assets/img/icons/${link.icon}`} width={20} height={20} />
         </a>
       ))}
     </div>

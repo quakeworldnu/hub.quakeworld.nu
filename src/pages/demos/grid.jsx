@@ -77,11 +77,7 @@ export const columnDefs = [
             className={cls}
             title="Download demo"
           >
-            <img
-              src="https://hub.quakeworld.nu/assets/img/icons/download.svg"
-              width={16}
-              height={16}
-            />
+            <img src="/assets/img/icons/download.svg" width={16} height={16} />
           </a>
           <a
             href={`qw://qtvplay ${params.value.qtvplay_url}`}
@@ -89,7 +85,7 @@ export const columnDefs = [
             title="Stream demo via QTV"
           >
             <img
-              src="https://hub.quakeworld.nu/assets/img/icons/play_arrow.svg"
+              src="/assets/img/icons/play_arrow.svg"
               width={16}
               height={16}
             />
