@@ -11,7 +11,7 @@ export const Lastscores = ({ address, onClose }) => {
 
   return (
     <div className="h-full text-xs">
-      <div className="bg-black/50 shadow flex items-center">
+      <div className="bg-gray-900 shadow flex items-center">
         <div
           className="flex grow p-3 cursor-pointer hover:bg-black/70 hover:text-sky-300"
           onClick={onClose}
@@ -43,10 +43,10 @@ export const Lastscores = ({ address, onClose }) => {
         {data && data.length > 0 && (
           <div className="max-h-[320px] overflow-y-auto">
             <table className="w-full text-left">
-              <thead className="bg-black/20 text-white">
-                <tr className="border-b border-black/20">
+              <thead className="bg-black/20 text-gray-300">
+                <tr className="border-b border-gray-800">
                   <th className="p-1">timestamp</th>
-                  <th className="p-1">mode</th>
+                  <th className="py-1 pr-3 text-right">mode</th>
                   <th className="p-1">participants</th>
                   <th className="p-1">map</th>
                   <th className="p-1 text-center" width={1}>
@@ -104,8 +104,8 @@ const LastscoresRow = ({ lastscores, showAllScores = false, address = "" }) => {
         className="odd:bg-black/10 hover:bg-black/20 cursor-pointer"
         onClick={toggleScoreboard}
       >
-        <td className="p-1">{timestamp}</td>
-        <td className="p-1">{mode}</td>
+        <td className="p-1 text-gray-300">{timestamp}</td>
+        <td className="py-1 pr-3 text-right text-gray-300">{mode}</td>
         <td className="p-1">
           {mode === "ffa" ? `${players.length} players` : participants}
         </td>
@@ -120,7 +120,7 @@ const LastscoresRow = ({ lastscores, showAllScores = false, address = "" }) => {
         <tr>
           <td colSpan={5}>
             <Mapshot map={map}>
-              <div className="border-y border-gray-900 py-6">
+              <div className="border-y border-gray-800 py-6">
                 <DemoButtons address={address} demo={demo} />
 
                 <div className="flex justify-center bg-gray-700/20 -mt-4">

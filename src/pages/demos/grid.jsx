@@ -44,7 +44,9 @@ export const columnDefs = [
     minWidth: 120,
     maxWidth: 120,
     cellRenderer: (params) => {
-      return <span className="text-gray-400">{params.value}</span>;
+      return (
+        <div className="text-gray-400 text-right pr-2">{params.value}</div>
+      );
     },
   },
   {
