@@ -1,4 +1,5 @@
 import React from "react";
+import { isTwitchExtensionEmbedded } from "./context";
 
 const themeBaseDefault = "text-white rounded shadow-md border bg-gradient-to-b";
 
@@ -24,6 +25,7 @@ export const PrimaryButton = React.memo((props) => {
   return (
     <a
       href={href}
+      target="_top"
       className={`${themePrimary.default} ${themePrimary.hover} ${className}`}
     >
       {children}
@@ -36,6 +38,7 @@ export const SecondaryButton = React.memo((props) => {
   return (
     <a
       href={href}
+      target="_top"
       className={`flex items-center justify-center p-1 ${themeSecondary.default} ${themeSecondary.hover} ${className}`}
     >
       {children}
@@ -47,9 +50,7 @@ export const SecondaryButton = React.memo((props) => {
   );
 });
 
-const IS_TWITCH_EXTENSION_EMBED = document.referrer.includes("ext-twitch.tv");
-
-export const TwitchButton = React.memo((props) => {
+export const TwitchButton = (props) => {
   const { channel = "", title = "", viewers = 0, className = "" } = props;
 
   return (
@@ -57,10 +58,11 @@ export const TwitchButton = React.memo((props) => {
       href={`https://www.twitch.tv/${channel}`}
       title={title}
       rel="nofollow"
+      target="_top"
       className={`items-center justify-center p-1 ${themeTwitch.default} ${themeTwitch.hover} ${className}`}
     >
       <span className="whitespace-nowrap space-x-1">
-        {!IS_TWITCH_EXTENSION_EMBED && (
+        {!isTwitchExtensionEmbedded() && (
           <img
             src={`https://hub.quakeworld.nu/assets/img/icons/twitch_glitch_purple.svg`}
             width="16"
@@ -81,4 +83,4 @@ export const TwitchButton = React.memo((props) => {
       )}
     </a>
   );
-});
+};

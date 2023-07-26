@@ -162,6 +162,7 @@ const DemoButtons = ({ demo, address }) => {
           key={link.title}
           href={link.url}
           title={link.title}
+          target="_top"
           className="p-1 rounded-full bg-gray-950 opacity-60 hover:opacity-100 "
         >
           <img
