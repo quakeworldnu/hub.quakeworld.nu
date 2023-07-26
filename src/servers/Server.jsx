@@ -93,9 +93,10 @@ export const ServerBody = (props) => {
         <div className="flex flex-col h-full group py-4 min-h-[96px] sm:min-h-[200px] bg-gray-700/20">
           <div className="flex transition-opacity opacity-0 group-hover:opacity-100 ml-4 space-x-2 absolute">
             <a
-              href={`/scoreboard/?address=${server.address}`}
+              href={`https://hub.quakeworld.nu/scoreboard/?address=${server.address}`}
               title="Show scoreboard in separate window"
               className="p-1 rounded-full bg-gray-950 opacity-60 hover:opacity-100"
+              target="_top"
             >
               <img
                 src="https://hub.quakeworld.nu/assets/img/icons/launch.svg"
@@ -121,7 +122,8 @@ export const ServerBody = (props) => {
           </div>
           <div className="flex flex-col justify-center items-center h-full px-2">
             {serverMeta.matchtag && (
-              <div className="py-1.5 mb-3 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r from-red-600/0 via-red-600 app-text-shadow">
+              <div
+                className="py-1.5 mb-3 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r from-red-600/0 via-red-600 app-text-shadow">
                 {serverMeta.matchtag}
               </div>
             )}
