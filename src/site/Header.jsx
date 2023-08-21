@@ -27,6 +27,8 @@ export const SiteHeader = () => (
       </div>
     </div>
 
-    <Settings />
+    <div className="md:max-w-xl">
+      <Settings />
+    </div>
   </div>
 );

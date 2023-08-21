@@ -8,6 +8,7 @@ import {
   setShowSettings,
   toggleShowSettings,
 } from "@qwhub/settingsSlice";
+import React from "react";
 
 export const Settings = () => {
   const serverFilters = useSelector((state) => state.settings.serverFilters);
@@ -46,20 +47,23 @@ const SettingsForm = () => {
     <Form onChange={submitForm}>
       <div
         className={classNames(
-          "my-4 p-4 pb-6 bg-slate-800 border border-slate-600 rounded-lg",
+          "my-4 p-3 pb-6 bg-slate-800 border border-slate-600 rounded-lg",
         )}
       >
-        {JSON.stringify(values, null, 2)}
-
         <div className="space-y-4" id="SettingsForm">
-          <div className="flex justify-between items-center border-b border-b-slate-600 pb-3">
+          <div className="flex justify-between items-center border-b border-b-slate-600 pb-2">
             <div className="font-bold">Server filters</div>
             <button
               type="button"
               onClick={onClose}
-              className="px-2.5 bg-white/10 rounded-full"
+              className="p-1.5 bg-slate-700 hover:bg-slate-600 rounded-full"
             >
-              x
+              <img
+                src="https://hub.quakeworld.nu/assets/img/icons/close.svg"
+                width={16}
+                height={16}
+                className={"block"}
+              />
             </button>
           </div>
 
@@ -129,9 +133,7 @@ export const SettingsToggleButton = () => {
         src="/assets/img/icons/settings.svg"
         width={16}
         height={16}
-        className="inline"
       />
-      <span className="hidden ml-1 sm:inline">Settings</span>
     </button>
   );
 };
