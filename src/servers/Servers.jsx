@@ -34,10 +34,6 @@ function filterServers(servers, filters) {
     filterOperations.push((s) => !s.players.every((p) => p.is_bot));
   }
 
-  if (filterOperations.length === 0) {
-    return [];
-  }
-
   filterOperations.forEach((filterOp) => {
     servers = servers.filter(filterOp);
   });
