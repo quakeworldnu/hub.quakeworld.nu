@@ -122,8 +122,7 @@ export const ServerBody = (props) => {
           </div>
           <div className="flex flex-col justify-center items-center h-full px-2">
             {serverMeta.matchtag && (
-              <div
-                className="py-1.5 mb-3 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r from-red-600/0 via-red-600 app-text-shadow">
+              <div className="py-1.5 mb-3 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r from-red-600/0 via-red-600 app-text-shadow">
                 {serverMeta.matchtag}
               </div>
             )}
