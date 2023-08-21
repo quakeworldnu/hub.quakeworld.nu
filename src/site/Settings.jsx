@@ -1,5 +1,5 @@
-import { Field, Form, Formik, useFormikContext } from "formik";
 import { useDispatch, useSelector } from "react-redux";
+import { Field, Form, Formik, useFormikContext } from "formik";
 import classNames from "classnames";
 import {
   gameModes,
@@ -46,7 +46,7 @@ const SettingsForm = () => {
     <Form onChange={submitForm}>
       <div
         className={classNames(
-          "mt-4 lg:mt-6 p-4 pb-6 bg-slate-800 border border-slate-600 rounded-lg",
+          "my-4 p-4 pb-6 bg-slate-800 border border-slate-600 rounded-lg",
         )}
       >
         {JSON.stringify(values, null, 2)}
@@ -121,7 +121,7 @@ export const SettingsToggleButton = () => {
   return (
     <button
       onClick={onToggleSettings}
-      className="flex items-center p-2 bg-white/10 hover:bg-white/20 rounded text-gray-300 text-xs"
+      className="inline-block px-2 py-1.5 ml-auto bg-slate-800 hover:bg-slate-700 rounded text-gray-300 text-xs"
       title="Settings"
     >
       <img
@@ -129,9 +129,9 @@ export const SettingsToggleButton = () => {
         src="/assets/img/icons/settings.svg"
         width={16}
         height={16}
-        className="block mr-1"
+        className="inline"
       />
-      <span className="hidden sm:inline">Settings</span>
+      <span className="hidden ml-1 sm:inline">Settings</span>
     </button>
   );
 };

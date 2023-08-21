@@ -9,14 +9,11 @@ export default function Servers() {
   });
 
   return (
-    <div>
-      <div>{JSON.stringify(serverFilters, null, 2)}</div>
-      <div className="my-4 lg:my-6">
-        <div className="grid grid-cols-servers gap-4 md:gap-6 lg:gap-8">
-          {servers.map((server) => (
-            <Server key={server.address} server={server} />
-          ))}
-        </div>
+    <div className="my-4">
+      <div className="grid grid-cols-servers gap-4 md:gap-6 lg:gap-8">
+        {servers.map((server) => (
+          <Server key={server.address} server={server} />
+        ))}
       </div>
     </div>
   );
