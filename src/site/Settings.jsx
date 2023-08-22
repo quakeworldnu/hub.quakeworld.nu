@@ -107,7 +107,7 @@ const SettingsForm = () => {
 export const Checkbox = ({ name, label, value, isChecked }) => {
   return (
     <div>
-      <label className="inline-block cursor-pointer w-auto p-0.5 text-gray-300 hover:text-white">
+      <label className="inline-block cursor-pointer w-auto p-0.5 text-gray-300 hover:text-white select-none">
         <Field type="checkbox" name={name} value={value} checked={isChecked} />
         <span className="ml-1.5">{label}</span>
       </label>

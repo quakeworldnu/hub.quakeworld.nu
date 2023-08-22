@@ -5,10 +5,10 @@ export const gameModes = [
   "1on1",
   "2on2",
   "4on4",
-  "FFA",
-  "Racing",
-  "Fortress",
-  "Other",
+  "ffa",
+  "racing",
+  "fortress",
+  "other",
 ];
 
 export function getDefaultServerFilters() {

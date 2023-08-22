@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { Server } from "./Server";
 import { useGetServersQuery } from "@qwhub/services/hub/hub";
+import { gameModes } from "@qwhub/settingsSlice";
 
 export default function Servers() {
   const serverFilters = useSelector((state) => state.settings.serverFilters);
@@ -23,10 +24,16 @@ export default function Servers() {
 
 function filterServers(servers, filters) {
   const filterOperations = [];
+  const gameModesExcludingOthers = gameModes.slice(0, -1);
 
-  ["1on1", "2on2", "4on4", "FFA", "Racing", "Fortress"].forEach((mode) => {
-    if (!filters.modes.includes(mode)) {
-      filterOperations.push((s) => s.mode.toLowerCase() !== mode.toLowerCase());
+  gameModes.forEach((mode) => {
+    const includeMode = filters.modes.includes(mode);
+    if (!includeMode) {
+      if ("other" === mode) {
+        filterOperations.push((s) => gameModesExcludingOthers.includes(s.mode));
+      } else {
+        filterOperations.push((s) => s.mode !== mode);
+      }
     }
   });
 
