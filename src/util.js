@@ -23,3 +23,7 @@ export function toId(str) {
 export function isDeepEqual(a, b) {
   return JSON.stringify(a) === JSON.stringify(b);
 }
+
+export function isTwitchExtensionEmbedded() {
+  return document.referrer.includes("ext-twitch.tv");
+}
