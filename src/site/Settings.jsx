@@ -10,6 +10,7 @@ import {
 } from "@qwhub/serverFilters";
 
 import classNames from "classnames";
+import { selectServerFilters } from "@qwhub/selectors";
 
 export const SettingsDrawer = () => {
   const showSettings = useSelector((state) => state.settings.ui.showSettings);
@@ -27,7 +28,8 @@ export const SettingsDrawer = () => {
 };
 
 export const Settings = () => {
-  const serverFilters = useSelector((state) => state.settings.serverFilters);
+  const serverFilters =
+    useSelector(selectServerFilters) || getDefaultServerFilters();
   const showSettings = useSelector((state) => state.settings.ui.showSettings);
   const dispatch = useDispatch();
 
@@ -145,7 +147,7 @@ const Checkbox = ({ name, label, value, isChecked }) => {
 };
 export const SettingsToggleButton = () => {
   const dispatch = useDispatch();
-  const filters = useSelector((state) => state.settings.serverFilters);
+  const filters = useSelector(selectServerFilters);
   const hasModifiedFilters = !equalsDefaultFilters(filters);
 
   function showSettings(e) {

@@ -1,15 +1,14 @@
 import React from "react";
-import { useGetServersQuery } from "@qwhub/services/hub/hub";
 import { SiteHeader } from "@qwhub/site/Header";
 import { SiteFooter } from "@qwhub/site/Footer";
 import { coloredQuakeName, QuakeText } from "@qwhub/QuakeText";
 import { ServerAddress } from "@qwhub/servers/Server";
+import { useSelector } from "react-redux";
+import { selectFilteredServers } from "@qwhub/selectors";
+import { ServerPoller } from "@qwhub/servers/Servers";
 
 export const App = () => {
-  const { data: servers = [] } = useGetServersQuery(null, {
-    pollingInterval: 10000,
-  });
-
+  const servers = useSelector(selectFilteredServers);
   const clients = [];
   const serversObj = [];
 
@@ -71,6 +70,7 @@ export const App = () => {
       </div>
 
       <SiteFooter />
+      <ServerPoller />
     </>
   );
 };

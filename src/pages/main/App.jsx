@@ -1,7 +1,7 @@
 import React from "react";
 import { SiteFooter } from "@qwhub/site/Footer";
 import { SiteHeader } from "@qwhub/site/Header";
-import Servers from "@qwhub/servers/Servers";
+import Servers, { ServerPoller } from "@qwhub/servers/Servers";
 import GamesInSpotlight from "@qwhub/GamesInSpotlight";
 import Events from "@qwhub/Events";
 import { HorizontalSeparator } from "@qwhub/site/Common";
@@ -47,6 +47,7 @@ export const App = () => {
       </div>
 
       <SiteFooter />
+      <ServerPoller />
     </>
   );
 };

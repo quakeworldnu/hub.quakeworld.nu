@@ -2,6 +2,7 @@ import React from "react";
 import { SiteHeader } from "@qwhub/site/Header";
 import { SiteFooter } from "@qwhub/site/Footer";
 import { RecentDemos } from "@qwhub/pages/demos/RecentDemos";
+import { ServerPoller } from "@qwhub/servers/Servers";
 
 export const App = () => {
   return (
@@ -13,6 +14,7 @@ export const App = () => {
       </div>
 
       <SiteFooter />
+      <ServerPoller />
     </div>
   );
 };

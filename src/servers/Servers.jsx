@@ -1,15 +1,10 @@
 import { useSelector } from "react-redux";
 import { Server } from "./Server";
 import { useGetServersQuery } from "@qwhub/services/hub/hub";
-import { filterServers } from "@qwhub/serverFilters";
+import { selectFilteredServers } from "@qwhub/selectors";
 
 export default function Servers() {
-  const serverFilters = useSelector((state) => state.settings.serverFilters);
-  let { data: servers = [] } = useGetServersQuery(null, {
-    pollingInterval: 5000,
-  });
-
-  servers = filterServers(servers, serverFilters);
+  const servers = useSelector(selectFilteredServers);
 
   return (
     <div className="my-4 mb-6">
@@ -20,4 +15,10 @@ export default function Servers() {
       </div>
     </div>
   );
+}
+
+export function ServerPoller({ pollingInterval = 5000 }) {
+  useGetServersQuery(null, {
+    pollingInterval,
+  });
 }

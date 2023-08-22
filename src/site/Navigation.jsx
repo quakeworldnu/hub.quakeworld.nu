@@ -1,11 +1,10 @@
 import classNames from "classnames";
 import { SettingsToggleButton } from "@qwhub/site/Settings";
-import { useGetServersQuery } from "@qwhub/services/hub/hub";
+import { useSelector } from "react-redux";
+import { selectFilteredServers } from "@qwhub/selectors";
 
 export default function SiteNavigation() {
-  const { data: servers = [] } = useGetServersQuery(null, {
-    pollingInterval: 5000,
-  });
+  const servers = useSelector(selectFilteredServers);
 
   const serverCount = servers.length;
   let playerCount = 0;
