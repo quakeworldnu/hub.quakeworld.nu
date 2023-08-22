@@ -3,6 +3,11 @@
 @import "./quake_colors";
 @import "./server";
 @import "./tailwind";
+@import "react-modern-drawer/dist/index.css";
+
+.EZDrawer .EZDrawer__container {
+  @apply bg-slate-900 text-gray-300 h-full p-3;
+}
 
 .debug {
   border: 1px solid red;
@@ -30,11 +35,10 @@
 }
 
 .app-text-outline {
-  text-shadow:
-    1px -1px 0 black,
-    -1px -1px 0 black,
-    1px 1px 0 black,
-    -1px 1px 0 black;
+  text-shadow: 1px -1px 0 black,
+  -1px -1px 0 black,
+  1px 1px 0 black,
+  -1px 1px 0 black;
 }
 
 .app-text-shadow {

@@ -64,7 +64,7 @@ const NavLink = ({ title, shortDescription, longDescription, url }) => {
   const isSelected = url === location.pathname;
 
   const cls = classNames(
-    "hover:text-white border-b-2 py-1 mr-2 sm:mr-4",
+    "hover:text-white border-b-2 py-1 mr-2.5 sm:mr-4",
     { "border-sky-600": isSelected },
     { "border-gray-700 hover:border-gray-500": !isSelected },
   );

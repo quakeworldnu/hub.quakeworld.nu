@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Field, Form, Formik, useFormikContext } from "formik";
-import classNames from "classnames";
+import EZDrawer from "react-modern-drawer";
 import {
   gameModes,
   getDefaultServerFilters,
@@ -8,7 +8,21 @@ import {
   setShowSettings,
   toggleShowSettings,
 } from "@qwhub/settingsSlice";
-import React from "react";
+
+export const SettingsDrawer = () => {
+  const showSettings = useSelector((state) => state.settings.ui.showSettings);
+  const dispatch = useDispatch();
+
+  function onClose() {
+    dispatch(setShowSettings(false));
+  }
+
+  return (
+    <EZDrawer open={showSettings} onClose={onClose} direction="left">
+      <Settings />
+    </EZDrawer>
+  );
+};
 
 export const Settings = () => {
   const serverFilters = useSelector((state) => state.settings.serverFilters);
@@ -45,13 +59,9 @@ const SettingsForm = () => {
 
   return (
     <Form onChange={submitForm}>
-      <div
-        className={classNames(
-          "my-4 p-3 pb-6 bg-slate-800 border border-slate-600 rounded-lg",
-        )}
-      >
+      <div>
         <div className="space-y-4" id="SettingsForm">
-          <div className="flex justify-between items-center border-b border-b-slate-600 pb-2">
+          <div className="flex justify-between items-center border-b border-b-slate-700 pb-2">
             <div className="font-bold">Server filters</div>
             <button
               type="button"
@@ -89,10 +99,10 @@ const SettingsForm = () => {
             })}
           </div>
 
-          <div className="text-sm pt-3">
+          <div className="text-sm pt-1">
             <button
               type="button"
-              className="bg-white/10 rounded p-2"
+              className="bg-slate-700 hover:bg-slate-600 rounded p-2"
               onClick={onReset}
             >
               Reset
