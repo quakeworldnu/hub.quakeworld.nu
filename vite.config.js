@@ -23,4 +23,7 @@ export default defineConfig({
       "@qwhub": resolve(__dirname, "./src"),
     },
   },
+  test: {
+    environment: "jsdom",
+  },
 });

@@ -37,6 +37,10 @@ export function getInitialServerFilters() {
 }
 
 export function filterServers(servers, filters) {
+  if (0 === servers.length) {
+    return servers;
+  }
+
   const filterOperations = [];
 
   // misc
@@ -47,24 +51,30 @@ export function filterServers(servers, filters) {
   // modes
   const gameModesExcludingOthers = modes.slice(0, -1);
 
-  modes.forEach((mode) => {
-    const includeMode = filters.modes.includes(mode);
-    if (!includeMode) {
-      if ("other" === mode) {
-        filterOperations.push((s) => gameModesExcludingOthers.includes(s.mode));
-      } else {
-        filterOperations.push((s) => s.mode !== mode);
+  if (filters.modes.length !== modes.length) {
+    modes.forEach((mode) => {
+      const includeMode = filters.modes.includes(mode);
+      if (!includeMode) {
+        if ("other" === mode) {
+          filterOperations.push((s) =>
+            gameModesExcludingOthers.includes(s.mode),
+          );
+        } else {
+          filterOperations.push((s) => s.mode !== mode);
+        }
       }
-    }
-  });
+    });
+  }
 
   // regions
-  regions.forEach((region) => {
-    const includeRegion = filters.regions.includes(region);
-    if (!includeRegion) {
-      filterOperations.push((s) => s.geo.region !== region);
-    }
-  });
+  if (filters.regions.length !== regions.length) {
+    regions.forEach((region) => {
+      const includeRegion = filters.regions.includes(region);
+      if (!includeRegion) {
+        filterOperations.push((s) => s.geo.region !== region);
+      }
+    });
+  }
 
   // apply filters
   filterOperations.forEach((filterOp) => {
