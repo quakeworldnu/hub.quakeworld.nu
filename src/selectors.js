@@ -21,7 +21,6 @@ export const selectFilteredClients = createSelector(
         name,
         name_color,
         status,
-        id: [address, status, name, name_color].join("-"),
         address,
       });
     }
