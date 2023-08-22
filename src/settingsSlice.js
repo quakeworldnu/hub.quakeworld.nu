@@ -6,7 +6,7 @@ export const gameModes = [
   "2on2",
   "4on4",
   "ffa",
-  "racing",
+  "race",
   "fortress",
   "other",
 ];
