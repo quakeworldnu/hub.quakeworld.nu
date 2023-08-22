@@ -22,7 +22,7 @@ export const App = () => {
           <HorizontalSeparator />
         </div>
 
-        <div className="md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:block 3xl:w-80">
+        <div className="md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:block 3xl:w-80 gap-x-4">
           <GamesInSpotlight />
           <Events />
           <div className="3xl:hidden">
@@ -39,7 +39,7 @@ export const App = () => {
 
       <div className="hidden 3xl:block">
         <HorizontalSeparator />
-        <div className="3xl:grid 3xl:grid-cols-4">
+        <div className="3xl:grid 3xl:grid-cols-4 gap-x-4">
           <News />
           <ForumPosts />
           <WikiRecentChanges />
