@@ -4,70 +4,15 @@ import { SiteFooter } from "@qwhub/site/Footer";
 import { coloredQuakeName, QuakeText } from "@qwhub/QuakeText";
 import { ServerAddress } from "@qwhub/servers/Server";
 import { useSelector } from "react-redux";
-import { selectFilteredServers } from "@qwhub/selectors";
+import { selectFilteredClients, selectFilteredServers } from "@qwhub/selectors";
 import { ServerPoller } from "@qwhub/servers/Servers";
 
 export const App = () => {
-  const servers = useSelector(selectFilteredServers);
-  const clients = [];
-  const serversObj = [];
-
-  function addClient(name, name_color = "", status, address) {
-    clients.push({
-      name: name,
-      name_color: name_color,
-      status: status,
-      id: [address, status, name, name_color].join("-"),
-      address,
-    });
-  }
-
-  for (let i = 0; i < servers.length; i++) {
-    const server = servers[i];
-    serversObj[server.address] = server;
-    const address = server.address;
-
-    server.players.forEach((client) => {
-      if (!client.is_bot) {
-        addClient(client.name, client.name_color, "Playing", address);
-      }
-    });
-
-    server.spectator_names.forEach((clientName) => {
-      addClient(clientName, "", "Spectating", address);
-    });
-
-    server.qtv_stream.spectator_names.forEach((clientName) => {
-      addClient(clientName, "", "Spectating (QTV)", address);
-    });
-  }
-
-  clients.sort((a, b) => {
-    return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
-  });
-
   return (
     <>
       <SiteHeader />
 
-      <div className="my-6">
-        <table cellPadding="10" className="text-left w-full lg:w-auto">
-          <thead className="text-gray-400 text-sm">
-            <tr>
-              <th className="w-48">Name</th>
-              <th className="w-28 hidden md:table-cell">Status</th>
-              <th className="min-w-[160px]">Server</th>
-              <th className="min-w-[160px] hidden sm:table-cell"></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {clients.map((c) => (
-              <ClientRow key={c.id} client={c} server={serversObj[c.address]} />
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <PlayerTable />
 
       <SiteFooter />
       <ServerPoller />
@@ -76,6 +21,37 @@ export const App = () => {
 };
 
 export default App;
+
+const PlayerTable = () => {
+  const clients = useSelector(selectFilteredClients);
+  const servers = useSelector(selectFilteredServers);
+  const serversObj = [];
+
+  for (let i = 0; i < servers.length; i++) {
+    serversObj[servers[i].address] = servers[i];
+  }
+
+  return (
+    <div className="my-6">
+      <table cellPadding="10" className="text-left w-full lg:w-auto">
+        <thead className="text-gray-400 text-sm">
+          <tr>
+            <th className="w-48">Name</th>
+            <th className="w-28 hidden md:table-cell">Status</th>
+            <th className="min-w-[160px]">Server</th>
+            <th className="min-w-[160px] hidden sm:table-cell"></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {clients.map((client) => (
+            <ClientRow client={client} server={serversObj[client.address]} />
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
 const ClientRow = (props) => {
   const { client, server } = props;
