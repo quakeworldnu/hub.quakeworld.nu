@@ -16,14 +16,6 @@ export function slugify(str) {
     .replace(/^-+|-+$/g, "");
 }
 
-export function toId(str) {
-  return slugify(str).replace(/-/g, "_");
-}
-
-export function isDeepEqual(a, b) {
-  return JSON.stringify(a) === JSON.stringify(b);
-}
-
 export function isTwitchExtensionEmbedded() {
   return document.referrer.includes("ext-twitch.tv");
 }
