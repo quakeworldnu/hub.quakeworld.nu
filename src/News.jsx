@@ -10,10 +10,13 @@ export default function News() {
     <div className="app-links my-8">
       <Heading text="NEWS" icon="article" />
       {news.slice(0, limit).map((item, index) => (
-        <a href={item.url} className="block" key={index}>
-          {item.title}
-          <span>({item.date})</span>
-        </a>
+        <>
+          <a href={item.url} className="inline-block" key={index}>
+            {item.title}
+            <span>({item.date})</span>
+          </a>
+          <br />
+        </>
       ))}
     </div>
   );

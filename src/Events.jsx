@@ -18,16 +18,23 @@ export default function Events() {
           {Object.values(eventsByStatus[k])
             .slice(0, 5)
             .map((e, index) => (
-              <a href={e.wiki_url} className="block ml-1.5" key={index}>
-                <img
-                  src={e.logo_url}
-                  width={18}
-                  height={18}
-                  className="inline mr-1"
-                />{" "}
-                {e.title}
-                <span>({e.date})</span>
-              </a>
+              <>
+                <a
+                  href={e.wiki_url}
+                  className="inline-block ml-1.5"
+                  key={index}
+                >
+                  <img
+                    src={e.logo_url}
+                    width={18}
+                    height={18}
+                    className="inline mr-1"
+                  />{" "}
+                  {e.title}
+                  <span>({e.date})</span>
+                </a>
+                <br />
+              </>
             ))}
         </div>
       ))}
