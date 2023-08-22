@@ -3,6 +3,11 @@
 @import "./quake_colors";
 @import "./server";
 @import "./tailwind";
+@import "react-modern-drawer/dist/index.css";
+
+.EZDrawer .EZDrawer__container {
+  @apply bg-slate-900 text-gray-300 h-full p-3;
+}
 
 .debug {
   border: 1px solid red;

@@ -1,4 +1,4 @@
-import React from "react";
+import { memo } from "react";
 import classNames from "classnames";
 import { coloredQuakeName, QuakeText } from "@qwhub/QuakeText";
 import { ColoredFrags } from "./ColoredFrags";
@@ -39,7 +39,7 @@ export const Teams = ({ teams = [] }) => {
   );
 };
 
-const TeamRow = React.memo((props) => {
+const TeamRow = memo((props) => {
   const { name, name_color, frags, colors, ping } = props;
 
   return (
@@ -52,7 +52,7 @@ const TeamRow = React.memo((props) => {
   );
 });
 
-const TeamName = React.memo((props) => {
+const TeamName = memo((props) => {
   const { name, name_color } = props;
   const maxLen = 4;
 
@@ -134,7 +134,7 @@ const PlayerRow = (props) => {
   );
 };
 
-const Ping = React.memo((props) => {
+const Ping = memo((props) => {
   const { value } = props;
 
   return <span className="text-right text-xs opacity-50">{value}</span>;

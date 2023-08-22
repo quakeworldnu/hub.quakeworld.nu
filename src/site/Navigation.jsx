@@ -1,11 +1,10 @@
-import React from "react";
-import { useGetServersQuery } from "@qwhub/services/hub/hub";
 import classNames from "classnames";
+import { SettingsToggleButton } from "@qwhub/site/Settings";
+import { useSelector } from "react-redux";
+import { selectFilteredServers } from "@qwhub/selectors";
 
 export default function SiteNavigation() {
-  const { data: servers = [] } = useGetServersQuery(null, {
-    pollingInterval: 5000,
-  });
+  const servers = useSelector(selectFilteredServers);
 
   const serverCount = servers.length;
   let playerCount = 0;
@@ -43,7 +42,7 @@ export default function SiteNavigation() {
   ];
 
   return (
-    <div className="text-xs sm:text-sm text-gray-400 space-x-4">
+    <div className="flex items-center text-xs sm:text-sm text-gray-400">
       {pageLinks.map((p) => (
         <NavLink
           key={p.url}
@@ -53,6 +52,9 @@ export default function SiteNavigation() {
           url={p.url}
         />
       ))}
+      <span className="ml-auto sm:ml-4">
+        <SettingsToggleButton />
+      </span>
     </div>
   );
 }
@@ -61,7 +63,7 @@ const NavLink = ({ title, shortDescription, longDescription, url }) => {
   const isSelected = url === location.pathname;
 
   const cls = classNames(
-    "hover:text-white border-b-2 py-1.5",
+    "hover:text-white border-b-2 py-1 mr-2.5 sm:mr-4",
     { "border-sky-600": isSelected },
     { "border-gray-700 hover:border-gray-500": !isSelected },
   );

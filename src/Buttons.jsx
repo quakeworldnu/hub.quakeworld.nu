@@ -1,5 +1,6 @@
 import React from "react";
-import { isTwitchExtensionEmbedded } from "./context";
+
+import { isTwitchExtensionEmbedded } from "@qwhub/util";
 
 const themeBaseDefault = "text-white rounded shadow-md border bg-gradient-to-b";
 

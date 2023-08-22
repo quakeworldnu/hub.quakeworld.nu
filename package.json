@@ -9,31 +9,37 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "format": "yarn prettier --write src"
+    "format": "yarn prettier --write src",
+    "test": "vitest --coverage",
+    "test:watch": "vitest --watch --coverage"
   },
   "devDependencies": {
-    "@types/react": "^18.2.16",
+    "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
-    "lightningcss": "^1.21.5",
-    "prettier": "^3.0.0"
+    "@vitest/coverage-v8": "^0.34.2",
+    "jsdom": "^22.1.0",
+    "prettier": "^3.0.2",
+    "vitest": "^0.34.2"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
-    "@vitejs/plugin-react": "^4.0.3",
-    "ag-grid-community": "^30.0.5",
-    "ag-grid-react": "^30.0.5",
-    "autoprefixer": "^10.4.14",
+    "@vitejs/plugin-react": "^4.0.4",
+    "ag-grid-community": "^30.0.6",
+    "ag-grid-react": "^30.0.6",
+    "autoprefixer": "^10.4.15",
     "classnames": "^2.3.2",
     "copy-text-to-clipboard": "^3.2.0",
-    "firebase-tools": "^12.4.6",
+    "firebase-tools": "^12.4.8",
+    "formik": "^2.4.3",
     "lodash.groupby": "^4.6.0",
-    "postcss": "^8.4.27",
+    "postcss": "^8.4.28",
     "query-string": "^8.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-redux": "^8.1.1",
-    "sass": "^1.64.1",
+    "react-modern-drawer": "^1.2.2",
+    "react-redux": "^8.1.2",
+    "sass": "^1.66.1",
     "tailwindcss": "^3.3.3",
-    "vite": "^4.4.7"
+    "vite": "^4.4.9"
   }
 }

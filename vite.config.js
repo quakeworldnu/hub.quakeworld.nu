@@ -1,27 +1,29 @@
-import { resolve } from 'path';
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { resolve } from "path";
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
-    cssMinify: 'lightningcss',
     rollupOptions: {
       input: {
-        main: resolve(__dirname, 'index.html'),
-        demos: resolve(__dirname, 'demos/index.html'),
-        players: resolve(__dirname, 'players/index.html'),
-        scoreboard: resolve(__dirname, 'scoreboard/index.html'),
-      }
-    }
+        main: resolve(__dirname, "index.html"),
+        demos: resolve(__dirname, "demos/index.html"),
+        players: resolve(__dirname, "players/index.html"),
+        scoreboard: resolve(__dirname, "scoreboard/index.html"),
+      },
+    },
   },
   define: {
-    'process.env': process.env,
+    "process.env": process.env,
   },
   plugins: [react()],
   resolve: {
     alias: {
-      '@qwhub': resolve(__dirname, './src')
+      "@qwhub": resolve(__dirname, "./src"),
     },
-  }
-})
+  },
+  test: {
+    environment: "jsdom",
+  },
+});

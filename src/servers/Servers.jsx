@@ -1,14 +1,13 @@
-import React from "react";
+import { useSelector } from "react-redux";
 import { Server } from "./Server";
 import { useGetServersQuery } from "@qwhub/services/hub/hub";
+import { selectFilteredServers } from "@qwhub/selectors";
 
 export default function Servers() {
-  const { data: servers = [] } = useGetServersQuery(null, {
-    pollingInterval: 5000,
-  });
+  const servers = useSelector(selectFilteredServers);
 
   return (
-    <div className="my-4 lg:my-6">
+    <div className="my-4 mb-6">
       <div className="grid grid-cols-servers gap-4 md:gap-6 lg:gap-8">
         {servers.map((server) => (
           <Server key={server.address} server={server} />
@@ -16,4 +15,10 @@ export default function Servers() {
       </div>
     </div>
   );
+}
+
+export function ServerPoller({ pollingInterval = 5000 }) {
+  useGetServersQuery(null, {
+    pollingInterval,
+  });
 }

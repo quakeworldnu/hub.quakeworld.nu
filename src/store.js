@@ -1,9 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 //import { setupListeners } from '@reduxjs/toolkit/query'
 import { hubApi } from "./services/hub/hub.js";
+import settingsReducer from "@qwhub/settingsSlice";
 
 export const store = configureStore({
   reducer: {
+    settings: settingsReducer,
+
     // Add the generated reducer as a specific top-level slice
     [hubApi.reducerPath]: hubApi.reducer,
   },
