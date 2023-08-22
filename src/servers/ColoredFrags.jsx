@@ -1,6 +1,6 @@
-import React from "react";
+import { memo } from "react";
 
-export const ColoredFrags = React.memo((props) => {
+export const ColoredFrags = memo((props) => {
   const { tag = "div", frags, colors } = props;
   const TagName = `${tag}`;
 
