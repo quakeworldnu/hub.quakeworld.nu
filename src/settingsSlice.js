@@ -1,31 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { localStorageGet, localStorageSet } from "@qwhub/util";
-
-export const gameModes = [
-  "1on1",
-  "2on2",
-  "4on4",
-  "ffa",
-  "race",
-  "fortress",
-  "other",
-];
-
-export function getDefaultServerFilters() {
-  const defaultValues = {
-    only_bots: true,
-    modes: [...gameModes],
-  };
-  return Object.assign({}, defaultValues);
-}
-
-function getInitialServerFilters() {
-  return Object.assign(
-    {},
-    getDefaultServerFilters(),
-    localStorageGet("serverFilters", {}),
-  );
-}
+import { localStorageSet } from "@qwhub/util";
+import { getInitialServerFilters } from "@qwhub/serverFilters";
 
 export const settingsSlice = createSlice({
   name: "settings",
@@ -36,9 +11,6 @@ export const settingsSlice = createSlice({
     serverFilters: getInitialServerFilters(),
   },
   reducers: {
-    toggleShowSettings: (state) => {
-      state.ui.showSettings = !state.ui.showSettings;
-    },
     setShowSettings: (state, { payload }) => {
       state.ui.showSettings = payload;
     },
@@ -49,9 +21,6 @@ export const settingsSlice = createSlice({
   },
 });
 
-export const { setServerFilters, setShowSettings, toggleShowSettings } =
-  settingsSlice.actions;
+export const { setServerFilters, setShowSettings } = settingsSlice.actions;
 
 export default settingsSlice.reducer;
-
-//

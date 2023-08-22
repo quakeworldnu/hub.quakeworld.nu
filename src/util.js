@@ -19,3 +19,7 @@ export function slugify(str) {
 export function toId(str) {
   return slugify(str).replace(/-/g, "_");
 }
+
+export function isDeepEqual(a, b) {
+  return JSON.stringify(a) === JSON.stringify(b);
+}

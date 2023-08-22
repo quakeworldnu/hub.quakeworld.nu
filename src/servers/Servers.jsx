@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { Server } from "./Server";
 import { useGetServersQuery } from "@qwhub/services/hub/hub";
-import { gameModes } from "@qwhub/settingsSlice";
+import { filterServers } from "@qwhub/serverFilters";
 
 export default function Servers() {
   const serverFilters = useSelector((state) => state.settings.serverFilters);
@@ -20,30 +20,4 @@ export default function Servers() {
       </div>
     </div>
   );
-}
-
-function filterServers(servers, filters) {
-  const filterOperations = [];
-  const gameModesExcludingOthers = gameModes.slice(0, -1);
-
-  gameModes.forEach((mode) => {
-    const includeMode = filters.modes.includes(mode);
-    if (!includeMode) {
-      if ("other" === mode) {
-        filterOperations.push((s) => gameModesExcludingOthers.includes(s.mode));
-      } else {
-        filterOperations.push((s) => s.mode !== mode);
-      }
-    }
-  });
-
-  if (!filters.only_bots) {
-    filterOperations.push((s) => !s.players.every((p) => p.is_bot));
-  }
-
-  filterOperations.forEach((filterOp) => {
-    servers = servers.filter(filterOp);
-  });
-
-  return servers;
 }
