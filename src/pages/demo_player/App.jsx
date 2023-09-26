@@ -44,10 +44,15 @@ export const App = () => {
         </div>
         <div className="flex debug min-h-[800px]">
           <div className="flex flex-col h-auto grow">
-            <div className="bg-white/5 px-5 py-4">
-              <div className="text-xl font-bold">4on4: SR vs -SD- [e1m2]</div>
-              <div className="text-sm text-neutral-300 mt-1">
-                QHLAN 13 - 4on4 Playoffs - Semi Final A
+            <div className="flex bg-white/5 px-5 py-4 items-center">
+              <div className="grow">
+                <div className="text-xl font-bold">4on4: SR vs -SD- [e1m2]</div>
+                <div className="text-sm text-neutral-300 mt-1">
+                  QHLAN 13 - 4on4 Playoffs - Semi Final A
+                </div>
+              </div>
+              <div className="border border-white/30 bg-blue-400/20 font-mono text-lg p-2 px-3">
+                Create group session
               </div>
             </div>
             <div className="flex grow bg-red-400/20 items-center justify-center max-h-[60vh]">
@@ -71,19 +76,21 @@ export const App = () => {
               </div>
             </div>
 
-            <div className="flex flex-row p-4">
-              <div className="grow">
-                <div className="opacity-50">Previous</div>
+            <div className="flex flex-row p-4 justify-around">
+              <div className="flex space-x-28">
                 <div>
-                  4on4: SR vs -SD- [e1m2] QHLAN 13 - 4on4 Playoffs - Semi Final
-                  A
+                  <div className="opacity-50 text-right">Previous</div>
+                  <div>
+                    4on4: SR vs -SD- [e1m2] QHLAN 13 - 4on4 Playoffs - Semi
+                    Final A
+                  </div>
                 </div>
-              </div>
-              <div className="grow text-right">
-                <div className="opacity-50">Next</div>
                 <div>
-                  4on4: SR vs -SD- [e1m2] QHLAN 13 - 4on4 Playoffs - Semi Final
-                  A
+                  <div className="opacity-50">Next</div>
+                  <div>
+                    4on4: SR vs -SD- [e1m2] QHLAN 13 - 4on4 Playoffs - Semi
+                    Final A
+                  </div>
                 </div>
               </div>
             </div>
@@ -102,12 +109,6 @@ export const App = () => {
             />
           </div>
         </div>
-
-        <div className="py-4">
-          <HorizontalSeparator />
-        </div>
-
-        <div>Related demos:</div>
       </div>
 
       <SiteFooter />
