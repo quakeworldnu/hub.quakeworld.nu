@@ -39,6 +39,12 @@ export default function SiteNavigation() {
       longDescription: "",
       url: "/demos/",
     },
+    {
+      title: "Demo player",
+      shortDescription: "",
+      longDescription: "",
+      url: "/demo_player/",
+    },
   ];
 
   return (
