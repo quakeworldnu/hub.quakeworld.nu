@@ -33,14 +33,17 @@ export const App = () => {
       <SiteHeader />
 
       <div className="my-6 space-y-4">
-        <div className="p-3 bg-white/5 text-sm text-gray-200">
-          Demos
-          {breadcrumbs.map((b) => (
-            <>
-              <span className="mx-2 text-gray-500">/</span>
-              <span>{b}</span>
-            </>
-          ))}
+        <div className="flex p-3 bg-white/5 text-sm text-gray-200 justify-between">
+          <div>
+            Demos
+            {breadcrumbs.map((b) => (
+              <>
+                <span className="mx-2 text-gray-500">/</span>
+                <span>{b}</span>
+              </>
+            ))}
+          </div>
+          <div>[START SESSION] [JOIN SESSION]</div>
         </div>
         <div className="flex debug min-h-[800px]">
           <div className="flex flex-col h-auto grow">
