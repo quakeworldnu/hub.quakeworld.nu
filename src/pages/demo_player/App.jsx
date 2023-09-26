@@ -2,10 +2,9 @@ import React from "react";
 import { SiteHeader } from "@qwhub/site/Header";
 import { SiteFooter } from "@qwhub/site/Footer";
 import FteComponent from "./nano/components/fte";
-import { HorizontalSeparator } from "@qwhub/site/Common";
 
 export const App = () => {
-  const mapName = "e1m2";
+  const mapName = "dm3";
 
   if (false) {
     const demoBaseUrl =
@@ -15,9 +14,11 @@ export const App = () => {
       "qhlan_group_ax_v_bl_1of3_ctf_blue_vs_red[e2m2]20221118-1523.mvd";
   }
 
-  const demoBaseUrl = "/public";
-  const demoDirectory = "demos";
-  const demoFilename = "4v4_-s-_vs_]sr[[e1m2]20220116-2312.mvd";
+  // https://quakeworld.s3.eu-central-1.amazonaws.com/qw/demos/tournaments/allstars/allstars_2015/20150920-1345_showmatch_666_vs_star%5Bdm3%5D.mvd
+
+  const demoBaseUrl = "https://quakeworld.s3.eu-central-1.amazonaws.com";
+  const demoDirectory = "qw/demos/tournaments/allstars/allstars_2015";
+  const demoFilename = "20150920-1345_showmatch_666_vs_star[dm3].mvd";
   const duration = 1210;
 
   const breadcrumbs = [
@@ -49,7 +50,7 @@ export const App = () => {
           <div className="flex flex-col h-auto grow">
             <div className="flex bg-white/5 px-5 py-4 items-center">
               <div className="grow">
-                <div className="text-xl font-bold">4on4: SR vs -SD- [e1m2]</div>
+                <div className="text-xl font-bold">4on4: SR vs -SD- [dm3]</div>
                 <div className="text-sm text-neutral-300 mt-1">
                   QHLAN 13 - 4on4 Playoffs - Semi Final A
                 </div>
@@ -84,15 +85,15 @@ export const App = () => {
                 <div>
                   <div className="opacity-50 text-right">Previous</div>
                   <div>
-                    4on4: SR vs -SD- [e1m2] QHLAN 13 - 4on4 Playoffs - Semi
-                    Final A
+                    4on4: SR vs -SD- [dm3] QHLAN 13 - 4on4 Playoffs - Semi Final
+                    A
                   </div>
                 </div>
                 <div>
                   <div className="opacity-50">Next</div>
                   <div>
-                    4on4: SR vs -SD- [e1m2] QHLAN 13 - 4on4 Playoffs - Semi
-                    Final A
+                    4on4: SR vs -SD- [dm3] QHLAN 13 - 4on4 Playoffs - Semi Final
+                    A
                   </div>
                 </div>
               </div>

@@ -68,7 +68,7 @@ class FteComponent extends React.Component {
     const baseUrl = this.props.demoBaseUrl;
     const demoUrl = `${baseUrl}/${this.props.directory}/${encodeURIComponent(
       this.props.demo,
-    )}.gz`;
+    )}`;
 
     const assetsUrl =
       "https://raw.githubusercontent.com/qw-ctf/qtube-assets/assets";
@@ -76,8 +76,8 @@ class FteComponent extends React.Component {
     const targetMapLit = "id1/maps/" + this.props.map + ".lit";
 
     const demoMountPath = /.+.mvd/.test(this.props.demo)
-      ? "qw/match.mvd.gz"
-      : "id1/match.dem.gz";
+      ? "qw/match.mvd"
+      : "id1/match.dem";
 
     const mapContent = /(dm[1-7]|e[1-4]m[1-8])/.test(this.props.map)
       ? {
