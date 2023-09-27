@@ -1,9 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,jsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     fontFamily: {
       sans: "Roboto, Helvetica, Arial, sans-serif",
@@ -11,12 +8,12 @@ module.exports = {
     },
     extend: {
       gridTemplateColumns: {
-        "servers": "repeat(auto-fill, minmax(340px, 1fr))"
+        servers: "repeat(auto-fill, minmax(340px, 1fr))",
       },
       screens: {
-        '3xl': '1890px',
-      }
+        "3xl": "1890px",
+      },
     },
   },
   plugins: [],
-}
+};
