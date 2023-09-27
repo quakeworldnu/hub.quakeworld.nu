@@ -1,7 +1,7 @@
 const assetsUrl =
   "https://raw.githubusercontent.com/qw-ctf/qtube-assets/assets";
 
-function withPrefix(path) {
+export function withPrefix(path) {
   return `/assets/static/${path}`;
 }
 
