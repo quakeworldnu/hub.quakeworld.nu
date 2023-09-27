@@ -1,7 +1,7 @@
 import React from "react";
 import { SiteHeader } from "@qwhub/site/Header";
 import { SiteFooter } from "@qwhub/site/Footer";
-//import FteComponent from "./nano/components/fte";
+import FteComponent from "./nano/components/fte";
 import { ChatInput, ChatMessages } from "@qwhub/pages/demo_player/Chat";
 
 export const App = () => {
@@ -51,13 +51,13 @@ export const App = () => {
               </div>
             </div>
             <div className="flex grow bg-red-400/20 items-center justify-center max-h-[60vh]">
-              {/*<FteComponent
-                  demo={demoFilename}
-                  map={mapName}
-                  demoBaseUrl={demoBaseUrl}
-                  directory={demoDirectory}
-                  duration={duration}
-                />*/}
+              <FteComponent
+                demo={demoFilename}
+                map={mapName}
+                demoBaseUrl={demoBaseUrl}
+                directory={demoDirectory}
+                duration={duration}
+              />
             </div>
             <div className="flex w-full p-4 space-x-4">
               <div className="flex space-x-4">
