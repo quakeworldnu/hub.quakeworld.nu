@@ -23,11 +23,17 @@ import { secondsToString } from "@qwhub/pages/demo_player/nano/components/time";
 
 const easingTime = 1500.0;
 
+function fteCommand(command) {
+  if (window.Module) {
+    window.Module.execute(command);
+  }
+}
+
 class FteComponent extends React.Component {
   state = {
     loadProgress: 0,
     demo: null,
-    refreshInterval: null,
+    refreshInterval: 250,
     gametime: 0,
     playing: true,
     playbackSpeed: 100,
@@ -35,7 +41,6 @@ class FteComponent extends React.Component {
     targetSpeedArrivalTime: 100,
     volume: Math.sqrt(0.05),
     volumeMuted: false,
-    volumeHover: false,
     volumeIcon: faVolumeLow,
     playerControlTimeout: 0,
     firstRefresh: true,
@@ -48,8 +53,6 @@ class FteComponent extends React.Component {
     super(props);
     this.canvasRef = React.createRef();
     this.playerRef = React.createRef();
-    this.playing = true;
-    this.playbackSpeed = 100;
     this.duration = secondsToString(this.props.duration);
   }
 
@@ -74,27 +77,29 @@ class FteComponent extends React.Component {
     screenfull.on("change", this.onResize.bind(this));
     window.addEventListener("resize", this.onResize.bind(this));
 
-    /*const parts = window.location.hash.substring(1).split("&");
-                    for (let i = 0; i < parts.length; i++) {
-                      const kv = parts[i].split("=");
-                      if (kv.length !== 2) continue;
-                      switch (kv[0]) {
-                        case "player":
-                          this.setState({ initialPlayer: Number.parseInt(kv[1]) });
-                          break;
-                        case "speed":
-                          this.setState({ initialSpeed: Number.parseInt(kv[1]) });
-                          break;
-                        case "position":
-                          this.setState({ initialPosition: Number.parseInt(kv[1]) });
-                          break;
-                        case "loop":
-                          this.setState({ loop: Number.parseInt(kv[1]) });
-                          break;
-                      }
-                    }*/
+    if (false) {
+      const parts = window.location.hash.substring(1).split("&");
+      for (let i = 0; i < parts.length; i++) {
+        const kv = parts[i].split("=");
+        if (kv.length !== 2) continue;
+        switch (kv[0]) {
+          case "player":
+            this.setState({ initialPlayer: Number.parseInt(kv[1]) });
+            break;
+          case "speed":
+            this.setState({ initialSpeed: Number.parseInt(kv[1]) });
+            break;
+          case "position":
+            this.setState({ initialPosition: Number.parseInt(kv[1]) });
+            break;
+          case "loop":
+            this.setState({ loop: Number.parseInt(kv[1]) });
+            break;
+        }
+      }
+    }
 
-    setInterval(this.onFteRefresh.bind(this), 250);
+    setInterval(this.onFteRefresh.bind(this), this.state.refreshInterval);
   }
 
   updateLoadProgress(text) {
@@ -112,7 +117,7 @@ class FteComponent extends React.Component {
       this.state.playerControlTimeout !== 0 &&
       this.state.playerControlTimeout < Date.now()
     ) {
-      window.Module.execute("viewsize 100");
+      fteCommand("viewsize 100");
       this.setState({ playerControlTimeout: 0 });
     }
     if (this.state.firstRefresh && this.state.gametime > 0) {
@@ -120,19 +125,19 @@ class FteComponent extends React.Component {
 
       // Workaround for not being able to bind an alias to TAB key for RQ demos
       if (/.+.dem/.test(this.props.demo)) {
-        window.Module.execute("bind tab +showteamscores");
+        fteCommand("bind tab +showteamscores");
       }
 
       if (this.state.initialPlayer) {
-        window.Module.execute("cl_autotrack off");
-        window.Module.execute("autotrack off");
-        window.Module.execute("track " + this.state.initialPlayer); // cmd: users for userId
+        fteCommand("cl_autotrack off");
+        fteCommand("autotrack off");
+        fteCommand("track " + this.state.initialPlayer); // cmd: users for userId
       }
       if (this.state.initialSpeed) {
-        window.Module.execute("demo_setspeed " + this.state.initialSpeed);
+        fteCommand("demo_setspeed " + this.state.initialSpeed);
       }
       if (this.state.initialPosition) {
-        window.Module.execute("demo_jump " + this.state.initialPosition);
+        fteCommand("demo_jump " + this.state.initialPosition);
       }
       this.setState({ firstRefresh: false });
     }
@@ -141,7 +146,7 @@ class FteComponent extends React.Component {
       this.state.loop &&
       this.state.gametime >= this.state.initialPosition + this.state.loop
     ) {
-      window.Module.execute("demo_jump " + this.state.initialPosition);
+      fteCommand("demo_jump " + this.state.initialPosition);
     }
 
     if (
@@ -150,7 +155,7 @@ class FteComponent extends React.Component {
     ) {
       const now = performance.now();
       if (now >= this.state.targetSpeedArrivalTime) {
-        window.Module.execute("demo_setspeed " + this.state.targetSpeed);
+        fteCommand("demo_setspeed " + this.state.targetSpeed);
         this.setState({ playbackSpeed: this.state.targetSpeed });
       } else {
         const progress = (this.state.targetSpeedArrivalTime - now) / easingTime;
@@ -159,13 +164,13 @@ class FteComponent extends React.Component {
           const speed =
             this.state.playbackSpeed -
             (this.state.playbackSpeed - this.state.targetSpeed * 1.0) * easing;
-          window.Module.execute("demo_setspeed " + speed);
+          fteCommand("demo_setspeed " + speed);
           this.setState({ playbackSpeed: speed });
         } else {
           const speed =
             this.state.playbackSpeed +
             (this.state.targetSpeed - this.state.playbackSpeed * 1.0) * easing;
-          window.Module.execute("demo_setspeed " + speed);
+          fteCommand("demo_setspeed " + speed);
           this.setState({ playbackSpeed: speed });
         }
       }
@@ -174,7 +179,7 @@ class FteComponent extends React.Component {
 
     // This is a hack, seeking causes player to switch
     if (this.state.gametime > 0 && this.state.initialPlayer) {
-      window.Module.execute("track " + this.state.initialPlayer); // cmd: users for userId
+      fteCommand("track " + this.state.initialPlayer); // cmd: users for userId
     }
   }
 
@@ -193,10 +198,10 @@ class FteComponent extends React.Component {
 
   togglePlay() {
     if (this.state.playing) {
-      window.Module.execute("demo_setspeed 0");
+      fteCommand("demo_setspeed 0");
       this.setState({ playing: false });
     } else {
-      window.Module.execute("demo_setspeed " + this.playbackSpeed);
+      fteCommand("demo_setspeed " + this.state.playbackSpeed);
       this.setState({ playing: true });
     }
   }
@@ -210,7 +215,7 @@ class FteComponent extends React.Component {
         : this.playerRef.current.clientHeight;
 
     // Arbitrary scaling ratio based on 4 * DPI for 4k fullscreen.
-    window.Module.execute(
+    fteCommand(
       "vid_conautoscale " +
         Math.ceil(4.0 * window.devicePixelRatio * (width / 3840.0)).toString(),
     );
@@ -229,16 +234,16 @@ class FteComponent extends React.Component {
     if (this.state.volumeMuted) {
       this.setState({ volumeMuted: false });
       const volume = this.state.volume * this.state.volume;
-      window.Module.execute("volume " + volume);
+      fteCommand("volume " + volume);
     } else {
       this.setState({ volumeMuted: true });
-      window.Module.execute("volume 0");
+      fteCommand("volume 0");
     }
   }
 
   onVolumeChange(e) {
     const volume = this.state.volume * this.state.volume;
-    window.Module.execute("volume " + volume);
+    fteCommand("volume " + volume);
     this.setState({ volume: e.target.value });
     if (e.target.value === 0) {
       this.setState({ volumeIcon: faVolumeOff });
@@ -253,7 +258,7 @@ class FteComponent extends React.Component {
     // Avoid spamming the react state
     if (this.state.playerControlTimeout - Date.now() < 2500) {
       this.setState({ playerControlTimeout: Date.now() + 3000 });
-      window.Module.execute("viewsize 120");
+      fteCommand("viewsize 120");
     }
   }
 
@@ -262,11 +267,11 @@ class FteComponent extends React.Component {
   }
 
   onTouchStart() {
-    window.Module.execute("+scoreboard");
+    fteCommand("+scoreboard");
   }
 
   onTouchEnd() {
-    window.Module.execute("-scoreboard");
+    fteCommand("-scoreboard");
   }
 
   onDemoSeek(event) {
@@ -275,7 +280,7 @@ class FteComponent extends React.Component {
     const seekPosition =
       ((event.clientX - playerOffsetX) / playerWidth) *
       (this.props.duration + 10);
-    window.Module.execute("demo_jump " + Math.floor(seekPosition));
+    fteCommand("demo_jump " + Math.floor(seekPosition));
     this.setState({ playerControlTimeout: Date.now() + 3000 });
   }
 
