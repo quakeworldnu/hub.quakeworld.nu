@@ -15,23 +15,11 @@ import {
 import Progressbar from "./progressbar";
 
 import { window, document } from "browser-monads";
-import { getAssets } from "@qwhub/pages/demo_player/nano/components/assets";
-
-function withPrefix(path) {
-  return `/assets/static/${path}`;
-}
-
-function secondsToString(duration) {
-  const durationMinutes = Math.floor(duration / 60).toLocaleString("en-US", {
-    minimumIntegerDigits: 2,
-    useGrouping: false,
-  });
-  const durationSeconds = Math.floor(duration % 60).toLocaleString("en-US", {
-    minimumIntegerDigits: 2,
-    useGrouping: false,
-  });
-  return `${durationMinutes}:${durationSeconds}`;
-}
+import {
+  getAssets,
+  withPrefix,
+} from "@qwhub/pages/demo_player/nano/components/assets";
+import { secondsToString } from "@qwhub/pages/demo_player/nano/components/time";
 
 const easingTime = 1500.0;
 
@@ -87,24 +75,24 @@ class FteComponent extends React.Component {
     window.addEventListener("resize", this.onResize.bind(this));
 
     /*const parts = window.location.hash.substring(1).split("&");
-                for (let i = 0; i < parts.length; i++) {
-                  const kv = parts[i].split("=");
-                  if (kv.length !== 2) continue;
-                  switch (kv[0]) {
-                    case "player":
-                      this.setState({ initialPlayer: Number.parseInt(kv[1]) });
-                      break;
-                    case "speed":
-                      this.setState({ initialSpeed: Number.parseInt(kv[1]) });
-                      break;
-                    case "position":
-                      this.setState({ initialPosition: Number.parseInt(kv[1]) });
-                      break;
-                    case "loop":
-                      this.setState({ loop: Number.parseInt(kv[1]) });
-                      break;
-                  }
-                }*/
+                    for (let i = 0; i < parts.length; i++) {
+                      const kv = parts[i].split("=");
+                      if (kv.length !== 2) continue;
+                      switch (kv[0]) {
+                        case "player":
+                          this.setState({ initialPlayer: Number.parseInt(kv[1]) });
+                          break;
+                        case "speed":
+                          this.setState({ initialSpeed: Number.parseInt(kv[1]) });
+                          break;
+                        case "position":
+                          this.setState({ initialPosition: Number.parseInt(kv[1]) });
+                          break;
+                        case "loop":
+                          this.setState({ loop: Number.parseInt(kv[1]) });
+                          break;
+                      }
+                    }*/
 
     setInterval(this.onFteRefresh.bind(this), 250);
   }
