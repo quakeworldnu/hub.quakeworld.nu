@@ -1,25 +1,16 @@
 import React from "react";
 import { SiteHeader } from "@qwhub/site/Header";
 import { SiteFooter } from "@qwhub/site/Footer";
-import FteComponent from "./nano/components/fte";
+//import FteComponent from "./nano/components/fte";
+import { ChatInput, ChatMessages } from "@qwhub/pages/demo_player/Chat";
 
 export const App = () => {
-  const mapName = "dm3";
-
-  if (false) {
-    const demoBaseUrl =
-      "https://media.githubusercontent.com/media/qw-ctf/matches/main";
-    const demoDirectory = "tournaments/qhlan-2022";
-    const demoFilename =
-      "qhlan_group_ax_v_bl_1of3_ctf_blue_vs_red[e2m2]20221118-1523.mvd";
-  }
-
   // https://quakeworld.s3.eu-central-1.amazonaws.com/qw/demos/tournaments/allstars/allstars_2015/20150920-1345_showmatch_666_vs_star%5Bdm3%5D.mvd
-
   const demoBaseUrl = "https://quakeworld.s3.eu-central-1.amazonaws.com";
   const demoDirectory = "qw/demos/tournaments/allstars/allstars_2015";
   const demoFilename = "20150920-1345_showmatch_666_vs_star[dm3].mvd";
   const duration = 1210;
+  const mapName = "dm3";
 
   const breadcrumbs = [
     "Tournaments",
@@ -60,13 +51,13 @@ export const App = () => {
               </div>
             </div>
             <div className="flex grow bg-red-400/20 items-center justify-center max-h-[60vh]">
-              <FteComponent
-                demo={demoFilename}
-                map={mapName}
-                demoBaseUrl={demoBaseUrl}
-                directory={demoDirectory}
-                duration={duration}
-              />
+              {/*<FteComponent
+                  demo={demoFilename}
+                  map={mapName}
+                  demoBaseUrl={demoBaseUrl}
+                  directory={demoDirectory}
+                  duration={duration}
+                />*/}
             </div>
             <div className="flex w-full p-4 space-x-4">
               <div className="flex space-x-4">
@@ -105,12 +96,11 @@ export const App = () => {
               <div>Playlist</div>
               <div>Related demos</div>
             </div>
-            <div className="grow bg-blue-400/10 p-4">[messages]</div>
-            <input
-              type="text"
-              className="bg-neutral-800 placeholder-white border border-white/10 w-full p-4"
-              placeholder={"Say something..."}
-            />
+            <div className="grow bg-blue-400/10">
+              <ChatMessages />
+            </div>
+
+            <ChatInput />
           </div>
         </div>
       </div>
@@ -122,13 +112,3 @@ export const App = () => {
 };
 
 export default App;
-
-function ChatMessage({ message }) {
-  return (
-    <div className="flex items-center space-x-2">
-      <span className="text-gray-400">{message.time}</span>
-      <span className="text-gray-400">{message.player}</span>
-      <span>{message.text}</span>
-    </div>
-  );
-}
