@@ -39,10 +39,25 @@
 }
 
 .app-text-outline {
-  text-shadow: 1px -1px 0 black,
-  -1px -1px 0 black,
-  1px 1px 0 black,
-  -1px 1px 0 black;
+  text-shadow:
+    1px -1px 0 black,
+    -1px -1px 0 black,
+    1px 1px 0 black,
+    -1px 1px 0 black;
+}
+
+.app-effect-fade-in {
+  will-change: opacity;
+  animation: fadein 0.5s;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .app-text-shadow {
