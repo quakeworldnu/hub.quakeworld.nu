@@ -28,11 +28,11 @@ export const App = () => {
         <div className="flex p-3 bg-white/5 text-sm text-gray-200 justify-between">
           <div>
             Demos
-            {breadcrumbs.map((b) => (
-              <>
+            {breadcrumbs.map((b, i) => (
+              <span key={i}>
                 <span className="mx-2 text-gray-500">/</span>
-                <span>{b}</span>
-              </>
+                {b}
+              </span>
             ))}
           </div>
           <div>[START SESSION] [JOIN SESSION]</div>
