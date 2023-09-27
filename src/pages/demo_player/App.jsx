@@ -37,7 +37,7 @@ export const App = () => {
           </div>
           <div>[START SESSION] [JOIN SESSION]</div>
         </div>
-        <div className="flex debug min-h-[800px]">
+        <div className="flex debug">
           <div className="flex flex-col h-auto grow">
             <div className="flex bg-white/5 px-5 py-4 items-center">
               <div className="grow">
@@ -96,11 +96,11 @@ export const App = () => {
               <div>Playlist</div>
               <div>Related demos</div>
             </div>
-            <div className="grow bg-blue-400/10">
-              <ChatMessages />
+            <div className="flex flex-col grow bg-blue-400/10 h-[1px]">
+              {/*<ChatMessages />*/}
             </div>
 
-            <ChatInput />
+            {/*<ChatInput />*/}
           </div>
         </div>
       </div>

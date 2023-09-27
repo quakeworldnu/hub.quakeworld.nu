@@ -17,7 +17,7 @@ export function ChatMessages() {
   }, [messages]);
 
   return (
-    <div id="ChatMessages" className="p-4 max-h-[60vh] overflow-auto">
+    <div id="ChatMessages" className="h-full p-4 overflow-auto">
       {messages?.map((message) => (
         <ChatMessage key={message._id} message={message} />
       ))}
