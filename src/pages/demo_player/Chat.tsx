@@ -45,7 +45,10 @@ export function ChatInput() {
     const input = document.getElementById(
       "ChatMessageInput",
     ) as HTMLInputElement;
-    const content = input.value;
+    const content = input.value.trim();
+
+    if (content.length === 0) return;
+
     input.value = "";
     await addMessage({ author: "vikpe", content });
   }
