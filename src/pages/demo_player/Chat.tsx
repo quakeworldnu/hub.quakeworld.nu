@@ -1,6 +1,9 @@
+import { FormEvent, useEffect } from "react";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
-import { FormEvent, useEffect } from "react";
+import { Doc } from "../../../convex/_generated/dataModel";
+
+type ChatMessage = Doc<"demoplayer_chats">;
 
 export function ChatMessages() {
   const messages = useQuery(api.demoplayer_chats.list);
@@ -22,7 +25,7 @@ export function ChatMessages() {
   );
 }
 
-function ChatMessage({ message }) {
+function ChatMessage({ message }: { message: ChatMessage }) {
   const time = new Date(message._creationTime).toLocaleTimeString();
 
   return (
