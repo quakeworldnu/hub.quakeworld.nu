@@ -28,4 +28,9 @@ export default defineSchema({
     author: v.string(),
     content: v.string(),
   }),
+
+  demoplayer_sessions: defineTable({
+    playback_timestamp: v.float64(),
+    uid: v.string(),
+  }),
 });

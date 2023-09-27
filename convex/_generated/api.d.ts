@@ -17,6 +17,7 @@ import type {
 import type * as demobot_demos from "../demobot_demos";
 import type * as demobot_playlist from "../demobot_playlist";
 import type * as demoplayer_chats from "../demoplayer_chats";
+import type * as demoplayer_sessions from "../demoplayer_sessions";
 import type * as init from "../init";
 
 /**
@@ -31,6 +32,7 @@ declare const fullApi: ApiFromModules<{
   demobot_demos: typeof demobot_demos;
   demobot_playlist: typeof demobot_playlist;
   demoplayer_chats: typeof demoplayer_chats;
+  demoplayer_sessions: typeof demoplayer_sessions;
   init: typeof init;
 }>;
 export declare const api: FilterApi<
