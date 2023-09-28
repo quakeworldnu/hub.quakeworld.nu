@@ -1,3 +1,5 @@
+import { demoUrlToFilename } from "@qwhub/pages/demo_player/demoUtil";
+
 const assetsUrl =
   "https://raw.githubusercontent.com/qw-ctf/qtube-assets/assets";
 
@@ -6,9 +8,7 @@ export function withPrefix(path) {
 }
 
 export function getAssets(demoUrl, mapName) {
-  const demoFilename = demoUrl.split("/").pop();
-
-  console.log(demoUrl, demoFilename, mapName);
+  const demoFilename = demoUrlToFilename(demoUrl);
 
   return {
     ...getGeneralAssets(),
