@@ -57,10 +57,7 @@ class FteComponent extends React.Component {
   }
 
   componentDidMount() {
-    const baseUrl = this.props.demoBaseUrl;
-    const demoUrl = `${baseUrl}/${this.props.directory}/${encodeURIComponent(
-      this.props.demo,
-    )}`;
+    const demoUrl = this.props.demoUrl;
     const assets = getAssets(demoUrl, this.props.map);
     this.setState({ numAssets: Object.keys(assets).length });
 
