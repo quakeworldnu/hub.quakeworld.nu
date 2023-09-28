@@ -24,8 +24,10 @@ import { secondsToString } from "@qwhub/pages/demo_player/nano/components/time";
 const easingTime = 1500.0;
 
 function fteCommand(command) {
-  if (window.Module) {
+  try {
     window.Module.execute(command);
+  } catch (e) {
+    console.log("fteCommand error: " + e);
   }
 }
 
