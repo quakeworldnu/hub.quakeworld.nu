@@ -5,6 +5,27 @@
 @import "./tailwind";
 @import "react-modern-drawer/dist/index.css";
 
+/* width */
+::-webkit-scrollbar {
+  width: 16px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #334;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #667;
+  border-radius: 3px;
+
+  &:hover {
+    background: #889;
+  }
+}
+
+
 .EZDrawer .EZDrawer__container {
   @apply bg-slate-900 text-gray-300 h-full p-3;
 }
@@ -39,11 +60,10 @@
 }
 
 .app-text-outline {
-  text-shadow:
-    1px -1px 0 black,
-    -1px -1px 0 black,
-    1px 1px 0 black,
-    -1px 1px 0 black;
+  text-shadow: 1px -1px 0 black,
+  -1px -1px 0 black,
+  1px 1px 0 black,
+  -1px 1px 0 black;
 }
 
 .app-effect-fade-in {
