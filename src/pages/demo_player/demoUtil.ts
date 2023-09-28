@@ -1,5 +1,3 @@
-import { AWS_S3_BASE_URL } from "./aws.ts";
-
 export function demoFilenameToMapName(demoFilename: string): string {
   const mapMatch = demoFilename.match(/\[(.*?)]/);
 
@@ -15,9 +13,25 @@ export function demoUrlToFilename(url: string): string {
   return parts.length > 0 ? parts[parts.length - 1] : "";
 }
 
-export function demoUrlToTitle(demoName: string): string {
-  return demoName
-    .replace(`${AWS_S3_BASE_URL}/qw/demos/`, "")
+export function demoUrlToQuakeRelativePath(demoUrl: string): string {
+  const needle = "/qw/demos/";
+  return demoUrl.includes(needle) ? demoUrl.split(needle)[1] : demoUrl;
+}
+
+export function demoFilenameToTitle(demoFilename: string): string {
+  return titlelize(demoFilename);
+}
+
+export function demoUrlToTitle(demoUrl: string): string {
+  if (0 === demoUrl.trim().length) {
+    return "";
+  }
+
+  return titlelize(demoUrlToQuakeRelativePath(demoUrl));
+}
+
+export function titlelize(value: string): string {
+  return value
     .replaceAll("/", " / ")
     .replaceAll("_", " ")
     .replace(/(\[.+])/gm, " $1 ")

@@ -1,112 +1,145 @@
 import React from "react";
+import queryString from "query-string";
 import { SiteHeader } from "@qwhub/site/Header";
 import { SiteFooter } from "@qwhub/site/Footer";
+import { DemoDropdown } from "./DemoDropdown";
+
 import FteComponent from "./nano/components/fte";
+import {
+  demoFilenameToMapName,
+  demoFilenameToTitle,
+  demoUrlToFilename,
+  demoUrlToQuakeRelativePath,
+  demoUrlToTitle,
+} from "./demoUtil";
 import { ChatInput, ChatMessages } from "@qwhub/pages/demo_player/Chat";
 
+function getCurrentUrlWithoutQueryString() {
+  return window.location.href.split("?")[0];
+}
+
 export const App = () => {
-  // https://quakeworld.s3.eu-central-1.amazonaws.com/qw/demos/tournaments/allstars/allstars_2015/20150920-1345_showmatch_666_vs_star%5Bdm3%5D.mvd
-  const demoBaseUrl = "https://quakeworld.s3.eu-central-1.amazonaws.com";
-  const demoDirectory = "qw/demos/tournaments/allstars/allstars_2015";
-  const demoFilename = "20150920-1345_showmatch_666_vs_star[dm3].mvd";
-  const duration = 1210;
-  const mapName = "dm3";
-
-  const breadcrumbs = [
-    "Tournaments",
-    "QLAN",
-    "QHLAN 13",
-    "4on4",
-    "Playoffs - Semi Final A",
-  ];
-
   return (
     <>
       <SiteHeader />
+      <DemoPlayerApp />
+      <SiteFooter />
+    </>
+  );
+};
 
-      <div className="my-6 space-y-4">
-        <div className="flex p-3 bg-white/5 text-sm text-gray-200 justify-between">
-          <div>
-            Demos
-            {breadcrumbs.map((b, i) => (
-              <span key={i}>
-                <span className="mx-2 text-gray-500">/</span>
-                {b}
-              </span>
-            ))}
-          </div>
-          <div>[START SESSION] [JOIN SESSION]</div>
+export const DemoPlayerApp = () => {
+  const query = queryString.parse(location.search);
+  const demoUrl = query.demoUrl ?? "";
+
+  function onDemoDropdownChange(value) {
+    const currentUrl = getCurrentUrlWithoutQueryString();
+    window.location.href = `${currentUrl}?demoUrl=${value}`;
+  }
+
+  return (
+    <div className="my-6 space-y-4">
+      {demoUrl && (
+        <DemoDropdown onChange={onDemoDropdownChange} currentValue={demoUrl} />
+      )}
+      {demoUrl && <DemoPlayer demoUrl={demoUrl} />}
+      {!demoUrl && (
+        <div className="flex flex-col justify-center items-center w-full h-[600px] bg-white/5 space-y-5">
+          <div className="font-bold text-xl">Select a demo</div>
+          <DemoDropdown
+            onChange={onDemoDropdownChange}
+            currentValue={demoUrl}
+          />
         </div>
-        <div className="flex debug min-h-[800px]">
-          <div className="flex flex-col h-auto grow">
-            <div className="flex bg-white/5 px-5 py-4 items-center">
-              <div className="grow">
-                <div className="text-xl font-bold">4on4: SR vs -SD- [dm3]</div>
-                <div className="text-sm text-neutral-300 mt-1">
-                  QHLAN 13 - 4on4 Playoffs - Semi Final A
+      )}
+    </div>
+  );
+};
+
+function demoUrlToBreadcrumbs(demoUrl) {
+  const parts = demoUrlToQuakeRelativePath(demoUrl).split("/");
+  return parts.slice(0, parts.length - 1).map((p) => p.replaceAll("_", " "));
+}
+
+export const DemoPlayer = ({ demoUrl }) => {
+  const demoFilename = demoUrlToFilename(demoUrl);
+  const demoDuration = 1210;
+  const demoMapName = demoFilenameToMapName(demoFilename);
+  const demoTitle = demoFilenameToTitle(demoFilename);
+  const demoBreadcrumbs = demoUrlToBreadcrumbs(demoUrl);
+  const demoEventTitle = demoBreadcrumbs.slice(-2).join(" / ");
+
+  return (
+    <>
+      <div className="flex p-3 bg-white/5 text-sm text-gray-200 justify-between">
+        <div>
+          Demos
+          {demoBreadcrumbs.map((b, i) => (
+            <span key={i}>
+              <span className="mx-2 text-gray-500">/</span>
+              {b}
+            </span>
+          ))}
+        </div>
+        <div className="opacity-40">[START / JOIN GROUP SESSION]</div>
+      </div>
+      <div className="flex min-h-[800px]">
+        <div className="flex flex-col grow">
+          <div className="flex grow bg-black items-center justify-center max-h-[60vh]">
+            <FteComponent
+              demoFilename={demoFilename}
+              map={demoMapName}
+              demoUrl={demoUrl}
+              duration={demoDuration}
+            />
+          </div>
+          <div className="py-6 flex justify-between">
+            <div>
+              <div className="text-2xl font-bold">{demoTitle}</div>
+              <div className="text-sm text-neutral-300 mt-1">
+                {demoEventTitle}
+              </div>
+            </div>
+            <div>
+              <a
+                href={demoUrl}
+                className="py-3 px-4 text-lg text-sm rounded bg-blue-600/50 hover:bg-blue-600/80 cursor-pointer"
+              >
+                Download demo
+              </a>
+            </div>
+          </div>
+
+          <div className="flex flex-row py-8 justify-around border-t border-white/10">
+            <div className="flex space-x-28 text-sm">
+              <div>
+                <div className="text-gray-500 text-right">Previous</div>
+                <div className="text-gray-300">
+                  4on4: SR vs -SD- [dm3] QHLAN 13 - 4on4 Playoffs - Semi Final A
                 </div>
               </div>
-              <div className="border border-white/30 bg-blue-400/20 font-mono text-lg p-2 px-3">
-                Create group session
-              </div>
-            </div>
-            <div className="flex grow bg-red-400/20 items-center justify-center max-h-[60vh]">
-              <FteComponent
-                demo={demoFilename}
-                map={mapName}
-                demoBaseUrl={demoBaseUrl}
-                directory={demoDirectory}
-                duration={duration}
-              />
-            </div>
-            <div className="flex w-full p-4 space-x-4">
-              <div className="flex space-x-4">
-                <button className="p-2 px-3 text-sm rounded bg-blue-600/50 hover:bg-blue-600/80 cursor-pointer">
-                  Create clip
-                </button>
-
-                <button className="p-2 px-3 text-sm rounded bg-blue-600/50 hover:bg-blue-600/80 cursor-pointer">
-                  Download
-                </button>
-              </div>
-            </div>
-
-            <div className="flex flex-row p-4 justify-around">
-              <div className="flex space-x-28">
-                <div>
-                  <div className="opacity-50 text-right">Previous</div>
-                  <div>
-                    4on4: SR vs -SD- [dm3] QHLAN 13 - 4on4 Playoffs - Semi Final
-                    A
-                  </div>
-                </div>
-                <div>
-                  <div className="opacity-50">Next</div>
-                  <div>
-                    4on4: SR vs -SD- [dm3] QHLAN 13 - 4on4 Playoffs - Semi Final
-                    A
-                  </div>
+              <div>
+                <div className="text-sky-400">Next</div>
+                <div className="text-sky-300 font-bold">
+                  4on4: SR vs -SD- [dm3] QHLAN 13 - 4on4 Playoffs - Semi Final A
                 </div>
               </div>
             </div>
           </div>
-          <div className="flex flex-col w-[400px]">
-            <div className="flex px-6 py-7 bg-white/5 space-x-6">
-              <div className="border-b-2 border-blue-500 font-bold">Chat</div>
-              <div>Playlist</div>
-              <div>Related demos</div>
-            </div>
-            <div className="grow bg-blue-400/10">
-              <ChatMessages />
-            </div>
-
-            <ChatInput />
+        </div>
+        <div className="flex flex-col w-[400px] ml-4">
+          <div className="flex px-6 py-7 bg-white/5 space-x-6">
+            <div className="border-b-2 border-blue-500 font-bold">Chat</div>
+            <div>Playlist</div>
+            <div>Related demos</div>
           </div>
+          <div className="grow bg-blue-400/10 h-1">
+            {false && <ChatMessages />}
+          </div>
+
+          {false && <ChatInput />}
         </div>
       </div>
-
-      <SiteFooter />
-      {/*<ServerPoller />*/}
     </>
   );
 };

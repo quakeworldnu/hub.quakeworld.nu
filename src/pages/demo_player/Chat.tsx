@@ -17,7 +17,7 @@ export function ChatMessages() {
   }, [messages]);
 
   return (
-    <div id="ChatMessages" className="p-4 max-h-[60vh] overflow-auto">
+    <div id="ChatMessages" className="h-full p-4 overflow-auto">
       {messages?.map((message) => (
         <ChatMessage key={message._id} message={message} />
       ))}
@@ -57,7 +57,7 @@ export function ChatInput() {
     <form onSubmit={onSubmit}>
       <input
         type="text"
-        className="bg-white/10 border border-red-400 w-full p-4 text-white"
+        className="bg-white/5 border border-sky-200/20 w-full p-4 text-white"
         id="ChatMessageInput"
       />
     </form>
