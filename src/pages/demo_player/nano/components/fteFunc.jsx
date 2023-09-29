@@ -1,6 +1,6 @@
 //  import { document, window } from "browser-monads";
 import screenfull from "screenfull";
-import { useInterval } from "usehooks-ts";
+import { useInterval, useEffectOnce } from "usehooks-ts";
 
 import {
   getAssets,
@@ -51,7 +51,7 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
   // const duration = secondsToString(duration);
   const easingTime = 1500.0;
 
-  useEffect(() => {
+  useEffectOnce(() => {
     function onMount() {
       console.log("Mount");
       const assets = getAssets(demoUrl, map);
@@ -72,7 +72,7 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
     }
 
     onMount();
-  }, []);
+  });
 
   useInterval(onFteRefresh, refreshInterval);
 
