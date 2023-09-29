@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { useLocalStorage } from "@uidotdev/usehooks";
+import { useLocalStorage } from "usehooks-ts";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { useEffect } from "react";
@@ -20,7 +20,7 @@ export function useUuid() {
     }
 
     updateUser();
-  }, [getOrCreate, uuid, setUuid]);
+  }, [getOrCreate, setUuid, uuid]);
 
   return uuid;
 }
