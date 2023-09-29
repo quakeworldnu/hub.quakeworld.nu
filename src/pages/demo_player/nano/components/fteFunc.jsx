@@ -13,7 +13,7 @@ import {
 } from "@qwhub/pages/demo_player/nano/components/Volume";
 import {
   GameTime,
-  PlayToggle,
+  PlayToggleButton,
   ToggleFullscreenButton,
   ToggleSlowMotionButton,
 } from "@qwhub/pages/demo_player/nano/components/controls";
@@ -291,7 +291,10 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
               ></div>
             </div>
 
-            <PlayToggle onClick={onPlayToggle} isPlaying={state.isPlaying} />
+            <PlayToggleButton
+              onClick={onPlayToggle}
+              isPlaying={state.isPlaying}
+            />
 
             <VolumeToggle
               isMuted={state.volumeMuted}

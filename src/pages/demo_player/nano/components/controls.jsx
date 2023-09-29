@@ -15,9 +15,9 @@ export const GameTime = ({ total, elapsed }) => {
     </div>
   );
 };
-export const PlayToggle = ({ isPlaying, onClick }) => {
+export const PlayToggleButton = ({ isPlaying, onClick }) => {
   return (
-    <button className="w-32 py-3" title="Play" onClick={onClick}>
+    <button className="w-12 py-3" title="Play" onClick={onClick}>
       <FontAwesomeIcon icon={isPlaying ? faPlay : faPause} />
     </button>
   );
