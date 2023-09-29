@@ -14,12 +14,10 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
-import type * as demobot_demos from "../demobot_demos";
-import type * as demobot_playlist from "../demobot_playlist";
-import type * as demoplayer_chats from "../demoplayer_chats";
-import type * as demoplayer_sessions from "../demoplayer_sessions";
-import type * as demoplayer_users from "../demoplayer_users";
+import type * as groups from "../groups";
 import type * as init from "../init";
+import type * as messages from "../messages";
+import type * as users from "../users";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -30,12 +28,10 @@ import type * as init from "../init";
  * ```
  */
 declare const fullApi: ApiFromModules<{
-  demobot_demos: typeof demobot_demos;
-  demobot_playlist: typeof demobot_playlist;
-  demoplayer_chats: typeof demoplayer_chats;
-  demoplayer_sessions: typeof demoplayer_sessions;
-  demoplayer_users: typeof demoplayer_users;
+  groups: typeof groups;
   init: typeof init;
+  messages: typeof messages;
+  users: typeof users;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,
