@@ -59,6 +59,7 @@
     "react-modern-drawer": "^1.2.2",
     "react-redux": "^8.1.2",
     "sass": "^1.68.0",
+    "screenfull": "^6.0.2",
     "tailwindcss": "^3.3.3",
     "vite": "^4.4.9"
   }

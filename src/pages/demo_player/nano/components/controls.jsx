@@ -7,7 +7,6 @@ import {
   faPause,
   faPlay,
 } from "@fortawesome/free-solid-svg-icons";
-import screenfull from "@qwhub/pages/demo_player/nano/components/screenfull";
 
 export const GameTime = ({ total, elapsed }) => {
   return (
@@ -31,10 +30,10 @@ export const ToggleSlowMotionButton = ({ onClick }) => {
     </button>
   );
 };
-export const ToggleFullscreenButton = ({ onClick }) => {
+export const ToggleFullscreenButton = ({ onClick, isFullscreen }) => {
   return (
     <button className={"w-12"} onClick={onClick}>
-      <FontAwesomeIcon icon={screenfull.isFullscreen ? faMinimize : faExpand} />
+      <FontAwesomeIcon icon={isFullscreen ? faMinimize : faExpand} />
     </button>
   );
 };

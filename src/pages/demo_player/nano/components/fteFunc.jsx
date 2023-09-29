@@ -1,6 +1,6 @@
 import * as playerStyle from "./fte.module.scss";
 //  import { document, window } from "browser-monads";
-import screenfull from "./screenfull";
+import screenfull from "screenfull";
 
 import {
   getAssets,
@@ -66,8 +66,8 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
       setStatus: updateLoadProgress,
     };
 
-    // screenfull.on("change", onResize);
-    // window.addEventListener("resize", onResize);
+    screenfull.on("change", onResize);
+    window.addEventListener("resize", onResize);
 
     setInterval(onFteRefresh, refreshInterval);
   }, []);
@@ -165,8 +165,6 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
   }
 
   function onResize() {
-    window.onresize();
-
     const width =
       window.screen.orientation.angle === 0
         ? playerRef.current.clientWidth
@@ -180,11 +178,14 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
   }
 
   function toggleFullscreen() {
+    if (!screenfull.isEnabled) {
+      return;
+    }
+
     if (screenfull.isFullscreen) {
       screenfull.exit();
     } else {
       screenfull.request(playerRef.current);
-      window.onresize();
     }
   }
 
@@ -249,10 +250,10 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
   const gametimeProgress =
     ((state.gametime / duration) * 100.0).toString() + "%";
   /*const loadProgress = state.numAssets
-    ? Math.round(state.loadProgress / state.numAssets)
-    : 0;
-
-  console.log("loadProgress", loadProgress);*/
+          ? Math.round(state.loadProgress / state.numAssets)
+          : 0;
+      
+        console.log("loadProgress", loadProgress);*/
 
   return (
     <div
@@ -299,7 +300,10 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
 
             <GameTime total={duration} elapsed={state.gametime} />
 
-            <ToggleFullscreenButton onClick={toggleFullscreen} />
+            <ToggleFullscreenButton
+              onClick={toggleFullscreen}
+              isFullscreen={screenfull.isFullscreen}
+            />
 
             <ToggleSlowMotionButton onClick={toggleSlowMotion} />
           </div>
