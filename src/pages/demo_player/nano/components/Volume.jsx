@@ -34,15 +34,7 @@ export const VolumeToggle = ({ volume, isMuted, onChange }) => {
   }
 
   return (
-    <button
-      style={{
-        width: "3em",
-        border: "none",
-        padding: "10px",
-      }}
-      title="Volume"
-      onClick={onClick}
-    >
+    <button className="w-12" title="Volume" onClick={onClick}>
       <FontAwesomeIcon icon={getVolumeIcon(volume, isMuted)} />
     </button>
   );
