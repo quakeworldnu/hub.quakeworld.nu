@@ -42,7 +42,7 @@ export function useGroup() {
     group,
     join: user?._id
       ? (code: string = "") => join({ userId: user._id, code })
-      : (code: string) => console.log(code),
+      : (code: string = "") => console.log(code),
     leave: user?._id ? () => leave({ userId: user._id }) : () => {},
   };
 }
