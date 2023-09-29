@@ -10,9 +10,9 @@ import {
   demoFilenameToTitle,
   demoUrlToFilename,
   demoUrlToQuakeRelativePath,
-  demoUrlToTitle,
 } from "./demoUtil";
-import { ChatInput, ChatMessages } from "@qwhub/pages/demo_player/Chat";
+import { Chat, ChatInput } from "@qwhub/pages/demo_player/Chat";
+import { useUser } from "@qwhub/pages/demo_player/user";
 
 function getCurrentUrlWithoutQueryString() {
   return window.location.href.split("?")[0];
@@ -21,9 +21,9 @@ function getCurrentUrlWithoutQueryString() {
 export const App = () => {
   return (
     <>
-      <SiteHeader />
+      {false && <SiteHeader />}
       <DemoPlayerApp />
-      <SiteFooter />
+      {false && <SiteFooter />}
     </>
   );
 };
@@ -61,6 +61,20 @@ function demoUrlToBreadcrumbs(demoUrl) {
   return parts.slice(0, parts.length - 1).map((p) => p.replaceAll("_", " "));
 }
 
+export function Session() {
+  const { user, clearUser, isLoading } = useUser();
+
+  if (isLoading) {
+    return <div>loading...</div>;
+  }
+
+  return (
+    <div>
+      {user.name} [{user.uuid}] <button onClick={clearUser}>clear</button>
+    </div>
+  );
+}
+
 export const DemoPlayer = ({ demoUrl }) => {
   const demoFilename = demoUrlToFilename(demoUrl);
   const demoDuration = 1210;
@@ -81,17 +95,21 @@ export const DemoPlayer = ({ demoUrl }) => {
             </span>
           ))}
         </div>
-        <div className="opacity-40">[START / JOIN GROUP SESSION]</div>
+        <div className="opacity-80">
+          <Session />
+        </div>
       </div>
       <div className="flex min-h-[800px]">
         <div className="flex flex-col grow">
           <div className="flex grow bg-black items-center justify-center max-h-[60vh]">
-            <FteComponent
-              demoFilename={demoFilename}
-              map={demoMapName}
-              demoUrl={demoUrl}
-              duration={demoDuration}
-            />
+            {false && (
+              <FteComponent
+                demoFilename={demoFilename}
+                map={demoMapName}
+                demoUrl={demoUrl}
+                duration={demoDuration}
+              />
+            )}
           </div>
           <div className="py-6 flex justify-between">
             <div>
@@ -134,7 +152,7 @@ export const DemoPlayer = ({ demoUrl }) => {
             <div>Related demos</div>
           </div>
           <div className="grow bg-blue-400/10 h-1">
-            {false && <ChatMessages />}
+            <Chat />
           </div>
 
           {false && <ChatInput />}
