@@ -4,7 +4,7 @@ import { SiteHeader } from "@qwhub/site/Header";
 import { SiteFooter } from "@qwhub/site/Footer";
 import { DemoDropdown } from "./DemoDropdown";
 
-import FteComponent from "./nano/components/fte";
+import FteComponent from "./nano/components/fteFunc";
 import {
   demoFilenameToMapName,
   demoFilenameToTitle,
@@ -33,6 +33,8 @@ export const DemoPlayerApp = () => {
   const query = queryString.parse(location.search);
   const demoUrl = query.demoUrl ?? "";
 
+  return <DemoPlayer demoUrl={demoUrl} />;
+
   function onDemoDropdownChange(value) {
     const currentUrl = getCurrentUrlWithoutQueryString();
     window.location.href = `${currentUrl}?demoUrl=${value}`;
@@ -43,7 +45,7 @@ export const DemoPlayerApp = () => {
       {demoUrl && (
         <DemoDropdown onChange={onDemoDropdownChange} currentValue={demoUrl} />
       )}
-      {demoUrl && <DemoPlayer demoUrl={demoUrl} />}
+      {demoUrl && <DemoPlayer demoUrl={""} />}
       {!demoUrl && (
         <div className="flex flex-col justify-center items-center w-full h-[600px] bg-white/5 space-y-5">
           <div className="font-bold text-xl">Select a demo</div>
@@ -60,76 +62,6 @@ export const DemoPlayerApp = () => {
 function demoUrlToBreadcrumbs(demoUrl) {
   const parts = demoUrlToQuakeRelativePath(demoUrl).split("/");
   return parts.slice(0, parts.length - 1).map((p) => p.replaceAll("_", " "));
-}
-
-export function UserInfo() {
-  const { user } = useUser();
-
-  if (!user) {
-    return <div>loading..</div>;
-  }
-  return (
-    <div>
-      <div>
-        <strong>User</strong>
-      </div>
-      <div>
-        <UserNameInput /> [{user.uuid}]
-      </div>
-    </div>
-  );
-}
-
-export function GroupInfo() {
-  const { group, join, leave } = useGroup();
-  const onCreateGroup = async () => await join();
-  const onLeaveGroup = async () => await leave();
-
-  async function onJoinGroup() {
-    const code = document.getElementById("GroupCode").value.trim();
-    await join(code);
-  }
-
-  return (
-    <div>
-      <div>
-        <strong>Group</strong>
-      </div>
-
-      {!group && (
-        <div className="flex items-center space-x-6">
-          <button onClick={onCreateGroup} className="p-2 border">
-            Create group
-          </button>
-          <div className="flex items-center">
-            <input
-              type="text"
-              className="border p-2 bg-black text-white"
-              id="GroupCode"
-            />
-            <button onClick={onJoinGroup} className="p-2 border">
-              Join group
-            </button>
-          </div>
-        </div>
-      )}
-      {group && (
-        <div className="flex items-center space-x-6">
-          <input
-            type="text"
-            disabled
-            className="inline-block w-16 text-center border border-white/30 px-2 py-1 font-mono text-xl cursor-text bg-black hover:bg-white/10"
-            onClick={() => copyTextToClipboard(group.code)}
-            title="Copy to clipboard"
-            value={group.code}
-          />
-          <button onClick={onLeaveGroup} className="border p-2">
-            Leave group
-          </button>
-        </div>
-      )}
-    </div>
-  );
 }
 
 export const DemoPlayer = ({ demoUrl }) => {
@@ -164,7 +96,7 @@ export const DemoPlayer = ({ demoUrl }) => {
       <div className="flex min-h-[800px]">
         <div className="flex flex-col grow">
           <div className="flex grow bg-black items-center justify-center max-h-[60vh]">
-            {false && (
+            {true && (
               <FteComponent
                 demoFilename={demoFilename}
                 map={demoMapName}
@@ -213,11 +145,9 @@ export const DemoPlayer = ({ demoUrl }) => {
             <div>Playlist</div>
             <div>Related demos</div>
           </div>
-          <div className="grow bg-blue-400/10 h-1">
-            <Chat />
-          </div>
+          <div className="grow bg-blue-400/10 h-1">{false && <Chat />}</div>
 
-          <ChatInput />
+          {false && <ChatInput />}
         </div>
       </div>
     </>
