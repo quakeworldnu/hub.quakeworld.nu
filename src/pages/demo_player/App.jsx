@@ -12,9 +12,8 @@ import {
   demoUrlToQuakeRelativePath,
 } from "./demoUtil";
 import { Chat, ChatInput } from "@qwhub/pages/demo_player/Chat";
-import { useGroup, useUser } from "./hooks";
-import { UserNameInput } from "@qwhub/pages/demo_player/User";
-import copyTextToClipboard from "copy-text-to-clipboard";
+import { GroupInfo } from "@qwhub/pages/demo_player/GroupInfo";
+import { UserInfo } from "@qwhub/pages/demo_player/UserInfo";
 
 function getCurrentUrlWithoutQueryString() {
   return window.location.href.split("?")[0];
@@ -153,12 +152,14 @@ export const DemoPlayer = ({ demoUrl }) => {
             </span>
           ))}
         </div>
-        <div className="opacity-80">
-          <div className="space-y-4">
-            <UserInfo />
-            <GroupInfo />
+        {false && (
+          <div className="opacity-80">
+            <div className="space-y-4">
+              <UserInfo />
+              <GroupInfo />
+            </div>
           </div>
-        </div>
+        )}
       </div>
       <div className="flex min-h-[800px]">
         <div className="flex flex-col grow">
