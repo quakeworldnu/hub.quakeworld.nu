@@ -4,6 +4,7 @@ import {
   faVolumeLow,
   faVolumeMute,
 } from "@fortawesome/free-solid-svg-icons";
+import classNames from "classnames";
 
 export const VolumeSlider = ({ volume, disabled, onChange }) => {
   function onChange_(e) {
@@ -17,6 +18,7 @@ export const VolumeSlider = ({ volume, disabled, onChange }) => {
         width: "6em",
         margin: "10px",
       }}
+      className={classNames({ "opacity-40": disabled })}
       min="0"
       max="1"
       step="0.01"
