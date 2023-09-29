@@ -1,5 +1,6 @@
 //  import { document, window } from "browser-monads";
 import screenfull from "screenfull";
+import { useInterval } from "usehooks-ts";
 
 import {
   getAssets,
@@ -51,25 +52,29 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
   const easingTime = 1500.0;
 
   useEffect(() => {
-    console.log("Mount");
-    const assets = getAssets(demoUrl, map);
-    setState({ ...state, numAssets: Object.keys(assets).length });
+    function onMount() {
+      console.log("Mount");
+      const assets = getAssets(demoUrl, map);
+      setState({ ...state, numAssets: Object.keys(assets).length });
 
-    const fteScript = document.createElement("script");
-    fteScript.src = withPrefix("/ftewebgl.js");
-    document.head.appendChild(fteScript);
+      const fteScript = document.createElement("script");
+      fteScript.src = withPrefix("/ftewebgl.js");
+      document.head.appendChild(fteScript);
 
-    window.Module = {
-      canvas: canvasRef.current,
-      files: assets,
-      setStatus: updateLoadProgress,
-    };
+      window.Module = {
+        canvas: canvasRef.current,
+        files: assets,
+        setStatus: updateLoadProgress,
+      };
 
-    screenfull.on("change", onResize);
-    window.addEventListener("resize", onResize);
+      screenfull.on("change", onResize);
+      window.addEventListener("resize", onResize);
+    }
 
-    setInterval(onFteRefresh, refreshInterval);
+    onMount();
   }, []);
+
+  useInterval(onFteRefresh, refreshInterval);
 
   function updateLoadProgress(text) {
     const found = text.match(/.+ [(]([^/]+)\/([^)]+)[)]/);
@@ -177,7 +182,7 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
 
   function onVolumeLevelChange(volume) {
     fteCommand(`volume ${volume}`);
-    setState({ ...state, volume });
+    setState({ ...state, volume: parseFloat(volume) });
   }
 
   function onVolumeMuteToggle(volumeMuted) {
@@ -262,10 +267,15 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
             cursor: state.playerControlTimeout ? "auto" : "none",
           }}
         />
+
         <div
           className={"flex absolute bottom-0 w-full z-10 transition-opacity"}
         >
           <div className={"flex w-full flex-wrap bg-black/60"}>
+            <div className="w-full p-4">
+              <pre>{JSON.stringify(state, null, 2)}</pre>
+            </div>
+
             <div
               className={
                 "flex relative w-full h-6 bg-neutral-500 cursor-pointer m-3"
