@@ -1,36 +1,30 @@
 import { FormEvent, useEffect } from "react";
-import { useLocalStorage } from "@uidotdev/usehooks";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
-import { Id } from "../../../convex/_generated/dataModel";
-import type { ChatMessage, User } from "../../../convex/schema.ts";
+import type { GroupId, Message } from "../../../convex/schema.ts";
+import { useUser } from "./hooks.ts";
+import * as classNames from "classnames";
 
 export function Chat() {
-  const [userObj] = useLocalStorage<User | null>("demoplayer_user", null);
+  const { user } = useUser();
 
-  if (userObj === null) {
+  if (!user?.groupId) {
     return (
       <div className="p-4 text-gray-400 text-sm">
-        Start a group session to enable chat.
+        Start or join a group to enable chat.
       </div>
     );
   }
 
   return (
     <>
-      <ChatMessages
-        sessionId={userObj.sessionId as Id<"demoplayer_sessions">}
-      />
+      <ChatMessages groupId={user.groupId} />
     </>
   );
 }
 
-export function ChatMessages({
-  sessionId,
-}: {
-  sessionId: Id<"demoplayer_sessions">;
-}) {
-  const messages = useQuery(api.demoplayer_chats.list, { sessionId });
+export function ChatMessages({ groupId }: { groupId: GroupId }) {
+  const messages = useQuery(api.messages.list, { groupId: groupId });
 
   useEffect(() => {
     if (messages && messages?.length > 0) {
@@ -49,7 +43,7 @@ export function ChatMessages({
   );
 }
 
-function ChatMessage({ message }: { message: ChatMessage }) {
+function ChatMessage({ message }: { message: Message }) {
   const time = new Date(message._creationTime).toLocaleTimeString();
 
   return (
@@ -62,12 +56,11 @@ function ChatMessage({ message }: { message: ChatMessage }) {
 }
 
 export function ChatInput() {
-  const addMessage = useMutation(api.demoplayer_chats.add);
-  const [sessionIdStr] = useLocalStorage<string>("demoplayer_session_id", "");
-  const [userObj] = useLocalStorage<User | null>("demoplayer_user", null);
+  const addMessage = useMutation(api.messages.add);
+  const { user } = useUser();
 
   async function onSubmit(e: FormEvent) {
-    if ("" === sessionIdStr) {
+    if (!user?.groupId) {
       return;
     }
 
@@ -81,8 +74,8 @@ export function ChatInput() {
 
     input.value = "";
     await addMessage({
-      sessionId: sessionIdStr as Id<"demoplayer_sessions">,
-      name: userObj?.name || "Anonymous",
+      groupId: user.groupId,
+      name: user.name,
       content,
     });
   }
@@ -90,9 +83,12 @@ export function ChatInput() {
   return (
     <form onSubmit={onSubmit}>
       <input
-        disabled={!sessionIdStr}
+        disabled={!user?.groupId}
         type="text"
-        className="bg-white/5 border border-sky-200/20 w-full p-4 text-white"
+        className={classNames(
+          { hidden: !user?.groupId },
+          "bg-white/5 border border-sky-200/20 w-full p-4 text-white",
+        )}
         id="ChatMessageInput"
       />
     </form>

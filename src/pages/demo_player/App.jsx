@@ -12,7 +12,8 @@ import {
   demoUrlToQuakeRelativePath,
 } from "./demoUtil";
 import { Chat, ChatInput } from "@qwhub/pages/demo_player/Chat";
-import { useUser } from "@qwhub/pages/demo_player/user";
+import { useGroup, useUser } from "./hooks";
+import { UserNameInput } from "@qwhub/pages/demo_player/User";
 
 function getCurrentUrlWithoutQueryString() {
   return window.location.href.split("?")[0];
@@ -61,16 +62,65 @@ function demoUrlToBreadcrumbs(demoUrl) {
   return parts.slice(0, parts.length - 1).map((p) => p.replaceAll("_", " "));
 }
 
-export function Session() {
-  const { user, clearUser, isLoading } = useUser();
+export function UserInfo() {
+  const { user } = useUser();
 
-  if (isLoading) {
-    return <div>loading...</div>;
+  if (!user) {
+    return <div>loading..</div>;
+  }
+  return (
+    <div>
+      <div>
+        <strong>User</strong>
+      </div>
+      <div>
+        <UserNameInput /> [{user.uuid}]
+      </div>
+    </div>
+  );
+}
+
+export function GroupInfo() {
+  const { group, join, leave } = useGroup();
+  const onCreateGroup = async () => await join();
+  const onLeaveGroup = async () => await leave();
+
+  async function onJoinGroup() {
+    const code = document.getElementById("GroupCode").value.trim();
+    await join(code);
   }
 
   return (
     <div>
-      {user.name} [{user.uuid}] <button onClick={clearUser}>clear</button>
+      <div>
+        <strong>Group</strong>
+      </div>
+
+      {!group && (
+        <div className="flex items-center space-x-6">
+          <button onClick={onCreateGroup} className="p-2 border">
+            Create group
+          </button>
+          <div className="flex items-center">
+            <input
+              type="text"
+              className="border p-2 bg-black text-white"
+              id="GroupCode"
+            />
+            <button onClick={onJoinGroup} className="p-2 border">
+              Join group
+            </button>
+          </div>
+        </div>
+      )}
+      {group && (
+        <div className="flex items-center space-x-6">
+          <div>{group.code}</div>
+          <button onClick={onLeaveGroup} className="border p-2">
+            Leave group
+          </button>
+        </div>
+      )}
     </div>
   );
 }
@@ -96,7 +146,10 @@ export const DemoPlayer = ({ demoUrl }) => {
           ))}
         </div>
         <div className="opacity-80">
-          <Session />
+          <div className="space-y-4">
+            <UserInfo />
+            <GroupInfo />
+          </div>
         </div>
       </div>
       <div className="flex min-h-[800px]">
@@ -155,7 +208,7 @@ export const DemoPlayer = ({ demoUrl }) => {
             <Chat />
           </div>
 
-          {false && <ChatInput />}
+          <ChatInput />
         </div>
       </div>
     </>
