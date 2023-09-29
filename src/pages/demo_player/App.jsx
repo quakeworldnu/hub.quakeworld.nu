@@ -14,6 +14,7 @@ import {
 import { Chat, ChatInput } from "@qwhub/pages/demo_player/Chat";
 import { useGroup, useUser } from "./hooks";
 import { UserNameInput } from "@qwhub/pages/demo_player/User";
+import copyTextToClipboard from "copy-text-to-clipboard";
 
 function getCurrentUrlWithoutQueryString() {
   return window.location.href.split("?")[0];
@@ -115,7 +116,14 @@ export function GroupInfo() {
       )}
       {group && (
         <div className="flex items-center space-x-6">
-          <div>{group.code}</div>
+          <input
+            type="text"
+            disabled
+            className="inline-block w-16 text-center border border-white/30 px-2 py-1 font-mono text-xl cursor-text bg-black hover:bg-white/10"
+            onClick={() => copyTextToClipboard(group.code)}
+            title="Copy to clipboard"
+            value={group.code}
+          />
           <button onClick={onLeaveGroup} className="border p-2">
             Leave group
           </button>

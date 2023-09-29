@@ -7,6 +7,8 @@ import * as classNames from "classnames";
 
 export function Chat() {
   const { user } = useUser();
+  const members =
+    useQuery(api.groups.members, { id: user?.groupId || null }) || [];
 
   if (!user?.groupId) {
     return (
@@ -18,6 +20,9 @@ export function Chat() {
 
   return (
     <>
+      <div className="bg-black/40 border-b border-white/10 p-3 text-xs">
+        [users] {members.map((m) => m.name).join(", ")}
+      </div>
       <ChatMessages groupId={user.groupId} />
     </>
   );
