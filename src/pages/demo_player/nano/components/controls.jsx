@@ -17,7 +17,7 @@ export const GameTime = ({ total, elapsed }) => {
 };
 export const PlayToggle = ({ isPlaying, onClick }) => {
   return (
-    <button className="w-32 border" title="Play" onClick={onClick}>
+    <button className="w-32 py-3" title="Play" onClick={onClick}>
       <FontAwesomeIcon icon={isPlaying ? faPlay : faPause} />{" "}
       {isPlaying ? "playing" : "not playing"}
     </button>

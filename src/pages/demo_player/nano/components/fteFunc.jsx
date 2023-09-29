@@ -1,4 +1,3 @@
-import * as playerStyle from "./fte.module.scss";
 //  import { document, window } from "browser-monads";
 import screenfull from "screenfull";
 
@@ -248,13 +247,13 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
       onBlur={onMouseLeave}
-      className={playerStyle.videoPlayer}
+      className={"fte w-full h-full relative bg-black aspect-video"}
     >
       <div>
         <canvas
           id="canvas"
           ref={canvasRef}
-          className={playerStyle.emscripten}
+          className={"absolute w-full h-full"}
           onClick={onPlayToggle}
           onDoubleClick={toggleFullscreen}
           onTouchStart={onTouchStart}
@@ -263,12 +262,22 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
             cursor: state.playerControlTimeout ? "auto" : "none",
           }}
         />
-        <div className={playerStyle.playerControls}>
-          <div className={playerStyle.playerControlsShowInner}>
-            <div className={playerStyle.videoProgress} onClick={onDemoSeek}>
+        <div
+          className={"flex absolute bottom-0 w-full z-10 transition-opacity"}
+        >
+          <div className={"flex w-full flex-wrap bg-black/60"}>
+            <div
+              className={
+                "flex relative w-full h-6 bg-neutral-500 cursor-pointer m-3"
+              }
+              onClick={onDemoSeek}
+            >
               <div
-                className={playerStyle.videoProgressFilled}
-                style={{ width: gametimeProgress }}
+                className={"w-0 bg-purple-700 border-r-2"}
+                style={{
+                  width: gametimeProgress,
+                  transition: "width 0.3s ease",
+                }}
               ></div>
             </div>
 
