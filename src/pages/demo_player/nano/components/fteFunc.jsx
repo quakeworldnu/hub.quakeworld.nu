@@ -46,7 +46,7 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
   const [state, setState] = useState(defaulState);
   const canvasRef = createRef();
   const playerRef = createRef();
-  const refreshInterval = 15000;
+  const refreshInterval = 250;
 
   // const duration = secondsToString(duration);
   const easingTime = 1500.0;
@@ -138,19 +138,6 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
     // This is a hack, seeking causes player to switch
     if (state.gametime > 0 && state.initialPlayer) {
       fteCommand("track " + state.initialPlayer); // cmd: users for userId
-    }
-  }
-
-  function onCanvasClick(event) {
-    switch (event.detail) {
-      case 1:
-        onPlayToggle();
-        break;
-      case 2:
-        toggleFullscreen();
-        break;
-      default:
-        break;
     }
   }
 
@@ -250,10 +237,10 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
   const gametimeProgress =
     ((state.gametime / duration) * 100.0).toString() + "%";
   /*const loadProgress = state.numAssets
-          ? Math.round(state.loadProgress / state.numAssets)
-          : 0;
-      
-        console.log("loadProgress", loadProgress);*/
+              ? Math.round(state.loadProgress / state.numAssets)
+              : 0;
+          
+            console.log("loadProgress", loadProgress);*/
 
   return (
     <div
@@ -268,7 +255,8 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
           id="canvas"
           ref={canvasRef}
           className={playerStyle.emscripten}
-          onClick={onCanvasClick}
+          onClick={onPlayToggle}
+          onDoubleClick={toggleFullscreen}
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
           style={{
