@@ -1,22 +1,22 @@
 //  import { document, window } from "browser-monads";
 import screenfull from "screenfull";
-import { useInterval, useEffectOnce } from "usehooks-ts";
+import { useCounter, useEffectOnce, useInterval, useScript } from "usehooks-ts";
 
 import {
   getAssets,
   withPrefix,
-} from "@qwhub/pages/demo_player/nano/components/assets";
+} from "@qwhub/pages/demo_player/DemoPlayer/components/assets";
 import { createRef, useEffect, useState } from "react";
 import {
   VolumeSlider,
   VolumeToggle,
-} from "@qwhub/pages/demo_player/nano/components/Volume";
+} from "@qwhub/pages/demo_player/DemoPlayer/components/Volume";
 import {
   GameTime,
   PlayToggleButton,
   ToggleFullscreenButton,
   ToggleSlowMotionButton,
-} from "@qwhub/pages/demo_player/nano/components/controls";
+} from "@qwhub/pages/demo_player/DemoPlayer/components/controls";
 
 function fteCommand(command) {
   try {
@@ -27,9 +27,6 @@ function fteCommand(command) {
 }
 
 const defaulState = {
-  loadProgress: 0,
-  demo: null,
-
   gametime: 0,
   isPlaying: true,
   playbackSpeed: 100,
@@ -39,7 +36,6 @@ const defaulState = {
   volumeMuted: false,
   playerControlTimeout: 0,
   firstRefresh: true,
-  numAssets: 0,
 };
 
 export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
@@ -47,39 +43,47 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
   const canvasRef = createRef();
   const playerRef = createRef();
   const refreshInterval = 250;
+  const gameAssets = getAssets(demoUrl, map);
+  const { count: numberOfLoadedAssets, increment: incrementLoadedAssets } =
+    useCounter(0);
+  const fteScriptStatus = useScript(withPrefix("/ftewebgl.js"), {
+    removeOnUnmount: true,
+  });
+  const [fteReady, setFteReady] = useState(false);
 
-  // const duration = secondsToString(duration);
+  console.log("FteComponent");
+
   const easingTime = 1500.0;
 
   useEffectOnce(() => {
-    function onMount() {
-      console.log("Mount");
-      const assets = getAssets(demoUrl, map);
-      setState({ ...state, numAssets: Object.keys(assets).length });
-
-      const fteScript = document.createElement("script");
-      fteScript.src = withPrefix("/ftewebgl.js");
-      document.head.appendChild(fteScript);
-
-      window.Module = {
-        canvas: canvasRef.current,
-        files: assets,
-        setStatus: updateLoadProgress,
-      };
-
-      screenfull.on("change", onResize);
-      window.addEventListener("resize", onResize);
-    }
-
-    onMount();
+    window.Module = {
+      canvas: canvasRef.current,
+      files: gameAssets,
+      setStatus: onStatusChange,
+    };
   });
 
-  useInterval(onFteRefresh, refreshInterval);
+  useEffect(() => {
+    if (fteReady) {
+      return;
+    }
 
-  function updateLoadProgress(text) {
-    const found = text.match(/.+ [(]([^/]+)\/([^)]+)[)]/);
-    if (found && found.length === 3 && found[1] === found[2]) {
-      setState({ ...state, loadProgress: state.loadProgress + 1 });
+    if ("ready" === fteScriptStatus) {
+      setFteReady(true);
+      console.log("########################## FTE ready");
+      console.log(window.Module);
+    }
+  }, [fteScriptStatus]);
+
+  useInterval(onFteRefresh, fteReady ? refreshInterval : null);
+
+  function onStatusChange(value) {
+    const assetRe = value.match(/.+ \((\d+)\/(\d+)\)/);
+    const isLoadedAsset =
+      assetRe && assetRe.length === 3 && assetRe[1] === assetRe[2];
+
+    if (isLoadedAsset) {
+      incrementLoadedAssets();
     }
   }
 
@@ -195,7 +199,6 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
     // Avoid spamming the react state
     if (state.playerControlTimeout - Date.now() < 2500) {
       setState({ ...state, playerControlTimeout: Date.now() + 3000 });
-      fteCommand("viewsize 120");
     }
   }
 
@@ -240,11 +243,7 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
 
   const gametimeProgress =
     ((state.gametime / duration) * 100.0).toString() + "%";
-  /*const loadProgress = state.numAssets
-              ? Math.round(state.loadProgress / state.numAssets)
-              : 0;
-          
-            console.log("loadProgress", loadProgress);*/
+  const totalAssets = Object.keys(gameAssets).length;
 
   return (
     <div
@@ -273,7 +272,18 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
         >
           <div className={"flex w-full flex-wrap bg-black/60"}>
             <div className="w-full p-4">
-              <pre>{JSON.stringify(state, null, 2)}</pre>
+              <pre>
+                {JSON.stringify(
+                  {
+                    ...state,
+                    totalAssets,
+                    loadedAssets: numberOfLoadedAssets,
+                    gametimeProgress,
+                  },
+                  null,
+                  2,
+                )}
+              </pre>
             </div>
 
             <div

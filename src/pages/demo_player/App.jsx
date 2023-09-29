@@ -4,7 +4,7 @@ import { SiteHeader } from "@qwhub/site/Header";
 import { SiteFooter } from "@qwhub/site/Footer";
 import { DemoDropdown } from "./DemoDropdown";
 
-import FteComponent from "./nano/components/fteFunc";
+import FteComponent from "./DemoPlayer/components/fte";
 import {
   demoFilenameToMapName,
   demoFilenameToTitle,
@@ -33,8 +33,6 @@ export const DemoPlayerApp = () => {
   const query = queryString.parse(location.search);
   const demoUrl = query.demoUrl ?? "";
 
-  return <DemoPlayer demoUrl={demoUrl} />;
-
   function onDemoDropdownChange(value) {
     const currentUrl = getCurrentUrlWithoutQueryString();
     window.location.href = `${currentUrl}?demoUrl=${value}`;
@@ -45,7 +43,7 @@ export const DemoPlayerApp = () => {
       {demoUrl && (
         <DemoDropdown onChange={onDemoDropdownChange} currentValue={demoUrl} />
       )}
-      {demoUrl && <DemoPlayer demoUrl={""} />}
+      {demoUrl && <DemoPlayer demoUrl={demoUrl} />}
       {!demoUrl && (
         <div className="flex flex-col justify-center items-center w-full h-[600px] bg-white/5 space-y-5">
           <div className="font-bold text-xl">Select a demo</div>

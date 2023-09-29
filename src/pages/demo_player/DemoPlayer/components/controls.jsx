@@ -1,4 +1,4 @@
-import { secondsToString } from "@qwhub/pages/demo_player/nano/components/time";
+import { secondsToString } from "@qwhub/pages/demo_player/DemoPlayer/components/time";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faExpand,
@@ -17,8 +17,8 @@ export const GameTime = ({ total, elapsed }) => {
 };
 export const PlayToggleButton = ({ isPlaying, onClick }) => {
   return (
-    <button className="w-12 py-3" title="Play" onClick={onClick}>
-      <FontAwesomeIcon icon={isPlaying ? faPlay : faPause} />
+    <button className="w-12 py-2" title="Play" onClick={onClick}>
+      <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
     </button>
   );
 };
