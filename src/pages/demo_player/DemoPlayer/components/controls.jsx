@@ -16,13 +16,6 @@ import classNames from "classnames";
 import { useEffect, useRef } from "react";
 import { useHover } from "usehooks-ts";
 
-export const Gametime = ({ total, elapsed }) => {
-  return (
-    <div className="flex mr-auto font-mono items-center">
-      {secondsToString(elapsed)} / {secondsToString(total)}
-    </div>
-  );
-};
 export const PlayToggleButton = ({ isPlaying, onClick }) => {
   return (
     <button className="w-12 py-2" title="Play" onClick={onClick}>
@@ -30,6 +23,7 @@ export const PlayToggleButton = ({ isPlaying, onClick }) => {
     </button>
   );
 };
+
 export const ToggleSlowMotionButton = ({ onClick }) => {
   return (
     <button className={"w-12"} onClick={onClick}>
@@ -37,6 +31,7 @@ export const ToggleSlowMotionButton = ({ onClick }) => {
     </button>
   );
 };
+
 export const ToggleFullscreenButton = ({ onClick, isFullscreen }) => {
   return (
     <button className={"w-12"} onClick={onClick}>

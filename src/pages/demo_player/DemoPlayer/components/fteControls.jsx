@@ -1,5 +1,4 @@
 import {
-  Gametime,
   PlayToggleButton,
   SeekBar,
   VolumeSlider,
@@ -7,6 +6,7 @@ import {
 } from "@qwhub/pages/demo_player/DemoPlayer/components/controls";
 import { useCounter, useEventListener, useInterval } from "usehooks-ts";
 import { useState } from "react";
+import { secondsToString } from "@qwhub/pages/demo_player/DemoPlayer/components/time";
 
 function useFteUpdateTriggers() {
   const { count, increment } = useCounter(0);
@@ -15,6 +15,7 @@ function useFteUpdateTriggers() {
   useEventListener("fte.unmute", increment);
   useEventListener("fte.play", increment);
   useEventListener("fte.pause", increment);
+  useEventListener("fte.track", increment);
   return count;
 }
 
@@ -52,12 +53,30 @@ export const FteControls = ({ fte, duration }) => {
         onChange={(v) => fte.setVolume(v)}
       />
 
-      <FteGametime fte={fte} duration={duration} />
+      <FteGametime fte={fte} durationStr={secondsToString(duration)} />
+
+      <Players players={fte.getPlayers()} onClick={(name) => fte.track(name)} />
     </>
   );
 };
 
-const FteGametime = ({ fte, duration }) => {
+const Players = ({ players, onClick }) => {
+  if (!players) {
+    return null;
+  }
+
+  return (
+    <div className="flex space-x-1 bg-black items-center px-2 ml-auto">
+      {players.map((p) => (
+        <button className="text-xs" key={p.id} onClick={() => onClick(p.name)}>
+          {p.name}
+        </button>
+      ))}
+    </div>
+  );
+};
+
+const FteGametime = ({ fte, durationStr }) => {
   const [gametime, setGametime] = useState(fte.getGametime());
   useInterval(() => setGametime(fte.getGametime()), 200);
 
@@ -65,5 +84,9 @@ const FteGametime = ({ fte, duration }) => {
     return null;
   }
 
-  return <Gametime total={duration} elapsed={gametime} />;
+  return (
+    <div className="flex mr-auto font-mono items-center">
+      {secondsToString(gametime)} / {durationStr}
+    </div>
+  );
 };

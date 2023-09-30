@@ -9,6 +9,7 @@ export class FteController {
   _isMuted;
   _volume;
   _speed;
+  _track;
 
   constructor(module) {
     this._module = module;
@@ -16,22 +17,23 @@ export class FteController {
     this._isMuted = false;
     this._volume = 0.5;
     this._speed = 100;
+    this._track = "";
 
     /*const eventHandlers = {
-      "fte.play": () => this.play(),
-      "fte.pause": () => this.pause(),
-      "fte.toggle_play": () => this.togglePlay(),
-      "fte.mute": () => this.mute(),
-      "fte.unmute": () => this.unmute(),
-      "fte.toggle_mute": () => this.toggleMute(),
-      "fte.set_volume": (e) => this.setVolume(e.detail.value),
-      "fte.set_speed": (e) => this.setSpeed(e.detail.value),
-      "fte.demo_jump": (e) => this.demoJump(e.detail.value),
-    };
-
-    for (const [key, value] of Object.entries(eventHandlers)) {
-      window.addEventListener(key, value);
-    }*/
+                  "fte.play": () => this.play(),
+                  "fte.pause": () => this.pause(),
+                  "fte.toggle_play": () => this.togglePlay(),
+                  "fte.mute": () => this.mute(),
+                  "fte.unmute": () => this.unmute(),
+                  "fte.toggle_mute": () => this.toggleMute(),
+                  "fte.set_volume": (e) => this.setVolume(e.detail.value),
+                  "fte.set_speed": (e) => this.setSpeed(e.detail.value),
+                  "fte.demo_jump": (e) => this.demoJump(e.detail.value),
+                };
+            
+                for (const [key, value] of Object.entries(eventHandlers)) {
+                  window.addEventListener(key, value);
+                }*/
   }
 
   get module() {
@@ -103,6 +105,26 @@ export class FteController {
 
   togglePlay() {
     this._isPaused ? this.play() : this.pause();
+  }
+
+  // track
+  autotrack() {
+    this.track("");
+  }
+
+  track(name = "") {
+    if (name === "") {
+      this.command("autotrack 1");
+    } else {
+      this.command("autotrack 0");
+      this.command("track " + name);
+    }
+    this._track = name;
+    fteEvent("track", { value: name });
+  }
+
+  getTrack() {
+    return this._track;
   }
 
   // volume
