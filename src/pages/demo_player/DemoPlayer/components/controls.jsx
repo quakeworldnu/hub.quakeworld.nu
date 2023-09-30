@@ -63,7 +63,7 @@ export function SeekBar({ onClick, max, value }) {
             <Slider.Range className="absolute bg-purple-800 group-hover:bg-purple-700 h-full rounded" />
           </Slider.Track>
           <Slider.Thumb
-            className="block rounded-full w-2 h-2 group-hover:w-4 group-hover:h-4 bg-purple-800 group-hover:bg-purple-700 focus:outline-none"
+            className="block w-1 h-1 bg-purple-800 group-hover:bg-purple-700 rounded-full group-hover:w-4 group-hover:h-4 focus:outline-none transition-size duration-100"
             aria-label="Seek"
           />
         </Slider.Root>
