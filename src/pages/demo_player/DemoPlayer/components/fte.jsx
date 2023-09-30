@@ -17,6 +17,7 @@ import {
   ToggleFullscreenButton,
   ToggleSlowMotionButton,
 } from "@qwhub/pages/demo_player/DemoPlayer/components/controls";
+import { FteController } from "@qwhub/pages/demo_player/DemoPlayer/components/fteController";
 
 function fteCommand(command) {
   try {
@@ -28,21 +29,25 @@ function fteCommand(command) {
 
 const defaulState = {
   gametime: 0,
-  isPlaying: true,
   playbackSpeed: 100,
   targetSpeed: 100,
   targetSpeedArrivalTime: 100,
-  volume: 0.1,
-  volumeMuted: false,
   playerControlTimeout: 0,
   firstRefresh: true,
 };
 
+const easingTime = 1500.0;
+const refreshInterval = 500;
+const canvasRef = createRef();
+const playerRef = createRef();
+
+const vlog = (arg1 = "", arg2 = "", arg3 = "") => {
+  console.log("############################", arg1, arg2, arg3);
+};
+
 export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
   const [state, setState] = useState(defaulState);
-  const canvasRef = createRef();
-  const playerRef = createRef();
-  const refreshInterval = 250;
+  const [fte, setFte] = useState(null);
   const gameAssets = getAssets(demoUrl, map);
   const { count: numberOfLoadedAssets, increment: incrementLoadedAssets } =
     useCounter(0);
@@ -51,41 +56,37 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
   });
   const [fteReady, setFteReady] = useState(false);
 
-  console.log("FteComponent");
+  useEffect(() => {
+    vlog("fteScriptStatus", fteScriptStatus);
+  }, [fteScriptStatus]);
 
-  const easingTime = 1500.0;
+  useEffect(() => {
+    setFte(new FteController(window.Module));
+  }, [fteReady]);
 
   useEffectOnce(() => {
     window.Module = {
       canvas: canvasRef.current,
       files: gameAssets,
-      setStatus: onStatusChange,
+      setStatus: function (value) {
+        if (value.includes("Running..")) {
+          setTimeout(() => {
+            setFteReady(true);
+          }, 500);
+        }
+
+        const assetRe = value.match(/.+ \((\d+)\/(\d+)\)/);
+        const isLoadedAsset =
+          assetRe && assetRe.length === 3 && assetRe[1] === assetRe[2];
+
+        if (isLoadedAsset) {
+          incrementLoadedAssets();
+        }
+      },
     };
   });
 
-  useEffect(() => {
-    if (fteReady) {
-      return;
-    }
-
-    if ("ready" === fteScriptStatus) {
-      setFteReady(true);
-      console.log("########################## FTE ready");
-      console.log(window.Module);
-    }
-  }, [fteScriptStatus]);
-
   useInterval(onFteRefresh, fteReady ? refreshInterval : null);
-
-  function onStatusChange(value) {
-    const assetRe = value.match(/.+ \((\d+)\/(\d+)\)/);
-    const isLoadedAsset =
-      assetRe && assetRe.length === 3 && assetRe[1] === assetRe[2];
-
-    if (isLoadedAsset) {
-      incrementLoadedAssets();
-    }
-  }
 
   function onFteRefresh() {
     if (window.Module.gametime) {
@@ -149,16 +150,6 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
     }
   }
 
-  function onPlayToggle() {
-    if (state.isPlaying) {
-      fteCommand("demo_setspeed 0");
-      setState({ ...state, isPlaying: false });
-    } else {
-      fteCommand("demo_setspeed " + state.playbackSpeed);
-      setState({ ...state, isPlaying: true });
-    }
-  }
-
   function onResize() {
     const width =
       window.screen.orientation.angle === 0
@@ -182,17 +173,6 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
     } else {
       screenfull.request(playerRef.current);
     }
-  }
-
-  function onVolumeLevelChange(volume) {
-    fteCommand(`volume ${volume}`);
-    setState({ ...state, volume: parseFloat(volume) });
-  }
-
-  function onVolumeMuteToggle(volumeMuted) {
-    setState({ ...state, volumeMuted });
-    const volume = volumeMuted ? 0 : state.volume;
-    fteCommand(`volume ${volume}`);
   }
 
   function onMouseMove() {
@@ -219,8 +199,8 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
     const playerWidth = playerRef.current.offsetWidth;
     const seekPosition =
       ((event.clientX - playerOffsetX) / playerWidth) * (duration + 10);
-    fteCommand("demo_jump " + Math.floor(seekPosition));
     setState({ ...state, playerControlTimeout: Date.now() + 3000 });
+    fte.demoJump(seekPosition);
   }
 
   function toggleSlowMotion(event) {
@@ -255,10 +235,10 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
     >
       <div>
         <canvas
-          id="canvas"
+          id="fteCanvas"
           ref={canvasRef}
           className={"absolute w-full h-full"}
-          onClick={onPlayToggle}
+          onClick={() => (fte ? fte.togglePlay() : null)}
           onDoubleClick={toggleFullscreen}
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
@@ -270,63 +250,65 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
         <div
           className={"flex absolute bottom-0 w-full z-10 transition-opacity"}
         >
-          <div className={"flex w-full flex-wrap bg-black/60"}>
-            <div className="w-full p-4">
-              <pre>
-                {JSON.stringify(
-                  {
-                    ...state,
-                    totalAssets,
-                    loadedAssets: numberOfLoadedAssets,
-                    gametimeProgress,
-                  },
-                  null,
-                  2,
-                )}
-              </pre>
-            </div>
+          {fte && (
+            <div className={"flex w-full flex-wrap bg-black/60"}>
+              <div className="w-full p-4">
+                <pre>
+                  {JSON.stringify(
+                    {
+                      ...state,
+                      totalAssets,
+                      loadedAssets: numberOfLoadedAssets,
+                      gametimeProgress,
+                    },
+                    null,
+                    2,
+                  )}
+                </pre>
+              </div>
 
-            <div
-              className={
-                "flex relative w-full h-6 bg-neutral-500 cursor-pointer m-3"
-              }
-              onClick={onDemoSeek}
-            >
               <div
-                className={"w-0 bg-purple-700 border-r-2"}
-                style={{
-                  width: gametimeProgress,
-                  transition: "width 0.3s ease",
-                }}
-              ></div>
+                className={
+                  "flex relative w-full h-6 bg-neutral-500 cursor-pointer m-3"
+                }
+                onClick={onDemoSeek}
+              >
+                <div
+                  className={"w-0 bg-purple-700 border-r-2"}
+                  style={{
+                    width: gametimeProgress,
+                    transition: "width 0.3s ease",
+                  }}
+                ></div>
+              </div>
+
+              <PlayToggleButton
+                onClick={() => fte.togglePlay()}
+                isPlaying={!fte.isPaused()}
+              />
+
+              <VolumeToggle
+                isMuted={fte.isMuted()}
+                volume={fte.volume()}
+                onClick={() => fte.toggleMute()}
+              />
+
+              <VolumeSlider
+                disabled={fte.isMuted()}
+                volume={fte.volume()}
+                onChange={(v) => fte.setVolume(v)}
+              />
+
+              <GameTime total={duration} elapsed={state.gametime} />
+
+              <ToggleFullscreenButton
+                onClick={toggleFullscreen}
+                isFullscreen={screenfull.isFullscreen}
+              />
+
+              <ToggleSlowMotionButton onClick={toggleSlowMotion} />
             </div>
-
-            <PlayToggleButton
-              onClick={onPlayToggle}
-              isPlaying={state.isPlaying}
-            />
-
-            <VolumeToggle
-              isMuted={state.volumeMuted}
-              volume={state.volume}
-              onChange={onVolumeMuteToggle}
-            />
-
-            <VolumeSlider
-              disabled={state.volumeMuted}
-              volume={state.volume}
-              onChange={onVolumeLevelChange}
-            />
-
-            <GameTime total={duration} elapsed={state.gametime} />
-
-            <ToggleFullscreenButton
-              onClick={toggleFullscreen}
-              isFullscreen={screenfull.isFullscreen}
-            />
-
-            <ToggleSlowMotionButton onClick={toggleSlowMotion} />
-          </div>
+          )}
         </div>
       </div>
     </div>

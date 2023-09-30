@@ -28,11 +28,7 @@ export const VolumeSlider = ({ volume, disabled, onChange }) => {
     />
   );
 };
-export const VolumeToggle = ({ volume, isMuted, onChange }) => {
-  function onClick() {
-    onChange(!isMuted);
-  }
-
+export const VolumeToggle = ({ volume, isMuted, onClick }) => {
   return (
     <button className="w-12" title="Volume" onClick={onClick}>
       <FontAwesomeIcon icon={getVolumeIcon(volume, isMuted)} />
