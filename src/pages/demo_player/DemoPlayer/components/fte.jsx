@@ -4,28 +4,15 @@ import { useCounter, useEffectOnce, useInterval, useScript } from "usehooks-ts";
 
 import { withPrefix } from "@qwhub/pages/demo_player/DemoPlayer/components/assets";
 import { createRef, useEffect, useState } from "react";
-import {
-  GameTime,
-  PlayToggleButton,
-  SeekBar,
-  ToggleFullscreenButton,
-  ToggleSlowMotionButton,
-  VolumeSlider,
-  VolumeToggle,
-} from "@qwhub/pages/demo_player/DemoPlayer/components/controls";
 import { FteController } from "@qwhub/pages/demo_player/DemoPlayer/components/fteController";
 import { demoUrlToFilename } from "@qwhub/pages/demo_player/demoUtil";
-
-function fteCommand(command) {
-  try {
-    window.Module.execute(command);
-  } catch (e) {
-    console.log("fteCommand error: " + e);
-  }
-}
+import { FteControls } from "@qwhub/pages/demo_player/DemoPlayer/components/fteControls";
+import {
+  ToggleFullscreenButton,
+  ToggleSlowMotionButton,
+} from "@qwhub/pages/demo_player/DemoPlayer/components/controls";
 
 const defaulState = {
-  gametime: 0,
   playbackSpeed: 100,
   targetSpeed: 100,
   targetSpeedArrivalTime: 100,
@@ -85,32 +72,34 @@ export const FteComponent = ({ files, demoUrl, duration }) => {
   useInterval(onFteRefresh, fteReady ? refreshInterval : null);
 
   function onFteRefresh() {
-    if (window.Module.gametime) {
-      setState({ ...state, gametime: window.Module.gametime() });
+    if (!fte) {
+      return;
     }
+
+    const gametime = fte.getGametime();
 
     if (
       state.playerControlTimeout !== 0 &&
       state.playerControlTimeout < Date.now()
     ) {
-      fteCommand("viewsize 100");
+      fte.command("viewsize 100");
       setState({ ...state, playerControlTimeout: 0 });
     }
 
-    if (state.firstRefresh && state.gametime > 0) {
+    if (state.firstRefresh && gametime > 0) {
       onResize();
 
       // Workaround for not being able to bind an alias to TAB key for RQ demos
       const demoFilename = demoUrlToFilename(demoUrl);
       if (/.+.dem/.test(demoFilename)) {
-        fteCommand("bind tab +showteamscores");
+        fte.command("bind tab +showteamscores");
       }
 
       setState({ ...state, firstRefresh: false });
     }
 
-    if (state.loop && state.gametime >= state.initialPosition + state.loop) {
-      fteCommand("demo_jump " + state.initialPosition);
+    if (state.loop && gametime >= state.initialPosition + state.loop) {
+      fte.command("demo_jump " + state.initialPosition);
     }
 
     if (
@@ -119,7 +108,7 @@ export const FteComponent = ({ files, demoUrl, duration }) => {
     ) {
       const now = performance.now();
       if (now >= state.targetSpeedArrivalTime) {
-        fteCommand("demo_setspeed " + state.targetSpeed);
+        fte.command("demo_setspeed " + state.targetSpeed);
         setState({ ...state, playbackSpeed: state.targetSpeed });
       } else {
         const progress = (state.targetSpeedArrivalTime - now) / easingTime;
@@ -129,32 +118,36 @@ export const FteComponent = ({ files, demoUrl, duration }) => {
           const speed =
             state.playbackSpeed -
             (state.playbackSpeed - state.targetSpeed * 1.0) * easing;
-          fteCommand("demo_setspeed " + speed);
+          fte.command("demo_setspeed " + speed);
           setState({ ...state, playbackSpeed: speed });
         } else {
           const speed =
             state.playbackSpeed +
             (state.targetSpeed - state.playbackSpeed * 1.0) * easing;
-          fteCommand("demo_setspeed " + speed);
+          fte.command("demo_setspeed " + speed);
           setState({ ...state, playbackSpeed: speed });
         }
       }
     }
 
     // This is a hack, seeking causes player to switch
-    if (state.gametime > 0 && state.initialPlayer) {
-      fteCommand("track " + state.initialPlayer); // cmd: users for userId
+    if (gametime > 0 && state.initialPlayer) {
+      fte.command("track " + state.initialPlayer); // cmd: users for userId
     }
   }
 
   function onResize() {
+    if (!fte) {
+      return;
+    }
+
     const width =
       window.screen.orientation.angle === 0
         ? playerRef.current.clientWidth
         : playerRef.current.clientHeight;
 
     // Arbitrary scaling ratio based on 4 * DPI for 4k fullscreen.
-    fteCommand(
+    fte.command(
       "vid_conautoscale " +
         Math.ceil(4.0 * window.devicePixelRatio * (width / 3840.0)).toString(),
     );
@@ -170,30 +163,6 @@ export const FteComponent = ({ files, demoUrl, duration }) => {
     } else {
       screenfull.request(playerRef.current);
     }
-  }
-
-  function onMouseMove() {
-    // Avoid spamming the react state
-    if (state.playerControlTimeout - Date.now() < 2500) {
-      setState({ ...state, playerControlTimeout: Date.now() + 3000 });
-    }
-  }
-
-  function onMouseLeave() {
-    setState({ ...state, playerControlTimeout: Date.now() + 250 });
-  }
-
-  function onTouchStart() {
-    fteCommand("+scoreboard");
-  }
-
-  function onTouchEnd() {
-    fteCommand("-scoreboard");
-  }
-
-  function onDemoSeek(value) {
-    setState({ ...state, playerControlTimeout: Date.now() + 3000 });
-    fte.demoJump(value);
   }
 
   function toggleSlowMotion(event) {
@@ -214,16 +183,11 @@ export const FteComponent = ({ files, demoUrl, duration }) => {
     }
   }
 
-  const gametimeProgress =
-    ((state.gametime / duration) * 100.0).toString() + "%";
   const totalAssets = Object.keys(files).length;
 
   return (
     <div
       ref={playerRef}
-      onMouseMove={onMouseMove}
-      onMouseLeave={onMouseLeave}
-      onBlur={onMouseLeave}
       className={"fte w-full h-full relative bg-black aspect-video"}
     >
       <div>
@@ -233,8 +197,8 @@ export const FteComponent = ({ files, demoUrl, duration }) => {
           className={"absolute w-full h-full"}
           onClick={() => (fte ? fte.togglePlay() : null)}
           onDoubleClick={toggleFullscreen}
-          onTouchStart={onTouchStart}
-          onTouchEnd={onTouchEnd}
+          onTouchStart={() => (fte ? fte.command("+scoreboard") : null)}
+          onTouchEnd={() => (fte ? fte.command("-scoreboard") : null)}
           style={{
             cursor: state.playerControlTimeout ? "auto" : "none",
           }}
@@ -253,7 +217,6 @@ export const FteComponent = ({ files, demoUrl, duration }) => {
                       duration,
                       totalAssets,
                       loadedAssets: numberOfLoadedAssets,
-                      gametimeProgress,
                     },
                     null,
                     2,
@@ -261,37 +224,15 @@ export const FteComponent = ({ files, demoUrl, duration }) => {
                 </pre>
               </div>
 
-              <SeekBar
-                onChange={onDemoSeek}
-                max={duration}
-                value={state.gametime}
-              />
+              <FteControls fte={fte} duration={duration} />
 
-              <PlayToggleButton
-                onClick={() => fte.togglePlay()}
-                isPlaying={!fte.isPaused()}
-              />
-
-              <VolumeToggle
-                isMuted={fte.isMuted()}
-                volume={fte.volume()}
-                onClick={() => fte.toggleMute()}
-              />
-
-              <VolumeSlider
-                disabled={fte.isMuted()}
-                volume={fte.volume()}
-                onChange={(v) => fte.setVolume(v)}
-              />
-
-              <GameTime total={duration} elapsed={state.gametime} />
-
-              <ToggleSlowMotionButton onClick={toggleSlowMotion} />
-
-              <ToggleFullscreenButton
-                onClick={toggleFullscreen}
-                isFullscreen={screenfull.isFullscreen}
-              />
+              <div className="ml-auto">
+                <ToggleSlowMotionButton onClick={toggleSlowMotion} />
+                <ToggleFullscreenButton
+                  onClick={toggleFullscreen}
+                  isFullscreen={screenfull.isFullscreen}
+                />
+              </div>
             </div>
           )}
         </div>

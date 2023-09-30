@@ -1,3 +1,8 @@
+export function fteEvent(name, detail) {
+  const event = new CustomEvent(`fte.${name}`, { detail });
+  window.dispatchEvent(event);
+}
+
 export class FteController {
   _module;
   _isPaused;
@@ -11,6 +16,22 @@ export class FteController {
     this._isMuted = false;
     this._volume = 0.5;
     this._speed = 100;
+
+    /*const eventHandlers = {
+      "fte.play": () => this.play(),
+      "fte.pause": () => this.pause(),
+      "fte.toggle_play": () => this.togglePlay(),
+      "fte.mute": () => this.mute(),
+      "fte.unmute": () => this.unmute(),
+      "fte.toggle_mute": () => this.toggleMute(),
+      "fte.set_volume": (e) => this.setVolume(e.detail.value),
+      "fte.set_speed": (e) => this.setSpeed(e.detail.value),
+      "fte.demo_jump": (e) => this.demoJump(e.detail.value),
+    };
+
+    for (const [key, value] of Object.entries(eventHandlers)) {
+      window.addEventListener(key, value);
+    }*/
   }
 
   get module() {
@@ -18,16 +39,26 @@ export class FteController {
   }
 
   getPlayers() {
-    return this.module.player_info();
+    try {
+      return this.module.player_info();
+    } catch (e) {
+      return [];
+    }
   }
 
   getGametime() {
-    return this.module.gametime();
+    try {
+      return this.module.gametime();
+    } catch (e) {
+      console.log(e);
+      return 0;
+    }
   }
 
   command(command) {
     try {
       this.module.execute(command);
+      fteEvent("command", { value: command });
     } catch (e) {
       console.log("fte command error: " + e);
     }
@@ -38,22 +69,26 @@ export class FteController {
     return this._speed;
   }
 
-  setSpeed(value) {
-    this._speed = parseFloat(value);
+  setSpeed(speed) {
+    this._speed = parseFloat(speed);
     this.command("demo_setspeed " + this._speed);
+    fteEvent("speed", { value: this._speed });
   }
 
   demoJump(gametime) {
-    this.command("demo_jump " + Math.floor(gametime));
+    const gametime_ = Math.floor(gametime);
+    this.command("demo_jump " + gametime_);
+    fteEvent("demo_jump", { value: gametime_ });
   }
 
   play() {
     this._isPaused = false;
     this.command("demo_setspeed " + this._speed);
+    fteEvent("play");
   }
 
   isPlaying() {
-    return !this._isPaused;
+    return !this.isPaused();
   }
 
   isPaused() {
@@ -63,6 +98,7 @@ export class FteController {
   pause() {
     this._isPaused = true;
     this.command("demo_setspeed 0");
+    fteEvent("pause");
   }
 
   togglePlay() {
@@ -73,6 +109,7 @@ export class FteController {
   mute() {
     this._isMuted = true;
     this.command("volume 0");
+    fteEvent("mute");
   }
 
   isMuted() {
@@ -82,6 +119,7 @@ export class FteController {
   unmute() {
     this._isMuted = false;
     this.command("volume " + this._volume);
+    fteEvent("unmute");
   }
 
   toggleMute() {
@@ -98,6 +136,7 @@ export class FteController {
 
   setVolume(value) {
     this._volume = parseFloat(value);
+    fteEvent("volume", { value: this._volume });
 
     if (value > 0) {
       this.unmute();

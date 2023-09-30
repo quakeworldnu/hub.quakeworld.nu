@@ -16,7 +16,7 @@ import classNames from "classnames";
 import { useEffect, useRef } from "react";
 import { useHover } from "usehooks-ts";
 
-export const GameTime = ({ total, elapsed }) => {
+export const Gametime = ({ total, elapsed }) => {
   return (
     <div className="flex mr-auto font-mono items-center">
       {secondsToString(elapsed)} / {secondsToString(total)}
@@ -105,7 +105,6 @@ export function SeekBar({ onChange, max, value }) {
 
 export const VolumeSlider = ({ volume, disabled, onChange }) => {
   function _onChange(e) {
-    console.log("VolumeSlider onChange", e.target.value);
     onChange(e.target.value);
   }
 
@@ -126,6 +125,7 @@ export const VolumeSlider = ({ volume, disabled, onChange }) => {
     />
   );
 };
+
 export const VolumeToggle = ({ volume, isMuted, onClick }) => {
   return (
     <button className="w-12" title="Volume" onClick={onClick}>
@@ -133,6 +133,7 @@ export const VolumeToggle = ({ volume, isMuted, onClick }) => {
     </button>
   );
 };
+
 const getVolumeIcon = (volume, isMuted) => {
   if (isMuted) {
     return faVolumeMute;
