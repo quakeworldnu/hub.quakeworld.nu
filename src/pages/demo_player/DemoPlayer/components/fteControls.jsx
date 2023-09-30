@@ -6,6 +6,7 @@ import {
   VolumeToggle,
 } from "@qwhub/pages/demo_player/DemoPlayer/components/controls";
 import { useCounter, useEventListener, useInterval } from "usehooks-ts";
+import { useState } from "react";
 
 function useFteUpdateTriggers() {
   const { count, increment } = useCounter(0);
@@ -57,14 +58,12 @@ export const FteControls = ({ fte, duration }) => {
 };
 
 const FteGametime = ({ fte, duration }) => {
-  const { increment } = useCounter(0);
-
-  useInterval(increment, 1000);
-  useEventListener("fte.demo_jump", increment);
+  const [gametime, setGametime] = useState(fte.getGametime());
+  useInterval(() => setGametime(fte.getGametime()), 200);
 
   if (!fte) {
     return null;
   }
 
-  return <Gametime total={duration} elapsed={fte.getGametime()} />;
+  return <Gametime total={duration} elapsed={gametime} />;
 };
