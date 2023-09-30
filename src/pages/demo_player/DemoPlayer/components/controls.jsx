@@ -1,6 +1,7 @@
 import { secondsToString } from "@qwhub/pages/demo_player/DemoPlayer/components/time";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as Slider from "@radix-ui/react-slider";
+import { useMouse } from "@uidotdev/usehooks";
 import {
   faExpand,
   faGauge,
@@ -12,6 +13,8 @@ import {
   faVolumeMute,
 } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
+import { useEffect, useRef } from "react";
+import { useHover } from "usehooks-ts";
 
 export const GameTime = ({ total, elapsed }) => {
   return (
@@ -42,38 +45,70 @@ export const ToggleFullscreenButton = ({ onClick, isFullscreen }) => {
   );
 };
 
-export function SeekBar({ onClick, max, value }) {
-  const onValueCommit = (values) => {
+export function SeekBar({ onChange, max, value }) {
+  const hoverRef = useRef(null);
+  const tooltipRef = useRef(null);
+  const isHover = useHover(hoverRef);
+  const [mouse, hoverTargetRef] = useMouse();
+
+  function onValueCommit(values) {
     if (values.length > 0) {
-      onClick(values[0]);
+      onChange(values[0]);
     }
-  };
+  }
+
+  useEffect(() => {
+    if (!isHover) {
+      return;
+    }
+
+    const x = mouse.elementX;
+    const width = hoverTargetRef.current.getBoundingClientRect().width;
+    const progress = x / width;
+    tooltipRef.current.textContent = secondsToString(
+      Math.round(progress * max),
+    );
+    tooltipRef.current.style.left = `${x - 10}px`; // -10 to center tooltip
+  }, [isHover, mouse.elementX]);
 
   return (
-    <div className="flex w-full">
-      <form className="flex w-full mx-4">
-        <Slider.Root
-          className="relative flex items-center select-none touch-none w-full h-8 group cursor-pointer transition-colors"
-          defaultValue={[value]}
-          onValueCommit={onValueCommit}
-          max={max}
-          step={1}
-        >
-          <Slider.Track className="bg-gray-500 group-hover:bg-gray-400 relative grow h-1 group-hover:h-1.5 rounded">
-            <Slider.Range className="absolute bg-purple-800 group-hover:bg-purple-700 h-full rounded" />
-          </Slider.Track>
-          <Slider.Thumb
-            className="block w-1 h-1 bg-purple-800 group-hover:bg-purple-700 rounded-full group-hover:w-4 group-hover:h-4 focus:outline-none transition-size duration-100"
-            aria-label="Seek"
-          />
-        </Slider.Root>
-      </form>
+    <div className="w-full mx-4">
+      <div
+        className={classNames(
+          { hidden: !isHover },
+          "absolute bottom-20 text-xs font-mono px-2 py-1 bg-purple-800 text-white rounded",
+        )}
+        ref={tooltipRef}
+      >
+        MM:SS
+      </div>
+      <div className="w-full" ref={hoverRef}>
+        <form>
+          <Slider.Root
+            className="relative flex items-center select-none touch-none w-full h-8 group cursor-pointer transition-colors"
+            defaultValue={[value]}
+            onValueCommit={onValueCommit}
+            max={max}
+            step={1}
+            ref={hoverTargetRef}
+          >
+            <Slider.Track className="bg-gray-500 group-hover:bg-gray-400 relative grow h-1 group-hover:h-1.5">
+              <Slider.Range className="absolute bg-purple-800 group-hover:bg-purple-700 h-full" />
+            </Slider.Track>
+            <Slider.Thumb
+              className="block w-1 h-1 bg-purple-800 group-hover:bg-purple-600 rounded-full group-hover:w-4 group-hover:h-4 focus:outline-none transition-size duration-100"
+              aria-label="Seek"
+            />
+          </Slider.Root>
+        </form>
+      </div>
     </div>
   );
 }
 
 export const VolumeSlider = ({ volume, disabled, onChange }) => {
-  function onChange_(e) {
+  function _onChange(e) {
+    console.log("VolumeSlider onChange", e.target.value);
     onChange(e.target.value);
   }
 
@@ -85,12 +120,12 @@ export const VolumeSlider = ({ volume, disabled, onChange }) => {
         margin: "10px",
       }}
       className={classNames({ "opacity-40": disabled })}
-      min="0"
-      max="1"
-      step="0.01"
+      min={0}
+      max={1}
+      step={0.01}
       defaultValue={volume}
       disabled={disabled}
-      onChange={onChange_}
+      onChange={_onChange}
     />
   );
 };

@@ -262,7 +262,7 @@ export const FteComponent = ({ files, demoUrl, duration }) => {
               </div>
 
               <SeekBar
-                onClick={onDemoSeek}
+                onChange={onDemoSeek}
                 max={duration}
                 value={state.gametime}
               />
@@ -286,12 +286,12 @@ export const FteComponent = ({ files, demoUrl, duration }) => {
 
               <GameTime total={duration} elapsed={state.gametime} />
 
+              <ToggleSlowMotionButton onClick={toggleSlowMotion} />
+
               <ToggleFullscreenButton
                 onClick={toggleFullscreen}
                 isFullscreen={screenfull.isFullscreen}
               />
-
-              <ToggleSlowMotionButton onClick={toggleSlowMotion} />
             </div>
           )}
         </div>
