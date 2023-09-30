@@ -46,10 +46,10 @@ export const ToggleFullscreenButton = ({ onClick, isFullscreen }) => {
 };
 
 export function SeekBar({ onChange, max, value }) {
-  const hoverRef = useRef(null);
+  const sliderWrapperRef = useRef(null);
   const tooltipRef = useRef(null);
-  const isHover = useHover(hoverRef);
-  const [mouse, hoverTargetRef] = useMouse();
+  const isHover = useHover(sliderWrapperRef);
+  const [mouse, sliderRootRef] = useMouse();
 
   function onValueCommit(values) {
     if (values.length > 0) {
@@ -62,13 +62,12 @@ export function SeekBar({ onChange, max, value }) {
       return;
     }
 
-    const x = mouse.elementX;
-    const width = hoverTargetRef.current.getBoundingClientRect().width;
-    const progress = x / width;
+    const sliderWidth = sliderRootRef.current.getBoundingClientRect().width;
+    const progress = mouse.elementX / sliderWidth;
     tooltipRef.current.textContent = secondsToString(
       Math.round(progress * max),
     );
-    tooltipRef.current.style.left = `${x - 10}px`; // -10 to center tooltip
+    tooltipRef.current.style.left = `${mouse.elementX - 10}px`; // -10 to center tooltip
   }, [isHover, mouse.elementX]);
 
   return (
@@ -79,10 +78,8 @@ export function SeekBar({ onChange, max, value }) {
           "absolute bottom-20 text-xs font-mono px-2 py-1 bg-purple-800 text-white rounded",
         )}
         ref={tooltipRef}
-      >
-        MM:SS
-      </div>
-      <div className="w-full" ref={hoverRef}>
+      ></div>
+      <div className="w-full" ref={sliderWrapperRef}>
         <form>
           <Slider.Root
             className="relative flex items-center select-none touch-none w-full h-8 group cursor-pointer transition-colors"
@@ -90,7 +87,7 @@ export function SeekBar({ onChange, max, value }) {
             onValueCommit={onValueCommit}
             max={max}
             step={1}
-            ref={hoverTargetRef}
+            ref={sliderRootRef}
           >
             <Slider.Track className="bg-gray-500 group-hover:bg-gray-400 relative grow h-1 group-hover:h-1.5">
               <Slider.Range className="absolute bg-purple-800 group-hover:bg-purple-700 h-full" />
