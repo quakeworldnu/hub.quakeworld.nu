@@ -5,15 +5,13 @@ import { useCounter, useEffectOnce, useInterval, useScript } from "usehooks-ts";
 import { withPrefix } from "@qwhub/pages/demo_player/DemoPlayer/components/assets";
 import { createRef, useEffect, useState } from "react";
 import {
-  VolumeSlider,
-  VolumeToggle,
-} from "@qwhub/pages/demo_player/DemoPlayer/components/Volume";
-import {
   GameTime,
   PlayToggleButton,
   SeekBar,
   ToggleFullscreenButton,
   ToggleSlowMotionButton,
+  VolumeSlider,
+  VolumeToggle,
 } from "@qwhub/pages/demo_player/DemoPlayer/components/controls";
 import { FteController } from "@qwhub/pages/demo_player/DemoPlayer/components/fteController";
 import { demoUrlToFilename } from "@qwhub/pages/demo_player/demoUtil";
@@ -193,13 +191,9 @@ export const FteComponent = ({ files, demoUrl, duration }) => {
     fteCommand("-scoreboard");
   }
 
-  function onDemoSeek(event) {
-    const playerOffsetX = playerRef.current.offsetLeft;
-    const playerWidth = playerRef.current.offsetWidth;
-    const seekPosition =
-      ((event.clientX - playerOffsetX) / playerWidth) * (duration + 10);
+  function onDemoSeek(value) {
     setState({ ...state, playerControlTimeout: Date.now() + 3000 });
-    fte.demoJump(seekPosition);
+    fte.demoJump(value);
   }
 
   function toggleSlowMotion(event) {
@@ -267,7 +261,11 @@ export const FteComponent = ({ files, demoUrl, duration }) => {
                 </pre>
               </div>
 
-              <SeekBar onClick={onDemoSeek} progress={gametimeProgress} />
+              <SeekBar
+                onClick={onDemoSeek}
+                max={duration}
+                value={state.gametime}
+              />
 
               <PlayToggleButton
                 onClick={() => fte.togglePlay()}
