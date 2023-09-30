@@ -2,10 +2,7 @@
 import screenfull from "screenfull";
 import { useCounter, useEffectOnce, useInterval, useScript } from "usehooks-ts";
 
-import {
-  getAssets,
-  withPrefix,
-} from "@qwhub/pages/demo_player/DemoPlayer/components/assets";
+import { withPrefix } from "@qwhub/pages/demo_player/DemoPlayer/components/assets";
 import { createRef, useEffect, useState } from "react";
 import {
   VolumeSlider,
@@ -18,6 +15,7 @@ import {
   ToggleSlowMotionButton,
 } from "@qwhub/pages/demo_player/DemoPlayer/components/controls";
 import { FteController } from "@qwhub/pages/demo_player/DemoPlayer/components/fteController";
+import { demoUrlToFilename } from "@qwhub/pages/demo_player/demoUtil";
 
 function fteCommand(command) {
   try {
@@ -45,10 +43,9 @@ const vlog = (arg1 = "", arg2 = "", arg3 = "") => {
   console.log("############################", arg1, arg2, arg3);
 };
 
-export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
+export const FteComponent = ({ files, demoUrl, duration }) => {
   const [state, setState] = useState(defaulState);
   const [fte, setFte] = useState(null);
-  const gameAssets = getAssets(demoUrl, map);
   const { count: numberOfLoadedAssets, increment: incrementLoadedAssets } =
     useCounter(0);
   const fteScriptStatus = useScript(withPrefix("/ftewebgl.js"), {
@@ -67,7 +64,7 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
   useEffectOnce(() => {
     window.Module = {
       canvas: canvasRef.current,
-      files: gameAssets,
+      files,
       setStatus: function (value) {
         if (value.includes("Running..")) {
           setTimeout(() => {
@@ -105,6 +102,7 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
       onResize();
 
       // Workaround for not being able to bind an alias to TAB key for RQ demos
+      const demoFilename = demoUrlToFilename(demoUrl);
       if (/.+.dem/.test(demoFilename)) {
         fteCommand("bind tab +showteamscores");
       }
@@ -223,7 +221,7 @@ export const FteComponent = ({ demoFilename, map, demoUrl, duration }) => {
 
   const gametimeProgress =
     ((state.gametime / duration) * 100.0).toString() + "%";
-  const totalAssets = Object.keys(gameAssets).length;
+  const totalAssets = Object.keys(files).length;
 
   return (
     <div

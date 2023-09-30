@@ -14,6 +14,7 @@ import {
 import { Chat, ChatInput } from "@qwhub/pages/demo_player/Chat";
 import { GroupInfo } from "@qwhub/pages/demo_player/GroupInfo";
 import { UserInfo } from "@qwhub/pages/demo_player/UserInfo";
+import { getAssets } from "@qwhub/pages/demo_player/DemoPlayer/components/assets";
 
 function getCurrentUrlWithoutQueryString() {
   return window.location.href.split("?")[0];
@@ -69,6 +70,7 @@ export const DemoPlayer = ({ demoUrl }) => {
   const demoTitle = demoFilenameToTitle(demoFilename);
   const demoBreadcrumbs = demoUrlToBreadcrumbs(demoUrl);
   const demoEventTitle = demoBreadcrumbs.slice(-2).join(" / ");
+  const files = getAssets(demoUrl, demoMapName);
 
   return (
     <>
@@ -96,8 +98,7 @@ export const DemoPlayer = ({ demoUrl }) => {
           <div className="flex grow bg-black items-center justify-center max-h-[60vh]">
             {true && (
               <FteComponent
-                demoFilename={demoFilename}
-                map={demoMapName}
+                files={files}
                 demoUrl={demoUrl}
                 duration={demoDuration}
               />
