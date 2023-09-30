@@ -11,6 +11,7 @@ import {
 import {
   GameTime,
   PlayToggleButton,
+  SeekBar,
   ToggleFullscreenButton,
   ToggleSlowMotionButton,
 } from "@qwhub/pages/demo_player/DemoPlayer/components/controls";
@@ -255,6 +256,7 @@ export const FteComponent = ({ files, demoUrl, duration }) => {
                   {JSON.stringify(
                     {
                       ...state,
+                      duration,
                       totalAssets,
                       loadedAssets: numberOfLoadedAssets,
                       gametimeProgress,
@@ -265,20 +267,7 @@ export const FteComponent = ({ files, demoUrl, duration }) => {
                 </pre>
               </div>
 
-              <div
-                className={
-                  "flex relative w-full h-6 bg-neutral-500 cursor-pointer m-3"
-                }
-                onClick={onDemoSeek}
-              >
-                <div
-                  className={"w-0 bg-purple-700 border-r-2"}
-                  style={{
-                    width: gametimeProgress,
-                    transition: "width 0.3s ease",
-                  }}
-                ></div>
-              </div>
+              <SeekBar onClick={onDemoSeek} progress={gametimeProgress} />
 
               <PlayToggleButton
                 onClick={() => fte.togglePlay()}

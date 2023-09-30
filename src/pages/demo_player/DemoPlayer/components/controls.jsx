@@ -36,3 +36,20 @@ export const ToggleFullscreenButton = ({ onClick, isFullscreen }) => {
     </button>
   );
 };
+
+export function SeekBar({ onClick, progress }) {
+  return (
+    <div
+      className={"flex relative w-full h-6 bg-neutral-500 cursor-pointer m-3"}
+      onClick={onClick}
+    >
+      <div
+        className={"w-0 bg-purple-700 border-r-2"}
+        style={{
+          width: progress,
+          transition: "width 0.3s ease",
+        }}
+      ></div>
+    </div>
+  );
+}
