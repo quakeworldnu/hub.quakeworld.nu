@@ -129,11 +129,6 @@ export const FteComponent = ({ files, demoUrl, duration }) => {
         }
       }
     }
-
-    // This is a hack, seeking causes player to switch
-    if (gametime > 0 && state.initialPlayer) {
-      fte.command("track " + state.initialPlayer); // cmd: users for userId
-    }
   }
 
   function onResize() {

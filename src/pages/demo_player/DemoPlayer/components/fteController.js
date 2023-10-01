@@ -115,9 +115,25 @@ export class FteController {
   }
 
   demoJump(gametime) {
-    const gametime_ = Math.floor(gametime);
-    this.command("demo_jump " + gametime_);
-    fteEvent("demo_jump", { value: gametime_ });
+    const currentGametime = this.getGametime();
+    const currentUserid = this.getTrackUserid();
+
+    const newGametime = Math.floor(gametime);
+    this.command("demo_jump " + newGametime);
+
+    if (newGametime < currentGametime) { // backward seek
+      const restoreTrack = () => {
+        if (this._autotrackEnabled) {
+          this.autotrack();
+        } else {
+          this.track(currentUserid);
+        }
+      };
+
+      setTimeout(restoreTrack, 20);
+    }
+
+    fteEvent("demo_jump", { value: newGametime });
   }
 
   play() {
@@ -146,22 +162,15 @@ export class FteController {
 
   // track
   autotrack() {
-    this.track("");
+    this.command("autotrack 1");
+    this._autotrackEnabled = true;
   }
 
-  track(name = "") {
-    if (name === "") {
-      this.command("autotrack 1");
-    } else {
-      this.command("autotrack 0");
-      this.command("track " + name);
-    }
-    this._track = name;
-    fteEvent("track", { value: name });
-  }
-
-  getTrack() {
-    return this._track;
+  track(userid) {
+    this._autotrackEnabled = false;
+    this.command("autotrack 0");
+    this.command("track " + userid);
+    fteEvent("track", { value: userid });
   }
 
   // volume
