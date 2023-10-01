@@ -26,7 +26,7 @@ export const PlayToggleButton = ({ isPlaying, onClick }) => {
 
 export const ToggleSlowMotionButton = ({ onClick }) => {
   return (
-    <button className={"w-12"} onClick={onClick}>
+    <button className={"w-12 py-2"} onClick={onClick}>
       <FontAwesomeIcon icon={faGauge} />
     </button>
   );
@@ -34,7 +34,7 @@ export const ToggleSlowMotionButton = ({ onClick }) => {
 
 export const ToggleFullscreenButton = ({ onClick, isFullscreen }) => {
   return (
-    <button className={"w-12"} onClick={onClick}>
+    <button className={"w-12 py-2"} onClick={onClick}>
       <FontAwesomeIcon icon={isFullscreen ? faMinimize : faExpand} />
     </button>
   );
@@ -123,7 +123,7 @@ export const VolumeSlider = ({ volume, disabled, onChange }) => {
 
 export const VolumeToggle = ({ volume, isMuted, onClick }) => {
   return (
-    <button className="w-12" title="Volume" onClick={onClick}>
+    <button className="w-12 py-2" title="Volume" onClick={onClick}>
       <FontAwesomeIcon icon={getVolumeIcon(volume, isMuted)} />
     </button>
   );
