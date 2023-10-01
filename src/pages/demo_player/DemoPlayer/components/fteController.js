@@ -9,8 +9,7 @@ export class FteController {
   _isMuted;
   _volume;
   _speed;
-  _track;
-  _players;
+  _playerCache;
 
   constructor(module) {
     this._module = module;
@@ -18,8 +17,8 @@ export class FteController {
     this._isMuted = false;
     this._volume = 0.1;
     this._speed = 100;
-    this._track = "";
-    this._players = [];
+    this._playerCache = [];
+    this._autotrackEnabled = true;
 
     if (false) {
       const eventHandlers = {
@@ -75,13 +74,13 @@ export class FteController {
 
   // exposed functions from fte
   getPlayers() {
-    if (this._players.length > 0) {
-      return this._players;
+    if (this._playerCache.length > 0) {
+      return this._playerCache;
     }
 
     try {
-      this._players = this.module.player_info();
-      return this._players;
+      this._playerCache = this.module.player_info();
+      return this._playerCache;
     } catch (e) {
       return [];
     }
