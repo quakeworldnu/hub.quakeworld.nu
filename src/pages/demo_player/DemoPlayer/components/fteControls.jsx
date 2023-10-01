@@ -56,7 +56,10 @@ export const FteControls = ({ fte, duration }) => {
 
       <FteGametime fte={fte} durationStr={secondsToString(duration)} />
 
-      <Players players={fte.getPlayers()} onClick={(name) => fte.track(name)} />
+      <Players
+        players={fte.getPlayers()}
+        onClick={(playerId) => fte.track(playerId)}
+      />
     </>
   );
 };
@@ -69,12 +72,9 @@ const Players = ({ players, onClick }) => {
   return (
     <div className="flex space-x-1 bg-black items-center px-2 ml-auto">
       {players.map((p) => (
-        <button
-          className="text-xs"
-          key={p.name}
-          onClick={() => onClick(toPlainText(p.name))}
-        >
-          <span dangerouslySetInnerHTML={{ __html: toColoredHtml(p.name) }} />
+        <button className="text-xs" key={p.name} onClick={() => onClick(p.id)}>
+          <span dangerouslySetInnerHTML={{ __html: toColoredHtml(p.name) }} /> [
+          {p.id}]
         </button>
       ))}
     </div>

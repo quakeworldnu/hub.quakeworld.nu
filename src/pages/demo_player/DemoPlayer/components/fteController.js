@@ -10,6 +10,7 @@ export class FteController {
   _volume;
   _speed;
   _track;
+  _players;
 
   constructor(module) {
     this._module = module;
@@ -18,31 +19,68 @@ export class FteController {
     this._volume = 0.5;
     this._speed = 100;
     this._track = "";
+    this._players = [];
 
-    /*const eventHandlers = {
-                  "fte.play": () => this.play(),
-                  "fte.pause": () => this.pause(),
-                  "fte.toggle_play": () => this.togglePlay(),
-                  "fte.mute": () => this.mute(),
-                  "fte.unmute": () => this.unmute(),
-                  "fte.toggle_mute": () => this.toggleMute(),
-                  "fte.set_volume": (e) => this.setVolume(e.detail.value),
-                  "fte.set_speed": (e) => this.setSpeed(e.detail.value),
-                  "fte.demo_jump": (e) => this.demoJump(e.detail.value),
-                };
-            
-                for (const [key, value] of Object.entries(eventHandlers)) {
-                  window.addEventListener(key, value);
-                }*/
+    if (false) {
+      const eventHandlers = {
+        "fte.play": () => this.play(),
+        "fte.pause": () => this.pause(),
+        "fte.toggle_play": () => this.togglePlay(),
+        "fte.mute": () => this.mute(),
+        "fte.unmute": () => this.unmute(),
+        "fte.toggle_mute": () => this.toggleMute(),
+        "fte.set_volume": (e) => this.setVolume(e.detail.value),
+        "fte.set_speed": (e) => this.setSpeed(e.detail.value),
+        "fte.demo_jump": (e) => this.demoJump(e.detail.value),
+      };
+
+      for (const [key, value] of Object.entries(eventHandlers)) {
+        window.addEventListener(key, value);
+      }
+    }
   }
 
   get module() {
     return this._module;
   }
 
-  getPlayers() {
+  command(command) {
     try {
-      return this.module.player_info();
+      this.module.execute(command);
+      fteEvent("command", { value: command });
+    } catch (e) {
+      console.log("fte command error: " + e);
+    }
+  }
+
+  captureCommandOutput(command) {
+    const originalLog = console.log;
+    const messages = [];
+
+    function captureLog() {
+      messages.push(arguments[0]);
+    }
+
+    console.log = captureLog;
+
+    try {
+      this.command(command);
+    } catch (e) {
+      // ignore
+    }
+
+    console.log = originalLog;
+    return messages;
+  }
+
+  getPlayers() {
+    if (this._players.length > 0) {
+      return this._players;
+    }
+
+    try {
+      this._players = this.module.player_info();
+      return this._players;
     } catch (e) {
       return [];
     }
@@ -53,15 +91,6 @@ export class FteController {
       return this.module.gametime();
     } catch (e) {
       return 0;
-    }
-  }
-
-  command(command) {
-    try {
-      this.module.execute(command);
-      fteEvent("command", { value: command });
-    } catch (e) {
-      console.log("fte command error: " + e);
     }
   }
 
