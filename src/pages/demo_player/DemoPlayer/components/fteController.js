@@ -16,7 +16,7 @@ export class FteController {
     this._module = module;
     this._isPaused = false;
     this._isMuted = false;
-    this._volume = 0.2;
+    this._volume = 0.1;
     this._speed = 100;
     this._track = "";
     this._players = [];
@@ -196,10 +196,7 @@ export class FteController {
 
   setVolume(value) {
     this._volume = parseFloat(value);
+    this.command("volume " + this._volume);
     fteEvent("volume", { value: this._volume });
-
-    if (value > 0) {
-      this.unmute();
-    }
   }
 }

@@ -101,10 +101,11 @@ export function SeekBar({ onChange, max, value }) {
 
 export const VolumeSlider = ({ volume, disabled, onChange, max }) => {
   function _onChange(e) {
-    const percent = e.target.value / 100;
-    const newVolume = roundFloat(percent * max);
-    onChange(newVolume);
+    onChange(e.target.value);
   }
+
+  const stepCount = 100;
+  const stepSize = roundFloat(max / stepCount, 3);
 
   return (
     <div>
@@ -116,12 +117,13 @@ export const VolumeSlider = ({ volume, disabled, onChange, max }) => {
         }}
         className={classNames({ "opacity-40": disabled })}
         min={0}
-        max={100}
-        step={1}
+        max={max}
+        step={stepSize}
         defaultValue={volume}
         disabled={disabled}
         onChange={_onChange}
       />
+      {volume}
     </div>
   );
 };
