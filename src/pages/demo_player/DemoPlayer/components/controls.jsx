@@ -108,23 +108,20 @@ export const VolumeSlider = ({ volume, disabled, onChange, max }) => {
   const stepSize = roundFloat(max / stepCount, 3);
 
   return (
-    <div>
-      <input
-        type="range"
-        style={{
-          width: "6em",
-          margin: "10px",
-        }}
-        className={classNames({ "opacity-40": disabled })}
-        min={0}
-        max={max}
-        step={stepSize}
-        defaultValue={volume}
-        disabled={disabled}
-        onChange={_onChange}
-      />
-      {volume}
-    </div>
+    <input
+      type="range"
+      style={{
+        width: "6em",
+        margin: "10px",
+      }}
+      className={classNames({ "opacity-40": disabled })}
+      min={0}
+      max={max}
+      step={stepSize}
+      defaultValue={volume}
+      disabled={disabled}
+      onChange={_onChange}
+    />
   );
 };
 
