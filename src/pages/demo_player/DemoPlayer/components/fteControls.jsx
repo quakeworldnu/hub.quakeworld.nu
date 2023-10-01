@@ -60,16 +60,21 @@ export const FteControls = ({ fte, duration }) => {
       <Players
         players={fte.getPlayers()}
         onClick={(playerId) => fte.track(playerId)}
-        trackUserid={fte.getTrackUserid()}
+        getTrackUserid={() => fte.getTrackUserid()}
       />
     </>
   );
 };
 
-const Players = ({ players, onClick, trackUserid }) => {
+const Players = ({ players, onClick, getTrackUserid }) => {
+  const { increment } = useCounter(0);
+  useInterval(increment, 200);
+
   if (!players) {
     return null;
   }
+
+  const trackUserid = getTrackUserid();
 
   return (
     <div className="flex space-x-1 px-3 bg-black rounded-xl items-center">
@@ -78,8 +83,9 @@ const Players = ({ players, onClick, trackUserid }) => {
           className={classNames(
             {
               "bg-purple-600": p.id === trackUserid,
+              "bg-black": p.id !== trackUserid,
             },
-            "text-xs py-1 px-1.5 rounded bg-black",
+            "text-xs py-1 px-1.5 rounded transition-colors",
           )}
           key={p.name}
           onClick={() => onClick(p.id)}
