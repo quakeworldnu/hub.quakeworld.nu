@@ -7,7 +7,8 @@ import {
 import { useCounter, useEventListener, useInterval } from "usehooks-ts";
 import { useState } from "react";
 import { secondsToString } from "@qwhub/pages/demo_player/DemoPlayer/components/time";
-import { toColoredHtml, toPlainText } from "@qwhub/pages/demo_player/qwstrings";
+import { toColoredHtml } from "@qwhub/pages/demo_player/qwstrings";
+import classNames from "classnames";
 
 function useFteUpdateTriggers() {
   const { count, increment } = useCounter(0);
@@ -59,22 +60,31 @@ export const FteControls = ({ fte, duration }) => {
       <Players
         players={fte.getPlayers()}
         onClick={(playerId) => fte.track(playerId)}
+        trackUserid={fte.getTrackUserid()}
       />
     </>
   );
 };
 
-const Players = ({ players, onClick }) => {
+const Players = ({ players, onClick, trackUserid }) => {
   if (!players) {
     return null;
   }
 
   return (
-    <div className="flex space-x-1 bg-black items-center px-2 ml-auto">
+    <div className="flex space-x-1 px-3 bg-black rounded-xl items-center">
       {players.map((p) => (
-        <button className="text-xs" key={p.name} onClick={() => onClick(p.id)}>
-          <span dangerouslySetInnerHTML={{ __html: toColoredHtml(p.name) }} /> [
-          {p.id}]
+        <button
+          className={classNames(
+            {
+              "bg-purple-600": p.id === trackUserid,
+            },
+            "text-xs py-1 px-1.5 rounded bg-black",
+          )}
+          key={p.name}
+          onClick={() => onClick(p.id)}
+        >
+          <span dangerouslySetInnerHTML={{ __html: toColoredHtml(p.name) }} />
         </button>
       ))}
     </div>

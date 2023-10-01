@@ -73,6 +73,7 @@ export class FteController {
     return messages;
   }
 
+  // exposed functions from fte
   getPlayers() {
     if (this._players.length > 0) {
       return this._players;
@@ -89,6 +90,14 @@ export class FteController {
   getGametime() {
     try {
       return this.module.gametime();
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  getTrackUserid() {
+    try {
+      return this.module.track_userid();
     } catch (e) {
       return 0;
     }
