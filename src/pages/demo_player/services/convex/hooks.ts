@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
 import { useLocalStorage } from "usehooks-ts";
 import { useMutation, useQuery } from "convex/react";
-import { api } from "../../../convex/_generated/api";
+import { api } from "../../../../../convex/_generated/api";
 import { useEffect } from "react";
 
 export function useUuid() {

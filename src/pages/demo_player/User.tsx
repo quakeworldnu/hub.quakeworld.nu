@@ -1,4 +1,4 @@
-import { useUser } from "./hooks.ts";
+import { useUser } from "./services/convex/hooks.ts";
 import { FormEvent } from "react";
 
 export const UserNameInput = () => {

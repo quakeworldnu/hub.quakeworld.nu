@@ -1,16 +1,16 @@
 import { useCounter, useInterval } from "usehooks-ts";
 import { useState } from "react";
 
-export function useUpdateInterval(interval: number) {
+export function useUpdateInterval(delay: number) {
   const { count, increment } = useCounter(0);
-  useInterval(increment, interval);
+  useInterval(increment, delay);
   return count;
 }
 
-export function useGametime(getGametime: () => number, delay: number) {
-  const [value, setValue] = useState(getGametime());
+export function useResultByInterval(getValue: () => number, delay: number) {
+  const [value, setValue] = useState(getValue());
   useInterval(() => {
-    setValue(getGametime());
+    setValue(getValue());
   }, delay);
   return value;
 }

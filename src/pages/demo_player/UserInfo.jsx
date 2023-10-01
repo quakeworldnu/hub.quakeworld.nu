@@ -1,4 +1,4 @@
-import { useUser } from "@qwhub/pages/demo_player/hooks";
+import { useUser } from "@qwhub/pages/demo_player/services/convex/hooks";
 import { UserNameInput } from "@qwhub/pages/demo_player/User";
 import React from "react";
 

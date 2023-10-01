@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from "react";
 
-import { getDemoUrls } from "./aws.ts";
+import { getDemoUrls } from "./services/aws.ts";
 import { demoUrlToTitle } from "./demoUtil.ts";
 
 export function DemoDropdown(props: {

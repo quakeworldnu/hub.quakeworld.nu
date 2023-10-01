@@ -2,8 +2,8 @@ import { FormEvent, useEffect } from "react";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import type { GroupId, Message } from "../../../convex/schema.ts";
-import { useUser } from "./hooks.ts";
-import * as classNames from "classnames";
+import { useUser } from "./services/convex/hooks.ts";
+import classNames from "classnames";
 
 export function Chat() {
   const { user } = useUser();

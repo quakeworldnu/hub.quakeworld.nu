@@ -1,4 +1,4 @@
-import { useGroup } from "@qwhub/pages/demo_player/hooks";
+import { useGroup } from "@qwhub/pages/demo_player/services/convex/hooks";
 import copyTextToClipboard from "copy-text-to-clipboard";
 import React from "react";
 

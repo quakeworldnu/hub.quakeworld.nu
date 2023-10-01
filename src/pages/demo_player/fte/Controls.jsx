@@ -1,5 +1,4 @@
 import { useCounter, useEventListener } from "usehooks-ts";
-import { secondsToString } from "./time";
 import screenfull from "screenfull";
 import { toggleFullscreen } from "./player";
 import { VolumeSlider } from "./controls/VolumeSlider";
@@ -10,6 +9,7 @@ import { PlayToggle } from "./controls/PlayToggle";
 import { FullscreenToggle } from "./controls/FullscreenToggle";
 import { Track } from "./controls/Track";
 import { Time } from "./controls/Time";
+import { secondsToString } from "@qwhub/pages/demo_player/util";
 
 function useFteUpdateTriggers() {
   const { count, increment } = useCounter(0);
