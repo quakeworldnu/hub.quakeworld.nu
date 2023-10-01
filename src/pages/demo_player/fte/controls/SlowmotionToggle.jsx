@@ -1,6 +1,6 @@
 import { fa1, faDiceOne } from "@fortawesome/free-solid-svg-icons";
 
-import { IconToggleButton } from "@qwhub/pages/demo_player/DemoPlayer/fte/controls/IconToggleButton";
+import { IconToggleButton } from "@qwhub/pages/demo_player/fte/controls/IconToggleButton";
 
 const slow = 20;
 const normal = 100;

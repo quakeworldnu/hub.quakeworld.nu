@@ -1,4 +1,4 @@
-import { roundFloat } from "@qwhub/pages/demo_player/DemoPlayer/fte/math";
+import { roundFloat } from "@qwhub/pages/demo_player/fte/math";
 import classNames from "classnames";
 
 export const VolumeSlider = ({ volume, disabled, onChange, max }) => {

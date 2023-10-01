@@ -1,4 +1,4 @@
-import { useUpdateInterval } from "@qwhub/pages/demo_player/DemoPlayer/fte/hooks";
+import { useUpdateInterval } from "@qwhub/pages/demo_player/fte/hooks";
 import classNames from "classnames";
 import { toColoredHtml } from "@qwhub/pages/demo_player/qwstrings";
 
