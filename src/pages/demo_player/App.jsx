@@ -4,7 +4,7 @@ import { SiteHeader } from "@qwhub/site/Header";
 import { SiteFooter } from "@qwhub/site/Footer";
 import { DemoDropdown } from "./DemoDropdown";
 
-import FteComponent from "./DemoPlayer/components/fte";
+import FtePlayer from "./DemoPlayer/components/fte";
 import {
   demoFilenameToMapName,
   demoFilenameToTitle,
@@ -97,7 +97,7 @@ export const DemoPlayer = ({ demoUrl }) => {
         <div className="flex flex-col grow">
           <div className="flex grow bg-black items-center justify-center max-h-[60vh]">
             {true && (
-              <FteComponent
+              <FtePlayer
                 files={files}
                 demoUrl={demoUrl}
                 duration={demoDuration}

@@ -1,59 +1,28 @@
-//  import { document, window } from "browser-monads";
-import screenfull from "screenfull";
-import { useCounter, useEffectOnce, useInterval, useScript } from "usehooks-ts";
+import { useCounter, useEffectOnce, useScript } from "usehooks-ts";
 
-import { withPrefix } from "@qwhub/pages/demo_player/DemoPlayer/components/assets";
-import { createRef, useEffect, useState } from "react";
-import { FteController } from "@qwhub/pages/demo_player/DemoPlayer/components/fteController";
-import { demoUrlToFilename } from "@qwhub/pages/demo_player/demoUtil";
-import { FteControls } from "@qwhub/pages/demo_player/DemoPlayer/components/fteControls";
-import {
-  ToggleFullscreenButton,
-  ToggleSlowMotionButton,
-} from "@qwhub/pages/demo_player/DemoPlayer/components/controls";
-
-const defaulState = {
-  playbackSpeed: 100,
-  targetSpeed: 100,
-  targetSpeedArrivalTime: 100,
-};
-
-const easingTime = 1500.0;
-const refreshInterval = 500;
-const canvasRef = createRef();
-const playerRef = createRef();
+import { withPrefix } from "./assets";
+import { useState } from "react";
+import { FteController } from "./fteController";
+import { Controls } from "./Controls";
 
 const vlog = (arg1 = "", arg2 = "", arg3 = "") => {
   console.log("############################", arg1, arg2, arg3);
 };
 
-export const FteComponent = ({ files, demoUrl, duration }) => {
-  const [isFirstRefresh, setIsFirstRefresh] = useState(true);
-  const [state, setState] = useState(defaulState);
+function useFteAssetLoader(files) {
+  const scriptPath = withPrefix("/ftewebgl.js");
+  const scriptStatus = useScript(scriptPath, { removeOnUnmount: true });
+  const { count: loaded, increment } = useCounter(0);
   const [fte, setFte] = useState(null);
-  const { count: numberOfLoadedAssets, increment: incrementLoadedAssets } =
-    useCounter(0);
-  const fteScriptStatus = useScript(withPrefix("/ftewebgl.js"), {
-    removeOnUnmount: true,
-  });
-  const [fteReady, setFteReady] = useState(false);
-
-  useEffect(() => {
-    vlog("fteScriptStatus", fteScriptStatus);
-  }, [fteScriptStatus]);
-
-  useEffect(() => {
-    setFte(new FteController(window.Module));
-  }, [fteReady]);
 
   useEffectOnce(() => {
     window.Module = {
-      canvas: canvasRef.current,
+      canvas: document.getElementById("fteCanvas"),
       files,
       setStatus: function (value) {
         if (value.includes("Running..")) {
           setTimeout(() => {
-            setFteReady(true);
+            setFte(new FteController(window.Module));
           }, 500);
         }
 
@@ -62,125 +31,39 @@ export const FteComponent = ({ files, demoUrl, duration }) => {
           assetRe && assetRe.length === 3 && assetRe[1] === assetRe[2];
 
         if (isLoadedAsset) {
-          incrementLoadedAssets();
+          increment();
         }
       },
     };
   });
 
-  useInterval(onFteRefresh, fteReady ? refreshInterval : null);
+  return {
+    scriptStatus,
+    assets: {
+      total: Object.values(files).length,
+      loaded,
+    },
+    fte,
+  };
+}
 
-  function onFteRefresh() {
-    if (!fte) {
-      return;
-    }
-
-    const gametime = fte.getGametime();
-
-    if (isFirstRefresh && gametime > 0) {
-      onResize();
-
-      // Workaround for not being able to bind an alias to TAB key for RQ demos
-      const demoFilename = demoUrlToFilename(demoUrl);
-      if (/.+.dem/.test(demoFilename)) {
-        fte.command("bind tab +showteamscores");
-      }
-
-      setIsFirstRefresh(false);
-    }
-
-    if (
-      state.playbackSpeed !== 0 &&
-      state.playbackSpeed !== state.targetSpeed
-    ) {
-      const now = performance.now();
-      if (now >= state.targetSpeedArrivalTime) {
-        fte.command("demo_setspeed " + state.targetSpeed);
-        setState({ ...state, playbackSpeed: state.targetSpeed });
-      } else {
-        const progress = (state.targetSpeedArrivalTime - now) / easingTime;
-        const easing = 1 - progress * (2 - progress);
-
-        if (state.playbackSpeed > state.targetSpeed) {
-          const speed =
-            state.playbackSpeed -
-            (state.playbackSpeed - state.targetSpeed * 1.0) * easing;
-          fte.command("demo_setspeed " + speed);
-          setState({ ...state, playbackSpeed: speed });
-        } else {
-          const speed =
-            state.playbackSpeed +
-            (state.targetSpeed - state.playbackSpeed * 1.0) * easing;
-          fte.command("demo_setspeed " + speed);
-          setState({ ...state, playbackSpeed: speed });
-        }
-      }
-    }
-  }
-
-  function onResize() {
-    if (!fte) {
-      return;
-    }
-
-    const width =
-      window.screen.orientation.angle === 0
-        ? playerRef.current.clientWidth
-        : playerRef.current.clientHeight;
-
-    // Arbitrary scaling ratio based on 4 * DPI for 4k fullscreen.
-    fte.command(
-      "vid_conautoscale " +
-        Math.ceil(4.0 * window.devicePixelRatio * (width / 3840.0)).toString(),
-    );
-  }
-
-  function toggleFullscreen() {
-    if (!screenfull.isEnabled) {
-      return;
-    }
-
-    if (screenfull.isFullscreen) {
-      screenfull.exit();
-    } else {
-      screenfull.request(playerRef.current);
-    }
-  }
-
-  function toggleSlowMotion(event) {
-    if (!state.playbackSpeed === 0) {
-      if (state.targetSpeed === 100) {
-        setState({
-          ...state,
-          targetSpeed: 20,
-          targetSpeedArrivalTime: event.timeStamp + easingTime,
-        });
-      } else {
-        setState({
-          ...state,
-          targetSpeed: 100,
-          targetSpeedArrivalTime: event.timeStamp + easingTime,
-        });
-      }
-    }
-  }
-
-  const totalAssets = Object.keys(files).length;
+export const FtePlayer = ({ files, duration }) => {
+  const { fte, assets } = useFteAssetLoader(files);
 
   return (
     <div
-      ref={playerRef}
+      id="ftePlayer"
       className={"w-full h-full relative bg-black aspect-video"}
     >
+      <div>Loadiasdasdng: {JSON.stringify(assets, null, 2)}</div>
       <div>
         <canvas
           id="fteCanvas"
-          ref={canvasRef}
           className={"absolute w-full h-full"}
-          onClick={() => (fte ? fte.togglePlay() : null)}
-          onDoubleClick={toggleFullscreen}
-          onTouchStart={() => (fte ? fte.command("+scoreboard") : null)}
-          onTouchEnd={() => (fte ? fte.command("-scoreboard") : null)}
+          /*onClick={fte.togglePlay}
+          onDoubleClick={() => toggleFullscreen("ftePlayer")}
+          onTouchStart={() => fte.command("+scoreboard")}
+          onTouchEnd={() => fte.command("-scoreboard")}*/
         />
 
         <div
@@ -188,30 +71,7 @@ export const FteComponent = ({ files, demoUrl, duration }) => {
         >
           {fte && (
             <div className={"flex w-full flex-wrap bg-black/60 mb-20"}>
-              <div className="w-full p-4">
-                <pre>
-                  {JSON.stringify(
-                    {
-                      ...state,
-                      duration,
-                      totalAssets,
-                      loadedAssets: numberOfLoadedAssets,
-                    },
-                    null,
-                    2,
-                  )}
-                </pre>
-              </div>
-
-              <FteControls fte={fte} duration={duration} />
-
-              <div className="ml-auto">
-                <ToggleSlowMotionButton onClick={toggleSlowMotion} />
-                <ToggleFullscreenButton
-                  onClick={toggleFullscreen}
-                  isFullscreen={screenfull.isFullscreen}
-                />
-              </div>
+              <Controls fte={fte} duration={duration} />
             </div>
           )}
         </div>
@@ -220,4 +80,4 @@ export const FteComponent = ({ files, demoUrl, duration }) => {
   );
 };
 
-export default FteComponent;
+export default FtePlayer;
