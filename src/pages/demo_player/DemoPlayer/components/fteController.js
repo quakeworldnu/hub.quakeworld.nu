@@ -97,9 +97,10 @@ export class FteController {
 
   getTrackUserid() {
     try {
-      return this.module.track_userid();
+      const seatIndex = 0; // index of screen in splitscreen
+      return parseInt(this.module.track_userid(seatIndex));
     } catch (e) {
-      return 0;
+      return -1;
     }
   }
 
