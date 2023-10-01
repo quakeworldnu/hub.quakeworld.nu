@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "react";
 import { useHover } from "usehooks-ts";
 import { useMouse } from "@uidotdev/usehooks";
-import { secondsToString } from "@qwhub/pages/demo_player/DemoPlayer/components/time";
+import { secondsToString } from "@qwhub/pages/demo_player/DemoPlayer/fte/time";
 import classNames from "classnames";
 import * as Slider from "@radix-ui/react-slider";
-import { useGametime } from "@qwhub/pages/demo_player/DemoPlayer/components/hooks";
+import { useGametime } from "@qwhub/pages/demo_player/DemoPlayer/fte/hooks";
 
 export function TimeSlider({ onChange, max, getGametime }) {
   const sliderWrapperRef = useRef(null);

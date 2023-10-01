@@ -3,7 +3,7 @@ import {
   faVolumeLow,
   faVolumeMute,
 } from "@fortawesome/free-solid-svg-icons";
-import { IconToggleButton } from "@qwhub/pages/demo_player/DemoPlayer/components/controls/IconToggleButton";
+import { IconToggleButton } from "@qwhub/pages/demo_player/DemoPlayer/fte/controls/IconToggleButton";
 
 export const VolumeToggle = ({ volume, isMuted, onClick }) => {
   return (

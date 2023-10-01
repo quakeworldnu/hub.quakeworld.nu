@@ -4,7 +4,7 @@ import { SiteHeader } from "@qwhub/site/Header";
 import { SiteFooter } from "@qwhub/site/Footer";
 import { DemoDropdown } from "./DemoDropdown";
 
-import FtePlayer from "./DemoPlayer/components/fte";
+import FtePlayer from "./DemoPlayer/fte/fte";
 import {
   demoFilenameToMapName,
   demoFilenameToTitle,
@@ -14,7 +14,7 @@ import {
 import { Chat, ChatInput } from "@qwhub/pages/demo_player/Chat";
 import { GroupInfo } from "@qwhub/pages/demo_player/GroupInfo";
 import { UserInfo } from "@qwhub/pages/demo_player/UserInfo";
-import { getAssets } from "@qwhub/pages/demo_player/DemoPlayer/components/assets";
+import { getAssets } from "@qwhub/pages/demo_player/DemoPlayer/fte/assets";
 
 function getCurrentUrlWithoutQueryString() {
   return window.location.href.split("?")[0];
