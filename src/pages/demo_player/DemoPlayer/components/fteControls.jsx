@@ -7,6 +7,7 @@ import {
 import { useCounter, useEventListener, useInterval } from "usehooks-ts";
 import { useState } from "react";
 import { secondsToString } from "@qwhub/pages/demo_player/DemoPlayer/components/time";
+import { toColoredHtml, toPlainText } from "@qwhub/pages/demo_player/qwstrings";
 
 function useFteUpdateTriggers() {
   const { count, increment } = useCounter(0);
@@ -68,8 +69,12 @@ const Players = ({ players, onClick }) => {
   return (
     <div className="flex space-x-1 bg-black items-center px-2 ml-auto">
       {players.map((p) => (
-        <button className="text-xs" key={p.id} onClick={() => onClick(p.name)}>
-          {p.name}
+        <button
+          className="text-xs"
+          key={p.name}
+          onClick={() => onClick(toPlainText(p.name))}
+        >
+          <span dangerouslySetInnerHTML={{ __html: toColoredHtml(p.name) }} />
         </button>
       ))}
     </div>

@@ -52,7 +52,6 @@ export class FteController {
     try {
       return this.module.gametime();
     } catch (e) {
-      console.log(e);
       return 0;
     }
   }
