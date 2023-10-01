@@ -9,6 +9,7 @@ import { useState } from "react";
 import { secondsToString } from "@qwhub/pages/demo_player/DemoPlayer/components/time";
 import { toColoredHtml } from "@qwhub/pages/demo_player/qwstrings";
 import classNames from "classnames";
+import { useUpdateInterval } from "@qwhub/pages/demo_player/DemoPlayer/components/hooks";
 
 function useFteUpdateTriggers() {
   const { count, increment } = useCounter(0);
@@ -67,8 +68,7 @@ export const FteControls = ({ fte, duration }) => {
 };
 
 const Players = ({ players, onClick, getTrackUserid }) => {
-  const { increment } = useCounter(0);
-  useInterval(increment, 200);
+  useUpdateInterval(200);
 
   if (!players) {
     return null;
