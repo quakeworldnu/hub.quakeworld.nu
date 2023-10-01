@@ -121,7 +121,8 @@ export class FteController {
     const newGametime = Math.floor(gametime);
     this.command("demo_jump " + newGametime);
 
-    if (newGametime < currentGametime) { // backward seek
+    // restore track on backwards jump
+    if (newGametime < currentGametime) {
       const restoreTrack = () => {
         if (this._autotrackEnabled) {
           this.autotrack();
