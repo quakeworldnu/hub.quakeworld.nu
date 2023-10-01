@@ -53,6 +53,7 @@ export const FteControls = ({ fte, duration }) => {
       <VolumeSlider
         volume={fte.volume()}
         disabled={fte.isMuted()}
+        max={0.2}
         onChange={(v) => fte.setVolume(v)}
       />
 

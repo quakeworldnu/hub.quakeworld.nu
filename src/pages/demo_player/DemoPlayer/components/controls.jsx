@@ -15,6 +15,7 @@ import {
 import classNames from "classnames";
 import { useEffect, useRef } from "react";
 import { useHover } from "usehooks-ts";
+import { roundFloat } from "@qwhub/pages/demo_player/DemoPlayer/components/math";
 
 export const PlayToggleButton = ({ isPlaying, onClick }) => {
   return (
@@ -98,26 +99,30 @@ export function SeekBar({ onChange, max, value }) {
   );
 }
 
-export const VolumeSlider = ({ volume, disabled, onChange }) => {
+export const VolumeSlider = ({ volume, disabled, onChange, max }) => {
   function _onChange(e) {
-    onChange(e.target.value);
+    const percent = e.target.value / 100;
+    const newVolume = roundFloat(percent * max);
+    onChange(newVolume);
   }
 
   return (
-    <input
-      type="range"
-      style={{
-        width: "6em",
-        margin: "10px",
-      }}
-      className={classNames({ "opacity-40": disabled })}
-      min={0}
-      max={1}
-      step={0.01}
-      defaultValue={volume}
-      disabled={disabled}
-      onChange={_onChange}
-    />
+    <div>
+      <input
+        type="range"
+        style={{
+          width: "6em",
+          margin: "10px",
+        }}
+        className={classNames({ "opacity-40": disabled })}
+        min={0}
+        max={100}
+        step={1}
+        defaultValue={volume}
+        disabled={disabled}
+        onChange={_onChange}
+      />
+    </div>
   );
 };
 

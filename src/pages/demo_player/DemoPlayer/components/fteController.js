@@ -16,7 +16,7 @@ export class FteController {
     this._module = module;
     this._isPaused = false;
     this._isMuted = false;
-    this._volume = 0.5;
+    this._volume = 0.2;
     this._speed = 100;
     this._track = "";
     this._players = [];
