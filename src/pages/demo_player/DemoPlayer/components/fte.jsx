@@ -16,8 +16,6 @@ const defaulState = {
   playbackSpeed: 100,
   targetSpeed: 100,
   targetSpeedArrivalTime: 100,
-  playerControlTimeout: 0,
-  firstRefresh: true,
 };
 
 const easingTime = 1500.0;
@@ -30,6 +28,7 @@ const vlog = (arg1 = "", arg2 = "", arg3 = "") => {
 };
 
 export const FteComponent = ({ files, demoUrl, duration }) => {
+  const [isFirstRefresh, setIsFirstRefresh] = useState(true);
   const [state, setState] = useState(defaulState);
   const [fte, setFte] = useState(null);
   const { count: numberOfLoadedAssets, increment: incrementLoadedAssets } =
@@ -78,15 +77,7 @@ export const FteComponent = ({ files, demoUrl, duration }) => {
 
     const gametime = fte.getGametime();
 
-    if (
-      state.playerControlTimeout !== 0 &&
-      state.playerControlTimeout < Date.now()
-    ) {
-      fte.command("viewsize 100");
-      setState({ ...state, playerControlTimeout: 0 });
-    }
-
-    if (state.firstRefresh && gametime > 0) {
+    if (isFirstRefresh && gametime > 0) {
       onResize();
 
       // Workaround for not being able to bind an alias to TAB key for RQ demos
@@ -95,11 +86,7 @@ export const FteComponent = ({ files, demoUrl, duration }) => {
         fte.command("bind tab +showteamscores");
       }
 
-      setState({ ...state, firstRefresh: false });
-    }
-
-    if (state.loop && gametime >= state.initialPosition + state.loop) {
-      fte.command("demo_jump " + state.initialPosition);
+      setIsFirstRefresh(false);
     }
 
     if (
@@ -183,7 +170,7 @@ export const FteComponent = ({ files, demoUrl, duration }) => {
   return (
     <div
       ref={playerRef}
-      className={"fte w-full h-full relative bg-black aspect-video"}
+      className={"w-full h-full relative bg-black aspect-video"}
     >
       <div>
         <canvas
@@ -194,16 +181,13 @@ export const FteComponent = ({ files, demoUrl, duration }) => {
           onDoubleClick={toggleFullscreen}
           onTouchStart={() => (fte ? fte.command("+scoreboard") : null)}
           onTouchEnd={() => (fte ? fte.command("-scoreboard") : null)}
-          style={{
-            cursor: state.playerControlTimeout ? "auto" : "none",
-          }}
         />
 
         <div
           className={"flex absolute bottom-0 w-full z-10 transition-opacity"}
         >
           {fte && (
-            <div className={"flex w-full flex-wrap bg-black/60"}>
+            <div className={"flex w-full flex-wrap bg-black/60 mb-20"}>
               <div className="w-full p-4">
                 <pre>
                   {JSON.stringify(
