@@ -22,9 +22,10 @@ export const PlayerTrackButtons = () => {
         <button
           className={classNames(
             {
-              "font-bold text-purple-500": p.id === trackUserid,
+              "text-pink-500 scale-125": p.id === trackUserid,
+              "text-gray-300": p.id !== trackUserid,
             },
-            "py-0.5 px-1.5 rounded transition-colors",
+            "py-0.5 px-1.5 rounded transition-all text-xs",
           )}
           key={p.name}
           onClick={() => fte.track(p.id)}
