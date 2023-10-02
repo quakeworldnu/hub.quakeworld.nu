@@ -12,7 +12,7 @@ export const Time = ({ durationStr }) => {
 
   return (
     <div className="flex mr-auto font-mono items-center">
-      {secondsToString(fte.getGametime())} / {durationStr}
+      {secondsToString(fte.getDemoTime())} / {durationStr}
     </div>
   );
 };

@@ -23,7 +23,6 @@ export const PlayerTrackButtons = () => {
           className={classNames(
             {
               "font-bold text-purple-500": p.id === trackUserid,
-              "": p.id !== trackUserid,
             },
             "py-0.5 px-1.5 rounded transition-colors",
           )}

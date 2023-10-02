@@ -68,31 +68,48 @@ export class FteController {
   }
 
   // exposed functions from fte
+  getDemoTime() {
+    try {
+      return this.module.getDemoTime();
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  /*getEndOfDemo() {
+      try {
+        return this.module.getEndOfDemo();
+      } catch (e) {
+        console.log("#############################", e);
+        return 0;
+      }
+    }*/
+
+  getMapName() {
+    try {
+      return this.module.getMapName();
+    } catch (e) {
+      return 0;
+    }
+  }
+
   getPlayers() {
     if (this._playerCache.length > 0) {
       return this._playerCache;
     }
 
     try {
-      this._playerCache = this.module.player_info();
+      this._playerCache = this.module.getPlayerInfo();
       return this._playerCache;
     } catch (e) {
       return [];
     }
   }
 
-  getGametime() {
-    try {
-      return this.module.gametime();
-    } catch (e) {
-      return 0;
-    }
-  }
-
   getTrackUserid() {
     try {
       const seatIndex = 0; // index of screen in splitscreen
-      return this.module.track_userid(seatIndex);
+      return this.module.getTrackUserid(seatIndex);
     } catch (e) {
       return -1;
     }
@@ -110,7 +127,7 @@ export class FteController {
   }
 
   demoJump(gametime) {
-    const currentGametime = this.getGametime();
+    const currentGametime = this.getDemoTime();
     const currentUserid = this.getTrackUserid();
 
     const newGametime = Math.floor(gametime);

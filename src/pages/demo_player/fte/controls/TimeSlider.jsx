@@ -61,7 +61,7 @@ const SliderRoot = ({ max }) => {
   return (
     <Slider.Root
       className="relative flex items-center select-none touch-none w-full h-8 group cursor-pointer transition-colors"
-      value={[fte.getGametime()]}
+      value={[fte.getDemoTime()]}
       onValueChange={onValueChange}
       max={max}
       step={1}

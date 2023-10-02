@@ -15,8 +15,6 @@ export const PlayToggle = () => {
     return null;
   }
 
-  console.log("PlayToggle.RENDER");
-
   return (
     <IconToggleButton
       onClick={() => fte.togglePlay()}
