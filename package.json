@@ -20,8 +20,8 @@
   "devDependencies": {
     "@types/react": "^18.2.24",
     "@types/react-dom": "^18.2.8",
-    "@typescript-eslint/eslint-plugin": "^6.7.3",
-    "@typescript-eslint/parser": "^6.7.3",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
+    "@typescript-eslint/parser": "^6.7.4",
     "@vitejs/plugin-react": "^4.1.0",
     "@vitest/coverage-v8": "^0.34.6",
     "eslint": "^8.50.0",
@@ -34,12 +34,12 @@
     "vitest": "^0.34.6"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.421.0",
-    "@aws-sdk/credential-providers": "^3.421.0",
+    "@aws-sdk/client-s3": "^3.423.0",
+    "@aws-sdk/credential-providers": "^3.423.0",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@radix-ui/colors": "^3.0.0-rc.5",
+    "@radix-ui/colors": "^3.0.0",
     "@radix-ui/react-slider": "^1.1.2",
     "@reduxjs/toolkit": "^1.9.6",
     "@uidotdev/usehooks": "^2.3.1",
