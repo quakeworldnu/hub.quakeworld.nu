@@ -17,7 +17,7 @@ export const AutotrackToggle = () => {
       className="select-none mr-4 cursor-pointer flex items-center"
       onClick={() => fte.toggleAutotrack()}
     >
-      Autotrack [{fte.autotrack() ? "ON" : "OFF"}] [{fte.getTrackUserid()}]
+      Autotrack [{fte.autotrack() ? "ON" : "OFF"}]
     </label>
   );
 };

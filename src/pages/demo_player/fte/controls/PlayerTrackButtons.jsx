@@ -6,7 +6,7 @@ import {
 import classNames from "classnames";
 import { toColoredHtml } from "@qwhub/pages/demo_player/qwstrings";
 
-export const PlayerButtons = () => {
+export const PlayerTrackButtons = () => {
   useUpdateInterval(100);
   useFteUpdateOnEvent("track");
   const fte = useFteController();
@@ -22,16 +22,15 @@ export const PlayerButtons = () => {
         <button
           className={classNames(
             {
-              "bg-purple-600": p.id === trackUserid,
-              "bg-black": p.id !== trackUserid,
+              "font-bold text-purple-500": p.id === trackUserid,
+              "": p.id !== trackUserid,
             },
             "py-0.5 px-1.5 rounded transition-colors",
           )}
           key={p.name}
           onClick={() => fte.track(p.id)}
         >
-          <span dangerouslySetInnerHTML={{ __html: toColoredHtml(p.name) }} />{" "}
-          {p.id}
+          <span dangerouslySetInnerHTML={{ __html: toColoredHtml(p.name) }} />
         </button>
       ))}
     </>
