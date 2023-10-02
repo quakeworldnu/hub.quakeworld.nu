@@ -162,7 +162,7 @@ export class FteController {
   }
 
   enableAutotrack() {
-    this.command("autotrack");
+    this.command("cl_autotrack stats");
     this._autotrack = true;
     fteEvent("autotrack", { value: this._autotrack });
   }
@@ -182,6 +182,7 @@ export class FteController {
 
   track(userid) {
     this._autotrack = false;
+    this.command("cl_autotrack user");
     this.command("track " + userid);
     fteEvent("track", { value: userid });
   }
