@@ -1,12 +1,18 @@
-import { useResultByInterval } from "@qwhub/pages/demo_player/fte/hooks";
+import { useUpdateInterval } from "@qwhub/hooks";
 import { secondsToString } from "@qwhub/pages/demo_player/util";
+import { useFteController } from "@qwhub/pages/demo_player/fte/hooks";
 
-export const Time = ({ getGametime, durationStr }) => {
-  const gametime = useResultByInterval(getGametime, 200);
+export const Time = ({ durationStr }) => {
+  const fte = useFteController();
+  useUpdateInterval(fte ? 200 : null);
+
+  if (!fte) {
+    return null;
+  }
 
   return (
     <div className="flex mr-auto font-mono items-center">
-      {secondsToString(gametime)} / {durationStr}
+      {secondsToString(fte.getGametime())} / {durationStr}
     </div>
   );
 };

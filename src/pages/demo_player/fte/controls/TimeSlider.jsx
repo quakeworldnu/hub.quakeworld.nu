@@ -3,10 +3,11 @@ import { useHover } from "usehooks-ts";
 import { useMouse } from "@uidotdev/usehooks";
 import classNames from "classnames";
 import * as Slider from "@radix-ui/react-slider";
-import { useResultByInterval } from "@qwhub/pages/demo_player/fte/hooks";
+import { useUpdateInterval } from "@qwhub/hooks";
 import { secondsToString } from "@qwhub/pages/demo_player/util";
+import { useFteController } from "@qwhub/pages/demo_player/fte/hooks";
 
-export function TimeSlider({ onChange, max, getGametime }) {
+export function TimeSlider({ max }) {
   const sliderWrapperRef = useRef(null);
   const tooltipRef = useRef(null);
   const isHover = useHover(sliderWrapperRef);
@@ -36,26 +37,31 @@ export function TimeSlider({ onChange, max, getGametime }) {
       ></div>
       <div className="w-full" ref={sliderWrapperRef}>
         <form ref={sliderRootRef}>
-          <SliderRoot getGametime={getGametime} max={max} onChange={onChange} />
+          <SliderRoot max={max} />
         </form>
       </div>
     </div>
   );
 }
 
-const SliderRoot = ({ getGametime, max, onChange }) => {
-  const current = useResultByInterval(getGametime, 200);
+const SliderRoot = ({ max }) => {
+  const fte = useFteController();
+  useUpdateInterval(fte ? 200 : null);
+
+  if (!fte) {
+    return null;
+  }
 
   function onValueChange(values) {
     if (values.length > 0) {
-      onChange(values[0]);
+      fte.demoJump(values[0]);
     }
   }
 
   return (
     <Slider.Root
       className="relative flex items-center select-none touch-none w-full h-8 group cursor-pointer transition-colors"
-      value={[current]}
+      value={[fte.getGametime()]}
       onValueChange={onValueChange}
       max={max}
       step={1}

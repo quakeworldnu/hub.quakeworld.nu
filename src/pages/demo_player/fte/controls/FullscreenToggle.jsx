@@ -1,12 +1,14 @@
 import { faExpand, faMinimize } from "@fortawesome/free-solid-svg-icons";
 
-import { IconToggleButton } from "@qwhub/pages/demo_player/fte/controls/IconToggleButton";
+import { IconToggleButton } from "./IconToggleButton";
+import { toggleFullscreen } from "@qwhub/pages/demo_player/fte/player";
+import screenfull from "screenfull";
 
-export const FullscreenToggle = ({ onClick, isFullscreen }) => {
+export const FullscreenToggle = () => {
   return (
     <IconToggleButton
-      onClick={onClick}
-      isEnabled={isFullscreen}
+      onClick={toggleFullscreen}
+      isEnabled={screenfull.isFullscreen}
       enabledIcon={faMinimize}
       disabledIcon={faExpand}
     />

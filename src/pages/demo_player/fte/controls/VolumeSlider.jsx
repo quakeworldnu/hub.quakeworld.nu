@@ -1,13 +1,24 @@
 import { roundFloat } from "@qwhub/pages/demo_player/math";
 import classNames from "classnames";
+import {
+  useFteController,
+  useFteUpdateOnEvent,
+} from "@qwhub/pages/demo_player/fte/hooks";
 
-export const VolumeSlider = ({ volume, disabled, onChange, max }) => {
-  function _onChange(e) {
-    onChange(e.target.gametime);
+const max = 0.2;
+const stepCount = 100;
+const stepSize = roundFloat(max / stepCount, 3);
+
+export const VolumeSlider = () => {
+  useFteUpdateOnEvent("mute");
+  useFteUpdateOnEvent("unmute");
+  useFteUpdateOnEvent("volume");
+
+  const fte = useFteController();
+
+  if (!fte) {
+    return null;
   }
-
-  const stepCount = 100;
-  const stepSize = roundFloat(max / stepCount, 3);
 
   return (
     <input
@@ -16,13 +27,13 @@ export const VolumeSlider = ({ volume, disabled, onChange, max }) => {
         width: "6em",
         margin: "10px",
       }}
-      className={classNames({ "opacity-40": disabled })}
+      className={classNames({ "opacity-40": !fte.isMuted() })}
       min={0}
-      max={max}
+      max={0.2}
       step={stepSize}
-      defaultValue={volume}
-      disabled={disabled}
-      onChange={_onChange}
+      defaultValue={fte.volume()}
+      disabled={fte.isMuted()}
+      onChange={(e) => fte.setVolume(e.target.value)}
     />
   );
 };

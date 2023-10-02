@@ -4,39 +4,34 @@ export function fteEvent(name, detail) {
 }
 
 export class FteController {
-  _module;
-  _isPaused;
-  _isMuted;
-  _volume;
-  _speed;
-  _playerCache;
+  _module = null;
+  _isPaused = false;
+  _isMuted = false;
+  _volume = 0.1;
+  _speed = 100;
+  _playerCache = [];
+  _autotrack = true;
+
+  static _instance = null;
+
+  static getInstance(module) {
+    if (FteController._instance === null) {
+      FteController._instance = new FteController(module);
+    }
+
+    console.log("#################### FteController SINGLETON");
+    return FteController._instance;
+  }
 
   constructor(module) {
-    this._module = module;
-    this._isPaused = false;
-    this._isMuted = false;
-    this._volume = 0.1;
-    this._speed = 100;
-    this._playerCache = [];
-    this._autotrackEnabled = true;
-
-    if (false) {
-      const eventHandlers = {
-        "fte.play": () => this.play(),
-        "fte.pause": () => this.pause(),
-        "fte.toggle_play": () => this.togglePlay(),
-        "fte.mute": () => this.mute(),
-        "fte.unmute": () => this.unmute(),
-        "fte.toggle_mute": () => this.toggleMute(),
-        "fte.set_volume": (e) => this.setVolume(e.detail.value),
-        "fte.set_speed": (e) => this.setSpeed(e.detail.value),
-        "fte.demo_jump": (e) => this.demoJump(e.detail.value),
-      };
-
-      for (const [key, value] of Object.entries(eventHandlers)) {
-        window.addEventListener(key, value);
-      }
+    if (FteController._instance) {
+      return FteController._instance;
     }
+
+    console.log("#################### FteController.new");
+    this._module = module;
+
+    return this;
   }
 
   get module() {
@@ -111,7 +106,7 @@ export class FteController {
   setSpeed(speed) {
     this._speed = parseFloat(speed);
     this.command("demo_setspeed " + this._speed);
-    fteEvent("speed", { value: this._speed });
+    fteEvent("demo_setspeed", { value: this._speed });
   }
 
   demoJump(gametime) {
@@ -124,8 +119,8 @@ export class FteController {
     // restore track on backwards jump
     if (newGametime < currentGametime) {
       const restoreTrack = () => {
-        if (this._autotrackEnabled) {
-          this.autotrack();
+        if (this._autotrack) {
+          this.enableAutotrack();
         } else {
           this.track(currentUserid);
         }
@@ -163,13 +158,30 @@ export class FteController {
 
   // track
   autotrack() {
-    this.command("autotrack 1");
-    this._autotrackEnabled = true;
+    return this._autotrack;
+  }
+
+  enableAutotrack() {
+    this.command("autotrack");
+    this._autotrack = true;
+    fteEvent("autotrack", { value: this._autotrack });
+  }
+
+  disableAutotrack() {
+    this.track(this.getTrackUserid());
+    fteEvent("autotrack", { value: this._autotrack });
+  }
+
+  toggleAutotrack() {
+    if (this.autotrack()) {
+      this.disableAutotrack();
+    } else {
+      this.enableAutotrack();
+    }
   }
 
   track(userid) {
-    this._autotrackEnabled = false;
-    this.command("autotrack 0");
+    this._autotrack = false;
     this.command("track " + userid);
     fteEvent("track", { value: userid });
   }
