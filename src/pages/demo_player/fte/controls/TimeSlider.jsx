@@ -5,7 +5,6 @@ import classNames from "classnames";
 import * as Slider from "@radix-ui/react-slider";
 import { useUpdateInterval } from "@qwhub/hooks";
 import { useFteController } from "@qwhub/pages/demo_player/fte/hooks";
-import { roundFloat } from "@qwhub/pages/demo_player/math";
 import { secondsToMinutesAndSeconds } from "@qwhub/pages/demo_player/util";
 
 export function TimeSlider() {
@@ -15,7 +14,8 @@ export function TimeSlider() {
   const isHover = useHover(sliderWrapperRef);
   const [mouse, sliderRootRef] = useMouse();
 
-  const maxValue = fte ? fte.getDemoTotalTime() : 60 * 20 + 10;
+  const matchStartTime = 10;
+  const maxValue = fte ? fte.getDemoTotalTime() : 60 * 20 + matchStartTime;
 
   useEffect(() => {
     if (!isHover) {
@@ -23,13 +23,13 @@ export function TimeSlider() {
     }
 
     const sliderWidth = sliderRootRef.current.getBoundingClientRect().width;
-    const progress = roundFloat(mouse.elementX / sliderWidth, 3);
+    const progress = mouse.elementX / sliderWidth;
     const seekTime = Math.round(progress * maxValue);
 
-    //console.log("############## seektime", progress, seekTime);
-
     tooltipRef.current.textContent =
-      seekTime < 10 ? "Countdown" : secondsToMinutesAndSeconds(seekTime - 10);
+      seekTime < matchStartTime
+        ? `Countdown: ${matchStartTime - seekTime}`
+        : secondsToMinutesAndSeconds(seekTime - matchStartTime);
     tooltipRef.current.style.left = `${mouse.elementX - 10}px`; // -10 to center tooltip
   }, [isHover, mouse.elementX]);
 
@@ -61,7 +61,6 @@ const SliderRoot = () => {
 
   function onValueChange(values) {
     if (values.length > 0) {
-      console.log("#################### onValueChange", values[0]);
       fte.demoJump(values[0]);
     }
   }
@@ -75,7 +74,7 @@ const SliderRoot = () => {
       onValueChange={onValueChange}
       min={0}
       max={max}
-      step={0.5}
+      step={1}
     >
       <Slider.Track className="bg-gray-500 group-hover:bg-gray-400 relative grow h-1 group-hover:h-1.5">
         <Slider.Range className="absolute bg-purple-800 group-hover:bg-purple-700 h-full" />
