@@ -2,7 +2,7 @@ import { AutotrackToggle } from "./controls/AutotrackToggle";
 import { FullscreenToggle } from "./controls/FullscreenToggle";
 import { PlayToggle } from "./controls/PlayToggle";
 import { PlayerTrackButtons } from "./controls/PlayerTrackButtons";
-import { SlowmotionToggle } from "./controls/SlowmotionToggle";
+// import { SlowmotionToggle } from "./controls/SlowmotionToggle";
 import { GameClock } from "./controls/GameClock";
 import { TimeSlider } from "./controls/TimeSlider";
 import { VolumeSlider } from "./controls/VolumeSlider";
@@ -20,7 +20,6 @@ export const Controls = () => {
         <AutotrackToggle />
         <PlayerTrackButtons />
       </div>
-      <SlowmotionToggle />
       <FullscreenToggle />
     </>
   );
