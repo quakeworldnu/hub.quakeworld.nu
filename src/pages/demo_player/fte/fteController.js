@@ -9,7 +9,6 @@ export class FteController {
   _isMuted = false;
   _volume = 0.1;
   _speed = 100;
-  _playerCache = [];
   _autotrack = true;
 
   static _instance = null;
@@ -77,13 +76,13 @@ export class FteController {
   }
 
   /*getEndOfDemo() {
-      try {
-        return this.module.getEndOfDemo();
-      } catch (e) {
-        console.log("#############################", e);
-        return 0;
-      }
-    }*/
+        try {
+          return this.module.getEndOfDemo();
+        } catch (e) {
+          console.log("#############################", e);
+          return 0;
+        }
+      }*/
 
   getMapName() {
     try {
@@ -94,13 +93,8 @@ export class FteController {
   }
 
   getPlayers() {
-    if (this._playerCache.length > 0) {
-      return this._playerCache;
-    }
-
     try {
-      this._playerCache = this.module.getPlayerInfo();
-      return this._playerCache;
+      return this.module.getPlayerInfo();
     } catch (e) {
       return [];
     }
