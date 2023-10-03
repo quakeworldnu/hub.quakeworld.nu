@@ -6,9 +6,7 @@ import { Heading } from "./Common";
 export default function Events() {
   const { data: events = [] } = useGetEventsQuery();
   const eventsByStatus = _groupby(events, "status");
-  const eventKeys = Object.keys(eventsByStatus);
-  eventKeys.sort();
-  eventKeys.reverse();
+  const eventKeys = ["ongoing", "upcoming", "completed"];
 
   return (
     <>
