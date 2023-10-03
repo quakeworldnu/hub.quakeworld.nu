@@ -1,4 +1,3 @@
-import { roundFloat } from "@qwhub/pages/demo_player/math";
 import { secondsToMinutesAndSeconds } from "@qwhub/pages/demo_player/util";
 
 export function fteEvent(name, detail) {
@@ -10,7 +9,7 @@ export class FteController {
   _module = null;
   _isPaused = false;
   _isMuted = false;
-  _volume = 0.1;
+  _volume = 0.0;
   _speed = 100;
   _autotrack = true;
   _cache = {
@@ -26,6 +25,7 @@ export class FteController {
   static getInstance(module) {
     if (FteController._instance === null) {
       FteController._instance = new FteController(module);
+      FteController._instance.mute();
     }
 
     return FteController._instance;
