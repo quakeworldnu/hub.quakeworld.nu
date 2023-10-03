@@ -19,14 +19,22 @@ export function debounce(fn, delay) {
   };
 }
 
-export function secondsToString(duration) {
-  const durationMinutes = Math.floor(duration / 60).toLocaleString("en-US", {
-    minimumIntegerDigits: 2,
-    useGrouping: false,
-  });
-  const durationSeconds = Math.floor(duration % 60).toLocaleString("en-US", {
-    minimumIntegerDigits: 2,
-    useGrouping: false,
-  });
+export function secondsToMinutesAndSeconds(seconds) {
+  const formatNum = (num) => String(Math.floor(num)).padStart(2, "0");
+  const durationMinutes = formatNum(seconds / 60);
+  const durationSeconds = formatNum(seconds % 60);
   return `${durationMinutes}:${durationSeconds}`;
+}
+
+export function formatTimeProgress(elapsed, total) {
+  const isCountdown = elapsed < 0;
+
+  if (isCountdown) {
+    return `Countdown: ${-Math.floor(elapsed)}`;
+  } else {
+    const elapsedStr = secondsToMinutesAndSeconds(elapsed);
+    const totalStr = secondsToMinutesAndSeconds(total);
+
+    return `${elapsedStr} / ${totalStr}`;
+  }
 }
