@@ -1,8 +1,8 @@
 import { useUpdateInterval } from "@qwhub/hooks";
-import { secondsToString } from "@qwhub/pages/demo_player/util";
 import { useFteController } from "@qwhub/pages/demo_player/fte/hooks";
+import { formatTimeProgress } from "@qwhub/pages/demo_player/util";
 
-export const Time = () => {
+export const Clock = () => {
   const fte = useFteController();
   useUpdateInterval(fte ? 200 : null);
 
@@ -10,12 +10,12 @@ export const Time = () => {
     return null;
   }
 
-  const elasped = fte.getDemoTime();
-  const total = fte.getTimelimit() * 60;
+  const elapsed = fte.getMatchElapsedTime();
+  const total = fte.getMatchTotalTime();
 
   return (
     <div className="flex mr-auto font-mono items-center">
-      {secondsToString(elasped)} / {secondsToString(total)}
+      {formatTimeProgress(elapsed, total)}
     </div>
   );
 };

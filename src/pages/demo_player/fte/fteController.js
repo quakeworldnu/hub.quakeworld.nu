@@ -1,3 +1,6 @@
+import { roundFloat } from "@qwhub/pages/demo_player/math";
+import { secondsToMinutesAndSeconds } from "@qwhub/pages/demo_player/util";
+
 export function fteEvent(name, detail) {
   const event = new CustomEvent(`fte.${name}`, { detail });
   window.dispatchEvent(event);
@@ -12,6 +15,10 @@ export class FteController {
   _autotrack = true;
   _cache = {
     timelimit: null,
+    map: null,
+    matchTotalTime: null,
+    demoTotalTime: null,
+    demoMatchStartTime: null,
   };
 
   static _instance = null;
@@ -21,7 +28,6 @@ export class FteController {
       FteController._instance = new FteController(module);
     }
 
-    console.log("#################### FteController SINGLETON");
     return FteController._instance;
   }
 
@@ -70,29 +76,61 @@ export class FteController {
   }
 
   // exposed functions from fte
-  getDemoTime() {
+  getCachedValue(key, getter, defaultValue) {
+    if (this._cache[key] !== null) {
+      return this._cache[key];
+    }
+
     try {
-      return this.module.getDemoTime();
+      this._cache[key] = getter();
+      return this._cache[key];
+    } catch (e) {
+      return defaultValue;
+    }
+  }
+
+  getDemoElapsedTime() {
+    try {
+      return this.module.getDemoElapsedTime();
     } catch (e) {
       return 0;
     }
   }
 
-  /*getEndOfDemo() {
-        try {
-          return this.module.getEndOfDemo();
-        } catch (e) {
-          console.log("#############################", e);
-          return 0;
-        }
-      }*/
+  getDemoTotalTime() {
+    return this.getCachedValue(
+      "demoTotalTime",
+      this.module.getDemoTotalTime,
+      10 + 60 * 20,
+    );
+  }
 
-  getMapName() {
+  getDemoMatchStartTime() {
+    return this.getCachedValue(
+      "demoMatchStartTime",
+      this.module.getDemoMatchStartTime,
+      0,
+    );
+  }
+
+  getMatchElapsedTime() {
     try {
-      return this.module.getMapName();
+      return this.module.getMatchElapsedTime();
     } catch (e) {
       return 0;
     }
+  }
+
+  getMatchTotalTime() {
+    return this.getCachedValue(
+      "matchTotalTime",
+      this.module.getMatchTotalTime,
+      60 * 20,
+    );
+  }
+
+  getMapName() {
+    return this.getCachedValue("mapName", this.module.getMapName, "unknown");
   }
 
   getPlayers() {
@@ -138,15 +176,21 @@ export class FteController {
     fteEvent("demo_setspeed", { value: this._speed });
   }
 
-  demoJump(gametime) {
-    const currentGametime = this.getDemoTime();
+  demoJump(demoTime) {
+    const newDemoTime = Math.floor(demoTime);
+
+    console.log(
+      `############################ demoJump: ${demoTime}`,
+      secondsToMinutesAndSeconds(demoTime),
+      newDemoTime,
+    );
+    const currentDemoTime = this.getDemoElapsedTime();
     const currentUserid = this.getTrackUserid();
 
-    const newGametime = Math.floor(gametime);
-    this.command("demo_jump " + newGametime);
+    this.command("demo_jump " + newDemoTime);
 
     // restore track on backwards jump
-    if (newGametime < currentGametime) {
+    if (newDemoTime < currentDemoTime) {
       const restoreTrack = () => {
         if (this._autotrack) {
           this.enableAutotrack();
@@ -158,7 +202,7 @@ export class FteController {
       setTimeout(restoreTrack, 20);
     }
 
-    fteEvent("demo_jump", { value: newGametime });
+    fteEvent("demo_jump", { value: newDemoTime });
   }
 
   play() {

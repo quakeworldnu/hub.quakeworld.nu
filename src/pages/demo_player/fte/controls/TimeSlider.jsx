@@ -4,8 +4,9 @@ import { useMouse } from "@uidotdev/usehooks";
 import classNames from "classnames";
 import * as Slider from "@radix-ui/react-slider";
 import { useUpdateInterval } from "@qwhub/hooks";
-import { secondsToString } from "@qwhub/pages/demo_player/util";
 import { useFteController } from "@qwhub/pages/demo_player/fte/hooks";
+import { roundFloat } from "@qwhub/pages/demo_player/math";
+import { secondsToMinutesAndSeconds } from "@qwhub/pages/demo_player/util";
 
 export function TimeSlider() {
   const fte = useFteController();
@@ -14,7 +15,7 @@ export function TimeSlider() {
   const isHover = useHover(sliderWrapperRef);
   const [mouse, sliderRootRef] = useMouse();
 
-  const max = fte ? fte.getTimelimit() * 60 : 60 * 20;
+  const maxValue = fte ? fte.getDemoTotalTime() : 60 * 20 + 10;
 
   useEffect(() => {
     if (!isHover) {
@@ -22,10 +23,13 @@ export function TimeSlider() {
     }
 
     const sliderWidth = sliderRootRef.current.getBoundingClientRect().width;
-    const progress = mouse.elementX / sliderWidth;
-    tooltipRef.current.textContent = secondsToString(
-      Math.round(progress * max),
-    );
+    const progress = roundFloat(mouse.elementX / sliderWidth, 3);
+    const seekTime = Math.round(progress * maxValue);
+
+    //console.log("############## seektime", progress, seekTime);
+
+    tooltipRef.current.textContent =
+      seekTime < 10 ? "Countdown" : secondsToMinutesAndSeconds(seekTime - 10);
     tooltipRef.current.style.left = `${mouse.elementX - 10}px`; // -10 to center tooltip
   }, [isHover, mouse.elementX]);
 
@@ -40,14 +44,14 @@ export function TimeSlider() {
       ></div>
       <div className="w-full" ref={sliderWrapperRef}>
         <form ref={sliderRootRef}>
-          <SliderRoot max={max} />
+          <SliderRoot />
         </form>
       </div>
     </div>
   );
 }
 
-const SliderRoot = ({ max }) => {
+const SliderRoot = () => {
   const fte = useFteController();
   useUpdateInterval(fte ? 200 : null);
 
@@ -57,17 +61,21 @@ const SliderRoot = ({ max }) => {
 
   function onValueChange(values) {
     if (values.length > 0) {
+      console.log("#################### onValueChange", values[0]);
       fte.demoJump(values[0]);
     }
   }
 
+  const max = fte.getDemoTotalTime();
+
   return (
     <Slider.Root
       className="relative flex items-center select-none touch-none w-full h-8 group cursor-pointer transition-colors"
-      value={[fte.getDemoTime()]}
+      value={[fte.getDemoElapsedTime()]}
       onValueChange={onValueChange}
+      min={0}
       max={max}
-      step={1}
+      step={0.5}
     >
       <Slider.Track className="bg-gray-500 group-hover:bg-gray-400 relative grow h-1 group-hover:h-1.5">
         <Slider.Range className="absolute bg-purple-800 group-hover:bg-purple-700 h-full" />

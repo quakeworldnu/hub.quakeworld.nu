@@ -132,7 +132,7 @@ export const DemoPlayer = ({ demoUrl }) => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col w-[400px] ml-4">
+        <div className="flex flex-col w-[400px] ml-4 hidden">
           <div className="flex px-6 py-7 bg-white/5 space-x-6">
             <div className="border-b-2 border-blue-500 font-bold">Chat</div>
             <div>Playlist</div>
