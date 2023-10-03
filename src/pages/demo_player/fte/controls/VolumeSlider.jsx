@@ -22,7 +22,7 @@ export const VolumeSlider = () => {
   return (
     <input
       type="range"
-      className={classNames({ grayscale: isMuted }, "w-24 mx-2")}
+      className={classNames({ grayscale: isMuted }, "w-24 mr-2")}
       min={0}
       max={max}
       step={stepSize}
