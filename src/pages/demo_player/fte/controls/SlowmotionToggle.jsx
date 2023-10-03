@@ -1,4 +1,4 @@
-import { fa1, faDiceOne } from "@fortawesome/free-solid-svg-icons";
+import { faStopwatch, faStopwatch20 } from "@fortawesome/free-solid-svg-icons";
 
 import { IconToggleButton } from "@qwhub/pages/demo_player/fte/controls/IconToggleButton";
 import {
@@ -27,14 +27,11 @@ export const SlowmotionToggle = () => {
   const isSlowmotion = currentSpeed === slow;
 
   return (
-    <div>
-      {fte.speed()}
-      <IconToggleButton
-        onClick={onClick}
-        isEnabled={isSlowmotion}
-        enabledIcon={faDiceOne}
-        disabledIcon={fa1}
-      />
-    </div>
+    <IconToggleButton
+      onClick={onClick}
+      isEnabled={isSlowmotion}
+      enabledIcon={faStopwatch20}
+      disabledIcon={faStopwatch}
+    />
   );
 };
