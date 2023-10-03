@@ -17,10 +17,6 @@
   }
 }
 
-.app-links {
-  @apply flex flex-col;
-}
-
 .app-links > a,
 .app-link {
   @apply py-1 text-blue-500 hover:text-white;

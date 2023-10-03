@@ -47,7 +47,7 @@ const StreamListItem = ({ stream }) => {
   return (
     <a href={url} className="inline-block ml-1.5" title={title}>
       {channel}
-      <span className="text-xs">
+      <span>
         ({viewers}) {title && <span>- {title.substring(0, maxLength)}</span>}
       </span>
     </a>
