@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { useGetNewsQuery } from "@qwhub/services/hub/hub";
 import { Heading } from "./Common";
 
@@ -10,10 +10,13 @@ export default function News() {
     <div className="app-links my-8">
       <Heading text="NEWS" icon="article" />
       {news.slice(0, limit).map((item) => (
-        <a href={item.url} className="inline-block" key={item.title}>
-          {item.title}
-          <span>({item.date})</span>
-        </a>
+        <Fragment key={item.title}>
+          <a href={item.url} className="inline-block">
+            {item.title}
+            <span>({item.date})</span>
+          </a>
+          <br />
+        </Fragment>
       ))}
     </div>
   );

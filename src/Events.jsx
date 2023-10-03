@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { useGetEventsQuery } from "@qwhub/services/hub/hub";
 import _groupby from "lodash.groupby";
 import { Heading } from "./Common";
@@ -21,20 +21,19 @@ export default function Events() {
           {Object.values(eventsByStatus[k])
             .slice(0, 5)
             .map((e) => (
-              <a
-                href={e.wiki_url}
-                className="inline-block ml-1.5"
-                key={e.title}
-              >
-                <img
-                  src={e.logo_url}
-                  width={18}
-                  height={18}
-                  className="inline mr-1"
-                />{" "}
-                {e.title}
-                <span>({e.date})</span>
-              </a>
+              <Fragment key={e.title}>
+                <a href={e.wiki_url} className="inline-block ml-1.5">
+                  <img
+                    src={e.logo_url}
+                    width={18}
+                    height={18}
+                    className="inline mr-1"
+                  />{" "}
+                  {e.title}
+                  <span>({e.date})</span>
+                </a>
+                <br />
+              </Fragment>
             ))}
         </div>
       ))}

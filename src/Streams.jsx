@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { useGetStreamsQuery } from "@qwhub/services/hub/hub";
 import { TwitchButton } from "./Buttons";
 import { Heading } from "@qwhub/Common";
@@ -45,11 +45,14 @@ const StreamListItem = ({ stream }) => {
   const maxLength = 60;
 
   return (
-    <a href={url} className="inline-block ml-1.5" title={title}>
-      {channel}
-      <span>
-        ({viewers}) {title && <span>- {title.substring(0, maxLength)}</span>}
-      </span>
-    </a>
+    <Fragment>
+      <a href={url} className="inline-block ml-1.5" title={title}>
+        {channel}
+        <span>
+          ({viewers}) {title && <span>- {title.substring(0, maxLength)}</span>}
+        </span>
+      </a>
+      <br />
+    </Fragment>
   );
 };
