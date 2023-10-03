@@ -5,10 +5,6 @@ import {
   useFteUpdateOnEvent,
 } from "@qwhub/pages/demo_player/fte/hooks";
 
-const max = 0.2;
-const stepCount = 100;
-const stepSize = roundFloat(max / stepCount, 3);
-
 export const VolumeSlider = () => {
   useFteUpdateOnEvent("volume");
 
@@ -19,6 +15,8 @@ export const VolumeSlider = () => {
   }
 
   const isMuted = fte.isMuted();
+  const stepCount = 100;
+  const stepSize = roundFloat(max / stepCount, 3);
 
   return (
     <input
