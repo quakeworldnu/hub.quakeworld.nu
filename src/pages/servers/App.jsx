@@ -8,6 +8,7 @@ import { HorizontalSeparator } from "@qwhub/site/Common";
 import News from "@qwhub/News";
 import ForumPosts from "@qwhub/ForumPosts";
 import WikiRecentChanges from "@qwhub/WikiRecentChanges";
+import { AllStreams } from "@qwhub/Streams";
 
 export const App = () => {
   return (
@@ -23,6 +24,7 @@ export const App = () => {
         </div>
 
         <div className="md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:block 3xl:w-80 gap-x-4">
+          <AllStreams />
           <GamesInSpotlight />
           <Events />
           <div className="3xl:hidden">
