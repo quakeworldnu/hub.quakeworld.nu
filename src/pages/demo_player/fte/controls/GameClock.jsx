@@ -2,7 +2,7 @@ import { useUpdateInterval } from "@qwhub/hooks";
 import { useFteController } from "@qwhub/pages/demo_player/fte/hooks";
 import { formatTimeProgress } from "@qwhub/pages/demo_player/util";
 
-export const Clock = () => {
+export const GameClock = () => {
   const fte = useFteController();
   useUpdateInterval(fte ? 200 : null);
 
