@@ -14,7 +14,7 @@ export const GameClock = () => {
   const total = fte.getMatchTotalTime();
 
   return (
-    <div className="flex mr-auto font-mono items-center">
+    <div className="flex mr-auto font-mono items-center px-2">
       {formatTimeProgress(elapsed, total)}
     </div>
   );

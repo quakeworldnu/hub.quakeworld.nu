@@ -8,7 +8,13 @@ export const IconToggleButton = ({
   title = "",
 }) => {
   return (
-    <button className={"w-12 py-2"} onClick={onClick} title={title}>
+    <button
+      className={
+        "flex h-10 w-12 items-center justify-center text-gray-300 hover:text-white hover:scale-125 transition-transform"
+      }
+      onClick={onClick}
+      title={title}
+    >
       <FontAwesomeIcon icon={isEnabled ? enabledIcon : disabledIcon} />
     </button>
   );

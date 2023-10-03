@@ -1,8 +1,7 @@
 import { AutotrackToggle } from "./controls/AutotrackToggle";
 import { FullscreenToggle } from "./controls/FullscreenToggle";
 import { PlayToggle } from "./controls/PlayToggle";
-import { PlayerTrackButtons } from "./controls/PlayerTrackButtons";
-// import { SlowmotionToggle } from "./controls/SlowmotionToggle";
+import { PlayerTrackButtons } from "./controls/PlayerTrackButtons"; // import { SlowmotionToggle } from "./controls/SlowmotionToggle";
 import { GameClock } from "./controls/GameClock";
 import { TimeSlider } from "./controls/TimeSlider";
 import { VolumeSlider } from "./controls/VolumeSlider";

@@ -15,21 +15,18 @@ export const VolumeSlider = () => {
   }
 
   const isMuted = fte.isMuted();
+  const max = fte.maxVolume();
   const stepCount = 100;
   const stepSize = roundFloat(max / stepCount, 3);
 
   return (
     <input
       type="range"
-      style={{
-        width: "6em",
-        margin: "10px",
-      }}
-      className={classNames({ grayscale: isMuted })}
+      className={classNames({ grayscale: isMuted }, "w-24 mx-2")}
       min={0}
-      max={fte.maxVolume()}
+      max={max}
       step={stepSize}
-      defaultValue={fte.volume()}
+      value={fte.volume()}
       onChange={(e) => fte.setVolume(e.target.value)}
     />
   );
