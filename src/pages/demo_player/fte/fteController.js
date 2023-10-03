@@ -10,6 +10,9 @@ export class FteController {
   _volume = 0.1;
   _speed = 100;
   _autotrack = true;
+  _cache = {
+    timelimit: null,
+  };
 
   static _instance = null;
 
@@ -97,6 +100,21 @@ export class FteController {
       return this.module.getPlayerInfo();
     } catch (e) {
       return [];
+    }
+  }
+
+  getTimelimit() {
+    if (this._cache.timelimit !== null) {
+      return this._cache.timelimit;
+    }
+
+    const timelimit = this.module.getTimelimit();
+    this._cache.timelimit = timelimit;
+
+    try {
+      return timelimit;
+    } catch (e) {
+      return 20;
     }
   }
 

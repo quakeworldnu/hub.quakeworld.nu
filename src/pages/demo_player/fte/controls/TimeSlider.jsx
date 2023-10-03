@@ -7,11 +7,14 @@ import { useUpdateInterval } from "@qwhub/hooks";
 import { secondsToString } from "@qwhub/pages/demo_player/util";
 import { useFteController } from "@qwhub/pages/demo_player/fte/hooks";
 
-export function TimeSlider({ max }) {
+export function TimeSlider() {
+  const fte = useFteController();
   const sliderWrapperRef = useRef(null);
   const tooltipRef = useRef(null);
   const isHover = useHover(sliderWrapperRef);
   const [mouse, sliderRootRef] = useMouse();
+
+  const max = fte ? fte.getTimelimit() * 60 : 60 * 20;
 
   useEffect(() => {
     if (!isHover) {

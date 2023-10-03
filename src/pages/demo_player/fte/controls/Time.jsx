@@ -2,7 +2,7 @@ import { useUpdateInterval } from "@qwhub/hooks";
 import { secondsToString } from "@qwhub/pages/demo_player/util";
 import { useFteController } from "@qwhub/pages/demo_player/fte/hooks";
 
-export const Time = ({ durationStr }) => {
+export const Time = () => {
   const fte = useFteController();
   useUpdateInterval(fte ? 200 : null);
 
@@ -10,9 +10,12 @@ export const Time = ({ durationStr }) => {
     return null;
   }
 
+  const elasped = fte.getDemoTime();
+  const total = fte.getTimelimit() * 60;
+
   return (
     <div className="flex mr-auto font-mono items-center">
-      {secondsToString(fte.getDemoTime())} / {durationStr}
+      {secondsToString(elasped)} / {secondsToString(total)}
     </div>
   );
 };

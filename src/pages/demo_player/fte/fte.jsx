@@ -1,7 +1,7 @@
 import { Controls } from "./Controls";
 import { useFteLoader } from "./hooks";
 
-export const FtePlayer = ({ files, duration }) => {
+export const FtePlayer = ({ files }) => {
   const { isReady, assets } = useFteLoader({ files });
 
   return (

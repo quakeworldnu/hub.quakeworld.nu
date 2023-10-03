@@ -7,16 +7,15 @@ import { Time } from "./controls/Time";
 import { TimeSlider } from "./controls/TimeSlider";
 import { VolumeSlider } from "./controls/VolumeSlider";
 import { VolumeToggle } from "./controls/VolumeToggle";
-import { secondsToString } from "@qwhub/pages/demo_player/util";
 
-export const Controls = ({ duration }) => {
+export const Controls = () => {
   return (
     <>
-      <TimeSlider max={duration} />
+      <TimeSlider />
       <PlayToggle />
       <VolumeToggle />
       <VolumeSlider />
-      <Time durationStr={secondsToString(duration)} />
+      <Time />
       <div className="flex space-x-1 px-3 bg-black rounded-xl items-center text-sm">
         <AutotrackToggle />
         <PlayerTrackButtons />
