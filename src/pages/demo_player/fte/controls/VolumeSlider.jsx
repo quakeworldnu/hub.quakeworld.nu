@@ -10,8 +10,6 @@ const stepCount = 100;
 const stepSize = roundFloat(max / stepCount, 3);
 
 export const VolumeSlider = () => {
-  useFteUpdateOnEvent("mute");
-  useFteUpdateOnEvent("unmute");
   useFteUpdateOnEvent("volume");
 
   const fte = useFteController();
@@ -20,6 +18,8 @@ export const VolumeSlider = () => {
     return null;
   }
 
+  const isMuted = fte.isMuted();
+
   return (
     <input
       type="range"
@@ -27,12 +27,11 @@ export const VolumeSlider = () => {
         width: "6em",
         margin: "10px",
       }}
-      className={classNames({ "opacity-40": !fte.isMuted() })}
+      className={classNames({ grayscale: isMuted })}
       min={0}
-      max={0.2}
+      max={fte.maxVolume()}
       step={stepSize}
       defaultValue={fte.volume()}
-      disabled={fte.isMuted()}
       onChange={(e) => fte.setVolume(e.target.value)}
     />
   );

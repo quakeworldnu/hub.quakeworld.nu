@@ -11,8 +11,6 @@ import {
 
 export const VolumeToggle = () => {
   useFteUpdateOnEvent("volume");
-  useFteUpdateOnEvent("mute");
-  useFteUpdateOnEvent("unmute");
   const fte = useFteController();
 
   if (!fte) {

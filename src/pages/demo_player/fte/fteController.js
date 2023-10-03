@@ -8,8 +8,9 @@ export function fteEvent(name, detail) {
 export class FteController {
   _module = null;
   _isPaused = false;
-  _isMuted = false;
   _volume = 0.0;
+  _lastVolume = 0.0;
+  _maxVolume = 0.2;
   _speed = 100;
   _autotrack = true;
   _cache = {
@@ -38,6 +39,7 @@ export class FteController {
 
     console.log("#################### FteController.new");
     this._module = module;
+    this._lastVolume = this._volume;
 
     return this;
   }
@@ -262,19 +264,19 @@ export class FteController {
 
   // volume
   mute() {
-    this._isMuted = true;
-    this.command("volume 0");
-    fteEvent("mute");
+    this.setVolume(0);
   }
 
   isMuted() {
-    return this._isMuted;
+    return 0 === this._volume;
   }
 
   unmute() {
-    this._isMuted = false;
-    this.command("volume " + this._volume);
-    fteEvent("unmute");
+    if (0 === this._lastVolume) {
+      this._lastVolume = this.maxVolume() / 100;
+    }
+
+    this.setVolume(this._lastVolume);
   }
 
   toggleMute() {
@@ -289,8 +291,18 @@ export class FteController {
     return this._volume;
   }
 
+  maxVolume() {
+    return this._maxVolume;
+  }
+
   setVolume(value) {
-    this._volume = parseFloat(value);
+    const newVolume = parseFloat(value);
+
+    if (0 === newVolume) {
+      this._lastVolume = this._volume;
+    }
+
+    this._volume = newVolume;
     this.command("volume " + this._volume);
     fteEvent("volume", { value: this._volume });
   }
