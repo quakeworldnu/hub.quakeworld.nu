@@ -49,7 +49,6 @@ export function useFteController() {
   const [fte, setFte] = useState(null);
 
   useEventListener("fte.ready", (e) => {
-    console.log("########################## WE ARE READY");
     const module = e.detail.value;
     const instance = FteController.getInstance(module);
     setFte(instance);
