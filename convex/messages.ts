@@ -7,7 +7,7 @@ export const list = query({
     return await ctx.db
       .query("messages")
       .withIndex("by_group_id", (q) => q.eq("groupId", groupId))
-      .take(100);
+      .take(5); // dev limit
   },
 });
 

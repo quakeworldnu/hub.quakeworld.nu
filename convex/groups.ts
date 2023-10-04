@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
-import { GroupId } from "./schema.ts";
+import { demoPlayback } from "./schema.ts";
 
 export const getCode = (size: number) => nanoid(size).toUpperCase();
 
@@ -34,34 +34,29 @@ export const getByCode = query({
   },
 });
 
+export const create = mutation({
+  args: { userId: v.id("users"), demoPlayback: demoPlayback },
+  handler: async (ctx, { userId, demoPlayback }) => {
+    console.log(
+      `groups:create(${userId}, demoPlayback: ${JSON.stringify(
+        demoPlayback,
+        null,
+        2,
+      )})`,
+    );
+
+    const groupId = await ctx.db.insert("groups", {
+      code: getCode(3),
+      demoPlayback,
+    });
+
+    return await ctx.db.patch(userId, { groupId });
+  },
+});
+
 export const join = mutation({
-  args: { userId: v.id("users"), code: v.optional(v.string()) },
-  handler: async (ctx, { userId, code }) => {
-    console.log(`groups:join(${userId}, ${code})`);
-
-    const user = await ctx.db.get(userId);
-    if (null === user) {
-      return;
-    }
-
-    const code_ = code?.toUpperCase() || getCode(3);
-    const existingGroup = await getByCode(ctx, { code: code_ });
-    let groupId: GroupId;
-
-    if (existingGroup === null) {
-      groupId = await ctx.db.insert("groups", {
-        code: code_,
-        playback: {
-          url: "",
-          time: 0,
-          track: "",
-          speed: 1,
-        },
-      });
-    } else {
-      groupId = existingGroup._id;
-    }
-
+  args: { userId: v.id("users"), groupId: v.id("groups") },
+  handler: async (ctx, { userId, groupId }) => {
     return await ctx.db.patch(userId, { groupId });
   },
 });
