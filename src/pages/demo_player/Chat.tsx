@@ -57,15 +57,24 @@ export function ChatMessages({ groupId }: { groupId: GroupId }) {
 }
 
 function ChatMessage({ message }: { message: Message }) {
-  const time = new Date(message._creationTime).toLocaleTimeString();
+  const time = formatTime(message._creationTime);
 
   return (
-    <div className="flex items-center space-x-2 app-effect-fade-in">
-      <span className="text-gray-400">{time}</span>
-      <span className="text-gray-400">{message.name}</span>
+    <div className="flex items-center space-x-2 app-effect-fade-in text-sm">
+      <span className="text-gray-400 text-xs">{time}</span>
+      <span className="text-sky-200 font-bold">{message.name}:</span>
       <span>{message.content}</span>
     </div>
   );
+}
+
+function formatTime(time: number) {
+  const format = new Intl.DateTimeFormat("en-GB", {
+    timeStyle: "short",
+    timeZone: "UTC",
+  });
+
+  return format.format(new Date(time));
 }
 
 export function ChatInput() {
