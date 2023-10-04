@@ -1,11 +1,10 @@
-import { secondsToMinutesAndSeconds } from "@qwhub/pages/demo_player/util";
-
 export function fteEvent(name, detail) {
   const event = new CustomEvent(`fte.${name}`, { detail });
   window.dispatchEvent(event);
 }
 
 export class FteController {
+  emitEvents = true;
   _module = null;
   _isPaused = false;
   _volume = 0.0;
@@ -51,9 +50,15 @@ export class FteController {
   command(command) {
     try {
       this.module.execute(command);
-      fteEvent("command", { value: command });
+      this.dispatchEvent("command", { value: command });
     } catch (e) {
       console.log("fte command error: " + e);
+    }
+  }
+
+  dispatchEvent(name, detail) {
+    if (this.emitEvents) {
+      fteEvent(name, detail);
     }
   }
 
@@ -175,17 +180,11 @@ export class FteController {
   setSpeed(speed) {
     this._speed = parseFloat(speed);
     this.command("demo_setspeed " + this._speed);
-    fteEvent("demo_setspeed", { value: this._speed });
+    this.dispatchEvent("demo_setspeed", { value: this._speed });
   }
 
   demoJump(demoTime) {
     const newDemoTime = Math.floor(demoTime);
-
-    console.log(
-      `############################ demoJump: ${demoTime}`,
-      secondsToMinutesAndSeconds(demoTime),
-      newDemoTime,
-    );
     const currentDemoTime = this.getDemoElapsedTime();
     const currentUserid = this.getTrackUserid();
 
@@ -204,13 +203,13 @@ export class FteController {
       setTimeout(restoreTrack, 20);
     }
 
-    fteEvent("demo_jump", { value: newDemoTime });
+    this.dispatchEvent("demo_jump", { value: newDemoTime });
   }
 
   play() {
     this._isPaused = false;
     this.command("demo_setspeed " + this._speed);
-    fteEvent("play");
+    this.dispatchEvent("play");
   }
 
   isPlaying() {
@@ -224,7 +223,7 @@ export class FteController {
   pause() {
     this._isPaused = true;
     this.command("demo_setspeed 0");
-    fteEvent("pause");
+    this.dispatchEvent("pause");
   }
 
   togglePlay() {
@@ -239,12 +238,12 @@ export class FteController {
   enableAutotrack() {
     this.command("cl_autotrack stats");
     this._autotrack = true;
-    fteEvent("autotrack", { value: this._autotrack });
+    this.dispatchEvent("autotrack", { value: this._autotrack });
   }
 
   disableAutotrack() {
     this.track(this.getTrackUserid());
-    fteEvent("autotrack", { value: this._autotrack });
+    this.dispatchEvent("autotrack", { value: this._autotrack });
   }
 
   toggleAutotrack() {
@@ -259,7 +258,7 @@ export class FteController {
     this._autotrack = false;
     this.command("cl_autotrack user");
     this.command("track " + userid);
-    fteEvent("track", { value: userid });
+    this.dispatchEvent("track", { value: userid });
   }
 
   // volume
@@ -304,6 +303,38 @@ export class FteController {
 
     this._volume = newVolume;
     this.command("volume " + this._volume);
-    fteEvent("volume", { value: this._volume });
+    this.dispatchEvent("volume", { value: this._volume });
+  }
+
+  toPlayback() {
+    return {
+      url: "todo",
+      time: this.getDemoElapsedTime(),
+      autotrack: this.autotrack(),
+      trackUserid: this.getTrackUserid(),
+      speed: this.speed(),
+    };
+  }
+
+  applyPlayback(playback) {
+    this.emitEvents = false;
+
+    const timeDelta = Math.abs(playback.time - this.getDemoElapsedTime());
+    if (timeDelta > 1) {
+      console.log("############# SHOULD DEMOJUMP TO", playback.time);
+      this.demoJump(playback.time);
+    }
+
+    if (playback.trackUserid !== this.getTrackUserid()) {
+      console.log("############# SHOULD TRACK", playback.trackUserid);
+      this.track(playback.trackUserid);
+    }
+
+    if (playback.speed !== this.speed()) {
+      console.log("############# SHOULD SET SPEED", playback.speed);
+      this.setSpeed(playback.speed);
+    }
+
+    this.emitEvents = true;
   }
 }
