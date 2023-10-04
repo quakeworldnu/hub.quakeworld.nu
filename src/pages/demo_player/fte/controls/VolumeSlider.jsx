@@ -1,9 +1,6 @@
 import { roundFloat } from "@qwhub/pages/demo_player/math";
 import classNames from "classnames";
-import {
-  useFteController,
-  useFteUpdateOnEvent,
-} from "@qwhub/pages/demo_player/fte/hooks";
+import { useFteController, useFteUpdateOnEvent } from "../hooks";
 
 export const VolumeSlider = () => {
   useFteUpdateOnEvent("volume");

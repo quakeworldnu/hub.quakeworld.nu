@@ -1,8 +1,5 @@
 import { useUpdateInterval } from "@qwhub/hooks";
-import {
-  useFteController,
-  useFteUpdateOnEvent,
-} from "@qwhub/pages/demo_player/fte/hooks";
+import { useFteController, useFteUpdateOnEvent } from "../hooks";
 import classNames from "classnames";
 import { toColoredHtml } from "@qwhub/pages/demo_player/qwstrings";
 

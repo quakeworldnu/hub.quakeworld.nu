@@ -1,5 +1,5 @@
 import { useUpdateInterval } from "@qwhub/hooks";
-import { useFteController } from "@qwhub/pages/demo_player/fte/hooks";
+import { useFteController } from "../hooks";
 import { formatTimeProgress } from "@qwhub/pages/demo_player/util";
 
 export const GameClock = () => {

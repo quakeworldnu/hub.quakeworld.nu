@@ -1,10 +1,7 @@
 import { faStopwatch, faStopwatch20 } from "@fortawesome/free-solid-svg-icons";
 
 import { IconToggleButton } from "@qwhub/pages/demo_player/fte/controls/IconToggleButton";
-import {
-  useFteController,
-  useFteUpdateOnEvent,
-} from "@qwhub/pages/demo_player/fte/hooks";
+import { useFteController, useFteUpdateOnEvent } from "../hooks";
 
 const slow = 20;
 const normal = 100;

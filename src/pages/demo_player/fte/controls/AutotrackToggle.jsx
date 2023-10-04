@@ -1,7 +1,4 @@
-import {
-  useFteController,
-  useFteUpdateOnEvent,
-} from "@qwhub/pages/demo_player/fte/hooks";
+import { useFteController, useFteUpdateOnEvent } from "../hooks";
 
 export const AutotrackToggle = () => {
   const fte = useFteController();
@@ -17,7 +14,7 @@ export const AutotrackToggle = () => {
       className="select-none mr-4 cursor-pointer flex items-center"
       onClick={() => fte.toggleAutotrack()}
     >
-      Autotrack [{fte.autotrack() ? "ON" : "OFF"}]
+      Autotrack [{fte.autotrack() ? "ON" : "OFF"}][{fte.getTrackUserid()}]
     </label>
   );
 };

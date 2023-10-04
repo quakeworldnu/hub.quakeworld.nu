@@ -1,4 +1,4 @@
-import { useFteController } from "@qwhub/pages/demo_player/fte/hooks";
+import { useFteController } from "../hooks";
 import { useUpdateInterval } from "@qwhub/hooks";
 
 export const DebugFte = () => {

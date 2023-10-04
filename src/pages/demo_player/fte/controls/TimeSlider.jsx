@@ -4,7 +4,7 @@ import { useMouse } from "@uidotdev/usehooks";
 import classNames from "classnames";
 import * as Slider from "@radix-ui/react-slider";
 import { useUpdateInterval } from "@qwhub/hooks";
-import { useFteController } from "@qwhub/pages/demo_player/fte/hooks";
+import { useFteController } from "../hooks";
 import { secondsToMinutesAndSeconds } from "@qwhub/pages/demo_player/util";
 
 export function TimeSlider() {
