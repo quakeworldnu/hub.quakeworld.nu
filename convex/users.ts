@@ -47,3 +47,17 @@ export const getOrCreate = mutation({
     return await ctx.db.get(id);
   },
 });
+
+export const joinGroup = mutation({
+  args: { userId: v.id("users"), groupId: v.id("groups") },
+  handler: async (ctx, { userId, groupId }) => {
+    return await ctx.db.patch(userId, { groupId });
+  },
+});
+
+export const leaveGroup = mutation({
+  args: { userId: v.id("users") },
+  handler: async (ctx, { userId }) => {
+    return await ctx.db.patch(userId, { groupId: null });
+  },
+});

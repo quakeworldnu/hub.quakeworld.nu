@@ -35,22 +35,25 @@ export const getByCode = query({
 });
 
 export const create = mutation({
-  args: { userId: v.id("users"), demoPlayback: demoPlayback },
-  handler: async (ctx, { userId, demoPlayback }) => {
-    console.log(
-      `groups:create(${userId}, demoPlayback: ${JSON.stringify(
-        demoPlayback,
-        null,
-        2,
-      )})`,
-    );
-
-    const groupId = await ctx.db.insert("groups", {
+  args: {},
+  handler: async (ctx) => {
+    return await ctx.db.insert("groups", {
       code: getCode(3),
-      demoPlayback,
+      demoPlayback: {
+        url: "",
+        time: 0,
+        autotrack: false,
+        trackUserid: 0,
+        speed: 100,
+      },
     });
+  },
+});
 
-    return await ctx.db.patch(userId, { groupId });
+export const setDemoPlayback = mutation({
+  args: { groupId: v.id("groups"), demoPlayback: demoPlayback },
+  handler: async (ctx, { groupId, demoPlayback }) => {
+    return await ctx.db.patch(groupId, { demoPlayback });
   },
 });
 
@@ -65,19 +68,5 @@ export const members = query({
       .query("users")
       .withIndex("by_group_id", (q) => q.eq("groupId", id))
       .collect();
-  },
-});
-
-export const join = mutation({
-  args: { userId: v.id("users"), groupId: v.id("groups") },
-  handler: async (ctx, { userId, groupId }) => {
-    return await ctx.db.patch(userId, { groupId });
-  },
-});
-
-export const leave = mutation({
-  args: { userId: v.id("users") },
-  handler: async (ctx, { userId }) => {
-    return await ctx.db.patch(userId, { groupId: null });
   },
 });
