@@ -11,8 +11,7 @@ import {
   demoUrlToFilename,
   demoUrlToQuakeRelativePath,
 } from "./demoUtil";
-import { Chat, ChatInput } from "./Chat";
-import { GroupInfo } from "./GroupInfo";
+import { Chat } from "./Chat";
 import { UserInfo } from "./UserInfo";
 import { getAssets } from "./fte/assets";
 
@@ -41,9 +40,17 @@ export const DemoPlayerApp = () => {
 
   return (
     <div className="my-6 space-y-4">
-      {demoUrl && (
-        <DemoDropdown onChange={onDemoDropdownChange} currentValue={demoUrl} />
-      )}
+      <div className="flex justify-between items-center">
+        {demoUrl && (
+          <div>
+            <DemoDropdown
+              onChange={onDemoDropdownChange}
+              currentValue={demoUrl}
+            />
+          </div>
+        )}
+        <UserInfo />
+      </div>
       {demoUrl && <DemoPlayer demoUrl={demoUrl} />}
       {!demoUrl && (
         <div className="flex flex-col justify-center items-center w-full h-[600px] bg-white/5 space-y-5">
@@ -65,7 +72,6 @@ function demoUrlToBreadcrumbs(demoUrl) {
 
 export const DemoPlayer = ({ demoUrl }) => {
   const demoFilename = demoUrlToFilename(demoUrl);
-  const demoDuration = 1210;
   const demoMapName = demoFilenameToMapName(demoFilename);
   const demoTitle = demoFilenameToTitle(demoFilename);
   const demoBreadcrumbs = demoUrlToBreadcrumbs(demoUrl);
@@ -84,14 +90,6 @@ export const DemoPlayer = ({ demoUrl }) => {
             </span>
           ))}
         </div>
-        {false && (
-          <div className="opacity-80">
-            <div className="space-y-4">
-              <UserInfo />
-              <GroupInfo />
-            </div>
-          </div>
-        )}
       </div>
       <div className="flex min-h-[800px]">
         <div className="flex flex-col grow">
@@ -108,7 +106,7 @@ export const DemoPlayer = ({ demoUrl }) => {
             <div>
               <a
                 href={demoUrl}
-                className="py-3 px-4 text-lg text-sm rounded bg-blue-600/50 hover:bg-blue-600/80 cursor-pointer"
+                className="py-3 px-4 rounded bg-blue-600/50 hover:bg-blue-600/80 cursor-pointer"
               >
                 Download demo
               </a>
@@ -132,15 +130,15 @@ export const DemoPlayer = ({ demoUrl }) => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col w-[400px] ml-4 hidden">
+        <div className="flex flex-col w-[400px] ml-4">
           <div className="flex px-6 py-7 bg-white/5 space-x-6">
             <div className="border-b-2 border-blue-500 font-bold">Chat</div>
             <div>Playlist</div>
             <div>Related demos</div>
           </div>
-          <div className="grow bg-blue-400/10 h-1">{false && <Chat />}</div>
-
-          {false && <ChatInput />}
+          <div className="flex flex-col bg-blue-400/10 h-full">
+            <Chat />
+          </div>
         </div>
       </div>
     </>

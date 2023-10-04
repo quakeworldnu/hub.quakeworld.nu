@@ -4,11 +4,13 @@ import { api } from "../../../convex/_generated/api";
 import type { GroupId, Message } from "../../../convex/schema.ts";
 import { useUser } from "./services/convex/hooks.ts";
 import classNames from "classnames";
+import { faUsers } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export function Chat() {
   const { user } = useUser();
-  const members =
-    useQuery(api.groups.members, { id: user?.groupId || null }) || [];
+  const membersArgs = user?.groupId ? { id: user.groupId } : "skip";
+  const members = useQuery(api.groups.members, membersArgs) || [];
 
   if (!user?.groupId) {
     return (
@@ -21,9 +23,15 @@ export function Chat() {
   return (
     <>
       <div className="bg-black/40 border-b border-white/10 p-3 text-xs">
-        [users] {members.map((m) => m.name).join(", ")}
+        <span className="mr-2">
+          <FontAwesomeIcon icon={faUsers} />
+        </span>
+        {members.map((m) => m.name).join(", ")}
       </div>
-      <ChatMessages groupId={user.groupId} />
+      <div className="flex flex-col h-full">
+        <ChatMessages groupId={user.groupId} />
+        <ChatInput />
+      </div>
     </>
   );
 }
