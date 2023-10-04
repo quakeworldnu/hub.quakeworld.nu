@@ -36,8 +36,7 @@ export function UserInfo() {
   return (
     <div className="space-y-2">
       <div>
-        <strong>{user.name}</strong>{" "}
-        <span className="font-mono text-xs">({user.uuid})</span>
+        <strong title={user.uuid}>{user.name}</strong>{" "}
       </div>
       <div>
         {!group && (
