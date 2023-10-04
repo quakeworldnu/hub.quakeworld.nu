@@ -1,5 +1,5 @@
 import SiteNavigation from "@qwhub/site/Navigation";
-import Streams from "@qwhub/Streams";
+import { FeaturedStreams } from "@qwhub/Streams";
 import { SettingsDrawer } from "@qwhub/site/Settings";
 
 export const SiteHeader = () => (
@@ -22,7 +22,7 @@ export const SiteHeader = () => (
             <SiteNavigation />
           </div>
         </div>
-        <Streams />
+        <FeaturedStreams />
       </div>
       <div className="hidden lg:flex mt-1">
         <SiteNavigation />
