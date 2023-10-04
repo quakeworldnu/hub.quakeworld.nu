@@ -54,13 +54,6 @@ export const create = mutation({
   },
 });
 
-export const join = mutation({
-  args: { userId: v.id("users"), groupId: v.id("groups") },
-  handler: async (ctx, { userId, groupId }) => {
-    return await ctx.db.patch(userId, { groupId });
-  },
-});
-
 export const members = query({
   args: { id: v.union(v.id("groups"), v.null()) },
   handler: async (ctx, { id }) => {
@@ -75,15 +68,16 @@ export const members = query({
   },
 });
 
+export const join = mutation({
+  args: { userId: v.id("users"), groupId: v.id("groups") },
+  handler: async (ctx, { userId, groupId }) => {
+    return await ctx.db.patch(userId, { groupId });
+  },
+});
+
 export const leave = mutation({
   args: { userId: v.id("users") },
   handler: async (ctx, { userId }) => {
-    const user = await ctx.db.get(userId);
-
-    if (null === user || user.groupId === null) {
-      return;
-    }
-
     return await ctx.db.patch(userId, { groupId: null });
   },
 });
