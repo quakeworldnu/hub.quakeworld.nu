@@ -3,7 +3,11 @@ import { useLocalStorage } from "usehooks-ts";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../../../convex/_generated/api";
 import { useEffect } from "react";
-import { GroupId } from "../../../../../convex/schema.ts";
+import {
+  demoPlayback,
+  DemoPlayback,
+  GroupId,
+} from "../../../../../convex/schema.ts";
 
 export function useUuid() {
   const [uuid, setUuid] = useLocalStorage<string>("uuid", nanoid());
@@ -38,6 +42,7 @@ export function useUser() {
   const groupArgs = user?.groupId ? { id: user.groupId } : "skip";
   const group = useQuery(api.groups.get, groupArgs);
   const create = useMutation(api.groups.create);
+  const setDemoPlayback = useMutation(api.groups.setDemoPlayback);
 
   const createAndJoin = user?._id
     ? async () => {
@@ -57,11 +62,20 @@ export function useUser() {
     ? () => leave({ userId: user._id })
     : () => console.log("leave");
 
+  const setGroupDemoplayback = user?.groupId
+    ? async (demoPlayback: DemoPlayback) => {
+        if (user.groupId) {
+          await setDemoPlayback({ groupId: user.groupId, demoPlayback });
+        }
+      }
+    : () => console.log("setDemoPlayback", demoPlayback);
+
   return {
     user,
     group,
     createGroup: createAndJoin,
     joinGroup,
     leaveGroup,
+    setGroupDemoplayback,
   };
 }
