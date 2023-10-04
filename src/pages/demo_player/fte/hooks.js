@@ -48,7 +48,7 @@ export function useFteLoader({ files }) {
 export function useFteController() {
   const [fte, setFte] = useState(null);
 
-  useEventListener("fte.ready", (e) => {
+  useFteEvent("ready", (e) => {
     const module = e.detail.value;
     const instance = FteController.getInstance(module);
     setFte(instance);
@@ -57,8 +57,11 @@ export function useFteController() {
   return fte;
 }
 
-export function useFteUpdateOnEvent(event) {
-  const { count, increment } = useCounter(0);
-  useEventListener(`fte.${event}`, increment);
-  return count;
+export function useFteEvent(eventName, callback) {
+  useEventListener(`fte.${eventName}`, callback);
+}
+
+export function useFteUpdateOnEvent(eventName) {
+  const { increment } = useCounter(0);
+  useFteEvent(eventName, increment);
 }
