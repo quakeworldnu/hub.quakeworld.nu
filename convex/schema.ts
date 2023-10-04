@@ -4,6 +4,7 @@ import { Doc, Id } from "./_generated/dataModel";
 
 export const demoPlayback = v.object({
   // demoId: v.id("demos"),
+  userId: v.union(v.id("users"), v.null()),
   url: v.string(),
   time: v.float64(),
   autotrack: v.boolean(),

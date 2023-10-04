@@ -40,6 +40,7 @@ export const create = mutation({
     return await ctx.db.insert("groups", {
       code: getCode(3),
       demoPlayback: {
+        userId: null,
         url: "",
         time: 0,
         autotrack: false,
