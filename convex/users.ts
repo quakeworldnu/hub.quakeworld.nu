@@ -1,5 +1,6 @@
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
+import { faker } from "@faker-js/faker";
 
 export const get = query({
   args: { id: v.union(v.id("users"), v.null()) },
@@ -40,7 +41,7 @@ export const getOrCreate = mutation({
     const id = await ctx.db.insert("users", {
       uuid,
       groupId: null,
-      name: "Player",
+      name: faker.person.firstName(),
     });
 
     return await ctx.db.get(id);
