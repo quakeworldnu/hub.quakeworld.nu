@@ -46,7 +46,7 @@ export function useFteLoader({ files }) {
 }
 
 export function useFteController() {
-  const [fte, setFte] = useState(null);
+  const [fte, setFte] = useState(undefined);
 
   useFteEvent("ready", (e) => {
     const module = e.detail.value;
@@ -54,7 +54,22 @@ export function useFteController() {
     setFte(instance);
   });
 
+  useEffectOnce(() => {
+    if (!fte && window.Module) {
+      const instance = FteController.getInstance(window.Module);
+      setFte(instance);
+    }
+  });
+
   return fte;
+}
+
+export function useFteEventBySource(eventName, source, callback) {
+  useEventListener(`fte.${eventName}`, (e) => {
+    if (e.detail.source === source) {
+      callback(e);
+    }
+  });
 }
 
 export function useFteEvent(eventName, callback) {
