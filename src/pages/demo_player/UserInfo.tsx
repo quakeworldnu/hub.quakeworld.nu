@@ -1,7 +1,6 @@
 import { useUser } from "./services/convex/hooks";
 import { useConvex } from "convex/react";
 import { api } from "../../../convex/_generated/api";
-import { GroupId } from "../../../convex/schema";
 import copyTextToClipboard from "copy-text-to-clipboard";
 import { useRef } from "react";
 
@@ -26,7 +25,7 @@ export function UserInfo() {
       codeEl.focus();
     } else {
       errorEl.classList.remove("bg-red-600");
-      joinGroup(groupTojoin._id as GroupId);
+      joinGroup(groupTojoin._id);
     }
   }
 
