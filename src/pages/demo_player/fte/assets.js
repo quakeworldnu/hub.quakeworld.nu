@@ -18,7 +18,17 @@ export function getAssets(demoUrl, mapName) {
 }
 
 function getDemoMountPath(demoFilename) {
-  return /.+.mvd/.test(demoFilename) ? "qw/match.mvd" : "id1/match.dem";
+  let mountPath;
+
+  if (demoFilename.endsWith(".gz")) {
+    mountPath = "qw/match.mvd.gz";
+  } else if (demoFilename.endsWith(".mvd")) {
+    mountPath = "qw/match.mvd";
+  } else {
+    mountPath = "id1/match.dem";
+  }
+
+  return mountPath;
 }
 
 function getMapAssets(mapName) {
