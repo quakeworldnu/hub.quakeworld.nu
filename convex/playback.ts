@@ -26,19 +26,16 @@ export const getByGroupId = query({
 export const create = mutation({
   args: {
     groupId: v.id("groups"),
-    props: v.object({
-      updateUserId: v.id("users"),
-      url: v.string(),
-      time: v.number(),
-      autotrack: v.boolean(),
-      trackUserid: v.number(),
-      speed: v.float64(),
-    }),
+    updateUserId: v.id("users"),
+    demo_jump: v.number(),
+    demo_setspeed: v.float64(),
+    cl_autotrack: v.string(),
+    track: v.number(),
   },
-  handler: async (ctx, { groupId, props }) => {
-    console.log(`playback:create(${groupId})`);
+  handler: async (ctx, props) => {
+    console.log(`playback:create()`);
 
-    const existing = await getByGroupId(ctx, { groupId });
+    const existing = await getByGroupId(ctx, { groupId: props.groupId });
 
     if (existing !== null) {
       return existing._id;
@@ -46,9 +43,9 @@ export const create = mutation({
 
     const playback = {
       ...props,
-      groupId,
       updateTime: getUpdateTime(),
       hasSyncRequest: false,
+      url: "todo",
     };
 
     return await ctx.db.insert("playback", playback);
@@ -62,10 +59,10 @@ export const update = mutation({
       updateUserId: v.optional(v.id("users")),
       hasSyncRequest: v.optional(v.boolean()),
       url: v.optional(v.string()),
-      time: v.optional(v.number()),
-      autotrack: v.optional(v.boolean()),
-      trackUserid: v.optional(v.number()),
-      speed: v.optional(v.float64()),
+      demo_jump: v.optional(v.number()),
+      demo_setspeed: v.optional(v.float64()),
+      cl_autotrack: v.optional(v.string()),
+      track: v.optional(v.number()),
     }),
   },
   handler: async (ctx, { id, props }) => {

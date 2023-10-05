@@ -8,33 +8,13 @@ export const playbackSchema = {
   updateUserId: v.id("users"),
   hasSyncRequest: v.boolean(),
   url: v.string(),
-  time: v.number(),
-  autotrack: v.boolean(),
-  trackUserid: v.number(),
-  speed: v.float64(),
+  demo_jump: v.number(),
+  demo_setspeed: v.float64(),
+  cl_autotrack: v.string(),
+  track: v.number(),
 };
 
 const schema = defineSchema({
-  // demos: defineTable({
-  //   // file
-  //   sha256: v.string(),
-  //   filepath: v.string(),
-  //   filename: v.string(),
-  //   filesize: v.number(),
-  //   url: v.string(),
-  //   // content
-  //   timestamp: v.string(),
-  //   duration: v.float64(),
-  //   title: v.string(),
-  //   mode: v.string(),
-  //   map: v.string(),
-  //   players: v.array(v.string()),
-  //   event: v.string(),
-  //   round: v.string(),
-  //   bestOf: v.number(),
-  //   mapNumber: v.number(),
-  // }).index("by_sha256", ["sha256"]),
-
   groups: defineTable({
     code: v.string(),
   }).index("by_code", ["code"]),
@@ -65,3 +45,24 @@ export type Playback = Doc<"playback">;
 export type PlaybackId = Id<"playback">;
 export type User = Doc<"users">;
 export type UserId = Id<"users">;
+
+// meh
+// demos: defineTable({
+//   // file
+//   sha256: v.string(),
+//   filepath: v.string(),
+//   filename: v.string(),
+//   filesize: v.number(),
+//   url: v.string(),
+//   // content
+//   timestamp: v.string(),
+//   duration: v.float64(),
+//   title: v.string(),
+//   mode: v.string(),
+//   map: v.string(),
+//   players: v.array(v.string()),
+//   event: v.string(),
+//   round: v.string(),
+//   bestOf: v.number(),
+//   mapNumber: v.number(),
+// }).index("by_sha256", ["sha256"]),
