@@ -35,6 +35,7 @@ export function titlelize(value: string): string {
     .replaceAll("/", " / ")
     .replaceAll("_", " ")
     .replace(/(\[.+])/gm, " $1 ")
+    .replace(".mvd.gz", "")
     .replace(".mvd", "")
     .trim();
 }
