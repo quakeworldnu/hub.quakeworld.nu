@@ -30,12 +30,15 @@ export function useFteLoader({ files }) {
     };
   });
 
+  const totalAssets = Object.values(files).length;
   return {
     isReady: scriptStatus === "ready",
+    isLoading: scriptStatus !== "ready",
     scriptStatus,
     assets: {
-      total: Object.values(files).length,
+      total: totalAssets,
       loaded,
+      progress: Math.round(100 * (loaded / totalAssets)),
     },
   };
 }
