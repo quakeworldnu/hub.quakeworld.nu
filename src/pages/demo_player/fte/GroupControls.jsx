@@ -25,18 +25,11 @@ export const GroupControls = () => {
 
   // follow group playback
   useEffect(() => {
-    console.log(
-      fte === undefined,
-      typeof playback,
-      isSynced,
-      playback && playback.updateUserId === user._id,
-    );
-
     if (!fte || !playback || (isSynced && playback.updateUserId === user._id)) {
       return;
     }
 
-    fte.applyPlayback(playback);
+    fte.applyGroupPlayback(playback);
 
     if (!isSynced) {
       setIsSynced(true);
@@ -59,7 +52,7 @@ export const GroupControls = () => {
 
   return (
     <div>
-      <div className="flex space-between">
+      <div className="flex space-between hidden">
         <Debug
           value={{
             fte: typeof fte,

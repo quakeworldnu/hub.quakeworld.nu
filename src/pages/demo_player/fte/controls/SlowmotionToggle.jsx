@@ -14,7 +14,7 @@ export const SlowmotionToggle = () => {
     return null;
   }
 
-  const currentSpeed = fte.speed();
+  const currentSpeed = fte.demo_setspeed();
 
   function onClick() {
     const newSpeed = currentSpeed === slow ? normal : slow;
