@@ -27,7 +27,20 @@ export function demoUrlToTitle(demoUrl: string): string {
     return "";
   }
 
-  return titlelize(demoUrlToQuakeRelativePath(demoUrl));
+  const title = titlelize(demoUrlToQuakeRelativePath(demoUrl));
+
+  if (!title.includes("recent /")) {
+    return title;
+  }
+
+  const partsRe = /recent \/ (.+?)(\d{6,8}-\d{4})$/m;
+  const match = title.match(partsRe);
+
+  if (match === null) {
+    return title;
+  }
+
+  return `recent / ${match[2]} ${match[1]}`;
 }
 
 export function titlelize(value: string): string {

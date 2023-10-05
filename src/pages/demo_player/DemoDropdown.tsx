@@ -3,15 +3,26 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { getDemoUrls } from "./services/aws.ts";
 import { demoUrlToTitle } from "./demoUtil.ts";
 
+type Demo = {
+  url: string;
+  title: string;
+};
+
 export function DemoDropdown(props: {
   currentValue: string;
   onChange: (demoUrl: string) => void;
 }) {
-  const [demoUrls, setDemoUrls] = useState<string[]>([]);
+  const [demos, setDemos] = useState<Demo[]>([]);
 
   useEffect(() => {
     async function run() {
-      setDemoUrls(await getDemoUrls());
+      const demoUrls = await getDemoUrls();
+      const demos = demoUrls.map((url) => ({
+        url,
+        title: demoUrlToTitle(url),
+      }));
+      demos.sort((a, b) => a.title.localeCompare(b.title));
+      setDemos(demos);
     }
 
     run();
@@ -29,9 +40,9 @@ export function DemoDropdown(props: {
       value={props.currentValue}
     >
       <option value="" />
-      {demoUrls.map((demoUrl) => (
-        <option key={demoUrl} value={demoUrl}>
-          {demoUrlToTitle(demoUrl)}
+      {demos.map((demo) => (
+        <option key={demo.title} value={demo.url}>
+          {demo.title}
         </option>
       ))}
     </select>
