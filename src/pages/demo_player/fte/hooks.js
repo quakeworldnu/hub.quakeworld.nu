@@ -2,11 +2,12 @@ import {
   useCounter,
   useEffectOnce,
   useEventListener,
+  useInterval,
   useScript,
 } from "usehooks-ts";
 import { useState } from "react";
 import { withPrefix } from "./assets";
-import { FteController, fteEvent } from "./fteController";
+import { FteController } from "./fteController";
 
 export function useFteLoader({ files }) {
   const scriptPath = withPrefix("/ftewebgl.js");
@@ -18,12 +19,6 @@ export function useFteLoader({ files }) {
       canvas: document.getElementById("fteCanvas"),
       files,
       setStatus: function (value) {
-        if (value.includes("Running..")) {
-          setTimeout(() => {
-            fteEvent("ready", { value: window.Module });
-          }, 500);
-        }
-
         const assetRe = value.match(/.+ \((\d+)\/(\d+)\)/);
         const isLoadedAsset =
           assetRe && assetRe.length === 3 && assetRe[1] === assetRe[2];
@@ -48,18 +43,15 @@ export function useFteLoader({ files }) {
 export function useFteController() {
   const [fte, setFte] = useState(undefined);
 
-  useFteEvent("ready", (e) => {
-    const module = e.detail.value;
-    const instance = FteController.getInstance(module);
-    setFte(instance);
-  });
-
-  useEffectOnce(() => {
-    if (!fte && window.Module) {
-      const instance = FteController.getInstance(window.Module);
-      setFte(instance);
-    }
-  });
+  useInterval(
+    () => {
+      if (!fte && window.Module?.execute) {
+        const instance = FteController.getInstance(window.Module);
+        setFte(instance);
+      }
+    },
+    fte ? null : 100,
+  );
 
   return fte;
 }

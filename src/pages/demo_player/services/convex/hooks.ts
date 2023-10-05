@@ -3,11 +3,7 @@ import { useLocalStorage } from "usehooks-ts";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../../../convex/_generated/api";
 import { useEffect } from "react";
-import {
-  demoPlayback,
-  DemoPlayback,
-  GroupId,
-} from "../../../../../convex/schema.ts";
+import { GroupId, Playback } from "../../../../../convex/schema.ts";
 
 export function useUuid() {
   const [uuid, setUuid] = useLocalStorage<string>("uuid", nanoid());
@@ -24,7 +20,7 @@ export function useUuid() {
       setUuid(user.uuid);
     }
 
-    console.log("updateUser()");
+    // console.log("updateUser()");
     updateUser();
   }, [uuid]);
 
@@ -35,47 +31,69 @@ export function useUser() {
   // user
   const uuid = useUuid();
   const user = useQuery(api.users.getByUuid, { uuid });
-  const join = useMutation(api.users.joinGroup);
-  const leave = useMutation(api.users.leaveGroup);
+  const userJoinGroup = useMutation(api.users.joinGroup);
+  const usersLeaveGroup = useMutation(api.users.leaveGroup);
 
   // groups
   const groupArgs = user?.groupId ? { id: user.groupId } : "skip";
   const group = useQuery(api.groups.get, groupArgs);
-  const create = useMutation(api.groups.create);
-  const setDemoPlayback = useMutation(api.groups.setDemoPlayback);
+  const groupsCreate = useMutation(api.groups.create);
 
-  const createAndJoin = user?._id
+  const createAndJoinGroup = user?._id
     ? async () => {
-        const newGroup = await create();
+        const newGroup = await groupsCreate();
 
         if (newGroup !== null) {
           joinGroup(newGroup);
         }
       }
-    : () => console.log("createAndJoin");
+    : () => console.log("createAndJoinGroup");
 
   const joinGroup = user?._id
-    ? (groupId: GroupId) => join({ userId: user._id, groupId })
+    ? (groupId: GroupId) => userJoinGroup({ userId: user._id, groupId })
     : (groupId: GroupId) => console.log("join", groupId);
 
   const leaveGroup = user?._id
-    ? () => leave({ userId: user._id })
+    ? () => usersLeaveGroup({ userId: user._id })
     : () => console.log("leave");
 
-  const setGroupDemoplayback = user?.groupId
-    ? async (demoPlayback: DemoPlayback) => {
-        if (user.groupId) {
-          await setDemoPlayback({ groupId: user.groupId, demoPlayback });
+  // playback
+  const playbackArgs = user?.groupId ? { groupId: user.groupId } : "skip";
+  const playback = useQuery(api.playback.getByGroupId, playbackArgs);
+  const playbackCreate = useMutation(api.playback.create);
+  const playbackUpdate = useMutation(api.playback.update);
+
+  const createPlayback =
+    user?._id && group?._id
+      ? (props: {
+          demo_jump: number;
+          demo_setspeed: number;
+          cl_autotrack: string;
+          track: number;
+        }) =>
+          playbackCreate({
+            groupId: group._id,
+            updateUserId: user._id,
+            ...props,
+          })
+      : () => console.log("createPlayback");
+
+  const updatePlayback =
+    user?._id && playback?._id
+      ? (props: Partial<Playback>) => {
+          props.updateUserId = user._id;
+          playbackUpdate({ id: playback._id, props });
         }
-      }
-    : () => console.log("setDemoPlayback", demoPlayback);
+      : (props: Partial<Playback>) => console.log("updatePlayback", props);
 
   return {
     user,
     group,
-    createGroup: createAndJoin,
+    playback,
+    createPlayback,
+    updatePlayback,
+    createGroup: createAndJoinGroup,
     joinGroup,
     leaveGroup,
-    setGroupDemoplayback,
   };
 }
