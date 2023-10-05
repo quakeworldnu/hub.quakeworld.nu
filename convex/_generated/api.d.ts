@@ -17,6 +17,7 @@ import type {
 import type * as groups from "../groups";
 import type * as init from "../init";
 import type * as messages from "../messages";
+import type * as playback from "../playback";
 import type * as users from "../users";
 
 /**
@@ -31,6 +32,7 @@ declare const fullApi: ApiFromModules<{
   groups: typeof groups;
   init: typeof init;
   messages: typeof messages;
+  playback: typeof playback;
   users: typeof users;
 }>;
 export declare const api: FilterApi<
