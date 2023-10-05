@@ -1,7 +1,7 @@
-export const Debug = (props) => {
+export const Debug = ({ value }) => {
   return (
     <div className="text-xs font-mono text-left">
-      <pre>{JSON.stringify({ props }, null, 2)}</pre>
+      <pre>{JSON.stringify(value, null, 2)}</pre>
     </div>
   );
 };
