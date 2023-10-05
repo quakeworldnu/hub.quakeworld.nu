@@ -3,15 +3,20 @@ export function fteEvent(name, detail) {
   window.dispatchEvent(event);
 }
 
+const AUTOTRACK_ON = "stats";
+const AUTOTRACK_OFF = "user";
+const CONTROL_USER = "user";
+const CONTROL_GROUP = "group";
+
 export class FteController {
-  emitEvents = true;
+  _controlSource = CONTROL_USER;
   _module = null;
-  _isPaused = false;
   _volume = 0.0;
   _lastVolume = 0.0;
   _maxVolume = 0.2;
-  _speed = 100;
-  _autotrack = true;
+  _last_demo_setspeed = 100;
+  _demo_setspeed = 100;
+  _cl_autotrack = AUTOTRACK_ON;
   _cache = {
     timelimit: null,
     map: null,
@@ -58,10 +63,7 @@ export class FteController {
   }
 
   dispatchEvent(name, detail) {
-    if (this.emitEvents) {
-      console.log("fte event: " + name, detail);
-      fteEvent(name, detail);
-    }
+    fteEvent(name, { ...detail, source: this._controlSource });
   }
 
   captureCommandOutput(command) {
@@ -106,7 +108,10 @@ export class FteController {
     }
   }
 
+  // todo: fix
   getDemoTotalTime() {
+    return 10 + 60 * 20;
+
     return this.getCachedValue(
       "demoTotalTime",
       this.module.getDemoTotalTime,
@@ -175,29 +180,21 @@ export class FteController {
   }
 
   // demo playback
-  speed() {
-    return this._speed;
-  }
-
-  setSpeed(speed) {
-    this._speed = parseFloat(speed);
-    this.command("demo_setspeed", this._speed);
-  }
-
   demoJump(demoTime) {
     const newDemoTime = Math.floor(demoTime);
     const currentDemoTime = this.getDemoElapsedTime();
-    const currentUserid = this.getTrackUserid();
+    const lastTrack = this.getTrackUserid();
+    const lastAutotrackEnabled = this.isUsingAutotrack();
 
     this.command("demo_jump", newDemoTime);
 
     // restore track on backwards jump
     if (newDemoTime < currentDemoTime) {
       const restoreTrack = () => {
-        if (this._autotrack) {
+        if (lastAutotrackEnabled) {
           this.enableAutotrack();
         } else {
-          this.track(currentUserid);
+          this.track(lastTrack);
         }
       };
 
@@ -205,45 +202,64 @@ export class FteController {
     }
   }
 
+  demo_setspeed() {
+    return this._demo_setspeed;
+  }
+
+  setSpeed(speed) {
+    this._last_demo_setspeed = this._demo_setspeed;
+    this._demo_setspeed = parseFloat(speed);
+    this.command("demo_setspeed", this._demo_setspeed);
+  }
+
   play() {
-    this._isPaused = false;
-    this.command("demo_setspeed", this._speed);
+    if (this.isPaused()) {
+      this.setSpeed(this._last_demo_setspeed);
+    }
   }
 
   isPlaying() {
-    return !this.isPaused();
+    return this._demo_setspeed > 0;
   }
 
   isPaused() {
-    return this._isPaused;
+    return !this.isPlaying();
   }
 
   pause() {
-    this._isPaused = true;
-    this.command("demo_setspeed", 0);
+    if (this.isPlaying()) {
+      this.setSpeed(0);
+    }
   }
 
   togglePlay() {
-    this._isPaused ? this.play() : this.pause();
+    this.isPlaying() ? this.pause() : this.play();
   }
 
   // track
-  autotrack() {
-    return this._autotrack;
+  cl_autotrack() {
+    return this._cl_autotrack;
+  }
+
+  isUsingAutotrack() {
+    return this._cl_autotrack === AUTOTRACK_ON;
+  }
+
+  setAutotrack(value) {
+    this._cl_autotrack = value;
+    this.command("cl_autotrack", this._cl_autotrack);
   }
 
   enableAutotrack() {
-    this.command("cl_autotrack", "stats");
-    this._autotrack = true;
+    this.setAutotrack(AUTOTRACK_ON);
   }
 
   disableAutotrack() {
-    this.command("cl_autotrack", "user");
-    this._autotrack = false;
+    this.setAutotrack(AUTOTRACK_OFF);
   }
 
   toggleAutotrack() {
-    if (this.autotrack()) {
+    if (this.isUsingAutotrack()) {
       this.disableAutotrack();
     } else {
       this.enableAutotrack();
@@ -251,7 +267,9 @@ export class FteController {
   }
 
   track(userid) {
-    this.disableAutotrack();
+    if (this.isUsingAutotrack()) {
+      this.disableAutotrack();
+    }
     this.command("track", userid);
   }
 
@@ -295,28 +313,35 @@ export class FteController {
     this.command("volume", this._volume);
   }
 
-  applyPlayback(playback) {
-    this.emitEvents = false;
+  applyGroupPlayback(playback) {
+    this._controlSource = CONTROL_GROUP;
 
-    const timeDelta = Math.abs(playback.time - this.getDemoElapsedTime());
-    if (timeDelta > 1) {
-      console.log("############# SHOULD DEMOJUMP TO", playback.time);
-      // this.demoJump(playback.time);
+    // track
+    if (playback.track !== this.getTrackUserid()) {
+      // console.log("### set track", playback.track);
+      this.track(playback.track);
     }
 
-    if (playback.autotrack && !this.autotrack()) {
-      console.log("############# SHOULD ENABLE AUTOTRACK");
-      //this.enableAutotrack();
-    } else if (playback.trackUserid !== this.getTrackUserid()) {
-      console.log("############# SHOULD TRACK", playback.trackUserid);
-      //this.track(playback.trackUserid);
+    if (playback.cl_autotrack !== this._cl_autotrack) {
+      // console.log("### set autotrack", playback.cl_autotrack);
+      this.setAutotrack(playback.cl_autotrack);
     }
 
-    if (playback.speed !== this.speed()) {
-      console.log("############# SHOULD SET SPEED", playback.speed);
-      //this.setSpeed(playback.speed);
+    // speed
+    if (playback.demo_setspeed !== this.demo_setspeed()) {
+      console.log("### set speed", playback.demo_setspeed);
+      this.setSpeed(playback.demo_setspeed);
     }
 
-    this.emitEvents = true;
+    // demo jump
+    const timeDelta = Math.abs(playback.demo_jump - this.getDemoElapsedTime());
+    const shouldDemoJump = timeDelta > 3;
+
+    if (shouldDemoJump) {
+      console.log("### demo jump", playback.demo_jump);
+      this.demoJump(playback.demo_jump);
+    }
+
+    this._controlSource = CONTROL_USER;
   }
 }
