@@ -4,8 +4,7 @@ import { IconToggleButton } from "@qwhub/pages/demo_player/fte/controls/IconTogg
 import { useFteController, useFteUpdateOnEvent } from "../hooks";
 
 export const PlayToggle = () => {
-  useFteUpdateOnEvent("play");
-  useFteUpdateOnEvent("pause");
+  useFteUpdateOnEvent("demo_setspeed");
   const fte = useFteController();
 
   if (!fte) {
