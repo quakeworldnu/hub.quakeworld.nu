@@ -26,7 +26,7 @@ export async function getDemoUrls(): Promise<string[]> {
 
   const demos = [];
   for (const o of objects) {
-    if (o.Key?.endsWith(".mvd")) {
+    if (o.Key?.endsWith(".mvd") || o.Key?.endsWith(".mvd.gz")) {
       demos.push(`${ENV.VITE_AWS_S3_BUCKET_URL}/${o.Key}`);
     }
   }
