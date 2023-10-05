@@ -1,7 +1,6 @@
 import { nanoid } from "nanoid";
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
-import { demoPlayback } from "./schema.ts";
 
 export const getCode = (size: number) => nanoid(size).toUpperCase();
 
@@ -39,22 +38,7 @@ export const create = mutation({
   handler: async (ctx) => {
     return await ctx.db.insert("groups", {
       code: getCode(3),
-      demoPlayback: {
-        userId: null,
-        url: "",
-        time: 0,
-        autotrack: false,
-        trackUserid: 0,
-        speed: 100,
-      },
     });
-  },
-});
-
-export const setDemoPlayback = mutation({
-  args: { groupId: v.id("groups"), demoPlayback: demoPlayback },
-  handler: async (ctx, { groupId, demoPlayback }) => {
-    return await ctx.db.patch(groupId, { demoPlayback });
   },
 });
 
