@@ -16,6 +16,7 @@ export class FteController {
   _maxVolume = 0.2;
   _last_demo_setspeed = 100;
   _demo_setspeed = 100;
+  _cl_splitscreen = 0;
   _cl_autotrack = AUTOTRACK_ON;
   _cache = {
     timelimit: null,
@@ -313,6 +314,21 @@ export class FteController {
     this.command("volume", this._volume);
   }
 
+  // split screen
+  cl_splitscreen() {
+    return this._cl_splitscreen;
+  }
+
+  toggleSplitscreen() {
+    this.setSplitscreen(this._cl_splitscreen === 0 ? 1 : 0);
+  }
+
+  setSplitscreen(value) {
+    this._cl_splitscreen = value;
+    this.command("cl_splitscreen", this._cl_splitscreen);
+  }
+
+  // group
   applyGroupPlayback(playback) {
     this._controlSource = CONTROL_GROUP;
 

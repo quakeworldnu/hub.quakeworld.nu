@@ -9,6 +9,7 @@ import { VolumeSlider } from "./controls/VolumeSlider";
 import { VolumeToggle } from "./controls/VolumeToggle";
 import { useUser } from "../services/convex/hooks";
 import { GroupControls } from "@qwhub/pages/demo_player/fte/GroupControls";
+import { SplitscreenToggle } from "@qwhub/pages/demo_player/fte/controls/SplitscreenToggle";
 
 export const Controls = () => {
   const { group } = useUser();
@@ -26,6 +27,7 @@ export const Controls = () => {
         <PlayerTrackButtons />
       </div>
       <SlowmotionToggle />
+      <SplitscreenToggle />
       <FullscreenToggle />
     </div>
   );
