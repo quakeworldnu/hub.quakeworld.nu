@@ -14,7 +14,7 @@ export const Controls = () => {
   const { group } = useUser();
 
   return (
-    <>
+    <div className="flex flex-wrap">
       {group && <GroupControls />}
       <TimeSlider />
       <PlayToggle />
@@ -27,6 +27,6 @@ export const Controls = () => {
       </div>
       <SlowmotionToggle />
       <FullscreenToggle />
-    </>
+    </div>
   );
 };
