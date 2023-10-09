@@ -18,6 +18,7 @@ export const GroupControls = () => {
         demo_jump: fte.getDemoElapsedTime(),
         demo_setspeed: fte.demo_setspeed(),
         cl_autotrack: fte.cl_autotrack(),
+        cl_splitscreen: fte.cl_splitscreen(),
         track: fte.getTrackUserid(),
       });
     }
@@ -45,6 +46,9 @@ export const GroupControls = () => {
   });
   useFteEventBySource("cl_autotrack", "user", (e) => {
     updatePlayback({ cl_autotrack: e.detail.value });
+  });
+  useFteEventBySource("cl_splitscreen", "user", (e) => {
+    updatePlayback({ cl_splitscreen: e.detail.value });
   });
   useFteEventBySource("track", "user", (e) => {
     updatePlayback({ track: e.detail.value });

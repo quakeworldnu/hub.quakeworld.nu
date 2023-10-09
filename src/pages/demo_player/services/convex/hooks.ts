@@ -69,6 +69,7 @@ export function useUser() {
           demo_jump: number;
           demo_setspeed: number;
           cl_autotrack: string;
+          cl_splitscreen: number;
           track: number;
         }) =>
           playbackCreate({

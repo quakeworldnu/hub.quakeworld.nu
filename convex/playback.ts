@@ -30,6 +30,7 @@ export const create = mutation({
     demo_jump: v.number(),
     demo_setspeed: v.float64(),
     cl_autotrack: v.string(),
+    cl_splitscreen: v.number(),
     track: v.number(),
   },
   handler: async (ctx, props) => {
@@ -62,6 +63,7 @@ export const update = mutation({
       demo_jump: v.optional(v.number()),
       demo_setspeed: v.optional(v.float64()),
       cl_autotrack: v.optional(v.string()),
+      cl_splitscreen: v.optional(v.number()),
       track: v.optional(v.number()),
     }),
   },

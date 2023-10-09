@@ -11,6 +11,7 @@ export const playbackSchema = {
   demo_jump: v.number(),
   demo_setspeed: v.float64(),
   cl_autotrack: v.string(),
+  cl_splitscreen: v.number(),
   track: v.number(),
 };
 
