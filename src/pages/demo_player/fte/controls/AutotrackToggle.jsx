@@ -1,4 +1,5 @@
 import { useFteController, useFteUpdateOnEvent } from "../hooks";
+import { Switch } from "./Switch";
 
 export const AutotrackToggle = () => {
   const fte = useFteController();
@@ -9,12 +10,12 @@ export const AutotrackToggle = () => {
   }
 
   return (
-    <label
-      className="select-none mr-4 cursor-pointer flex items-center"
-      onClick={() => fte.toggleAutotrack()}
-    >
-      Autotrack [{fte.isUsingAutotrack() ? "ON" : "OFF"}][{fte.getTrackUserid()}
-      ]
-    </label>
+    <div className="mx-3">
+      <Switch
+        label="Autotrack"
+        enabled={fte.isUsingAutotrack()}
+        onClick={() => fte.toggleAutotrack()}
+      />
+    </div>
   );
 };
