@@ -326,6 +326,10 @@ export class FteController {
   setSplitscreen(value) {
     this._cl_splitscreen = value;
     this.command("cl_splitscreen", this._cl_splitscreen);
+
+    if (this._cl_splitscreen > 0 && this.isPaused()) {
+      this.command("demo_nudge 1");
+    }
   }
 
   // group
