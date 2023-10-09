@@ -480,5 +480,9 @@ function getGeneralAssets() {
     "id1/textures/wad/sb_suit.png": `${assetsUrl}/textures/wad/sb_suit.png`,
     "qw/fragfile.dat": withPrefix("/data/fragfile.dat"),
     "ctf/fragfile.dat": withPrefix("/data/fragfile.dat"),
+    "skins/enemy.jpg":
+      "https://raw.githubusercontent.com/vikpe/qw-streambot-ezquake/main/qw/skins/enemy.jpg",
+    "skins/team.jpg":
+      "https://raw.githubusercontent.com/vikpe/qw-streambot-ezquake/main/qw/skins/team.jpg",
   };
 }
