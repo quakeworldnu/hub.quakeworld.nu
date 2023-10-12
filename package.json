@@ -34,8 +34,6 @@
     "vitest": "^0.34.6"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.427.0",
-    "@aws-sdk/credential-providers": "^3.427.0",
     "@faker-js/faker": "^8.1.0",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
