@@ -4,11 +4,12 @@ import { toggleFullscreen } from "@qwhub/pages/demo_player/fte/player";
 import React from "react";
 import classNames from "classnames";
 
-export const FtePlayer = ({ files }) => {
-  const { isLoading, assets } = useFteLoader({ files });
+export const FtePlayer = ({ files, demoTotalTime }) => {
+  const { isLoadingAssets, isReady, assets, isInitializing } = useFteLoader({
+    files,
+    demoTotalTime,
+  });
   const fte = useFteController();
-  const isLoadingAssets = isLoading || assets.progress < 80;
-  const isInitializing = !isLoadingAssets && !fte;
 
   return (
     <div id="ftePlayer" className={"relative w-full h-full bg-black"}>
@@ -18,7 +19,7 @@ export const FtePlayer = ({ files }) => {
         className={classNames(
           "absolute z-30 w-full h-full bg-black transition-opacity duration-700 delay-500 pointer-events-none",
           {
-            "opacity-0": fte !== undefined,
+            "opacity-0": isReady,
           },
         )}
       >
@@ -28,7 +29,7 @@ export const FtePlayer = ({ files }) => {
               className={classNames(
                 "w-6 h-6 mr-2 fill-purple-600 text-purple-800 animate-spin",
                 {
-                  hidden: fte,
+                  hidden: isReady,
                 },
               )}
               viewBox="0 0 100 101"

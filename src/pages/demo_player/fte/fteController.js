@@ -12,6 +12,7 @@ export class FteController {
   _controlSource = CONTROL_USER;
   _module = null;
   _volume = 0.0;
+  _demoTotalTime = 0.0;
   _lastVolume = 0.0;
   _maxVolume = 0.2;
   _last_demo_setspeed = 100;
@@ -28,12 +29,18 @@ export class FteController {
 
   static _instance = null;
 
-  static getInstance(module) {
+  static createInstace(module, demoTotalTime) {
     if (FteController._instance === null) {
-      FteController._instance = new FteController(module);
-      FteController._instance.mute();
+      const fte = new FteController(module);
+      fte.mute();
+      fte.setDemoTotalTime(demoTotalTime);
+      FteController._instance = fte;
     }
 
+    return FteController._instance;
+  }
+
+  static getInstance() {
     return FteController._instance;
   }
 
@@ -109,23 +116,16 @@ export class FteController {
     }
   }
 
-  // todo: fix
   getDemoTotalTime() {
-    return 10 + 60 * 20;
+    return this._demoTotalTime;
+  }
 
-    return this.getCachedValue(
-      "demoTotalTime",
-      this.module.getDemoTotalTime,
-      10 + 60 * 20,
-    );
+  setDemoTotalTime(value) {
+    this._demoTotalTime = value;
   }
 
   getDemoMatchStartTime() {
-    return this.getCachedValue(
-      "demoMatchStartTime",
-      this.module.getDemoMatchStartTime,
-      0,
-    );
+    return this._demoTotalTime % 60;
   }
 
   getMatchElapsedTime() {
@@ -137,15 +137,7 @@ export class FteController {
   }
 
   getMatchTotalTime() {
-    return this.getCachedValue(
-      "matchTotalTime",
-      this.module.getMatchTotalTime,
-      60 * 20,
-    );
-  }
-
-  getMapName() {
-    return this.getCachedValue("mapName", this.module.getMapName, "unknown");
+    return this.getDemoTotalTime() - this.getDemoMatchStartTime();
   }
 
   getPlayers() {
@@ -154,6 +146,10 @@ export class FteController {
     } catch (e) {
       return [];
     }
+  }
+
+  getMapName() {
+    return this.getCachedValue("mapName", this.module.getMapName, "unknown");
   }
 
   getTimelimit() {

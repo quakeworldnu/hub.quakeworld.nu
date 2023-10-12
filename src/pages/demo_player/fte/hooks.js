@@ -9,10 +9,11 @@ import { useState } from "react";
 import { withPrefix } from "./assets";
 import { FteController } from "./fteController";
 
-export function useFteLoader({ files }) {
+export function useFteLoader({ files, demoTotalTime }) {
   const scriptPath = withPrefix("/ftewebgl.js");
   const scriptStatus = useScript(scriptPath, { removeOnUnmount: true });
   const { count: loaded, increment } = useCounter(0);
+  const [fte, setFte] = useState(undefined);
 
   useEffectOnce(() => {
     window.Module = {
@@ -30,16 +31,36 @@ export function useFteLoader({ files }) {
     };
   });
 
-  const totalAssets = Object.values(files).length;
-  return {
-    isReady: scriptStatus === "ready",
-    isLoading: scriptStatus !== "ready",
-    scriptStatus,
-    assets: {
-      total: totalAssets,
-      loaded,
-      progress: Math.round(100 * (loaded / totalAssets)),
+  useInterval(
+    () => {
+      if (!fte && window.Module?.execute) {
+        const instance = FteController.createInstace(
+          window.Module,
+          demoTotalTime,
+        );
+        setFte(instance);
+      }
     },
+    fte ? null : 100,
+  );
+
+  const totalAssets = Object.values(files).length;
+  const assets = {
+    total: totalAssets,
+    loaded,
+    progress: Math.round(100 * (loaded / totalAssets)),
+  };
+  const isLoadingScript = scriptStatus !== "ready";
+  const isLoadingAssets = assets.progress < 80;
+
+  return {
+    isLoadingAssets: assets.progress < 80,
+    isInitializing: !isLoadingAssets && !fte,
+    isReady: fte,
+    isLoading: !fte,
+    isLoadingScript,
+    scriptStatus,
+    assets,
   };
 }
 
@@ -48,9 +69,12 @@ export function useFteController() {
 
   useInterval(
     () => {
-      if (!fte && window.Module?.execute) {
+      if (!fte) {
         const instance = FteController.getInstance(window.Module);
-        setFte(instance);
+
+        if (instance) {
+          setFte(instance);
+        }
       }
     },
     fte ? null : 100,
