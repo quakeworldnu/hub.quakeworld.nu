@@ -14,8 +14,8 @@ export function TimeSlider() {
   const isHover = useHover(sliderWrapperRef);
   const [mouse, sliderRootRef] = useMouse();
 
-  const matchStartTime = 10;
-  const maxValue = fte ? fte.getDemoTotalTime() : 60 * 20 + matchStartTime;
+  const matchStartTime = fte ? fte.getDemoMatchStartTime() : 10;
+  const maxValue = fte ? fte.getDemoTotalTime() : 1200;
 
   useEffect(() => {
     if (!isHover) {
