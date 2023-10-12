@@ -69,42 +69,42 @@ const RecentDemoTiles = () => {
   return (
     <div className="my-6 grid grid-cols-servers gap-4">
       {demos.map((d) => (
-        <a
-          key={d.id}
-          href={`/demo_player/?demoId=${d.id}`}
-          className="flex flex-col border border-white/10 min-h-[200px] bg-no-repeat bg-center bg-cover hover:scale-110 transition-transform hover:shadow-2xl hover:border-4"
-          style={{
-            backgroundImage: `url(https://raw.githubusercontent.com/vikpe/qw-mapshots/main/${d.map}.jpg)`,
-          }}
-        >
-          <div>
-            <span
-              className={classNames(
-                "-rotate-12 ml-2 mt-2 w-14 h-14 rounded-full text-white font-mono font-bold justify-center items-center flex",
-                {
-                  "bg-emerald-800": d.mode === "4on4",
-                  "bg-blue-800": d.mode === "2on2",
-                  "bg-green-800": d.mode === "1on1",
-                },
-              )}
-            >
-              {d.mode}
-            </span>
-          </div>
-          <div
-            className={classNames(
-              "p-2 block app-text-shadow bg-black/80 mt-auto text-center",
-              {
-                "text-sm": d.mode === "2on2",
-                "text-xs": d.mode === "4on4",
-              },
-            )}
-          >
-            {d.title}
-          </div>
-        </a>
+        <DemoTile key={d.id} demo={d} />
       ))}
     </div>
+  );
+};
+
+const DemoTile = ({ demo }) => {
+  const participants = demo.title.split(" vs ");
+
+  return (
+    <a
+      key={demo.id}
+      href={`/demo_player/?demoId=${demo.id}`}
+      className="flex flex-col border border-white/10 min-h-[200px] bg-no-repeat bg-center bg-cover hover:scale-110 transition-transform hover:shadow-2xl hover:border-4"
+      style={{
+        backgroundImage: `url(https://raw.githubusercontent.com/vikpe/qw-mapshots/main/${demo.map}.jpg)`,
+      }}
+    >
+      <span
+        className={classNames(
+          "-mt-3 -ml-3 w-14 h-14 -rotate-12 rounded-full text-white font-mono font-bold justify-center items-center flex z-10",
+          {
+            "bg-emerald-800": demo.mode === "4on4",
+            "bg-blue-800": demo.mode === "2on2",
+            "bg-green-800": demo.mode === "1on1",
+          },
+        )}
+      >
+        {demo.mode}
+      </span>
+      <div className="flex -mt-[44px] h-full items-center justify-center space-x-4 bg-black/50">
+        <div className="text-right">{participants[0]}</div>
+        <div className="text-2xl font-bold">vs</div>
+        <div className="text-left">{participants[1]}</div>
+      </div>
+    </a>
   );
 };
 
