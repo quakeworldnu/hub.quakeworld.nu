@@ -15,7 +15,8 @@
     "test": "vitest --coverage",
     "test:watch": "vitest --watch --coverage",
     "convex:server": "convex dev",
-    "convex:init": "convex dev --run init --until-success"
+    "convex:init": "convex dev --run init --until-success",
+    "supabase:types": "supabase gen types typescript --project-id ncsphkjfominimxztjip > database.types.ts"
   },
   "devDependencies": {
     "@types/react": "^18.2.28",
@@ -30,6 +31,7 @@
     "jsdom": "^22.1.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.0.3",
+    "supabase": "^1.100.1",
     "typescript": "^5.2.2",
     "vitest": "^0.34.6"
   },
@@ -42,6 +44,7 @@
     "@radix-ui/react-slider": "^1.1.2",
     "@radix-ui/react-switch": "^1.0.3",
     "@reduxjs/toolkit": "^1.9.7",
+    "@supabase/supabase-js": "^2.38.0",
     "@uidotdev/usehooks": "^2.4.0",
     "ag-grid-community": "^30.2.0",
     "ag-grid-react": "^30.2.0",
