@@ -55,15 +55,17 @@ const RecentDemoTiles = () => {
   const [demos, setDemos] = useState([]);
 
   useEffectOnce(() => {
-    async function getDemos() {
+    async function run() {
       const { data } = await client
         .from("demos")
-        .select("id, map, title, mode, s3_key")
-        .order("timestamp", { ascending: false });
+        .select("id, map, mode, participants, title, s3_key")
+        .eq("mode", "4on4")
+        .order("timestamp", { ascending: false })
+        .limit(5);
       setDemos(data);
     }
 
-    getDemos();
+    run();
   });
 
   return (
@@ -76,35 +78,73 @@ const RecentDemoTiles = () => {
 };
 
 const DemoTile = ({ demo }) => {
-  const participants = demo.title.split(" vs ");
-
   return (
-    <a
-      key={demo.id}
-      href={`/demo_player/?demoId=${demo.id}`}
-      className="flex flex-col border border-white/10 min-h-[200px] bg-no-repeat bg-center bg-cover hover:scale-110 transition-transform hover:shadow-2xl hover:border-4"
-      style={{
-        backgroundImage: `url(https://raw.githubusercontent.com/vikpe/qw-mapshots/main/${demo.map}.jpg)`,
-      }}
-    >
-      <span
-        className={classNames(
-          "-mt-3 -ml-3 w-14 h-14 -rotate-12 rounded-full text-white font-mono font-bold justify-center items-center flex z-10",
-          {
-            "bg-emerald-800": demo.mode === "4on4",
-            "bg-blue-800": demo.mode === "2on2",
-            "bg-green-800": demo.mode === "1on1",
-          },
-        )}
+    <div>
+      <a
+        key={demo.id}
+        href={`/demo_player/?demoId=${demo.id}`}
+        className="flex flex-col border border-white/10 min-h-[200px] bg-no-repeat bg-center bg-cover hover:scale-110 transition-transform hover:shadow-2xl hover:border-4"
+        style={{
+          backgroundImage: `url(https://raw.githubusercontent.com/vikpe/qw-mapshots/main/${demo.map}.jpg)`,
+        }}
       >
-        {demo.mode}
-      </span>
-      <div className="flex -mt-[44px] h-full items-center justify-center space-x-4 bg-black/50">
-        <div className="text-right">{participants[0]}</div>
-        <div className="text-2xl font-bold">vs</div>
-        <div className="text-left">{participants[1]}</div>
+        <div className="absolute">
+          <ModeRibbon mode={demo.mode} />
+        </div>
+        {demo.participants.teams.length > 0 && <TeamplayTile demo={demo} />}
+      </a>
+      {false && (
+        <div className="hidden">
+          <pre>{JSON.stringify(demo, null, 2)}</pre>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const TeamplayTile = ({ demo }) => {
+  return (
+    <div className="grow flex h-full bg-black/50">
+      <div className="w-[50%] flex flex-col justify-center bg-gradient-to-r from-blue-600/40">
+        <TeamList team={demo.participants.teams[1]} />
       </div>
-    </a>
+      <div className="flex items-center -mx-12 z-10">
+        <img src="/assets/img/versus.png" className="w-24 h-24" />
+      </div>
+      <div className="w-[50%] flex flex-col justify-center bg-gradient-to-l from-red-600/40">
+        <TeamList team={demo.participants.teams[0]} />
+      </div>
+    </div>
+  );
+};
+
+const TeamList = ({ team }) => {
+  return (
+    <div className="app-text-shadow">
+      <div className="text-lg font-bold text-center mb-1">{team.name}</div>
+      <div className="text-center">
+        {team.players.map((p) => (
+          <div key={p.name}>{p.name}</div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const ModeRibbon = ({ mode }) => {
+  return (
+    <span
+      className={classNames(
+        "-mt-3 -ml-3 w-14 h-14 bg-gradient-to-t -rotate-12 rounded-full text-white font-mono font-bold justify-center items-center flex z-10 app-text-shadow",
+        {
+          "from-emerald-800 to-emerald-600": mode === "4on4",
+          "from-blue-800 to-blue-600": mode === "2on2",
+          "from-green-800 to-green-600": mode === "1on1",
+        },
+      )}
+    >
+      {mode}
+    </span>
   );
 };
 
