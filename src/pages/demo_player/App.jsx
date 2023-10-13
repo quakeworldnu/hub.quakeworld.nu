@@ -12,13 +12,15 @@ import {
 } from "@qwhub/pages/demo_player/services/supabase/supabase";
 import { useEffectOnce } from "usehooks-ts";
 import classNames from "classnames";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faSquare } from "@fortawesome/free-solid-svg-icons";
 
 export const App = () => {
   return (
     <>
-      {false && <SiteHeader />}
+      {true && <SiteHeader />}
       <DemoPlayerApp />
-      {false && <SiteFooter />}
+      {true && <SiteFooter />}
     </>
   );
 };
@@ -28,19 +30,42 @@ export const DemoPlayerApp = () => {
   const demoId = query.demoId ?? "";
 
   return (
-    <div className="my-6 space-y-4">
+    <div className="my-6">
       <div className="flex justify-between items-center my-4 space-x-4">
         <div className="flex space-x-10 items-center">
-          <div className="text-xl font-bold">Recent demos</div>
-          <div>[thumbs] [list]</div>
-          <div>[modes]</div>
-          <div>[search]</div>
+          <div className="flex space-x-2 items-center">
+            <div className="p-1 px-1.5 bg-blue-500/20 rounded border border-white/10">
+              <FontAwesomeIcon icon={faSquare} size={"xl"} color={"#abc"} />
+            </div>
+            <FontAwesomeIcon icon={faBars} size={"xl"} color={"#789"} />
+          </div>
+          <div className="flex space-x-1 items-center">
+            {["All", "1on1", "2on2", "4on4", "CTF", "Race", "Other"].map(
+              (mode, index) => (
+                <div
+                  className={classNames({
+                    "font-bold border border-white/10 px-2 py-1 bg-blue-500/20 rounded":
+                      index === 0,
+                    "text-gray-400 text-sm px-2 py-1": index !== 0,
+                  })}
+                >
+                  {mode}
+                </div>
+              ),
+            )}
+          </div>
+          <div>
+            <input
+              type="search"
+              className="border border-white/10 px-2 py-1 bg-blue-500/20 rounded"
+              name=""
+              id=""
+            />
+          </div>
         </div>
-
-        <div>[search]</div>
       </div>
 
-      {!demoId && <RecentDemoTiles />}
+      {!demoId && <DemoTiles />}
 
       <div className="flex justify-between items-center">
         {demoId && <UserInfo />}
@@ -50,7 +75,7 @@ export const DemoPlayerApp = () => {
   );
 };
 
-const RecentDemoTiles = () => {
+const DemoTiles = () => {
   const client = getClient();
   const [demos, setDemos] = useState([]);
 
@@ -58,10 +83,9 @@ const RecentDemoTiles = () => {
     async function run() {
       const { data } = await client
         .from("demos")
-        .select("id, map, mode, participants, title, s3_key")
-        .eq("mode", "4on4")
+        .select("id, map, mode, participants, title, source, s3_key")
         .order("timestamp", { ascending: false })
-        .limit(5);
+        .limit(15);
       setDemos(data);
     }
 
@@ -69,7 +93,7 @@ const RecentDemoTiles = () => {
   });
 
   return (
-    <div className="my-6 grid grid-cols-servers gap-4">
+    <div className="my-6 grid grid-cols-servers gap-6">
       {demos.map((d) => (
         <DemoTile key={d.id} demo={d} />
       ))}
@@ -78,12 +102,14 @@ const RecentDemoTiles = () => {
 };
 
 const DemoTile = ({ demo }) => {
+  const hasTeams = demo.participants.teams.length > 0;
+
   return (
     <div>
       <a
         key={demo.id}
         href={`/demo_player/?demoId=${demo.id}`}
-        className="flex flex-col border border-white/10 min-h-[200px] bg-no-repeat bg-center bg-cover hover:scale-110 transition-transform hover:shadow-2xl hover:border-4"
+        className="flex flex-col border border-white/10 min-h-[200px] bg-no-repeat bg-center bg-cover hover:scale-125 transition-transform hover:shadow-2xl hover:z-20 hover:relative"
         style={{
           backgroundImage: `url(https://raw.githubusercontent.com/vikpe/qw-mapshots/main/${demo.map}.jpg)`,
         }}
@@ -91,28 +117,53 @@ const DemoTile = ({ demo }) => {
         <div className="absolute">
           <ModeRibbon mode={demo.mode} />
         </div>
-        {demo.participants.teams.length > 0 && <TeamplayTile demo={demo} />}
+        {hasTeams && <TeamplayTile demo={demo} />}
+        {!hasTeams && <DuelTime demo={demo} />}
       </a>
       {false && (
-        <div className="hidden">
+        <div className="">
           <pre>{JSON.stringify(demo, null, 2)}</pre>
         </div>
       )}
+
+      <div className="mt-2 text-xs text-slate-400 text-center">
+        x minutes ago @ {demo.source}
+      </div>
+    </div>
+  );
+};
+
+const DuelTime = ({ demo }) => {
+  return (
+    <div className="grow flex h-full bg-black/30">
+      <div className="w-[50%] flex flex-col justify-center bg-gradient-to-r from-blue-600/20">
+        <div className="app-text-shadow font-bold text-right text-lg">
+          {demo.participants.players[0].name}
+        </div>
+      </div>
+      <div className="flex items-center w-24">
+        <img src="/assets/img/versus.png" className="w-16 mx-auto" />
+      </div>
+      <div className="w-[50%] flex flex-col justify-center bg-gradient-to-l from-red-600/20">
+        <div className="app-text-shadow font-bold text-left text-lg">
+          {demo.participants.players[1].name}
+        </div>
+      </div>
     </div>
   );
 };
 
 const TeamplayTile = ({ demo }) => {
   return (
-    <div className="grow flex h-full bg-black/50">
+    <div className="grow flex h-full bg-black/30">
       <div className="w-[50%] flex flex-col justify-center bg-gradient-to-r from-blue-600/40">
-        <TeamList team={demo.participants.teams[1]} />
+        <TeamList team={demo.participants.teams[0]} />
       </div>
       <div className="flex items-center -mx-12 z-10">
         <img src="/assets/img/versus.png" className="w-24 h-24" />
       </div>
       <div className="w-[50%] flex flex-col justify-center bg-gradient-to-l from-red-600/40">
-        <TeamList team={demo.participants.teams[0]} />
+        <TeamList team={demo.participants.teams[1]} />
       </div>
     </div>
   );
