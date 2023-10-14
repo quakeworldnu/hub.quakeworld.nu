@@ -54,6 +54,30 @@ export interface Database {
         }
         Relationships: []
       }
+      ignored_demos: {
+        Row: {
+          created_at: string | null
+          filename: string
+          id: number
+          reason: string
+          sha256: string
+        }
+        Insert: {
+          created_at?: string | null
+          filename?: string
+          id?: number
+          reason?: string
+          sha256: string
+        }
+        Update: {
+          created_at?: string | null
+          filename?: string
+          id?: number
+          reason?: string
+          sha256?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
