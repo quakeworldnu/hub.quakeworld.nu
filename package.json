@@ -16,7 +16,7 @@
     "test:watch": "vitest --watch --coverage",
     "convex:server": "convex dev",
     "convex:init": "convex dev --run init --until-success",
-    "supabase:types": "supabase gen types typescript --project-id ncsphkjfominimxztjip > database.types.ts"
+    "supabase:types": "supabase gen types typescript --project-id ncsphkjfominimxztjip > src/pages/demo_player/services/supabase/database.types.ts"
   },
   "devDependencies": {
     "@types/react": "^18.2.28",
