@@ -59,6 +59,7 @@ export interface Database {
           created_at: string | null
           filename: string
           id: number
+          mode: string
           reason: string
           sha256: string
         }
@@ -66,6 +67,7 @@ export interface Database {
           created_at?: string | null
           filename?: string
           id?: number
+          mode: string
           reason?: string
           sha256: string
         }
@@ -73,6 +75,7 @@ export interface Database {
           created_at?: string | null
           filename?: string
           id?: number
+          mode?: string
           reason?: string
           sha256?: string
         }
