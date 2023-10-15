@@ -15,6 +15,15 @@ import classNames from "classnames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faSquare } from "@fortawesome/free-solid-svg-icons";
 
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.extend(relativeTime);
+
 export const App = () => {
   return (
     <>
@@ -101,6 +110,12 @@ const DemoTiles = () => {
   );
 };
 
+const DemoTimestamp = ({ timestamp }) => {
+  const format = dayjs().from(dayjs(timestamp));
+
+  return <>{format}</>;
+};
+
 const DemoTile = ({ demo }) => {
   const hasTeams = demo.participants.teams.length > 0;
 
@@ -127,7 +142,7 @@ const DemoTile = ({ demo }) => {
       )}
 
       <div className="mt-2 text-xs text-slate-400 text-center">
-        x minutes ago @ {demo.source}
+        <DemoTimestamp timestamp={demo.timestamp} /> @ {demo.source}
       </div>
     </div>
   );
