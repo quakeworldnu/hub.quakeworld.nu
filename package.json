@@ -36,7 +36,7 @@
     "vitest": "^0.34.6"
   },
   "dependencies": {
-    "@faker-js/faker": "^8.1.0",
+    "@faker-js/faker": "^8.2.0",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
@@ -55,7 +55,7 @@
     "firebase-tools": "^12.7.0",
     "formik": "^2.4.5",
     "lodash.groupby": "^4.6.0",
-    "nanoid": "^5.0.1",
+    "nanoid": "^5.0.2",
     "postcss": "^8.4.31",
     "query-string": "^8.1.0",
     "react": "^18.2.0",
