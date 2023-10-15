@@ -52,6 +52,7 @@ export const DemoPlayerApp = () => {
             {["All", "1on1", "2on2", "4on4", "CTF", "Race", "Other"].map(
               (mode, index) => (
                 <div
+                  key={mode}
                   className={classNames({
                     "font-bold border border-white/10 px-2 py-1 bg-blue-500/20 rounded":
                       index === 0,
@@ -77,7 +78,7 @@ export const DemoPlayerApp = () => {
       {!demoId && <DemoTiles />}
 
       <div className="flex justify-between items-center">
-        {demoId && <UserInfo />}
+        {false && demoId && <UserInfo />}
       </div>
       {demoId && <DemoPlayer demoId={demoId} />}
     </div>
@@ -92,7 +93,8 @@ const DemoTiles = () => {
     async function run() {
       const { data } = await client
         .from("demos")
-        .select("id, map, mode, participants, title, source, s3_key")
+        .select("id, map, mode, participants, title, source, s3_key, timestamp")
+        //.eq("mode", "4on4")
         .order("timestamp", { ascending: false })
         .limit(15);
       setDemos(data);
@@ -151,16 +153,16 @@ const DemoTile = ({ demo }) => {
 const DuelTime = ({ demo }) => {
   return (
     <div className="grow flex h-full bg-black/30">
-      <div className="w-[50%] flex flex-col justify-center bg-gradient-to-r from-blue-600/20">
-        <div className="app-text-shadow font-bold text-right text-lg">
+      <div className="grow flex flex-col justify-center bg-gradient-to-r from-blue-600/20">
+        <div className="app-text-shadow font-bold text-right text-2xl">
           {demo.participants.players[0].name}
         </div>
       </div>
-      <div className="flex items-center w-24">
-        <img src="/assets/img/versus.png" className="w-16 mx-auto" />
+      <div className="flex items-center w-16">
+        <img src="/assets/img/versus.png" className="w-full" />
       </div>
-      <div className="w-[50%] flex flex-col justify-center bg-gradient-to-l from-red-600/20">
-        <div className="app-text-shadow font-bold text-left text-lg">
+      <div className="grow flex flex-col justify-center bg-gradient-to-l from-red-600/20">
+        <div className="app-text-shadow font-bold text-left text-2xl">
           {demo.participants.players[1].name}
         </div>
       </div>
@@ -170,14 +172,14 @@ const DuelTime = ({ demo }) => {
 
 const TeamplayTile = ({ demo }) => {
   return (
-    <div className="grow flex h-full bg-black/30">
-      <div className="w-[50%] flex flex-col justify-center bg-gradient-to-r from-blue-600/40">
+    <div className="grow flex h-full bg-black/10">
+      <div className="grow flex flex-col justify-center">
         <TeamList team={demo.participants.teams[0]} />
       </div>
-      <div className="flex items-center -mx-12 z-10">
-        <img src="/assets/img/versus.png" className="w-24 h-24" />
+      <div className="flex items-center w-20 -mx-20">
+        <img src="/assets/img/versus.png" className="w-full" />
       </div>
-      <div className="w-[50%] flex flex-col justify-center bg-gradient-to-l from-red-600/40">
+      <div className="grow flex flex-col justify-center">
         <TeamList team={demo.participants.teams[1]} />
       </div>
     </div>
@@ -187,7 +189,7 @@ const TeamplayTile = ({ demo }) => {
 const TeamList = ({ team }) => {
   return (
     <div className="app-text-shadow">
-      <div className="text-lg font-bold text-center mb-1">{team.name}</div>
+      <div className="text-2xl font-bold text-center mb-1">{team.name}</div>
       <div className="text-center">
         {team.players.map((p) => (
           <div key={p.name}>{p.name}</div>
