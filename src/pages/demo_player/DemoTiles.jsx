@@ -3,6 +3,13 @@ import React, { useState } from "react";
 import { getClient } from "@qwhub/pages/demo_player/services/supabase/supabase";
 import { useEffectOnce } from "usehooks-ts";
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.extend(relativeTime);
 
 export const DemoTiles = () => {
   const client = getClient();
@@ -15,7 +22,7 @@ export const DemoTiles = () => {
         .select("id, map, mode, participants, title, source, s3_key, timestamp")
         //.eq("mode", "4on4")
         .order("timestamp", { ascending: false })
-        .limit(15);
+        .limit(25);
       setDemos(data);
     }
 
@@ -30,101 +37,103 @@ export const DemoTiles = () => {
     </div>
   );
 };
+
 const DemoTimestamp = ({ timestamp }) => {
-  const format = dayjs().from(dayjs(timestamp));
+  const format = dayjs(timestamp).from(dayjs());
 
   return <>{format}</>;
 };
-const DemoTile = ({ demo }) => {
-  const hasTeams = demo.participants.teams.length > 0;
 
+const DemoTile = ({ demo }) => {
   return (
     <div>
       <a
         key={demo.id}
         href={`/demo_player/?demoId=${demo.id}`}
-        className="flex flex-col border border-white/10 min-h-[200px] bg-no-repeat bg-center bg-cover hover:scale-125 transition-transform hover:shadow-2xl hover:z-20 hover:relative"
+        className={classNames(
+          "flex flex-col border min-h-[200px] bg-no-repeat bg-center bg-cover hover:scale-125 transition-transform hover:shadow-2xl hover:z-20 hover:relative",
+          {
+            "border-green-800": demo.mode === "1on1",
+            "border-blue-800": demo.mode === "2on2",
+            "border-red-800": demo.mode === "4on4",
+          },
+        )}
         style={{
           backgroundImage: `url(https://raw.githubusercontent.com/vikpe/qw-mapshots/main/${demo.map}.jpg)`,
         }}
       >
         <div className="absolute">
-          <ModeRibbon mode={demo.mode} />
+          <ModeRibbon mode={demo.mode} map={demo.map} />
         </div>
-        {hasTeams && <TeamplayTile demo={demo} />}
-        {!hasTeams && <DuelTime demo={demo} />}
+        <Participants participants={demo.participants} />
       </a>
-      {false && (
-        <div className="">
-          <pre>{JSON.stringify(demo, null, 2)}</pre>
-        </div>
-      )}
 
       <div className="mt-2 text-xs text-slate-400 text-center">
-        <DemoTimestamp timestamp={demo.timestamp} /> @ {demo.source}
+        <DemoTimestamp timestamp={demo.timestamp} />{" "}
+        <span className="text-slate-500">@</span> {demo.source.split(":")[0]}
       </div>
     </div>
   );
 };
-const DuelTime = ({ demo }) => {
+
+const Versus = () => {
   return (
-    <div className="grow flex h-full bg-black/30">
-      <div className="grow flex flex-col justify-center bg-gradient-to-r from-blue-600/20">
-        <div className="app-text-shadow font-bold text-right text-2xl">
-          {demo.participants.players[0].name}
+    <div className="flex justify-center items-center w-16 app-text-shadow font-bold text-xl text-amber-300">
+      VS
+    </div>
+  );
+};
+
+const Participants = ({ participants }) => {
+  const hasTeams = participants.teams.length > 0;
+  const titles = hasTeams
+    ? participants.teams.map((t) => t.name)
+    : participants.players.map((p) => p.name);
+
+  return (
+    <div className="grow flex h-full bg-gray-700/20 app-text-shadow">
+      <div className="w-1/2 flex flex-col justify-center">
+        <div className="ml-auto">
+          <div className="font-bold text-center text-2xl">{titles[0]}</div>
+          {hasTeams && <PlayerList team={participants.teams[0]} />}
         </div>
       </div>
-      <div className="flex items-center w-16">
-        <img src="/assets/img/versus.png" className="w-full" />
-      </div>
-      <div className="grow flex flex-col justify-center bg-gradient-to-l from-red-600/20">
-        <div className="app-text-shadow font-bold text-left text-2xl">
-          {demo.participants.players[1].name}
+      <Versus />
+      <div className="w-1/2 flex flex-col justify-center">
+        <div className="mr-auto">
+          <div className="font-bold text-center text-2xl">{titles[1]}</div>
+          {hasTeams && <PlayerList team={participants.teams[1]} />}
         </div>
       </div>
     </div>
   );
 };
-const TeamplayTile = ({ demo }) => {
+
+const PlayerList = ({ team }) => {
   return (
-    <div className="grow flex h-full bg-black/10">
-      <div className="grow flex flex-col justify-center">
-        <TeamList team={demo.participants.teams[0]} />
-      </div>
-      <div className="flex items-center w-20 -mx-20">
-        <img src="/assets/img/versus.png" className="w-full" />
-      </div>
-      <div className="grow flex flex-col justify-center">
-        <TeamList team={demo.participants.teams[1]} />
-      </div>
+    <div className="text-center mx-1">
+      {team.players.map((p) => (
+        <div key={p.name}>{p.name}</div>
+      ))}
     </div>
   );
 };
-const TeamList = ({ team }) => {
-  return (
-    <div className="app-text-shadow">
-      <div className="text-2xl font-bold text-center mb-1">{team.name}</div>
-      <div className="text-center">
-        {team.players.map((p) => (
-          <div key={p.name}>{p.name}</div>
-        ))}
-      </div>
-    </div>
-  );
-};
+
 const ModeRibbon = ({ mode }) => {
   return (
-    <span
-      className={classNames(
-        "-mt-3 -ml-3 w-14 h-14 bg-gradient-to-t -rotate-12 rounded-full text-white font-mono font-bold justify-center items-center flex z-10 app-text-shadow",
-        {
-          "from-emerald-800 to-emerald-600": mode === "4on4",
-          "from-blue-800 to-blue-600": mode === "2on2",
-          "from-green-800 to-green-600": mode === "1on1",
-        },
-      )}
-    >
-      {mode}
-    </span>
+    <div className="w-24 h-24 overflow-hidden">
+      <div
+        className={classNames(
+          "-translate-x-[45%] -translate-y-[195%] -rotate-45 origin-bottom-right h-8 w-48 bg-gradient-to-bl text-white font-mono justify-center items-center flex z-10 app-text-shadow",
+          {
+            "from-red-600 to-red-700": mode === "4on4",
+            "from-blue-600 to-blue-700": mode === "2on2",
+            "from-green-600 to-green-700": mode === "1on1",
+          },
+        )}
+      >
+        {mode}
+      </div>
+    </div>
   );
 };
