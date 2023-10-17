@@ -36,6 +36,7 @@ export function UserInfo() {
     <div className="space-y-2">
       <div>
         <strong title={user.uuid}>{user.name}</strong>{" "}
+        <span className="text-xs">[{user.uuid}]</span>
       </div>
       <div>
         {!group && (

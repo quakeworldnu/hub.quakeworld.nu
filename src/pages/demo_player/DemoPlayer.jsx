@@ -8,6 +8,7 @@ import { faBars, faSquare } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
 import { DemoTiles } from "@qwhub/pages/demo_player/DemoTiles";
 import { UserInfo } from "@qwhub/pages/demo_player/UserInfo";
+import { Chat } from "./Chat";
 
 export const DemoPlayerApp = () => {
   const query = queryString.parse(location.search);
@@ -15,50 +16,55 @@ export const DemoPlayerApp = () => {
 
   return (
     <div className="my-6">
-      <div className="flex justify-between items-center my-4 space-x-4">
-        <div className="flex space-x-10 items-center">
-          <div className="flex space-x-2 items-center">
-            <div className="p-1 px-1.5 bg-blue-500/20 rounded border border-white/10">
-              <FontAwesomeIcon icon={faSquare} size={"xl"} color={"#abc"} />
-            </div>
-            <FontAwesomeIcon icon={faBars} size={"xl"} color={"#789"} />
-          </div>
-          <div className="flex space-x-1 items-center">
-            {["All", "1on1", "2on2", "4on4", "CTF", "Race", "Other"].map(
-              (mode, index) => (
-                <div
-                  key={mode}
-                  className={classNames({
-                    "font-bold border border-white/10 px-2 py-1 bg-blue-500/20 rounded":
-                      index === 0,
-                    "text-gray-400 text-sm px-2 py-1": index !== 0,
-                  })}
-                >
-                  {mode}
-                </div>
-              ),
-            )}
-          </div>
-          <div>
-            <input
-              type="search"
-              className="border border-white/10 px-2 py-1 bg-blue-500/20 rounded"
-              name=""
-              id=""
-            />
-          </div>
+      {!demoId && (
+        <div className="flex justify-between items-center my-4 space-x-4">
+          <BrowserControls />
         </div>
-      </div>
+      )}
 
       {!demoId && <DemoTiles />}
-
-      <div className="flex justify-between items-center">
-        {false && demoId && <UserInfo />}
-      </div>
       {demoId && <DemoPlayer demoId={demoId} />}
     </div>
   );
 };
+
+export const BrowserControls = () => {
+  return (
+    <div className="flex space-x-10 items-center">
+      <div className="flex space-x-2 items-center">
+        <div className="p-1 px-1.5 bg-blue-500/20 rounded border border-white/10">
+          <FontAwesomeIcon icon={faSquare} size={"xl"} color={"#abc"} />
+        </div>
+        <FontAwesomeIcon icon={faBars} size={"xl"} color={"#789"} />
+      </div>
+      <div className="flex space-x-1 items-center">
+        {["All", "1on1", "2on2", "4on4", "CTF", "Race", "Other"].map(
+          (mode, index) => (
+            <div
+              key={mode}
+              className={classNames({
+                "font-bold border border-white/10 px-2 py-1 bg-blue-500/20 rounded":
+                  index === 0,
+                "text-gray-400 text-sm px-2 py-1": index !== 0,
+              })}
+            >
+              {mode}
+            </div>
+          ),
+        )}
+      </div>
+      <div>
+        <input
+          type="search"
+          className="border border-white/10 px-2 py-1 bg-blue-500/20 rounded"
+          name=""
+          id=""
+        />
+      </div>
+    </div>
+  );
+};
+
 export const DemoPlayer = ({ demoId }) => {
   const [demo, setDemo] = useState(null);
 
@@ -87,7 +93,7 @@ export const DemoPlayer = ({ demoId }) => {
 
   return (
     <>
-      <div className="flex p-3 bg-white/5 text-sm text-gray-200 justify-between">
+      <div className="flex p-3 bg-white/5 text-sm text-gray-200 justify-between my-4">
         <div>
           <a href={`/demo_player/`}>Demos</a>
           {demoBreadcrumbs.map((b, i) => (
@@ -139,14 +145,17 @@ export const DemoPlayer = ({ demoId }) => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col w-[400px] ml-4 hidden">
+        <div className="flex flex-col w-[400px] ml-4">
           <div className="flex px-6 py-7 bg-white/5 space-x-6">
             <div className="border-b-2 border-blue-500 font-bold">Chat</div>
             <div>Playlist</div>
             <div>Related demos</div>
           </div>
+          <div className="p-6">
+            <UserInfo />
+          </div>
           <div className="flex flex-col bg-blue-400/10 h-full">
-            {/*<Chat />*/}
+            <Chat />
           </div>
         </div>
       </div>

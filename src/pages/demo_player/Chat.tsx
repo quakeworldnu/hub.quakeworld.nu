@@ -15,7 +15,7 @@ export function Chat() {
   if (!user?.groupId) {
     return (
       <div className="p-4 text-gray-400 text-sm">
-        Start or join a group to enable chat.
+        Create or join a group to enable chat.
       </div>
     );
   }
