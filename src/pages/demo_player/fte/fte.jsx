@@ -13,7 +13,10 @@ export const FtePlayer = ({ files, demoTotalTime }) => {
   const fte = useFteController();
 
   return (
-    <div id="ftePlayer" className={"relative w-full h-full bg-black"}>
+    <div
+      id="ftePlayer"
+      className={"relative w-full h-full bg-black aspect-video"}
+    >
       <FteCanvas />
 
       <div
