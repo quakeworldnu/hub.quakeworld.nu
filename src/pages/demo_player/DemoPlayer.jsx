@@ -128,7 +128,7 @@ export const DemoPlayer = ({ demoId }) => {
             </div>
           </div>
 
-          <div className="flex flex-row py-8 justify-around border-t border-white/10">
+          <div className="flex flex-row py-8 justify-around border-t border-white/10 hidden">
             <div className="flex space-x-28 text-sm">
               <div>
                 <div className="text-gray-500 text-right">Previous</div>
