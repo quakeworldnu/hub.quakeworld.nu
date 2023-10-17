@@ -1,8 +1,9 @@
 import { Controls } from "./Controls";
 import { useFteController, useFteLoader } from "./hooks";
 import { toggleFullscreen } from "@qwhub/pages/demo_player/fte/player";
-import React from "react";
+import React, { useState } from "react";
 import classNames from "classnames";
+import { useEventListener } from "usehooks-ts";
 
 export const FtePlayer = ({ files, demoTotalTime }) => {
   const { isLoadingAssets, isReady, assets, isInitializing } = useFteLoader({
@@ -65,6 +66,45 @@ export default FtePlayer;
 
 const FteCanvas = () => {
   const fte = useFteController();
+  const [isShowingScores, setIsShowingScores] = useState(false);
+
+  function onKeyDown(e) {
+    if (!fte) {
+      return;
+    }
+
+    if (e.code === "Tab") {
+      e.preventDefault();
+
+      if (isShowingScores) {
+        return;
+      }
+      fte.command("+showscores");
+      setIsShowingScores(true);
+    } else if (e.code === "Space") {
+      e.preventDefault();
+      fte.command("+jump");
+
+      setTimeout(() => {
+        fte.command("-jump");
+      }, 50);
+    }
+  }
+
+  function onKeyUp(e) {
+    if (!fte) {
+      return;
+    }
+
+    if (e.code === "Tab") {
+      e.preventDefault();
+      fte.command("-showscores");
+      setIsShowingScores(false);
+    }
+  }
+
+  useEventListener("keydown", onKeyDown);
+  useEventListener("keyup", onKeyUp);
 
   return (
     <canvas
