@@ -148,8 +148,8 @@ export const DemoPlayer = ({ demoId }) => {
         <div className="flex flex-col w-[400px] ml-4">
           <div className="flex px-6 py-7 bg-white/5 space-x-6">
             <div className="border-b-2 border-blue-500 font-bold">Chat</div>
-            <div>Playlist</div>
-            <div>Related demos</div>
+            <div className="text-slate-400">Playlist</div>
+            <div className="text-slate-400">Related demos</div>
           </div>
           <div className="p-6">
             <UserInfo />
