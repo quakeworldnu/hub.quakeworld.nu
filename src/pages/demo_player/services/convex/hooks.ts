@@ -6,25 +6,23 @@ import { useEffect } from "react";
 import { GroupId, Playback } from "../../../../../convex/schema.ts";
 
 export function useUuid() {
-  const [uuid, setUuid] = useLocalStorage<string>("uuid", nanoid());
+  const [id, setId] = useLocalStorage<string | null>("uuid", null);
   const getOrCreate = useMutation(api.users.getOrCreate);
 
   useEffect(() => {
     async function updateUser() {
-      const user = await getOrCreate({ uuid });
-
-      if (user === null) {
-        return;
+      if (id === null) {
+        const uuid = nanoid();
+        console.log("new id!", uuid);
+        setId(uuid);
+        await getOrCreate({ uuid });
       }
-
-      setUuid(user.uuid);
     }
 
-    // console.log("updateUser()");
     updateUser();
-  }, [uuid]);
+  }, [id]);
 
-  return uuid;
+  return id;
 }
 
 export function useUser() {
