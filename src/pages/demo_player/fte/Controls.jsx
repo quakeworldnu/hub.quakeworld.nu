@@ -10,12 +10,22 @@ import { VolumeToggle } from "./controls/VolumeToggle";
 import { useUser } from "../services/convex/hooks";
 import { GroupControls } from "@qwhub/pages/demo_player/fte/GroupControls";
 import { SplitscreenToggle } from "@qwhub/pages/demo_player/fte/controls/SplitscreenToggle";
+import { useIdle } from "@uidotdev/usehooks";
+import classNames from "classnames";
 
 export const Controls = () => {
   const { group } = useUser();
+  const idle = useIdle(2500);
 
   return (
-    <div className="flex flex-wrap">
+    <div
+      className={classNames(
+        "flex flex-wrap transition-opacity duration-500 bg-black/60",
+        {
+          "opacity-0": idle,
+        },
+      )}
+    >
       {group && <GroupControls />}
       <TimeSlider />
       <PlayToggle />

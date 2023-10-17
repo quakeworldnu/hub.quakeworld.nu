@@ -54,7 +54,7 @@ export const FtePlayer = ({ files, demoTotalTime }) => {
         </div>
       </div>
       {fte && (
-        <div className={"absolute z-10 bottom-0 w-full bg-black/60"}>
+        <div className={"absolute z-10 bottom-0 w-full"}>
           <Controls />
         </div>
       )}
