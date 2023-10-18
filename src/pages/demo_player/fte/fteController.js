@@ -271,6 +271,15 @@ export class FteController {
     this.command("track", userid);
   }
 
+  trackNext() {
+    this.disableAutotrack();
+    this.command("+jump");
+
+    setTimeout(() => {
+      this.command("-jump");
+    }, 50);
+  }
+
   // volume
   mute() {
     this._lastVolume = this._volume;

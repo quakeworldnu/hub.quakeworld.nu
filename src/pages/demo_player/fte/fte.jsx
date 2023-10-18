@@ -86,11 +86,7 @@ const FteCanvas = () => {
       setIsShowingScores(true);
     } else if (e.code === "Space") {
       e.preventDefault();
-      fte.command("+jump");
-
-      setTimeout(() => {
-        fte.command("-jump");
-      }, 50);
+      fte.trackNext();
     }
   }
 
