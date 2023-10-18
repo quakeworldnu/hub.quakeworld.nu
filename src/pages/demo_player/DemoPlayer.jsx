@@ -37,7 +37,7 @@ export const BrowserControls = () => {
         </div>
         <FontAwesomeIcon icon={faBars} size={"xl"} color={"#789"} />
       </div>
-      <div className="flex space-x-1 items-center">
+      <div className="hidden md:flex space-x-1 items-center">
         {["All", "1on1", "2on2", "4on4", "CTF", "Race", "Other"].map(
           (mode, index) => (
             <div
@@ -104,12 +104,12 @@ export const DemoPlayer = ({ demoId }) => {
           ))}
         </div>
       </div>
-      <div className="flex min-h-[800px]">
+      <div className="lg:flex min-h-[800px]">
         <div className="flex flex-col grow">
           <div className="flex grow bg-black items-center justify-center max-h-[75vh]">
             <FtePlayer files={files} demoTotalTime={demo.duration} />
           </div>
-          <div className="py-6 flex justify-between">
+          <div className="py-6 md:flex justify-between debug">
             <div className="space-y-2">
               <div className="text-2xl font-bold">
                 {demo.mode}: {demo.title} [{demo.map}]
@@ -121,7 +121,7 @@ export const DemoPlayer = ({ demoId }) => {
             <div>
               <a
                 href={demoUrl}
-                className="py-3 px-4 rounded bg-blue-600/50 hover:bg-blue-600/80 cursor-pointer"
+                className="inline-block mt-4 md:mt-0 py-3 px-4 rounded bg-blue-600/50 hover:bg-blue-600/80 cursor-pointer"
               >
                 Download demo
               </a>
@@ -145,7 +145,7 @@ export const DemoPlayer = ({ demoId }) => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col w-[400px] ml-4">
+        <div className="flex flex-col w-auto lg:w-[280px] lg:ml-4">
           <div className="flex px-6 py-7 bg-white/5 space-x-6">
             <div className="border-b-2 border-blue-500 font-bold">Chat</div>
             <div className="text-slate-400">Playlist</div>
