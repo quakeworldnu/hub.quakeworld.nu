@@ -22,7 +22,7 @@ export const DemoTiles = () => {
         .select("id, map, mode, participants, title, source, s3_key, timestamp")
         //.eq("mode", "4on4")
         .order("timestamp", { ascending: false })
-        .limit(50);
+        .limit(60);
       setDemos(data);
     }
 
