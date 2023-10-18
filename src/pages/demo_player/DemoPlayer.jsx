@@ -109,7 +109,7 @@ export const DemoPlayer = ({ demoId }) => {
           <div className="flex grow bg-black items-center justify-center max-h-[75vh]">
             <FtePlayer files={files} demoTotalTime={demo.duration} />
           </div>
-          <div className="py-6 md:flex justify-between debug">
+          <div className="py-6 md:flex justify-between">
             <div className="space-y-2">
               <div className="text-2xl font-bold">
                 {demo.mode}: {demo.title} [{demo.map}]
