@@ -32,7 +32,7 @@ function getMapAssets(mapName) {
   const targetMapBsp = "id1/maps/" + mapName + ".bsp";
   const targetMapLit = "id1/maps/" + mapName + ".lit";
 
-  return /(dm[1-7]|e[1-4]m[1-8])/.test(mapName)
+  return /^(dm[1-7]|e[1-4]m[1-8])/.test(mapName)
     ? {
         [targetMapBsp]: `https://raw.githubusercontent.com/fzwoch/quake_map_source/master/bsp/${mapName}.bsp`,
         [targetMapLit]: `https://media.githubusercontent.com/media/qw-ctf/lits/main/jscolour/id1_gpl/${mapName}.lit`,
