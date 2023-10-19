@@ -93,6 +93,7 @@ const QueryInput = ({ defaultValue = "" }) => {
         className="z-10 text-slate-500 pointer-events-none"
       />
       <input
+        autoFocus
         type="search"
         value={query}
         className="-ml-6 px-2 pl-8 py-2 text-sm bg-blue-950 border border-blue-800 text-white rounded"
