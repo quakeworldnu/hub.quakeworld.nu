@@ -40,7 +40,7 @@ export const Browser = () => {
 
 export const Settings = () => {
   return (
-    <div className="flex space-x-8 items-center">
+    <div className="flex flex-wrap gap-x-6 gap-y-3 items-center">
       <DisplayModeButtons />
       <GameModeButtons />
       <QueryInput />
@@ -129,7 +129,7 @@ const QueryInput = ({ defaultValue = "" }) => {
   }, [debouncedQuery]);
 
   return (
-    <label className="flex items-center">
+    <label className="flex items-center ml-2">
       <FontAwesomeIcon
         icon={faSearch}
         className="z-10 text-slate-500 pointer-events-none"
