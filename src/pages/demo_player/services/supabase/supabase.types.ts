@@ -29,3 +29,9 @@ export type Team = {
   frags: number;
   players: Player[];
 };
+
+export type Participants = {
+  teams: Team[];
+  players: Player[];
+  player_count: number;
+};
