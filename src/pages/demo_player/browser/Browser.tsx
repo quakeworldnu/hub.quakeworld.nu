@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faSearch, faSquare } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faSearch,
+  faTableCells,
+} from "@fortawesome/free-solid-svg-icons";
 import { useDebounce } from "usehooks-ts";
 
 import { Grid } from "./Grid.tsx";
@@ -47,10 +51,10 @@ const DisplayModeInput = () => {
 
   const selectedClass = "bg-blue-500/20 border-white/10 text-white";
   const defaultClass =
-    "p-1 px-1.5 cursor-pointer rounded border border-transparent hover:border-white/10 text-slate-400";
+    "flex items-center space-x-2 p-2 px-3 cursor-pointer text-sm first:rounded-l last:rounded-r border border-transparent border-white/10 hover:border-white/20 hover:bg-blue-500/20 text-slate-400";
 
   return (
-    <div className="flex space-x-2 items-center">
+    <div className="flex items-center">
       <div
         title="Display as grid"
         className={classNames(defaultClass, {
@@ -58,7 +62,8 @@ const DisplayModeInput = () => {
         })}
         onClick={() => setMode("grid")}
       >
-        <FontAwesomeIcon icon={faSquare} size={"xl"} />
+        <FontAwesomeIcon icon={faTableCells} size="lg" />
+        <div>Grid</div>
       </div>
       <div
         title="Display as list"
@@ -67,7 +72,8 @@ const DisplayModeInput = () => {
         })}
         onClick={() => setMode("list")}
       >
-        <FontAwesomeIcon icon={faBars} size={"xl"} />
+        <FontAwesomeIcon icon={faBars} size="lg" />
+        <div>List</div>
       </div>
     </div>
   );
