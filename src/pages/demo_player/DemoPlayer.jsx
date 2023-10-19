@@ -121,7 +121,7 @@ export const DemoPlayer = ({ demoId }) => {
             <div>
               <a
                 href={demoUrl}
-                className="inline-block mt-4 md:mt-0 py-3 px-4 rounded bg-blue-600/50 hover:bg-blue-600/80 cursor-pointer"
+                className="inline-block mt-4 md:mt-0 py-2.5 px-4 rounded bg-gradient-to-b from-blue-700 to-blue-900 hover:from-blue-600 hover:to-blue-800"
               >
                 Download demo
               </a>
