@@ -1,6 +1,6 @@
 const qtubeUrl = "https://raw.githubusercontent.com/qw-ctf/qtube-assets/assets";
 const streambotUrl =
-  "https://raw.githubusercontent.com/vikpe/qw-streambot-ezquake/main/";
+  "https://raw.githubusercontent.com/vikpe/qw-streambot-ezquake/main";
 
 export function withPrefix(path) {
   return `/assets/static/${path}`;
@@ -50,10 +50,14 @@ function getMapAssets(mapName) {
 
 function getGeneralAssets() {
   return {
+    // streambot
+    "id1/crosshairs/xtm01.png": `${streambotUrl}/qw/crosshairs/xtm01.png`,
+    "skins/enemy.jpg": `${streambotUrl}/qw/skins/enemy.jpg`,
+    "skins/team.jpg": `${streambotUrl}/qw/skins/team.jpg`,
+
+    // qtube
     "default.fmf": withPrefix("/data/default.fmf"),
     "id1/config.cfg": withPrefix("/data/id1/config.cfg"),
-    // "id1/crosshairs/crossdeurk.png": `${qtubeUrl}/crosshairs/crossdeurk.png`,
-    "id1/crosshairs/xtm01.png": `${streambotUrl}/qw/crosshairs/xtm01.png`,
     "id1/gfx/ranking.png": `${qtubeUrl}/gfx/ranking.png`,
     "id1/gfx.wad": `${qtubeUrl}/gfx.wad`,
     "id1/maps/b_batt0.bsp": `${qtubeUrl}/maps/b_batt0.bsp`,
@@ -479,9 +483,5 @@ function getGeneralAssets() {
     "id1/textures/wad/sb_suit.png": `${qtubeUrl}/textures/wad/sb_suit.png`,
     "qw/fragfile.dat": withPrefix("/data/fragfile.dat"),
     "ctf/fragfile.dat": withPrefix("/data/fragfile.dat"),
-    "skins/enemy.jpg":
-      "https://raw.githubusercontent.com/vikpe/qw-streambot-ezquake/main/qw/skins/enemy.jpg",
-    "skins/team.jpg":
-      "https://raw.githubusercontent.com/vikpe/qw-streambot-ezquake/main/qw/skins/team.jpg",
   };
 }
