@@ -30,10 +30,14 @@ function queryToFullTextSearchString(query: string = ""): string {
     .join(" & ");
 }
 
-export async function searchDemos({ query }: DemoBrowserSettings) {
+export async function searchDemos({ query, gameMode }: DemoBrowserSettings) {
   let qb = supabase.from("demos").select("*");
 
   const fts = queryToFullTextSearchString(query);
+
+  if (gameMode !== "all") {
+    qb = qb.eq("mode", gameMode);
+  }
 
   if (fts) {
     qb = qb.textSearch("fts", fts);

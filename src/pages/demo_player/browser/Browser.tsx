@@ -7,6 +7,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useDebounce } from "usehooks-ts";
 
+const btnSelectedClass =
+  "bg-gradient-to-t from-blue-500/20 to-blue-500/40 border-white/10 text-white";
+const btnDefaultClass =
+  "flex items-center space-x-2 p-2 px-2.5 cursor-pointer text-sm first:rounded-l last:rounded-r border border-transparent border-white/10 hover:border-white/20 hover:bg-blue-500/20 text-slate-400";
+
 import { Grid } from "./Grid.tsx";
 import { useDemoBrowserSettings, useSearchDemos } from "./hooks.ts";
 import { DisplayMode } from "./types.ts";
@@ -35,46 +40,77 @@ export const Browser = () => {
 
 export const Settings = () => {
   return (
-    <div className="flex space-x-10 items-center">
-      <DisplayModeInput />
+    <div className="flex space-x-8 items-center">
+      <DisplayModeButtons />
+      <GameModeButtons />
       <QueryInput />
     </div>
   );
 };
 
-const DisplayModeInput = () => {
+const DisplayModeButtons = () => {
   const { settings, setSettings } = useDemoBrowserSettings();
 
   function setMode(displayMode: DisplayMode) {
     setSettings({ ...settings, displayMode });
   }
 
-  const selectedClass = "bg-blue-500/20 border-white/10 text-white";
-  const defaultClass =
-    "flex items-center space-x-2 p-2 px-3 cursor-pointer text-sm first:rounded-l last:rounded-r border border-transparent border-white/10 hover:border-white/20 hover:bg-blue-500/20 text-slate-400";
+  const options = [
+    { icon: faTableCells, label: "Grid", value: "grid" },
+    { icon: faBars, label: "List", value: "list" },
+  ];
 
   return (
     <div className="flex items-center">
-      <div
-        title="Display as grid"
-        className={classNames(defaultClass, {
-          [selectedClass]: settings.displayMode === "grid",
-        })}
-        onClick={() => setMode("grid")}
-      >
-        <FontAwesomeIcon icon={faTableCells} size="lg" />
-        <div>Grid</div>
-      </div>
-      <div
-        title="Display as list"
-        className={classNames(defaultClass, {
-          [selectedClass]: settings.displayMode === "list",
-        })}
-        onClick={() => setMode("list")}
-      >
-        <FontAwesomeIcon icon={faBars} size="lg" />
-        <div>List</div>
-      </div>
+      {options.map((option) => (
+        <div
+          key={option.value}
+          title={`Display as ${option.value}`}
+          className={classNames(btnDefaultClass, {
+            [btnSelectedClass]: settings.displayMode === option.value,
+          })}
+          onClick={() => setMode(option.value as DisplayMode)}
+        >
+          <FontAwesomeIcon icon={option.icon} size="lg" />
+          <div>{option.label}</div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const GameModeButtons = () => {
+  const { settings, setSettings } = useDemoBrowserSettings();
+
+  function setGameMode(gameMode: string) {
+    setSettings({ ...settings, gameMode });
+  }
+
+  const options = [
+    {
+      value: "all",
+      label: "All",
+    },
+  ].concat(
+    ["1on1", "2on2", "4on4"].map((mode) => ({
+      label: mode,
+      value: mode,
+    })),
+  );
+
+  return (
+    <div className="flex items-center">
+      {options.map((option) => (
+        <div
+          key={option.value}
+          className={classNames(btnDefaultClass, {
+            [btnSelectedClass]: settings.gameMode === option.value,
+          })}
+          onClick={() => setGameMode(option.value)}
+        >
+          {option.label}
+        </div>
+      ))}
     </div>
   );
 };

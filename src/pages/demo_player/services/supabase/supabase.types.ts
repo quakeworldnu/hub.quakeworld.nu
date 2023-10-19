@@ -12,7 +12,7 @@ export type DbResultErr = PostgrestError;
 
 export type Demo = Tables<"demos">;
 
-export type Player = {
+export type DemoPlayer = {
   name: string;
   team: string;
   top_color: number;
@@ -24,14 +24,14 @@ export type Player = {
   ping: number;
 };
 
-export type Team = {
+export type DemoTeam = {
   name: string;
   frags: number;
-  players: Player[];
+  players: DemoPlayer[];
 };
 
-export type Participants = {
-  teams: Team[];
-  players: Player[];
+export type DemoParticipants = {
+  teams: DemoTeam[];
+  players: DemoPlayer[];
   player_count: number;
 };

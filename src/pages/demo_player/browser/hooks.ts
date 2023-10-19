@@ -14,7 +14,7 @@ export function useSearchDemos(settings: DemoBrowserSettings) {
     }
 
     run();
-  }, [settings.query]);
+  }, [settings.query, settings.gameMode]);
 
   return { demos };
 }
@@ -23,7 +23,8 @@ export function useDemoBrowserSettings() {
   const [settings, setSettings] = useLocalStorage<DemoBrowserSettings>(
     "demoBrowser",
     {
-      displayMode: "list",
+      displayMode: "grid",
+      gameMode: "all",
       query: "",
     },
   );
