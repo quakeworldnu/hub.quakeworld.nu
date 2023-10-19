@@ -22,9 +22,8 @@ export class FteController {
   _cache = {
     timelimit: null,
     map: null,
-    matchTotalTime: null,
     demoTotalTime: null,
-    demoMatchStartTime: null,
+    demoGameStartTime: null,
   };
 
   static _instance = null;
@@ -125,20 +124,16 @@ export class FteController {
     this._demoTotalTime = value;
   }
 
-  getDemoMatchStartTime() {
+  getDemoGameStartTime() {
     return this._demoTotalTime % 60;
   }
 
-  getMatchElapsedTime() {
-    try {
-      return this.module.getMatchElapsedTime();
-    } catch (e) {
-      return 0;
-    }
+  getGameElapsedTime() {
+    return this.getDemoElapsedTime() - this.getDemoGameStartTime();
   }
 
-  getMatchTotalTime() {
-    return this.getDemoTotalTime() - this.getDemoMatchStartTime();
+  getGameTotalTime() {
+    return this.getDemoTotalTime() - this.getDemoGameStartTime();
   }
 
   getPlayers() {

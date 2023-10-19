@@ -10,8 +10,8 @@ export const GameClock = () => {
     return null;
   }
 
-  const elapsed = fte.getMatchElapsedTime();
-  const total = fte.getMatchTotalTime();
+  const elapsed = fte.getGameElapsedTime();
+  const total = fte.getGameTotalTime();
 
   return (
     <div className="flex mr-auto font-mono items-center px-2">

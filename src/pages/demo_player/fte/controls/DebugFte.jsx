@@ -12,10 +12,10 @@ export const DebugFte = () => {
   const demoProps = {
     getDemoTotalTime: fte.getDemoTotalTime(),
     getDemoElapsedTime: fte.getDemoElapsedTime(),
-    getDemoMatchStartTime: fte.getDemoMatchStartTime(),
+    getDemoGameStartTime: fte.getDemoGameStartTime(),
 
-    getMatchTotalTime: fte.getMatchTotalTime(),
-    getMatchElapsedTime: fte.getMatchElapsedTime(),
+    getGameTotalTime: fte.getGameTotalTime(),
+    getGameElapsedTime: fte.getGameElapsedTime(),
   };
 
   return (

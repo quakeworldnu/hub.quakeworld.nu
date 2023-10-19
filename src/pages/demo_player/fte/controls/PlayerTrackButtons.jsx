@@ -12,7 +12,7 @@ export const PlayerTrackButtons = () => {
     return null;
   }
   const trackUserid = fte.getTrackUserid();
-  const showWeapons = fte.getMatchElapsedTime() > 0;
+  const showWeapons = fte.getGameElapsedTime() > 0;
 
   return (
     <>
