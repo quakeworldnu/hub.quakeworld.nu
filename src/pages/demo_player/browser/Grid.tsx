@@ -94,7 +94,7 @@ const ModeRibbon = ({ mode }: { mode: string }) => {
     <div className="w-24 h-24 overflow-hidden">
       <div
         className={classNames(
-          "-translate-x-[45%] -translate-y-[195%] -rotate-45 origin-bottom-right h-8 w-48 bg-gradient-to-bl text-white font-mono justify-center items-center flex z-10 app-text-shadow",
+          "flex -translate-x-[45%] -translate-y-[195%] -rotate-45 origin-bottom-right h-8 w-48 bg-gradient-to-bl justify-center items-center z-10 text-white app-text-shadow font-bold text-sm",
           {
             "from-red-500 to-red-900": mode === "4on4",
             "from-blue-500 to-blue-900": mode === "2on2",

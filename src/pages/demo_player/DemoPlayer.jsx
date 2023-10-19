@@ -47,7 +47,8 @@ export const DemoPlayer = ({ demoId }) => {
     return <div>Loading...</div>;
   }
 
-  const demoBreadcrumbs = ["Recent"];
+  const demoDescription = `${demo.mode}: ${demo.title} [${demo.map}]`;
+  const demoBreadcrumbs = [demoDescription];
   const demoUrl = [import.meta.env.VITE_AWS_S3_BUCKET_URL, demo.s3_key].join(
     "/",
   );
@@ -73,9 +74,7 @@ export const DemoPlayer = ({ demoId }) => {
           </div>
           <div className="py-6 md:flex justify-between">
             <div className="space-y-2">
-              <div className="text-2xl font-bold">
-                {demo.mode}: {demo.title} [{demo.map}]
-              </div>
+              <div className="text-2xl font-bold">{demoDescription}</div>
               <div className="text-slate-400">
                 <Timestamp timestamp={demo.timestamp} /> on {demo.source}
               </div>
