@@ -37,6 +37,10 @@
 
     > * {
       border: 1px solid green;
+
+      > * {
+        border: 1px solid red;
+      }
     }
   }
 }
@@ -59,11 +63,10 @@
 }
 
 .app-text-outline {
-  text-shadow:
-    1px -1px 0 black,
-    -1px -1px 0 black,
-    1px 1px 0 black,
-    -1px 1px 0 black;
+  text-shadow: 1px -1px 0 black,
+  -1px -1px 0 black,
+  1px 1px 0 black,
+  -1px 1px 0 black;
 }
 
 .app-effect-fade-in {

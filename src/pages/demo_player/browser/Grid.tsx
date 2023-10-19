@@ -35,7 +35,12 @@ const DemoItem = ({ demo }: { demo: Demo }) => {
         <div className="absolute">
           <ModeRibbon mode={demo.mode} />
         </div>
+
         <ParticipantsZZZ participants={demo.participants as Participants} />
+
+        <div className="flex -mt-8 h-6 px-2 text-right ml-auto items-center bg-gray-900/50 text-xs rounded mr-2 mb-2">
+          {demo.map}
+        </div>
       </a>
 
       <div className="mt-2 text-xs text-slate-400 text-center">
