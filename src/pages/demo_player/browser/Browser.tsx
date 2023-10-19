@@ -115,9 +115,9 @@ const GameModeButtons = () => {
   );
 };
 
-const QueryInput = ({ defaultValue = "" }) => {
-  const [query, setQuery] = useState<string>(defaultValue);
+const QueryInput = () => {
   const { settings, setSettings } = useDemoBrowserSettings();
+  const [query, setQuery] = useState<string>(settings.query);
   const debouncedQuery = useDebounce<string>(query, 400);
 
   function onChange(e: React.ChangeEvent<HTMLInputElement>) {
