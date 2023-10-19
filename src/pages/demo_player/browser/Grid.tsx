@@ -1,50 +1,20 @@
 import classNames from "classnames";
-import React, { useState } from "react";
-import { getClient } from "@qwhub/pages/demo_player/services/supabase/supabase";
-import { useEffectOnce } from "usehooks-ts";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
-import relativeTime from "dayjs/plugin/relativeTime";
+import {
+  Demo,
+  Participants,
+  Player,
+} from "../services/supabase/supabase.types.ts";
+import { Timestamp } from "./Timestamp.tsx";
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
-dayjs.extend(relativeTime);
-
-export const DemoTiles = () => {
-  const client = getClient();
-  const [demos, setDemos] = useState([]);
-
-  useEffectOnce(() => {
-    async function run() {
-      const { data } = await client
-        .from("demos")
-        .select("id, map, mode, participants, title, source, s3_key, timestamp")
-        //.eq("mode", "4on4")
-        .order("timestamp", { ascending: false })
-        .limit(60);
-      setDemos(data);
-    }
-
-    run();
-  });
-
+export const Grid = ({ demos }: { demos: Demo[] | null }) => {
   return (
     <div className="my-6 grid grid-cols-servers gap-6">
-      {demos.map((d) => (
-        <DemoTile key={d.id} demo={d} />
-      ))}
+      {demos?.map((demo) => <DemoItem key={demo.id} demo={demo} />)}
     </div>
   );
 };
 
-const DemoTimestamp = ({ timestamp }) => {
-  const format = dayjs(timestamp).from(dayjs());
-
-  return <>{format}</>;
-};
-
-const DemoTile = ({ demo }) => {
+const DemoItem = ({ demo }: { demo: Demo }) => {
   return (
     <div>
       <a
@@ -63,13 +33,13 @@ const DemoTile = ({ demo }) => {
         }}
       >
         <div className="absolute">
-          <ModeRibbon mode={demo.mode} map={demo.map} />
+          <ModeRibbon mode={demo.mode} />
         </div>
-        <Participants participants={demo.participants} />
+        <ParticipantsZZZ participants={demo.participants as Participants} />
       </a>
 
       <div className="mt-2 text-xs text-slate-400 text-center">
-        <DemoTimestamp timestamp={demo.timestamp} />{" "}
+        <Timestamp timestamp={demo.timestamp} />{" "}
         <span className="text-slate-500">@</span> {demo.source.split(":")[0]}
       </div>
     </div>
@@ -84,7 +54,7 @@ const Versus = () => {
   );
 };
 
-const Participants = ({ participants }) => {
+const ParticipantsZZZ = ({ participants }: { participants: Participants }) => {
   const hasTeams = participants.teams.length > 0;
   const titles = hasTeams
     ? participants.teams.map((t) => t.name)
@@ -95,40 +65,40 @@ const Participants = ({ participants }) => {
       <div className="w-1/2 flex flex-col justify-center">
         <div className="ml-auto">
           <div className="font-bold text-center text-2xl">{titles[0]}</div>
-          {hasTeams && <PlayerList team={participants.teams[0]} />}
+          {hasTeams && <PlayerList players={participants.teams[0].players} />}
         </div>
       </div>
       <Versus />
       <div className="w-1/2 flex flex-col justify-center">
         <div className="mr-auto">
           <div className="font-bold text-center text-2xl">{titles[1]}</div>
-          {hasTeams && <PlayerList team={participants.teams[1]} />}
+          {hasTeams && <PlayerList players={participants.teams[1].players} />}
         </div>
       </div>
     </div>
   );
 };
 
-const PlayerList = ({ team }) => {
+const PlayerList = ({ players }: { players: Player[] }) => {
   return (
     <div className="text-center mx-1">
-      {team.players.map((p) => (
+      {players.map((p) => (
         <div key={p.name}>{p.name}</div>
       ))}
     </div>
   );
 };
 
-const ModeRibbon = ({ mode }) => {
+const ModeRibbon = ({ mode }: { mode: string }) => {
   return (
     <div className="w-24 h-24 overflow-hidden">
       <div
         className={classNames(
           "-translate-x-[45%] -translate-y-[195%] -rotate-45 origin-bottom-right h-8 w-48 bg-gradient-to-bl text-white font-mono justify-center items-center flex z-10 app-text-shadow",
           {
-            "from-red-600 to-red-700": mode === "4on4",
-            "from-blue-600 to-blue-700": mode === "2on2",
-            "from-green-600 to-green-700": mode === "1on1",
+            "from-red-500 to-red-900": mode === "4on4",
+            "from-blue-500 to-blue-900": mode === "2on2",
+            "from-green-500 to-green-900": mode === "1on1",
           },
         )}
       >

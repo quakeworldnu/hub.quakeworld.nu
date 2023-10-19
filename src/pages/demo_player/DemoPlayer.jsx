@@ -3,12 +3,11 @@ import { getDemo } from "@qwhub/pages/demo_player/services/supabase/supabase";
 import { getAssets } from "@qwhub/pages/demo_player/fte/assets";
 import FtePlayer from "@qwhub/pages/demo_player/fte/fte";
 import queryString from "query-string";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faSquare } from "@fortawesome/free-solid-svg-icons";
-import classNames from "classnames";
-import { DemoTiles } from "@qwhub/pages/demo_player/DemoTiles";
+import { Grid } from "@qwhub/pages/demo_player/browser/Grid";
 import { UserInfo } from "@qwhub/pages/demo_player/UserInfo";
 import { Chat } from "./Chat";
+import { Settings } from "@qwhub/pages/demo_player/browser/Browser";
+import { Timestamp } from "@qwhub/pages/demo_player/browser/Timestamp";
 
 export const DemoPlayerApp = () => {
   const query = queryString.parse(location.search);
@@ -18,49 +17,12 @@ export const DemoPlayerApp = () => {
     <div className="my-6">
       {!demoId && (
         <div className="flex justify-between items-center my-4 space-x-4">
-          <BrowserControls />
+          <Settings onChange={onSettingsChange} />
         </div>
       )}
 
-      {!demoId && <DemoTiles />}
+      {!demoId && <Grid />}
       {demoId && <DemoPlayer demoId={demoId} />}
-    </div>
-  );
-};
-
-export const BrowserControls = () => {
-  return (
-    <div className="flex space-x-10 items-center">
-      <div className="flex space-x-2 items-center">
-        <div className="p-1 px-1.5 bg-blue-500/20 rounded border border-white/10">
-          <FontAwesomeIcon icon={faSquare} size={"xl"} color={"#abc"} />
-        </div>
-        <FontAwesomeIcon icon={faBars} size={"xl"} color={"#789"} />
-      </div>
-      <div className="hidden md:flex space-x-1 items-center">
-        {["All", "1on1", "2on2", "4on4", "CTF", "Race", "Other"].map(
-          (mode, index) => (
-            <div
-              key={mode}
-              className={classNames({
-                "font-bold border border-white/10 px-2 py-1 bg-blue-500/20 rounded":
-                  index === 0,
-                "text-gray-400 text-sm px-2 py-1": index !== 0,
-              })}
-            >
-              {mode}
-            </div>
-          ),
-        )}
-      </div>
-      <div>
-        <input
-          type="search"
-          className="border border-white/10 px-2 py-1 bg-blue-500/20 rounded"
-          name=""
-          id=""
-        />
-      </div>
     </div>
   );
 };
@@ -115,7 +77,7 @@ export const DemoPlayer = ({ demoId }) => {
                 {demo.mode}: {demo.title} [{demo.map}]
               </div>
               <div className="text-slate-400">
-                Played on {demo.source} at {demo.timestamp}
+                <Timestamp timestamp={demo.timestamp} /> on {demo.source}
               </div>
             </div>
             <div>
