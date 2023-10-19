@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faSquare } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faSearch, faSquare } from "@fortawesome/free-solid-svg-icons";
 import { useDebounce } from "usehooks-ts";
 
 import { Grid } from "./Grid.tsx";
@@ -87,13 +87,17 @@ const QueryInput = ({ defaultValue = "" }) => {
   }, [debouncedQuery]);
 
   return (
-    <div>
+    <label className="flex items-center">
+      <FontAwesomeIcon
+        icon={faSearch}
+        className="z-10 text-slate-500 pointer-events-none"
+      />
       <input
         type="search"
         value={query}
-        className="px-2 py-1 bg-blue-950 border border-blue-800 text-white"
+        className="-ml-6 px-2 pl-8 py-2 text-sm bg-blue-950 border border-blue-800 text-white rounded"
         onChange={onChange}
       />
-    </div>
+    </label>
   );
 };

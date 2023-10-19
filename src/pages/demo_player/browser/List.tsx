@@ -20,7 +20,7 @@ export const List = ({ demos }: { demos: Demo[] | null }) => {
   );
 };
 
-function downloadUrl(s3Key: string) {
+function demoDownloadUrl(s3Key: string) {
   return `https://quakeworld.s3.eu-central-1.amazonaws.com/${s3Key}`;
 }
 
@@ -38,7 +38,7 @@ const ListItem = ({ demo }: { demo: Demo }) => {
           Play
         </a>
 
-        <a href={downloadUrl(demo.s3_key)} className="text-blue-500">
+        <a href={demoDownloadUrl(demo.s3_key)} className="text-blue-500">
           Download
         </a>
       </td>
