@@ -10,6 +10,7 @@ export const ModeRibbon = ({ mode }: { mode: string }) => {
             "from-red-500 to-red-900": mode === "4on4",
             "from-blue-500 to-blue-900": mode === "2on2",
             "from-green-500 to-green-900": mode === "1on1",
+            "from-amber-500 to-amber-900": mode === "ctf",
           },
         )}
       >
