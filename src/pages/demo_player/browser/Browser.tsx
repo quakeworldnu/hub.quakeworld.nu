@@ -92,7 +92,7 @@ const GameModeButtons = () => {
       label: "All",
     },
   ].concat(
-    ["1on1", "2on2", "4on4"].map((mode) => ({
+    ["1on1", "2on2", "4on4", "CTF"].map((mode) => ({
       label: mode,
       value: mode,
     })),
@@ -104,9 +104,10 @@ const GameModeButtons = () => {
         <div
           key={option.value}
           className={classNames(btnDefaultClass, {
-            [btnSelectedClass]: settings.gameMode === option.value,
+            [btnSelectedClass]:
+              settings.gameMode === option.value.toLowerCase(),
           })}
-          onClick={() => setGameMode(option.value)}
+          onClick={() => setGameMode(option.value.toLowerCase())}
         >
           {option.label}
         </div>
