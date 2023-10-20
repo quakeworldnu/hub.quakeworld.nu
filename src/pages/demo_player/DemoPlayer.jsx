@@ -2,30 +2,9 @@ import React, { useEffect, useState } from "react";
 import { getDemo } from "@qwhub/pages/demo_player/services/supabase/supabase";
 import { getAssets } from "@qwhub/pages/demo_player/fte/assets";
 import FtePlayer from "@qwhub/pages/demo_player/fte/fte";
-import queryString from "query-string";
-import { Grid } from "@qwhub/pages/demo_player/browser/Grid";
 import { UserInfo } from "@qwhub/pages/demo_player/UserInfo";
 import { Chat } from "./Chat";
-import { Settings } from "@qwhub/pages/demo_player/browser/Browser";
 import { Timestamp } from "@qwhub/pages/demo_player/browser/Timestamp";
-
-export const DemoPlayerApp = () => {
-  const query = queryString.parse(location.search);
-  const demoId = query.demoId ?? "";
-
-  return (
-    <div className="my-6">
-      {!demoId && (
-        <div className="flex justify-between items-center my-4 space-x-4">
-          <Settings onChange={onSettingsChange} />
-        </div>
-      )}
-
-      {!demoId && <Grid />}
-      {demoId && <DemoPlayer demoId={demoId} />}
-    </div>
-  );
-};
 
 export const DemoPlayer = ({ demoId }) => {
   const [demo, setDemo] = useState(null);
@@ -112,11 +91,13 @@ export const DemoPlayer = ({ demoId }) => {
             <div className="text-slate-400">Playlist</div>
             <div className="text-slate-400">Related demos</div>
           </div>
-          <div className="p-6">
-            <UserInfo />
-          </div>
+          {false && (
+            <div className="p-6">
+              <UserInfo />
+            </div>
+          )}
           <div className="flex flex-col bg-blue-400/10 h-full">
-            <Chat />
+            {false && <Chat />}
           </div>
         </div>
       </div>

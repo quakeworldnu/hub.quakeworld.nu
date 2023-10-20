@@ -4,6 +4,8 @@ import { toggleFullscreen } from "@qwhub/pages/demo_player/fte/player";
 import React, { useState } from "react";
 import classNames from "classnames";
 import { useEventListener } from "usehooks-ts";
+import { Debug } from "@qwhub/pages/demo_player/fte/Debug";
+import { useUpdateInterval } from "@qwhub/hooks";
 
 export const FtePlayer = ({ files, demoTotalTime }) => {
   const { isLoadingAssets, isReady, assets, isInitializing } = useFteLoader({
@@ -65,6 +67,17 @@ export const FtePlayer = ({ files, demoTotalTime }) => {
   );
 };
 
+const PlayerDebug = () => {
+  useUpdateInterval(200);
+  const fte = useFteController();
+
+  if (!fte) {
+    return null;
+  }
+
+  return <Debug value={fte.getPlayers()} />;
+};
+
 export default FtePlayer;
 
 const FteCanvas = () => {
@@ -85,7 +98,6 @@ const FteCanvas = () => {
       fte.command("+showscores");
       setIsShowingScores(true);
     } else if (e.code === "Space") {
-      e.preventDefault();
       fte.trackNext();
     }
   }
