@@ -19,7 +19,7 @@
     "supabase:types": "supabase gen types typescript --project-id ncsphkjfominimxztjip > src/pages/demo_player/services/supabase/database.types.ts"
   },
   "devDependencies": {
-    "@types/react": "^18.2.29",
+    "@types/react": "^18.2.31",
     "@types/react-dom": "^18.2.14",
     "@typescript-eslint/eslint-plugin": "^6.8.0",
     "@typescript-eslint/parser": "^6.8.0",
@@ -44,7 +44,7 @@
     "@radix-ui/react-slider": "^1.1.2",
     "@radix-ui/react-switch": "^1.0.3",
     "@reduxjs/toolkit": "^1.9.7",
-    "@supabase/supabase-js": "^2.38.1",
+    "@supabase/supabase-js": "^2.38.2",
     "@uidotdev/usehooks": "^2.4.0",
     "ag-grid-community": "^30.2.0",
     "ag-grid-react": "^30.2.0",
