@@ -1,10 +1,17 @@
 import { ReactNode, useState } from "react";
 import { SortableItemList } from "./Sortable.tsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faSort, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlay,
+  faPlus,
+  faSort,
+  faTrashCan,
+} from "@fortawesome/free-solid-svg-icons";
 import { Timestamp } from "../browser/Timestamp.tsx";
 import { usePlaylist } from "./hooks.ts";
 import type { Demo } from "../services/supabase/supabase.types.ts";
+import { Switch } from "../Switch.tsx";
+import classNames from "classnames";
 
 export type { Demo } from "../services/supabase/supabase.types.ts";
 
@@ -15,27 +22,17 @@ export type PlaylistItem = {
 
 export const Playlist = () => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const { playlist } = usePlaylist();
 
   return (
     <div>
-      <div className="flex items-center justify-between">
-        <button
+      <div className="flex items-center justify-between py-2 border-y border-y-white/10">
+        <Switch
+          label="Edit"
+          enabled={isEditing}
           onClick={() => setIsEditing(!isEditing)}
-          className="px-2 py-1 bg-slate-600 rounded mb-3"
-        >
-          Edit
-        </button>
-
-        <a
-          href={`/demo_player/?demoId=${playlist[0].id}`}
-          className="px-2 py-1 bg-slate-600 rounded mb-3"
-        >
-          Play
-        </a>
+        />
       </div>
-
-      {isEditing ? <EditablePlaylist /> : <ReadOnlyPlaylist />}
+      <div>{isEditing ? <EditablePlaylist /> : <ReadOnlyPlaylist />}</div>
     </div>
   );
 };
@@ -46,7 +43,7 @@ export const ReadOnlyPlaylist = () => {
   return (
     <div>
       {playlist.map((item) => (
-        <Item key={item.id} item={item} />
+        <ReadOnlyItem key={item.id} item={item} />
       ))}
     </div>
   );
@@ -141,7 +138,9 @@ export function RemoveButton({ id }: { id: number }) {
 export const EditableItem = ({ item }: { item: PlaylistItem }) => {
   return (
     <div className="flex items-center justify-between w-full">
-      <Item item={item} />
+      <div className="p-2">
+        <Item item={item} />
+      </div>
       <div className="ml-auto">
         <RemoveButton id={item.id} />
       </div>
@@ -149,9 +148,37 @@ export const EditableItem = ({ item }: { item: PlaylistItem }) => {
   );
 };
 
+export const ReadOnlyItem = ({ item }: { item: PlaylistItem }) => {
+  const isPlaying = location.href.includes(`demoId=${item.demo.id}`);
+
+  return (
+    <a
+      title="Play demo"
+      href={`/demo_player/?demoId=${item.demo.id}`}
+      className={classNames(
+        "flex items-center justify-between p-2 pr-3 hover:bg-white/10 rounded group",
+        {
+          "bg-sky-600/30 hover:bg-sky-600/50": isPlaying,
+          "hover:bg-white/10": !isPlaying,
+        },
+      )}
+    >
+      <Item item={item} />
+      <FontAwesomeIcon
+        icon={faPlay}
+        className={classNames({
+          "text-green-400": isPlaying,
+          "hidden group-hover:inline-block group-hover:text-slate-300":
+            !isPlaying,
+        })}
+      />
+    </a>
+  );
+};
+
 export const Item = ({ item }: { item: PlaylistItem }) => {
   return (
-    <div className="text-sm py-1.5">
+    <div className="text-sm">
       <div className="font-bold mb-0.5">{item.demo.title}</div>
       <div className="text-slate-400 text-xs">
         {item.demo.mode} on {item.demo.map} {"-"}{" "}

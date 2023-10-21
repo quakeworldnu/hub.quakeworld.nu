@@ -1,7 +1,13 @@
 import * as RadixSwitch from "@radix-ui/react-switch";
 import classNames from "classnames";
 
-export const Switch = ({ label, enabled, onClick }) => {
+type Props = {
+  label: string;
+  enabled: boolean;
+  onClick: () => void;
+};
+
+export const Switch = ({ label, enabled, onClick }: Props) => {
   return (
     <form>
       <div className="flex items-center cursor-pointer">

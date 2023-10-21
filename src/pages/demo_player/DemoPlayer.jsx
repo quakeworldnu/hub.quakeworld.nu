@@ -90,17 +90,17 @@ export const DemoPlayer = ({ demoId }) => {
           <div className="flex px-6 py-7 bg-white/5 space-x-6">
             <div className="border-b-2 border-blue-500 font-bold">Playlist</div>
           </div>
-          <div className="mx-4">
-            <Playlist />
-          </div>
+          <Playlist />
           {false && (
             <div className="p-6">
               <UserInfo />
             </div>
           )}
-          <div className="flex flex-col bg-blue-400/10 h-full">
-            {false && <Chat />}
-          </div>
+          {false && (
+            <div className="flex flex-col bg-blue-400/10 h-full">
+              <Chat />
+            </div>
+          )}
         </div>
       </div>
     </>
