@@ -5,6 +5,7 @@ import FtePlayer from "@qwhub/pages/demo_player/fte/fte";
 import { UserInfo } from "@qwhub/pages/demo_player/UserInfo";
 import { Chat } from "./Chat";
 import { Timestamp } from "@qwhub/pages/demo_player/browser/Timestamp";
+import { Playlist } from "@qwhub/pages/demo_player/playlist/Playlist";
 
 export const DemoPlayer = ({ demoId }) => {
   const [demo, setDemo] = useState(null);
@@ -87,9 +88,10 @@ export const DemoPlayer = ({ demoId }) => {
         </div>
         <div className="flex flex-col w-auto lg:w-[280px] 2xl:w-[360px] lg:ml-4">
           <div className="flex px-6 py-7 bg-white/5 space-x-6">
-            <div className="border-b-2 border-blue-500 font-bold">Chat</div>
-            <div className="text-slate-400">Playlist</div>
-            <div className="text-slate-400">Related demos</div>
+            <div className="border-b-2 border-blue-500 font-bold">Playlist</div>
+          </div>
+          <div className="mx-4">
+            <Playlist />
           </div>
           {false && (
             <div className="p-6">

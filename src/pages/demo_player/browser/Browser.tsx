@@ -6,17 +6,17 @@ import {
   faTableCells,
 } from "@fortawesome/free-solid-svg-icons";
 import { useDebounce } from "usehooks-ts";
-
-const btnSelectedClass =
-  "bg-gradient-to-t from-blue-500/20 to-blue-500/40 border-white/10 text-white";
-const btnDefaultClass =
-  "flex items-center space-x-2 p-2 px-2.5 cursor-pointer text-sm first:rounded-l last:rounded-r border border-transparent border-white/10 hover:border-white/20 hover:bg-blue-500/20 text-slate-400";
-
 import { Grid } from "./Grid.tsx";
 import { useDemoBrowserSettings, useSearchDemos } from "./hooks.ts";
 import { DisplayMode } from "./types.ts";
 import { List } from "./List.tsx";
 import classNames from "classnames";
+import { Playlist } from "../playlist/Playlist.tsx";
+
+const btnSelectedClass =
+  "bg-gradient-to-t from-blue-500/20 to-blue-500/40 border-white/10 text-white";
+const btnDefaultClass =
+  "flex items-center space-x-2 p-2 px-2.5 cursor-pointer text-sm first:rounded-l last:rounded-r border border-transparent border-white/10 hover:border-white/20 hover:bg-blue-500/20 text-slate-400";
 
 export const Browser = () => {
   const { settings } = useDemoBrowserSettings();
@@ -25,15 +25,22 @@ export const Browser = () => {
   return (
     <div className="my-6">
       <Settings />
-      {settings.displayMode === "grid" ? (
-        <Grid demos={demos} />
-      ) : (
-        <List demos={demos} />
-      )}
+      <div className="flex gap-6">
+        <div className="grow">
+          {settings.displayMode === "grid" ? (
+            <Grid demos={demos} />
+          ) : (
+            <List demos={demos} />
+          )}
 
-      {demos?.length === 0 && (
-        <div className="text-slate-400">No demos found.</div>
-      )}
+          {demos?.length === 0 && (
+            <div className="text-slate-400">No demos found.</div>
+          )}
+        </div>
+        <div className="w-96 my-6">
+          <Playlist />
+        </div>
+      </div>
     </div>
   );
 };

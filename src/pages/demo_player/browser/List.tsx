@@ -1,5 +1,8 @@
 import { Demo } from "../services/supabase/supabase.types.ts";
 import { Timestamp } from "./Timestamp.tsx";
+import { ToggleButton } from "../playlist/Playlist.tsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFloppyDisk, faPlay } from "@fortawesome/free-solid-svg-icons";
 
 export const List = ({ demos }: { demos: Demo[] | null }) => {
   return (
@@ -33,13 +36,23 @@ const ListItem = ({ demo }: { demo: Demo }) => {
       <td className="p-2 text-slate-400 text-right">{demo.mode}</td>
       <td className="p-2 text-slate-400">{demo.map}</td>
       <td className="p-2">{demo.title}</td>
-      <td className="p-2 space-x-3">
-        <a href={`/demo_player/?demoId=${demo.id}`} className="text-blue-500">
-          Play
+      <td className="p-2 flex items-center space-x-2">
+        <a
+          href={`/demo_player/?demoId=${demo.id}`}
+          className="flex items-center justify-center text-blue-500 hover:text-blue-300 w-8 h-8 hover:scale-125 transition-transform"
+          title="Play"
+        >
+          <FontAwesomeIcon icon={faPlay} size={"lg"} />
         </a>
 
-        <a href={demoDownloadUrl(demo.s3_key)} className="text-blue-500">
-          Download
+        <ToggleButton demo={demo} />
+
+        <a
+          href={demoDownloadUrl(demo.s3_key)}
+          className="flex items-center justify-center text-slate-500 hover:text-slate-300 w-8 h-8 hover:scale-125 transition-transform"
+          title="Download"
+        >
+          <FontAwesomeIcon icon={faFloppyDisk} size={"lg"} />
         </a>
       </td>
     </tr>

@@ -6,7 +6,7 @@ import { ParticipantsZZZ } from "./Participants.tsx";
 
 export const Grid = ({ demos }: { demos: Demo[] | null }) => {
   return (
-    <div className="my-6 grid grid-cols-servers gap-6">
+    <div className="my-6 grid grid-cols-servers gap-4">
       {demos?.map((demo) => <DemoItem key={demo.id} demo={demo} />)}
     </div>
   );
