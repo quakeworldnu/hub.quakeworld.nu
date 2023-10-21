@@ -2,6 +2,7 @@ import { ReactNode, useState } from "react";
 import { SortableItemList } from "./Sortable.tsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faList,
   faPlay,
   faPlus,
   faSort,
@@ -26,10 +27,11 @@ export const Playlist = () => {
 
   return (
     <div>
-      <div className="flex px-6 py-7 bg-white/5 space-x-6 items-center justify-between">
-        <div className="font-bold">Playlist</div>
+      <div className="flex p-5 bg-white/5 items-center">
+        <FontAwesomeIcon icon={faList} className="text-slate-400 mr-2" />
+        <div className="font-bold text-slate-200">Playlist</div>
 
-        <div className={classNames({ hidden: isEmpty })}>
+        <div className={classNames("text-sm ml-auto", { hidden: isEmpty })}>
           <Switch
             label="Edit"
             enabled={isEditing}
