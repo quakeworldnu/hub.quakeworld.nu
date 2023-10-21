@@ -23,10 +23,6 @@ export const List = ({ demos }: { demos: Demo[] | null }) => {
   );
 };
 
-function demoDownloadUrl(s3Key: string) {
-  return `https://quakeworld.s3.eu-central-1.amazonaws.com/${s3Key}`;
-}
-
 const ListItem = ({ demo }: { demo: Demo }) => {
   return (
     <tr className="odd:bg-[#1a1a2a] hover:bg-white/10">
@@ -56,6 +52,11 @@ export const PlayButton = ({ id }: { id: number }) => {
     </a>
   );
 };
+
+function demoDownloadUrl(s3Key: string) {
+  return `https://quakeworld.s3.eu-central-1.amazonaws.com/${s3Key}`;
+}
+
 export const DownloadButton = ({ s3_key }: { s3_key: string }) => {
   return (
     <a
