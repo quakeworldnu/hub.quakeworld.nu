@@ -22,7 +22,7 @@ const DemoItem = ({ demo }: { demo: Demo }) => {
         title="Play demo"
         href={`/demo_player/?demoId=${demo.id}`}
         className={classNames(
-          "flex flex-col border min-h-[200px] bg-slate-800 bg-no-repeat bg-center bg-cover hover:scale-125 transition-transform hover:shadow-2xl hover:z-20 hover:relative",
+          "flex flex-col border min-h-[200px] bg-slate-800 bg-no-repeat bg-center bg-cover hover:scale-105 transition-transform hover:shadow-2xl hover:z-20 hover:relative",
           {
             "border-green-800": demo.mode === "1on1",
             "border-blue-800": demo.mode === "2on2",
