@@ -40,6 +40,7 @@ export function usePlaylist() {
 
   return {
     playlist,
+    isEmpty: playlist.length === 0,
     add,
     remove,
     clear,

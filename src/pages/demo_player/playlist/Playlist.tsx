@@ -22,17 +22,25 @@ export type PlaylistItem = {
 
 export const Playlist = () => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const { isEmpty } = usePlaylist();
 
   return (
     <div>
-      <div className="flex items-center justify-between py-2 border-y border-y-white/10">
-        <Switch
-          label="Edit"
-          enabled={isEditing}
-          onClick={() => setIsEditing(!isEditing)}
-        />
+      <div className="flex px-6 py-7 bg-white/5 space-x-6 items-center justify-between">
+        <div className="font-bold">Playlist</div>
+
+        <div className={classNames({ hidden: isEmpty })}>
+          <Switch
+            label="Edit"
+            enabled={isEditing}
+            onClick={() => setIsEditing(!isEditing)}
+          />
+        </div>
       </div>
-      <div>{isEditing ? <EditablePlaylist /> : <ReadOnlyPlaylist />}</div>
+      {isEmpty && <div className="p-4 text-slate-400">Playlist is empty..</div>}
+      {!isEmpty && (
+        <div>{isEditing ? <EditablePlaylist /> : <ReadOnlyPlaylist />}</div>
+      )}
     </div>
   );
 };
@@ -62,7 +70,7 @@ export const EditablePlaylist = () => {
 
   return (
     <div>
-      <div className="flex gap-2 mb-2">
+      <div className="flex gap-2 m-2">
         <SortButton />
         <ClearButton />
       </div>
