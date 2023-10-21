@@ -8,7 +8,7 @@ export const Versus = () => {
     </div>
   );
 };
-export const ParticipantsZZZ = ({
+export const Participants = ({
   participants,
 }: {
   participants: DemoParticipants;
