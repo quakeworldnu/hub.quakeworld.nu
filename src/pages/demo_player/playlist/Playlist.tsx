@@ -32,7 +32,7 @@ export const Playlist = () => {
   }, [isEmpty]);
 
   return (
-    <div>
+    <div className="h-full max-h-[75vh]">
       <div className="flex p-5 bg-white/5 items-center">
         <FontAwesomeIcon icon={faList} className="text-slate-400 mr-2" />
         <div>
@@ -50,23 +50,56 @@ export const Playlist = () => {
           />
         </div>
       </div>
-      {isEmpty && <div className="p-4 text-slate-400">Playlist is empty..</div>}
-      {!isEmpty && (
-        <div>{isEditing ? <EditablePlaylist /> : <ReadOnlyPlaylist />}</div>
-      )}
+      <div
+        className="max-h-full grow overflow-auto app-effect-fade-in"
+        id="AppPlaylist"
+      >
+        {isEmpty && (
+          <div className="p-4 text-slate-400">Playlist is empty..</div>
+        )}
+        {!isEmpty && (
+          <>{isEditing ? <EditablePlaylist /> : <ReadOnlyPlaylist />}</>
+        )}
+      </div>
     </div>
   );
 };
 
+function scrollPlaylistToCurrentDemo() {
+  const currentDemo = document.getElementsByClassName(
+    "AppPlaylistPlaying",
+  ) as HTMLCollectionOf<HTMLElement>;
+
+  if (!currentDemo) {
+    return;
+  }
+  const playlist = document.getElementById("AppPlaylist");
+
+  playlist?.scrollTo({
+    top:
+      currentDemo[0]?.offsetTop -
+      playlist?.offsetTop -
+      2 * currentDemo[0]?.getBoundingClientRect().height,
+  });
+}
+
 export const ReadOnlyPlaylist = () => {
-  const { playlist } = usePlaylist();
+  const { playlist, isEmpty } = usePlaylist();
+
+  useEffect(() => {
+    if (isEmpty) {
+      return;
+    }
+
+    scrollPlaylistToCurrentDemo();
+  }, [isEmpty]);
 
   return (
-    <div className="app-effect-fade-in">
+    <>
       {playlist.map((item) => (
         <ReadOnlyItem key={item.id} item={item} />
       ))}
-    </div>
+    </>
   );
 };
 
@@ -82,7 +115,7 @@ export const EditablePlaylist = () => {
   }
 
   return (
-    <div className="app-effect-fade-in">
+    <>
       <div className="flex gap-2 m-2">
         <SortButton />
         <ClearButton />
@@ -92,7 +125,7 @@ export const EditablePlaylist = () => {
         handleChange={handleChange}
         renderItem={renderItem}
       />
-    </div>
+    </>
   );
 };
 
@@ -174,12 +207,13 @@ export const ReadOnlyItem = ({ item }: { item: PlaylistItem }) => {
 
   return (
     <a
+      id={`PlaylistDemo-${item.demo.id}`}
       title="Play demo"
       href={`/demo_player/?demoId=${item.demo.id}`}
       className={classNames(
         "flex items-center justify-between p-2 pr-3 hover:bg-white/10 rounded group",
         {
-          "bg-sky-600/30 hover:bg-sky-600/50": isPlaying,
+          "bg-sky-600/30 hover:bg-sky-600/50 AppPlaylistPlaying": isPlaying,
           "hover:bg-white/10": !isPlaying,
         },
       )}
