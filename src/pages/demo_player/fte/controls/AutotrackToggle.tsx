@@ -1,4 +1,4 @@
-import { useFteController, useFteUpdateOnEvent } from "../hooks";
+import { useFteController, useFteUpdateOnEvent } from "../hooks.ts";
 import { Switch } from "../../ui/Switch";
 
 export const AutotrackToggle = () => {

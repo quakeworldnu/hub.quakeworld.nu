@@ -1,7 +1,7 @@
 import { faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
 
-import { IconToggleButton } from "@qwhub/pages/demo_player/fte/controls/IconToggleButton";
-import { useFteController, useFteUpdateOnEvent } from "../hooks";
+import { IconToggleButton } from "./IconToggleButton";
+import { useFteController, useFteUpdateOnEvent } from "../hooks.ts";
 
 export const PlayToggle = () => {
   useFteUpdateOnEvent("demo_setspeed");

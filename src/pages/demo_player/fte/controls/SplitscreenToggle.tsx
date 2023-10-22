@@ -1,7 +1,7 @@
 import { faColumns, faSquare } from "@fortawesome/free-solid-svg-icons";
 
-import { IconToggleButton } from "@qwhub/pages/demo_player/fte/controls/IconToggleButton";
-import { useFteController, useFteUpdateOnEvent } from "../hooks";
+import { IconToggleButton } from "./IconToggleButton";
+import { useFteController, useFteUpdateOnEvent } from "../hooks.ts";
 
 export const SplitscreenToggle = () => {
   useFteUpdateOnEvent("cl_splitscreen");
@@ -14,7 +14,7 @@ export const SplitscreenToggle = () => {
   return (
     <IconToggleButton
       onClick={() => fte.toggleSplitscreen()}
-      isEnabled={fte.cl_splitscreen()}
+      isEnabled={fte.cl_splitscreen() > 0}
       enabledIcon={faSquare}
       disabledIcon={faColumns}
       title={

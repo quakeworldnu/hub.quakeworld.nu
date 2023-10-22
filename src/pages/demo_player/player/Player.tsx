@@ -3,9 +3,8 @@ import { getDemo } from "../services/supabase/supabase";
 import { Timestamp } from "../browser/Timestamp";
 import { Playlist } from "../playlist/Playlist";
 import { Demo } from "../services/supabase/supabase.types.ts";
-import { getDemoUrl } from "../demo.ts";
-import { FtePlayer } from "../fte/fte.jsx";
-import { getDemoDescription } from "../demo.ts";
+import { getDemoDescription, getDemoUrl } from "../demo.ts";
+import { FtePlayer } from "../fte/fte.tsx";
 
 export const Player = ({ demoId }: { demoId: number }) => {
   const [demo, setDemo] = useState<Demo | null>(null);

@@ -1,7 +1,8 @@
-import { useUpdateInterval } from "@qwhub/hooks";
-import { useFteController, useFteUpdateOnEvent } from "../hooks";
+import { useUpdateInterval } from "../../hooks.ts";
+import { useFteController, useFteUpdateOnEvent } from "../hooks.ts";
 import classNames from "classnames";
-import { toColoredHtml } from "@qwhub/pages/demo_player/qwstrings";
+import { toColoredHtml } from "../../qwstrings.ts";
+import { PlayerInfo } from "../types.ts";
 
 export const PlayerTrackButtons = () => {
   useUpdateInterval(100);
@@ -19,7 +20,7 @@ export const PlayerTrackButtons = () => {
       {fte
         .getPlayers()
         .slice(0, 8)
-        .map((p) => (
+        .map((p: PlayerInfo) => (
           <button
             className={classNames(
               {

@@ -1,10 +1,7 @@
-import {
-  useFteController,
-  useFteEventBySource,
-} from "@qwhub/pages/demo_player/fte/hooks";
-import { useUser } from "@qwhub/pages/demo_player/services/convex/hooks";
+import { useFteController, useFteEventBySource } from "./hooks";
+import { useUser } from "../services/convex/hooks.ts";
 import { useEffect, useState } from "react";
-import { Debug } from "@qwhub/pages/demo_player/fte/Debug";
+import { Debug } from "./Debug";
 
 export const GroupControls = () => {
   const fte = useFteController();
@@ -26,7 +23,12 @@ export const GroupControls = () => {
 
   // follow group playback
   useEffect(() => {
-    if (!fte || !playback || (isSynced && playback.updateUserId === user._id)) {
+    if (
+      !fte ||
+      !playback ||
+      !user ||
+      (isSynced && playback.updateUserId === user._id)
+    ) {
       return;
     }
 

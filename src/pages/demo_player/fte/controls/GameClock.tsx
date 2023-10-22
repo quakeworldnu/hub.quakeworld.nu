@@ -1,6 +1,6 @@
-import { useUpdateInterval } from "@qwhub/hooks";
-import { useFteController } from "../hooks";
-import { formatTimeProgress } from "@qwhub/pages/demo_player/util";
+import { useUpdateInterval } from "../../hooks.ts";
+import { useFteController } from "../hooks.ts";
+import { formatTimeProgress } from "../../time.ts";
 
 export const GameClock = () => {
   const fte = useFteController();

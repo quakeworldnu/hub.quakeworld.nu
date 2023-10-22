@@ -1,4 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+
+type Props = {
+  onClick: () => void;
+  isEnabled: boolean;
+  enabledIcon: IconProp;
+  disabledIcon: IconProp;
+  title?: string;
+};
 
 export const IconToggleButton = ({
   onClick,
@@ -6,7 +15,7 @@ export const IconToggleButton = ({
   enabledIcon,
   disabledIcon,
   title = "",
-}) => {
+}: Props) => {
   return (
     <button
       className={

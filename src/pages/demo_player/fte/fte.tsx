@@ -4,12 +4,11 @@ import { toggleFullscreen } from "./player";
 import { useState } from "react";
 import classNames from "classnames";
 import { useEventListener } from "usehooks-ts";
-import { Debug } from "../fte/Debug";
-import { useUpdateInterval } from "@qwhub/hooks";
-import { getAssets } from "../fte/assets";
+import { getAssets } from "./assets";
 import { getDemoUrl } from "../demo";
+import { Demo } from "../services/supabase/supabase.types.ts";
 
-export const FtePlayer = ({ demo }) => {
+export const FtePlayer = ({ demo }: { demo: Demo }) => {
   const demoUrl = getDemoUrl(demo.s3_key);
   const files = getAssets(demoUrl, demo.map);
   const { isLoadingAssets, isReady, assets, isInitializing } = useFteLoader({
@@ -71,22 +70,22 @@ export const FtePlayer = ({ demo }) => {
   );
 };
 
-const PlayerDebug = () => {
-  useUpdateInterval(200);
-  const fte = useFteController();
-
-  if (!fte) {
-    return null;
-  }
-
-  return <Debug value={fte.getPlayers()} />;
-};
+// const PlayerDebug = () => {
+//   useUpdateInterval(200);
+//   const fte = useFteController();
+//
+//   if (!fte) {
+//     return null;
+//   }
+//
+//   return <Debug value={fte.getPlayers()} />;
+// };
 
 const FteCanvas = () => {
   const fte = useFteController();
   const [isShowingScores, setIsShowingScores] = useState(false);
 
-  function onKeyDown(e) {
+  function onKeyDown(e: KeyboardEvent) {
     if (!fte) {
       return;
     }
@@ -104,7 +103,7 @@ const FteCanvas = () => {
     }
   }
 
-  function onKeyUp(e) {
+  function onKeyUp(e: KeyboardEvent) {
     if (!fte) {
       return;
     }

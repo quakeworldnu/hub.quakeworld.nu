@@ -2,12 +2,12 @@ const qtubeUrl = "https://raw.githubusercontent.com/qw-ctf/qtube-assets/assets";
 const streambotUrl =
   "https://raw.githubusercontent.com/vikpe/qw-streambot-ezquake/main";
 
-export function withPrefix(path) {
+export function withPrefix(path: string) {
   return `/assets/static/${path}`;
 }
 
-export function getAssets(demoUrl, mapName) {
-  const demoFilename = demoUrl.split("/").pop();
+export function getAssets(demoUrl: string, mapName: string): object {
+  const demoFilename = demoUrl.split("/").pop() || "";
   return {
     ...getGeneralAssets(),
     [getDemoMountPath(demoFilename)]: demoUrl,
@@ -15,7 +15,7 @@ export function getAssets(demoUrl, mapName) {
   };
 }
 
-function getDemoMountPath(demoFilename) {
+function getDemoMountPath(demoFilename: string): string {
   let mountPath;
 
   if (demoFilename.endsWith(".gz")) {
@@ -29,7 +29,7 @@ function getDemoMountPath(demoFilename) {
   return mountPath;
 }
 
-function getMapAssets(mapName) {
+function getMapAssets(mapName: string): object {
   const targetMapBsp = "id1/maps/" + mapName + ".bsp";
   const targetMapLit = "id1/maps/" + mapName + ".lit";
 
@@ -48,7 +48,7 @@ function getMapAssets(mapName) {
       };
 }
 
-function getGeneralAssets() {
+function getGeneralAssets(): object {
   return {
     // streambot
     "id1/crosshairs/xtm01.png": `${streambotUrl}/qw/crosshairs/xtm01.png`,

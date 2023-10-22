@@ -1,7 +1,7 @@
 import { useCounter, useInterval } from "usehooks-ts";
 import { useState } from "react";
 
-export function useUpdateInterval(delay: number) {
+export function useUpdateInterval(delay: number | null) {
   const { count, increment } = useCounter(0);
   useInterval(increment, delay);
   return count;

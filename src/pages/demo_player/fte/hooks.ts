@@ -6,18 +6,37 @@ import {
   useScript,
 } from "usehooks-ts";
 import { useState } from "react";
-import { withPrefix } from "./assets";
-import { FteController } from "./fteController";
+import { withPrefix } from "./assets.ts";
+import { FteController } from "./fteController.ts";
+import { FteModule } from "./types.ts";
 
-export function useFteLoader({ files, demoTotalTime }) {
+type FtePreloadModule = {
+  canvas: HTMLCanvasElement;
+  files: object;
+  setStatus: (value: string) => void;
+};
+
+declare global {
+  interface Window {
+    Module: FteModule | FtePreloadModule;
+  }
+}
+
+export function useFteLoader({
+  files,
+  demoTotalTime,
+}: {
+  files: object;
+  demoTotalTime: number | null;
+}) {
   const scriptPath = withPrefix("/ftewebgl.js");
   const scriptStatus = useScript(scriptPath, { removeOnUnmount: true });
   const { count: loaded, increment } = useCounter(0);
-  const [fte, setFte] = useState(undefined);
+  const [fte, setFte] = useState<undefined | FteController>(undefined);
 
   useEffectOnce(() => {
     window.Module = {
-      canvas: document.getElementById("fteCanvas"),
+      canvas: document.getElementById("fteCanvas") as HTMLCanvasElement,
       files,
       setStatus: function (value) {
         const assetRe = value.match(/.+ \((\d+)\/(\d+)\)/);
@@ -33,9 +52,9 @@ export function useFteLoader({ files, demoTotalTime }) {
 
   useInterval(
     () => {
-      if (!fte && window.Module?.execute) {
+      if (!fte && (window.Module as FteModule).execute) {
         const instance = FteController.createInstace(
-          window.Module,
+          window.Module as FteModule,
           demoTotalTime,
         );
         setFte(instance);
@@ -65,12 +84,12 @@ export function useFteLoader({ files, demoTotalTime }) {
 }
 
 export function useFteController() {
-  const [fte, setFte] = useState(undefined);
+  const [fte, setFte] = useState<undefined | FteController>(undefined);
 
   useInterval(
     () => {
       if (!fte) {
-        const instance = FteController.getInstance(window.Module);
+        const instance = FteController.getInstance();
 
         if (instance) {
           setFte(instance);
@@ -83,19 +102,30 @@ export function useFteController() {
   return fte;
 }
 
-export function useFteEventBySource(eventName, source, callback) {
-  useEventListener(`fte.${eventName}`, (e) => {
+export function useFteEventBySource(
+  eventName: string,
+  source: string,
+  callback: (e: CustomEvent) => void,
+) {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  useEventListener(`fte.${eventName}`, (e: CustomEvent) => {
     if (e.detail.source === source) {
       callback(e);
     }
   });
 }
 
-export function useFteEvent(eventName, callback) {
+export function useFteEvent(
+  eventName: string,
+  callback: (e: CustomEvent) => void,
+) {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   useEventListener(`fte.${eventName}`, callback);
 }
 
-export function useFteUpdateOnEvent(eventName) {
+export function useFteUpdateOnEvent(eventName: string) {
   const { increment } = useCounter(0);
   useFteEvent(eventName, increment);
 }

@@ -1,4 +1,12 @@
-export function toPlainText(input, keepNewLines) {
+const charCodeA = "A".charCodeAt(0);
+const charCodeZ = "Z".charCodeAt(0);
+const charCodea = "a".charCodeAt(0);
+const charCodez = "z".charCodeAt(0);
+const charcodeLt = "<".charCodeAt(0);
+const charcodeGt = ">".charCodeAt(0);
+const charcodeQuot = '"'.charCodeAt(0);
+
+export function toPlainText(input: string, keepNewLines: boolean) {
   let str = "";
   if (!input) {
     return str;
@@ -22,8 +30,8 @@ export function toPlainText(input, keepNewLines) {
       str += String.fromCharCode(ch - 18 + 48);
     } else if (ch === 28) {
       str += "&#8226;";
-    } else if (ch >= "A" && ch <= "Z") {
-      str += String.fromCharCode(ch + ("a" - "A"));
+    } else if (ch >= charCodeA && ch <= charCodeZ) {
+      str += String.fromCharCode(ch + (charCodea - charCodez));
     } else {
       str += String.fromCharCode(ch);
     }
@@ -31,11 +39,15 @@ export function toPlainText(input, keepNewLines) {
   return str;
 }
 
-export function toColoredHtml(input, maxLength, keepNewLines) {
+export function toColoredHtml(
+  input: string,
+  maxLength: number = 999,
+  keepNewLines: boolean = false,
+) {
   let str = "";
   let type = "normal";
 
-  let changeType = function (newType) {
+  const changeType = function (newType: string) {
     if (type !== newType) {
       if (type !== "normal") {
         str += "</span>";
@@ -69,7 +81,7 @@ export function toColoredHtml(input, maxLength, keepNewLines) {
       changeType("g");
       str += "]";
     } else if (ch >= 18 && ch <= 27) {
-      let num = ch - 18 + 48;
+      const num = ch - 18 + 48;
       changeType("g");
       str += String.fromCharCode(num);
     } else if (ch === 28) {
@@ -82,11 +94,11 @@ export function toColoredHtml(input, maxLength, keepNewLines) {
         changeType("normal");
       }
 
-      if (ch === "<") {
+      if (ch === charcodeLt) {
         str += "&lt;";
-      } else if (ch === ">") {
+      } else if (ch === charcodeGt) {
         str += "&gt;";
-      } else if (ch === '"') {
+      } else if (ch === charcodeQuot) {
         str += "&quot;";
       } else {
         str += String.fromCharCode(ch);

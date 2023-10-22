@@ -1,5 +1,5 @@
-import { useFteController } from "../hooks";
-import { useUpdateInterval } from "@qwhub/hooks";
+import { useFteController } from "../hooks.ts";
+import { useUpdateInterval } from "../../hooks.ts";
 
 export const DebugFte = () => {
   useUpdateInterval(500);

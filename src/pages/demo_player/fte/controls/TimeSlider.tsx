@@ -1,24 +1,24 @@
 import { useEffect, useRef } from "react";
-import { useHover } from "usehooks-ts";
-import { useMouse } from "@uidotdev/usehooks";
 import classNames from "classnames";
 import * as Slider from "@radix-ui/react-slider";
-import { useUpdateInterval } from "@qwhub/hooks";
-import { useFteController } from "../hooks";
-import { secondsToMinutesAndSeconds } from "@qwhub/pages/demo_player/util";
+import { useHover } from "usehooks-ts";
+import { useMouse } from "@uidotdev/usehooks";
+import { useUpdateInterval } from "../../hooks.ts";
+import { useFteController } from "../hooks.ts";
+import { secondsToMinutesAndSeconds } from "../../time.ts";
 
 export function TimeSlider() {
   const fte = useFteController();
   const sliderWrapperRef = useRef(null);
-  const tooltipRef = useRef(null);
+  const tooltipRef = useRef<HTMLDivElement | null>(null);
   const isHover = useHover(sliderWrapperRef);
-  const [mouse, sliderRootRef] = useMouse();
+  const [mouse, sliderRootRef] = useMouse<HTMLFormElement>();
 
-  const matchStartTime = fte ? parseInt(fte.getDemoGameStartTime()) : 10;
+  const matchStartTime = fte ? fte.getDemoGameStartTime() : 10;
   const maxValue = fte ? fte.getDemoTotalTime() : 1200;
 
   useEffect(() => {
-    if (!isHover) {
+    if (!isHover || !tooltipRef.current) {
       return;
     }
 
@@ -59,8 +59,8 @@ const SliderRoot = () => {
     return null;
   }
 
-  function onValueChange(values) {
-    if (values.length > 0) {
+  function onValueChange(values: number[]) {
+    if (fte && values.length > 0) {
       fte.demoJump(values[0]);
     }
   }

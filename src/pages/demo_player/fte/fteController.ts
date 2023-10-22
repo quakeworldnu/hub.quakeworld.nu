@@ -1,4 +1,6 @@
-export function fteEvent(name, detail) {
+import { FteModule, PlayerInfo } from "./types.ts";
+
+export function fteEvent(name: string, detail: object) {
   const event = new CustomEvent(`fte.${name}`, { detail });
   window.dispatchEvent(event);
 }
@@ -10,7 +12,9 @@ const CONTROL_GROUP = "group";
 
 export class FteController {
   _controlSource = CONTROL_USER;
-  _module = null;
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  _module: FteModule;
   _volume = 0.0;
   _demoTotalTime = 0.0;
   _lastVolume = 0.0;
@@ -19,20 +23,20 @@ export class FteController {
   _demo_setspeed = 100;
   _cl_splitscreen = 0;
   _cl_autotrack = AUTOTRACK_ON;
-  _cache = {
+  _cache: { [key: string]: string | number | null } = {
     timelimit: null,
     map: null,
     demoTotalTime: null,
     demoGameStartTime: null,
   };
 
-  static _instance = null;
+  static _instance: FteController | null = null;
 
-  static createInstace(module, demoTotalTime) {
+  static createInstace(module: FteModule, demoTotalTime: number | null) {
     if (FteController._instance === null) {
       const fte = new FteController(module);
       fte.mute();
-      fte.setDemoTotalTime(demoTotalTime);
+      fte.setDemoTotalTime(demoTotalTime || 600);
       fte.command("con_textsize 12");
       FteController._instance = fte;
     }
@@ -44,7 +48,7 @@ export class FteController {
     return FteController._instance;
   }
 
-  constructor(module) {
+  constructor(module: FteModule) {
     if (FteController._instance) {
       return FteController._instance;
     }
@@ -60,7 +64,7 @@ export class FteController {
     return this._module;
   }
 
-  command(command, value = undefined) {
+  command(command: string, value?: undefined | string | number) {
     try {
       const commandStr = value !== undefined ? `${command} ${value}` : command;
       this.module.execute(commandStr);
@@ -70,32 +74,16 @@ export class FteController {
     }
   }
 
-  dispatchEvent(name, detail) {
+  dispatchEvent(name: string, detail: object) {
     fteEvent(name, { ...detail, source: this._controlSource });
   }
 
-  captureCommandOutput(command) {
-    const originalLog = console.log;
-    const messages = [];
-
-    function captureLog() {
-      messages.push(arguments[0]);
-    }
-
-    console.log = captureLog;
-
-    try {
-      this.command(command);
-    } catch (e) {
-      // ignore
-    }
-
-    console.log = originalLog;
-    return messages;
-  }
-
   // exposed functions from fte
-  getCachedValue(key, getter, defaultValue) {
+  getCachedValue(
+    key: string,
+    getter: () => number | string,
+    defaultValue: number | string,
+  ) {
     if (this._cache[key] !== null) {
       return this._cache[key];
     }
@@ -108,7 +96,7 @@ export class FteController {
     }
   }
 
-  getDemoElapsedTime() {
+  getDemoElapsedTime(): number {
     try {
       return this.module.getDemoElapsedTime();
     } catch (e) {
@@ -116,27 +104,27 @@ export class FteController {
     }
   }
 
-  getDemoTotalTime() {
+  getDemoTotalTime(): number {
     return this._demoTotalTime;
   }
 
-  setDemoTotalTime(value) {
+  setDemoTotalTime(value: number) {
     this._demoTotalTime = value;
   }
 
-  getDemoGameStartTime() {
+  getDemoGameStartTime(): number {
     return this._demoTotalTime % 60;
   }
 
-  getGameElapsedTime() {
+  getGameElapsedTime(): number {
     return this.getDemoElapsedTime() - this.getDemoGameStartTime();
   }
 
-  getGameTotalTime() {
+  getGameTotalTime(): number {
     return this.getDemoTotalTime() - this.getDemoGameStartTime();
   }
 
-  getPlayers() {
+  getPlayers(): PlayerInfo[] {
     try {
       return this.module.getPlayerInfo();
     } catch (e) {
@@ -173,7 +161,7 @@ export class FteController {
   }
 
   // demo playback
-  demoJump(demoTime) {
+  demoJump(demoTime: number) {
     const newDemoTime = Math.floor(demoTime);
     const currentDemoTime = this.getDemoElapsedTime();
     const lastTrack = this.getTrackUserid();
@@ -199,9 +187,9 @@ export class FteController {
     return this._demo_setspeed;
   }
 
-  setSpeed(speed) {
+  setSpeed(speed: number) {
     this._last_demo_setspeed = this._demo_setspeed;
-    this._demo_setspeed = parseFloat(speed);
+    this._demo_setspeed = parseFloat(`${speed}`);
     this.command("demo_setspeed", this._demo_setspeed);
   }
 
@@ -238,7 +226,7 @@ export class FteController {
     return this._cl_autotrack === AUTOTRACK_ON;
   }
 
-  setAutotrack(value) {
+  setAutotrack(value: string) {
     this._cl_autotrack = value;
     this.command("cl_autotrack", this._cl_autotrack);
   }
@@ -259,7 +247,7 @@ export class FteController {
     }
   }
 
-  track(userid) {
+  track(userid: number) {
     if (this.isUsingAutotrack()) {
       this.disableAutotrack();
     }
@@ -309,9 +297,9 @@ export class FteController {
     return this._maxVolume;
   }
 
-  setVolume(value) {
+  setVolume(value: number | string) {
     this._lastVolume = this._volume;
-    this._volume = parseFloat(value);
+    this._volume = parseFloat(`${value}`);
     this.command("volume", this._volume);
   }
 
@@ -324,7 +312,7 @@ export class FteController {
     this.setSplitscreen(this._cl_splitscreen === 0 ? 1 : 0);
   }
 
-  setSplitscreen(value) {
+  setSplitscreen(value: number) {
     this._cl_splitscreen = value;
     this.command("cl_splitscreen", this._cl_splitscreen);
 
@@ -334,7 +322,12 @@ export class FteController {
   }
 
   // group
-  applyGroupPlayback(playback) {
+  applyGroupPlayback(playback: {
+    track: number;
+    cl_autotrack: string;
+    demo_setspeed: number;
+    demo_jump: number;
+  }) {
     this._controlSource = CONTROL_GROUP;
 
     // track
@@ -366,3 +359,23 @@ export class FteController {
     this._controlSource = CONTROL_USER;
   }
 }
+
+// captureCommandOutput(command: string) {
+//   const originalLog = console.log;
+//   const messages: string[] = [];
+//
+//   function captureLog() {
+//     messages.push(`${arguments[0]}`);
+//   }
+//
+//   console.log = captureLog;
+//
+//   try {
+//     this.command(command);
+//   } catch (e) {
+//     // ignore
+//   }
+//
+//   console.log = originalLog;
+//   return messages;
+// }

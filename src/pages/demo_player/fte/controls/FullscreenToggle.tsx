@@ -1,7 +1,7 @@
 import { faExpand, faMinimize } from "@fortawesome/free-solid-svg-icons";
 
 import { IconToggleButton } from "./IconToggleButton";
-import { toggleFullscreen } from "@qwhub/pages/demo_player/fte/player";
+import { toggleFullscreen } from "../player.ts";
 import screenfull from "screenfull";
 
 export const FullscreenToggle = () => {
