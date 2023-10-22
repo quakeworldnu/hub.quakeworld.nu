@@ -50,10 +50,7 @@ export const Playlist = () => {
           />
         </div>
       </div>
-      <div
-        className="max-h-full grow overflow-auto app-effect-fade-in"
-        id="AppPlaylist"
-      >
+      <div className="max-h-full grow overflow-auto" id="AppPlaylist">
         {isEmpty && (
           <div className="p-4 text-slate-400">Playlist is empty..</div>
         )}
