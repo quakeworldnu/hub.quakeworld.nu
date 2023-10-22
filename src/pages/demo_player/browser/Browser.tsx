@@ -1,6 +1,6 @@
-import { GridView } from "./GridView.tsx";
+import { DemoGrid } from "./DemoGrid.tsx";
 import { useDemoBrowserSettings, useSearchDemos } from "./hooks.ts";
-import { ListView } from "./ListView.tsx";
+import { DemoList } from "./DemoList.tsx";
 import { Playlist } from "../playlist/Playlist.tsx";
 import { Toolbar } from "./Toolbar.tsx";
 
@@ -25,9 +25,9 @@ const Demos = () => {
   return (
     <div className="grow">
       {settings.displayMode === "grid" ? (
-        <GridView demos={demos} />
+        <DemoGrid demos={demos} />
       ) : (
-        <ListView demos={demos} />
+        <DemoList demos={demos} />
       )}
 
       {demos?.length === 0 && (
