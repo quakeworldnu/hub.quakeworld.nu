@@ -1,7 +1,7 @@
 import { useFteController } from "./hooks.ts";
 import { useState } from "react";
 import { useEventListener } from "usehooks-ts";
-import { toggleFullscreen } from "./fullscreen.ts";
+import { toggleFullscreen } from "../fullscreen.ts";
 
 export const FteCanvas = () => {
   const fte = useFteController();
