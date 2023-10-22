@@ -1,16 +1,20 @@
 import { Controls } from "./Controls";
 import { useFteController, useFteLoader } from "./hooks";
-import { toggleFullscreen } from "@qwhub/pages/demo_player/fte/player";
-import React, { useState } from "react";
+import { toggleFullscreen } from "./player";
+import { useState } from "react";
 import classNames from "classnames";
 import { useEventListener } from "usehooks-ts";
-import { Debug } from "@qwhub/pages/demo_player/fte/Debug";
+import { Debug } from "../fte/Debug";
 import { useUpdateInterval } from "@qwhub/hooks";
+import { getAssets } from "../fte/assets";
+import { getDemoUrl } from "../demo";
 
-export const FtePlayer = ({ files, demoTotalTime }) => {
+export const FtePlayer = ({ demo }) => {
+  const demoUrl = getDemoUrl(demo.s3_key);
+  const files = getAssets(demoUrl, demo.map);
   const { isLoadingAssets, isReady, assets, isInitializing } = useFteLoader({
     files,
-    demoTotalTime,
+    demoTotalTime: demo.duration,
   });
   const fte = useFteController();
 
@@ -77,8 +81,6 @@ const PlayerDebug = () => {
 
   return <Debug value={fte.getPlayers()} />;
 };
-
-export default FtePlayer;
 
 const FteCanvas = () => {
   const fte = useFteController();

@@ -9,9 +9,9 @@ import {
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 import { Timestamp } from "../browser/Timestamp.tsx";
-import { usePlaylist } from "./hooks.ts";
+import { useCurrentDemoId, usePlaylist } from "./hooks.ts";
 import type { Demo } from "../services/supabase/supabase.types.ts";
-import { Switch } from "../Switch.tsx";
+import { Switch } from "../ui/Switch.tsx";
 import classNames from "classnames";
 
 export type { Demo } from "../services/supabase/supabase.types.ts";
@@ -50,7 +50,7 @@ export const Playlist = () => {
           />
         </div>
       </div>
-      <div className="max-h-full grow overflow-auto" id="AppPlaylist">
+      <div className="max-h-full grow overflow-y-auto" id="AppPlaylist">
         {isEmpty && (
           <div className="p-4 text-slate-400">Playlist is empty..</div>
         )}
@@ -200,7 +200,8 @@ export const EditableItem = ({ item }: { item: PlaylistItem }) => {
 };
 
 export const ReadOnlyItem = ({ item }: { item: PlaylistItem }) => {
-  const isPlaying = location.href.includes(`demoId=${item.demo.id}`);
+  const currentDemoId = useCurrentDemoId();
+  const isPlaying = currentDemoId === item.demo.id;
 
   return (
     <a

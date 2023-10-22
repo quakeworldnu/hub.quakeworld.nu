@@ -10,6 +10,12 @@ function demoToPlaylistItem(demo: Demo): PlaylistItem {
   return { id: demo.id, demo };
 }
 
+export function useCurrentDemoId(): number | undefined {
+  const urlParams = new URLSearchParams(window.location.search);
+  const demoId = urlParams.get("demoId");
+  return demoId ? parseInt(demoId) : undefined;
+}
+
 export function usePlaylist() {
   const [playlist, setPlaylist] = useLocalStorage<PlaylistItem[]>("queue", []);
 

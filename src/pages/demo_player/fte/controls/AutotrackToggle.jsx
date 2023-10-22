@@ -1,5 +1,5 @@
 import { useFteController, useFteUpdateOnEvent } from "../hooks";
-import { Switch } from "../../Switch";
+import { Switch } from "../../ui/Switch";
 
 export const AutotrackToggle = () => {
   const fte = useFteController();
