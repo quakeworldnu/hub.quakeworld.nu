@@ -184,7 +184,13 @@ export const ReadOnlyItem = ({ item }: { item: PlaylistItem }) => {
         },
       )}
     >
-      <Item item={item} />
+      <div
+        className={classNames({
+          "text-green-400": isPlaying,
+        })}
+      >
+        <Item item={item} />
+      </div>
       <FontAwesomeIcon
         icon={faPlay}
         className={classNames("ml-2", {
