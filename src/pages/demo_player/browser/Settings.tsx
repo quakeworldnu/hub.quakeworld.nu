@@ -1,14 +1,16 @@
-import { useDemoBrowserSettings } from "./hooks.ts";
+import { useDemoBrowserSettings, useFilteredDemos } from "./hooks.ts";
 import React, { useEffect, useState } from "react";
 import { useDebounce } from "usehooks-ts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
+  faPlus,
   faSearch,
   faTableCells,
 } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
 import { DisplayMode } from "./types.ts";
+import { usePlaylist } from "../playlist/hooks.ts";
 
 export const btnSelectedClass =
   "bg-gradient-to-t from-blue-500/20 to-blue-500/40 border-white/10 text-white";
@@ -20,9 +22,37 @@ export const Settings = () => {
       <DisplayModeButtons />
       <GameModeButtons />
       <QueryInput />
+      <BulkActions />
     </div>
   );
 };
+
+export const BulkActions = () => {
+  const { demos, hasDemos } = useFilteredDemos();
+  const { addMany } = usePlaylist();
+
+  function handleClick() {
+    addMany(demos);
+  }
+
+  return (
+    <button
+      disabled={!hasDemos}
+      className={classNames(
+        "flex items-center bg-slate-800 text-slate-200 text-xs py-2 px-3 rounded border border-white/10 disabled:opacity-60 transition-opacity",
+        {
+          "hover:bg-slate-700 hover:text-white": hasDemos,
+          "cursor-not-allowed opacity-20": !hasDemos,
+        },
+      )}
+      onClick={handleClick}
+    >
+      <FontAwesomeIcon icon={faPlus} className="text-slate-400 mr-1 " />
+      Add all to playlist
+    </button>
+  );
+};
+
 export const DisplayModeButtons = () => {
   const { settings, setSettings } = useDemoBrowserSettings();
 
@@ -107,12 +137,13 @@ export const QueryInput = () => {
       <FontAwesomeIcon
         icon={faSearch}
         className="z-10 text-slate-500 pointer-events-none"
+        size="sm"
       />
       <input
         autoFocus
         type="search"
         value={query}
-        className="-ml-6 px-2 pl-8 py-2 text-sm bg-blue-950 border border-blue-800 text-white rounded"
+        className="-ml-6 px-2 pl-8 py-2 text-sm bg-blue-950 border border-blue-800 text-white rounded w-72 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         onChange={onChange}
       />
     </label>
