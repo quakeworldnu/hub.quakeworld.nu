@@ -57,7 +57,7 @@ export const ReadOnlyPlaylist = () => {
   const { playlist } = usePlaylist();
 
   return (
-    <div>
+    <div className="app-effect-fade-in">
       {playlist.map((item) => (
         <ReadOnlyItem key={item.id} item={item} />
       ))}
@@ -77,7 +77,7 @@ export const EditablePlaylist = () => {
   }
 
   return (
-    <div>
+    <div className="app-effect-fade-in">
       <div className="flex gap-2 m-2">
         <SortButton />
         <ClearButton />
