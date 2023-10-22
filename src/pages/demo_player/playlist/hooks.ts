@@ -6,6 +6,10 @@ function compareDemoDates(a: string | null, b: string | null) {
   return new Date(a || 0).getTime() - new Date(b || 0).getTime();
 }
 
+function demoToPlaylistItem(demo: Demo): PlaylistItem {
+  return { id: demo.id, demo };
+}
+
 export function usePlaylist() {
   const [playlist, setPlaylist] = useLocalStorage<PlaylistItem[]>("queue", []);
 
@@ -14,7 +18,13 @@ export function usePlaylist() {
       return;
     }
 
-    setPlaylist([...playlist, { id: demo.id, demo }]);
+    setPlaylist([...playlist, demoToPlaylistItem(demo)]);
+  }
+
+  function addMany(demos: Demo[]) {
+    const newDemos = demos.filter((demo) => !includes(demo.id));
+    newDemos.sort((a, b) => compareDemoDates(a.timestamp, b.timestamp));
+    setPlaylist([...playlist, ...newDemos.map(demoToPlaylistItem)]);
   }
 
   function includes(id: number) {
@@ -42,6 +52,7 @@ export function usePlaylist() {
     playlist,
     isEmpty: playlist.length === 0,
     add,
+    addMany,
     remove,
     clear,
     includes,
