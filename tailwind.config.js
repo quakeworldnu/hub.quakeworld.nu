@@ -1,5 +1,3 @@
-const { blackA, violet } = require("@radix-ui/colors");
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
@@ -9,10 +7,6 @@ module.exports = {
       mono: "monospace",
     },
     extend: {
-      colors: {
-        ...blackA,
-        ...violet,
-      },
       gridTemplateColumns: {
         servers: "repeat(auto-fill, minmax(340px, 1fr))",
       },
