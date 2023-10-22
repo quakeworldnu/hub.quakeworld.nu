@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { SortableItemList } from "./Sortable.tsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -24,6 +24,12 @@ export type PlaylistItem = {
 export const Playlist = () => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const { isEmpty } = usePlaylist();
+
+  useEffect(() => {
+    if (isEmpty) {
+      setIsEditing(false);
+    }
+  }, [isEmpty]);
 
   return (
     <div>
