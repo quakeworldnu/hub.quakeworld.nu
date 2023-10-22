@@ -4,7 +4,7 @@ import {
   faVolumeMute,
 } from "@fortawesome/free-solid-svg-icons";
 import { IconToggleButton } from "./IconToggleButton.tsx";
-import { useFteController, useFteUpdateOnEvent } from "../hooks.ts";
+import { useFteController, useFteUpdateOnEvent } from "../../fte/hooks.ts";
 
 export const VolumeToggle = () => {
   useFteUpdateOnEvent("volume");

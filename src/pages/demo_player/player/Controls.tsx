@@ -7,9 +7,9 @@ import { GameClock } from "./controls/GameClock.tsx";
 import { TimeSlider } from "./controls/TimeSlider.tsx";
 import { VolumeSlider } from "./controls/VolumeSlider.tsx";
 import { VolumeToggle } from "./controls/VolumeToggle.tsx";
-import { useUser } from "../services/convex/hooks";
-import { GroupControls } from "./GroupControls";
-import { SplitscreenToggle } from "./controls/SplitscreenToggle";
+import { useUser } from "../services/convex/hooks.ts";
+import { GroupControls } from "./GroupControls.tsx";
+import { SplitscreenToggle } from "./controls/SplitscreenToggle.tsx";
 import { useIdle } from "@uidotdev/usehooks";
 import classNames from "classnames";
 

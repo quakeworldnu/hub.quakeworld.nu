@@ -1,6 +1,6 @@
 import { roundFloat } from "../../math.ts";
 import classNames from "classnames";
-import { useFteController, useFteUpdateOnEvent } from "../hooks.ts";
+import { useFteController, useFteUpdateOnEvent } from "../../fte/hooks.ts";
 
 export const VolumeSlider = () => {
   useFteUpdateOnEvent("volume");

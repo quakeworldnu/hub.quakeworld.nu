@@ -7,7 +7,7 @@ import {
   getDemoDescription,
   getDemoDownloadUrl,
 } from "../services/supabase/demo.ts";
-import { FtePlayer } from "../fte/FtePlayer.tsx";
+import { FtePlayer } from "./FtePlayer.tsx";
 
 export const Player = ({ demoId }: { demoId: number }) => {
   const [demo, setDemo] = useState<Demo | null>(null);

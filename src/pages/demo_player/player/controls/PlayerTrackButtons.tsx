@@ -1,8 +1,8 @@
 import { useUpdateInterval } from "../../hooks.ts";
-import { useFteController, useFteUpdateOnEvent } from "../hooks.ts";
+import { useFteController, useFteUpdateOnEvent } from "../../fte/hooks.ts";
 import classNames from "classnames";
 import { toColoredHtml } from "../../qwstrings.ts";
-import { PlayerInfo } from "../types.ts";
+import { PlayerInfo } from "../../fte/types.ts";
 
 export const PlayerTrackButtons = () => {
   useUpdateInterval(100);

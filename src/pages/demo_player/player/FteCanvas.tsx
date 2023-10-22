@@ -1,4 +1,4 @@
-import { useFteController } from "./hooks.ts";
+import { useFteController } from "../fte/hooks.ts";
 import { useState } from "react";
 import { useEventListener } from "usehooks-ts";
 import { toggleFullscreen } from "../fullscreen.ts";

@@ -4,7 +4,7 @@ import * as Slider from "@radix-ui/react-slider";
 import { useHover } from "usehooks-ts";
 import { useMouse } from "@uidotdev/usehooks";
 import { useUpdateInterval } from "../../hooks.ts";
-import { useFteController } from "../hooks.ts";
+import { useFteController } from "../../fte/hooks.ts";
 import { formatSeek } from "../../time.ts";
 
 export function TimeSlider() {

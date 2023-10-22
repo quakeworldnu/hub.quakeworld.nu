@@ -1,5 +1,5 @@
 import { useUpdateInterval } from "../../hooks.ts";
-import { useFteController } from "../hooks.ts";
+import { useFteController } from "../../fte/hooks.ts";
 import { formatElapsed } from "../../time.ts";
 
 export const GameClock = () => {

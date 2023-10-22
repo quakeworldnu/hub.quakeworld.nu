@@ -1,4 +1,4 @@
-import { useFteController, useFteEventBySource } from "./hooks";
+import { useFteController, useFteEventBySource } from "../fte/hooks.ts";
 import { useUser } from "../services/convex/hooks.ts";
 import { useEffect, useState } from "react";
 import { Debug } from "../Debug.tsx";

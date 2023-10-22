@@ -1,4 +1,4 @@
-import { useFteController } from "../hooks.ts";
+import { useFteController } from "../../fte/hooks.ts";
 import { useUpdateInterval } from "../../hooks.ts";
 
 export const DebugFte = () => {

@@ -1,7 +1,7 @@
-import { Controls } from "./Controls";
-import { useFteController, useFteLoader } from "./hooks";
+import { Controls } from "./Controls.tsx";
+import { useFteController, useFteLoader } from "../fte/hooks.ts";
 import classNames from "classnames";
-import { getAssets } from "./assets";
+import { getAssets } from "../fte/assets.ts";
 import { getDemoDownloadUrl } from "../services/supabase/demo.ts";
 import { Demo } from "../services/supabase/supabase.types.ts";
 import { FteCanvas } from "./FteCanvas.tsx";
