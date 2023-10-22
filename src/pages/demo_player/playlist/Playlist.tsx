@@ -187,9 +187,9 @@ export const ReadOnlyItem = ({ item }: { item: PlaylistItem }) => {
       <Item item={item} />
       <FontAwesomeIcon
         icon={faPlay}
-        className={classNames({
+        className={classNames("ml-2", {
           "text-green-400": isPlaying,
-          "hidden group-hover:inline-block group-hover:text-slate-300":
+          "opacity-0 group-hover:opacity-100 group-hover:text-slate-300":
             !isPlaying,
         })}
       />
