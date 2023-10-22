@@ -23,7 +23,7 @@ export type PlaylistItem = {
 
 export const Playlist = () => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const { isEmpty } = usePlaylist();
+  const { isEmpty, count } = usePlaylist();
 
   useEffect(() => {
     if (isEmpty) {
@@ -35,7 +35,12 @@ export const Playlist = () => {
     <div>
       <div className="flex p-5 bg-white/5 items-center">
         <FontAwesomeIcon icon={faList} className="text-slate-400 mr-2" />
-        <div className="font-bold text-slate-200">Playlist</div>
+        <div>
+          <span className="font-bold text-slate-200">Playlist</span>{" "}
+          {!isEmpty && (
+            <span className={"text-slate-400 text-sm"}>({count})</span>
+          )}
+        </div>
 
         <div className={classNames("text-sm ml-auto", { hidden: isEmpty })}>
           <Switch

@@ -50,6 +50,7 @@ export function usePlaylist() {
 
   return {
     playlist,
+    count: playlist.length,
     isEmpty: playlist.length === 0,
     add,
     addMany,
