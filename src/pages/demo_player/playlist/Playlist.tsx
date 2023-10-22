@@ -14,8 +14,6 @@ import type { Demo } from "../services/supabase/supabase.types.ts";
 import { Switch } from "../ui/Switch.tsx";
 import classNames from "classnames";
 
-export type { Demo } from "../services/supabase/supabase.types.ts";
-
 export type PlaylistItem = {
   id: number;
   demo: Demo;

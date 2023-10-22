@@ -1,7 +1,7 @@
 import { useLocalStorage } from "usehooks-ts";
 import { Demo } from "../services/supabase/supabase.types.ts";
-import { PlaylistItem } from "./types.ts";
 import { compareDemoDates } from "../services/supabase/demo.ts";
+import { PlaylistItem } from "./Playlist.tsx";
 
 function demoToPlaylistItem(demo: Demo): PlaylistItem {
   return { id: demo.id, demo };
