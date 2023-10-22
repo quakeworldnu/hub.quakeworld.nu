@@ -5,15 +5,20 @@ export function secondsToMinutesAndSeconds(seconds: number): string {
   return `${durationMinutes}:${durationSeconds}`;
 }
 
-export function formatTimeProgress(elapsed: number, total: number): string {
-  const isCountdown = elapsed < 0;
-
-  if (isCountdown) {
+export function formatElapsed(elapsed: number, total: number): string {
+  if (elapsed < 0) {
     return `Countdown: ${-Math.floor(elapsed)}`;
   } else {
     const elapsedStr = secondsToMinutesAndSeconds(elapsed);
     const totalStr = secondsToMinutesAndSeconds(total);
-
     return `${elapsedStr} / ${totalStr}`;
+  }
+}
+
+export function formatSeek(seekTime: number, startTime: number): string {
+  if (seekTime < startTime) {
+    return `Countdown: ${Math.floor(startTime - seekTime)}`;
+  } else {
+    return secondsToMinutesAndSeconds(seekTime - startTime);
   }
 }

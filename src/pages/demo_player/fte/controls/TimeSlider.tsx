@@ -5,7 +5,7 @@ import { useHover } from "usehooks-ts";
 import { useMouse } from "@uidotdev/usehooks";
 import { useUpdateInterval } from "../../hooks.ts";
 import { useFteController } from "../hooks.ts";
-import { secondsToMinutesAndSeconds } from "../../time.ts";
+import { formatSeek } from "../../time.ts";
 
 export function TimeSlider() {
   const fte = useFteController();
@@ -26,10 +26,7 @@ export function TimeSlider() {
     const progress = mouse.elementX / sliderWidth;
     const seekTime = Math.round(progress * maxValue);
 
-    tooltipRef.current.textContent =
-      seekTime < matchStartTime
-        ? `Countdown: ${matchStartTime - seekTime}`
-        : secondsToMinutesAndSeconds(seekTime - matchStartTime);
+    tooltipRef.current.textContent = formatSeek(seekTime, matchStartTime);
     tooltipRef.current.style.left = `${mouse.elementX - 10}px`; // -10 to center tooltip
   }, [isHover, mouse.elementX]);
 
@@ -44,14 +41,14 @@ export function TimeSlider() {
       ></div>
       <div className="w-full" ref={sliderWrapperRef}>
         <form ref={sliderRootRef}>
-          <SliderRoot />
+          <SliderRoot max={maxValue} />
         </form>
       </div>
     </div>
   );
 }
 
-const SliderRoot = () => {
+const SliderRoot = ({ max }: { max: number }) => {
   const fte = useFteController();
   useUpdateInterval(fte ? 200 : null);
 
@@ -59,19 +56,17 @@ const SliderRoot = () => {
     return null;
   }
 
-  function onValueChange(values: number[]) {
+  function handleValueChange(values: number[]) {
     if (fte && values.length > 0) {
       fte.demoJump(values[0]);
     }
   }
 
-  const max = fte.getDemoTotalTime();
-
   return (
     <Slider.Root
       className="relative flex items-center select-none touch-none w-full h-8 group cursor-pointer transition-colors"
       value={[fte.getDemoElapsedTime()]}
-      onValueChange={onValueChange}
+      onValueChange={handleValueChange}
       min={0}
       max={max}
       step={1}

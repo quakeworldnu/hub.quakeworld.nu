@@ -81,7 +81,7 @@ export function ChatInput() {
   const addMessage = useMutation(api.messages.add);
   const { user } = useUser();
 
-  async function onSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     if (!user?.groupId) {
       return;
     }
@@ -103,7 +103,7 @@ export function ChatInput() {
   }
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={handleSubmit}>
       <input
         disabled={!user?.groupId}
         type="text"

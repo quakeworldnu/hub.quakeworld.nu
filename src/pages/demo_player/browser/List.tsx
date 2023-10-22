@@ -1,8 +1,9 @@
 import { Demo } from "../services/supabase/supabase.types.ts";
-import { Timestamp } from "./Timestamp.tsx";
+import { Timestamp } from "../Timestamp.tsx";
 import { ToggleButton } from "../playlist/Playlist.tsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFloppyDisk, faPlay } from "@fortawesome/free-solid-svg-icons";
+import { getDemoDownloadUrl } from "../services/supabase/demo.ts";
 
 export const List = ({ demos }: { demos: Demo[] | null }) => {
   return (
@@ -53,14 +54,10 @@ export const PlayButton = ({ id }: { id: number }) => {
   );
 };
 
-function demoDownloadUrl(s3Key: string) {
-  return `https://quakeworld.s3.eu-central-1.amazonaws.com/${s3Key}`;
-}
-
 export const DownloadButton = ({ s3_key }: { s3_key: string }) => {
   return (
     <a
-      href={demoDownloadUrl(s3_key)}
+      href={getDemoDownloadUrl(s3_key)}
       className="flex items-center justify-center text-slate-500 hover:text-slate-300 w-8 h-8 hover:scale-125 transition-transform"
       title="Download"
     >

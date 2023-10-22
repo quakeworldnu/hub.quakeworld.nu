@@ -10,7 +10,7 @@ export function UserInfo() {
   const codeErrorRef = useRef<HTMLInputElement>(null);
   const codeRef = useRef<HTMLInputElement>(null);
 
-  async function onJoinGroup() {
+  async function handleJoinGroup() {
     if (!codeErrorRef.current || !codeRef.current) {
       return;
     }
@@ -58,7 +58,7 @@ export function UserInfo() {
                 />
               </div>
               <button
-                onClick={onJoinGroup}
+                onClick={handleJoinGroup}
                 className="py-1 px-2 text-sm rounded bg-blue-600/50 hover:bg-blue-600/80 cursor-pointer"
               >
                 Join group

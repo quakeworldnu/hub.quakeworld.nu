@@ -10,13 +10,7 @@ export const SlowmotionToggle = () => {
   useFteUpdateOnEvent("demo_setspeed");
   const fte = useFteController();
 
-  if (!fte) {
-    return null;
-  }
-
-  const currentSpeed = fte.demo_setspeed();
-
-  function onClick() {
+  function handleClick() {
     if (!fte) {
       return;
     }
@@ -24,11 +18,16 @@ export const SlowmotionToggle = () => {
     fte.setSpeed(newSpeed);
   }
 
+  if (!fte) {
+    return null;
+  }
+
+  const currentSpeed = fte.demo_setspeed();
   const isSlowmotion = currentSpeed === slow;
 
   return (
     <IconToggleButton
-      onClick={onClick}
+      onClick={handleClick}
       isEnabled={isSlowmotion}
       enabledIcon={faStopwatch20}
       disabledIcon={faStopwatch}

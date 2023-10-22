@@ -1,4 +1,4 @@
-import { createClient, SupabaseClient } from "@supabase/supabase-js";
+import { createClient } from "@supabase/supabase-js";
 
 import { Database } from "./database.types.ts";
 
@@ -9,16 +9,12 @@ const supabase = createClient<Database>(
   import.meta.env.VITE_SUPABASE_ANON_KEY,
 );
 
-export function getClient(): SupabaseClient {
-  return supabase;
-}
-
 export async function getDemo(id: number) {
   return supabase.from("demos").select("*").eq("id", id).limit(1).single();
 }
 
-function queryToFullTextSearchString(query: string = ""): string {
-  const q = query.trim();
+function queryToFts(query: string = ""): string {
+  const q = query.replace(/\s+/g, " ").trim();
 
   if (!q) {
     return "";
@@ -33,7 +29,7 @@ function queryToFullTextSearchString(query: string = ""): string {
 export async function searchDemos({ query, gameMode }: DemoBrowserSettings) {
   let qb = supabase.from("demos").select("*");
 
-  const fts = queryToFullTextSearchString(query);
+  const fts = queryToFts(query);
 
   if (gameMode !== "all") {
     qb = qb.eq("mode", gameMode);

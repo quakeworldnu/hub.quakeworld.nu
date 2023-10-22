@@ -8,7 +8,7 @@ import {
   faSort,
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
-import { Timestamp } from "../browser/Timestamp.tsx";
+import { Timestamp } from "../Timestamp.tsx";
 import { useCurrentDemoId, usePlaylist } from "./hooks.ts";
 import type { Demo } from "../services/supabase/supabase.types.ts";
 import { Switch } from "../ui/Switch.tsx";

@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { getDemo } from "../services/supabase/supabase";
-import { Timestamp } from "../browser/Timestamp";
+import { Timestamp } from "../Timestamp.tsx";
 import { Playlist } from "../playlist/Playlist";
 import { Demo } from "../services/supabase/supabase.types.ts";
-import { getDemoDescription, getDemoUrl } from "../demo.ts";
-import { FtePlayer } from "../fte/fte.tsx";
+import {
+  getDemoDescription,
+  getDemoDownloadUrl,
+} from "../services/supabase/demo.ts";
+import { FtePlayer } from "../fte/FtePlayer.tsx";
 
 export const Player = ({ demoId }: { demoId: number }) => {
   const [demo, setDemo] = useState<Demo | null>(null);
@@ -69,7 +72,7 @@ export const DemoInfo = ({ demo }: { demo: Demo }) => {
 };
 
 export const DownloadDemoButton = ({ s3_key }: { s3_key: string }) => {
-  const demoUrl = getDemoUrl(s3_key);
+  const demoUrl = getDemoDownloadUrl(s3_key);
 
   return (
     <a

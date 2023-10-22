@@ -1,15 +1,13 @@
 import { Controls } from "./Controls";
 import { useFteController, useFteLoader } from "./hooks";
-import { toggleFullscreen } from "./player";
-import { useState } from "react";
 import classNames from "classnames";
-import { useEventListener } from "usehooks-ts";
 import { getAssets } from "./assets";
-import { getDemoUrl } from "../demo";
+import { getDemoDownloadUrl } from "../services/supabase/demo.ts";
 import { Demo } from "../services/supabase/supabase.types.ts";
+import { FteCanvas } from "./FteCanvas.tsx";
 
 export const FtePlayer = ({ demo }: { demo: Demo }) => {
-  const demoUrl = getDemoUrl(demo.s3_key);
+  const demoUrl = getDemoDownloadUrl(demo.s3_key);
   const files = getAssets(demoUrl, demo.map);
   const { isLoadingAssets, isReady, assets, isInitializing } = useFteLoader({
     files,
@@ -80,52 +78,3 @@ export const FtePlayer = ({ demo }: { demo: Demo }) => {
 //
 //   return <Debug value={fte.getPlayers()} />;
 // };
-
-const FteCanvas = () => {
-  const fte = useFteController();
-  const [isShowingScores, setIsShowingScores] = useState(false);
-
-  function onKeyDown(e: KeyboardEvent) {
-    if (!fte) {
-      return;
-    }
-
-    if (e.code === "Tab") {
-      e.preventDefault();
-
-      if (isShowingScores) {
-        return;
-      }
-      fte.command("+showscores");
-      setIsShowingScores(true);
-    } else if (e.code === "Space") {
-      fte.trackNext();
-    }
-  }
-
-  function onKeyUp(e: KeyboardEvent) {
-    if (!fte) {
-      return;
-    }
-
-    if (e.code === "Tab") {
-      e.preventDefault();
-      fte.command("-showscores");
-      setIsShowingScores(false);
-    }
-  }
-
-  useEventListener("keydown", onKeyDown);
-  useEventListener("keyup", onKeyUp);
-
-  return (
-    <canvas
-      id="fteCanvas"
-      className={"absolute w-full h-full"}
-      onClick={() => fte?.togglePlay()}
-      onDoubleClick={() => toggleFullscreen()}
-      onTouchStart={() => fte?.command("+scoreboard")}
-      onTouchEnd={() => fte?.command("-scoreboard")}
-    />
-  );
-};

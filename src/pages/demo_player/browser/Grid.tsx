@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { Demo, DemoParticipants } from "../services/supabase/supabase.types.ts";
-import { Timestamp } from "./Timestamp.tsx";
+import { Timestamp } from "../Timestamp.tsx";
 import { ModeRibbon } from "./ModeRibbon.tsx";
 import { Participants } from "./Participants.tsx";
 import { ToggleButton } from "../playlist/Playlist.tsx";

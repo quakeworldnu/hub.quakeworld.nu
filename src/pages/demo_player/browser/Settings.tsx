@@ -124,7 +124,7 @@ export const QueryInput = () => {
   const [query, setQuery] = useState<string>(settings.query);
   const debouncedQuery = useDebounce<string>(query, 400);
 
-  function onChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setQuery(e.target.value);
   }
 
@@ -143,8 +143,8 @@ export const QueryInput = () => {
         autoFocus
         type="search"
         value={query}
-        className="-ml-6 px-2 pl-8 py-2 text-sm bg-blue-950 border border-blue-800 text-white rounded w-72 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-        onChange={onChange}
+        className="-ml-6 px-2 pl-8 py-2 text-sm bg-slate-900 focus:bg-slate-800 border border-slate-700 text-white rounded w-72 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        onChange={handleChange}
       />
     </label>
   );

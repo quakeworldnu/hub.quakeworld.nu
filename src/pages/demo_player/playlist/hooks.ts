@@ -1,10 +1,7 @@
 import { useLocalStorage } from "usehooks-ts";
 import { Demo } from "../services/supabase/supabase.types.ts";
 import { PlaylistItem } from "./types.ts";
-
-function compareDemoDates(a: string | null, b: string | null) {
-  return new Date(a || 0).getTime() - new Date(b || 0).getTime();
-}
+import { compareDemoDates } from "../services/supabase/demo.ts";
 
 function demoToPlaylistItem(demo: Demo): PlaylistItem {
   return { id: demo.id, demo };
