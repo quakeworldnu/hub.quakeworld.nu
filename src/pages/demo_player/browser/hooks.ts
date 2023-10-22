@@ -37,3 +37,8 @@ export function useDemoBrowserSettings() {
 
   return { settings, setSettings };
 }
+
+export function useDisplayMode() {
+  const [displayMode, setDisplayMode] = useState<"grid" | "list">("grid");
+  return { displayMode, setDisplayMode };
+}

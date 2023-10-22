@@ -1,17 +1,18 @@
-import { FteModule, PlayerInfo } from "./types.ts";
+import {
+  Autotrack,
+  ControlSource,
+  FteModule,
+  DemoPlayback,
+  PlayerInfo,
+} from "./types.ts";
 
 export function fteEvent(name: string, detail: object) {
   const event = new CustomEvent(`fte.${name}`, { detail });
   window.dispatchEvent(event);
 }
 
-const AUTOTRACK_ON = "stats";
-const AUTOTRACK_OFF = "user";
-const CONTROL_USER = "user";
-const CONTROL_GROUP = "group";
-
 export class FteController {
-  _controlSource = CONTROL_USER;
+  _controlSource = ControlSource.USER;
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   _module: FteModule;
@@ -22,7 +23,7 @@ export class FteController {
   _last_demo_setspeed = 100;
   _demo_setspeed = 100;
   _cl_splitscreen = 0;
-  _cl_autotrack = AUTOTRACK_ON;
+  _cl_autotrack: string = Autotrack.ON;
   _cache: { [key: string]: string | number | null } = {
     timelimit: null,
     map: null,
@@ -223,7 +224,7 @@ export class FteController {
   }
 
   isUsingAutotrack() {
-    return this._cl_autotrack === AUTOTRACK_ON;
+    return this._cl_autotrack === Autotrack.ON;
   }
 
   setAutotrack(value: string) {
@@ -232,11 +233,11 @@ export class FteController {
   }
 
   enableAutotrack() {
-    this.setAutotrack(AUTOTRACK_ON);
+    this.setAutotrack(Autotrack.ON);
   }
 
   disableAutotrack() {
-    this.setAutotrack(AUTOTRACK_OFF);
+    this.setAutotrack(Autotrack.OFF);
   }
 
   toggleAutotrack() {
@@ -322,13 +323,8 @@ export class FteController {
   }
 
   // group
-  applyGroupPlayback(playback: {
-    track: number;
-    cl_autotrack: string;
-    demo_setspeed: number;
-    demo_jump: number;
-  }) {
-    this._controlSource = CONTROL_GROUP;
+  applyGroupPlayback(playback: DemoPlayback) {
+    this._controlSource = ControlSource.GROUP;
 
     // track
     if (playback.track !== this.getTrackUserid()) {
@@ -356,7 +352,7 @@ export class FteController {
       this.demoJump(playback.demo_jump);
     }
 
-    this._controlSource = CONTROL_USER;
+    this._controlSource = ControlSource.USER;
   }
 }
 

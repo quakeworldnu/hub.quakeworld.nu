@@ -1,13 +1,13 @@
-import { Grid } from "./Grid.tsx";
+import { GridView } from "./GridView.tsx";
 import { useDemoBrowserSettings, useSearchDemos } from "./hooks.ts";
-import { List } from "./List.tsx";
+import { ListView } from "./ListView.tsx";
 import { Playlist } from "../playlist/Playlist.tsx";
-import { Settings } from "./Settings.tsx";
+import { Toolbar } from "./Toolbar.tsx";
 
 export const Browser = () => {
   return (
     <div className="my-6">
-      <Settings />
+      <Toolbar />
       <div className="flex gap-6">
         <Demos />
         <div className="w-96 my-6">
@@ -25,9 +25,9 @@ const Demos = () => {
   return (
     <div className="grow">
       {settings.displayMode === "grid" ? (
-        <Grid demos={demos} />
+        <GridView demos={demos} />
       ) : (
-        <List demos={demos} />
+        <ListView demos={demos} />
       )}
 
       {demos?.length === 0 && (

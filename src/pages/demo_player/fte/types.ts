@@ -1,3 +1,18 @@
+export type FtePreloadModule = {
+  canvas: HTMLCanvasElement;
+  files: object;
+  setStatus: (value: string) => void;
+};
+
+export type FteModule = FtePreloadModule & {
+  execute: (command: string) => void;
+  getDemoElapsedTime: () => number;
+  getPlayerInfo: () => PlayerInfo[];
+  getMapName: () => string;
+  getTimelimit: () => number;
+  getTrackUserid: (seatIndex: number) => number;
+};
+
 export type PlayerInfo = {
   id: number;
   name: string;
@@ -25,15 +40,21 @@ export type PlayerInfo = {
     pent: boolean;
   };
 };
-export type FteModule = {
-  files: object;
-  canvas: HTMLCanvasElement;
-  setStatus: (value: string) => void;
 
-  execute: (command: string) => void;
-  getDemoElapsedTime: () => number;
-  getPlayerInfo: () => PlayerInfo[];
-  getMapName: () => string;
-  getTimelimit: () => number;
-  getTrackUserid: (seatIndex: number) => number;
+export enum Autotrack {
+  ON = "stats",
+  OFF = "user",
+}
+
+export enum ControlSource {
+  USER = "user",
+  GROUP = "group",
+}
+
+export type DemoPlayback = {
+  demo_jump: number;
+  demo_setspeed: number;
+  cl_autotrack: Autotrack | string;
+  cl_splitscreen: number;
+  track: number;
 };

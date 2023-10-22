@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFloppyDisk, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { getDemoDownloadUrl } from "../services/supabase/demo.ts";
 
-export const List = ({ demos }: { demos: Demo[] | null }) => {
+export const ListView = ({ demos }: { demos: Demo[] | null }) => {
   return (
     <table className="my-6 text-left text-sm">
       <thead>

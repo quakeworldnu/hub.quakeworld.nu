@@ -5,6 +5,10 @@ export const AutotrackToggle = () => {
   const fte = useFteController();
   useFteUpdateOnEvent("cl_autotrack");
 
+  function handleClick() {
+    fte && fte.toggleAutotrack();
+  }
+
   if (!fte) {
     return null;
   }
@@ -14,7 +18,7 @@ export const AutotrackToggle = () => {
       <Switch
         label="Autotrack"
         enabled={fte.isUsingAutotrack()}
-        onClick={() => fte.toggleAutotrack()}
+        onClick={handleClick}
       />
     </div>
   );

@@ -4,17 +4,17 @@ import { Timestamp } from "../Timestamp.tsx";
 import { ModeRibbon } from "./ModeRibbon.tsx";
 import { Participants } from "./Participants.tsx";
 import { ToggleButton } from "../playlist/Playlist.tsx";
-import { DownloadButton } from "./List.tsx";
+import { DownloadButton } from "./ListView.tsx";
 
-export const Grid = ({ demos }: { demos: Demo[] | null }) => {
+export const GridView = ({ demos }: { demos: Demo[] | null }) => {
   return (
     <div className="my-6 grid grid-cols-servers gap-4">
-      {demos?.map((demo) => <DemoItem key={demo.id} demo={demo} />)}
+      {demos?.map((demo) => <GridItem key={demo.id} demo={demo} />)}
     </div>
   );
 };
 
-const DemoItem = ({ demo }: { demo: Demo }) => {
+const GridItem = ({ demo }: { demo: Demo }) => {
   return (
     <div>
       <a

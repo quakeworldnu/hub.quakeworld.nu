@@ -7,13 +7,17 @@ export const SplitscreenToggle = () => {
   useFteUpdateOnEvent("cl_splitscreen");
   const fte = useFteController();
 
+  function handleClick() {
+    fte && fte.toggleSplitscreen();
+  }
+
   if (!fte) {
     return null;
   }
 
   return (
     <IconToggleButton
-      onClick={() => fte.toggleSplitscreen()}
+      onClick={handleClick}
       isEnabled={fte.cl_splitscreen() > 0}
       enabledIcon={faSquare}
       disabledIcon={faColumns}

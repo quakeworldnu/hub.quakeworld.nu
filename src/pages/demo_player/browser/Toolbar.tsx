@@ -16,7 +16,8 @@ export const btnSelectedClass =
   "bg-gradient-to-t from-blue-500/20 to-blue-500/40 border-white/10 text-white";
 export const btnDefaultClass =
   "flex items-center space-x-2 p-2 px-2.5 cursor-pointer text-sm first:rounded-l last:rounded-r border border-transparent border-white/10 hover:border-white/20 hover:bg-blue-500/20 text-slate-400";
-export const Settings = () => {
+
+export const Toolbar = () => {
   return (
     <div className="flex flex-wrap gap-x-6 gap-y-3 items-center">
       <DisplayModeButtons />

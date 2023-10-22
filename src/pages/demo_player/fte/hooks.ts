@@ -8,13 +8,7 @@ import {
 import { useState } from "react";
 import { withPrefix } from "./assets.ts";
 import { FteController } from "./fteController.ts";
-import { FteModule } from "./types.ts";
-
-type FtePreloadModule = {
-  canvas: HTMLCanvasElement;
-  files: object;
-  setStatus: (value: string) => void;
-};
+import { FteModule, FtePreloadModule } from "./types.ts";
 
 declare global {
   interface Window {
