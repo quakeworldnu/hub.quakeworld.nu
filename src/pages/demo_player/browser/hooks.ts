@@ -4,6 +4,12 @@ import { searchDemos } from "../services/supabase/supabase.ts";
 import { DemoBrowserSettings } from "./types.ts";
 import { useLocalStorage } from "usehooks-ts";
 
+export function useFilteredDemos() {
+  const { settings } = useDemoBrowserSettings();
+  const { demos, count } = useSearchDemos(settings);
+  return { demos: demos || [], count, hasDemos: count > 0 };
+}
+
 export function useSearchDemos(settings: DemoBrowserSettings) {
   const [demos, setDemos] = useState<Demo[] | null>([]);
 
@@ -16,7 +22,7 @@ export function useSearchDemos(settings: DemoBrowserSettings) {
     run();
   }, [settings.query, settings.gameMode]);
 
-  return { demos };
+  return { demos, count: demos?.length || 0 };
 }
 
 export function useDemoBrowserSettings() {
