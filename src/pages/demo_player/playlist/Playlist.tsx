@@ -192,10 +192,10 @@ export function RemoveButton({ id }: { id: number }) {
 export const EditableItem = ({ item }: { item: PlaylistItem }) => {
   return (
     <div className="flex items-center justify-between w-full">
-      <div className="p-2">
+      <div className="py-2 pr-2">
         <Item item={item} />
       </div>
-      <div className="ml-auto">
+      <div className="ml-auto mr-1">
         <RemoveButton id={item.id} />
       </div>
     </div>
