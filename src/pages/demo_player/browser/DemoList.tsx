@@ -7,7 +7,7 @@ import { getDemoDownloadUrl } from "../services/supabase/demo.ts";
 
 export const DemoList = ({ demos }: { demos: Demo[] | null }) => {
   return (
-    <table className="my-6 text-left text-sm">
+    <table className="text-left text-sm">
       <thead>
         <tr>
           <th className="p-2 min-w-[120px]">Timestamp</th>

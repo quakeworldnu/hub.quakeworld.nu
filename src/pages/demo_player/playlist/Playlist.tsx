@@ -30,8 +30,8 @@ export const Playlist = () => {
   }, [isEmpty]);
 
   return (
-    <div className="h-full max-h-[75vh] my-6 lg:my-0">
-      <div className="flex p-5 bg-white/5 items-center">
+    <div className="flex flex-col h-full w-full">
+      <div className="flex p-4 bg-white/5 items-center">
         <FontAwesomeIcon
           fixedWidth
           icon={faList}
@@ -52,7 +52,7 @@ export const Playlist = () => {
           />
         </div>
       </div>
-      <div className="max-h-full grow overflow-y-auto" id="AppPlaylist">
+      <div className="overflow-y-auto grow" id="AppPlaylist">
         {isEmpty && (
           <div className="p-4 text-slate-400">Playlist is empty..</div>
         )}

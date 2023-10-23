@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { getDemo } from "../services/supabase/supabase";
 import { Timestamp } from "../Timestamp.tsx";
-import { Playlist } from "../playlist/Playlist";
 import { Demo } from "../services/supabase/supabase.types.ts";
 import {
   getDemoDescription,
@@ -32,15 +31,12 @@ export const Player = ({ demoId }: { demoId: number }) => {
   return (
     <>
       <DemoBreadcrumbs demo={demo} />
-      <div className="lg:flex min-h-[800px]">
+      <div className="lg:flex min-h-[800px] mt-4">
         <div className="flex flex-col grow">
           <div className="flex grow bg-black items-center justify-center max-h-[75vh]">
             <FtePlayer demo={demo} />
           </div>
           <DemoPlayerFooter demo={demo} />
-        </div>
-        <div className="flex flex-col w-auto lg:w-[280px] 2xl:w-[360px] lg:ml-4">
-          <Playlist />
         </div>
       </div>
     </>
@@ -89,7 +85,7 @@ export const DemoBreadcrumbs = ({ demo }: { demo: Demo }) => {
   const demoBreadcrumbs = [demoDescription];
 
   return (
-    <div className="flex p-3 bg-white/5 text-sm text-slate-300 my-4">
+    <div className="flex p-3 bg-white/5 text-sm text-slate-300">
       <a href={`/demo_player/`}>Demos</a>
       {demoBreadcrumbs.map((b, i) => (
         <span key={i}>

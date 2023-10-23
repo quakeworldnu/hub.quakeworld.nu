@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { SiteHeader } from "../../site/Header";
 import { SiteFooter } from "../../site/Footer";
-import { Player } from "./player/Player";
 import { Browser } from "./browser/Browser";
 import { useCurrentDemoId } from "./playlist/hooks";
 import {
@@ -10,6 +9,8 @@ import {
 } from "./services/supabase/supabase.ts";
 import { useDemos } from "./browser/context.tsx";
 import { useDemoBrowserSettings } from "./browser/hooks.ts";
+import { Sidebar } from "./Sidebar";
+import { Player } from "@qwhub/pages/demo_player/player/Player";
 
 export const App = () => {
   const demoId = useCurrentDemoId();
@@ -42,14 +43,19 @@ export const App = () => {
   }, [settings.page]);
 
   return (
-    <>
+    <div className="flex flex-col">
       <SiteHeader />
-      <div className="my-6">
-        {demoId && <Player demoId={demoId} />}
-        {!demoId && <Browser />}
+      <div className="lg:flex gap-6 my-6">
+        <div className="w-full">
+          <div id="AppDemoBrowserBody">
+            {demoId && <Player demoId={demoId} />}
+            {!demoId && <Browser />}
+          </div>
+        </div>
+        <Sidebar />
       </div>
       <SiteFooter />
-    </>
+    </div>
   );
 };
 

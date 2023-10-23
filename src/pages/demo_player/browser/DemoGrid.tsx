@@ -10,7 +10,7 @@ import { DownloadButton } from "./DemoList.tsx";
 
 export const DemoGrid = ({ demos }: { demos: Demo[] | null }) => {
   return (
-    <div className="my-6 grid grid-cols-servers gap-4">
+    <div className="grid grid-cols-servers gap-4">
       {demos?.map((demo) => <GridItem key={demo.id} demo={demo} />)}
     </div>
   );
