@@ -3,9 +3,10 @@ import { Demo } from "../services/supabase/supabase.types.ts";
 
 type DemoContextProps = {
   demos: Demo[];
-  setDemos: (demos: Demo[] | null, count: number | null) => void;
+  setDemos: (demos: Demo[] | null) => void;
   hasDemos: boolean;
   count: number;
+  setCount: (count: number | null) => void;
   isLoading: boolean;
   setIsLoading: (isLoading: boolean) => void;
 };
@@ -15,6 +16,7 @@ const DemoContext = createContext<DemoContextProps>({
   setDemos: () => {},
   hasDemos: false,
   count: 0,
+  setCount: () => {},
   isLoading: true,
   setIsLoading: () => {},
 });
@@ -24,16 +26,12 @@ export const DemoProvider = ({ children }: { children: ReactNode }) => {
   const [count, setCount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  function setDemos_(demos: Demo[] | null, count: number | null) {
-    setCount(count || 0);
-    setDemos(demos || []);
-  }
-
   const value = {
     demos,
-    setDemos: setDemos_,
+    setDemos: (demos: Demo[] | null) => setDemos(demos || []),
     hasDemos: demos.length > 0,
     count,
+    setCount: (count: number | null) => setCount(count || 0),
     isLoading,
     setIsLoading,
   };

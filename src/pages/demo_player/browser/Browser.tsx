@@ -13,9 +13,7 @@ export const Browser = () => {
         <div className="grow">
           <Toolbar />
           <Demos />
-          <div className="flex justify-end">
-            <Pagination />
-          </div>
+          <Pagination />
         </div>
         <div className="w-96">
           <Sidebar />
@@ -31,7 +29,7 @@ const Sidebar = () => {
 
 const Demos = () => {
   const { settings } = useDemoBrowserSettings();
-  const { demos } = useDemos();
+  const { demos, hasDemos } = useDemos();
 
   return (
     <div className="grow">
@@ -41,9 +39,7 @@ const Demos = () => {
         <DemoList demos={demos} />
       )}
 
-      {demos?.length === 0 && (
-        <div className="text-slate-400">No demos found.</div>
-      )}
+      {!hasDemos && <div className="text-slate-400">No demos found.</div>}
     </div>
   );
 };

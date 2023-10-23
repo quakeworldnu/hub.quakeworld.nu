@@ -26,9 +26,7 @@ export const Toolbar = () => {
       <GameModeButtons />
       <QueryInput />
       <BulkActions />
-      <div className="flex ml-auto">
-        <Pagination />
-      </div>
+      <Pagination />
     </div>
   );
 };
