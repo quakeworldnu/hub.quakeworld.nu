@@ -1,4 +1,4 @@
-import { useDemoBrowserSettings, useFilteredDemos } from "./hooks.ts";
+import { useDemoBrowserSettings } from "./hooks.ts";
 import React, { useEffect, useState } from "react";
 import { useDebounce } from "usehooks-ts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,6 +11,8 @@ import {
 import classNames from "classnames";
 import { DisplayMode } from "./types.ts";
 import { usePlaylist } from "../playlist/hooks.ts";
+import { Pagination } from "./Pagination.tsx";
+import { useDemos } from "./context.tsx";
 
 export const btnSelectedClass =
   "bg-gradient-to-t from-blue-500/20 to-blue-500/40 border-white/10 text-white";
@@ -24,12 +26,15 @@ export const Toolbar = () => {
       <GameModeButtons />
       <QueryInput />
       <BulkActions />
+      <div className="flex ml-auto">
+        <Pagination />
+      </div>
     </div>
   );
 };
 
 export const BulkActions = () => {
-  const { demos, hasDemos } = useFilteredDemos();
+  const { demos, hasDemos } = useDemos();
   const { addMany } = usePlaylist();
 
   function handleClick() {

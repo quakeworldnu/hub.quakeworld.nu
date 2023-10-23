@@ -1,26 +1,37 @@
 import { DemoGrid } from "./DemoGrid.tsx";
-import { useDemoBrowserSettings, useSearchDemos } from "./hooks.ts";
+import { useDemoBrowserSettings } from "./hooks.ts";
 import { DemoList } from "./DemoList.tsx";
 import { Playlist } from "../playlist/Playlist.tsx";
 import { Toolbar } from "./Toolbar.tsx";
+import { Pagination } from "./Pagination.tsx";
+import { useDemos } from "./context.tsx";
 
 export const Browser = () => {
   return (
     <div className="my-6">
-      <Toolbar />
       <div className="flex gap-6">
-        <Demos />
-        <div className="w-96 my-6">
-          <Playlist />
+        <div className="grow">
+          <Toolbar />
+          <Demos />
+          <div className="flex justify-end">
+            <Pagination />
+          </div>
+        </div>
+        <div className="w-96">
+          <Sidebar />
         </div>
       </div>
     </div>
   );
 };
 
+const Sidebar = () => {
+  return <Playlist />;
+};
+
 const Demos = () => {
   const { settings } = useDemoBrowserSettings();
-  const { demos } = useSearchDemos(settings);
+  const { demos } = useDemos();
 
   return (
     <div className="grow">

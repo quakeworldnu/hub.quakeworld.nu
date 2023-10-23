@@ -4,4 +4,5 @@ export type DemoBrowserSettings = {
   displayMode: DisplayMode;
   gameMode: string;
   query: string;
+  page: number;
 };
