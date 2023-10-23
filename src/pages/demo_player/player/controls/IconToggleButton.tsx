@@ -24,7 +24,10 @@ export const IconToggleButton = ({
       onClick={onClick}
       title={title}
     >
-      <FontAwesomeIcon icon={isEnabled ? enabledIcon : disabledIcon} />
+      <FontAwesomeIcon
+        fixedWidth
+        icon={isEnabled ? enabledIcon : disabledIcon}
+      />
     </button>
   );
 };

@@ -107,7 +107,7 @@ export function SortableItem({
           {...attributes}
           {...listeners}
         >
-          <FontAwesomeIcon icon={faBars} />
+          <FontAwesomeIcon fixedWidth icon={faBars} />
         </button>
         {Item}
       </div>

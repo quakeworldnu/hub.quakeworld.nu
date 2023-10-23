@@ -24,7 +24,7 @@ export function Chat() {
     <>
       <div className="bg-black/40 border-b border-white/10 p-3 text-xs">
         <span className="mr-2">
-          <FontAwesomeIcon icon={faUsers} />
+          <FontAwesomeIcon fixedWidth icon={faUsers} />
         </span>
         {members.map((m) => m.name).join(", ")}
       </div>

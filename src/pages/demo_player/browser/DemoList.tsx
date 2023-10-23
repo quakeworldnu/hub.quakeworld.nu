@@ -49,7 +49,7 @@ export const PlayButton = ({ id }: { id: number }) => {
       className="flex items-center justify-center text-blue-500 hover:text-blue-300 w-8 h-8 hover:scale-125 transition-transform"
       title="Play"
     >
-      <FontAwesomeIcon icon={faPlay} size={"lg"} />
+      <FontAwesomeIcon fixedWidth icon={faPlay} size={"lg"} />
     </a>
   );
 };
@@ -61,7 +61,7 @@ export const DownloadButton = ({ s3_key }: { s3_key: string }) => {
       className="flex items-center justify-center text-slate-500 hover:text-slate-300 w-8 h-8 hover:scale-125 transition-transform"
       title="Download"
     >
-      <FontAwesomeIcon icon={faFloppyDisk} size={"lg"} />
+      <FontAwesomeIcon fixedWidth icon={faFloppyDisk} size={"lg"} />
     </a>
   );
 };

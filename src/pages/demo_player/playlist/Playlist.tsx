@@ -32,7 +32,11 @@ export const Playlist = () => {
   return (
     <div className="h-full max-h-[75vh]">
       <div className="flex p-5 bg-white/5 items-center">
-        <FontAwesomeIcon icon={faList} className="text-slate-400 mr-2" />
+        <FontAwesomeIcon
+          fixedWidth
+          icon={faList}
+          className="text-slate-400 mr-2"
+        />
         <div>
           <span className="font-bold text-slate-200">Playlist</span>{" "}
           {!isEmpty && (
@@ -132,7 +136,8 @@ export function SortButton() {
 
   return (
     <button className={miniButtonClass} onClick={sortByTimestamp}>
-      <FontAwesomeIcon icon={faSort} className="mr-2" /> Sort by timestamp
+      <FontAwesomeIcon fixedWidth icon={faSort} className="mr-2" /> Sort by
+      timestamp
     </button>
   );
 }
@@ -142,7 +147,7 @@ export function ClearButton() {
 
   return (
     <button onClick={clear} className={miniButtonClass}>
-      <FontAwesomeIcon icon={faTrashCan} className="mr-2" /> Clear
+      <FontAwesomeIcon fixedWidth icon={faTrashCan} className="mr-2" /> Clear
     </button>
   );
 }
@@ -165,7 +170,7 @@ export function AddButton({ demo }: { demo: Demo }) {
       onClick={() => add(demo)}
       className="text-slate-500 hover:text-slate-300 w-8 h-8 hover:scale-125 transition-transform"
     >
-      <FontAwesomeIcon icon={faPlus} size={"lg"} />
+      <FontAwesomeIcon fixedWidth icon={faPlus} size={"lg"} />
     </button>
   );
 }
@@ -179,7 +184,7 @@ export function RemoveButton({ id }: { id: number }) {
       onClick={() => remove(id)}
       className="text-slate-500 hover:text-slate-300 w-8 h-8 hover:scale-125 transition-transform"
     >
-      <FontAwesomeIcon icon={faTrashCan} />
+      <FontAwesomeIcon fixedWidth icon={faTrashCan} />
     </button>
   );
 }

@@ -48,7 +48,11 @@ export const BulkActions = () => {
       )}
       onClick={handleClick}
     >
-      <FontAwesomeIcon icon={faPlus} className="text-slate-400 mr-1 " />
+      <FontAwesomeIcon
+        fixedWidth
+        icon={faPlus}
+        className="text-slate-400 mr-1 "
+      />
       Add all to playlist
     </button>
   );
@@ -77,7 +81,7 @@ export const DisplayModeButtons = () => {
           })}
           onClick={() => setMode(option.value as DisplayMode)}
         >
-          <FontAwesomeIcon icon={option.icon} size="lg" />
+          <FontAwesomeIcon fixedWidth icon={option.icon} size="lg" />
           <div>{option.label}</div>
         </div>
       ))}
