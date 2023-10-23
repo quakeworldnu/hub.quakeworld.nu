@@ -9,7 +9,7 @@ import { useDemos } from "./context.tsx";
 export const Browser = () => {
   return (
     <div className="my-6">
-      <div className="flex gap-6">
+      <div className="lg:flex gap-6">
         <div className="grow">
           <Toolbar />
           <Demos />

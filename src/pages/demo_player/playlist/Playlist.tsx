@@ -30,7 +30,7 @@ export const Playlist = () => {
   }, [isEmpty]);
 
   return (
-    <div className="h-full max-h-[75vh]">
+    <div className="h-full max-h-[75vh] my-6 lg:my-0">
       <div className="flex p-5 bg-white/5 items-center">
         <FontAwesomeIcon
           fixedWidth
