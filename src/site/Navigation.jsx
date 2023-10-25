@@ -40,10 +40,10 @@ export default function SiteNavigation() {
       url: "/demos/",
     },
     {
-      title: "Demo player",
+      title: "Recent games",
       shortDescription: "",
       longDescription: "",
-      url: "/demo_player/",
+      url: "/recent_games/",
     },
   ];
 

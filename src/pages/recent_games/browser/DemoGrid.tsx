@@ -92,7 +92,7 @@ const ScoreboardTile = ({ demo }: { demo: Demo }) => {
     <a
       key={demo.id}
       title="Play demo"
-      href={`/demo_player/?demoId=${demo.id}`}
+      href={`/recent_games/?demoId=${demo.id}`}
       className={classNames(
         "flex flex-col border min-h-[200px] bg-slate-800 bg-no-repeat bg-center bg-cover hover:scale-105 transition-transform hover:shadow-2xl hover:z-20 hover:relative",
         {
@@ -126,7 +126,7 @@ const TeaserTile = ({ demo }: { demo: Demo }) => {
     <a
       key={demo.id}
       title="Play demo"
-      href={`/demo_player/?demoId=${demo.id}`}
+      href={`/recent_games/?demoId=${demo.id}`}
       className={classNames(
         "flex flex-col border min-h-[200px] bg-slate-800 bg-no-repeat bg-center bg-cover hover:scale-105 transition-transform hover:shadow-2xl hover:z-20 hover:relative",
         {

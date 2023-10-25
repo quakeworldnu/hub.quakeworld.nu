@@ -10,7 +10,7 @@ import {
 import { useDemos } from "./browser/context.tsx";
 import { useDemoBrowserSettings } from "./browser/hooks.ts";
 import { Sidebar } from "./Sidebar";
-import { Player } from "@qwhub/pages/demo_player/player/Player";
+import { Player } from "@qwhub/pages/recent_games/player/Player";
 
 export const App = () => {
   const demoId = useCurrentDemoId();

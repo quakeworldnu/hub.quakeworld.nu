@@ -86,7 +86,7 @@ export const DemoBreadcrumbs = ({ demo }: { demo: Demo }) => {
 
   return (
     <div className="flex p-3 bg-white/5 text-sm text-slate-300">
-      <a href={`/demo_player/`}>Demos</a>
+      <a href={`/recent_games/`}>Recent games</a>
       {demoBreadcrumbs.map((b, i) => (
         <span key={i}>
           <span className="mx-2 text-gray-500">/</span>

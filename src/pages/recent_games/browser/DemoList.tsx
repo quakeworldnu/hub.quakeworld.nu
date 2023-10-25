@@ -49,7 +49,7 @@ const ListItem = ({ demo }: { demo: Demo }) => {
 export const PlayButton = ({ id }: { id: number }) => {
   return (
     <a
-      href={`/demo_player/?demoId=${id}`}
+      href={`/recent_games/?demoId=${id}`}
       className="flex items-center justify-center text-blue-500 hover:text-blue-300 w-8 h-8 hover:scale-125 transition-transform"
       title="Play"
     >
