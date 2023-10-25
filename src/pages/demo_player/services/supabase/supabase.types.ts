@@ -14,9 +14,10 @@ export type Demo = Tables<"demos">;
 
 export type DemoPlayer = {
   name: string;
-  team: string;
-  top_color: number;
-  bottom_color: number;
+  name_color: string;
+  team?: string;
+  team_color?: string;
+  colors: number[];
   frags: number;
   teamkills: number;
   deaths: number;
@@ -26,7 +27,10 @@ export type DemoPlayer = {
 
 export type DemoTeam = {
   name: string;
+  name_color: string;
+  colors: number[];
   frags: number;
+  ping: number;
   players: DemoPlayer[];
 };
 
