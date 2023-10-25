@@ -44,7 +44,7 @@ const TeamRow = memo((props) => {
 
   return (
     <div className="sc-row sc-row-team">
-      <Ping value={`${ping} ms`} />
+      <Ping value={ping ? `${ping} ms` : ""} />
       <ColoredFrags frags={frags} colors={colors} />
       <TeamName name={name} name_color={name_color} />
       <div></div>
