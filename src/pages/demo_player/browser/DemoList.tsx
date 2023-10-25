@@ -11,6 +11,7 @@ export const DemoList = ({ demos }: { demos: Demo[] | null }) => {
       <thead>
         <tr>
           <th className="p-2 min-w-[120px]">Timestamp</th>
+          <th className="p-2">Server</th>
           <th className="p-2">Mode</th>
           <th className="p-2">Map</th>
           <th className="p-2">Title</th>
@@ -29,6 +30,9 @@ const ListItem = ({ demo }: { demo: Demo }) => {
     <tr className="odd:bg-[#1a1a2a] hover:bg-white/10">
       <td className="p-2 text-slate-400 text-xs">
         <Timestamp timestamp={demo.timestamp} />
+      </td>
+      <td className="p-2 text-slate-400">
+        {demo.source.replace(":28000", "")}
       </td>
       <td className="p-2 text-slate-400 text-right">{demo.mode}</td>
       <td className="p-2 text-slate-400">{demo.map}</td>
