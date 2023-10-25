@@ -10,6 +10,8 @@ import { Timestamp } from "../Timestamp.tsx";
 import { ToggleButton } from "../playlist/Playlist.tsx";
 import { DownloadButton } from "./DemoList.tsx";
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import { Scoreboard } from "../../../servers/Scoreboard.jsx";
 import { QuakeText } from "../QuakeText.tsx";
 
