@@ -38,7 +38,6 @@ export class FteController {
       const fte = new FteController(module);
       fte.mute();
       fte.setDemoTotalTime(demoTotalTime || 600);
-      fte.command("con_textsize 12");
       FteController._instance = fte;
     }
 
