@@ -1,11 +1,6 @@
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import classNames from "classnames";
-import {
-  Demo,
-  DemoParticipants,
-  DemoPlayer,
-  DemoTeam,
-} from "../services/supabase/supabase.types.ts";
+import { Demo, DemoParticipants } from "../services/supabase/supabase.types.ts";
 import { Timestamp } from "../Timestamp.tsx";
 import { ToggleButton } from "../playlist/Playlist.tsx";
 import { DownloadButton } from "./DemoList.tsx";
@@ -13,7 +8,6 @@ import { DownloadButton } from "./DemoList.tsx";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { Scoreboard } from "../../../servers/Scoreboard.jsx";
-import { QuakeText } from "../QuakeText.tsx";
 
 export const DemoGrid = ({ demos }: { demos: Demo[] | null }) => {
   return (
@@ -34,23 +28,21 @@ const GridItem = (props: { demo: Demo; mode?: GridItemDisplayMode }) => {
   }
 
   return (
-    <div>
-      {displayMode === "teaser" ? (
-        <TeaserTile demo={demo} />
-      ) : (
-        <ScoreboardTile demo={demo} />
-      )}
+    <div className="flex flex-col h-full">
+      <div className="h-full min-h-[200px]">
+        <ScoreboardTile demo={demo} showScores={displayMode === "scoreboard"} />
+      </div>
 
-      <div className="flex items-center mt-1">
+      <div className="flex items-center mt-1 text-xs">
         <button
           onClick={revealScores}
-          className={classNames("text-sm bg-slate-800 p-1 px-2 rounded", {
+          className={classNames("bg-slate-800 p-1 px-2 rounded", {
             "opacity-0": displayMode === "scoreboard",
           })}
         >
           Reveal scores
         </button>
-        <div className="text-sm text-slate-400 text-center grow">
+        <div className="text-slate-400 text-center grow">
           <Timestamp timestamp={demo.timestamp} />{" "}
           <span className="text-slate-500">@</span> {demo.source.split(":")[0]}
         </div>
@@ -63,148 +55,68 @@ const GridItem = (props: { demo: Demo; mode?: GridItemDisplayMode }) => {
   );
 };
 
-const ScoreboardTile = ({ demo }: { demo: Demo }) => {
+const ScoreboardTile = ({
+  demo,
+  showScores = false,
+}: {
+  demo: Demo;
+  showScores: boolean;
+}) => {
   const { teams, players } = demo.participants as DemoParticipants;
   const hasTeams = teams.length > 0;
 
-  if (hasTeams) {
-    for (let i = 0; i < teams.length; i++) {
-      teams[i].players.sort((a, b) => b.frags - a.frags);
+  const fixedTeams = [...teams];
+  const fixedPlayers = [...players];
 
-      for (let j = 0; j < teams[i].players.length; j++) {
-        teams[i].players[j].team = teams[i].name;
-        teams[i].players[j].team_color = teams[i].name_color;
-        players.push(teams[i].players[j]);
+  if (hasTeams) {
+    for (let i = 0; i < fixedTeams.length; i++) {
+      for (let j = 0; j < fixedTeams[i].players.length; j++) {
+        fixedTeams[i].players[j].team = fixedTeams[i].name;
+        fixedTeams[i].players[j].team_color = fixedTeams[i].name_color;
+        fixedPlayers.push(fixedTeams[i].players[j]);
       }
     }
   }
 
-  players.sort((a, b) => b.frags - a.frags);
-
-  const server = {
-    players,
-    teams,
-    meta: {
-      showTeams: hasTeams,
-      showTeamColumn: hasTeams,
-    },
-  };
-
-  return (
-    <a
-      key={demo.id}
-      title="Play demo"
-      href={`/recent_games/?demoId=${demo.id}`}
-      className={classNames(
-        "flex flex-col border min-h-[200px] bg-slate-800 bg-no-repeat bg-center bg-cover hover:scale-105 transition-transform hover:shadow-2xl hover:z-20 hover:relative",
-        {
-          "border-green-800": demo.mode === "1on1",
-          "border-blue-800": demo.mode === "2on2",
-          "border-red-800": demo.mode === "4on4",
-          "border-amber-700": demo.mode === "ctf",
-        },
-      )}
-      style={{
-        backgroundImage: `url(https://raw.githubusercontent.com/vikpe/qw-mapshots/main/${demo.map}.jpg)`,
-      }}
-    >
-      <div className="absolute">
-        <ModeRibbon mode={demo.mode} />
-      </div>
-
-      <div className="grow flex h-full bg-gray-700/20 justify-center items-center">
-        <Scoreboard server={server} />
-      </div>
-
-      <div className="flex -mt-8 h-6 px-2 text-right ml-auto items-center bg-gray-900/50 text-xs rounded-lg mr-2 mb-2">
-        {demo.map}
-      </div>
-    </a>
-  );
-};
-
-const TeaserTile = ({ demo }: { demo: Demo }) => {
-  return (
-    <a
-      key={demo.id}
-      title="Play demo"
-      href={`/recent_games/?demoId=${demo.id}`}
-      className={classNames(
-        "flex flex-col border min-h-[200px] bg-slate-800 bg-no-repeat bg-center bg-cover hover:scale-105 transition-transform hover:shadow-2xl hover:z-20 hover:relative",
-        {
-          "border-green-800": demo.mode === "1on1",
-          "border-blue-800": demo.mode === "2on2",
-          "border-red-800": demo.mode === "4on4",
-          "border-amber-700": demo.mode === "ctf",
-        },
-      )}
-      style={{
-        backgroundImage: `url(https://raw.githubusercontent.com/vikpe/qw-mapshots/main/${demo.map}.jpg)`,
-      }}
-    >
-      <div className="absolute">
-        <ModeRibbon mode={demo.mode} />
-      </div>
-
-      <Participants participants={demo.participants as DemoParticipants} />
-
-      <div className="flex -mt-8 h-6 px-2 text-right ml-auto items-center bg-gray-900/50 text-xs rounded-lg mr-2 mb-2">
-        {demo.map}
-      </div>
-    </a>
-  );
-};
-
-const Participants = ({ participants }: { participants: DemoParticipants }) => {
-  const hasTeams = participants.teams.length > 0;
-
-  let titleElements: ReactNode[];
-
-  if (hasTeams) {
-    participants.teams.sort((a, b) => b.frags - a.frags);
-    titleElements = participants.teams.map((t: DemoTeam) => (
-      <QuakeText text={t.name} color={t.name_color} />
-    ));
-  } else {
-    titleElements = participants.players.map((p: DemoPlayer) => (
-      <QuakeText text={p.name} color={p.name_color} />
-    ));
+  if (showScores) {
+    fixedTeams.sort((a, b) => b.frags - a.frags);
+    fixedPlayers.sort((a, b) => b.frags - a.frags);
   }
 
   return (
-    <div className="grow flex h-full bg-gray-700/20 app-text-outline">
-      <div className="w-1/2 flex flex-col justify-center">
-        <div className="ml-auto">
-          <div className="font-bold text-center text-2xl">
-            {titleElements[0]}
-          </div>
-          {hasTeams && <PlayerList players={participants.teams[0].players} />}
-        </div>
+    <a
+      key={demo.id}
+      title="Play demo"
+      href={`/recent_games/?demoId=${demo.id}`}
+      className={classNames(
+        "flex flex-col h-full border bg-slate-800 bg-no-repeat bg-center bg-cover hover:scale-105 transition-transform hover:shadow-2xl hover:z-20 hover:relative",
+        {
+          "border-green-800": demo.mode === "1on1",
+          "border-blue-800": demo.mode === "2on2",
+          "border-red-800": demo.mode === "4on4",
+          "border-amber-700": demo.mode === "ctf",
+        },
+      )}
+      style={{
+        backgroundImage: `url(https://raw.githubusercontent.com/vikpe/qw-mapshots/main/${demo.map}.jpg)`,
+      }}
+    >
+      <div className="absolute">
+        <ModeRibbon mode={demo.mode} />
       </div>
-      <div className="flex justify-center items-center w-16 app-text-shadow font-bold text-xl text-amber-300">
-        VS
-      </div>
-      <div className="w-1/2 flex flex-col justify-center">
-        <div className="mr-auto">
-          <div className="font-bold text-center text-2xl">
-            {titleElements[1]}
-          </div>
-          {hasTeams && <PlayerList players={participants.teams[1].players} />}
-        </div>
-      </div>
-    </div>
-  );
-};
 
-const PlayerList = ({ players }: { players: DemoPlayer[] }) => {
-  return (
-    <div className="text-center mx-1">
-      {players.map((p) => (
-        <div key={`${p.name}-${p.name_color}`}>
-          <QuakeText text={p.name} color={p.name_color} />
-        </div>
-      ))}
-    </div>
+      <div className="flex grow bg-gray-700/20 justify-center items-center my-4">
+        <Scoreboard
+          teams={fixedTeams}
+          players={fixedPlayers}
+          showFrags={showScores}
+        />
+      </div>
+
+      <div className="flex -mt-8 h-6 px-2 text-right ml-auto items-center bg-gray-900/50 text-xs rounded-lg mr-2 mb-2">
+        {demo.map}
+      </div>
+    </a>
   );
 };
 
