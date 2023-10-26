@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import classNames from "classnames";
 import {
   Demo,
@@ -157,19 +157,27 @@ const TeaserTile = ({ demo }: { demo: Demo }) => {
 
 const Participants = ({ participants }: { participants: DemoParticipants }) => {
   const hasTeams = participants.teams.length > 0;
-  const titles = hasTeams
-    ? participants.teams.map((t: DemoTeam) => (
-        <QuakeText text={t.name} color={t.name_color} />
-      ))
-    : participants.players.map((p: DemoPlayer) => (
-        <QuakeText text={p.name} color={p.name_color} />
-      ));
+
+  let titleElements: ReactNode[];
+
+  if (hasTeams) {
+    participants.teams.sort((a, b) => b.frags - a.frags);
+    titleElements = participants.teams.map((t: DemoTeam) => (
+      <QuakeText text={t.name} color={t.name_color} />
+    ));
+  } else {
+    titleElements = participants.players.map((p: DemoPlayer) => (
+      <QuakeText text={p.name} color={p.name_color} />
+    ));
+  }
 
   return (
     <div className="grow flex h-full bg-gray-700/20 app-text-outline">
       <div className="w-1/2 flex flex-col justify-center">
         <div className="ml-auto">
-          <div className="font-bold text-center text-2xl">{titles[0]}</div>
+          <div className="font-bold text-center text-2xl">
+            {titleElements[0]}
+          </div>
           {hasTeams && <PlayerList players={participants.teams[0].players} />}
         </div>
       </div>
@@ -178,7 +186,9 @@ const Participants = ({ participants }: { participants: DemoParticipants }) => {
       </div>
       <div className="w-1/2 flex flex-col justify-center">
         <div className="mr-auto">
-          <div className="font-bold text-center text-2xl">{titles[1]}</div>
+          <div className="font-bold text-center text-2xl">
+            {titleElements[1]}
+          </div>
           {hasTeams && <PlayerList players={participants.teams[1].players} />}
         </div>
       </div>
