@@ -1,6 +1,6 @@
 import { useDemoBrowserSettings } from "./hooks.ts";
 import React, { useEffect, useState } from "react";
-import { useDebounce } from "usehooks-ts";
+import { useDebounce, useLocalStorage } from "usehooks-ts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
@@ -13,6 +13,7 @@ import { DisplayMode } from "./types.ts";
 import { usePlaylist } from "../playlist/hooks.ts";
 import { Pagination } from "./Pagination.tsx";
 import { useDemos } from "./context.tsx";
+import { Switch } from "../ui/Switch.tsx";
 
 export const btnSelectedClass =
   "bg-gradient-to-t from-blue-500/20 to-blue-500/40 border-white/10 text-white";
@@ -25,8 +26,32 @@ export const Toolbar = () => {
       <DisplayModeButtons />
       <GameModeButtons />
       <QueryInput />
+      <GlobalShowScoresToggle />
       <BulkActions />
       <Pagination />
+    </div>
+  );
+};
+
+const GlobalShowScoresToggle = () => {
+  const [showScores, setShowScores] = useLocalStorage<boolean>(
+    "demoBrowserShowScores",
+    false,
+  );
+
+  function handleClick() {
+    setShowScores(!showScores);
+  }
+
+  return (
+    <div>
+      <div className="text-sm">
+        <Switch
+          label={"Show scores"}
+          enabled={showScores}
+          onClick={handleClick}
+        />
+      </div>
     </div>
   );
 };

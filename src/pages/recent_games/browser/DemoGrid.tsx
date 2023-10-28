@@ -1,13 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import classNames from "classnames";
 import { Demo, DemoParticipants } from "../services/supabase/supabase.types.ts";
 import { Timestamp } from "../Timestamp.tsx";
 import { ToggleButton } from "../playlist/Playlist.tsx";
-import { DownloadButton } from "./DemoList.tsx";
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+import { DownloadButton } from "./DemoList.tsx"; // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { Scoreboard } from "../../../servers/Scoreboard.jsx";
+import { useLocalStorage } from "usehooks-ts";
 
 export const DemoGrid = ({ demos }: { demos: Demo[] | null }) => {
   return (
@@ -17,36 +16,38 @@ export const DemoGrid = ({ demos }: { demos: Demo[] | null }) => {
   );
 };
 
-type GridItemDisplayMode = "teaser" | "scoreboard";
+const GridItem = (props: { demo: Demo }) => {
+  const { demo } = props;
+  const [globalShowScores] = useLocalStorage<boolean>(
+    "demoBrowserShowScores",
+    false,
+  );
+  const [value, setValue] = useState(globalShowScores);
 
-const GridItem = (props: { demo: Demo; mode?: GridItemDisplayMode }) => {
-  const { demo, mode = "teaser" } = props;
-  const [displayMode, setDisplayMode] = useState<GridItemDisplayMode>(mode);
-
-  function revealScores() {
-    setDisplayMode("scoreboard");
-  }
+  useEffect(() => {
+    setValue(globalShowScores);
+  }, [globalShowScores]);
 
   return (
     <div className="flex flex-col h-full">
       <div className="h-full min-h-[200px]">
-        <ScoreboardTile demo={demo} showScores={displayMode === "scoreboard"} />
+        <ScoreboardTile demo={demo} showScores={value} />
       </div>
 
       <div className="flex items-center mt-1 text-xs">
         <button
-          onClick={revealScores}
+          onClick={() => setValue(!value)}
           className={classNames("bg-slate-800 p-1 px-2 rounded", {
-            "opacity-0": displayMode === "scoreboard",
+            "opacity-0": value,
           })}
         >
-          Reveal scores
+          Show scores
         </button>
-        <div className="text-slate-400 text-center grow">
+        <div className="text-slate-400 grow text-center">
           <Timestamp timestamp={demo.timestamp} />{" "}
           <span className="text-slate-500">@</span> {demo.source.split(":")[0]}
         </div>
-        <div className="flex items-center space-x-2 w-14">
+        <div className="flex items-center space-x-1">
           <ToggleButton demo={demo} />
           <DownloadButton s3_key={demo.s3_key} />
         </div>

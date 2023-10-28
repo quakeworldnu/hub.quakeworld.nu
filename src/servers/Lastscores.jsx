@@ -192,7 +192,7 @@ const TextSpoiler = ({ text, isRevealed = false }) => {
   return (
     <span
       className={classNames({ "blur-sm": !isRevealed })}
-      title="Reveal scores"
+      title="Show scores"
     >
       {text}
     </span>
