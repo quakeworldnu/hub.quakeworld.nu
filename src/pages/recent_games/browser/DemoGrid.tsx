@@ -65,6 +65,7 @@ const ScoreboardTile = ({
   if (hasTeams) {
     for (let i = 0; i < fixedTeams.length; i++) {
       for (let j = 0; j < fixedTeams[i].players.length; j++) {
+        fixedTeams[i].players[j].colors = fixedTeams[i].colors;
         fixedTeams[i].players[j].team = fixedTeams[i].name;
         fixedTeams[i].players[j].team_color = fixedTeams[i].name_color;
         fixedPlayers.push(fixedTeams[i].players[j]);
