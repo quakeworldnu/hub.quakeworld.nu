@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
 import classNames from "classnames";
 import { Demo, DemoParticipants } from "../services/supabase/supabase.types.ts";
 import { Timestamp } from "../Timestamp.tsx";
 import { ToggleButton } from "../playlist/Playlist.tsx";
-import { DownloadButton } from "./DemoList.tsx"; // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { Scoreboard } from "../../../servers/Scoreboard.jsx";
-import { useLocalStorage } from "usehooks-ts";
+import { useDemoScoreSpoiler } from "./hooks.ts";
+import { DownloadButton } from "./Controls.tsx";
 
 export const DemoGrid = ({ demos }: { demos: Demo[] | null }) => {
   return (
@@ -18,27 +19,19 @@ export const DemoGrid = ({ demos }: { demos: Demo[] | null }) => {
 
 const GridItem = (props: { demo: Demo }) => {
   const { demo } = props;
-  const [globalShowScores] = useLocalStorage<boolean>(
-    "demoBrowserShowScores",
-    false,
-  );
-  const [value, setValue] = useState(globalShowScores);
-
-  useEffect(() => {
-    setValue(globalShowScores);
-  }, [globalShowScores]);
+  const { isVisible, show } = useDemoScoreSpoiler();
 
   return (
     <div className="flex flex-col h-full">
       <div className="h-full min-h-[200px]">
-        <ScoreboardTile demo={demo} showScores={value} />
+        <ScoreboardTile demo={demo} showScores={isVisible} />
       </div>
 
       <div className="flex items-center mt-1 text-xs">
         <button
-          onClick={() => setValue(!value)}
+          onClick={show}
           className={classNames("bg-slate-800 p-1 px-2 rounded", {
-            "opacity-0": value,
+            "opacity-0": isVisible,
           })}
         >
           Show scores

@@ -44,14 +44,12 @@ const GlobalShowScoresToggle = () => {
   }
 
   return (
-    <div>
-      <div className="text-sm">
-        <Switch
-          label={"Show scores"}
-          enabled={showScores}
-          onClick={handleClick}
-        />
-      </div>
+    <div className="text-sm">
+      <Switch
+        label={"Show all scores"}
+        enabled={showScores}
+        onClick={handleClick}
+      />
     </div>
   );
 };

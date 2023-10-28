@@ -1,9 +1,8 @@
-import { Demo } from "../services/supabase/supabase.types.ts";
+import { Demo, DemoParticipants } from "../services/supabase/supabase.types.ts";
 import { Timestamp } from "../Timestamp.tsx";
 import { ToggleButton } from "../playlist/Playlist.tsx";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFloppyDisk, faPlay } from "@fortawesome/free-solid-svg-icons";
-import { getDemoDownloadUrl } from "../services/supabase/demo.ts";
+import { ScoreSpoiler } from "./ScoreSpoiler.tsx";
+import { DownloadButton, PlayButton } from "./Controls.tsx";
 
 export const DemoList = ({ demos }: { demos: Demo[] | null }) => {
   return (
@@ -14,6 +13,7 @@ export const DemoList = ({ demos }: { demos: Demo[] | null }) => {
           <th className="p-2">Server</th>
           <th className="p-2">Mode</th>
           <th className="p-2">Map</th>
+          <th className="p-2">Score</th>
           <th className="p-2">Title</th>
           <th className="p-2"></th>
         </tr>
@@ -36,6 +36,11 @@ const ListItem = ({ demo }: { demo: Demo }) => {
       </td>
       <td className="p-2 text-slate-400 text-right">{demo.mode}</td>
       <td className="p-2 text-slate-400">{demo.map}</td>
+      <td className="text-center">
+        <ScoreSpoiler
+          score={getDemoScores(demo.participants as DemoParticipants)}
+        />
+      </td>
       <td className="p-2">{demo.title}</td>
       <td className="p-2 flex items-center space-x-2">
         <PlayButton id={demo.id} />
@@ -46,26 +51,16 @@ const ListItem = ({ demo }: { demo: Demo }) => {
   );
 };
 
-export const PlayButton = ({ id }: { id: number }) => {
-  return (
-    <a
-      href={`/recent_games/?demoId=${id}`}
-      className="flex items-center justify-center text-blue-500 hover:text-blue-300 w-8 h-8 hover:scale-125 transition-transform"
-      title="Play"
-    >
-      <FontAwesomeIcon fixedWidth icon={faPlay} size={"lg"} />
-    </a>
-  );
-};
+function getDemoScores(participants: DemoParticipants): string {
+  const { teams, players } = participants;
 
-export const DownloadButton = ({ s3_key }: { s3_key: string }) => {
-  return (
-    <a
-      href={getDemoDownloadUrl(s3_key)}
-      className="flex items-center justify-center text-slate-500 hover:text-slate-300 w-8 h-8 hover:scale-125 transition-transform"
-      title="Download"
-    >
-      <FontAwesomeIcon fixedWidth icon={faFloppyDisk} size={"lg"} />
-    </a>
-  );
-};
+  let p: number[];
+
+  if (teams.length > 0) {
+    p = teams.map((t) => t.frags);
+  } else {
+    p = players.map((p) => p.frags);
+  }
+
+  return p.join(" : ");
+}
