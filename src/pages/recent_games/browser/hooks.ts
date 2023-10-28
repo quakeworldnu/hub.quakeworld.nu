@@ -1,5 +1,6 @@
 import { DemoBrowserSettings } from "./types.ts";
-import { useLocalStorage } from "usehooks-ts";
+import { useLocalStorage, useToggle } from "usehooks-ts";
+import { useEffect } from "react";
 
 export function useDemoBrowserSettings() {
   const [settings, setSettings] = useLocalStorage<DemoBrowserSettings>(
@@ -17,4 +18,15 @@ export function useDemoBrowserSettings() {
   }
 
   return { settings, setSettings, setPage };
+}
+
+export function useDemoScoreSpoiler() {
+  const [globalShow] = useLocalStorage<boolean>("demoBrowserShowScores", false);
+  const [isVisible, toggleVisible, setIsVisible] = useToggle(globalShow);
+
+  useEffect(() => {
+    setIsVisible(globalShow);
+  }, [globalShow, setIsVisible]);
+
+  return { isVisible, toggleVisible, show: () => setIsVisible(true) };
 }
