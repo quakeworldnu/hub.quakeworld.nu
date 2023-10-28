@@ -7,6 +7,8 @@ import {
   getDemoDownloadUrl,
 } from "../services/supabase/demo.ts";
 import { FtePlayer } from "./FtePlayer.tsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 
 export const Player = ({ demoId }: { demoId: number }) => {
   const [demo, setDemo] = useState<Demo | null>(null);
@@ -34,7 +36,7 @@ export const Player = ({ demoId }: { demoId: number }) => {
       <div className="lg:flex min-h-[800px] mt-4">
         <div className="flex flex-col grow">
           <div className="flex grow bg-black items-center justify-center max-h-[75vh]">
-            <FtePlayer demo={demo} />
+            {false && <FtePlayer demo={demo} />}
           </div>
           <DemoPlayerFooter demo={demo} />
         </div>
@@ -73,8 +75,9 @@ export const DownloadDemoButton = ({ s3_key }: { s3_key: string }) => {
   return (
     <a
       href={demoUrl}
-      className="flex mt-4 md:mt-0 py-2.5 px-4 rounded bg-gradient-to-b from-blue-700 to-blue-900 hover:from-blue-600 hover:to-blue-800"
+      className="flex text-sm items-center md:mt-0 py-2.5 px-4 rounded bg-gradient-to-b from-blue-700 to-blue-900 hover:from-blue-600 hover:to-blue-800"
     >
+      <FontAwesomeIcon icon={faFloppyDisk} fixedWidth className="mr-1.5" />
       Download demo
     </a>
   );
