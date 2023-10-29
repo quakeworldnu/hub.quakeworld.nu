@@ -31,7 +31,7 @@ export function TimeSlider() {
   }, [isHover, mouse.elementX]);
 
   return (
-    <div className="w-full mx-4">
+    <>
       <div
         className={classNames(
           { hidden: !isHover },
@@ -44,7 +44,7 @@ export function TimeSlider() {
           <SliderRoot max={maxValue} />
         </form>
       </div>
-    </div>
+    </>
   );
 }
 
