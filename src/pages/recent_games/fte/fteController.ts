@@ -1,8 +1,8 @@
 import {
   Autotrack,
   ControlSource,
-  FteModule,
   DemoPlayback,
+  FteModule,
   PlayerInfo,
 } from "./types.ts";
 
@@ -24,12 +24,6 @@ export class FteController {
   _demo_setspeed = 100;
   _cl_splitscreen = 0;
   _cl_autotrack: string = Autotrack.ON;
-  _cache: { [key: string]: string | number | null } = {
-    timelimit: null,
-    map: null,
-    demoTotalTime: null,
-    demoGameStartTime: null,
-  };
 
   static _instance: FteController | null = null;
 
@@ -78,24 +72,6 @@ export class FteController {
     fteEvent(name, { ...detail, source: this._controlSource });
   }
 
-  // exposed functions from fte
-  getCachedValue(
-    key: string,
-    getter: () => number | string,
-    defaultValue: number | string,
-  ) {
-    if (this._cache[key] !== null) {
-      return this._cache[key];
-    }
-
-    try {
-      this._cache[key] = getter();
-      return this._cache[key];
-    } catch (e) {
-      return defaultValue;
-    }
-  }
-
   getDemoElapsedTime(): number {
     try {
       return this.module.getDemoElapsedTime();
@@ -129,25 +105,6 @@ export class FteController {
       return this.module.getPlayerInfo();
     } catch (e) {
       return [];
-    }
-  }
-
-  getMapName() {
-    return this.getCachedValue("mapName", this.module.getMapName, "unknown");
-  }
-
-  getTimelimit() {
-    if (this._cache.timelimit !== null) {
-      return this._cache.timelimit;
-    }
-
-    const timelimit = this.module.getTimelimit();
-    this._cache.timelimit = timelimit;
-
-    try {
-      return timelimit;
-    } catch (e) {
-      return 20;
     }
   }
 
