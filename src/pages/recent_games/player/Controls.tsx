@@ -7,18 +7,12 @@ import { GameClock } from "./controls/GameClock.tsx";
 import { TimeSlider } from "./controls/TimeSlider.tsx";
 import { VolumeSlider } from "./controls/VolumeSlider.tsx";
 import { VolumeToggle } from "./controls/VolumeToggle.tsx";
-import { GroupControls } from "./GroupControls.tsx";
 import { SplitscreenToggle } from "./controls/SplitscreenToggle.tsx";
 import { useIdle } from "@uidotdev/usehooks";
 import classNames from "classnames";
-import { ClipTimeSlider } from "./ClipTimeSlider.tsx";
-import { useClipEditor } from "./Clips.tsx";
 
 export const Controls = () => {
-  // const { group } = useUser();
-  const { isEnabled } = useClipEditor();
-  const group = false;
-  const idle = useIdle(5000000);
+  const idle = useIdle(2500);
 
   return (
     <div
@@ -29,11 +23,8 @@ export const Controls = () => {
         },
       )}
     >
-      {false && group && <GroupControls />}
-
       <div className="w-full mx-4">
         <TimeSlider />
-        {isEnabled && <ClipTimeSlider />}
       </div>
 
       <PlayToggle />
