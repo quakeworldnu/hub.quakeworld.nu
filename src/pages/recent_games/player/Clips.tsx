@@ -1,52 +1,52 @@
-import { useLocalStorage } from "usehooks-ts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faScissors } from "@fortawesome/free-solid-svg-icons";
 import { query } from "urlcat";
-
-type ClipEditor = {
-  isEnabled: boolean;
-  demoId: number;
-  from: number;
-  to: number;
-};
+import { useState } from "react";
 
 export function useClipEditor() {
-  const [props, setProps] = useLocalStorage<ClipEditor>("isClipping", {
-    isEnabled: false,
-    demoId: 0,
-    from: 0,
-    to: 0,
-  });
+  const [isEnabled, setIsEnabled] = useState<boolean>(false);
+  const [from, setFrom] = useState<number>(0);
+  const [to, setTo] = useState<number>(0);
 
   function toggleIsEnabled() {
-    setProps({ ...props, isEnabled: !props.isEnabled });
+    if (isEnabled) {
+      disable();
+    } else {
+      enable();
+    }
+  }
+
+  function enable() {
+    setIsEnabled(true);
   }
 
   function disable() {
-    setProps({ ...props, isEnabled: false });
+    setIsEnabled(false);
   }
 
   function setTimeFrom(from: number) {
-    setProps({ ...props, from });
+    setFrom(Math.floor(from));
   }
 
   function setTimeTo(to: number) {
-    setProps({ ...props, to });
+    setTo(Math.floor(to));
   }
 
   function getUrl() {
     const baseUrl =
       "https://qwsb-4b8ab--demoplayer-ue1ng6v5.web.app/demo_player/";
     const params = {
-      demoId: props.demoId,
-      from: props.from,
-      to: props.to,
+      demoId: 0,
+      from,
+      to,
     };
     return `${baseUrl}?${query(params)}`;
   }
 
   return {
-    ...props,
+    isEnabled,
+    from,
+    to,
     toggleIsEnabled,
     disable,
     getUrl,
