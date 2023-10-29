@@ -9,6 +9,7 @@ import {
 import { FtePlayer } from "./FtePlayer.tsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
+import { ClipButton } from "./Clips.tsx";
 
 export const Player = ({ demoId }: { demoId: number }) => {
   const [demo, setDemo] = useState<Demo | null>(null);
@@ -33,10 +34,10 @@ export const Player = ({ demoId }: { demoId: number }) => {
   return (
     <>
       <DemoBreadcrumbs demo={demo} />
-      <div className="lg:flex min-h-[800px] mt-4">
+      <div className="lg:flex min-h-[200px] mt-4">
         <div className="flex flex-col grow">
           <div className="flex grow bg-black items-center justify-center max-h-[75vh]">
-            {false && <FtePlayer demo={demo} />}
+            <FtePlayer demo={demo} />
           </div>
           <DemoPlayerFooter demo={demo} />
         </div>
@@ -49,7 +50,8 @@ export const DemoPlayerFooter = ({ demo }: { demo: Demo }) => {
   return (
     <div className="py-6 md:flex justify-between">
       <DemoInfo demo={demo} />
-      <div>
+      <div className="flex items-center space-x-4">
+        <ClipButton />
         <DownloadDemoButton s3_key={demo.s3_key} />
       </div>
     </div>
@@ -78,7 +80,7 @@ export const DownloadDemoButton = ({ s3_key }: { s3_key: string }) => {
       className="flex text-sm items-center md:mt-0 py-2.5 px-4 rounded bg-gradient-to-b from-blue-700 to-blue-900 hover:from-blue-600 hover:to-blue-800"
     >
       <FontAwesomeIcon icon={faFloppyDisk} fixedWidth className="mr-1.5" />
-      Download demo
+      Download
     </a>
   );
 };
