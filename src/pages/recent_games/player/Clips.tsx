@@ -2,9 +2,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faScissors } from "@fortawesome/free-solid-svg-icons";
 import { query } from "urlcat";
 import { useState } from "react";
+import { useLocalStorage } from "usehooks-ts";
 
 export function useClipEditor() {
-  const [isEnabled, setIsEnabled] = useState<boolean>(false);
+  const [isEnabled, setIsEnabled] = useLocalStorage<boolean>(
+    "showClipEditor",
+    false,
+  );
   const [from, setFrom] = useState<number>(0);
   const [to, setTo] = useState<number>(0);
 
@@ -55,7 +59,7 @@ export function useClipEditor() {
   };
 }
 
-export const ClipButton = () => {
+export const ToggleClipEditorButton = () => {
   const { toggleIsEnabled } = useClipEditor();
 
   return (

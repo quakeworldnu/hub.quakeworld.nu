@@ -9,7 +9,7 @@ import {
 import { FtePlayer } from "./FtePlayer.tsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
-import { ClipButton } from "./Clips.tsx";
+import { ToggleClipEditorButton } from "./Clips.tsx";
 
 export const Player = ({ demoId }: { demoId: number }) => {
   const [demo, setDemo] = useState<Demo | null>(null);
@@ -51,7 +51,7 @@ export const DemoPlayerFooter = ({ demo }: { demo: Demo }) => {
     <div className="py-6 md:flex justify-between">
       <DemoInfo demo={demo} />
       <div className="flex items-center space-x-4">
-        <ClipButton />
+        <ToggleClipEditorButton />
         <DownloadDemoButton s3_key={demo.s3_key} />
       </div>
     </div>

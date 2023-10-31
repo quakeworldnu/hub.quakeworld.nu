@@ -10,9 +10,12 @@ import { VolumeToggle } from "./controls/VolumeToggle.tsx";
 import { SplitscreenToggle } from "./controls/SplitscreenToggle.tsx";
 import { useIdle } from "@uidotdev/usehooks";
 import classNames from "classnames";
+import { useClipEditor } from "./Clips.tsx";
+import { ClipControls } from "./ClipControls.tsx";
 
 export const Controls = () => {
-  const idle = useIdle(2500);
+  const { isEnabled: showClipEditor } = useClipEditor();
+  const idle = useIdle(showClipEditor ? undefined : 2500);
 
   return (
     <div
@@ -25,6 +28,7 @@ export const Controls = () => {
     >
       <div className="w-full mx-4">
         <TimeSlider />
+        {showClipEditor && <ClipControls />}
       </div>
 
       <PlayToggle />

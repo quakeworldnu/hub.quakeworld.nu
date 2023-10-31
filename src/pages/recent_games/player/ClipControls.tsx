@@ -12,6 +12,7 @@ import { useFteController } from "../fte/hooks.ts";
 import { PlayToggle } from "./controls/PlayToggle.tsx";
 import { useClipEditor } from "./Clips.tsx";
 import { throttle } from "@martinstark/throttle-ts";
+import * as Slider from "@radix-ui/react-slider";
 
 export const ClipControls = () => {
   const fte = useFteController();
@@ -55,8 +56,31 @@ export const ClipControls = () => {
 
   console.log("values", values);
 
+  function handleTimeSliderChange(args) {
+    fte?.demoJump(args[0]);
+    console.log("handleTimeSliderChange", args);
+  }
+
   return (
     <div className="flex flex-wrap justify-center mt-4">
+      <div className="flex w-full my-2">
+        <Slider.Root
+          className="relative flex items-center select-none touch-none w-full h-8 group cursor-pointer transition-colors"
+          value={values}
+          onValueChange={handleTimeSliderChange}
+          min={0}
+          max={max}
+          step={1}
+        >
+          <Slider.Track className="bg-gray-400 relative grow h-1.5">
+            <Slider.Range className="absolute bg-purple-700 h-full" />
+          </Slider.Track>
+          <Slider.Thumb
+            className="block w-4 h-4 bg-purple-600 rounded-full focus:outline-none transition-size duration-100"
+            aria-label="Seek"
+          />
+        </Slider.Root>
+      </div>
       <Range
         draggableTrack
         values={values}
