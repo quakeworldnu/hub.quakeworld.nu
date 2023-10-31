@@ -8,9 +8,16 @@ function demoToPlaylistItem(demo: Demo): PlaylistItem {
 }
 
 export function useCurrentDemoId(): number | undefined {
-  const urlParams = new URLSearchParams(window.location.search);
-  const demoId = urlParams.get("demoId");
+  const params = new URLSearchParams(window.location.search);
+  const demoId = params.get("demoId");
   return demoId ? parseInt(demoId) : undefined;
+}
+
+export function useUrlClipParams(): { from: number; to: number } {
+  const params = new URLSearchParams(window.location.search);
+  const from = parseInt(params.get("from") || "0");
+  const to = parseInt(params.get("to") || "0");
+  return { from, to };
 }
 
 export function usePlaylist() {

@@ -43,13 +43,14 @@ export const ClipEditorProvider = ({ children }: { children: ReactNode }) => {
   const [to, setTo] = useState<number>(0);
 
   function setRange([from, to]: number[]) {
-    setFrom(from);
-    setTo(to);
+    setFrom(Math.floor(from));
+    setTo(Math.floor(to));
   }
 
   function getUrl(): string {
     const q = query({ demoId, from: from, to: to });
-    return `https://qwsb-4b8ab--demoplayer-ue1ng6v5.web.app/recent_games/?${q}`;
+    const base = window.location.href.split("?")[0];
+    return `${base}?${q}`;
   }
 
   const value = {

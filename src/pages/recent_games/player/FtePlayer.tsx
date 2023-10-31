@@ -5,8 +5,11 @@ import { getAssets } from "../fte/assets.ts";
 import { getDemoDownloadUrl } from "../services/supabase/demo.ts";
 import { Demo } from "../services/supabase/supabase.types.ts";
 import { FteCanvas } from "./FteCanvas.tsx";
+import { useEffect } from "react";
+import { useUrlClipParams } from "../playlist/hooks.ts";
 
 export const FtePlayer = ({ demo }: { demo: Demo }) => {
+  const { from, to } = useUrlClipParams();
   const demoUrl = getDemoDownloadUrl(demo.s3_key);
   const files = getAssets(demoUrl, demo.map);
   const { isLoadingAssets, isReady, assets, isInitializing } = useFteLoader({
@@ -14,6 +17,17 @@ export const FtePlayer = ({ demo }: { demo: Demo }) => {
     demoTotalTime: demo.duration,
   });
   const fte = useFteController();
+
+  useEffect(() => {
+    if (!fte) {
+      return;
+    }
+
+    if (from > 0 && to > 0) {
+      fte.demoJump(Math.min(from, demo.duration || 0));
+      fte.pause();
+    }
+  }, [fte, isReady]);
 
   return (
     <div

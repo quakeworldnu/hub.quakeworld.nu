@@ -8,6 +8,7 @@ import { useFteController } from "../../fte/hooks.ts";
 import { formatSeek } from "../../time.ts";
 import { useClipEditor } from "../clips/context.tsx";
 import { getTrackBackground } from "react-range";
+import { useUrlClipParams } from "../../playlist/hooks.ts";
 
 export function TimeSlider() {
   const fte = useFteController();
@@ -52,7 +53,8 @@ export function TimeSlider() {
 
 const SliderRoot = ({ max }: { max: number }) => {
   const fte = useFteController();
-  const { range, isEnabled } = useClipEditor();
+  const { range: clipRange, isEnabled: clipEditorEnabled } = useClipEditor();
+  const { from, to } = useUrlClipParams();
   useUpdateInterval(fte ? 200 : null);
 
   if (!fte) {
@@ -67,6 +69,16 @@ const SliderRoot = ({ max }: { max: number }) => {
 
   const min = 0;
 
+  let range = [0, 0];
+
+  if (clipEditorEnabled) {
+    range = clipRange;
+  } else if (from > 0 && to > 0) {
+    range = [from, to];
+  }
+
+  const useRange = range[1] > 0;
+
   return (
     <Slider.Root
       className="relative flex items-center select-none touch-none w-full h-8 group cursor-pointer transition-opacity duration-500"
@@ -78,7 +90,7 @@ const SliderRoot = ({ max }: { max: number }) => {
     >
       <div
         className={classNames("absolute w-full h-2", {
-          "opacity-0": !isEnabled,
+          "opacity-0": !useRange,
         })}
         style={{
           background: getTrackBackground({
@@ -93,17 +105,13 @@ const SliderRoot = ({ max }: { max: number }) => {
       <Slider.Track
         className={classNames(
           "relative grow h-1 transition-size group-hover:h-2 bg-gray-500",
-          {
-            "opacity-0": isEnabled,
-          },
+          { "opacity-0": useRange },
         )}
       >
         <Slider.Range
           className={classNames(
             "absolute h-full bg-violet-700 group-hover:bg-violet-600",
-            {
-              "opacity-0": isEnabled,
-            },
+            { "opacity-0": useRange },
           )}
         />
       </Slider.Track>
@@ -112,9 +120,8 @@ const SliderRoot = ({ max }: { max: number }) => {
         className={classNames(
           "block w-1 focus:outline-none pointer-events-none transition-size",
           {
-            "bg-white h-5": isEnabled,
-            "h-3 bg-violet-500 group-hover:bg-white group-hover:h-5":
-              !isEnabled,
+            "h-5 bg-white": useRange,
+            "h-3 bg-violet-500 group-hover:bg-white group-hover:h-5": !useRange,
           },
         )}
       />

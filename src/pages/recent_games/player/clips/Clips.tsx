@@ -14,7 +14,7 @@ export const DisableClipEditorButton = () => {
       )}
       onClick={toggle}
     >
-      <FontAwesomeIcon icon={faClose} fixedWidth className="mr-1.5" />
+      <FontAwesomeIcon icon={faClose} fixedWidth className="mr-0.5" />
       Close
     </button>
   );
