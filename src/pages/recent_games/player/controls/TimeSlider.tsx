@@ -71,13 +71,10 @@ const SliderRoot = ({ max }: { max: number }) => {
       max={max}
       step={1}
     >
-      <Slider.Track className="bg-gray-500 group-hover:bg-gray-400 relative grow h-1 group-hover:h-1.5">
-        <Slider.Range className="absolute bg-purple-800 group-hover:bg-purple-700 h-full" />
+      <Slider.Track className="relative grow h-1 transition-size group-hover:h-2 bg-gray-500">
+        <Slider.Range className="absolute h-full bg-purple-700 group-hover:bg-purple-600" />
       </Slider.Track>
-      <Slider.Thumb
-        className="block w-1 h-1 bg-purple-800 group-hover:bg-purple-600 rounded-full group-hover:w-4 group-hover:h-4 focus:outline-none transition-size duration-100"
-        aria-label="Seek"
-      />
+      <Slider.Thumb className="block w-1 h-2 bg-purple-500 transition-size focus:outline-none pointer-events-none group-hover:bg-white group-hover:rounded-none group-hover:w-1 group-hover:h-5" />
     </Slider.Root>
   );
 };
