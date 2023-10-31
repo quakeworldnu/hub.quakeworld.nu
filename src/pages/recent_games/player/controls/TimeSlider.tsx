@@ -6,6 +6,8 @@ import { useMouse } from "@uidotdev/usehooks";
 import { useUpdateInterval } from "../../hooks.ts";
 import { useFteController } from "../../fte/hooks.ts";
 import { formatSeek } from "../../time.ts";
+import { useClipEditor } from "../clips/context.tsx";
+import { getTrackBackground } from "react-range";
 
 export function TimeSlider() {
   const fte = useFteController();
@@ -35,7 +37,7 @@ export function TimeSlider() {
       <div
         className={classNames(
           { hidden: !isHover },
-          "absolute bottom-20 text-xs font-mono px-2 py-1 bg-purple-800 text-white rounded",
+          "absolute bottom-20 text-xs font-mono px-2 py-1 bg-violet-800 text-white rounded",
         )}
         ref={tooltipRef}
       ></div>
@@ -50,6 +52,7 @@ export function TimeSlider() {
 
 const SliderRoot = ({ max }: { max: number }) => {
   const fte = useFteController();
+  const { range, isEnabled } = useClipEditor();
   useUpdateInterval(fte ? 200 : null);
 
   if (!fte) {
@@ -62,19 +65,59 @@ const SliderRoot = ({ max }: { max: number }) => {
     }
   }
 
+  const min = 0;
+
   return (
     <Slider.Root
-      className="relative flex items-center select-none touch-none w-full h-8 group cursor-pointer"
+      className="relative flex items-center select-none touch-none w-full h-8 group cursor-pointer transition-opacity duration-500"
       value={[fte.getDemoElapsedTime()]}
       onValueChange={handleValueChange}
-      min={0}
+      min={min}
       max={max}
       step={1}
     >
-      <Slider.Track className="relative grow h-1 transition-size group-hover:h-2 bg-gray-500">
-        <Slider.Range className="absolute h-full bg-purple-700 group-hover:bg-purple-600" />
+      <div
+        className={classNames("absolute w-full h-2", {
+          "opacity-0": !isEnabled,
+        })}
+        style={{
+          background: getTrackBackground({
+            values: range,
+            colors: ["#444", "#80f", "#444"],
+            min,
+            max,
+          }),
+        }}
+      ></div>
+
+      <Slider.Track
+        className={classNames(
+          "relative grow h-1 transition-size group-hover:h-2 bg-gray-500",
+          {
+            "opacity-0": isEnabled,
+          },
+        )}
+      >
+        <Slider.Range
+          className={classNames(
+            "absolute h-full bg-violet-700 group-hover:bg-violet-600",
+            {
+              "opacity-0": isEnabled,
+            },
+          )}
+        />
       </Slider.Track>
-      <Slider.Thumb className="block w-1 h-2 bg-purple-500 transition-size focus:outline-none pointer-events-none group-hover:bg-white group-hover:h-5" />
+
+      <Slider.Thumb
+        className={classNames(
+          "block w-1 focus:outline-none pointer-events-none transition-size",
+          {
+            "bg-white h-5": isEnabled,
+            "h-3 bg-violet-500 group-hover:bg-white group-hover:h-5":
+              !isEnabled,
+          },
+        )}
+      />
     </Slider.Root>
   );
 };

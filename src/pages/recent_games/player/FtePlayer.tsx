@@ -34,7 +34,7 @@ export const FtePlayer = ({ demo }: { demo: Demo }) => {
           <div className="flex items-center">
             <svg
               className={classNames(
-                "w-6 h-6 mr-2 fill-purple-600 text-purple-800 animate-spin",
+                "w-6 h-6 mr-2 fill-violet-600 text-violet-800 animate-spin",
                 {
                   hidden: isReady,
                 },

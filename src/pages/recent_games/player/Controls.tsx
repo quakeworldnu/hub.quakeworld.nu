@@ -10,8 +10,7 @@ import { VolumeToggle } from "./controls/VolumeToggle.tsx";
 import { SplitscreenToggle } from "./controls/SplitscreenToggle.tsx";
 import { useIdle } from "@uidotdev/usehooks";
 import classNames from "classnames";
-import { useClipEditor } from "./Clips.tsx";
-import { ClipControls } from "./ClipControls.tsx";
+import { useClipEditor } from "./clips/context.tsx";
 
 export const Controls = () => {
   const { isEnabled: showClipEditor } = useClipEditor();
@@ -22,13 +21,12 @@ export const Controls = () => {
       className={classNames(
         "flex flex-wrap transition-opacity duration-500 bg-black/60",
         {
-          "opacity-0": idle,
+          "opacity-0z": idle,
         },
       )}
     >
       <div className="w-full mx-4">
         <TimeSlider />
-        {showClipEditor && <ClipControls />}
       </div>
 
       <PlayToggle />

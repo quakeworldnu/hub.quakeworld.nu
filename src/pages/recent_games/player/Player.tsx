@@ -9,7 +9,9 @@ import {
 import { FtePlayer } from "./FtePlayer.tsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
-import { ToggleClipEditorButton } from "./Clips.tsx";
+import { EnableClipEditorButton } from "./clips/Clips.tsx";
+import { ClipControls } from "./clips/ClipControls.tsx";
+import { useClipEditor } from "./clips/context.tsx";
 
 export const Player = ({ demoId }: { demoId: number }) => {
   const [demo, setDemo] = useState<Demo | null>(null);
@@ -47,26 +49,25 @@ export const Player = ({ demoId }: { demoId: number }) => {
 };
 
 export const DemoPlayerFooter = ({ demo }: { demo: Demo }) => {
+  const { isEnabled: showClipEditor } = useClipEditor();
   return (
-    <div className="py-6 md:flex justify-between">
-      <DemoInfo demo={demo} />
-      <div className="flex items-center space-x-4">
-        <ToggleClipEditorButton />
-        <DownloadDemoButton s3_key={demo.s3_key} />
-      </div>
-    </div>
-  );
-};
-
-export const DemoInfo = ({ demo }: { demo: Demo }) => {
-  const demoDescription = getDemoDescription(demo);
-
-  return (
-    <div className="space-y-2">
-      <div className="text-2xl font-bold">{demoDescription}</div>
-      <div className="text-slate-400 text-sm">
-        <Timestamp timestamp={demo.timestamp} /> on {demo.source}
-      </div>
+    <div className="py-6">
+      {showClipEditor ? (
+        <ClipControls />
+      ) : (
+        <div className="md:flex justify-between">
+          <div className="space-y-2">
+            <div className="text-2xl font-bold">{getDemoDescription(demo)}</div>
+            <div className="text-slate-400 text-sm">
+              <Timestamp timestamp={demo.timestamp} /> on {demo.source}
+            </div>
+          </div>
+          <div className="flex items-center space-x-4">
+            <EnableClipEditorButton />
+            <DownloadDemoButton s3_key={demo.s3_key} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
