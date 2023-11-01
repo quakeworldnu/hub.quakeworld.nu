@@ -27,6 +27,10 @@ export const ClipRange = () => {
     setLastRange(values);
   }
 
+  if (!fte) {
+    return null;
+  }
+
   const min = 0;
   const max = fte?.getDemoTotalTime() || 610;
 
