@@ -119,7 +119,11 @@ export class FteController {
 
   // demo playback
   demoJump(demoTime: number) {
-    const newDemoTime = Math.floor(demoTime);
+    const newDemoTime = clamp(
+      Math.floor(demoTime),
+      0,
+      1.1 + this.getDemoTotalTime(),
+    );
     const currentDemoTime = this.getDemoElapsedTime();
     const lastTrack = this.getTrackUserid();
     const lastAutotrackEnabled = this.isUsingAutotrack();
@@ -331,3 +335,7 @@ export class FteController {
 //   console.log = originalLog;
 //   return messages;
 // }
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(Math.max(value, min), max);
+}
