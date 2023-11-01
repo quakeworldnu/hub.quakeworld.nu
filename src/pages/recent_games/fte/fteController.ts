@@ -125,7 +125,15 @@ export class FteController {
       0,
       1.1 + this.getDemoTotalTime(),
     );
-    const currentDemoTime = this.getDemoElapsedTime();
+
+    // skip shorter jumps than 1 second
+    const currentDemoTime = Math.floor(this.getDemoElapsedTime());
+    const delta = Math.abs(newDemoTime - currentDemoTime);
+
+    if (delta < 1) {
+      return;
+    }
+
     const lastTrack = this.getTrackUserid();
     const lastAutotrackEnabled = this.isUsingAutotrack();
 
