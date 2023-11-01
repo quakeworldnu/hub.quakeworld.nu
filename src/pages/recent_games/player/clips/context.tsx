@@ -64,7 +64,7 @@ export const ClipEditorProvider = ({ children }: { children: ReactNode }) => {
     disable,
     toggle,
     from,
-    setFrom,
+    setFrom: (from: number) => setFrom(Math.max(0, from)),
     to,
     setTo,
     range: [from, to],
