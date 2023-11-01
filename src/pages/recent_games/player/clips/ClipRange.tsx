@@ -79,7 +79,7 @@ export const ClipRange = () => {
           >
             <div
               className={classNames(
-                "absolute rounded bg-blue-800 text-white font-mono p-1 px-1.5 text-xs",
+                "absolute rounded bg-blue-900 text-white font-mono p-1 px-1.5 text-xs",
                 { "z-10": isDragged },
               )}
             >
