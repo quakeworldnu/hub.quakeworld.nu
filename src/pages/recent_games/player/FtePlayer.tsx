@@ -5,7 +5,7 @@ import { getAssets } from "../fte/assets.ts";
 import { getDemoDownloadUrl } from "../services/supabase/demo.ts";
 import { Demo } from "../services/supabase/supabase.types.ts";
 import { FteCanvas } from "./FteCanvas.tsx";
-import { useClipPlayback } from "./clips/ClipPlayback.tsx";
+import { useClipPlayback } from "./clips/hooks.ts";
 
 export const FtePlayer = ({ demo }: { demo: Demo }) => {
   useClipPlayback();
