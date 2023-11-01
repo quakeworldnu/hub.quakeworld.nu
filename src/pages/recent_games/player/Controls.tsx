@@ -11,6 +11,8 @@ import { SplitscreenToggle } from "./controls/SplitscreenToggle.tsx";
 import { useIdle } from "@uidotdev/usehooks";
 import classNames from "classnames";
 import { useClipEditor } from "./clips/context.tsx";
+import { SeekToEndButton } from "./controls/SeekToEndButton.tsx";
+import { SeekToStartButton } from "./controls/SeekToStartButton.tsx";
 
 export const Controls = () => {
   const { isEnabled: showClipEditor } = useClipEditor();
@@ -19,7 +21,7 @@ export const Controls = () => {
   return (
     <div
       className={classNames(
-        "flex flex-wrap transition-opacity duration-500 bg-black/60",
+        "flex flex-wrap transition-opacity duration-500 bg-black/60 justify-between",
         {
           "opacity-0z": idle,
         },
@@ -29,17 +31,26 @@ export const Controls = () => {
         <TimeSlider />
       </div>
 
-      <PlayToggle />
-      <VolumeToggle />
-      <VolumeSlider />
-      <GameClock />
-      <div className="flex space-x-1 px-3 bg-black rounded-xl items-center text-sm">
-        <AutotrackToggle />
-        <PlayerTrackButtons />
+      <div className="flex space-x-1 items-center">
+        <VolumeToggle />
+        <VolumeSlider />
+        <GameClock />
       </div>
-      <SlowmotionToggle />
-      <SplitscreenToggle />
-      <FullscreenToggle />
+
+      <div className="flex w-56 space-x-1 items-center justify-center">
+        <SeekToStartButton />
+        <PlayToggle />
+        <SeekToEndButton />
+      </div>
+
+      <div className="flex space-x-1 items-center">
+        {false && <AutotrackToggle />}
+        {false && <PlayerTrackButtons />}
+        {false && <div className="w-12"></div>}
+        <SlowmotionToggle />
+        <SplitscreenToggle />
+        <FullscreenToggle />
+      </div>
     </div>
   );
 };

@@ -5,12 +5,10 @@ import { getAssets } from "../fte/assets.ts";
 import { getDemoDownloadUrl } from "../services/supabase/demo.ts";
 import { Demo } from "../services/supabase/supabase.types.ts";
 import { FteCanvas } from "./FteCanvas.tsx";
-import { useEffect } from "react";
-import { useUrlClipParams } from "../playlist/hooks.ts";
-import { useBoolean, useInterval } from "usehooks-ts";
+import { useClipPlayback } from "./clips/ClipPlayback.tsx";
 
 export const FtePlayer = ({ demo }: { demo: Demo }) => {
-  useClipPlayback(demo.duration);
+  useClipPlayback();
   const demoUrl = getDemoDownloadUrl(demo.s3_key);
   const files = getAssets(demoUrl, demo.map);
   const { isLoadingAssets, isReady, assets, isInitializing } = useFteLoader({
@@ -71,43 +69,6 @@ export const FtePlayer = ({ demo }: { demo: Demo }) => {
     </div>
   );
 };
-
-export function useClipPlayback(demoDuration: number) {
-  const { from, to, track, hasParams } = useUrlClipParams();
-  const { value: hasPaused, setTrue: setHasPaused } = useBoolean(false);
-  const fte = useFteController();
-
-  // initial
-  useEffect(() => {
-    if (!fte) {
-      return;
-    }
-
-    if (hasParams) {
-      if (track !== "auto") {
-        fte.track(track);
-      }
-      fte.demoJump(Math.min(from, demoDuration || 0));
-      fte.pause();
-    }
-  }, [fte]);
-
-  useInterval(
-    () => {
-      if (!fte || hasPaused || !fte.isPlaying()) {
-        return;
-      }
-
-      const demoTimeSecond = Math.floor(fte.getDemoElapsedTime());
-
-      if (demoTimeSecond > to) {
-        fte.pause();
-        setHasPaused();
-      }
-    },
-    hasPaused ? null : 200,
-  );
-}
 
 // const PlayerDebug = () => {
 //   useUpdateInterval(200);
