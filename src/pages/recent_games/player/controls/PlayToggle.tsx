@@ -1,4 +1,4 @@
-import { faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
+import { faCirclePause, faCirclePlay } from "@fortawesome/free-solid-svg-icons";
 import { IconToggleButton } from "./IconButton.tsx";
 import { useFteController, useFteUpdateOnEvent } from "../../fte/hooks.ts";
 
@@ -19,13 +19,13 @@ export const PlayToggle = () => {
 
   return (
     <IconToggleButton
-      size={"xl"}
+      size={"2xl"}
       onClick={handleClick}
       isEnabled={fte.isPlaying()}
       enabledTitle="Pause"
-      enabledIcon={faPause}
+      enabledIcon={faCirclePause}
       disabledTitle="Play"
-      disabledIcon={faPlay}
+      disabledIcon={faCirclePlay}
     />
   );
 };
