@@ -18,7 +18,7 @@ export function useClipPlayback() {
       if (track !== "auto") {
         fte.track(track);
       }
-      fte.demoJump(Math.max(from, 0));
+      fte.demoJump(from);
       fte.pause();
     }
   }, [fte]);
