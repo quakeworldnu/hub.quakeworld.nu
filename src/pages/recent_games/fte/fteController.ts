@@ -5,6 +5,7 @@ import {
   FteModule,
   PlayerInfo,
 } from "./types.ts";
+import { clamp } from "../math.ts";
 
 export function fteEvent(name: string, detail: object) {
   const event = new CustomEvent(`fte.${name}`, { detail });
@@ -335,7 +336,3 @@ export class FteController {
 //   console.log = originalLog;
 //   return messages;
 // }
-
-function clamp(value: number, min: number, max: number) {
-  return Math.min(Math.max(value, min), max);
-}
