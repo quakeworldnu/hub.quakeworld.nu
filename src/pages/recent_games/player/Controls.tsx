@@ -31,19 +31,19 @@ export const Controls = () => {
         <TimeSlider />
       </div>
 
-      <div className="flex space-x-1 items-center">
+      <div className="flex space-x-1 items-center my-2">
         <VolumeToggle />
         <VolumeSlider />
         <GameClock />
       </div>
 
-      <div className="flex w-56 space-x-1 items-center justify-center">
+      <div className="flex w-56 space-x-1 items-center justify-center my-2">
         <SeekToStartButton />
         <PlayToggle />
         <SeekToEndButton />
       </div>
 
-      <div className="flex space-x-1 items-center">
+      <div className="flex space-x-1 items-center my-2">
         {false && <AutotrackToggle />}
         {false && <PlayerTrackButtons />}
         {false && <div className="w-12"></div>}
