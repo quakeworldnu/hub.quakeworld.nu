@@ -23,7 +23,7 @@ export const Controls = () => {
       className={classNames(
         "flex flex-wrap transition-opacity duration-500 bg-black/60 justify-between",
         {
-          "opacity-0z": idle,
+          "opacity-0": idle,
         },
       )}
     >
