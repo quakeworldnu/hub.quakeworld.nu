@@ -14,6 +14,8 @@ type ClipEditorContextProps = {
   setTo: (to: number) => void;
   range: number[];
   setRange: (range: number[]) => void;
+  track: number | "auto";
+  setTrack: (track: number | "auto") => void;
   getUrl: () => string;
 };
 
@@ -26,9 +28,11 @@ const ClipEditorContext = createContext<ClipEditorContextProps>({
   enable: () => {},
   disable: () => {},
   toggle: () => {},
-  getUrl: () => "",
   range: [0, 0],
   setRange: () => {},
+  track: 0,
+  setTrack: () => {},
+  getUrl: () => "",
 });
 
 export const ClipEditorProvider = ({ children }: { children: ReactNode }) => {
@@ -41,6 +45,7 @@ export const ClipEditorProvider = ({ children }: { children: ReactNode }) => {
   } = useBoolean(false);
   const [from, setFrom] = useState<number>(0);
   const [to, setTo] = useState<number>(0);
+  const [track, setTrack] = useState<number | "auto">(0);
 
   function setRange([from, to]: number[]) {
     setFrom(Math.floor(from));
@@ -48,7 +53,7 @@ export const ClipEditorProvider = ({ children }: { children: ReactNode }) => {
   }
 
   function getUrl(): string {
-    const q = query({ demoId, from: from, to: to });
+    const q = query({ demoId, from, to, track });
     const base = window.location.href.split("?")[0];
     return `${base}?${q}`;
   }
@@ -64,6 +69,8 @@ export const ClipEditorProvider = ({ children }: { children: ReactNode }) => {
     setTo,
     range: [from, to],
     setRange,
+    track,
+    setTrack,
     getUrl,
   };
 

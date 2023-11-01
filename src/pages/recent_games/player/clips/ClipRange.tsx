@@ -13,8 +13,6 @@ export const ClipRange = () => {
   const [lastRange, setLastRange] = useState<number[]>(range);
 
   function handleFinalChange(values: number[]) {
-    console.log("handleFinalChange", values);
-
     if (!fte) {
       return;
     }
@@ -30,7 +28,7 @@ export const ClipRange = () => {
   }
 
   const min = 0;
-  const max = 610;
+  const max = fte?.getDemoTotalTime() || 610;
 
   return (
     <div>

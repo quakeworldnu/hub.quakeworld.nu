@@ -13,11 +13,16 @@ export function useCurrentDemoId(): number | undefined {
   return demoId ? parseInt(demoId) : undefined;
 }
 
-export function useUrlClipParams(): { from: number; to: number } {
+export function useUrlClipParams(): {
+  from: number;
+  to: number;
+  track: number | string;
+} {
   const params = new URLSearchParams(window.location.search);
   const from = parseInt(params.get("from") || "0");
   const to = parseInt(params.get("to") || "0");
-  return { from, to };
+  const track = params.get("track") || "auto";
+  return { from, to, track };
 }
 
 export function usePlaylist() {

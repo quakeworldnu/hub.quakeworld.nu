@@ -21,7 +21,7 @@ export const DisableClipEditorButton = () => {
 };
 
 export const EnableClipEditorButton = () => {
-  const { enable, setRange } = useClipEditor();
+  const { enable, setRange, setTrack } = useClipEditor();
   const fte = useFteController();
 
   function handleClick() {
@@ -33,6 +33,7 @@ export const EnableClipEditorButton = () => {
       Math.max(fte.getDemoElapsedTime() - 15, 0),
       fte.getDemoElapsedTime(),
     ]);
+    setTrack(fte.isUsingAutotrack() ? "auto" : fte.getTrackUserid());
     enable();
     fte.pause();
   }

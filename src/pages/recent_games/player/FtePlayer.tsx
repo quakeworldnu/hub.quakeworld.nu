@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { useUrlClipParams } from "../playlist/hooks.ts";
 
 export const FtePlayer = ({ demo }: { demo: Demo }) => {
-  const { from, to } = useUrlClipParams();
+  const { from, to, track } = useUrlClipParams();
   const demoUrl = getDemoDownloadUrl(demo.s3_key);
   const files = getAssets(demoUrl, demo.map);
   const { isLoadingAssets, isReady, assets, isInitializing } = useFteLoader({
@@ -24,6 +24,9 @@ export const FtePlayer = ({ demo }: { demo: Demo }) => {
     }
 
     if (from > 0 && to > 0) {
+      if (track !== "auto") {
+        fte.track(track);
+      }
       fte.demoJump(Math.min(from, demo.duration || 0));
       fte.pause();
     }
