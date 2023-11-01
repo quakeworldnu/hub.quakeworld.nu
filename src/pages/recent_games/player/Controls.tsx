@@ -43,8 +43,10 @@ export const Controls = () => {
         <SeekToEndButton />
       </div>
 
-      <div className="flex w-1/4 space-x-1 items-center my-2">
-        {false && <PlayerTrackButtons />}
+      <div className="flex w-1/4 space-x-1 items-center justify-end my-2">
+        <div className="hidden xl:flex mr-4">
+          <PlayerTrackButtons />
+        </div>
         <AutotrackToggle />
         <SlowmotionToggle />
         <SplitscreenToggle />
