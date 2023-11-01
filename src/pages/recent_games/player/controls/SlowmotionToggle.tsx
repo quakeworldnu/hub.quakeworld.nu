@@ -1,6 +1,6 @@
 import { faStopwatch, faStopwatch20 } from "@fortawesome/free-solid-svg-icons";
 
-import { IconToggleButton } from "./IconToggleButton.tsx";
+import { IconToggleButton } from "./IconButton.tsx";
 import { useFteController, useFteUpdateOnEvent } from "../../fte/hooks.ts";
 
 const slow = 20;
@@ -29,7 +29,9 @@ export const SlowmotionToggle = () => {
     <IconToggleButton
       onClick={handleClick}
       isEnabled={isSlowmotion}
+      enabledTitle={"Disable slowmotion"}
       enabledIcon={faStopwatch20}
+      disabledTitle={"Enable slowmotion"}
       disabledIcon={faStopwatch}
     />
   );

@@ -1,6 +1,5 @@
 import { faColumns, faSquare } from "@fortawesome/free-solid-svg-icons";
-
-import { IconToggleButton } from "./IconToggleButton.tsx";
+import { IconToggleButton } from "./IconButton.tsx";
 import { useFteController, useFteUpdateOnEvent } from "../../fte/hooks.ts";
 
 export const SplitscreenToggle = () => {
@@ -8,22 +7,27 @@ export const SplitscreenToggle = () => {
   const fte = useFteController();
 
   function handleClick() {
-    fte && fte.toggleSplitscreen();
+    if (!fte) {
+      return null;
+    }
+
+    fte.toggleSplitscreen();
   }
 
   if (!fte) {
     return null;
   }
 
+  const isEnabled = fte.cl_splitscreen() > 0;
+
   return (
     <IconToggleButton
       onClick={handleClick}
-      isEnabled={fte.cl_splitscreen() > 0}
+      isEnabled={isEnabled}
+      enabledTitle="Disable splitscreen"
       enabledIcon={faSquare}
+      disabledTitle="Enable splitscreen"
       disabledIcon={faColumns}
-      title={
-        fte.cl_splitscreen() ? "Disable splitscreen" : "Enable splitscreen"
-      }
     />
   );
 };
