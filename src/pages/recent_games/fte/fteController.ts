@@ -204,11 +204,11 @@ export class FteController {
     }
   }
 
-  track(userid: number) {
+  track(userid: number | string) {
     if (this.isUsingAutotrack()) {
       this.disableAutotrack();
     }
-    this.command("track", userid);
+    this.command("track", Number(userid));
   }
 
   trackNext() {
