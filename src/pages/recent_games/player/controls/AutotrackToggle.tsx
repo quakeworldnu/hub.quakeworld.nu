@@ -14,7 +14,7 @@ export const AutotrackToggle = () => {
   }
 
   return (
-    <div className="mx-3">
+    <div className="mx-3 text-sm">
       <Switch
         label="Autotrack"
         enabled={fte.isUsingAutotrack()}

@@ -14,6 +14,7 @@ export const Switch = ({ label, enabled, onClick }: Props) => {
         <label
           className={classNames("pr-2 cursor-pointer select-none", {
             "text-gray-300": !enabled,
+            "font-bold": enabled,
           })}
           htmlFor={label}
         >
