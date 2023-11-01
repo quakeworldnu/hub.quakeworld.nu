@@ -17,12 +17,14 @@ export function useUrlClipParams(): {
   from: number;
   to: number;
   track: number | string;
+  hasParams: boolean;
 } {
   const params = new URLSearchParams(window.location.search);
   const from = parseInt(params.get("from") || "0");
   const to = parseInt(params.get("to") || "0");
   const track = params.get("track") || "auto";
-  return { from, to, track };
+  const hasParams = from > 0 && to > 0;
+  return { from, to, track, hasParams };
 }
 
 export function usePlaylist() {

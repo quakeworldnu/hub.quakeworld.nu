@@ -54,7 +54,7 @@ export function TimeSlider() {
 const SliderRoot = ({ max }: { max: number }) => {
   const fte = useFteController();
   const { range: clipRange, isEnabled: clipEditorEnabled } = useClipEditor();
-  const { from, to } = useUrlClipParams();
+  const { from, to, hasParams } = useUrlClipParams();
   useUpdateInterval(fte ? 200 : null);
 
   if (!fte) {
@@ -68,12 +68,11 @@ const SliderRoot = ({ max }: { max: number }) => {
   }
 
   const min = 0;
-
   let range = [0, 0];
 
   if (clipEditorEnabled) {
     range = clipRange;
-  } else if (from > 0 && to > 0) {
+  } else if (hasParams) {
     range = [from, to];
   }
 
