@@ -27,13 +27,14 @@ export const SeekToStartButton = () => {
 };
 
 function useSeekStartTime(): number {
-  const { isEnabled: editorIsEnabled, from: editorFrom } = useClipEditor();
-  const { hasParams: hasUrlParams, from: urlFrom } = useUrlClipParams();
+  const { from: editorFrom } = useClipEditor();
+  const { from: urlFrom } = useUrlClipParams();
 
-  if (editorIsEnabled) {
+  if (editorFrom > 0) {
     return editorFrom;
-  } else if (hasUrlParams) {
+  } else if (urlFrom > 0) {
     return urlFrom;
+  } else {
+    return 0;
   }
-  return 0;
 }
