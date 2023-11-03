@@ -46,7 +46,7 @@ export const EnableClipEditorButton = () => {
       onClick={handleClick}
     >
       <FontAwesomeIcon icon={faScissors} fixedWidth className="mr-1.5" />
-      Share Clip
+      Create Clip
     </button>
   );
 };

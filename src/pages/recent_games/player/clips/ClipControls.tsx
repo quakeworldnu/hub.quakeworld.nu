@@ -47,7 +47,7 @@ export const ClipControls = () => {
       </div>
 
       <div className="flex flex-wrap items-center ">
-        <CopyClipUrlButton />
+        <div className="w-48"></div>
 
         <div className="flex flex-wrap grow items-center justify-center space-x-1 my-3">
           <AdjustRangeButton current={from} delta={-5} onClick={setFrom} />
@@ -61,6 +61,10 @@ export const ClipControls = () => {
           <AdjustRangeButton current={to} delta={-1} onClick={setTo} />
           <AdjustRangeButton current={to} delta={1} onClick={setTo} />
           <AdjustRangeButton current={to} delta={5} onClick={setTo} />
+        </div>
+
+        <div className="w-48 text-right">
+          <CopyClipUrlButton />
         </div>
       </div>
     </div>
