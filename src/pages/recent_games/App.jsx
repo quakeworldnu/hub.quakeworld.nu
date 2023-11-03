@@ -11,6 +11,7 @@ import { useDemos } from "./browser/context.tsx";
 import { useDemoBrowserSettings } from "./browser/hooks.ts";
 import { Sidebar } from "./Sidebar";
 import { Player } from "@qwhub/pages/recent_games/player/Player";
+import { useThrottledElementSize } from "@qwhub/pages/recent_games/hooks";
 
 export const App = () => {
   const demoId = useCurrentDemoId();
@@ -42,12 +43,17 @@ export const App = () => {
     run();
   }, [settings.page]);
 
+  const [bodyRef, bodySize] = useThrottledElementSize();
+  useEffect(() => {
+    dispatchEvent(new CustomEvent("app.body.resize", { detail: bodySize }));
+  }, [bodySize]);
+
   return (
     <div className="flex flex-col">
       <SiteHeader />
       <div className="lg:flex gap-6 my-6">
         <div className="w-full">
-          <div id="AppDemoBrowserBody">
+          <div id="AppBody" ref={bodyRef}>
             {demoId && <Player demoId={demoId} />}
             {!demoId && <Browser />}
           </div>

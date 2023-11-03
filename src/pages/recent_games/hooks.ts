@@ -1,11 +1,5 @@
-import {
-  useCounter,
-  useDebounce,
-  useEffectOnce,
-  useEventListener,
-  useInterval,
-} from "usehooks-ts";
-import { useEffect, useState } from "react";
+import { useCounter, useElementSize, useInterval } from "usehooks-ts";
+import { useThrottle } from "react-use";
 
 export function useUpdateInterval(delay: number | null) {
   const { count, increment } = useCounter(0);
@@ -13,37 +7,14 @@ export function useUpdateInterval(delay: number | null) {
   return count;
 }
 
-const delay = 100;
-const initialDelay = 300;
+// export function useDebouncedElementSize(delay: number = 200) {
+//   const [ref, size_] = useElementSize();
+//   const size = useDebounce(size_, delay);
+//   return [ref, size];
+// }
 
-export function useElementHeight(elementId: string) {
-  const [height, setHeight] = useState(0);
-  const debouncedHeight = useDebounce(height, delay);
-
-  function handleResize() {
-    const targetEl = document.getElementById(elementId);
-    if (!targetEl) {
-      return;
-    }
-    console.log("handleResize");
-    setHeight(getElementTotalHeight(targetEl));
-  }
-
-  useEventListener("resize", handleResize);
-
-  useEffectOnce(() => {
-    setTimeout(handleResize, initialDelay);
-  });
-
-  useEffect(() => {
-    handleResize();
-  }, [debouncedHeight]);
-
-  return debouncedHeight;
-}
-
-function getElementTotalHeight(el: HTMLElement): number {
-  const style = window.getComputedStyle(el);
-  const margin = parseFloat(style.marginTop) + parseFloat(style.marginBottom);
-  return Math.ceil(el.clientHeight + margin);
+export function useThrottledElementSize(rate: number = 200) {
+  const [ref, size_] = useElementSize();
+  const size = useThrottle(size_, rate);
+  return [ref, size];
 }
