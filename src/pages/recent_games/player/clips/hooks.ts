@@ -10,11 +10,11 @@ export function useClipPlayback() {
 }
 
 function useSeekToBegin() {
-  const { from, track, hasParams } = useUrlClipParams();
+  const { from, track } = useUrlClipParams();
   const fte = useFteController();
 
   useEffect(() => {
-    if (!fte || !hasParams) {
+    if (!fte || from < 1) {
       return;
     }
 
