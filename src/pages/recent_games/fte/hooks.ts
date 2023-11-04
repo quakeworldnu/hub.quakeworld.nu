@@ -1,14 +1,9 @@
-import {
-  useCounter,
-  useEffectOnce,
-  useEventListener,
-  useInterval,
-  useScript,
-} from "usehooks-ts";
+import { useCounter, useEffectOnce, useInterval, useScript } from "usehooks-ts";
 import { useState } from "react";
 import { withPrefix } from "./assets.ts";
 import { FteController } from "./fteController.ts";
 import { FteModule, FtePreloadModule } from "./types.ts";
+import { useEventListener } from "../hooks.ts";
 
 declare global {
   interface Window {
@@ -101,8 +96,6 @@ export function useFteEventBySource(
   source: string,
   callback: (e: CustomEvent) => void,
 ) {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   useEventListener(`fte.${eventName}`, (e: CustomEvent) => {
     if (e.detail.source === source) {
       callback(e);
@@ -114,8 +107,6 @@ export function useFteEvent(
   eventName: string,
   callback: (e: CustomEvent) => void,
 ) {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   useEventListener(`fte.${eventName}`, callback);
 }
 

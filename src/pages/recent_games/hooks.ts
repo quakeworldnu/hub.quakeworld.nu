@@ -1,4 +1,9 @@
-import { useCounter, useElementSize, useInterval } from "usehooks-ts";
+import {
+  useCounter,
+  useElementSize,
+  useEventListener as uhUseEventListener,
+  useInterval,
+} from "usehooks-ts";
 import { useThrottle } from "react-use";
 
 export function useUpdateInterval(delay: number | null) {
@@ -17,4 +22,13 @@ export function useThrottledElementSize(rate: number = 200) {
   const [ref, size_] = useElementSize();
   const size = useThrottle(size_, rate);
   return [ref, size];
+}
+
+export function useEventListener(
+  eventName: string,
+  handler: (event: any) => void,
+) {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  uhUseEventListener(eventName, handler);
 }
