@@ -1,11 +1,12 @@
-import { useFteController } from "../fte/hooks.ts";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useEventListener } from "usehooks-ts";
+import { useFteController } from "../fte/hooks.ts";
 import { toggleFullscreen } from "../fullscreen.ts";
 
 export const FteCanvas = () => {
   const fte = useFteController();
   const [isShowingScores, setIsShowingScores] = useState(false);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   function handleKeyDown(e: KeyboardEvent) {
     if (!fte) {
@@ -37,11 +38,12 @@ export const FteCanvas = () => {
     }
   }
 
-  useEventListener("keydown", handleKeyDown);
-  useEventListener("keyup", handleKeyUp);
+  useEventListener("keydown", handleKeyDown, canvasRef);
+  useEventListener("keyup", handleKeyUp, canvasRef);
 
   return (
     <canvas
+      ref={canvasRef}
       id="fteCanvas"
       className={"absolute w-full h-full"}
       onClick={() => fte?.togglePlay()}
