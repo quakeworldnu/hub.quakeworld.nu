@@ -41,7 +41,7 @@ export const EnableClipEditorButton = () => {
   return (
     <button
       className={classNames(
-        "flex text-sm items-center md:mt-0 py-2.5 px-4 rounded bg-gradient-to-b from-violet-700 to-violet-900 hover:from-violet-600 hover:to-violet-800",
+        "flex text-sm items-center md:mt-0 py-2.5 px-4 rounded bg-gradient-to-b from-blue-700 to-blue-900 hover:from-blue-600 hover:to-blue-800",
       )}
       onClick={handleClick}
     >

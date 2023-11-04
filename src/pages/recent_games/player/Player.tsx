@@ -12,6 +12,7 @@ import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import { EnableClipEditorButton } from "./clips/Clips.tsx";
 import { ClipControls } from "./clips/ClipControls.tsx";
 import { useClipEditor } from "./clips/context.tsx";
+import { ShareDemoButton } from "./Share.tsx";
 
 export const Player = ({ demoId }: { demoId: number }) => {
   const [demo, setDemo] = useState<Demo | null>(null);
@@ -64,6 +65,7 @@ export const DemoPlayerFooter = ({ demo }: { demo: Demo }) => {
           </div>
           <div className="flex items-center space-x-4">
             <EnableClipEditorButton />
+            <ShareDemoButton />
             <DownloadDemoButton s3_key={demo.s3_key} />
           </div>
         </div>
@@ -78,7 +80,7 @@ export const DownloadDemoButton = ({ s3_key }: { s3_key: string }) => {
   return (
     <a
       href={demoUrl}
-      className="flex text-sm items-center md:mt-0 py-2.5 px-4 rounded bg-gradient-to-b from-blue-700 to-blue-900 hover:from-blue-600 hover:to-blue-800"
+      className="flex text-sm items-center md:mt-0 py-2.5 px-4 rounded bg-gradient-to-b from-green-700 to-green-900 hover:from-green-600 hover:to-green-800"
     >
       <FontAwesomeIcon icon={faFloppyDisk} fixedWidth className="mr-1.5" />
       Download
