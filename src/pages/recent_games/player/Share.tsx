@@ -22,6 +22,7 @@ export const ShareDemoButton = () => {
     if (!fte) {
       return;
     }
+    fte.pause();
     setTrackUserId(fte.getTrackUserid());
     setFrom(Math.floor(fte.getGameElapsedTime()));
     setIsUsingAutotrack(fte.isUsingAutotrack());
