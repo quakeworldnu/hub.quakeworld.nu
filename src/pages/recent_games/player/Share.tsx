@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose, faCopy, faShare } from "@fortawesome/free-solid-svg-icons";
 import * as Dialog from "@radix-ui/react-dialog";
 import { useFteController } from "../fte/hooks.ts";
-import { secondsToMinutesAndSeconds } from "../time.ts";
+import { formatElapsed } from "../time.ts";
 import { useCopyToClipboard, useToggle } from "usehooks-ts";
 import { useCurrentDemoId } from "../playlist/hooks.ts";
 import { query } from "urlcat";
@@ -103,9 +103,7 @@ export const ShareDemoButton = () => {
                   onClick={toggleUseFrom}
                 />{" "}
                 Start at{" "}
-                <span className="ml-1 font-mono">
-                  {secondsToMinutesAndSeconds(from)}
-                </span>
+                <span className="ml-1 font-mono">{formatElapsed(from)}</span>
               </label>
             </div>
             <div className="flex items-center space-x-2">

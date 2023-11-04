@@ -5,7 +5,7 @@ export function secondsToMinutesAndSeconds(seconds: number): string {
   return `${durationMinutes}:${durationSeconds}`;
 }
 
-export function formatElapsed(elapsed: number, total: number): string {
+export function formatDuration(elapsed: number, total: number): string {
   if (elapsed < 0) {
     return `Countdown: ${-Math.floor(elapsed)}`;
   } else {
@@ -13,6 +13,12 @@ export function formatElapsed(elapsed: number, total: number): string {
     const totalStr = secondsToMinutesAndSeconds(total);
     return `${elapsedStr} / ${totalStr}`;
   }
+}
+
+export function formatElapsed(elapsed: number): string {
+  return elapsed < 0
+    ? `Countdown: ${-Math.floor(elapsed)}`
+    : secondsToMinutesAndSeconds(elapsed);
 }
 
 export function formatSeek(seekTime: number, startTime: number): string {

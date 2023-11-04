@@ -1,6 +1,6 @@
 import { useUpdateInterval } from "../../hooks.ts";
 import { useFteController } from "../../fte/hooks.ts";
-import { formatElapsed } from "../../time.ts";
+import { formatDuration } from "../../time.ts";
 
 export const GameClock = () => {
   const fte = useFteController();
@@ -15,7 +15,7 @@ export const GameClock = () => {
 
   return (
     <div className="flex mr-auto font-mono items-center px-2">
-      {formatElapsed(elapsed, total)}
+      {formatDuration(elapsed, total)}
     </div>
   );
 };
