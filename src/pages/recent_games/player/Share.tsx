@@ -7,6 +7,7 @@ import { formatElapsed } from "../time.ts";
 import { useCopyToClipboard, useToggle } from "usehooks-ts";
 import { useCurrentDemoId } from "../playlist/hooks.ts";
 import { query } from "urlcat";
+import { toPlainText } from "../qwstrings.ts";
 
 export const ShareDemoButton = () => {
   const fte = useFteController();
@@ -16,7 +17,7 @@ export const ShareDemoButton = () => {
   const [isUsingAutotrack, setIsUsingAutotrack] = useState<boolean>(false);
   const [trackUserId, setTrackUserId] = useState<number>(0);
   const [url, setUrl] = useState<string>(getUrl());
-  const [_, copyToClipboard] = useCopyToClipboard();
+  const [, copyToClipboard] = useCopyToClipboard();
 
   function handleOpenClick() {
     if (!fte) {
@@ -116,7 +117,9 @@ export const ShareDemoButton = () => {
               >
                 <option value="auto">Autotrack</option>
                 {fte.getPlayers().map((player) => (
-                  <option value={player.id}>{player.name}</option>
+                  <option key={player.id} value={player.id}>
+                    {toPlainText(player.name)}
+                  </option>
                 ))}
               </select>
             </div>
