@@ -38,6 +38,10 @@ export const EnableClipEditorButton = () => {
     fte.pause();
   }
 
+  if (!fte) {
+    return null;
+  }
+
   return (
     <button
       className={classNames(
