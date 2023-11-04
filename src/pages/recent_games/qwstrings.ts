@@ -1,26 +1,22 @@
-const charCodeA = "A".charCodeAt(0);
-const charCodeZ = "Z".charCodeAt(0);
-const charCodea = "a".charCodeAt(0);
-const charCodez = "z".charCodeAt(0);
 const charcodeLt = "<".charCodeAt(0);
 const charcodeGt = ">".charCodeAt(0);
 const charcodeQuot = '"'.charCodeAt(0);
 
-export function toPlainText(input: string, keepNewLines: boolean) {
-  let str = "";
-  if (!input) {
-    return str;
+export function toPlainText(input: string) {
+  if (input.trim().length === 0) {
+    return "";
   }
+
+  let str = "";
 
   for (let i = 0; i < input.length; ++i) {
     let ch = input.charCodeAt(i);
+
     if (ch >= 128) {
       ch = ch - 128;
     }
 
-    if (keepNewLines && (ch === 10 || ch === 13)) {
-      str += String.fromCharCode(ch);
-    } else if (ch < 16 || (ch >= 29 && ch <= 31)) {
+    if (ch < 16 || (ch >= 29 && ch <= 31)) {
       str += "_";
     } else if (ch === 16) {
       str += "[";
@@ -30,8 +26,6 @@ export function toPlainText(input: string, keepNewLines: boolean) {
       str += String.fromCharCode(ch - 18 + 48);
     } else if (ch === 28) {
       str += "&#8226;";
-    } else if (ch >= charCodeA && ch <= charCodeZ) {
-      str += String.fromCharCode(ch + (charCodea - charCodez));
     } else {
       str += String.fromCharCode(ch);
     }
