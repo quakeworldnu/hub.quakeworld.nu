@@ -12,7 +12,7 @@ import { toPlainText } from "../qwstrings.ts";
 export const ShareDemoButton = () => {
   const fte = useFteController();
   const demoId = useCurrentDemoId();
-  const [from, setFrom] = useState<number>(0);
+  const [gameElapsedTime, setGameElapsedTime] = useState<number>(0);
   const [useFrom, toggleUseFrom] = useToggle(false);
   const [isUsingAutotrack, setIsUsingAutotrack] = useState<boolean>(false);
   const [trackUserId, setTrackUserId] = useState<number>(0);
@@ -25,7 +25,7 @@ export const ShareDemoButton = () => {
     }
     fte.pause();
     setTrackUserId(fte.getTrackUserid());
-    setFrom(Math.floor(fte.getGameElapsedTime()));
+    setGameElapsedTime(Math.floor(fte.getGameElapsedTime()));
     setIsUsingAutotrack(fte.isUsingAutotrack());
     setUrl(getUrl());
   }
@@ -41,15 +41,19 @@ export const ShareDemoButton = () => {
   }
 
   function getUrl(): string {
+    if (!fte) {
+      return "";
+    }
+
     const base = window.location.href.split("?")[0];
-    if (!from) {
+    if (!gameElapsedTime) {
       return base;
     }
 
     const q: { [key: string]: string | number | undefined } = { demoId };
 
     if (useFrom) {
-      q.from = from;
+      q.from = Math.floor(fte.getDemoElapsedTime());
     }
 
     if (!isUsingAutotrack) {
@@ -61,7 +65,7 @@ export const ShareDemoButton = () => {
 
   useEffect(() => {
     setUrl(getUrl());
-  }, [from, useFrom, isUsingAutotrack, trackUserId]);
+  }, [gameElapsedTime, useFrom, isUsingAutotrack, trackUserId]);
 
   if (!fte) {
     return;
@@ -79,7 +83,7 @@ export const ShareDemoButton = () => {
         <Dialog.Overlay className="bg-black/70 data-[state=open]:animate-overlayShow fixed inset-0" />
         <Dialog.Content className="z-50 data-[state=open]:animate-contentShow fixed top-1/2 left-1/2 max-h-[85vh] w-[90vw] max-w-[580px] -translate-x-1/2 -translate-y-1/2 bg-slate-900 p-6 space-y-5 rounded-xl">
           <Dialog.Title className="text-lg font-bold">Share demo</Dialog.Title>
-          <Dialog.Description className="text-sm my-3">
+          <div className="text-sm space-y-3">
             <div className="border border-slate-600 bg-slate-800 p-2 text-xs select-all">
               <div className="flex items-center justify-between">
                 <div className="max-w-[80%] whitespace-nowrap overflow-hidden overflow-ellipsis">
@@ -94,36 +98,39 @@ export const ShareDemoButton = () => {
                 </button>
               </div>
             </div>
-          </Dialog.Description>
-          <div className="flex justify-between text-sm">
-            <div className="flex items-center">
-              <label className="flex items-center cursor-pointer">
-                <input
-                  type="checkbox"
-                  className="mr-1.5"
-                  defaultChecked={useFrom}
-                  onClick={toggleUseFrom}
-                />{" "}
-                Start at{" "}
-                <span className="ml-1 font-mono">{formatElapsed(from)}</span>
-              </label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <div>Track</div>
-              <select
-                className="bg-slate-700 text-white rounded p-1 text-sm"
-                defaultValue={isUsingAutotrack ? "auto" : trackUserId}
-                onChange={handleTrackChange}
-              >
-                <option value="auto">Autotrack</option>
-                {fte.getPlayers().map((player) => (
-                  <option key={player.id} value={player.id}>
-                    {toPlainText(player.name)}
-                  </option>
-                ))}
-              </select>
+            <div className="flex justify-between text-sm">
+              <div className="flex items-center">
+                <label className="flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    className="mr-1.5"
+                    defaultChecked={useFrom}
+                    onClick={toggleUseFrom}
+                  />{" "}
+                  Start at{" "}
+                  <span className="ml-1 font-mono">
+                    {formatElapsed(gameElapsedTime)}
+                  </span>
+                </label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div>Track</div>
+                <select
+                  className="bg-slate-700 text-white rounded p-1 text-sm"
+                  defaultValue={isUsingAutotrack ? "auto" : trackUserId}
+                  onChange={handleTrackChange}
+                >
+                  <option value="auto">Autotrack</option>
+                  {fte.getPlayers().map((player) => (
+                    <option key={player.id} value={player.id}>
+                      {toPlainText(player.name)}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
+
           <Dialog.Close asChild>
             <button
               className="text-slate-300 hover:text-white bg-slate-700 hover:bg-slate-600 absolute top-2 right-3 flex h-6 w-6 items-center justify-center rounded-full border-slate-600"
