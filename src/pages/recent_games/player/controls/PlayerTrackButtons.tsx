@@ -34,6 +34,7 @@ export const PlayerTrackButtons = () => {
           >
             <span className="flex items-center space-x-0.5">
               <span
+                className="whitespace-nowrap"
                 dangerouslySetInnerHTML={{ __html: toColoredHtml(p.name) }}
               />
               {showWeapons && (
