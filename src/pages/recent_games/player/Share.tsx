@@ -87,7 +87,7 @@ export const ShareDemoButton = () => {
             <div className="border border-slate-600 bg-slate-800 p-2 text-xs select-all">
               <div className="flex items-center justify-between">
                 <div className="max-w-[80%] whitespace-nowrap overflow-hidden overflow-ellipsis">
-                  {getUrl()}
+                  {url}
                 </div>
                 <button
                   className="bg-blue-800 text-white hover:bg-blue-600 focus:shadow-green-400 inline-flex items-center justify-center rounded py-2 px-3 select-none"
