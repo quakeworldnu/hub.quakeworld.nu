@@ -15,7 +15,7 @@ export function TimeSlider() {
   const sliderWrapperRef = useRef(null);
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const isHover = useHover(sliderWrapperRef);
-  const [mouse, sliderRootRef] = useMouse<HTMLFormElement>();
+  const [mouse, sliderRootRef] = useMouse<HTMLDivElement>();
 
   const matchStartTime = fte ? fte.getDemoGameStartTime() : 10;
   const maxValue = fte ? fte.getDemoTotalTime() : 1200;
@@ -38,14 +38,14 @@ export function TimeSlider() {
       <div
         className={classNames(
           { hidden: !isHover },
-          "absolute bottom-20 text-xs font-mono px-2 py-1 bg-violet-800 text-white rounded",
+          "absolute bottom-24 text-xs font-mono px-2 py-1 bg-violet-800 text-white rounded",
         )}
         ref={tooltipRef}
       ></div>
       <div className="w-full" ref={sliderWrapperRef}>
-        <form ref={sliderRootRef}>
+        <div ref={sliderRootRef}>
           <SliderRoot max={maxValue} />
-        </form>
+        </div>
       </div>
     </>
   );
