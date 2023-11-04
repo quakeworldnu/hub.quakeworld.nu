@@ -21,30 +21,30 @@ export const Controls = () => {
   return (
     <div
       className={classNames(
-        "flex flex-wrap transition-opacity duration-500 bg-black/60 justify-between",
+        "flex flex-wrap transition-opacity duration-500 bg-black/60 justify-between px-4",
         {
           "opacity-0": idle,
         },
       )}
     >
-      <div className="w-full mx-4">
+      <div className="w-full ">
         <TimeSlider />
       </div>
 
-      <div className="flex w-1/4 space-x-1 items-center my-2">
+      <div className="flex w-1/4 space-x-2 items-center my-2">
         <VolumeToggle />
         <VolumeSlider />
         <GameClock />
       </div>
 
-      <div className="flex space-x-1 items-center justify-center my-2">
+      <div className="flex space-x-2 items-center justify-center my-2">
         <SeekToStartButton />
         <PlayToggle />
         <SeekToEndButton />
       </div>
 
-      <div className="flex w-1/4 space-x-1 items-center justify-end my-2">
-        <div className="hidden xl:flex mr-4">
+      <div className="flex w-1/4 space-x-2 items-center justify-end my-2">
+        <div className="hidden xl:flex">
           <PlayerTrackButtons />
         </div>
         <AutotrackToggle />
