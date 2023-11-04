@@ -1,6 +1,7 @@
+import classNames from "classnames";
+import { useIdleTimer } from "react-idle-timer";
 import { Controls } from "./Controls.tsx";
 import { useFteController, useFteLoader } from "../fte/hooks.ts";
-import classNames from "classnames";
 import { getAssets } from "../fte/assets.ts";
 import { getDemoDownloadUrl } from "../services/supabase/demo.ts";
 import { Demo } from "../services/supabase/supabase.types.ts";
@@ -16,6 +17,13 @@ export const FtePlayer = ({ demo }: { demo: Demo }) => {
     demoTotalTime: demo.duration,
   });
   const fte = useFteController();
+
+  useIdleTimer({
+    onIdle: () => dispatchEvent(new Event("demoplayer.mouse.idle")),
+    onActive: () => dispatchEvent(new Event("demoplayer.mouse.active")),
+    events: ["mousemove"],
+    timeout: 2500,
+  });
 
   return (
     <div
