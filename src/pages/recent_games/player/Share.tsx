@@ -97,7 +97,7 @@ export const ShareDemoButton = () => {
                   {url}
                 </div>
                 <button
-                  className="bg-blue-800 text-white hover:bg-blue-600 focus:shadow-green-400 inline-flex items-center justify-center rounded py-2 px-3 select-none"
+                  className="bg-gradient-to-b from-blue-700 to-blue-800 text-sm text-white hover:from-blue-600 hover:to-blue-700 rounded py-1.5 px-2 select-none"
                   onClick={copyToClipboardWithToast}
                 >
                   <FontAwesomeIcon icon={faCopy} fixedWidth className="mr-1" />
@@ -105,7 +105,7 @@ export const ShareDemoButton = () => {
                 </button>
               </div>
             </div>
-            <div className="flex justify-between text-sm">
+            <div className="flex text-sm gap-x-12">
               <div className="flex items-center">
                 <label className="flex items-center cursor-pointer">
                   <input
