@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { ToastContainer } from "react-toastify";
 import { SiteHeader } from "../../site/Header";
 import { SiteFooter } from "../../site/Footer";
 import { Browser } from "./browser/Browser";
@@ -61,6 +62,7 @@ export const App = () => {
         <Sidebar />
       </div>
       <SiteFooter />
+      <ToastContainer hideProgressBar position="bottom-right" theme="dark" />
     </div>
   );
 };

@@ -8,6 +8,7 @@ import { useCopyToClipboard, useToggle } from "usehooks-ts";
 import { useCurrentDemoId } from "../playlist/hooks.ts";
 import { query } from "urlcat";
 import { toPlainText } from "../qwstrings.ts";
+import { toast } from "react-toastify";
 
 export const ShareDemoButton = () => {
   const fte = useFteController();
@@ -28,6 +29,7 @@ export const ShareDemoButton = () => {
     setGameElapsedTime(Math.floor(fte.getGameElapsedTime()));
     setIsUsingAutotrack(fte.isUsingAutotrack());
     setUrl(getUrl());
+    copyToClipboardWithToast();
   }
 
   function handleTrackChange(e: ChangeEvent<HTMLSelectElement>) {
@@ -38,6 +40,14 @@ export const ShareDemoButton = () => {
       setTrackUserId(parseInt(e.target.value));
       setIsUsingAutotrack(false);
     }
+  }
+
+  function copyToClipboardWithToast() {
+    copyToClipboard(url);
+    toast("Link copied to clipboard", {
+      type: "success",
+      autoClose: 1500,
+    });
   }
 
   function getUrl(): string {
@@ -91,7 +101,7 @@ export const ShareDemoButton = () => {
                 </div>
                 <button
                   className="bg-blue-800 text-white hover:bg-blue-600 focus:shadow-green-400 inline-flex items-center justify-center rounded py-2 px-3 select-none"
-                  onClick={() => copyToClipboard(url)}
+                  onClick={copyToClipboardWithToast}
                 >
                   <FontAwesomeIcon icon={faCopy} fixedWidth className="mr-1" />
                   Copy
