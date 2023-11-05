@@ -81,8 +81,13 @@ export const ShareDemoButton = () => {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild onClick={handleOpenClick}>
-        <button className="flex text-sm items-center md:mt-0 py-2.5 px-4 rounded bg-gradient-to-b from-blue-700 to-blue-900 hover:from-blue-600 hover:to-blue-800">
-          <FontAwesomeIcon icon={faShare} fixedWidth className="mr-1.5" />
+        <button className="flex text-sm items-center md:mt-0 py-2.5 px-3 rounded bg-gradient-to-b from-blue-700 to-blue-900 hover:from-blue-600 hover:to-blue-800">
+          <FontAwesomeIcon
+            icon={faShare}
+            fixedWidth
+            size="sm"
+            className="mr-1.5"
+          />
           Share
         </button>
       </Dialog.Trigger>

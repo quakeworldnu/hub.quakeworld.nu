@@ -45,12 +45,17 @@ export const EnableClipEditorButton = () => {
   return (
     <button
       className={classNames(
-        "flex text-sm items-center md:mt-0 py-2.5 px-4 rounded bg-gradient-to-b from-blue-700 to-blue-900 hover:from-blue-600 hover:to-blue-800",
+        "flex text-sm items-center md:mt-0 py-2.5 px-3 rounded bg-gradient-to-b from-blue-700 to-blue-900 hover:from-blue-600 hover:to-blue-800",
       )}
       onClick={handleClick}
     >
-      <FontAwesomeIcon icon={faScissors} fixedWidth className="mr-1.5" />
-      Create Clip
+      <FontAwesomeIcon
+        icon={faScissors}
+        fixedWidth
+        size="sm"
+        className="mr-1.5"
+      />
+      Clip
     </button>
   );
 };
