@@ -10,7 +10,7 @@ export const DisableClipEditorButton = () => {
   return (
     <button
       className={classNames(
-        "flex text-xs items-center py-1 px-1.5 rounded bg-slate-700 hover:bg-slate-600",
+        "flex text-xs items-center py-1.5 px-2 rounded bg-slate-700 hover:bg-slate-600",
       )}
       onClick={toggle}
     >

@@ -12,9 +12,11 @@ import copyTextToClipboard from "copy-text-to-clipboard";
 import { useFteController, useFteEvent } from "../../fte/hooks.ts";
 import { secondsToMinutesAndSeconds } from "../../time.ts";
 import { clamp } from "../../math.ts";
+import { toast } from "react-toastify";
+import classNames from "classnames";
 
 export const ClipControls = () => {
-  const { setTrack, range, from, to, setFrom, setTo } = useClipEditor();
+  const { setTrack } = useClipEditor();
 
   useFteEvent("cl_autotrack", (e: CustomEvent) => {
     if (e.detail.value === "stats") {
@@ -42,31 +44,56 @@ export const ClipControls = () => {
         <DisableClipEditorButton />
       </div>
 
-      <div className="my-2">
+      <div className="my-3">
         <ClipRange />
       </div>
 
-      <div className="flex flex-wrap items-center ">
-        <div className="w-48"></div>
-
-        <div className="flex flex-wrap grow items-center justify-center space-x-1 my-3">
-          <AdjustRangeButton current={from} delta={-5} onClick={setFrom} />
-          <AdjustRangeButton current={from} delta={-1} onClick={setFrom} />
-          <AdjustRangeButton current={from} delta={1} onClick={setFrom} />
-          <AdjustRangeButton current={from} delta={5} onClick={setFrom} />
-          <div className="font-mono text-sm px-2">
-            {range.map(secondsToMinutesAndSeconds).join(" - ")}
-          </div>
-          <AdjustRangeButton current={to} delta={-5} onClick={setTo} />
-          <AdjustRangeButton current={to} delta={-1} onClick={setTo} />
-          <AdjustRangeButton current={to} delta={1} onClick={setTo} />
-          <AdjustRangeButton current={to} delta={5} onClick={setTo} />
-        </div>
-
-        <div className="w-48 text-right">
-          <CopyClipUrlButton />
+      <div className="flex flex-wrap justify-between my-3 gap-3">
+        <div className="hidden md:block w-32"></div>
+        <AdjustControls />
+        <div className="text-right">
+          <CopyLinkButton />
         </div>
       </div>
+    </div>
+  );
+};
+
+export const CopyLinkButton = () => {
+  const { getUrl } = useClipEditor();
+
+  function handleClick() {
+    copyTextToClipboard(getUrl());
+    toast("Link copied to clipboard", { type: "success" });
+  }
+
+  return (
+    <button
+      className="bg-gradient-to-b from-blue-700 to-blue-800 text-sm text-white hover:from-blue-600 hover:to-blue-700 rounded py-1.5 px-2 select-none"
+      onClick={handleClick}
+    >
+      <FontAwesomeIcon icon={faCopy} fixedWidth size="sm" className="mr-1" />
+      Copy link
+    </button>
+  );
+};
+
+const AdjustControls = () => {
+  const { range, from, to, setFrom, setTo } = useClipEditor();
+
+  return (
+    <div className="flex flex-wrap grow items-center md:justify-center space-x-1 gap-y-1">
+      <AdjustRangeButton current={from} delta={-5} onClick={setFrom} />
+      <AdjustRangeButton current={from} delta={-1} onClick={setFrom} />
+      <AdjustRangeButton current={from} delta={1} onClick={setFrom} />
+      <AdjustRangeButton current={from} delta={5} onClick={setFrom} />
+      <div className="font-mono text-sm px-2">
+        {range.map(secondsToMinutesAndSeconds).join(" - ")}
+      </div>
+      <AdjustRangeButton current={to} delta={-5} onClick={setTo} />
+      <AdjustRangeButton current={to} delta={-1} onClick={setTo} />
+      <AdjustRangeButton current={to} delta={1} onClick={setTo} />
+      <AdjustRangeButton current={to} delta={5} onClick={setTo} />
     </div>
   );
 };
@@ -93,7 +120,10 @@ const AdjustRangeButton = ({
 
   return (
     <button
-      className="bg-violet-700 hover:bg-violet-600 px-1.5 py-1 text-xs rounded font-bold"
+      className={classNames(
+        "flex items-center bg-gradient-to-b from-slate-600 to-slate-700 hover:from-slate-500 hover:to-slate-600 px-1.5 py-1 text-xs rounded",
+        { "hidden sm:flex": Math.abs(delta) > 1 },
+      )}
       onClick={handleClick}
     >
       <FontAwesomeIcon
@@ -102,20 +132,6 @@ const AdjustRangeButton = ({
         className="mr-1"
       />
       {Math.abs(delta)}
-    </button>
-  );
-};
-
-export const CopyClipUrlButton = () => {
-  const { getUrl } = useClipEditor();
-
-  return (
-    <button
-      className="bg-blue-700 hover:bg-blue-600 px-2 py-1.5 text-xs rounded font-bold"
-      onClick={() => copyTextToClipboard(getUrl())}
-    >
-      <FontAwesomeIcon icon={faCopy} fixedWidth className="mr-1.5" />
-      Copy URL to clipboard
     </button>
   );
 };
