@@ -62,7 +62,12 @@ export const App = () => {
         <Sidebar />
       </div>
       <SiteFooter />
-      <ToastContainer hideProgressBar position="bottom-right" theme="dark" />
+      <ToastContainer
+        hideProgressBar
+        position="bottom-right"
+        theme="dark"
+        autoClose={1500}
+      />
     </div>
   );
 };

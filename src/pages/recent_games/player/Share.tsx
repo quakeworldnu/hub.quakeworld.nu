@@ -44,10 +44,7 @@ export const ShareDemoButton = () => {
 
   function copyToClipboardWithToast() {
     copyToClipboard(url);
-    toast("Link copied to clipboard", {
-      type: "success",
-      autoClose: 1500,
-    });
+    toast("Link copied to clipboard", { type: "success" });
   }
 
   function getUrl(): string {
