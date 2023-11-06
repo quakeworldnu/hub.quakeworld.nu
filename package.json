@@ -19,7 +19,7 @@
     "supabase:types": "supabase gen types typescript --project-id ncsphkjfominimxztjip > src/pages/recent_games/services/supabase/database.types.ts"
   },
   "devDependencies": {
-    "@types/react": "^18.2.34",
+    "@types/react": "^18.2.36",
     "@types/react-dom": "^18.2.14",
     "@typescript-eslint/eslint-plugin": "^6.9.1",
     "@typescript-eslint/parser": "^6.9.1",
@@ -62,7 +62,7 @@
     "firebase-tools": "^12.8.0",
     "formik": "^2.4.5",
     "lodash.groupby": "^4.6.0",
-    "nanoid": "^5.0.2",
+    "nanoid": "^5.0.3",
     "postcss": "^8.4.31",
     "query-string": "^8.1.0",
     "react": "^18.2.0",
