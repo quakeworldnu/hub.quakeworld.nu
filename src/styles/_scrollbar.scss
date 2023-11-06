@@ -18,7 +18,7 @@ body::-webkit-scrollbar {
 
 // Buttons
 ::-webkit-scrollbar-button:single-button {
-  @apply block bg-no-repeat ;
+  @apply block bg-no-repeat;
   background-size: 8px;
 
   &:vertical {
