@@ -23,8 +23,14 @@ import {
 } from "../ui/theme.ts";
 
 export const Toolbar = () => {
+  const { isLoading } = useDemos();
+
   return (
-    <div className="flex flex-wrap gap-x-6 gap-y-3 items-center">
+    <div
+      className={classNames("flex flex-wrap gap-x-6 gap-y-3 items-center", {
+        "pointer-events-none": isLoading,
+      })}
+    >
       <DisplayModeButtons />
       <GameModeButtons />
       <QueryInput />
@@ -92,6 +98,10 @@ export const DisplayModeButtons = () => {
     { icon: faBars, label: "List", value: "list" },
   ];
 
+  function handleClick(value: string) {
+    setMode(value as DisplayMode);
+  }
+
   return (
     <div className="flex items-center space-x-px">
       {options.map((option) => (
@@ -101,7 +111,7 @@ export const DisplayModeButtons = () => {
           className={classNames(`${toggleBtn} ${sizeSmall}`, {
             [toggleBtnSelected]: settings.displayMode === option.value,
           })}
-          onClick={() => setMode(option.value as DisplayMode)}
+          onClick={() => handleClick(option.value)}
         >
           <FontAwesomeIcon fixedWidth icon={option.icon} />
           <div>{option.label}</div>
@@ -129,6 +139,10 @@ export const GameModeButtons = () => {
     })),
   );
 
+  function handleClick(mode: string) {
+    setGameMode(mode.toLowerCase());
+  }
+
   return (
     <div className="flex items-center space-x-px">
       {options.map((option) => (
@@ -138,7 +152,7 @@ export const GameModeButtons = () => {
             [toggleBtnSelected]:
               settings.gameMode === option.value.toLowerCase(),
           })}
-          onClick={() => setGameMode(option.value.toLowerCase())}
+          onClick={() => handleClick(option.value)}
         >
           {option.label}
         </div>

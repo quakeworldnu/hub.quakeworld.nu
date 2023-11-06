@@ -10,7 +10,7 @@ import { btnSecondary, formInput, sizeSmall } from "../ui/theme.ts";
 
 const PER_PAGE = 20;
 export const Pagination = () => {
-  const { count, isLoading } = useDemos();
+  const { count } = useDemos();
   const { settings, nextPage, prevPage } = useDemoBrowserSettings();
   const pageCount = Math.ceil(count / PER_PAGE);
 
@@ -24,7 +24,7 @@ export const Pagination = () => {
   return (
     <div className="flex items-center space-x-3">
       <button
-        disabled={!hasPreviousPage || isLoading}
+        disabled={!hasPreviousPage}
         className={`${sizeSmall} ${btnSecondary}`}
         onClick={prevPage}
       >
@@ -32,7 +32,7 @@ export const Pagination = () => {
       </button>
       <PagNumberSelect pageCount={pageCount} />
       <button
-        disabled={!hasNextPage || isLoading}
+        disabled={!hasNextPage}
         className={`${sizeSmall} ${btnSecondary}`}
         onClick={nextPage}
       >
