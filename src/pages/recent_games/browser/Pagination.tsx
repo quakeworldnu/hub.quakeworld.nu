@@ -5,50 +5,71 @@ import {
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { useDemoBrowserSettings } from "./hooks.ts";
+import { ChangeEvent } from "react";
+import { btnSecondary, formInput, sizeSmall } from "../ui/theme.ts";
 
 const PER_PAGE = 20;
-const btnClass = "py-2 px-3 bg-slate-800 hover:bg-slate-700 rounded text-xs";
-
 export const Pagination = () => {
   const { count, isLoading } = useDemos();
-  const { settings, setPage } = useDemoBrowserSettings();
+  const { settings, nextPage, prevPage } = useDemoBrowserSettings();
+  const pageCount = Math.ceil(count / PER_PAGE);
 
-  function handleNextClick() {
-    setPage(settings.page + 1);
-  }
-
-  function handlePrevClick() {
-    setPage(settings.page - 1);
-  }
-
-  const totalPages = Math.ceil(count / PER_PAGE);
-
-  if (0 === count || totalPages < 2) {
+  if (0 === count || pageCount < 2) {
     return null;
   }
 
-  const hasNextPage = settings.page < totalPages;
+  const hasNextPage = settings.page < pageCount;
   const hasPreviousPage = settings.page > 1;
 
   return (
     <div className="flex items-center space-x-3">
       <button
         disabled={!hasPreviousPage || isLoading}
-        className={btnClass}
-        onClick={handlePrevClick}
+        className={`${sizeSmall} ${btnSecondary}`}
+        onClick={prevPage}
       >
         <FontAwesomeIcon icon={faChevronLeft} className="mr-1" /> Previous
       </button>
-      <div className="text-xs">
-        {settings.page} / {totalPages}
-      </div>
+      <PagNumberSelect pageCount={pageCount} />
       <button
         disabled={!hasNextPage || isLoading}
-        className={btnClass}
-        onClick={handleNextClick}
+        className={`${sizeSmall} ${btnSecondary}`}
+        onClick={nextPage}
       >
         Next <FontAwesomeIcon icon={faChevronRight} className="ml-1" />
       </button>
+    </div>
+  );
+};
+
+const PagNumberSelect = ({ pageCount = 1 }: { pageCount: number }) => {
+  const { settings, setPage } = useDemoBrowserSettings();
+
+  if (pageCount < 2) {
+    return null;
+  }
+
+  function handleChange(e: ChangeEvent<HTMLSelectElement>) {
+    const pageNumber = parseInt(e.target.value);
+    setPage(pageNumber);
+  }
+
+  const pageNumbers = Array.from(Array(pageCount).keys());
+
+  return (
+    <div className="flex items-center space-x-2">
+      <select
+        className={formInput}
+        value={settings.page}
+        onChange={handleChange}
+      >
+        {pageNumbers.map((p) => (
+          <option key={p} value={1 + p}>
+            {1 + p}
+          </option>
+        ))}
+      </select>
+      <div className="text-xs">of {pageCount}</div>
     </div>
   );
 };

@@ -17,7 +17,15 @@ export function useDemoBrowserSettings() {
     setSettings({ ...settings, page });
   }
 
-  return { settings, setSettings, setPage };
+  function nextPage() {
+    setPage(settings.page + 1);
+  }
+
+  function prevPage() {
+    setPage(settings.page - 1);
+  }
+
+  return { settings, setSettings, setPage, nextPage, prevPage };
 }
 
 export function useDemoScoreSpoiler() {

@@ -14,6 +14,7 @@ import { secondsToMinutesAndSeconds } from "../../time.ts";
 import { clamp } from "../../math.ts";
 import { toast } from "react-toastify";
 import classNames from "classnames";
+import { btnPrimary, sizeSmall } from "../../ui/theme.ts";
 
 export const ClipControls = () => {
   const { setTrack } = useClipEditor();
@@ -68,10 +69,7 @@ export const CopyLinkButton = () => {
   }
 
   return (
-    <button
-      className="bg-gradient-to-b from-blue-700 to-blue-800 text-sm text-white hover:from-blue-600 hover:to-blue-700 rounded py-1.5 px-2 select-none"
-      onClick={handleClick}
-    >
+    <button className={`${btnPrimary} ${sizeSmall}`} onClick={handleClick}>
       <FontAwesomeIcon icon={faCopy} fixedWidth size="sm" className="mr-1" />
       Copy link
     </button>

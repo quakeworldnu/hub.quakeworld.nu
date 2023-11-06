@@ -3,6 +3,7 @@ import { faClose, faScissors } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
 import { useClipEditor } from "./context.tsx";
 import { useFteController } from "../../fte/hooks.ts";
+import { btnPrimary, sizeLarge } from "../../ui/theme.ts";
 
 export const DisableClipEditorButton = () => {
   const { toggle } = useClipEditor();
@@ -43,12 +44,7 @@ export const EnableClipEditorButton = () => {
   }
 
   return (
-    <button
-      className={classNames(
-        "flex text-sm items-center md:mt-0 py-2.5 px-3 rounded bg-gradient-to-b from-blue-700 to-blue-900 hover:from-blue-600 hover:to-blue-800",
-      )}
-      onClick={handleClick}
-    >
+    <button className={`${btnPrimary} ${sizeLarge}`} onClick={handleClick}>
       <FontAwesomeIcon
         icon={faScissors}
         fixedWidth

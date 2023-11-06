@@ -2,6 +2,7 @@ import classNames from "classnames";
 import { Demo, DemoParticipants } from "../services/supabase/supabase.types.ts";
 import { Timestamp } from "../Timestamp.tsx";
 import { ToggleButton } from "../playlist/Playlist.tsx";
+import { btnSecondary } from "../ui/theme.ts";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -30,7 +31,7 @@ const GridItem = (props: { demo: Demo }) => {
       <div className="flex items-center mt-1 text-xs">
         <button
           onClick={show}
-          className={classNames("bg-slate-800 p-1 px-2 rounded", {
+          className={classNames(btnSecondary, "py-1 px-1.5", {
             "opacity-0": isVisible,
           })}
         >

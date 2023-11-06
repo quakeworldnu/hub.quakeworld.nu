@@ -1,5 +1,4 @@
-import { useDemoBrowserSettings } from "./hooks.ts";
-import React, { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useDebounce, useLocalStorage } from "usehooks-ts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -9,16 +8,19 @@ import {
   faTableCells,
 } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
+import { useDemoBrowserSettings } from "./hooks.ts";
 import { DisplayMode } from "./types.ts";
 import { usePlaylist } from "../playlist/hooks.ts";
 import { Pagination } from "./Pagination.tsx";
 import { useDemos } from "./context.tsx";
 import { Switch } from "../ui/Switch.tsx";
-
-export const btnSelectedClass =
-  "bg-gradient-to-t from-blue-500/20 to-blue-500/40 border-white/10 text-white";
-export const btnDefaultClass =
-  "flex items-center space-x-2 p-2 px-2.5 cursor-pointer text-sm first:rounded-l last:rounded-r border border-transparent border-white/10 hover:border-white/20 hover:bg-blue-500/20 text-slate-400";
+import {
+  btnSecondary,
+  formInput,
+  sizeSmall,
+  toggleBtn,
+  toggleBtnSelected,
+} from "../ui/theme.ts";
 
 export const Toolbar = () => {
   return (
@@ -65,13 +67,7 @@ export const BulkActions = () => {
   return (
     <button
       disabled={!hasDemos}
-      className={classNames(
-        "flex items-center bg-slate-800 text-slate-200 text-xs py-2 px-3 rounded border border-white/10 disabled:opacity-60 transition-opacity",
-        {
-          "hover:bg-slate-700 hover:text-white": hasDemos,
-          "cursor-not-allowed opacity-20": !hasDemos,
-        },
-      )}
+      className={`${btnSecondary} ${sizeSmall}`}
       onClick={handleClick}
     >
       <FontAwesomeIcon
@@ -97,17 +93,17 @@ export const DisplayModeButtons = () => {
   ];
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center space-x-px">
       {options.map((option) => (
         <div
           key={option.value}
           title={`Display as ${option.value}`}
-          className={classNames(btnDefaultClass, {
-            [btnSelectedClass]: settings.displayMode === option.value,
+          className={classNames(`${toggleBtn} ${sizeSmall}`, {
+            [toggleBtnSelected]: settings.displayMode === option.value,
           })}
           onClick={() => setMode(option.value as DisplayMode)}
         >
-          <FontAwesomeIcon fixedWidth icon={option.icon} size="lg" />
+          <FontAwesomeIcon fixedWidth icon={option.icon} />
           <div>{option.label}</div>
         </div>
       ))}
@@ -134,12 +130,12 @@ export const GameModeButtons = () => {
   );
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center space-x-px">
       {options.map((option) => (
         <div
           key={option.value}
-          className={classNames(btnDefaultClass, {
-            [btnSelectedClass]:
+          className={classNames(`${toggleBtn} ${sizeSmall}`, {
+            [toggleBtnSelected]:
               settings.gameMode === option.value.toLowerCase(),
           })}
           onClick={() => setGameMode(option.value.toLowerCase())}
@@ -155,7 +151,7 @@ export const QueryInput = () => {
   const [query, setQuery] = useState<string>(settings.query);
   const debouncedQuery = useDebounce<string>(query, 400);
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleChange(e: ChangeEvent<HTMLInputElement>) {
     setQuery(e.target.value);
   }
 
@@ -174,7 +170,7 @@ export const QueryInput = () => {
         autoFocus
         type="search"
         value={query}
-        className="-ml-6 px-2 pl-8 py-2 text-sm bg-slate-900 focus:bg-slate-800 border border-slate-700 text-white rounded w-72 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        className={`${formInput} -ml-6 pl-8 w-72`}
         onChange={handleChange}
       />
     </label>

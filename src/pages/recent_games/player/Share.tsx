@@ -9,6 +9,7 @@ import { useCurrentDemoId } from "../playlist/hooks.ts";
 import { query } from "urlcat";
 import { toPlainText } from "../qwstrings.ts";
 import { toast } from "react-toastify";
+import { btnPrimary, sizeLarge, sizeSmall } from "../ui/theme.ts";
 
 export const ShareDemoButton = () => {
   const fte = useFteController();
@@ -81,7 +82,7 @@ export const ShareDemoButton = () => {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild onClick={handleOpenClick}>
-        <button className="flex text-sm items-center md:mt-0 py-2.5 px-3 rounded bg-gradient-to-b from-blue-700 to-blue-900 hover:from-blue-600 hover:to-blue-800">
+        <button className={`${btnPrimary} ${sizeLarge} md:mt-0`}>
           <FontAwesomeIcon
             icon={faShare}
             fixedWidth
@@ -102,7 +103,7 @@ export const ShareDemoButton = () => {
                   {url}
                 </div>
                 <button
-                  className="bg-gradient-to-b from-blue-700 to-blue-800 text-sm text-white hover:from-blue-600 hover:to-blue-700 rounded py-1.5 px-2 select-none"
+                  className={`${btnPrimary} ${sizeSmall}`}
                   onClick={copyToClipboardWithToast}
                 >
                   <FontAwesomeIcon icon={faCopy} fixedWidth className="mr-1" />

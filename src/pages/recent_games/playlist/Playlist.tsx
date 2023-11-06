@@ -13,6 +13,7 @@ import { useCurrentDemoId, usePlaylist } from "./hooks.ts";
 import type { Demo } from "../services/supabase/supabase.types.ts";
 import { Switch } from "../ui/Switch.tsx";
 import classNames from "classnames";
+import { btnSecondary, sizeSmall } from "../ui/theme.ts";
 
 export type PlaylistItem = {
   id: number;
@@ -128,8 +129,7 @@ export const EditablePlaylist = () => {
   );
 };
 
-const miniButtonClass =
-  "flex items-center bg-slate-800 hover:bg-slate-700 text-xs py-2 px-3 rounded border border-white/10";
+const miniButtonClass = `${btnSecondary} ${sizeSmall}`;
 
 export function SortButton() {
   const { sortByTimestamp } = usePlaylist();
