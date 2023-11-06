@@ -3,32 +3,9 @@
 @import "./quake_colors";
 @import "./server";
 @import "./tailwind";
+@import "./scrollbar";
 @import "react-modern-drawer/dist/index.css";
 @import "react-toastify/dist/ReactToastify.css";
-
-/* width */
-body::-webkit-scrollbar {
-  width: 14px;
-}
-
-select::-webkit-scrollbar {
-  width: 8px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: #334;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #667;
-  border-radius: 3px;
-
-  &:hover {
-    background: #889;
-  }
-}
 
 .EZDrawer .EZDrawer__container {
   @apply bg-slate-900 text-gray-300 h-full p-3;
