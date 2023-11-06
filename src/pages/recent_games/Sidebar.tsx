@@ -1,13 +1,13 @@
 import { Playlist } from "./playlist/Playlist.tsx";
 import { useState } from "react";
-import { useEvent } from "react-use";
+import { useEventListener } from "./hooks.ts";
 
 const minHeight = 480;
 
 export const Sidebar = () => {
   const [height, setHeight] = useState<number>(minHeight);
 
-  useEvent("app.body.resize", (e: CustomEvent) => {
+  useEventListener("app.body.resize", (e: CustomEvent) => {
     const { height } = e.detail;
     setHeight(height);
   });

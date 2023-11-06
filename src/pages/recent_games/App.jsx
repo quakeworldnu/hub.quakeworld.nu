@@ -12,12 +12,27 @@ import { useDemos } from "./browser/context.tsx";
 import { useDemoBrowserSettings } from "./browser/hooks.ts";
 import { Sidebar } from "./Sidebar";
 import { Player } from "@qwhub/pages/recent_games/player/Player";
-import { useThrottledElementSize } from "@qwhub/pages/recent_games/hooks";
+import { useElementSize } from "usehooks-ts";
+
+function getAppBodySize() {
+  const el = document.getElementById("AppBody");
+  if (!el) {
+    return { width: 0, height: 0 };
+  }
+  const { width, height } = el.getBoundingClientRect();
+  return { width, height };
+}
 
 export const App = () => {
   const demoId = useCurrentDemoId();
   const { settings, setPage } = useDemoBrowserSettings();
-  const { setDemos, setCount, setIsLoading } = useDemos();
+  const { setDemos, setCount, setIsLoading, isLoading } = useDemos();
+
+  function handleAppBodySizeChange() {
+    dispatchEvent(
+      new CustomEvent("app.body.resize", { detail: getAppBodySize() }),
+    );
+  }
 
   useEffect(() => {
     async function run() {
@@ -44,9 +59,18 @@ export const App = () => {
     run();
   }, [settings.page]);
 
-  const [bodyRef, bodySize] = useThrottledElementSize();
+  const [bodyRef, bodySize] = useElementSize();
+
   useEffect(() => {
-    dispatchEvent(new CustomEvent("app.body.resize", { detail: bodySize }));
+    if (isLoading) {
+      return;
+    }
+
+    handleAppBodySizeChange();
+  }, [isLoading]);
+
+  useEffect(() => {
+    handleAppBodySizeChange();
   }, [bodySize]);
 
   return (
