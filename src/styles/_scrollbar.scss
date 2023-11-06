@@ -1,9 +1,9 @@
-body::-webkit-scrollbar {
-  @apply w-3 h-3;
+::-webkit-scrollbar {
+  @apply w-2 h-2;
 }
 
-select::-webkit-scrollbar {
-  @apply w-2 h-2;
+body::-webkit-scrollbar {
+  @apply w-3 h-3;
 }
 
 ::-webkit-scrollbar-corner,
