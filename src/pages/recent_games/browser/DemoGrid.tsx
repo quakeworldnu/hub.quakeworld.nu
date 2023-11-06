@@ -79,38 +79,43 @@ const ScoreboardTile = ({
     fixedPlayers.sort((a, b) => b.frags - a.frags);
   }
 
+  const isCustomMode = ["ctf"].includes(demo.mode);
+
   return (
     <a
       key={demo.id}
       title="Play demo"
       href={`/recent_games/?demoId=${demo.id}`}
       className={classNames(
-        "flex flex-col h-full border bg-slate-800 bg-no-repeat bg-center bg-cover hover:scale-105 transition-transform hover:shadow-2xl hover:z-20 hover:relative",
+        "flex flex-col border border-black h-full bg-slate-800 bg-no-repeat bg-center bg-cover hover:scale-105 transition-transform hover:z-20 hover:relative",
         {
-          "border-green-800": demo.mode === "1on1",
-          "border-blue-800": demo.mode === "2on2",
-          "border-red-800": demo.mode === "4on4",
-          "border-amber-700": demo.mode === "ctf",
+          "zborder-green-800": demo.mode === "1on1",
+          "zborder-blue-800": demo.mode === "2on2",
+          "zborder-red-800": demo.mode === "4on4",
+          "zborder-amber-700": demo.mode === "ctf",
         },
       )}
       style={{
         backgroundImage: `url(https://raw.githubusercontent.com/vikpe/qw-mapshots/main/${demo.map}.jpg)`,
       }}
     >
-      <div className="absolute">
-        <ModeRibbon mode={demo.mode} />
-      </div>
+      <div className="flex flex-col h-full bg-gray-700/20">
+        {isCustomMode && (
+          <div className="absolute">
+            <ModeRibbon mode={demo.mode} />
+          </div>
+        )}
 
-      <div className="flex grow bg-gray-700/20 justify-center items-center my-4">
-        <Scoreboard
-          teams={fixedTeams}
-          players={fixedPlayers}
-          showFrags={showScores}
-        />
-      </div>
-
-      <div className="flex -mt-8 h-6 px-2 text-right ml-auto items-center bg-gray-900/50 text-xs rounded-lg mr-2 mb-2">
-        {demo.map}
+        <div className="flex grow justify-center items-center py-4 -mb-8">
+          <Scoreboard
+            teams={fixedTeams}
+            players={fixedPlayers}
+            showFrags={showScores}
+          />
+        </div>
+        <div className="flex h-8 px-2 items-start justify-end text-xs text-slate-300">
+          <div className="bg-gray-900/50 rounded px-2 py-1">{demo.map}</div>
+        </div>
       </div>
     </a>
   );
@@ -123,10 +128,10 @@ export const ModeRibbon = ({ mode }: { mode: string }) => {
         className={classNames(
           "flex -translate-x-[45%] -translate-y-[195%] -rotate-45 origin-bottom-right h-8 w-48 bg-gradient-to-bl justify-center items-center z-10 text-white app-text-shadow font-bold text-sm",
           {
-            "from-red-500 to-red-900": mode === "4on4",
-            "from-blue-500 to-blue-900": mode === "2on2",
-            "from-green-500 to-green-900": mode === "1on1",
-            "from-amber-500 to-amber-900": mode === "ctf",
+            "from-red-600 to-red-900": mode === "4on4",
+            "from-blue-600 to-blue-900": mode === "2on2",
+            "from-green-600 to-green-900": mode === "1on1",
+            "from-amber-600 to-amber-900": mode === "ctf",
           },
         )}
       >
