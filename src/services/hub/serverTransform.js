@@ -1,4 +1,15 @@
+function fixAddress(address) {
+  return address.replaceAll("10.0.0.10", "play.qwlan.pl");
+}
+
 export const transformServer = (server) => {
+  // radomsko lan fix
+  server.address = fixAddress(server.address);
+  server.settings.hostname = fixAddress(server.settings.hostname);
+  server.settings.hostname_parsed = fixAddress(server.settings.hostname_parsed);
+  server.qtv_stream.address = fixAddress(server.qtv_stream.address);
+  server.qtv_stream.url = fixAddress(server.qtv_stream.url);
+
   // exclude [ServeMe]
   const index = server.spectator_names.indexOf("[ServeMe]");
 
