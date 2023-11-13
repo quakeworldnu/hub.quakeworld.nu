@@ -10,7 +10,7 @@
     "dev:convex": "npm-run-all convex:init --parallel convex:server dev",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "format": "yarn prettier --write src",
+    "format": "yarn prettier --write src --list-different",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "test": "vitest --coverage",
     "test:watch": "vitest --watch --coverage",
