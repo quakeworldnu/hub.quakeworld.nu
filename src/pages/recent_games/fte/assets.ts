@@ -39,13 +39,13 @@ function getMapAssets(mapName: string): object {
         [targetMapLit]: `https://media.githubusercontent.com/media/qw-ctf/lits/main/jscolour/id1_gpl/${mapName}.lit`,
       }
     : mapName === "mammoth" || mapName === "ctf5"
-    ? {
-        [targetMapBsp]: `https://media.githubusercontent.com/media/qw-ctf/qtube-maps/main/${mapName}.bsp`,
-      }
-    : {
-        [targetMapBsp]: `https://raw.githubusercontent.com/nQuake/distfiles/master/sv-maps/qw/maps/${mapName}.bsp`,
-        [targetMapLit]: `https://media.githubusercontent.com/media/qw-ctf/lits/main/jscolour/maps/${mapName}.lit`,
-      };
+      ? {
+          [targetMapBsp]: `https://media.githubusercontent.com/media/qw-ctf/qtube-maps/main/${mapName}.bsp`,
+        }
+      : {
+          [targetMapBsp]: `https://raw.githubusercontent.com/nQuake/distfiles/master/sv-maps/qw/maps/${mapName}.bsp`,
+          [targetMapLit]: `https://media.githubusercontent.com/media/qw-ctf/lits/main/jscolour/maps/${mapName}.lit`,
+        };
 }
 
 function getGeneralAssets(): object {
