@@ -53,9 +53,7 @@ const metaByServer = (server) => {
   const showTeamColumn =
     "teamplay" in server.settings && server.settings.teamplay > 0;
   const showTeams =
-    showTeamColumn &&
-    server.teams.length < server.player_slots.used &&
-    server.teams.length <= 3;
+    showTeamColumn && server.teams.length > 0 && server.teams.length <= 3;
 
   const showMatchTag =
     "matchtag" in server.settings &&
