@@ -24,7 +24,7 @@ const GridItem = (props: { demo: Demo }) => {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="h-full min-h-[200px]">
+      <div className="h-full min-h-[200px] bg-cover bg-center bg-[url(https://hub.quakeworld.nu/assets/img/default_mapshot.jpg)]">
         <ScoreboardTile demo={demo} showScores={isVisible} />
       </div>
 
@@ -87,13 +87,7 @@ const ScoreboardTile = ({
       title="Play demo"
       href={`/recent_games/?demoId=${demo.id}`}
       className={classNames(
-        "flex flex-col border border-black h-full bg-slate-800 bg-no-repeat bg-center bg-cover hover:scale-105 transition-transform hover:z-20 hover:relative",
-        {
-          "zborder-green-800": demo.mode === "1on1",
-          "zborder-blue-800": demo.mode === "2on2",
-          "zborder-red-800": demo.mode === "4on4",
-          "zborder-amber-700": demo.mode === "ctf",
-        },
+        "flex flex-col border border-black h-full bg-no-repeat bg-center bg-cover hover:scale-105 transition-transform hover:z-20 hover:relative",
       )}
       style={{
         backgroundImage: `url(https://raw.githubusercontent.com/vikpe/qw-mapshots/main/${demo.map}.jpg)`,
