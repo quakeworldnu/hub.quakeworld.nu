@@ -39,7 +39,7 @@ const GridItem = (props: { demo: Demo }) => {
         </button>
         <div className="text-slate-400 grow text-center">
           <Timestamp timestamp={demo.timestamp} />{" "}
-          <span className="text-slate-500">@</span> {demo.source.split(":")[0]}
+          <span className="text-slate-500">@</span> {demo.source}
         </div>
         <div className="flex items-center space-x-1">
           <ToggleButton demo={demo} />
