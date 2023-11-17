@@ -32,11 +32,11 @@ export const Toolbar = () => {
       })}
     >
       <DisplayModeButtons />
+      <GlobalShowScoresToggle />
       <GameModeButtons />
       <QueryInput />
-      <GlobalShowScoresToggle />
-      <BulkActions />
       <Pagination />
+      <BulkActions />
     </div>
   );
 };
@@ -54,7 +54,7 @@ const GlobalShowScoresToggle = () => {
   return (
     <div className="text-sm">
       <Switch
-        label={"Show all scores"}
+        label={"Show scores"}
         enabled={showScores}
         onClick={handleClick}
       />

@@ -14,7 +14,7 @@ export const btnPrimary = `${btn} ${themePrimary}`;
 export const btnSecondary = `${btn} ${themeSecondary}`;
 export const btnSuccess = `${btn} ${themeSuccess}`;
 
-export const sizeSmall = `py-2 px-3 text-xs`;
+export const sizeSmall = `py-2 px-2.5 text-xs`;
 export const sizeLarge = `py-2.5 px-3 text-sm`;
 
 export const formInput = `inline-block py-2 px-3 rounded bg-slate-900 border border-slate-700 text-white text-xs focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`;
