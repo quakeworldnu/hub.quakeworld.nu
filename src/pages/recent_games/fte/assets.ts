@@ -33,19 +33,25 @@ function getMapAssets(mapName: string): object {
   const targetMapBsp = "id1/maps/" + mapName + ".bsp";
   const targetMapLit = "id1/maps/" + mapName + ".lit";
 
-  return /^(dm[1-7]|e[1-4]m[1-8])/.test(mapName)
-    ? {
-        [targetMapBsp]: `https://raw.githubusercontent.com/fzwoch/quake_map_source/master/bsp/${mapName}.bsp`,
-        [targetMapLit]: `https://media.githubusercontent.com/media/qw-ctf/lits/main/jscolour/id1_gpl/${mapName}.lit`,
-      }
-    : mapName === "mammoth" || mapName === "ctf5"
-      ? {
-          [targetMapBsp]: `https://media.githubusercontent.com/media/qw-ctf/qtube-maps/main/${mapName}.bsp`,
-        }
-      : {
-          [targetMapBsp]: `https://raw.githubusercontent.com/nQuake/distfiles/master/sv-maps/qw/maps/${mapName}.bsp`,
-          [targetMapLit]: `https://media.githubusercontent.com/media/qw-ctf/lits/main/jscolour/maps/${mapName}.lit`,
-        };
+  if (/^(dm[1-7]|e[1-4]m[1-8])/.test(mapName)) {
+    return {
+      [targetMapBsp]: `https://raw.githubusercontent.com/fzwoch/quake_map_source/master/bsp/${mapName}.bsp`,
+      [targetMapLit]: `https://media.githubusercontent.com/media/qw-ctf/lits/main/jscolour/id1_gpl/${mapName}.lit`,
+    };
+  } else if (["phantombase"].includes(mapName)) {
+    return {
+      [targetMapBsp]: `https://quakeworld.s3.eu-central-1.amazonaws.com/qw/maps/${mapName}.bsp`,
+    };
+  } else if (["mammoth", "ctf5"].includes(mapName)) {
+    return {
+      [targetMapBsp]: `https://media.githubusercontent.com/media/qw-ctf/qtube-maps/main/${mapName}.bsp`,
+    };
+  } else {
+    return {
+      [targetMapBsp]: `https://raw.githubusercontent.com/nQuake/distfiles/master/sv-maps/qw/maps/${mapName}.bsp`,
+      [targetMapLit]: `https://media.githubusercontent.com/media/qw-ctf/lits/main/jscolour/maps/${mapName}.lit`,
+    };
+  }
 }
 
 function getGeneralAssets(): object {
