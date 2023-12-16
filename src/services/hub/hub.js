@@ -5,7 +5,7 @@ import { compareServers } from "@qwhub/services/hub/serverSort";
 
 export const hubApi = createApi({
   reducerPath: "hub",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://hubapi.quake.world:3000/v2/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "https://hubapi.quake.world/v2/" }),
   endpoints: (build) => ({
     getDemos: build.query({
       query: () => "demos",
