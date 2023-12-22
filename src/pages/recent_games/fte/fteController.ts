@@ -149,7 +149,7 @@ export class FteController {
         }
       };
 
-      setTimeout(restoreTrack, 20);
+      setTimeout(restoreTrack, 75);
     }
   }
 
