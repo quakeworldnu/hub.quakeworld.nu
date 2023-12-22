@@ -21,7 +21,7 @@ export class FteController {
   _demoTotalTime = 0.0;
   _lastVolume = 0.0;
   _maxVolume = 0.2;
-  _last_demo_setspeed = 100;
+  _lastDemoSetspeed = 100;
   _demo_setspeed = 100;
   _cl_splitscreen = 0;
   _cl_autotrack: string = Autotrack.ON;
@@ -158,14 +158,14 @@ export class FteController {
   }
 
   setSpeed(speed: number) {
-    this._last_demo_setspeed = this._demo_setspeed;
+    this._lastDemoSetspeed = this._demo_setspeed;
     this._demo_setspeed = parseFloat(`${speed}`);
     this.command("demo_setspeed", this._demo_setspeed);
   }
 
   play() {
     if (this.isPaused()) {
-      this.setSpeed(this._last_demo_setspeed);
+      this.setSpeed(this._lastDemoSetspeed);
     }
   }
 
