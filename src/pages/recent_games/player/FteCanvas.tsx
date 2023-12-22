@@ -17,16 +17,9 @@ export const FteCanvas = () => {
       }
 
       switch (e.key) {
-        case " ":
-          e.preventDefault();
-          return fte.trackNext();
         case "Tab":
           e.preventDefault();
           return fte.command("+showscores");
-        case "~":
-          return fte.command("toggleconsole");
-        case "`":
-          return fte.command("toggleconsole");
         default:
           break;
       }
@@ -40,10 +33,19 @@ export const FteCanvas = () => {
     }
 
     switch (e.key) {
+      case " ":
+        e.preventDefault();
+        return fte.trackNext();
       case "Tab":
         return fte.command("-showscores");
       default:
         break;
+    }
+
+    const consoleKeys = ["`", "~", "§"];
+
+    if (consoleKeys.includes(e.key)) {
+      return fte.command("toggleconsole");
     }
   });
 
