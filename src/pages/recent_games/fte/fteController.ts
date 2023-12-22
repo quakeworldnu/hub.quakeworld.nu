@@ -50,7 +50,7 @@ export class FteController {
 
     console.log("#################### FteController.new");
     this._module = module;
-    this._lastVolume = this._volume;
+    this._lastVolume = this.getVolume();
 
     return this;
   }
@@ -248,8 +248,8 @@ export class FteController {
   }
 
   unmute() {
-    if (this._lastVolume <= this.maxVolume() / 100) {
-      this._lastVolume = this.maxVolume() / 10;
+    if (this._lastVolume <= this.getMaxVolume() / 100) {
+      this._lastVolume = this.getMaxVolume() / 10;
     }
 
     this.setVolume(this._lastVolume);
@@ -263,18 +263,18 @@ export class FteController {
     }
   }
 
-  volume() {
+  getVolume() {
     return this._volume;
   }
 
-  maxVolume() {
+  getMaxVolume() {
     return this._maxVolume;
   }
 
   setVolume(value: number | string) {
-    this._lastVolume = this._volume;
+    this._lastVolume = this.getVolume();
     this._volume = parseFloat(`${value}`);
-    this.command("volume", this._volume);
+    this.command("volume", this.getVolume());
   }
 
   // split screen
