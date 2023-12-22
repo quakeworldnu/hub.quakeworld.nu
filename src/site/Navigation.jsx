@@ -34,13 +34,7 @@ export default function SiteNavigation() {
       url: "/players/",
     },
     {
-      title: "Demos",
-      shortDescription: "",
-      longDescription: "",
-      url: "/demos/",
-    },
-    {
-      title: "Recent games",
+      title: "Demos / Recent games",
       shortDescription: "",
       longDescription: "",
       url: "/recent_games/",
