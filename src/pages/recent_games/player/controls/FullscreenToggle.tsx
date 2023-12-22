@@ -5,7 +5,7 @@ import screenfull from "screenfull";
 
 export const FullscreenToggle = () => {
   function handleClick() {
-    toggleFullscreen("fteCanvas");
+    toggleFullscreen("ftePlayer");
   }
 
   return (

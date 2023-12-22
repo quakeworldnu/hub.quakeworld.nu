@@ -3,7 +3,6 @@ import { useBoolean } from "usehooks-ts";
 import { AutotrackToggle } from "./controls/AutotrackToggle.tsx";
 import { FullscreenToggle } from "./controls/FullscreenToggle.tsx";
 import { PlayToggle } from "./controls/PlayToggle.tsx";
-import { PlayerTrackButtons } from "./controls/PlayerTrackButtons.tsx";
 import { SlowmotionToggle } from "./controls/SlowmotionToggle.tsx";
 import { GameClock } from "./controls/GameClock.tsx";
 import { TimeSlider } from "./controls/TimeSlider.tsx";
@@ -35,7 +34,7 @@ export const Controls = () => {
         },
       )}
     >
-      <div className="w-full ">
+      <div className="w-full justify-end">
         <TimeSlider />
       </div>
 
@@ -52,9 +51,6 @@ export const Controls = () => {
       </div>
 
       <div className="flex w-1/4 space-x-2 items-center justify-end my-2">
-        <div className="hidden xl:flex">
-          <PlayerTrackButtons />
-        </div>
         <AutotrackToggle />
         <SlowmotionToggle />
         <SplitscreenToggle />

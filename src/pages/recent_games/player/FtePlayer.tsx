@@ -7,6 +7,7 @@ import { getDemoDownloadUrl } from "../services/supabase/demo.ts";
 import { Demo } from "../services/supabase/supabase.types.ts";
 import { FteCanvas } from "./FteCanvas.tsx";
 import { useClipPlayback } from "./clips/hooks.ts";
+import { PlayerTrackButtons } from "./controls/PlayerTrackButtons.tsx";
 
 export const FtePlayer = ({ demo }: { demo: Demo }) => {
   useClipPlayback();
@@ -30,7 +31,19 @@ export const FtePlayer = ({ demo }: { demo: Demo }) => {
       id="ftePlayer"
       className={"relative w-full h-full bg-black aspect-video"}
     >
-      <FteCanvas />
+      <div id="FullscreenContent">
+        <FteCanvas />
+
+        {fte && (
+          <div
+            className={`absolute flex justify-center bottom-[20%] right-[5%]`}
+          >
+            <div className="grid grid-cols-2 items-center justify-center max-w-[520px] gap-1">
+              <PlayerTrackButtons />
+            </div>
+          </div>
+        )}
+      </div>
 
       <div
         className={classNames(

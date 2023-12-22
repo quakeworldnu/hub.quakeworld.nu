@@ -53,7 +53,7 @@ export const FteCanvas = () => {
       id="fteCanvas"
       className={"absolute w-full h-full"}
       onPointerDown={() => fte?.togglePlay()}
-      onDoubleClick={() => toggleFullscreen("fteCanvas")}
+      onDoubleClick={() => toggleFullscreen("ftePlayer")}
       onTouchStart={() => fte?.command("+scoreboard")}
       onTouchEnd={() => fte?.command("-scoreboard")}
     />
