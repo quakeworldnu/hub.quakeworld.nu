@@ -22,6 +22,7 @@ export class FteController {
   _lastVolume = 0.0;
   _maxVolume = 0.2;
   _lastDemoSpeed = 100;
+  _lastTrackUserId = -1;
   _demoSpeed = 100;
   _splitscreen = 0;
   _autotrack: string = Autotrack.ON;
@@ -134,23 +135,22 @@ export class FteController {
       return;
     }
 
-    const lastTrack = this.getTrackUserid();
-    const lastAutotrackEnabled = this.isUsingAutotrack();
+    const lastTrackUserId = this._lastTrackUserId;
+    const hadAutotrackEnabled = this.isUsingAutotrack();
+    const isRewind = newDemoTime < currentDemoTime;
 
     this.command("demo_jump", newDemoTime);
 
-    // restore track on backwards jump
-    if (newDemoTime < currentDemoTime) {
-      const restoreTrack = () => {
-        if (lastAutotrackEnabled) {
-          this.enableAutotrack();
-        } else {
-          this.track(lastTrack);
-        }
-      };
+    // fix tracking
+    const applyTrack = () => {
+      if (hadAutotrackEnabled) {
+        this.enableAutotrack();
+      } else if (isRewind && this.getTrackUserid() !== lastTrackUserId) {
+        this.track(lastTrackUserId);
+      }
+    };
 
-      setTimeout(restoreTrack, 75);
-    }
+    setTimeout(applyTrack, 50);
   }
 
   getDemoSpeed() {
@@ -221,7 +221,9 @@ export class FteController {
     if (this.isUsingAutotrack()) {
       this.disableAutotrack();
     }
-    this.command("track", Number(userid));
+    const userid_ = Number(userid);
+    this._lastTrackUserId = userid_;
+    this.command("track", userid_);
   }
 
   trackNext() {
