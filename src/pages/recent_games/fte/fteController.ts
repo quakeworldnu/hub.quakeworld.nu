@@ -23,7 +23,7 @@ export class FteController {
   _maxVolume = 0.2;
   _lastDemoSpeed = 100;
   _demoSpeed = 100;
-  _cl_splitscreen = 0;
+  _splitscreen = 0;
   _cl_autotrack: string = Autotrack.ON;
 
   static _instance: FteController | null = null;
@@ -278,19 +278,19 @@ export class FteController {
   }
 
   // split screen
-  cl_splitscreen() {
-    return this._cl_splitscreen;
+  getSplitScreen() {
+    return this._splitscreen;
   }
 
   toggleSplitscreen() {
-    this.setSplitscreen(this._cl_splitscreen === 0 ? 1 : 0);
+    this.setSplitscreen(this.getSplitScreen() === 0 ? 1 : 0);
   }
 
-  setSplitscreen(value: number) {
-    this._cl_splitscreen = value;
-    this.command("cl_splitscreen", this._cl_splitscreen);
+  setSplitscreen(value: 0 | 1) {
+    this._splitscreen = value;
+    this.command("cl_splitscreen", this.getSplitScreen());
 
-    if (this._cl_splitscreen > 0 && this.isPaused()) {
+    if (this.getSplitScreen() > 0 && this.isPaused()) {
       this.command("demo_nudge 1");
     }
   }
