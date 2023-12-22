@@ -21,8 +21,8 @@ export class FteController {
   _demoTotalTime = 0.0;
   _lastVolume = 0.0;
   _maxVolume = 0.2;
-  _lastDemoSetspeed = 100;
-  _demo_setspeed = 100;
+  _lastDemoSpeed = 100;
+  _demoSpeed = 100;
   _cl_splitscreen = 0;
   _cl_autotrack: string = Autotrack.ON;
 
@@ -153,24 +153,24 @@ export class FteController {
     }
   }
 
-  demo_setspeed() {
-    return this._demo_setspeed;
+  getDemoSpeed() {
+    return this._demoSpeed;
   }
 
-  setSpeed(speed: number) {
-    this._lastDemoSetspeed = this._demo_setspeed;
-    this._demo_setspeed = parseFloat(`${speed}`);
-    this.command("demo_setspeed", this._demo_setspeed);
+  setDemoSpeed(speed: number) {
+    this._lastDemoSpeed = this._demoSpeed;
+    this._demoSpeed = parseFloat(`${speed}`);
+    this.command("demo_setspeed", this._demoSpeed);
   }
 
   play() {
     if (this.isPaused()) {
-      this.setSpeed(this._lastDemoSetspeed);
+      this.setDemoSpeed(this._lastDemoSpeed);
     }
   }
 
   isPlaying() {
-    return this._demo_setspeed > 0;
+    return this.getDemoSpeed() > 0;
   }
 
   isPaused() {
@@ -179,7 +179,7 @@ export class FteController {
 
   pause() {
     if (this.isPlaying()) {
-      this.setSpeed(0);
+      this.setDemoSpeed(0);
     }
   }
 
