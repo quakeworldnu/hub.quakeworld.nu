@@ -1,8 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 import * as Slider from "@radix-ui/react-slider";
-import { useHover } from "usehooks-ts";
-import { useMouse } from "@uidotdev/usehooks";
+import { useEventListener, useHover } from "usehooks-ts";
+import { useMouse, useThrottle } from "@uidotdev/usehooks";
 import { useUpdateInterval } from "../../hooks.ts";
 import { useFteController } from "../../fte/hooks.ts";
 import { formatSeek } from "../../time.ts";
@@ -53,9 +53,40 @@ export function TimeSlider() {
 
 const SliderRoot = ({ max }: { max: number }) => {
   const fte = useFteController();
+  const documentRef = useRef<Document>(document);
   const { range: clipRange, isEnabled: clipEditorEnabled } = useClipEditor();
   const { from, to, hasParams } = useUrlClipParams();
-  useUpdateInterval(fte ? 200 : null);
+  const [jump, setJump] = useState<number>(0);
+  const throttledJump = useThrottle(jump, 200);
+  useUpdateInterval(fte ? 100 : null);
+
+  // keyboard shortcuts
+  useEventListener(
+    "keydown",
+    function (e: KeyboardEvent) {
+      if (!fte) {
+        return;
+      }
+
+      const jumpDelta = e.shiftKey ? 10 : 1;
+
+      switch (e.key) {
+        case "ArrowLeft":
+          return setJump((prev) => prev - jumpDelta);
+        case "ArrowRight":
+          return setJump((prev) => prev + jumpDelta);
+        default:
+          break;
+      }
+    },
+    documentRef,
+  );
+
+  useEffect(() => {
+    if (fte) {
+      fte.demoJump(throttledJump);
+    }
+  }, [fte, throttledJump]);
 
   if (!fte) {
     return null;
@@ -63,7 +94,7 @@ const SliderRoot = ({ max }: { max: number }) => {
 
   function handleValueChange(values: number[]) {
     if (fte && values.length > 0) {
-      fte.demoJump(values[0]);
+      setJump(values[0]);
     }
   }
 

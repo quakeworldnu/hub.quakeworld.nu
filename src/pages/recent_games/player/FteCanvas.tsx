@@ -1,52 +1,58 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useEventListener } from "usehooks-ts";
 import { useFteController } from "../fte/hooks.ts";
 import { toggleFullscreen } from "../fullscreen.ts";
 
 export const FteCanvas = () => {
   const fte = useFteController();
-  const [isShowingScores, setIsShowingScores] = useState(false);
+  const documentRef = useRef<Document>(document);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  function handleKeyDown(e: KeyboardEvent) {
-    if (!fte) {
-      return;
-    }
-
-    if (e.code === "Tab") {
-      e.preventDefault();
-
-      if (isShowingScores) {
+  // keyboard shortcuts
+  useEventListener(
+    "keydown",
+    function (e: KeyboardEvent) {
+      if (!fte) {
         return;
       }
-      fte.command("+showscores");
-      setIsShowingScores(true);
-    } else if (e.code === "Space") {
-      fte.trackNext();
-    }
-  }
 
-  function handleKeyUp(e: KeyboardEvent) {
+      switch (e.key) {
+        case " ":
+          e.preventDefault();
+          return fte.trackNext();
+        case "Tab":
+          e.preventDefault();
+          return fte.command("+showscores");
+        case "~":
+          return fte.command("toggleconsole");
+        case "`":
+          return fte.command("toggleconsole");
+        default:
+          break;
+      }
+    },
+    documentRef,
+  );
+
+  useEventListener("keyup", function (e: KeyboardEvent) {
     if (!fte) {
       return;
     }
 
-    if (e.code === "Tab") {
-      e.preventDefault();
-      fte.command("-showscores");
-      setIsShowingScores(false);
+    switch (e.key) {
+      case "Tab":
+        return fte.command("-showscores");
+      default:
+        break;
     }
-  }
-
-  useEventListener("keydown", handleKeyDown, canvasRef);
-  useEventListener("keyup", handleKeyUp, canvasRef);
+  });
 
   return (
     <canvas
       ref={canvasRef}
       id="fteCanvas"
       className={"absolute w-full h-full"}
-      onClick={() => fte?.togglePlay()}
+      onPointerDown={() => fte?.togglePlay()}
       onDoubleClick={() => toggleFullscreen("fteCanvas")}
       onTouchStart={() => fte?.command("+scoreboard")}
       onTouchEnd={() => fte?.command("-scoreboard")}
