@@ -73,7 +73,10 @@ export const FteCanvas = () => {
           return fte.command("-showscores");
         case "1":
           loadPreset("normal");
-          return fte.command("exec default_preset.cfg");
+          setTimeout(() => {
+            fte.command("exec default_preset.cfg");
+          }, 100);
+          return;
         case "2":
           return loadPreset("vanilla");
         case "3":
