@@ -24,7 +24,7 @@ export class FteController {
   _lastDemoSpeed = 100;
   _demoSpeed = 100;
   _splitscreen = 0;
-  _cl_autotrack: string = Autotrack.ON;
+  _autotrack: string = Autotrack.ON;
 
   static _instance: FteController | null = null;
 
@@ -188,17 +188,17 @@ export class FteController {
   }
 
   // track
-  cl_autotrack() {
-    return this._cl_autotrack;
+  getAutotrack(): string {
+    return this._autotrack;
   }
 
   isUsingAutotrack() {
-    return this._cl_autotrack === Autotrack.ON;
+    return this._autotrack === Autotrack.ON;
   }
 
   setAutotrack(value: string) {
-    this._cl_autotrack = value;
-    this.command("cl_autotrack", this._cl_autotrack);
+    this._autotrack = value;
+    this.command("cl_autotrack", this.getAutotrack());
   }
 
   enableAutotrack() {
@@ -305,7 +305,7 @@ export class FteController {
       this.track(playback.track);
     }
 
-    if (playback.cl_autotrack !== this._cl_autotrack) {
+    if (playback.cl_autotrack !== this._autotrack) {
       // console.log("### set autotrack", playback.cl_autotrack);
       this.setAutotrack(playback.cl_autotrack);
     }
