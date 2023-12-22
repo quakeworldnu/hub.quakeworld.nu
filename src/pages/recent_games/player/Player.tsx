@@ -63,20 +63,84 @@ export const DemoPlayerFooter = ({ demo }: { demo: Demo }) => {
       {showClipEditor ? (
         <ClipControls />
       ) : (
-        <div className="md:flex justify-between">
-          <div className="space-y-2">
-            <div className="text-2xl font-bold">{demoDescription}</div>
-            <div className="text-slate-400 text-sm">
-              <Timestamp timestamp={demo.timestamp} /> on {demo.source}
+        <div>
+          <div className="md:flex justify-between">
+            <div className="space-y-2">
+              <div className="text-2xl font-bold">{demoDescription}</div>
+              <div className="text-slate-400 text-sm">
+                <Timestamp timestamp={demo.timestamp} /> on {demo.source}
+              </div>
+            </div>
+            <div className="flex items-start my-3 md:my-0 gap-3">
+              <EnableClipEditorButton />
+              <ShareDemoButton />
+              <DownloadDemoButton s3_key={demo.s3_key} />
             </div>
           </div>
-          <div className="flex items-start my-3 md:my-0 gap-3">
-            <EnableClipEditorButton />
-            <ShareDemoButton />
-            <DownloadDemoButton s3_key={demo.s3_key} />
-          </div>
+
+          <hr className="my-6 border-slate-800" />
+
+          <KeyboardShortcuts />
         </div>
       )}
+    </div>
+  );
+};
+
+const KeyboardShortcuts = () => {
+  const shortcuts = [
+    {
+      keys: ["Space"],
+      description: "Track next player",
+    },
+    {
+      keys: ["Tab"],
+      description: "Toggle scoreboard",
+    },
+    {
+      keys: [">"],
+      description: "Fast forward 1 second",
+    },
+    {
+      keys: ["Shift", ">"],
+      description: "Fast forward 10 seconds",
+    },
+    {
+      keys: ["<"],
+      description: "Rewind 1 second",
+    },
+    {
+      keys: ["Shift", "<"],
+      description: "Rewind 10 seconds",
+    },
+    {
+      keys: ["~"],
+      description: "Toggle console",
+    },
+  ];
+
+  return (
+    <div>
+      <div className="font-bold text-slate-300 mb-2">Keyboard shortcuts</div>
+
+      <div className="space-y-2">
+        {shortcuts.map((shortcut, i) => (
+          <div key={i} className="flex flex-row items-center space-x-4">
+            <div className="text-slate-400 text-sm w-40">
+              {shortcut.description}
+            </div>
+            <div className="flex items-center space-x-2">
+              <kbd>{shortcut.keys[0]}</kbd>
+              {shortcut.keys[1] && (
+                <>
+                  <span className="text-slate-400">+</span>
+                  <kbd>{shortcut.keys[1]}</kbd>
+                </>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
