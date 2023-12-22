@@ -146,7 +146,7 @@ const KeyboardShortcuts = () => {
     <div>
       <div className="font-bold text-slate-300 mb-2">Keyboard shortcuts</div>
 
-      <div className="flex flex-row flex-wrap space-x-10 debug">
+      <div className="flex flex-row flex-wrap space-x-10">
         {chunkedShortcuts.map((chunk, i) => (
           <div className="space-y-2" key={i}>
             {chunk.map((shortcut, j) => (
