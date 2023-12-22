@@ -479,7 +479,7 @@ function getGeneralAssets(): object {
   };
 
   for (const path of filePaths) {
-    assets[path] = `${FTE_ASSETS_URL}/${path}`;
+    assets[path] = `${FTE_ASSETS_URL}/${encodeURIComponent(path)}`;
   }
 
   return assets;
