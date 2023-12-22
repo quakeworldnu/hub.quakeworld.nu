@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Helmet } from "react-helmet";
 import { getDemo } from "../services/supabase/supabase";
 import { Timestamp } from "../Timestamp.tsx";
 import { Demo } from "../services/supabase/supabase.types.ts";
@@ -14,25 +13,7 @@ import { EnableClipEditorButton } from "./clips/Clips.tsx";
 import { ClipControls } from "./clips/ClipControls.tsx";
 import { useClipEditor } from "./clips/context.tsx";
 import { ShareDemoButton } from "./Share.tsx";
-import { btnSuccess, sizeLarge } from "../ui/theme.ts"; // import { useUrlClipParams } from "../playlist/hooks.ts";
-
-const HelmetProps = ({ demo }: { demo: Demo }) => {
-  const demoDescription = getDemoDescription(demo);
-
-  return (
-    <Helmet>
-      <title>Demo: {demoDescription} - QuakeWorld Hub</title>
-      <meta property="og:title" content={demoDescription} />
-      <meta property="og:type" content="video" />
-      {/*<meta property="og:description" content={demoDescription} />*/}
-      <meta
-        property="og:image"
-        content={`https://raw.githubusercontent.com/vikpe/qw-mapshots/main/${demo.map}.jpg`}
-      />
-      <meta property="og:url" content={document.location.href} />
-    </Helmet>
-  );
-};
+import { btnSuccess, sizeLarge } from "../ui/theme.ts";
 
 export const Player = ({ demoId }: { demoId: number }) => {
   const [demo, setDemo] = useState<Demo | null>(null);
@@ -56,7 +37,6 @@ export const Player = ({ demoId }: { demoId: number }) => {
 
   return (
     <>
-      <HelmetProps demo={demo} />
       <DemoBreadcrumbs demo={demo} />
       <div className="lg:flex min-h-[200px] mt-4">
         <div className="flex flex-col grow">
