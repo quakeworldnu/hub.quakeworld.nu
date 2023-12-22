@@ -25,6 +25,10 @@ export const FteCanvas = () => {
         "cl_bobup 0",
         "cl_rollangle 0",
         "cl_gibfilter 0",
+        "gl_flashblend 0",
+        "gl_polyblend 0",
+        "cl_muzzleflash 0",
+        "v_contentblend 0",
       ];
 
       for (const cmd of cmds) {
