@@ -82,7 +82,9 @@ export const ShareDemoButton = () => {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild onClick={handleOpenClick}>
-        <button className={`${btnPrimary} ${sizeLarge} md:mt-0`}>
+        <button
+          className={`${btnPrimary} ${sizeLarge} md:mt-0 app-effect-fade-in`}
+        >
           <FontAwesomeIcon
             icon={faShare}
             fixedWidth

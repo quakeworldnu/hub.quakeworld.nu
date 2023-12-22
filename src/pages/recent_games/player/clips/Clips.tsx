@@ -44,7 +44,10 @@ export const EnableClipEditorButton = () => {
   }
 
   return (
-    <button className={`${btnPrimary} ${sizeLarge}`} onClick={handleClick}>
+    <button
+      className={`${btnPrimary} ${sizeLarge} app-effect-fade-in`}
+      onClick={handleClick}
+    >
       <FontAwesomeIcon
         icon={faScissors}
         fixedWidth
