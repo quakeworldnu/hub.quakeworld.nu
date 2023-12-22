@@ -52,6 +52,12 @@ export const Player = ({ demoId }: { demoId: number }) => {
 
 export const DemoPlayerFooter = ({ demo }: { demo: Demo }) => {
   const { isEnabled: showClipEditor } = useClipEditor();
+  const demoDescription = getDemoDescription(demo);
+
+  useEffect(() => {
+    document.title = `${demoDescription} - QuakeWorld Hub`;
+  });
+
   return (
     <div className="py-6">
       {showClipEditor ? (
@@ -59,7 +65,7 @@ export const DemoPlayerFooter = ({ demo }: { demo: Demo }) => {
       ) : (
         <div className="md:flex justify-between">
           <div className="space-y-2">
-            <div className="text-2xl font-bold">{getDemoDescription(demo)}</div>
+            <div className="text-2xl font-bold">{demoDescription}</div>
             <div className="text-slate-400 text-sm">
               <Timestamp timestamp={demo.timestamp} /> on {demo.source}
             </div>
