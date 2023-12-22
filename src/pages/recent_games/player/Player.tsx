@@ -14,6 +14,7 @@ import { ClipControls } from "./clips/ClipControls.tsx";
 import { useClipEditor } from "./clips/context.tsx";
 import { ShareDemoButton } from "./Share.tsx";
 import { btnSuccess, sizeLarge } from "../ui/theme.ts";
+import { KeyboardShortcuts } from "./KeyboardShortcuts.tsx";
 
 export const Player = ({ demoId }: { demoId: number }) => {
   const [demo, setDemo] = useState<Demo | null>(null);
@@ -80,94 +81,11 @@ export const DemoPlayerFooter = ({ demo }: { demo: Demo }) => {
 
           <hr className="my-6 border-slate-800" />
 
-          <KeyboardShortcuts />
+          <div className="hidden md:block">
+            <KeyboardShortcuts />
+          </div>
         </div>
       )}
-    </div>
-  );
-};
-
-const KeyboardShortcuts = () => {
-  const shortcuts = [
-    {
-      keys: ["~"],
-      description: "Toggle console",
-    },
-    {
-      keys: ["Tab"],
-      description: "Toggle scoreboard",
-    },
-    {
-      keys: ["Ctrl"],
-      description: "Toggle play/pause",
-    },
-    {
-      keys: ["Space"],
-      description: "Track next player",
-    },
-    {
-      keys: [">"],
-      description: "Fast forward 1 second",
-    },
-    {
-      keys: ["Shift", ">"],
-      description: "Fast forward 10 seconds",
-    },
-    {
-      keys: ["<"],
-      description: "Rewind 1 second",
-    },
-    {
-      keys: ["Shift", "<"],
-      description: "Rewind 10 seconds",
-    },
-    {
-      keys: ["1"],
-      description: "Default graphics",
-    },
-    {
-      keys: ["2"],
-      description: "Vanilla Quake graphics",
-    },
-    {
-      keys: ["3"],
-      description: "Fast graphics",
-    },
-  ];
-
-  // chunk shortcuts into groups of 4
-  const chunkSize = 4;
-  const chunkedShortcuts = [];
-  for (let i = 0; i < shortcuts.length; i += chunkSize) {
-    chunkedShortcuts.push(shortcuts.slice(i, i + chunkSize));
-  }
-
-  return (
-    <div>
-      <div className="font-bold text-slate-300 mb-2">Keyboard shortcuts</div>
-
-      <div className="flex flex-row flex-wrap space-x-10">
-        {chunkedShortcuts.map((chunk, i) => (
-          <div className="space-y-2" key={i}>
-            {chunk.map((shortcut, j) => (
-              <div key={j} className="flex flex-row items-center space-x-4">
-                <div className="text-slate-400 text-sm w-40">
-                  {shortcut.description}
-                </div>
-                <div className="flex items-center space-x-2">
-                  <kbd>{shortcut.keys[0]}</kbd>
-                  {shortcut.keys[1] && (
-                    <>
-                      <span className="text-slate-400">+</span>
-                      <kbd>{shortcut.keys[1]}</kbd>
-                    </>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
     </div>
   );
 };
