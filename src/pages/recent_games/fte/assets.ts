@@ -476,6 +476,7 @@ function getGeneralAssets(): object {
 
   const assets: { [key: string]: string } = {
     "id1/config.cfg": withPrefix("data/id1/config.cfg"),
+    "id1/default_preset.cfg": withPrefix("data/id1/default_preset.cfg"),
   };
 
   for (const path of filePaths) {
