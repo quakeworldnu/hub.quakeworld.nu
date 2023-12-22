@@ -226,11 +226,15 @@ export class FteController {
 
   trackNext() {
     this.disableAutotrack();
-    this.command("+jump");
+    this.plusCommand("jump");
+  }
+
+  plusCommand(command: string, duration: number = 50) {
+    this.command(`+${command}`);
 
     setTimeout(() => {
-      this.command("-jump");
-    }, 50);
+      this.command(`-${command}`);
+    }, duration);
   }
 
   // volume
