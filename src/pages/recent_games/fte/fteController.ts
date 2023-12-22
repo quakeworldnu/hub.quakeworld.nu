@@ -307,9 +307,9 @@ export class FteController {
     }
 
     // speed
-    if (playback.demo_setspeed !== this.demo_setspeed()) {
+    if (playback.demo_setspeed !== this.getDemoSpeed()) {
       console.log("### set speed", playback.demo_setspeed);
-      this.setSpeed(playback.demo_setspeed);
+      this.setDemoSpeed(playback.demo_setspeed);
     }
 
     // demo jump
