@@ -12,7 +12,7 @@ export const VolumeSlider = () => {
   }
 
   const isMuted = fte.isMuted();
-  const max = fte.maxVolume();
+  const max = fte.getMaxVolume();
   const stepCount = 100;
   const stepSize = roundFloat(max / stepCount, 3);
 
@@ -23,7 +23,7 @@ export const VolumeSlider = () => {
       min={0}
       max={max}
       step={stepSize}
-      value={fte.volume()}
+      value={fte.getVolume()}
       onChange={(e) => fte.setVolume(e.target.value)}
     />
   );

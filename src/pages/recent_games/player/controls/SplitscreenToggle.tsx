@@ -18,7 +18,7 @@ export const SplitscreenToggle = () => {
     return null;
   }
 
-  const isEnabled = fte.cl_splitscreen() > 0;
+  const isEnabled = fte.getSplitScreen() > 0;
 
   return (
     <IconToggleButton

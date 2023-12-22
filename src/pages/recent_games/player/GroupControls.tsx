@@ -13,9 +13,9 @@ export const GroupControls = () => {
     if (fte && playback === null) {
       createPlayback({
         demo_jump: fte.getDemoElapsedTime(),
-        demo_setspeed: fte.demo_setspeed(),
-        cl_autotrack: fte.cl_autotrack(),
-        cl_splitscreen: fte.cl_splitscreen(),
+        demo_setspeed: fte.getDemoSpeed(),
+        cl_autotrack: fte.getAutotrack(),
+        cl_splitscreen: fte.getSplitScreen(),
         track: fte.getTrackUserid(),
       });
     }

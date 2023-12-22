@@ -27,7 +27,7 @@ export const VolumeToggle = () => {
       onClick={handleClick}
       isEnabled={!fte.isMuted()}
       enabledTitle={"Mute"}
-      enabledIcon={fte.volume() < 0.1 ? faVolumeLow : faVolumeHigh}
+      enabledIcon={fte.getVolume() < 0.1 ? faVolumeLow : faVolumeHigh}
       disabledTitle={"Unmute"}
       disabledIcon={faVolumeMute}
     />

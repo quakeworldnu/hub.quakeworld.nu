@@ -15,14 +15,14 @@ export const SlowmotionToggle = () => {
       return;
     }
     const newSpeed = currentSpeed === slow ? normal : slow;
-    fte.setSpeed(newSpeed);
+    fte.setDemoSpeed(newSpeed);
   }
 
   if (!fte) {
     return null;
   }
 
-  const currentSpeed = fte.demo_setspeed();
+  const currentSpeed = fte.getDemoSpeed();
   const isSlowmotion = currentSpeed === slow;
 
   return (
