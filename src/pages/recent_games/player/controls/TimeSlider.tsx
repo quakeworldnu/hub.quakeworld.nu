@@ -72,9 +72,9 @@ const SliderRoot = ({ max }: { max: number }) => {
 
       switch (e.key) {
         case "ArrowLeft":
-          return setJump((prev) => prev - jumpDelta);
+          return setJump(fte.getDemoElapsedTime() - jumpDelta);
         case "ArrowRight":
-          return setJump((prev) => prev + jumpDelta);
+          return setJump(fte.getDemoElapsedTime() + jumpDelta);
         default:
           break;
       }
