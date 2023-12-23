@@ -2,6 +2,7 @@ import {
   Autotrack,
   ControlSource,
   DemoPlayback,
+  FTEC,
   FteModule,
   PlayerInfo,
 } from "./types.ts";
@@ -10,6 +11,12 @@ import { clamp } from "../math.ts";
 export function fteEvent(name: string, detail: object) {
   const event = new CustomEvent(`fte.${name}`, { detail });
   window.dispatchEvent(event);
+}
+
+declare global {
+  interface Window {
+    FTEC: FTEC;
+  }
 }
 
 export class FteController {
@@ -32,6 +39,7 @@ export class FteController {
   static createInstace(module: FteModule, demoTotalTime: number | null) {
     if (FteController._instance === null) {
       const fte = new FteController(module);
+      console.log("FTEC.cbufadd", window.FTEC.cbufadd);
       fte.mute();
       fte.setDemoTotalTime(demoTotalTime || 600);
       FteController._instance = fte;
@@ -63,7 +71,7 @@ export class FteController {
   command(command: string, value?: undefined | string | number) {
     try {
       const commandStr = value !== undefined ? `${command} ${value}` : command;
-      this.module.execute(commandStr);
+      window.FTEC.cbufadd(commandStr);
       this.dispatchEvent(command, { value });
     } catch (e) {
       console.log("fte command error: " + e);

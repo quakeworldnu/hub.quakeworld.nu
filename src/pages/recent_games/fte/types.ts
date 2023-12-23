@@ -5,10 +5,10 @@ export type FtePreloadModule = {
 };
 
 export type FteModule = FtePreloadModule & {
-  execute: (command: string) => void;
+  // execute: (command: string) => void;
   getDemoElapsedTime: () => number;
   getPlayerInfo: () => PlayerInfo[];
-  getMapName: () => string;
+  // getMapName: () => string;
   getTimelimit: () => number;
   getTrackUserid: (seatIndex: number) => number;
 };
@@ -58,3 +58,8 @@ export type DemoPlayback = {
   cl_splitscreen: number;
   track: number;
 };
+
+export interface FTEC {
+  cbufadd: (command: string) => void;
+  loadurl: (url: string) => void;
+}
