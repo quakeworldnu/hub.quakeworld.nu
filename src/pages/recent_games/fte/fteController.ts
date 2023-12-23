@@ -39,7 +39,6 @@ export class FteController {
   static createInstace(module: FteModule, demoTotalTime: number | null) {
     if (FteController._instance === null) {
       const fte = new FteController(module);
-      console.log("FTEC.cbufadd", window.FTEC.cbufadd);
       fte.mute();
       fte.setDemoTotalTime(demoTotalTime || 600);
       FteController._instance = fte;
