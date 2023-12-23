@@ -14,18 +14,34 @@ export const Volume = () => {
   const volume = fte.getVolume();
   const isMuted = fte.isMuted();
 
+  function handleToggleClick() {
+    if (!fte) {
+      return;
+    }
+
+    fte.toggleMute();
+  }
+
+  function handleVolumeChange(volume: number) {
+    if (!fte) {
+      return;
+    }
+
+    fte.setVolume(volume);
+  }
+
   return (
     <>
       <VolumeToggle
         isEnabled={!isMuted}
-        onClick={() => fte.toggleMute()}
+        onClick={handleToggleClick}
         volume={volume}
       />
       <VolumeSlider
         volume={volume}
         isMuted={isMuted}
         maxVolume={fte.getMaxVolume()}
-        onChange={(volume: number) => fte.setVolume(volume)}
+        onChange={handleVolumeChange}
       />
     </>
   );
