@@ -34,11 +34,11 @@ export const FteCanvas = () => {
     }
 
     if (!consoleOpen) {
-      switch (e.key) {
-        case " ":
+      switch (e.code) {
+        case "Space":
           e.preventDefault();
           return fte.trackNext();
-        case "Control":
+        case "ControlLeft":
           e.preventDefault();
           return fte.togglePlay();
         case "Tab":
@@ -48,7 +48,7 @@ export const FteCanvas = () => {
       }
     }
 
-    if (["`", "~", "§"].includes(e.key)) {
+    if (["Backquote"].includes(e.code)) {
       e.preventDefault();
       setConsoleOpen(!consoleOpen);
       return fte.command("toggleconsole");
