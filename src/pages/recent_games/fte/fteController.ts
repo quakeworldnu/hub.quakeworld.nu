@@ -236,9 +236,8 @@ export class FteController {
   trackNext() {
     this.disableAutotrack();
     this.command("__track_next");
-    setTimeout(() => {
-      this._lastTrackUserId = this.getTrackUserid();
-    }, 50);
+    this.command("wait");
+    this._lastTrackUserId = this.getTrackUserid();
   }
 
   // volume
