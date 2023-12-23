@@ -47,13 +47,21 @@ export const FtePlayer = ({ demo }: { demo: Demo }) => {
 
       <div
         className={classNames(
-          "absolute z-30 w-full h-full bg-black transition-opacity duration-700 delay-500 pointer-events-none",
+          "absolute z-30 w-full h-full bg-black transition-opacity duration-700 delay-500 pointer-events-none bg-cover",
           {
             "opacity-0": isReady,
           },
         )}
+        style={{
+          backgroundImage: `url(https://raw.githubusercontent.com/vikpe/qw-mapshots/main/${demo.map}.jpg)`,
+        }}
       >
-        <div className="flex w-full h-full items-center justify-center">
+        <div
+          className="flex w-full h-full items-center justify-center"
+          style={{
+            background: "radial-gradient(circle at center, black 0, #000c 40%)",
+          }}
+        >
           <div className="flex items-center">
             <svg
               className={classNames(
