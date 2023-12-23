@@ -1,30 +1,36 @@
 import { roundFloat } from "../../math.ts";
 import classNames from "classnames";
-import { useFteController, useFteUpdateOnEvent } from "../../fte/hooks.ts";
+import { ChangeEvent } from "react";
 
-export const VolumeSlider = () => {
-  useFteUpdateOnEvent("volume");
+type Props = {
+  isMuted: boolean;
+  volume: number;
+  maxVolume: number;
+  onChange: (volume: number) => void;
+};
 
-  const fte = useFteController();
-
-  if (!fte) {
-    return null;
-  }
-
-  const isMuted = fte.isMuted();
-  const max = fte.getMaxVolume();
+export const VolumeSlider = ({
+  isMuted,
+  volume,
+  maxVolume,
+  onChange,
+}: Props) => {
   const stepCount = 100;
-  const stepSize = roundFloat(max / stepCount, 3);
+  const stepSize = roundFloat(maxVolume / stepCount, 3);
+
+  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+    onChange(Number(e.target.value));
+  }
 
   return (
     <input
       type="range"
       className={classNames({ grayscale: isMuted }, "w-24 mr-2")}
       min={0}
-      max={max}
+      max={maxVolume}
       step={stepSize}
-      value={fte.getVolume()}
-      onChange={(e) => fte.setVolume(e.target.value)}
+      value={volume}
+      onChange={handleChange}
     />
   );
 };

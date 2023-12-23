@@ -6,13 +6,12 @@ import { PlayToggle } from "./controls/PlayToggle.tsx";
 import { SlowmotionToggle } from "./controls/SlowmotionToggle.tsx";
 import { GameClock } from "./controls/GameClock.tsx";
 import { TimeSlider } from "./controls/TimeSlider.tsx";
-import { VolumeSlider } from "./controls/VolumeSlider.tsx";
-import { VolumeToggle } from "./controls/VolumeToggle.tsx";
 import { SplitscreenToggle } from "./controls/SplitscreenToggle.tsx";
 import { useClipEditor } from "./clips/context.tsx";
 import { SeekToEndButton } from "./controls/SeekToEndButton.tsx";
 import { SeekToStartButton } from "./controls/SeekToStartButton.tsx";
 import { useEventListener } from "../hooks.ts";
+import { Volume } from "./controls/Volume.tsx";
 
 export const Controls = () => {
   const { isEnabled: showClipEditor } = useClipEditor();
@@ -39,8 +38,7 @@ export const Controls = () => {
       </div>
 
       <div className="flex w-1/4 space-x-2 items-center my-2">
-        <VolumeToggle />
-        <VolumeSlider />
+        <Volume />
         <GameClock />
       </div>
 

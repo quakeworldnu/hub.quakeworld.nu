@@ -4,30 +4,21 @@ import {
   faVolumeMute,
 } from "@fortawesome/free-solid-svg-icons";
 import { IconToggleButton } from "./IconButton.tsx";
-import { useFteController, useFteUpdateOnEvent } from "../../fte/hooks.ts";
 
-export const VolumeToggle = () => {
-  useFteUpdateOnEvent("volume");
-  const fte = useFteController();
+type Props = {
+  isEnabled: boolean;
+  volume: number;
+  onClick: () => void;
+};
 
-  function handleClick() {
-    if (!fte) {
-      return;
-    }
-
-    fte.toggleMute();
-  }
-
-  if (!fte) {
-    return null;
-  }
-
+export const VolumeToggle = ({ isEnabled, onClick, volume }: Props) => {
+  const icon = volume < 0.1 ? faVolumeLow : faVolumeHigh;
   return (
     <IconToggleButton
-      onClick={handleClick}
-      isEnabled={!fte.isMuted()}
+      onClick={onClick}
+      isEnabled={isEnabled}
       enabledTitle={"Mute"}
-      enabledIcon={fte.getVolume() < 0.1 ? faVolumeLow : faVolumeHigh}
+      enabledIcon={icon}
       disabledTitle={"Unmute"}
       disabledIcon={faVolumeMute}
     />
