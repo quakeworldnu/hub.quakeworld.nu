@@ -59,17 +59,14 @@ export const FtePlayer = ({ demo }: { demo: Demo }) => {
         <div
           className="flex w-full h-full items-center justify-center"
           style={{
-            background: "radial-gradient(circle at center, black 0, #000c 40%)",
+            background: "radial-gradient(circle at center, black 0, #0009 80%)",
           }}
         >
           <div className="flex items-center">
             <svg
-              className={classNames(
-                "w-6 h-6 mr-2 fill-violet-600 text-violet-800 animate-spin",
-                {
-                  hidden: isReady,
-                },
-              )}
+              className={
+                "w-6 h-6 mr-2 fill-violet-600 text-violet-800 animate-spin"
+              }
               viewBox="0 0 100 101"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
