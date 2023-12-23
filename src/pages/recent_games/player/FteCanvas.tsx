@@ -9,34 +9,6 @@ export const FteCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [consoleOpen, setConsoleOpen] = useState<boolean>(false);
 
-  function loadPreset(name: string) {
-    if (!fte) {
-      return;
-    }
-
-    fte.command(`fps_preset ${name}`);
-
-    setTimeout(() => {
-      const cmds = [
-        'crosshairimage ""',
-        "crosshaircolor 255 255 255",
-        "v_kickpitch 0",
-        "v_kickroll 0",
-        "cl_bobup 0",
-        "cl_rollangle 0",
-        "cl_gibfilter 0",
-        "gl_flashblend 0",
-        "gl_polyblend 0",
-        "cl_muzzleflash 0",
-        "v_contentblend 0",
-      ];
-
-      for (const cmd of cmds) {
-        fte.command(cmd);
-      }
-    }, 50);
-  }
-
   // keyboard shortcuts
   useEventListener(
     "keydown",
@@ -71,16 +43,6 @@ export const FteCanvas = () => {
           return fte.togglePlay();
         case "Tab":
           return fte.command("-showscores");
-        case "1":
-          loadPreset("normal");
-          setTimeout(() => {
-            fte.command("exec default_preset.cfg");
-          }, 100);
-          return;
-        case "2":
-          return loadPreset("vanilla");
-        case "3":
-          return loadPreset("286");
         default:
           break;
       }

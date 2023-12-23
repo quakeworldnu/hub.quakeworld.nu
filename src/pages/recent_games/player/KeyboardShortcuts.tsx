@@ -32,18 +32,18 @@ export const KeyboardShortcuts = () => {
       keys: ["Shift", "<"],
       description: "Rewind 10 seconds",
     },
-    {
-      keys: ["1"],
-      description: "Default graphics",
-    },
-    {
-      keys: ["2"],
-      description: "Vanilla Quake graphics",
-    },
-    {
-      keys: ["3"],
-      description: "Fast graphics",
-    },
+    // {
+    //   keys: ["1"],
+    //   description: "Default graphics",
+    // },
+    // {
+    //   keys: ["2"],
+    //   description: "Vanilla Quake graphics",
+    // },
+    // {
+    //   keys: ["3"],
+    //   description: "Fast graphics",
+    // },
   ];
 
   // chunk shortcuts into groups of 4
