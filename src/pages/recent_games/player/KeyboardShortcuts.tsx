@@ -18,11 +18,11 @@ export const KeyboardShortcuts = () => {
     },
     {
       keys: [">"],
-      description: "Fast forward 1 second",
+      description: "Forward 1 second",
     },
     {
       keys: ["Shift", ">"],
-      description: "Fast forward 10 seconds",
+      description: "Forward 10 seconds",
     },
     {
       keys: ["<"],
@@ -57,12 +57,12 @@ export const KeyboardShortcuts = () => {
     <div>
       <div className="font-bold text-slate-300 mb-2">Keyboard shortcuts</div>
 
-      <div className="flex flex-row flex-wrap gap-x-10 gap-y-2">
+      <div className="flex flex-row flex-wrap gap-x-12 gap-y-2">
         {chunkedShortcuts.map((chunk, i) => (
           <div className="space-y-2" key={i}>
             {chunk.map((shortcut, j) => (
               <div key={j} className="flex flex-row items-center space-x-4">
-                <div className="text-slate-400 text-sm w-40">
+                <div className="text-slate-400 text-sm w-32">
                   {shortcut.description}
                 </div>
                 <div className="flex items-center space-x-2">
