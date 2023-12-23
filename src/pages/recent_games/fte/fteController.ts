@@ -70,7 +70,7 @@ export class FteController {
   command(command: string, value?: undefined | string | number) {
     try {
       const commandStr = value !== undefined ? `${command} ${value}` : command;
-      window.FTEC.cbufadd(commandStr);
+      window.FTEC.cbufadd(`${commandStr}\n`);
       this.dispatchEvent(command, { value });
     } catch (e) {
       console.log("fte command error: " + e);
