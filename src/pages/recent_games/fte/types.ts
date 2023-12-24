@@ -44,6 +44,7 @@ export type PlayerInfo = {
 
 export type TeamInfo = {
   name: string;
+  frags: number;
   players: PlayerInfo[];
 };
 

@@ -128,9 +128,11 @@ export class FteController {
 
       if (team) {
         team.players.push(player);
+        team.frags += player.frags;
       } else {
         teams.push({
           name: player.team,
+          frags: player.frags,
           players: [player],
         });
       }
