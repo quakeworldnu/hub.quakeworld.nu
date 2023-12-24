@@ -20,22 +20,22 @@ declare global {
 }
 
 export class FteController {
-  _controlSource = ControlSource.USER;
+  private _controlSource = ControlSource.USER;
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  _module: FteModule;
-  _volume = 0.0;
-  _demoTotalTime = 0.0;
-  _lastVolume = 0.0;
-  _maxVolume = 0.2;
-  _lastDemoSpeed = 100;
-  _lastTrackUserId = -1;
-  _demoSpeed = 100;
-  _splitscreen = 0;
-  _autotrack: string = Autotrack.ON;
+  private _module: FteModule;
+  private _volume = 0.0;
+  private _demoTotalTime = 0.0;
+  private _lastVolume = 0.0;
+  private _maxVolume = 0.2;
+  private _lastDemoSpeed = 100;
+  private _lastTrackUserId = -1;
+  private _demoSpeed = 100;
+  private _splitscreen = 0;
+  private _autotrack: string = Autotrack.ON;
   private _consoleIsOpen = false;
 
-  static _instance: FteController | null = null;
+  private static _instance: FteController | null = null;
 
   static createInstace(module: FteModule, demoTotalTime: number | null) {
     if (FteController._instance === null) {
