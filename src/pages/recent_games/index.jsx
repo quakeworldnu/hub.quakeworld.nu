@@ -10,10 +10,11 @@ import { ClipEditorProvider } from "@qwhub/pages/recent_games/player/clips/conte
 
 // const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL);
 import * as Sentry from "@sentry/react";
+import { Wasm as WasmIntegration } from "@sentry/wasm";
 
 Sentry.init({
   dsn: import.meta.env.VITE_SENTRY_DSN,
-  integrations: [],
+  integrations: [new WasmIntegration()],
   environment: import.meta.env.VITE_SENTRY_ENVIRONMENT,
 });
 
