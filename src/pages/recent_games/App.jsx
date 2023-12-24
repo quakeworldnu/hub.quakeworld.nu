@@ -13,6 +13,7 @@ import { useDemoBrowserSettings } from "./browser/hooks.ts";
 import { Sidebar } from "./Sidebar";
 import { Player } from "@qwhub/pages/recent_games/player/Player";
 import { useElementSize } from "usehooks-ts";
+import { ServerPoller } from "@qwhub/servers/Servers.jsx";
 
 function getAppBodySize() {
   const el = document.getElementById("AppBody");
@@ -86,6 +87,7 @@ export const App = () => {
         <Sidebar />
       </div>
       <SiteFooter />
+      <ServerPoller pollingInterval={30} />
       <ToastContainer
         hideProgressBar
         position="bottom-right"
