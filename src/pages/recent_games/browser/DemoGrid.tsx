@@ -3,12 +3,13 @@ import { Demo, DemoParticipants } from "../services/supabase/supabase.types.ts";
 import { Timestamp } from "../Timestamp.tsx";
 import { ToggleButton } from "../playlist/Playlist.tsx";
 import { btnSecondary } from "../ui/theme.ts";
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// eslint-disable-next-line
 // @ts-ignore
+// @typescript-eslint/ban-ts-comment
 import { Scoreboard } from "../../../servers/Scoreboard.jsx";
 import { useDemoScoreSpoiler } from "./hooks.ts";
 import { DownloadButton } from "./Controls.tsx";
+import { getMapshotCssUrl } from "../../../services/mapshots.ts";
 
 export const DemoGrid = ({ demos }: { demos: Demo[] | null }) => {
   return (
@@ -90,7 +91,7 @@ const ScoreboardTile = ({
         "flex flex-col border border-black h-full bg-no-repeat bg-center bg-cover hover:scale-105 transition-transform hover:z-20 hover:relative",
       )}
       style={{
-        backgroundImage: `url(https://raw.githubusercontent.com/vikpe/qw-mapshots/main/${demo.map}.jpg)`,
+        backgroundImage: getMapshotCssUrl(demo.map),
       }}
     >
       <div className="flex flex-col h-full bg-gray-700/20">
