@@ -6,4 +6,5 @@ node_modules/
 !.gitkeep
 *.log
 .firebaserc
-.env.local
+.env*
+!.env.example
