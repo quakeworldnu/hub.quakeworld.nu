@@ -76,7 +76,7 @@ export const PlayerTrackButtons = ({ showTeams }: { showTeams: boolean }) => {
 
 const PlayerItems = ({ items }: { items: ItemsInfo }) => {
   return (
-    <span className="ml-2 space-x-2">
+    <span className="ml-2 space-x-1">
       {items.quad && (
         <span className="text-blue-500 app-effect-fade-in">q</span>
       )}
