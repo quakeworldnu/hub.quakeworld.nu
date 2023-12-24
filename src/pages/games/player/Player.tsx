@@ -42,8 +42,7 @@ export const Player = ({ demoId }: { demoId: number }) => {
 
   return (
     <>
-      <DemoBreadcrumbs demo={demo} />
-      <div className="lg:flex min-h-[200px] mt-4">
+      <div className="lg:flex min-h-[200px]">
         <div className="flex flex-col grow">
           <div className="flex grow bg-black items-center justify-center max-h-[75vh]">
             <FtePlayer demo={demo} />
@@ -127,22 +126,5 @@ export const DownloadDemoButton = ({ s3_key }: { s3_key: string }) => {
       <FontAwesomeIcon icon={faFloppyDisk} fixedWidth className="mr-1.5" />
       Download
     </a>
-  );
-};
-
-export const DemoBreadcrumbs = ({ demo }: { demo: Demo }) => {
-  const demoDescription = getDemoDescription(demo);
-  const demoBreadcrumbs = [demoDescription];
-
-  return (
-    <div className="flex p-3 bg-white/5 text-sm text-slate-300">
-      <a href={`/recent_games/`}>Recent games</a>
-      {demoBreadcrumbs.map((b, i) => (
-        <span key={i}>
-          <span className="mx-2 text-gray-500">/</span>
-          {b}
-        </span>
-      ))}
-    </div>
   );
 };

@@ -89,7 +89,7 @@ export const ScoreboardLink = ({
   return (
     <a
       title="Play demo"
-      href={`/recent_games/?demoId=${demo.id}`}
+      href={`/games/?demoId=${demo.id}`}
       className={classNames(
         "hover:scale-105 transition-transform hover:z-20 hover:relative",
       )}

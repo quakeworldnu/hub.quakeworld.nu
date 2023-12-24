@@ -8,7 +8,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve("./index.html"),
-        recentGames: resolve("./recent_games/index.html"),
+        games: resolve("./games/index.html"),
         players: resolve("./players/index.html"),
         scoreboard: resolve("./scoreboard/index.html"),
       },

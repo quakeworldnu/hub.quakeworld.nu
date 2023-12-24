@@ -5,7 +5,7 @@ import { getDemoDownloadUrl } from "../services/supabase/demo.ts";
 export const PlayButton = ({ id }: { id: number }) => {
   return (
     <a
-      href={`/recent_games/?demoId=${id}`}
+      href={`/games/?demoId=${id}`}
       className="flex items-center justify-center text-blue-500 hover:text-blue-300 w-8 h-8 hover:scale-125 transition-transform"
       title="Play"
     >

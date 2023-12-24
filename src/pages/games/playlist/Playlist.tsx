@@ -210,7 +210,7 @@ export const ReadOnlyItem = ({ item }: { item: PlaylistItem }) => {
     <a
       id={`PlaylistDemo-${item.demo.id}`}
       title="Play demo"
-      href={`/recent_games/?demoId=${item.demo.id}`}
+      href={`/games/?demoId=${item.demo.id}`}
       className={classNames(
         "flex items-center justify-between p-2 pr-3 hover:bg-white/10 rounded group",
         {

@@ -5,8 +5,8 @@ import { Provider } from "react-redux";
 import store from "@qwhub/store";
 import App from "./App";
 import "@qwhub/styles/index.scss";
-import { DemoProvider } from "@qwhub/pages/recent_games/browser/context";
-import { ClipEditorProvider } from "@qwhub/pages/recent_games/player/clips/context";
+import { DemoProvider } from "@qwhub/pages/games/browser/context";
+import { ClipEditorProvider } from "@qwhub/pages/games/player/clips/context";
 
 // const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL);
 import * as Sentry from "@sentry/react";

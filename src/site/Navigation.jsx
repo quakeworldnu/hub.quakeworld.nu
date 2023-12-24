@@ -37,7 +37,7 @@ export default function SiteNavigation() {
       title: "Demos / Recent games",
       shortDescription: "",
       longDescription: "",
-      url: "/recent_games/",
+      url: "/games/",
     },
   ];
 

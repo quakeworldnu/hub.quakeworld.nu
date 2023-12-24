@@ -30,7 +30,7 @@ export const Teaminfo = ({ showTeams }: { showTeams: boolean }) => {
   return (
     <div className="grid grid-cols-2 gap-x-6 items-center">
       {teams.map((t: TeamInfo) => (
-        <div className="text-xs 2xl:text-base">
+        <div key={t.name} className="text-xs 2xl:text-base">
           {showTeams && (
             <div className="flex items-center justify-between text-sm mb-1 px-2 py-1 border-b-2 border-b-black">
               <div
