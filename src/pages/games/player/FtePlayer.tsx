@@ -8,6 +8,7 @@ import { Demo } from "../services/supabase/supabase.types.ts";
 import { FteCanvas } from "./FteCanvas.tsx";
 import { useClipPlayback } from "./clips/hooks.ts";
 import { Teaminfo } from "./controls/Teaminfo.tsx";
+import { ScoreBanner } from "./controls/ScoreBanner.tsx";
 
 export const FtePlayer = ({ demo }: { demo: Demo }) => {
   useClipPlayback();
@@ -37,11 +38,17 @@ export const FtePlayer = ({ demo }: { demo: Demo }) => {
         <FteCanvas />
 
         {fte && (
-          <div
-            className={`absolute hidden sm:flex scale-50 lg:scale-75 xl:scale-100 origin-bottom-right right-[6%] bottom-24 justify-center`}
-          >
-            <Teaminfo showTeams={isTeamPlay} />
-          </div>
+          <>
+            <div className={"w-fit mx-auto pt-[2%] app-effect-fade-in"}>
+              <ScoreBanner mode={demo.mode} />
+            </div>
+
+            <div
+              className={`absolute hidden sm:flex scale-50 lg:scale-75 xl:scale-100 origin-bottom-right right-[6%] bottom-24 justify-center`}
+            >
+              <Teaminfo showTeams={isTeamPlay} />
+            </div>
+          </>
         )}
       </div>
 

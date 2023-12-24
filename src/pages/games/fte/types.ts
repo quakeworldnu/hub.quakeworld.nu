@@ -30,6 +30,8 @@ export type PlayerInfo = {
   name: string;
   team: string;
   frags: number;
+  top_color: number;
+  bottom_color: number;
   //armor: number;
   //armor_type: string;
   // position: {
