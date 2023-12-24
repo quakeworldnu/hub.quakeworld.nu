@@ -26,6 +26,8 @@ export const FtePlayer = ({ demo }: { demo: Demo }) => {
     timeout: 2500,
   });
 
+  const isTeamPlay = !["1on1"].includes(demo.mode);
+
   return (
     <div
       id="ftePlayer"
@@ -38,9 +40,7 @@ export const FtePlayer = ({ demo }: { demo: Demo }) => {
           <div
             className={`absolute flex justify-center bottom-[20%] right-[5%]`}
           >
-            <div className="grid grid-cols-2 items-center justify-center max-w-[520px] gap-1">
-              <PlayerTrackButtons />
-            </div>
+            <PlayerTrackButtons showTeams={isTeamPlay} />
           </div>
         )}
       </div>

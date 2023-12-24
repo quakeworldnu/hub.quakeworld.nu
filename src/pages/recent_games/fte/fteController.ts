@@ -5,6 +5,7 @@ import {
   FTEC,
   FteModule,
   PlayerInfo,
+  TeamInfo,
 } from "./types.ts";
 import { clamp } from "../math.ts";
 
@@ -116,6 +117,41 @@ export class FteController {
     } catch (e) {
       return [];
     }
+  }
+
+  getTeams(): TeamInfo[] {
+    const players = this.getPlayers();
+    const teams: TeamInfo[] = [];
+
+    players.forEach((player) => {
+      const team = teams.find((team) => team.name === player.team);
+
+      if (team) {
+        team.players.push(player);
+      } else {
+        teams.push({
+          name: player.team,
+          players: [player],
+        });
+      }
+    });
+
+    // sort players by name
+    teams.forEach((team) => {
+      team.players.sort((a, b) => {
+        if (a.name < b.name) {
+          return -1;
+        }
+
+        if (a.name > b.name) {
+          return 1;
+        }
+
+        return 0;
+      });
+    });
+
+    return teams;
   }
 
   getTrackUserid() {
