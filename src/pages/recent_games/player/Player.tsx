@@ -13,8 +13,12 @@ import { EnableClipEditorButton } from "./clips/Clips.tsx";
 import { ClipControls } from "./clips/ClipControls.tsx";
 import { useClipEditor } from "./clips/context.tsx";
 import { ShareDemoButton } from "./Share.tsx";
-import { btnSuccess, sizeLarge } from "../ui/theme.ts";
+import { btnSecondary, btnSuccess, sizeLarge } from "../ui/theme.ts";
 import { KeyboardShortcuts } from "./KeyboardShortcuts.tsx";
+
+import { Scoreboard } from "../browser/Scoreboard.tsx";
+import classNames from "classnames";
+import { useBoolean } from "usehooks-ts";
 
 export const Player = ({ demoId }: { demoId: number }) => {
   const [demo, setDemo] = useState<Demo | null>(null);
@@ -79,6 +83,10 @@ export const DemoPlayerFooter = ({ demo }: { demo: Demo }) => {
             </div>
           </div>
 
+          <div className="my-6">
+            <Result demo={demo} />
+          </div>
+
           <hr className="my-6 border-slate-800" />
 
           <div className="hidden md:block">
@@ -86,6 +94,27 @@ export const DemoPlayerFooter = ({ demo }: { demo: Demo }) => {
           </div>
         </div>
       )}
+    </div>
+  );
+};
+
+const Result = ({ demo }: { demo: Demo }) => {
+  const { setTrue: handleShowscoresClick, value: showScores } =
+    useBoolean(false);
+
+  return (
+    <div>
+      <div className="font-bold text-slate-400 mb-2">Scoreboard</div>
+      <div className="w-[340px] space-y-2">
+        <Scoreboard demo={demo} showScores={showScores} />
+        <button
+          onClick={handleShowscoresClick}
+          className={classNames(btnSecondary, "py-1.5 px-2 text-sm")}
+          disabled={showScores}
+        >
+          Show scores
+        </button>
+      </div>
     </div>
   );
 };
