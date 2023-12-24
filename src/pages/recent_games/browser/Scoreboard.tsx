@@ -43,7 +43,7 @@ export const Scoreboard = ({
   const isCustomMode = ["ctf"].includes(demo.mode);
 
   return (
-    <div className="h-full min-h-[160px] bg-cover bg-center bg-no-repeat bg-[url(https://hub.quakeworld.nu/assets/img/default_mapshot.jpg)] rounded">
+    <div className="h-full bg-cover bg-center bg-no-repeat bg-[url(https://hub.quakeworld.nu/assets/img/default_mapshot.jpg)]">
       {isCustomMode && (
         <div className="absolute">
           <ModeRibbon mode={demo.mode} />
@@ -51,13 +51,13 @@ export const Scoreboard = ({
       )}
 
       <div
-        className={"h-full bg-no-repeat bg-center bg-cover rounded"}
+        className={"h-full bg-no-repeat bg-center bg-cover"}
         style={{
           backgroundImage: getMapshotCssUrl(demo.map),
         }}
       >
         <div className="flex flex-col h-full bg-gray-700/20 py-4">
-          <div className="flex grow justify-center items-center">
+          <div className="flex grow justify-center items-center min-h-[160px]">
             <LegacyScoreboard
               teams={fixedTeams}
               players={fixedPlayers}
