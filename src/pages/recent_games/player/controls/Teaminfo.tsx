@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { toColoredHtml } from "../../qwstrings.ts";
 import { ItemsInfo, PlayerInfo, TeamInfo } from "../../fte/types.ts";
 
-export const PlayerTrackButtons = ({ showTeams }: { showTeams: boolean }) => {
+export const Teaminfo = ({ showTeams }: { showTeams: boolean }) => {
   useUpdateInterval(100);
   useFteUpdateOnEvent("track");
   const fte = useFteController();
@@ -13,7 +13,7 @@ export const PlayerTrackButtons = ({ showTeams }: { showTeams: boolean }) => {
     return null;
   }
   const trackUserid = fte.getTrackUserid();
-  const showItems = fte.getGameElapsedTime() > 0;
+  const gameHasStarted = fte.getGameElapsedTime() > 0;
 
   let teams: TeamInfo[];
 
@@ -37,7 +37,9 @@ export const PlayerTrackButtons = ({ showTeams }: { showTeams: boolean }) => {
                 className="font-bold"
                 dangerouslySetInnerHTML={{ __html: toColoredHtml(t.name) }}
               ></div>
-              <div className="font-mono text-xs">{t.frags}</div>
+              {gameHasStarted && (
+                <div className="font-mono text-sm">{t.frags}</div>
+              )}
             </div>
           )}
           <div>
@@ -48,22 +50,26 @@ export const PlayerTrackButtons = ({ showTeams }: { showTeams: boolean }) => {
                     "font-bold bg-black/50 rounded": p.id === trackUserid,
                     "text-gray-300": p.id !== trackUserid,
                   },
-                  "flex w-full items-center py-1 px-2 rounded transition-colors focus:outline-none max-w-36",
+                  "flex w-full items-center py-1 px-2 rounded transition-colors focus:outline-none",
                 )}
                 key={p.name}
                 onClick={() => fte.track(p.id)}
               >
-                <div className="flex w-full items-center">
+                <div className="flex w-full items-center space-x-2">
                   <div className="whitespace-nowrap grow text-left">
                     <span
                       dangerouslySetInnerHTML={{
                         __html: toColoredHtml(p.name),
                       }}
                     />
-                    {showItems && <PlayerItems items={p.items} />}
+                    {gameHasStarted && <PlayerItems items={p.items} />}
                   </div>
 
-                  <div className="w-8 text-right font-mono">{p.frags}</div>
+                  {gameHasStarted && (
+                    <div className="w-8 text-right font-mono text-sm">
+                      {p.frags}
+                    </div>
+                  )}
                 </div>
               </button>
             ))}
@@ -76,7 +82,7 @@ export const PlayerTrackButtons = ({ showTeams }: { showTeams: boolean }) => {
 
 const PlayerItems = ({ items }: { items: ItemsInfo }) => {
   return (
-    <span className="ml-2 space-x-1">
+    <span className="pl-2 space-x-1">
       {items.quad && (
         <span className="text-blue-500 app-effect-fade-in">q</span>
       )}

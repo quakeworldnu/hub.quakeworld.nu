@@ -7,7 +7,7 @@ import { getDemoDownloadUrl } from "../services/supabase/demo.ts";
 import { Demo } from "../services/supabase/supabase.types.ts";
 import { FteCanvas } from "./FteCanvas.tsx";
 import { useClipPlayback } from "./clips/hooks.ts";
-import { PlayerTrackButtons } from "./controls/PlayerTrackButtons.tsx";
+import { Teaminfo } from "./controls/Teaminfo.tsx";
 
 export const FtePlayer = ({ demo }: { demo: Demo }) => {
   useClipPlayback();
@@ -38,9 +38,9 @@ export const FtePlayer = ({ demo }: { demo: Demo }) => {
 
         {fte && (
           <div
-            className={`absolute flex justify-center bottom-[15%] right-[6%]`}
+            className={`absolute hidden sm:flex scale-50 lg:scale-75 xl:scale-100 origin-bottom-right right-[6%] bottom-24 justify-center`}
           >
-            <PlayerTrackButtons showTeams={isTeamPlay} />
+            <Teaminfo showTeams={isTeamPlay} />
           </div>
         )}
       </div>
