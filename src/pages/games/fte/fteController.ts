@@ -119,6 +119,13 @@ export class FteController {
     }
   }
 
+  getTrackedPlayer(): PlayerInfo | null {
+    const userid = this.getTrackUserid();
+    const players = this.getPlayers();
+    const player = players.find((player) => player.id === userid);
+    return player || null;
+  }
+
   getTeams(): TeamInfo[] {
     const players = this.getPlayers();
     const teams: TeamInfo[] = [];
