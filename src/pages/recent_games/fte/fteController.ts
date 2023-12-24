@@ -33,6 +33,7 @@ export class FteController {
   _demoSpeed = 100;
   _splitscreen = 0;
   _autotrack: string = Autotrack.ON;
+  private _consoleIsOpen = false;
 
   static _instance: FteController | null = null;
 
@@ -296,6 +297,16 @@ export class FteController {
     if (this.getSplitScreen() > 0 && this.isPaused()) {
       this.command("demo_nudge 1");
     }
+  }
+
+  // console
+  toggleConsole() {
+    this.command("toggleconsole");
+    this._consoleIsOpen = !this.isConsoleOpen();
+  }
+
+  isConsoleOpen() {
+    return this._consoleIsOpen;
   }
 
   // group

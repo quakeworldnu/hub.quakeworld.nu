@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useEventListener } from "usehooks-ts";
 import { useFteController } from "../fte/hooks.ts";
 import { toggleFullscreen } from "../fullscreen.ts";
@@ -7,13 +7,12 @@ export const FteCanvas = () => {
   const fte = useFteController();
   const documentRef = useRef<Document>(document);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [consoleOpen, setConsoleOpen] = useState<boolean>(false);
 
   // keyboard shortcuts
   useEventListener(
     "keydown",
     function (e: KeyboardEvent) {
-      if (!fte || consoleOpen) {
+      if (!fte || fte.isConsoleOpen()) {
         return;
       }
 
@@ -33,7 +32,7 @@ export const FteCanvas = () => {
       return;
     }
 
-    if (!consoleOpen) {
+    if (!fte.isConsoleOpen()) {
       switch (e.code) {
         case "Space":
           e.preventDefault();
@@ -50,8 +49,7 @@ export const FteCanvas = () => {
 
     if (["Backquote"].includes(e.code)) {
       e.preventDefault();
-      setConsoleOpen(!consoleOpen);
-      return fte.command("toggleconsole");
+      return fte.toggleConsole();
     }
   });
 

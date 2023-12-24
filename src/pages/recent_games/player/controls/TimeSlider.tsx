@@ -64,7 +64,7 @@ const SliderRoot = ({ max }: { max: number }) => {
   useEventListener(
     "keydown",
     function (e: KeyboardEvent) {
-      if (!fte) {
+      if (!fte || fte.isConsoleOpen()) {
         return;
       }
 
