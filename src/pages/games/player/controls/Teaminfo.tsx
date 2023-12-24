@@ -59,7 +59,7 @@ export const Teaminfo = ({ showTeams }: { showTeams: boolean }) => {
                   <div className="whitespace-nowrap grow text-left">
                     <span
                       dangerouslySetInnerHTML={{
-                        __html: toColoredHtml(p.name),
+                        __html: toColoredHtml(p.name.substring(0, 15)),
                       }}
                     />
                     {gameHasStarted && <PlayerItems items={p.items} />}
