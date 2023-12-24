@@ -13,32 +13,38 @@ export type FteModule = FtePreloadModule & {
   getTrackUserid: (seatIndex: number) => number;
 };
 
+export type ItemsInfo = {
+  ssg: boolean;
+  ng: boolean;
+  sng: boolean;
+  gl: boolean;
+  rl: boolean;
+  lg: boolean;
+  quad: boolean;
+  ring: boolean;
+  pent: boolean;
+};
+
 export type PlayerInfo = {
   id: number;
   name: string;
   team: string;
-  health: number;
-  armor: number;
-  armor_type: string;
-
-  position: {
-    x: number;
-    y: number;
-    z: number;
-  };
+  frags: number;
+  //armor: number;
+  //armor_type: string;
+  // position: {
+  //   x: number;
+  //   y: number;
+  //   z: number;
+  // };
 
   // items
-  items: {
-    ssg: boolean;
-    ng: boolean;
-    sng: boolean;
-    gl: boolean;
-    rl: boolean;
-    lg: boolean;
-    quad: boolean;
-    ring: boolean;
-    pent: boolean;
-  };
+  items: ItemsInfo;
+};
+
+export type TeamInfo = {
+  name: string;
+  players: PlayerInfo[];
 };
 
 export enum Autotrack {
