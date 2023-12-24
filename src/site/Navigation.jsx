@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { SettingsToggleButton } from "@qwhub/site/Settings";
+import { SettingsToggleButton } from "@qwhub/site/settings/ServerSettings.jsx";
 import { useSelector } from "react-redux";
 import { selectFilteredServers } from "@qwhub/selectors";
 
@@ -52,12 +52,24 @@ export default function SiteNavigation() {
           url={p.url}
         />
       ))}
-      <span className="ml-auto sm:ml-4">
-        <SettingsToggleButton />
-      </span>
+      <PageSettings />
     </div>
   );
 }
+
+const PageSettings = () => {
+  const path = location.pathname;
+
+  if (["/", "/players/"].includes(path)) {
+    return (
+      <span className="ml-auto sm:ml-4">
+        <SettingsToggleButton />
+      </span>
+    );
+  }
+
+  return null;
+};
 
 const NavLink = ({ title, shortDescription, longDescription, url }) => {
   const isSelected = url === location.pathname;

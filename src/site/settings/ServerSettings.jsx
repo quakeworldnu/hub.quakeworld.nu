@@ -22,12 +22,12 @@ export const SettingsDrawer = () => {
 
   return (
     <EZDrawer open={showSettings} onClose={onClose} direction="left" size={320}>
-      <Settings />
+      <ServerSettings />
     </EZDrawer>
   );
 };
 
-export const Settings = () => {
+export const ServerSettings = () => {
   const serverFilters =
     useSelector(selectServerFilters) || getDefaultServerFilters();
   const showSettings = useSelector((state) => state.settings.ui.showSettings);

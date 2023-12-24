@@ -1,6 +1,6 @@
 import SiteNavigation from "@qwhub/site/Navigation";
 import { FeaturedStreams } from "@qwhub/Streams";
-import { SettingsDrawer } from "@qwhub/site/Settings";
+import { SettingsDrawer } from "@qwhub/site/settings/ServerSettings.jsx";
 
 export const SiteHeader = () => (
   <div className="mt-2">
