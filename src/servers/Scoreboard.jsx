@@ -50,7 +50,9 @@ const TeamRow = memo((props) => {
   return (
     <div className="sc-row">
       <Ping value={ping ? `${ping} ms` : ""} />
-      <ColoredFrags frags={frags} colors={colors} />
+      <div className="h-full py-px">
+        <ColoredFrags frags={frags} colors={colors} />
+      </div>
       <TeamName name={name} name_color={name_color} />
       <div></div>
     </div>
@@ -100,7 +102,9 @@ const PlayerRow = (props) => {
   return (
     <div className="sc-row sc-row-player">
       <Ping value={pingText} />
-      <ColoredFrags frags={frags} colors={colors} />
+      <div className="h-full py-px">
+        <ColoredFrags frags={frags} colors={colors} />
+      </div>
       {showTeam && <TeamName name={team} name_color={team_color} />}
       <span className="flex items-center">
         {cc && (

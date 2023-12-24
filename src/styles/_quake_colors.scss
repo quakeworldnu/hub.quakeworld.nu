@@ -20,7 +20,7 @@ $qw-player-colors: (
     .qw-bgcolor-#{$topValue}-#{$bottomValue} {
       $topLight: lighten($topHex, 5);
       $botLight: lighten($bottomHex, 5);
-      $offsetY: 1px;
+      $offsetY: 0;
       background: linear-gradient(
           to bottom,
           transparent 0 $offsetY,
