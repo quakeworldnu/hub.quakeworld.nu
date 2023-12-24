@@ -9,6 +9,13 @@ import { DemoProvider } from "@qwhub/pages/recent_games/browser/context";
 import { ClipEditorProvider } from "@qwhub/pages/recent_games/player/clips/context";
 
 // const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL);
+import * as Sentry from "@sentry/react";
+
+Sentry.init({
+  dsn: import.meta.env.VITE_SENTRY_DSN,
+  integrations: [],
+  environment: import.meta.env.VITE_SENTRY_ENVIRONMENT,
+});
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   /*<React.StrictMode>*/
