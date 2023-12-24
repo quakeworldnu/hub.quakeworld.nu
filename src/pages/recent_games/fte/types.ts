@@ -61,5 +61,4 @@ export type DemoPlayback = {
 
 export interface FTEC {
   cbufadd: (command: string) => void;
-  loadurl: (url: string) => void;
 }
