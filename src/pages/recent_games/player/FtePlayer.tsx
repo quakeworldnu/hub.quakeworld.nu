@@ -38,7 +38,7 @@ export const FtePlayer = ({ demo }: { demo: Demo }) => {
 
         {fte && (
           <div
-            className={`absolute flex justify-center bottom-[20%] right-[5%]`}
+            className={`absolute flex justify-center bottom-[15%] right-[6%]`}
           >
             <PlayerTrackButtons showTeams={isTeamPlay} />
           </div>

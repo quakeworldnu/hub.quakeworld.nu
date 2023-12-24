@@ -22,19 +22,23 @@ export const PlayerTrackButtons = ({ showTeams }: { showTeams: boolean }) => {
   } else {
     teams = fte.getPlayers().map((p: PlayerInfo) => ({
       name: p.name,
+      frags: p.frags,
       players: [p],
     }));
   }
 
   return (
-    <div className="grid grid-cols-2 gap-4 items-center justify-center">
+    <div className="grid grid-cols-2 gap-x-6 items-center">
       {teams.map((t: TeamInfo) => (
         <div className="text-xs 2xl:text-base">
           {showTeams && (
-            <div
-              className="font-bold text-sm mb-1 px-2 py-1 border-b border-b-black"
-              dangerouslySetInnerHTML={{ __html: toColoredHtml(t.name) }}
-            ></div>
+            <div className="flex items-center justify-between text-sm mb-1 px-2 py-1 border-b-2 border-b-black">
+              <div
+                className="font-bold"
+                dangerouslySetInnerHTML={{ __html: toColoredHtml(t.name) }}
+              ></div>
+              <div className="font-mono text-xs">{t.frags}</div>
+            </div>
           )}
           <div>
             {t.players.map((p: PlayerInfo) => (
@@ -44,21 +48,22 @@ export const PlayerTrackButtons = ({ showTeams }: { showTeams: boolean }) => {
                     "font-bold bg-black/50 rounded": p.id === trackUserid,
                     "text-gray-300": p.id !== trackUserid,
                   },
-                  "flex w-full items-center py-1 px-2 rounded transition-colors focus:outline-none",
+                  "flex w-full items-center py-1 px-2 rounded transition-colors focus:outline-none max-w-36",
                 )}
                 key={p.name}
                 onClick={() => fte.track(p.id)}
               >
-                <span className="flex items-center space-x-0.5">
-                  <span
-                    className="whitespace-nowrap mr-2"
-                    dangerouslySetInnerHTML={{ __html: toColoredHtml(p.name) }}
-                  />
-                  {showItems && <PlayerItems items={p.items} />}
-                </span>
-                <div className="text-xs text-left hidden">
-                  <br />
-                  <pre>{JSON.stringify(p, null, 2)}</pre>
+                <div className="flex w-full items-center">
+                  <div className="whitespace-nowrap grow text-left">
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html: toColoredHtml(p.name),
+                      }}
+                    />
+                    {showItems && <PlayerItems items={p.items} />}
+                  </div>
+
+                  <div className="w-8 text-right font-mono">{p.frags}</div>
                 </div>
               </button>
             ))}
@@ -71,7 +76,7 @@ export const PlayerTrackButtons = ({ showTeams }: { showTeams: boolean }) => {
 
 const PlayerItems = ({ items }: { items: ItemsInfo }) => {
   return (
-    <>
+    <span className="ml-2 space-x-2">
       {items.quad && (
         <span className="text-blue-500 app-effect-fade-in">q</span>
       )}
@@ -83,6 +88,6 @@ const PlayerItems = ({ items }: { items: ItemsInfo }) => {
         <span className="text-amber-400 app-effect-fade-in">rl</span>
       )}
       {items.lg && <span className="text-cyan-400 app-effect-fade-in">lg</span>}
-    </>
+    </span>
   );
 };
