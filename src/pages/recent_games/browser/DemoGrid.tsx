@@ -1,15 +1,11 @@
 import classNames from "classnames";
-import { Demo, DemoParticipants } from "../services/supabase/supabase.types.ts";
+import { Demo } from "../services/supabase/supabase.types.ts";
 import { Timestamp } from "../Timestamp.tsx";
 import { ToggleButton } from "../playlist/Playlist.tsx";
 import { btnSecondary } from "../ui/theme.ts";
-// eslint-disable-next-line
-// @ts-ignore
-// @typescript-eslint/ban-ts-comment
-import { Scoreboard } from "../../../servers/Scoreboard.jsx";
 import { useDemoScoreSpoiler } from "./hooks.ts";
 import { DownloadButton } from "./Controls.tsx";
-import { getMapshotCssUrl } from "../../../services/mapshots.ts";
+import { ScoreboardLink } from "./Scoreboard.tsx";
 
 export const DemoGrid = ({ demos }: { demos: Demo[] | null }) => {
   return (
@@ -25,9 +21,7 @@ const GridItem = (props: { demo: Demo }) => {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="h-full min-h-[200px] bg-cover bg-center bg-[url(https://hub.quakeworld.nu/assets/img/default_mapshot.jpg)]">
-        <ScoreboardTile demo={demo} showScores={isVisible} />
-      </div>
+      <ScoreboardLink demo={demo} showScores={isVisible} />
 
       <div className="flex items-center mt-1 text-xs">
         <button
@@ -46,91 +40,6 @@ const GridItem = (props: { demo: Demo }) => {
           <ToggleButton demo={demo} />
           <DownloadButton s3_key={demo.s3_key} />
         </div>
-      </div>
-    </div>
-  );
-};
-
-const ScoreboardTile = ({
-  demo,
-  showScores = false,
-}: {
-  demo: Demo;
-  showScores: boolean;
-}) => {
-  const { teams, players } = demo.participants as DemoParticipants;
-  const hasTeams = teams.length > 0;
-
-  const fixedTeams = [...teams];
-  const fixedPlayers = [...players];
-
-  if (hasTeams) {
-    for (let i = 0; i < fixedTeams.length; i++) {
-      for (let j = 0; j < fixedTeams[i].players.length; j++) {
-        fixedTeams[i].players[j].colors = fixedTeams[i].colors;
-        fixedTeams[i].players[j].team = fixedTeams[i].name;
-        fixedTeams[i].players[j].team_color = fixedTeams[i].name_color;
-        fixedPlayers.push(fixedTeams[i].players[j]);
-      }
-    }
-  }
-
-  if (showScores) {
-    fixedTeams.sort((a, b) => b.frags - a.frags);
-    fixedPlayers.sort((a, b) => b.frags - a.frags);
-  }
-
-  const isCustomMode = ["ctf"].includes(demo.mode);
-
-  return (
-    <a
-      key={demo.id}
-      title="Play demo"
-      href={`/recent_games/?demoId=${demo.id}`}
-      className={classNames(
-        "flex flex-col border border-black h-full bg-no-repeat bg-center bg-cover hover:scale-105 transition-transform hover:z-20 hover:relative",
-      )}
-      style={{
-        backgroundImage: getMapshotCssUrl(demo.map),
-      }}
-    >
-      <div className="flex flex-col h-full bg-gray-700/20">
-        {isCustomMode && (
-          <div className="absolute">
-            <ModeRibbon mode={demo.mode} />
-          </div>
-        )}
-
-        <div className="flex grow justify-center items-center py-4 -mb-8">
-          <Scoreboard
-            teams={fixedTeams}
-            players={fixedPlayers}
-            showFrags={showScores}
-          />
-        </div>
-        <div className="flex h-8 px-2 items-start justify-end text-xs text-slate-300">
-          <div className="bg-gray-900/50 rounded px-2 py-1">{demo.map}</div>
-        </div>
-      </div>
-    </a>
-  );
-};
-
-export const ModeRibbon = ({ mode }: { mode: string }) => {
-  return (
-    <div className="w-24 h-24 overflow-hidden">
-      <div
-        className={classNames(
-          "flex -translate-x-[45%] -translate-y-[195%] -rotate-45 origin-bottom-right h-8 w-48 bg-gradient-to-bl justify-center items-center z-10 text-white app-text-shadow font-bold text-sm",
-          {
-            "from-red-600 to-red-900": mode === "4on4",
-            "from-blue-600 to-blue-900": mode === "2on2",
-            "from-green-600 to-green-900": mode === "1on1",
-            "from-amber-600 to-amber-900": mode === "ctf",
-          },
-        )}
-      >
-        {mode}
       </div>
     </div>
   );
