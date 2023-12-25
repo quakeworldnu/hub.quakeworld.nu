@@ -12,6 +12,7 @@ export default {
       },
       screens: {
         "3xl": "1890px",
+        "4xl": "2000px",
       },
       transitionProperty: {
         size: "width, height",

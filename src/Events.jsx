@@ -3,6 +3,8 @@ import { useGetEventsQuery } from "@qwhub/services/hub/hub";
 import _groupby from "lodash.groupby";
 import { Heading } from "./Common";
 
+const wikiUrl = "https://www.quakeworld.nu/wiki/";
+
 export default function Events() {
   const { data: events = [] } = useGetEventsQuery();
   const eventsByStatus = _groupby(events, "status");
@@ -22,7 +24,7 @@ export default function Events() {
             .slice(0, 5)
             .map((e) => (
               <Fragment key={e.title}>
-                <a href={e.wiki_url} className="inline-block ml-1.5">
+                <a href={e.wiki_url || wikiUrl} className="inline-block ml-1.5">
                   <img
                     src={e.logo_url}
                     width={18}

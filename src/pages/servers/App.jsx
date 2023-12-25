@@ -14,7 +14,7 @@ export const App = () => {
   return (
     <>
       <SiteHeader />
-      <div className="3xl:flex 3xl:gap-x-12">
+      <div className="3xl:flex 3xl:gap-x-8 4xl:gap-x-10">
         <div className="grow">
           <Servers />
         </div>
