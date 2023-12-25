@@ -39,7 +39,7 @@ export const FtePlayer = ({ demo }: { demo: Demo }) => {
 
         {fte && (
           <>
-            <div className={"w-fit mx-auto pt-[2%]"}>
+            <div className={"absolute w-full pt-[2%]"}>
               <ScoreBanner isTeamplay={isTeamplay} />
             </div>
 
@@ -54,7 +54,7 @@ export const FtePlayer = ({ demo }: { demo: Demo }) => {
 
       <div
         className={classNames(
-          "absolute z-30 w-full h-full bg-black transition-opacity duration-700 delay-500 pointer-events-none bg-cover",
+          "absolute z-30 w-full h-full bg-black transition-opacity duration-700 pointer-events-none bg-cover",
           {
             "opacity-0": isReady,
           },
