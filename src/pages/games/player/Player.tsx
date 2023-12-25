@@ -14,7 +14,7 @@ import { ClipControls } from "./clips/ClipControls.tsx";
 import { useClipEditor } from "./clips/context.tsx";
 import { ShareDemoButton } from "./Share.tsx";
 import { btnSecondary, btnSuccess, sizeLarge } from "../ui/theme.ts";
-import { KeyboardShortcuts } from "./KeyboardShortcuts.tsx";
+import { Shortcuts } from "./Shortcuts.tsx";
 
 import { Scoreboard } from "../browser/Scoreboard.tsx";
 import classNames from "classnames";
@@ -89,7 +89,7 @@ export const DemoPlayerFooter = ({ demo }: { demo: Demo }) => {
           <hr className="my-6 border-slate-800" />
 
           <div className="hidden md:block">
-            <KeyboardShortcuts />
+            <Shortcuts />
           </div>
         </div>
       )}
