@@ -52,7 +52,7 @@ function teamToParticipant(team: TeamInfo): ParticipantInfo {
   };
 }
 
-export const ScoreBanner = ({ mode }: { mode: string }) => {
+export const ScoreBanner = ({ isTeamplay }: { isTeamplay: boolean }) => {
   const fte = useFteController();
   useUpdateInterval(500);
 
@@ -60,17 +60,15 @@ export const ScoreBanner = ({ mode }: { mode: string }) => {
     return null;
   }
 
-  const isTeamPlay = !["1on1"].includes(mode);
-
   let participants: ParticipantInfo[];
 
-  if (isTeamPlay) {
+  if (isTeamplay) {
     participants = fte.getTeams().map(teamToParticipant);
   } else {
     participants = fte.getPlayers();
   }
 
-  if (!participants) {
+  if (participants.length < 2) {
     return null;
   }
 
@@ -90,7 +88,7 @@ export const ScoreBanner = ({ mode }: { mode: string }) => {
           nameLength={maxNameLength}
         />
       </div>
-      <div className="text-center mt-2 text-base font-mono font-bold app-text-outline text-yellow-200">
+      <div className="text-center mt-1 text-base font-mono font-bold app-text-outline text-yellow-200">
         {formatElapsed(fte.getGameElapsedTime())}
       </div>
     </div>
@@ -133,7 +131,7 @@ const Participant = ({
       </div>
       <div
         className={classNames(
-          `qw-bgcolor-${participant.top_color}-${participant.bottom_color} text-center w-12 text-xl font-bold app-text-outline border border-black`,
+          `qw-bgcolor-${participant.top_color}-${participant.bottom_color} text-center w-12 text-lg font-bold app-text-outline border border-black`,
           {
             "border-r-0": isFirst,
           },

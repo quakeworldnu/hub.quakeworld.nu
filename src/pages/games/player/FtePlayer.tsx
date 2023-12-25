@@ -27,7 +27,7 @@ export const FtePlayer = ({ demo }: { demo: Demo }) => {
     timeout: 2500,
   });
 
-  const isTeamPlay = !["1on1"].includes(demo.mode);
+  const isTeamplay = !["1on1"].includes(demo.mode);
 
   return (
     <div
@@ -39,14 +39,14 @@ export const FtePlayer = ({ demo }: { demo: Demo }) => {
 
         {fte && (
           <>
-            <div className={"w-fit mx-auto pt-[2%] app-effect-fade-in"}>
-              <ScoreBanner mode={demo.mode} />
+            <div className={"w-fit mx-auto pt-[2%]"}>
+              <ScoreBanner isTeamplay={isTeamplay} />
             </div>
 
             <div
               className={`absolute hidden sm:flex scale-50 lg:scale-75 xl:scale-100 origin-bottom-right right-[6%] bottom-24 justify-center`}
             >
-              <Teaminfo showTeams={isTeamPlay} />
+              <Teaminfo showTeams={isTeamplay} />
             </div>
           </>
         )}
