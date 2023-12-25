@@ -37,7 +37,7 @@ export const Controls = () => {
         <TimeSlider />
       </div>
 
-      <div className="flex w-full sm:w-1/3 sm:space-x-2 items-center sm:my-2 debug">
+      <div className="flex w-full sm:w-1/3 sm:space-x-2 items-center sm:my-2">
         <Volume />
         <GameClock />
       </div>
