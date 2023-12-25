@@ -56,7 +56,7 @@ export const FteCanvas = () => {
   });
 
   // pointer events
-  const dblTap = useDoubleTap((e: MouseEvent<HTMLCanvasElement>) => {
+  function onDoubleTap(e: MouseEvent<HTMLCanvasElement>) {
     const { x } = relativeEventPositionInPercent(e);
     const threshold = 25;
 
@@ -67,6 +67,10 @@ export const FteCanvas = () => {
     } else {
       toggleFullscreen("ftePlayer");
     }
+  }
+
+  const dblTap = useDoubleTap(onDoubleTap, 300, {
+    onSingleTap: () => fte?.togglePlay(),
   });
 
   const longPress = useLongPress(() => fte?.command("+showscores"), {
