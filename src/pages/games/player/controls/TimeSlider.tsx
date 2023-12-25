@@ -56,7 +56,7 @@ const SliderRoot = ({ max }: { max: number }) => {
   const documentRef = useRef<Document>(document);
   const { range: clipRange, isEnabled: clipEditorEnabled } = useClipEditor();
   const { from, to, hasParams } = useUrlClipParams();
-  const [jump, setJump] = useState<number>(0);
+  const [jump, setJump] = useState<number>(-1);
   const throttledJump = useThrottle(jump, 200);
   useUpdateInterval(fte ? 100 : null);
 
@@ -84,6 +84,10 @@ const SliderRoot = ({ max }: { max: number }) => {
 
   useEffect(() => {
     if (fte) {
+      if (jump < 0) {
+        return;
+      }
+      console.log("#".repeat(24), "throttledJump");
       fte.demoJump(throttledJump);
     }
   }, [fte, throttledJump]);
