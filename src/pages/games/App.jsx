@@ -77,7 +77,7 @@ export const App = () => {
   return (
     <div className="flex flex-col">
       <SiteHeader />
-      <div className="3xl:flex gap-6 my-6">
+      <div className="3xl:flex gap-6 my-4">
         <div className="w-full">
           <div id="AppBody" ref={bodyRef}>
             {demoId && <Player demoId={demoId} />}
