@@ -206,6 +206,14 @@ export class FteController {
     setTimeout(applyTrack, 50);
   }
 
+  seekForward(delta: number) {
+    this.demoJump(this.getDemoElapsedTime() + delta);
+  }
+
+  seekBackward(delta: number) {
+    this.demoJump(this.getDemoElapsedTime() - delta);
+  }
+
   getDemoSpeed() {
     return this._demoSpeed;
   }
