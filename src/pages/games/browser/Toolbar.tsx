@@ -36,7 +36,7 @@ export const Toolbar = () => {
       <GameModeButtons />
       <QueryInput />
       <Pagination />
-      <BulkActions />
+      {/*<BulkActions />*/}
     </div>
   );
 };
