@@ -24,7 +24,7 @@ export const FtePlayer = ({ demo }: { demo: Demo }) => {
     onIdle: () => dispatchEvent(new Event("demoplayer.mouse.idle")),
     onActive: () => dispatchEvent(new Event("demoplayer.mouse.active")),
     events: ["mousemove"],
-    timeout: 250000,
+    timeout: 2500,
   });
 
   const isTeamplay = !["1on1"].includes(demo.mode);
