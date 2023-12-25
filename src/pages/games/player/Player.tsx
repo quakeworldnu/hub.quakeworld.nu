@@ -88,9 +88,7 @@ export const DemoPlayerFooter = ({ demo }: { demo: Demo }) => {
 
           <hr className="my-6 border-slate-800" />
 
-          <div className="hidden md:block">
-            <Shortcuts />
-          </div>
+          <Shortcuts />
         </div>
       )}
     </div>

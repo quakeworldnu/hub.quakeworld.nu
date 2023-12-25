@@ -4,7 +4,9 @@ import { faHandPointer, faKeyboard } from "@fortawesome/free-solid-svg-icons";
 export const Shortcuts = () => {
   return (
     <div className="flex flex-row flex-wrap gap-x-16 gap-y-8">
-      <KeyboardShortcuts />
+      <div className="hidden sm:block">
+        <KeyboardShortcuts />
+      </div>
       <MouseShortcuts />
     </div>
   );
