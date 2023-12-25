@@ -127,7 +127,8 @@ export const ServerBody = (props) => {
               </div>
             )}
             <Scoreboard
-              server={server}
+              players={server.players}
+              teams={server.teams}
               limit={serverMeta.playerDisplay.visible}
             />
             <HiddenPlayers count={serverMeta.playerDisplay.hidden} />

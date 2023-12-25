@@ -50,11 +50,6 @@ const metaByServer = (server) => {
   const spectatorText = calcSpectatorText(spectator_names);
   const isStarted = "Started" === server.status.name;
 
-  const showTeamColumn =
-    "teamplay" in server.settings && server.settings.teamplay > 0;
-  const showTeams =
-    showTeamColumn && server.teams.length > 0 && server.teams.length <= 3;
-
   const showMatchTag =
     "matchtag" in server.settings &&
     !server.settings.matchtag.includes("prac") &&
@@ -67,8 +62,6 @@ const metaByServer = (server) => {
     spectatorText,
     mapName: server.settings["map"],
     matchtag: showMatchTag ? server.settings.matchtag : "",
-    showTeams,
-    showTeamColumn,
     supportsLastscores: supportsLastscores(server.settings["*version"]),
   };
 

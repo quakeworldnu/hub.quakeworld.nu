@@ -6,8 +6,13 @@ $team-width: 40px;
   @apply grid text-sm app-text-outline;
 
   .sc-row {
-    @apply grid items-center gap-2;
+    @apply grid items-center gap-x-2;
     grid-template-columns: $ping-width $frags-width $team-width auto;
+  }
+
+  &.sc-hide-frags .sc-frags {
+    @apply text-transparent select-none;
+    text-shadow: none;
   }
 
   &.sc-hide-team .sc-row {

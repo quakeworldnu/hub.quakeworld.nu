@@ -3,7 +3,9 @@
 @import "./quake_colors";
 @import "./server";
 @import "./tailwind";
+@import "./scrollbar";
 @import "react-modern-drawer/dist/index.css";
+@import "react-toastify/dist/ReactToastify.css";
 
 .EZDrawer .EZDrawer__container {
   @apply bg-slate-900 text-gray-300 h-full p-3;
@@ -14,6 +16,14 @@
 
   > * {
     border: 1px solid yellow;
+
+    > * {
+      border: 1px solid green;
+
+      > * {
+        border: 1px solid red;
+      }
+    }
   }
 }
 
@@ -42,6 +52,24 @@
     -1px 1px 0 black;
 }
 
+.app-effect-fade-in {
+  will-change: opacity;
+  animation: fadein 0.5s;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .app-text-shadow {
   text-shadow: rgba(black, 0.5) 1px 1px 1px;
+}
+
+kbd {
+  @apply text-slate-200 text-xs bg-slate-800 py-1 px-1.5 rounded font-mono border border-slate-700;
 }

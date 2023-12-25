@@ -17,8 +17,8 @@ export default function Servers() {
   );
 }
 
-export function ServerPoller({ pollingInterval = 5000 }) {
+export function ServerPoller({ pollingInterval = 5 }) {
   useGetServersQuery(null, {
-    pollingInterval,
+    pollingInterval: pollingInterval * 1000,
   });
 }

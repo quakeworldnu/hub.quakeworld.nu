@@ -32,7 +32,7 @@ const PlayerTable = () => {
   }
 
   return (
-    <div className="my-6">
+    <div className="mt-4 mb-6">
       <table cellPadding="10" className="text-left w-full lg:w-auto">
         <thead className="text-gray-400 text-sm">
           <tr>
