@@ -3,8 +3,8 @@ const FTE_ASSETS_URL =
 const GENERIC_ASSETS_URL =
   "https://raw.githubusercontent.com/vikpe/qw-assets/main";
 
-export function withPrefix(path: string) {
-  return `/assets/static/${path}`;
+export function fteAsset(path: string) {
+  return `/assets/fte/${path}`;
 }
 
 export function getAssets(demoUrl: string, mapName: string): object {
@@ -475,7 +475,7 @@ function getGeneralAssets(): object {
   ];
 
   const assets: { [key: string]: string } = {
-    "id1/config.cfg": withPrefix("data/id1/config.cfg"),
+    "id1/config.cfg": fteAsset("config.cfg"),
   };
 
   for (const path of filePaths) {

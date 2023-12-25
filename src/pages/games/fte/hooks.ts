@@ -1,6 +1,6 @@
 import { useCounter, useEffectOnce, useInterval, useScript } from "usehooks-ts";
 import { useState } from "react";
-import { withPrefix } from "./assets.ts";
+import { fteAsset } from "./assets.ts";
 import { FteController } from "./fteController.ts";
 import { FteModule, FtePreloadModule } from "./types.ts";
 import { useEventListener } from "../hooks.ts";
@@ -18,7 +18,7 @@ export function useFteLoader({
   files: object;
   demoTotalTime: number | null;
 }) {
-  const scriptPath = withPrefix("/ftewebgl.js");
+  const scriptPath = fteAsset("/ftewebgl.js");
   const scriptStatus = useScript(scriptPath, { removeOnUnmount: true });
   const { count: loaded, increment } = useCounter(0);
   const [fte, setFte] = useState<undefined | FteController>(undefined);
