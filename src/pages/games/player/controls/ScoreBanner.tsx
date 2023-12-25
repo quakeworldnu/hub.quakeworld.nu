@@ -75,7 +75,7 @@ export const ScoreBanner = ({ isTeamplay }: { isTeamplay: boolean }) => {
   const maxNameLength = Math.max(...participants.map((p) => p.name.length));
 
   return (
-    <div className="app-effect-fade-in origin-top scale-50 sm:scale-75 md:scale-100 lg:scale-100 xl:scale-125 3xl:scale-150">
+    <div className="app-effect-fade-in origin-top scale-50 sm:scale-75 md:scale-100 lg:scale-100 xl:scale-125 3xl:scale-150 pointer-events-none select-none">
       <div className="flex items-center justify-between">
         <Participant
           participant={participants[0]}
