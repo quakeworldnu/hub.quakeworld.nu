@@ -11,7 +11,8 @@ $team-width: 40px;
   }
 
   &.sc-hide-frags .sc-frags {
-    @apply hidden;
+    @apply text-transparent select-none;
+    text-shadow: none;
   }
 
   &.sc-hide-team .sc-row {
