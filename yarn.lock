@@ -2361,10 +2361,10 @@ cjson@^0.3.1:
   dependencies:
     json-parse-helpfulerror "^1.0.3"
 
-classnames@^2.3.2:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.2.tgz#351d813bf0137fcc6a76a16b88208d2560a0d924"
-  integrity sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==
+classnames@^2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.3.tgz#897b59920fa3e336571c164366efad73e9d6418b"
+  integrity sha512-1inzZmicIFcmUya7PGtUQeXtcF7zZpPnxtQoYOrz0uiOBGlLFa4ik4361seYL2JCcRDIyfdFHiwQolESFlw+Og==
 
 clean-stack@^2.0.0:
   version "2.2.0"
