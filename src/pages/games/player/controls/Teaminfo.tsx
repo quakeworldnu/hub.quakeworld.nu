@@ -28,7 +28,7 @@ export const Teaminfo = ({ showTeams }: { showTeams: boolean }) => {
   }
 
   return (
-    <div className="grid grid-cols-2 gap-x-6 items-center">
+    <div className="grid grid-cols-2 gap-x-6 items-center select-none">
       {teams.map((t: TeamInfo) => (
         <div key={t.name} className="text-xs 2xl:text-base">
           {showTeams && (
