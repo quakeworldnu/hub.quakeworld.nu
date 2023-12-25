@@ -37,18 +37,18 @@ export const Controls = () => {
         <TimeSlider />
       </div>
 
-      <div className="flex w-full sm:w-1/3 sm:space-x-2 items-center sm:my-1">
+      <div className="flex w-full sm:w-1/3 sm:space-x-2 items-center sm:mb-2">
         <Volume />
         <GameClock />
       </div>
 
-      <div className="hidden sm:flex space-x-1 items-center justify-center my-1">
+      <div className="hidden sm:flex space-x-1 items-center justify-center mb-2">
         <SeekToStartButton />
         <PlayToggle />
         <SeekToEndButton />
       </div>
 
-      <div className="hidden sm:flex w-1/3 space-x-2 items-center justify-end my-1 ">
+      <div className="hidden sm:flex w-1/3 space-x-2 items-center justify-end mb-2 ">
         <AutotrackToggle />
         <SlowmotionToggle />
         <SplitscreenToggle />
