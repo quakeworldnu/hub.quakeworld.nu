@@ -72,21 +72,11 @@ export const ScoreBanner = ({ isTeamplay }: { isTeamplay: boolean }) => {
     return null;
   }
 
-  const maxNameLength = Math.max(...participants.map((p) => p.name.length));
-
   return (
-    <div className="w-fit mx-auto app-effect-fade-in origin-top scale-50 sm:scale-75 md:scale-100 lg:scale-100 xl:scale-125 3xl:scale-150 pointer-events-none select-none">
-      <div className="flex items-center justify-between">
-        <Participant
-          participant={participants[0]}
-          index={0}
-          nameLength={maxNameLength}
-        />
-        <Participant
-          participant={participants[1]}
-          index={1}
-          nameLength={maxNameLength}
-        />
+    <div className="flex flex-col items-center app-effect-fade-in origin-top scale-50 sm:scale-75 md:scale-100 lg:scale-100 xl:scale-125 3xl:scale-150 pointer-events-none select-none">
+      <div className="flex items-center">
+        <Participant participant={participants[0]} index={0} />
+        <Participant participant={participants[1]} index={1} />
       </div>
       <div className="text-center mt-1 text-base font-mono font-bold app-text-outline text-yellow-200">
         {formatElapsed(fte.getGameElapsedTime())}
@@ -98,33 +88,23 @@ export const ScoreBanner = ({ isTeamplay }: { isTeamplay: boolean }) => {
 const Participant = ({
   participant,
   index,
-  nameLength,
 }: {
   participant: ParticipantInfo;
   index: number;
-  nameLength: number;
 }) => {
-  const padCount = nameLength - participant.name.length;
   const isFirst = index % 2 === 0;
 
   return (
     <div
-      className={classNames("flex items-center", {
+      className={classNames("flex w-64 justify-end", {
         "flex-row-reverse": !isFirst,
       })}
     >
-      <div
-        className={classNames("flex items-center bg-black/50", {
-          "rounded-r": !isFirst,
-          "rounded-l": isFirst,
-        })}
-      >
-        {padCount > 0 && (
-          <div className="text-transparent">{"j".repeat(padCount)}</div>
-        )}
+      <div className="flex items-center">
         <div
-          className={classNames("px-4", {
-            "text-right": index % 2 === 1,
+          className={classNames("px-2 bg-black/50 ", {
+            "rounded-l": isFirst,
+            "rounded-r": !isFirst,
           })}
           dangerouslySetInnerHTML={{ __html: toColoredHtml(participant.name) }}
         />
