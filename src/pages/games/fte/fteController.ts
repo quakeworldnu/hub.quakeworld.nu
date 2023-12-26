@@ -113,7 +113,9 @@ export class FteController {
 
   getPlayers(): PlayerInfo[] {
     try {
-      return this.module.getPlayerInfo();
+      const players = this.module.getPlayerInfo();
+      players.sort((a, b) => a.name.localeCompare(b.name));
+      return players;
     } catch (e) {
       return [];
     }
@@ -145,19 +147,8 @@ export class FteController {
       }
     });
 
-    // sort players by name
     teams.forEach((team) => {
-      team.players.sort((a, b) => {
-        if (a.name < b.name) {
-          return -1;
-        }
-
-        if (a.name > b.name) {
-          return 1;
-        }
-
-        return 0;
-      });
+      team.players.sort((a, b) => a.name.localeCompare(b.name));
     });
 
     return teams;
