@@ -75,7 +75,7 @@ export const DemoPlayerFooter = ({ demo }: { demo: Demo }) => {
                 <Timestamp timestamp={demo.timestamp} /> on {demo.source}
               </div>
             </div>
-            <div className="flex items-start my-3 md:my-0 gap-3">
+            <div className="flex flex-wrap items-start my-3 md:my-0 gap-3">
               <EnableClipEditorButton />
               <ShareDemoButton />
               <DownloadDemoButton s3_key={demo.s3_key} />
