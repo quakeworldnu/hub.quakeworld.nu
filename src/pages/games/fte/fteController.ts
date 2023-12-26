@@ -123,7 +123,7 @@ export class FteController {
 
   getTrackedPlayer(): PlayerInfo | null {
     const userid = this.getTrackUserid();
-    const players = this.getPlayers();
+    const players = this.module.getPlayerInfo();
     const player = players.find((player) => player.id === userid);
     return player || null;
   }
