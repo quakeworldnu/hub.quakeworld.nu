@@ -45,13 +45,15 @@ export const ScoreBanner = ({ isTeamplay }: { isTeamplay: boolean }) => {
   }
 
   return (
-    <div className="flex flex-col items-center app-effect-fade-in origin-top scale-50 sm:scale-75 md:scale-100 lg:scale-100 xl:scale-125 3xl:scale-150 pointer-events-none select-none">
-      <div className="flex items-center">
-        <Participant participant={participants[0]} index={0} />
-        <Participant participant={participants[1]} index={1} />
-      </div>
-      <div className="text-center mt-1 text-base font-mono font-bold app-text-outline text-yellow-200">
-        {formatElapsed(fte.getGameElapsedTime())}
+    <div className="flex flex-col items-center app-effect-fade-in pointer-events-none select-none">
+      <div className="origin-top scale-50 sm:scale-75 md:scale-100 lg:scale-100 xl:scale-125 3xl:scale-150">
+        <div className="flex items-center">
+          <Participant participant={participants[0]} index={0} />
+          <Participant participant={participants[1]} index={1} />
+        </div>
+        <div className="text-center mt-1 text-base font-mono font-bold app-text-outline text-yellow-200">
+          {formatElapsed(fte.getGameElapsedTime())}
+        </div>
       </div>
     </div>
   );
@@ -68,7 +70,7 @@ const Participant = ({
 
   return (
     <div
-      className={classNames("flex w-64 justify-end", {
+      className={classNames("flex w-48 justify-end", {
         "flex-row-reverse": !isFirst,
       })}
     >
