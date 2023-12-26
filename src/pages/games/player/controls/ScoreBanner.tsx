@@ -1,9 +1,10 @@
 import classNames from "classnames";
 import { useFteController } from "../../fte/hooks.ts";
 import { useUpdateInterval } from "../../hooks.ts";
-import { PlayerInfo, TeamInfo } from "../../fte/types.ts";
+import { TeamInfo } from "../../fte/types.ts";
 import { toColoredHtml } from "../../qwstrings.ts";
 import { formatElapsed } from "../../time.ts";
+import { getPlayersMajorityColor } from "../../fte/util.ts";
 
 type ParticipantInfo = {
   name: string;
@@ -12,37 +13,8 @@ type ParticipantInfo = {
   bottom_color: number;
 };
 
-function getMajorityColorPair(players: PlayerInfo[]): number[] {
-  if (players.length === 0) {
-    return [0, 0];
-  } else if (players.length === 1) {
-    return [players[0].top_color, players[0].bottom_color];
-  }
-
-  const colorPairs = players.map(
-    (p: PlayerInfo) => `${p.top_color}-${p.bottom_color}`,
-  );
-  colorPairs.sort();
-
-  const countPerPair: { [key: string]: number } = {};
-
-  for (const element of colorPairs) {
-    if (countPerPair[element]) {
-      countPerPair[element] += 1;
-    } else {
-      countPerPair[element] = 1;
-    }
-  }
-
-  const majorityColorPair = Object.keys(countPerPair).reduce((a, b) =>
-    countPerPair[a] > countPerPair[b] ? a : b,
-  );
-
-  return majorityColorPair.split("-").map((x) => parseInt(x, 10));
-}
-
 function teamToParticipant(team: TeamInfo): ParticipantInfo {
-  const [top_color, bottom_color] = getMajorityColorPair(team.players);
+  const { top_color, bottom_color } = getPlayersMajorityColor(team.players);
 
   return {
     name: team.name,
