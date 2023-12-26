@@ -54,7 +54,7 @@ function teamToParticipant(team: TeamInfo): ParticipantInfo {
 
 export const ScoreBanner = ({ isTeamplay }: { isTeamplay: boolean }) => {
   const fte = useFteController();
-  useUpdateInterval(500);
+  useUpdateInterval(250);
 
   if (!fte) {
     return null;
