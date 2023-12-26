@@ -16,8 +16,6 @@ export function getPlayersMajorityColor(players: PlayerInfo[]): {
   const colorPairs = players.map(
     (p: PlayerInfo) => `${p.top_color}-${p.bottom_color}`,
   );
-  colorPairs.sort();
-
   const countPerPair: { [key: string]: number } = {};
 
   for (const element of colorPairs) {
@@ -29,7 +27,7 @@ export function getPlayersMajorityColor(players: PlayerInfo[]): {
   }
 
   const majorityColorPair = Object.keys(countPerPair).reduce((a, b) =>
-    countPerPair[a] > countPerPair[b] ? a : b,
+    countPerPair[a] >= countPerPair[b] ? a : b,
   );
 
   const [top_color, bottom_color] = majorityColorPair
