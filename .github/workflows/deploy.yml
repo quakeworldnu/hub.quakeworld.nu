@@ -10,7 +10,7 @@ jobs:
     timeout-minutes: 5
     runs-on: ubuntu-latest
     env:
-      VITE_AWS_S3_BUCKET_URL: '${{ secrets.VITE_AWS_S3_BUCKET_URL }}'
+      VITE_AWS_CLOUDFRONT_URL: '${{ secrets.VITE_AWS_CLOUDFRONT_URL }}'
       VITE_SUPABASE_URL: '${{ secrets.VITE_SUPABASE_URL }}'
       VITE_SUPABASE_ANON_KEY: '${{ secrets.VITE_SUPABASE_ANON_KEY }}'
       VITE_SENTRY_ENVIRONMENT: '${{ secrets.VITE_SENTRY_ENVIRONMENT }}'

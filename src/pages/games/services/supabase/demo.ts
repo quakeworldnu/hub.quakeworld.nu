@@ -1,6 +1,6 @@
 import { Demo, DemoParticipants } from "./supabase.types.ts";
 
-const BASE_URL: string = import.meta.env.VITE_AWS_S3_BUCKET_URL;
+const BASE_URL: string = import.meta.env.VITE_AWS_CLOUDFRONT_URL;
 
 export function getDemoDownloadUrl(s3_key: string): string {
   return [BASE_URL, s3_key].join("/");
