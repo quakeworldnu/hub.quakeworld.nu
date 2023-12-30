@@ -1,25 +1,25 @@
-import { useDemos } from "./context.tsx";
+import { useDemos } from "../context.tsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import { useDemoBrowserSettings } from "./hooks.ts";
+import { useDemoSettings } from "./context.tsx";
 import { ChangeEvent } from "react";
-import { btnSecondary, formInput, sizeSmall } from "../ui/theme.ts";
+import { btnSecondary, formInput, sizeSmall } from "../../ui/theme.ts";
 
 const PER_PAGE = 20;
 export const Pagination = () => {
-  const { count } = useDemos();
-  const { settings, nextPage, prevPage } = useDemoBrowserSettings();
+  const { count, hasDemos } = useDemos();
+  const { page, nextPage, prevPage } = useDemoSettings();
   const pageCount = Math.ceil(count / PER_PAGE);
 
-  if (0 === count || pageCount < 2) {
+  if (!hasDemos || pageCount < 2) {
     return null;
   }
 
-  const hasNextPage = settings.page < pageCount;
-  const hasPreviousPage = settings.page > 1;
+  const hasNextPage = page < pageCount;
+  const hasPreviousPage = page > 1;
 
   return (
     <div className="flex items-center space-x-3">
@@ -43,7 +43,7 @@ export const Pagination = () => {
 };
 
 const PagNumberSelect = ({ pageCount = 1 }: { pageCount: number }) => {
-  const { settings, setPage } = useDemoBrowserSettings();
+  const { page, setPage } = useDemoSettings();
 
   if (pageCount < 2) {
     return null;
@@ -58,11 +58,7 @@ const PagNumberSelect = ({ pageCount = 1 }: { pageCount: number }) => {
 
   return (
     <div className="flex items-center space-x-2">
-      <select
-        className={formInput}
-        value={settings.page}
-        onChange={handleChange}
-      >
+      <select className={formInput} value={page} onChange={handleChange}>
         {pageNumbers.map((p) => (
           <option key={p} value={1 + p}>
             {1 + p}

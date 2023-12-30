@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import { EnableClipEditorButton } from "./clips/Clips.tsx";
 import { ClipControls } from "./clips/ClipControls.tsx";
-import { useClipEditor } from "./clips/context.tsx";
+import { ClipEditorProvider, useClipEditor } from "./clips/context.tsx";
 import { ShareDemoButton } from "./Share.tsx";
 import { btnSecondary, btnSuccess, sizeLarge } from "../ui/theme.ts";
 import { Shortcuts } from "./Shortcuts.tsx";
@@ -41,7 +41,7 @@ export const Player = ({ demoId }: { demoId: number }) => {
   }
 
   return (
-    <>
+    <ClipEditorProvider>
       <div className="lg:flex min-h-[200px]">
         <div className="flex flex-col grow">
           <div className="flex grow bg-black items-center justify-center max-h-[75vh]">
@@ -50,7 +50,7 @@ export const Player = ({ demoId }: { demoId: number }) => {
           <DemoPlayerFooter demo={demo} />
         </div>
       </div>
-    </>
+    </ClipEditorProvider>
   );
 };
 

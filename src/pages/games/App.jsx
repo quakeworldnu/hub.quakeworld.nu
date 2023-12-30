@@ -4,12 +4,7 @@ import { SiteHeader } from "../../site/Header";
 import { SiteFooter } from "../../site/Footer";
 import { Browser } from "./browser/Browser";
 import { useCurrentDemoId } from "./playlist/hooks";
-import {
-  searchDemosCount,
-  searchDemosRows,
-} from "./services/supabase/supabase.ts";
 import { useDemos } from "./browser/context.tsx";
-import { useDemoBrowserSettings } from "./browser/hooks.ts";
 import { Sidebar } from "./Sidebar";
 import { Player } from "@qwhub/pages/games/player/Player";
 import { useElementSize } from "usehooks-ts";
@@ -26,39 +21,13 @@ function getAppBodySize() {
 
 export const App = () => {
   const demoId = useCurrentDemoId();
-  const { settings, setPage } = useDemoBrowserSettings();
-  const { setDemos, setCount, setIsLoading, isLoading } = useDemos();
+  const { isLoading } = useDemos();
 
   function handleAppBodySizeChange() {
     dispatchEvent(
       new CustomEvent("app.body.resize", { detail: getAppBodySize() }),
     );
   }
-
-  useEffect(() => {
-    async function run() {
-      setIsLoading(true);
-      const { data: demos } = await searchDemosRows(settings);
-      const { data: count } = await searchDemosCount(settings);
-      setDemos(demos);
-      setCount(count.count);
-      setPage(1);
-      setIsLoading(false);
-    }
-
-    run();
-  }, [settings.query, settings.gameMode]);
-
-  useEffect(() => {
-    async function run() {
-      setIsLoading(true);
-      const { data: demos } = await searchDemosRows(settings);
-      setDemos(demos);
-      setIsLoading(false);
-    }
-
-    run();
-  }, [settings.page]);
 
   const [bodyRef, bodySize] = useElementSize();
 

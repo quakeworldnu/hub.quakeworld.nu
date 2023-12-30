@@ -1,33 +1,40 @@
 import { DemoGrid } from "./DemoGrid.tsx";
-import { useDemoBrowserSettings } from "./hooks.ts";
+import { DemoSettingsProvider, useDemoSettings } from "./settings/context.tsx";
 import { DemoList } from "./DemoList.tsx";
-import { Toolbar } from "./Toolbar.tsx";
-import { Pagination } from "./Pagination.tsx";
-import { useDemos } from "./context.tsx";
+import { Toolbar } from "./settings/Toolbar.tsx";
+import { Pagination } from "./settings/Pagination.tsx";
+import { DemoProvider, useDemos } from "./context.tsx";
 
 export const Browser = () => {
   return (
     <div className="space-y-4">
-      <Toolbar />
-      <Demos />
-      <Pagination />
+      <DemoSettingsProvider localStorageKey="mainDemoBrowser.settings.v2">
+        <DemoProvider>
+          <Toolbar />
+          <Demos />
+          <Pagination />
+        </DemoProvider>
+      </DemoSettingsProvider>
     </div>
   );
 };
 
 const Demos = () => {
-  const { settings } = useDemoBrowserSettings();
-  const { demos, hasDemos } = useDemos();
+  const { displayMode } = useDemoSettings();
+  const { demos, hasDemos, isLoading } = useDemos();
 
   return (
     <div>
-      {settings.displayMode === "grid" ? (
+      {displayMode === "Grid" ? (
         <DemoGrid demos={demos} />
       ) : (
         <DemoList demos={demos} />
       )}
+      {isLoading && <div className="text-slate-400">Loading demos...</div>}
 
-      {!hasDemos && <div className="text-slate-400">No demos found.</div>}
+      {!isLoading && !hasDemos && (
+        <div className="text-slate-400">No demos found.</div>
+      )}
     </div>
   );
 };
