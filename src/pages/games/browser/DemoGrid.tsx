@@ -23,19 +23,21 @@ const GridItem = (props: { demo: Demo }) => {
     <div className="flex flex-col h-full">
       <ScoreboardLink demo={demo} showScores={isVisible} />
 
-      <div className="flex items-center mt-1 text-xs">
-        <button
-          onClick={show}
-          className={classNames(btnSecondary, "py-1 px-1.5", {
-            "opacity-0": isVisible,
-          })}
-        >
-          Show scores
-        </button>
-        <div className="text-slate-400 grow text-center">
+      <div className="flex items-center mt-1 text-xs justify-between">
+        <div className="w-1/3 text-slate-500">
           <Timestamp timestamp={demo.timestamp} />
         </div>
-        <div className="flex items-center space-x-1">
+        <div className="w-1/3">
+          <button
+            onClick={show}
+            className={classNames(btnSecondary, "py-1 px-1.5 mx-auto", {
+              "opacity-0": isVisible,
+            })}
+          >
+            Show scores
+          </button>
+        </div>
+        <div className="flex items-center space-x-1 w-1/3 justify-end">
           <ToggleButton demo={demo} />
           <DownloadButton s3_key={demo.s3_key} />
         </div>
