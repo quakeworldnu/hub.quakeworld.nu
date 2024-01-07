@@ -1,3 +1,5 @@
+export type FteAssets = { [key: string]: string };
+
 export type FtePreloadModule = {
   canvas: HTMLCanvasElement;
   files: object;

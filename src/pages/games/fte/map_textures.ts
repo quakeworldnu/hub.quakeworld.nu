@@ -1,18 +1,18 @@
+import { FteAssets } from "./types.ts";
+
 const FTE_ASSETS_URL =
   "https://raw.githubusercontent.com/vikpe/fte-web-assets/main";
 
-type TextureMap = { [key: string]: string };
-
-export function getMapTextures(mapName: string): TextureMap {
+export function getMapTextures(mapName: string): FteAssets {
   const filenames = texturesPerMapName[mapName] ?? [];
   const filepaths = filenames.map((t) => `id1/textures/${mapName}/${t}`);
-  const result: TextureMap = {};
+  const assets: FteAssets = {};
 
   for (const path of filepaths) {
-    result[path] = `${FTE_ASSETS_URL}/${path.replace("#", "%23")}`;
+    assets[path] = `${FTE_ASSETS_URL}/${path.replace("#", "%23")}`;
   }
 
-  return result;
+  return assets;
 }
 
 const texturesPerMapName: { [key: string]: string[] } = {

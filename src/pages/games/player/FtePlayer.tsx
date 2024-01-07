@@ -2,22 +2,26 @@ import classNames from "classnames";
 import { useIdleTimer } from "react-idle-timer";
 import { Controls } from "./Controls.tsx";
 import { useFteController, useFteLoader } from "../fte/hooks.ts";
-import { getAssets } from "../fte/assets.ts";
-import { getDemoDownloadUrl } from "../services/supabase/demo.ts";
 import { Demo } from "../services/supabase/supabase.types.ts";
 import { FteCanvas } from "./FteCanvas.tsx";
 import { useClipPlayback } from "./clips/hooks.ts";
 import { Teaminfo } from "./controls/Teaminfo.tsx";
 import { ScoreBanner } from "./controls/ScoreBanner.tsx";
+import { FteAssets } from "../fte/types.ts";
 
-export const FtePlayer = ({ demo }: { demo: Demo }) => {
+export const FtePlayer = ({
+  demo,
+  assets,
+}: {
+  demo: Demo;
+  assets: FteAssets;
+}) => {
   useClipPlayback();
-  const demoUrl = getDemoDownloadUrl(demo.s3_key);
-  const files = getAssets(demoUrl, demo.map);
-  const { isLoadingAssets, isReady, assets, isInitializing } = useFteLoader({
-    files,
-    demoTotalTime: demo.duration,
-  });
+  const { isLoadingAssets, isReady, assetStatus, isInitializing } =
+    useFteLoader({
+      assets,
+      demoTotalTime: demo.duration,
+    });
   const fte = useFteController();
 
   useIdleTimer({
@@ -88,7 +92,7 @@ export const FtePlayer = ({ demo }: { demo: Demo }) => {
               />
             </svg>
             <div className="animate-pulse text-gray-400">
-              {isLoadingAssets && <>Loading assets ({assets.progress}%)</>}
+              {isLoadingAssets && <>Loading assets ({assetStatus.progress}%)</>}
               {isInitializing && <>Initializing..</>}
             </div>
           </div>

@@ -2,7 +2,7 @@ import { useCounter, useEffectOnce, useInterval, useScript } from "usehooks-ts";
 import { useState } from "react";
 import { fteAsset } from "./assets.ts";
 import { FteController } from "./fteController.ts";
-import { FteModule, FtePreloadModule } from "./types.ts";
+import { FteAssets, FteModule, FtePreloadModule } from "./types.ts";
 import { useEventListener } from "../hooks.ts";
 
 declare global {
@@ -12,10 +12,10 @@ declare global {
 }
 
 export function useFteLoader({
-  files,
+  assets,
   demoTotalTime,
 }: {
-  files: object;
+  assets: FteAssets;
   demoTotalTime: number | null;
 }) {
   const scriptPath = fteAsset("/ftewebgl.js");
@@ -26,7 +26,7 @@ export function useFteLoader({
   useEffectOnce(() => {
     window.Module = {
       canvas: document.getElementById("fteCanvas") as HTMLCanvasElement,
-      files,
+      files: assets,
       setStatus: function (value) {
         const assetRe = value.match(/.+ \((\d+)\/(\d+)\)/);
         const isLoadedAsset =
@@ -52,23 +52,23 @@ export function useFteLoader({
     fte ? null : 100,
   );
 
-  const totalAssets = Object.values(files).length;
-  const assets = {
+  const totalAssets = Object.values(assets).length;
+  const assetStatus = {
     total: totalAssets,
     loaded,
     progress: Math.round(100 * (loaded / totalAssets)),
   };
   const isLoadingScript = scriptStatus !== "ready";
-  const isLoadingAssets = assets.progress < 80;
+  const isLoadingAssets = assetStatus.progress < 80;
 
   return {
-    isLoadingAssets: assets.progress < 80,
+    isLoadingAssets: assetStatus.progress < 80,
     isInitializing: !isLoadingAssets && !fte,
     isReady: fte,
     isLoading: !fte,
     isLoadingScript,
     scriptStatus,
-    assets,
+    assetStatus,
   };
 }
 

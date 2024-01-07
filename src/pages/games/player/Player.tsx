@@ -19,6 +19,7 @@ import { Shortcuts } from "./Shortcuts.tsx";
 import { Scoreboard } from "../browser/Scoreboard.tsx";
 import classNames from "classnames";
 import { useBoolean } from "usehooks-ts";
+import { getAssets } from "../fte/assets.ts";
 
 export const Player = ({ demoId }: { demoId: number }) => {
   const [demo, setDemo] = useState<Demo | null>(null);
@@ -40,12 +41,15 @@ export const Player = ({ demoId }: { demoId: number }) => {
     return <div>Loading...</div>;
   }
 
+  const demoUrl = getDemoDownloadUrl(demo.s3_key);
+  const assets = getAssets(demoUrl, demo.map);
+
   return (
     <ClipEditorProvider>
       <div className="lg:flex min-h-[200px]">
         <div className="flex flex-col grow">
           <div className="flex grow bg-black items-center justify-center max-h-[75vh]">
-            <FtePlayer demo={demo} />
+            <FtePlayer demo={demo} assets={assets} />
           </div>
           <DemoPlayerFooter demo={demo} />
         </div>

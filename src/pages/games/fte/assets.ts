@@ -1,4 +1,5 @@
 import { getMapTextures } from "./map_textures.ts";
+import { FteAssets } from "./types.ts";
 
 const FTE_ASSETS_URL =
   "https://raw.githubusercontent.com/vikpe/fte-web-assets/main";
@@ -9,7 +10,7 @@ export function fteAsset(path: string) {
   return `/assets/fte/${path}`;
 }
 
-export function getAssets(demoUrl: string, mapName: string): object {
+export function getAssets(demoUrl: string, mapName: string): FteAssets {
   const demoFilename = demoUrl.split("/").pop() || "";
   return {
     ...getGeneralAssets(),
@@ -32,7 +33,7 @@ function getDemoMountPath(demoFilename: string): string {
   return mountPath;
 }
 
-function getMapAssets(mapName: string): object {
+function getMapAssets(mapName: string): FteAssets {
   const targetMapBsp = "id1/maps/" + mapName + ".bsp";
   const targetMapLit = "id1/maps/" + mapName + ".lit";
   const mapUrl = `${GENERIC_ASSETS_URL}/maps/${mapName}/${mapName}`;
@@ -43,7 +44,7 @@ function getMapAssets(mapName: string): object {
   };
 }
 
-function getGeneralAssets(): object {
+function getGeneralAssets(): FteAssets {
   const filePaths = [
     "default.fmf",
     "qw/fragfile.dat",
@@ -477,7 +478,7 @@ function getGeneralAssets(): object {
     "id1/textures/wad/sb_suit.png",
   ];
 
-  const assets: { [key: string]: string } = {
+  const assets: FteAssets = {
     "id1/config.cfg": fteAsset("config.cfg"),
   };
 
