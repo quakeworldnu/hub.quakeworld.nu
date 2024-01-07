@@ -1,3 +1,5 @@
+import { getMapTextures } from "./map_textures.ts";
+
 const FTE_ASSETS_URL =
   "https://raw.githubusercontent.com/vikpe/fte-web-assets/main";
 const GENERIC_ASSETS_URL =
@@ -37,6 +39,7 @@ function getMapAssets(mapName: string): object {
   return {
     [targetMapBsp]: `${mapUrl}.bsp`,
     [targetMapLit]: `${mapUrl}.lit`,
+    ...getMapTextures(mapName),
   };
 }
 
