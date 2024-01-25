@@ -5,7 +5,7 @@ import { sizeSmall, toggleBtn, toggleBtnSelected } from "../../ui/theme.ts";
 
 export const GameModeBar = () => {
   const { gameMode, setGameMode } = useDemoSettings();
-  const modes: GameMode[] = ["All", "1on1", "2on2", "4on4", "CTF"];
+  const modes: GameMode[] = ["All", "1on1", "2on2", "4on4", "Wipeout", "CTF"];
 
   function handleClick(mode: GameMode) {
     setGameMode(mode);
