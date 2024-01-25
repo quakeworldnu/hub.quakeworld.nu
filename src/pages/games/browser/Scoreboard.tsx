@@ -40,7 +40,7 @@ export const Scoreboard = ({
     fixedPlayers.sort((a, b) => b.frags - a.frags);
   }
 
-  const isCustomMode = ["ctf"].includes(demo.mode);
+  const isCustomMode = ["ctf", "wipeout"].includes(demo.mode);
 
   return (
     <div className="h-full bg-cover bg-center bg-no-repeat bg-[url(https://hub.quakeworld.nu/assets/img/default_mapshot.jpg)]">
@@ -107,6 +107,7 @@ const ModeRibbon = ({ mode }: { mode: string }) => {
           "flex -translate-x-[45%] -translate-y-[195%] -rotate-45 origin-bottom-right h-8 w-48 bg-gradient-to-bl justify-center items-center z-10 text-white app-text-shadow font-bold text-sm",
           {
             "from-amber-600 to-amber-900": mode === "ctf",
+            "from-sky-600 to-sky-900": mode === "wipeout",
           },
         )}
       >
