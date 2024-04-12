@@ -20,11 +20,3 @@ export function formatElapsed(elapsed: number): string {
     ? `Countdown: ${-Math.floor(elapsed)}`
     : secondsToMinutesAndSeconds(elapsed);
 }
-
-export function formatSeek(seekTime: number, startTime: number): string {
-  if (seekTime < startTime) {
-    return `Countdown: ${Math.floor(startTime - seekTime)}`;
-  } else {
-    return secondsToMinutesAndSeconds(seekTime - startTime);
-  }
-}

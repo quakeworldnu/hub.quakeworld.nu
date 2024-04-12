@@ -1,6 +1,6 @@
 import { getTrackBackground, Range } from "react-range";
 import classNames from "classnames";
-import { secondsToMinutesAndSeconds } from "../../time.ts";
+import { formatElapsed } from "../../time.ts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGripLinesVertical } from "@fortawesome/free-solid-svg-icons";
 import { useClipEditor } from "./context.tsx";
@@ -32,7 +32,8 @@ export const ClipRange = () => {
   }
 
   const min = 0;
-  const max = fte?.getDemoTotalTime() || 610;
+  const max = Math.ceil(fte?.getDemoTotalTime()) || 610;
+  const countdownLength = fte?.getGameStartTime();
 
   return (
     <Range
@@ -82,7 +83,7 @@ export const ClipRange = () => {
               { "z-10": isDragged },
             )}
           >
-            {secondsToMinutesAndSeconds(range[props.key])}
+            {formatElapsed(range[props.key] - countdownLength)}
           </div>
 
           <FontAwesomeIcon
