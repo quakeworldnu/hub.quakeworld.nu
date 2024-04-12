@@ -126,7 +126,7 @@ const MouseShortcuts = () => {
     },
     {
       keys: ["Swipe Left/Right"],
-      description: "Track next player",
+      description: "Track next/previous player",
     },
     {
       keys: ["Double Tap (right)"],

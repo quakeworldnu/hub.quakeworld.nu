@@ -31,6 +31,10 @@ export class FteController {
   private _maxVolume = 0.2;
   private _lastDemoSpeed = 100;
   private _lastTrackUserId = -1;
+  private _trackTarget: {
+    demoTime: number;
+    timeout: ReturnType<typeof setTimeout> | null;
+  } = { demoTime: 0, timeout: null };
   private _demoSpeed = 100;
   private _splitscreen = 0;
   private _autotrack: string = Autotrack.ON;
@@ -121,12 +125,12 @@ export class FteController {
     }
   }
 
-  getTrackedPlayer(): PlayerInfo | null {
-    const userid = this.getTrackUserid();
-    const players = this.module.getPlayerInfo();
-    const player = players.find((player) => player.id === userid);
-    return player || null;
-  }
+  // getTrackedPlayer(): PlayerInfo | null {
+  //   const userid = this.getTrackUserid();
+  //   const players = this.module.getPlayerInfo();
+  //   const player = players.find((player) => player.id === userid);
+  //   return player || null;
+  // }
 
   getTeams(): TeamInfo[] {
     const players = this.getPlayers();
@@ -165,6 +169,12 @@ export class FteController {
 
   // demo playback
   demoJump(demoTime: number) {
+    // clear existing track targets
+    if (this._trackTarget.timeout) {
+      clearTimeout(this._trackTarget.timeout);
+    }
+
+    // clamp demo time
     const newDemoTime = clamp(
       Math.floor(demoTime),
       0,
@@ -179,22 +189,34 @@ export class FteController {
       return;
     }
 
-    const lastTrackUserId = this._lastTrackUserId;
-    const hadAutotrackEnabled = this.isUsingAutotrack();
-    const isRewind = newDemoTime < currentDemoTime;
-
     this.command("demo_jump", newDemoTime);
 
-    // fix tracking
-    const applyTrack = () => {
-      if (hadAutotrackEnabled) {
-        this.enableAutotrack();
-      } else if (isRewind && this.getTrackUserid() !== lastTrackUserId) {
-        this.track(lastTrackUserId);
-      }
-    };
+    // restore tracking on rewind
+    if (newDemoTime < currentDemoTime) {
+      this._trackTarget = {
+        demoTime,
+        timeout: setInterval(() => this._restoreTrack(), 25),
+      };
+    }
+  }
 
-    setTimeout(applyTrack, 50);
+  _restoreTrack() {
+    const timeDiff = this.getDemoElapsedTime() - this._trackTarget.demoTime;
+    const acceptableDiff = 0.05;
+
+    if (!this._trackTarget.timeout || timeDiff > acceptableDiff) {
+      return;
+    }
+
+    // disable new checks
+    clearTimeout(this._trackTarget.timeout);
+
+    // restore track
+    if (this.isUsingAutotrack()) {
+      this.enableAutotrack();
+    } else {
+      this.track(this._lastTrackUserId);
+    }
   }
 
   seekForward(delta: number) {
@@ -270,19 +292,25 @@ export class FteController {
   }
 
   track(userid: number | string) {
-    if (this.isUsingAutotrack()) {
-      this.disableAutotrack();
-    }
+    this.disableAutotrack();
     const userid_ = Number(userid);
     this._lastTrackUserId = userid_;
     this.command("track", userid_);
   }
 
   trackNext() {
-    this.disableAutotrack();
-    this.command("__track_next");
-    this.command("wait");
-    this._lastTrackUserId = this.getTrackUserid();
+    this._trackByDelta(1);
+  }
+
+  trackPrev() {
+    this._trackByDelta(-1);
+  }
+
+  _trackByDelta(delta: 1 | -1) {
+    const all_ids = this.module.getPlayerInfo().map((p) => p.id);
+    const current_index = all_ids.indexOf(this.getTrackUserid());
+    const new_index = (current_index + delta + all_ids.length) % all_ids.length;
+    this.track(all_ids[new_index]);
   }
 
   // volume

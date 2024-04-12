@@ -78,7 +78,8 @@ export const FteCanvas = () => {
   });
 
   const swipe = useSwipeable({
-    onSwiped: () => fte?.trackNext(),
+    onSwipedLeft: () => fte?.trackPrev(),
+    onSwipedRight: () => fte?.trackNext(),
     trackMouse: true,
     swipeDuration: 500,
     preventScrollOnSwipe: true,
