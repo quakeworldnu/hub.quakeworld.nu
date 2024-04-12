@@ -91,10 +91,6 @@ export const ServerBody = (props) => {
     return (
       <Mapshot map={serverMeta.mapName}>
         <div className="flex flex-col h-full group py-4 min-h-[96px] sm:min-h-[200px] bg-gray-700/20">
-          {server.meta.addressTitle.includes("QHLAN") && (<div className="absolute ml-4 w-16 sm:w-20">
-            <img src="https://www.qhlan.org/assets/img/qhlan2024_anim.svg" width={"100%"} alt="QHLAN"/>
-          </div>)
-          }
           <div className="flex transition-opacity opacity-0 group-hover:opacity-100 ml-4 space-x-2 absolute">
             <a
               href={`https://hub.quakeworld.nu/scoreboard/?address=${server.address}`}
