@@ -103,16 +103,16 @@ export class FteController {
     this._demoTotalTime = value;
   }
 
-  getDemoGameStartTime(): number {
+  getGameStartTime(): number {
     return this._demoTotalTime % 60;
   }
 
   getGameElapsedTime(): number {
-    return this.getDemoElapsedTime() - this.getDemoGameStartTime();
+    return this.getDemoElapsedTime() - this.getGameStartTime();
   }
 
   getGameTotalTime(): number {
-    return this.getDemoTotalTime() - this.getDemoGameStartTime();
+    return this.getDemoTotalTime() - this.getGameStartTime();
   }
 
   getPlayers(): PlayerInfo[] {
