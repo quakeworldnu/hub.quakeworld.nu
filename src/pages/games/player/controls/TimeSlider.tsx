@@ -5,7 +5,7 @@ import { useEventListener, useHover } from "usehooks-ts";
 import { useMouse, useThrottle } from "@uidotdev/usehooks";
 import { useUpdateInterval } from "../../hooks.ts";
 import { useFteController } from "../../fte/hooks.ts";
-import { formatSeek } from "../../time.ts";
+import { formatElapsed } from "../../time.ts";
 import { useClipEditor } from "../clips/context.tsx";
 import { getTrackBackground } from "react-range";
 import { useUrlClipParams } from "../../playlist/hooks.ts";
@@ -17,7 +17,7 @@ export function TimeSlider() {
   const isHover = useHover(sliderWrapperRef);
   const [mouse, sliderRootRef] = useMouse<HTMLDivElement>();
 
-  const matchStartTime = fte ? fte.getDemoGameStartTime() : 10;
+  const countdownLength = fte ? fte.getGameStartTime() : 10;
   const maxValue = fte ? fte.getDemoTotalTime() : 1200;
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export function TimeSlider() {
     const progress = mouse.elementX / sliderWidth;
     const seekTime = Math.round(progress * maxValue);
 
-    tooltipRef.current.textContent = formatSeek(seekTime, matchStartTime);
+    tooltipRef.current.textContent = formatElapsed(seekTime - countdownLength);
     tooltipRef.current.style.left = `${mouse.elementX - 10}px`; // -10 to center tooltip
   }, [isHover, mouse.elementX]);
 

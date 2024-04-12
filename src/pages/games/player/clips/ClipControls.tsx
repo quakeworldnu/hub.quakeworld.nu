@@ -10,7 +10,7 @@ import {
 import { useClipEditor } from "./context.tsx";
 import copyTextToClipboard from "copy-text-to-clipboard";
 import { useFteController, useFteEvent } from "../../fte/hooks.ts";
-import { secondsToMinutesAndSeconds } from "../../time.ts";
+import { formatElapsed } from "../../time.ts";
 import { clamp } from "../../math.ts";
 import { toast } from "react-toastify";
 import classNames from "classnames";
@@ -77,7 +77,15 @@ export const CopyLinkButton = () => {
 };
 
 const AdjustControls = () => {
+  const fte = useFteController();
   const { range, from, to, setFrom, setTo } = useClipEditor();
+
+  if (!fte) {
+    return null;
+  }
+
+  const countdownLength = fte.getGameStartTime();
+  const rangeInGameTime = range.map((v) => v - countdownLength);
 
   return (
     <div className="flex flex-wrap grow items-center md:justify-center space-x-1 gap-y-1">
@@ -86,7 +94,7 @@ const AdjustControls = () => {
       <AdjustRangeButton current={from} delta={1} onClick={setFrom} />
       <AdjustRangeButton current={from} delta={5} onClick={setFrom} />
       <div className="font-mono text-sm px-2">
-        {range.map(secondsToMinutesAndSeconds).join(" - ")}
+        {rangeInGameTime.map(formatElapsed).join(" - ")}
       </div>
       <AdjustRangeButton current={to} delta={-5} onClick={setTo} />
       <AdjustRangeButton current={to} delta={-1} onClick={setTo} />
