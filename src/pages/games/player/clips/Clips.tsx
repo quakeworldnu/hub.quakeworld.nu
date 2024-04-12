@@ -5,6 +5,8 @@ import { useClipEditor } from "./context.tsx";
 import { useFteController } from "../../fte/hooks.ts";
 import { btnPrimary, sizeLarge } from "../../ui/theme.ts";
 
+const DEFAULT_CLIP_LENGTH = 60;
+
 export const DisableClipEditorButton = () => {
   const { toggle } = useClipEditor();
 
@@ -31,7 +33,7 @@ export const EnableClipEditorButton = () => {
     }
 
     setRange([
-      Math.max(fte.getDemoElapsedTime() - 15, 0),
+      Math.max(fte.getDemoElapsedTime() - DEFAULT_CLIP_LENGTH, 0),
       fte.getDemoElapsedTime(),
     ]);
     setTrack(fte.isUsingAutotrack() ? "auto" : fte.getTrackUserid());
