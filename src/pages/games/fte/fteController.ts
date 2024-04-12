@@ -270,19 +270,25 @@ export class FteController {
   }
 
   track(userid: number | string) {
-    if (this.isUsingAutotrack()) {
-      this.disableAutotrack();
-    }
+    this.disableAutotrack();
     const userid_ = Number(userid);
     this._lastTrackUserId = userid_;
     this.command("track", userid_);
   }
 
   trackNext() {
-    this.disableAutotrack();
-    this.command("__track_next");
-    this.command("wait");
-    this._lastTrackUserId = this.getTrackUserid();
+    this._trackByDelta(1);
+  }
+
+  trackPrev() {
+    this._trackByDelta(-1);
+  }
+
+  _trackByDelta(delta: 1 | -1) {
+    const all_ids = this.module.getPlayerInfo().map((p) => p.id);
+    const current_index = all_ids.indexOf(this.getTrackUserid());
+    const new_index = (current_index + delta + all_ids.length) % all_ids.length;
+    this.track(all_ids[new_index]);
   }
 
   // volume
