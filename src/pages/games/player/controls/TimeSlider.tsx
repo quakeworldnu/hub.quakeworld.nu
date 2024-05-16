@@ -87,7 +87,6 @@ const SliderRoot = ({ max }: { max: number }) => {
       if (jump < 0) {
         return;
       }
-      console.log("#".repeat(24), "throttledJump");
       fte.demoJump(throttledJump);
     }
   }, [fte, throttledJump]);
