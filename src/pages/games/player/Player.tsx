@@ -1,24 +1,24 @@
+import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import { getDemo } from "../services/supabase/supabase";
 import { Timestamp } from "../Timestamp.tsx";
-import { Demo } from "../services/supabase/supabase.types.ts";
 import {
   getDemoDescription,
   getDemoDownloadUrl,
 } from "../services/supabase/demo.ts";
-import { FtePlayer } from "./FtePlayer.tsx";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
-import { EnableClipEditorButton } from "./clips/Clips.tsx";
-import { ClipControls } from "./clips/ClipControls.tsx";
-import { ClipEditorProvider, useClipEditor } from "./clips/context.tsx";
-import { ShareDemoButton } from "./Share.tsx";
+import { getDemo } from "../services/supabase/supabase";
+import type { Demo } from "../services/supabase/supabase.types.ts";
 import { btnSecondary, btnSuccess, sizeLarge } from "../ui/theme.ts";
+import { FtePlayer } from "./FtePlayer.tsx";
+import { ShareDemoButton } from "./Share.tsx";
 import { Shortcuts } from "./Shortcuts.tsx";
+import { ClipControls } from "./clips/ClipControls.tsx";
+import { EnableClipEditorButton } from "./clips/Clips.tsx";
+import { ClipEditorProvider, useClipEditor } from "./clips/context.tsx";
 
-import { Scoreboard } from "../browser/Scoreboard.tsx";
 import classNames from "classnames";
 import { useBoolean } from "usehooks-ts";
+import { Scoreboard } from "../browser/Scoreboard.tsx";
 import { getAssets } from "../fte/assets.ts";
 
 export const Player = ({ demoId }: { demoId: number }) => {

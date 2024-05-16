@@ -1,7 +1,7 @@
-import React from "react";
-import queryString from "query-string";
-import { useGetServerQuery } from "@qwhub/services/hub/hub";
 import { ServerBody } from "@qwhub/servers/Server";
+import { useGetServerQuery } from "@qwhub/services/hub/hub";
+import queryString from "query-string";
+import React from "react";
 
 export const App = () => {
   const { address = "" } = queryString.parse(location.search);

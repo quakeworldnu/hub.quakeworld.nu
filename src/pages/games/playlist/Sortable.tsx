@@ -1,15 +1,15 @@
 import {
-  closestCenter,
   DndContext,
-  DragEndEvent,
+  type DragEndEvent,
   MeasuringStrategy,
   PointerSensor,
+  closestCenter,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
 import {
-  arrayMove,
   SortableContext,
+  arrayMove,
   useSortable,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
@@ -19,10 +19,10 @@ import {
   restrictToVerticalAxis,
 } from "@dnd-kit/modifiers";
 import { CSS } from "@dnd-kit/utilities";
-import { ReactNode } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { Demo } from "../services/supabase/supabase.types.ts";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import type { ReactNode } from "react";
+import type { Demo } from "../services/supabase/supabase.types.ts";
 
 type SortableDemoItem = {
   id: number;

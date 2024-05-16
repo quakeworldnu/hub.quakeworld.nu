@@ -1,7 +1,7 @@
 import { faStopwatch, faStopwatch20 } from "@fortawesome/free-solid-svg-icons";
 
-import { IconToggleButton } from "./IconButton.tsx";
 import { useFteController, useFteUpdateOnEvent } from "../../fte/hooks.ts";
+import { IconToggleButton } from "./IconButton.tsx";
 
 const slow = 20;
 const normal = 100;

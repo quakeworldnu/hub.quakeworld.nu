@@ -1,14 +1,14 @@
-import { ChangeEvent, useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose, faCopy, faShare } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as Dialog from "@radix-ui/react-dialog";
-import { useFteController } from "../fte/hooks.ts";
-import { formatElapsed } from "../time.ts";
-import { useCopyToClipboard, useToggle } from "usehooks-ts";
-import { useCurrentDemoId } from "../playlist/hooks.ts";
-import { query } from "urlcat";
-import { toPlainText } from "../qwstrings.ts";
+import { type ChangeEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { query } from "urlcat";
+import { useCopyToClipboard, useToggle } from "usehooks-ts";
+import { useFteController } from "../fte/hooks.ts";
+import { useCurrentDemoId } from "../playlist/hooks.ts";
+import { toPlainText } from "../qwstrings.ts";
+import { formatElapsed } from "../time.ts";
 import { btnPrimary, sizeLarge, sizeSmall } from "../ui/theme.ts";
 
 export const ShareDemoButton = () => {
@@ -38,7 +38,7 @@ export const ShareDemoButton = () => {
       setIsUsingAutotrack(true);
       setTrackUserId(0);
     } else {
-      setTrackUserId(parseInt(e.target.value));
+      setTrackUserId(Number.parseInt(e.target.value));
       setIsUsingAutotrack(false);
     }
   }

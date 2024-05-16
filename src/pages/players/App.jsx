@@ -1,11 +1,11 @@
-import React from "react";
-import { SiteHeader } from "@qwhub/site/Header";
-import { SiteFooter } from "@qwhub/site/Footer";
-import { coloredQuakeName, QuakeText } from "@qwhub/QuakeText";
-import { ServerAddress } from "@qwhub/servers/Server";
-import { useSelector } from "react-redux";
+import { QuakeText, coloredQuakeName } from "@qwhub/QuakeText";
 import { selectFilteredClients, selectFilteredServers } from "@qwhub/selectors";
+import { ServerAddress } from "@qwhub/servers/Server";
 import { ServerPoller } from "@qwhub/servers/Servers";
+import { SiteFooter } from "@qwhub/site/Footer";
+import { SiteHeader } from "@qwhub/site/Header";
+import React from "react";
+import { useSelector } from "react-redux";
 
 export const App = () => {
   return (

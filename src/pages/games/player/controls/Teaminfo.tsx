@@ -1,8 +1,8 @@
-import { useUpdateInterval } from "../../hooks.ts";
-import { useFteController, useFteUpdateOnEvent } from "../../fte/hooks.ts";
 import classNames from "classnames";
+import { useFteController, useFteUpdateOnEvent } from "../../fte/hooks.ts";
+import type { ItemsInfo, PlayerInfo, TeamInfo } from "../../fte/types.ts";
+import { useUpdateInterval } from "../../hooks.ts";
 import { toColoredHtml } from "../../qwstrings.ts";
-import { ItemsInfo, PlayerInfo, TeamInfo } from "../../fte/types.ts";
 
 export const Teaminfo = ({ showTeams }: { showTeams: boolean }) => {
   useUpdateInterval(100);

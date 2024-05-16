@@ -1,5 +1,5 @@
-import SiteNavigation from "@qwhub/site/Navigation";
 import { FeaturedStreams } from "@qwhub/Streams";
+import SiteNavigation from "@qwhub/site/Navigation";
 import { SettingsDrawer } from "@qwhub/site/settings/ServerSettings.jsx";
 import classNames from "classnames";
 

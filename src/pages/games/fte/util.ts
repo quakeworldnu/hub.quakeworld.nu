@@ -1,4 +1,4 @@
-import { PlayerInfo } from "./types.ts";
+import type { PlayerInfo } from "./types.ts";
 
 export function getPlayersMajorityColor(players: PlayerInfo[]): {
   top_color: number;
@@ -32,7 +32,7 @@ export function getPlayersMajorityColor(players: PlayerInfo[]): {
 
   const [top_color, bottom_color] = majorityColorPair
     .split("-")
-    .map((x) => parseInt(x, 10));
+    .map((x) => Number.parseInt(x, 10));
 
   return { top_color, bottom_color };
 }

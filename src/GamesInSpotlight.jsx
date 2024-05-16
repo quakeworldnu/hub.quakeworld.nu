@@ -1,8 +1,8 @@
-import React from "react";
 import {
   useGetEventsQuery,
   useGetGamesInSpotlightQuery,
 } from "@qwhub/services/hub/hub";
+import React from "react";
 import { Heading } from "./Common";
 
 const LIMIT = 5;

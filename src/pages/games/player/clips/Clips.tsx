@@ -1,9 +1,9 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose, faScissors } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
-import { useClipEditor } from "./context.tsx";
 import { useFteController } from "../../fte/hooks.ts";
 import { btnPrimary, sizeLarge } from "../../ui/theme.ts";
+import { useClipEditor } from "./context.tsx";
 
 const DEFAULT_CLIP_LENGTH = 60;
 

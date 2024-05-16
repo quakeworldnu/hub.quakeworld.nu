@@ -1,11 +1,11 @@
-import { FormEvent, useEffect } from "react";
+import { faUsers } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import classNames from "classnames";
 import { useMutation, useQuery } from "convex/react";
+import { type FormEvent, useEffect } from "react";
 import { api } from "../../../convex/_generated/api";
 import type { GroupId, Message } from "../../../convex/schema.ts";
 import { useUser } from "./services/convex/hooks.ts";
-import classNames from "classnames";
-import { faUsers } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export function Chat() {
   const { user } = useUser();

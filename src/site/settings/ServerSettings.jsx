@@ -1,16 +1,16 @@
-import { useDispatch, useSelector } from "react-redux";
-import { Field, Form, Formik, useFormikContext } from "formik";
-import EZDrawer from "react-modern-drawer";
-import { setServerFilters, setShowSettings } from "@qwhub/settingsSlice";
 import {
   equalsDefaultFilters,
   getDefaultServerFilters,
   modes,
   regions,
 } from "@qwhub/serverFilters";
+import { setServerFilters, setShowSettings } from "@qwhub/settingsSlice";
+import { Field, Form, Formik, useFormikContext } from "formik";
+import EZDrawer from "react-modern-drawer";
+import { useDispatch, useSelector } from "react-redux";
 
-import classNames from "classnames";
 import { selectServerFilters } from "@qwhub/selectors";
+import classNames from "classnames";
 
 export const SettingsDrawer = () => {
   const showSettings = useSelector((state) => state.settings.ui.showSettings);

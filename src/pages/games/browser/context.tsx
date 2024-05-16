@@ -1,17 +1,17 @@
 import {
+  type ReactNode,
   createContext,
-  ReactNode,
   useContext,
   useEffect,
   useState,
 } from "react";
-import { Demo } from "../services/supabase/supabase.types.ts";
+import { useIsFirstRender } from "usehooks-ts";
 import {
   searchDemosCount,
   searchDemosRows,
 } from "../services/supabase/supabase.ts";
+import type { Demo } from "../services/supabase/supabase.types.ts";
 import { useDemoSettings } from "./settings/context.tsx";
-import { useIsFirstRender } from "usehooks-ts";
 
 type DemoContextProps = {
   demos: Demo[];

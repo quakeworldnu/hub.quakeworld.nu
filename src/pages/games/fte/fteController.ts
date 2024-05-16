@@ -1,13 +1,13 @@
+import { clamp } from "../math.ts";
 import {
   Autotrack,
   ControlSource,
-  DemoPlayback,
-  FTEC,
-  FteModule,
-  PlayerInfo,
-  TeamInfo,
+  type DemoPlayback,
+  type FTEC,
+  type FteModule,
+  type PlayerInfo,
+  type TeamInfo,
 } from "./types.ts";
-import { clamp } from "../math.ts";
 
 export function fteEvent(name: string, detail: object) {
   const event = new CustomEvent(`fte.${name}`, { detail });
@@ -233,7 +233,7 @@ export class FteController {
 
   setDemoSpeed(speed: number) {
     this._lastDemoSpeed = this._demoSpeed;
-    this._demoSpeed = parseFloat(`${speed}`);
+    this._demoSpeed = Number.parseFloat(`${speed}`);
     this.command("demo_setspeed", this._demoSpeed);
   }
 
@@ -349,7 +349,7 @@ export class FteController {
 
   setVolume(value: number | string) {
     this._lastVolume = this.getVolume();
-    this._volume = parseFloat(`${value}`);
+    this._volume = Number.parseFloat(`${value}`);
     this.command("volume", this.getVolume());
   }
 

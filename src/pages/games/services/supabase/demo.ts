@@ -1,4 +1,4 @@
-import { Demo, DemoParticipants } from "./supabase.types.ts";
+import type { Demo, DemoParticipants } from "./supabase.types.ts";
 
 const BASE_URL: string = import.meta.env.VITE_AWS_CLOUDFRONT_URL;
 

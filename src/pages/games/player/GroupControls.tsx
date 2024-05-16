@@ -1,7 +1,7 @@
-import { useFteController, useFteEventBySource } from "../fte/hooks.ts";
-import { useUser } from "../services/convex/hooks.ts";
 import { useEffect, useState } from "react";
 import { Debug } from "../Debug.tsx";
+import { useFteController, useFteEventBySource } from "../fte/hooks.ts";
+import { useUser } from "../services/convex/hooks.ts";
 
 export const GroupControls = () => {
   const fte = useFteController();

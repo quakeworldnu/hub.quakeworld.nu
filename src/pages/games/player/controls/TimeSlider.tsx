@@ -1,14 +1,14 @@
-import { useEffect, useRef, useState } from "react";
-import classNames from "classnames";
 import * as Slider from "@radix-ui/react-slider";
-import { useEventListener, useHover } from "usehooks-ts";
 import { useMouse, useThrottle } from "@uidotdev/usehooks";
-import { useUpdateInterval } from "../../hooks.ts";
+import classNames from "classnames";
+import { useEffect, useRef, useState } from "react";
+import { getTrackBackground } from "react-range";
+import { useEventListener, useHover } from "usehooks-ts";
 import { useFteController } from "../../fte/hooks.ts";
+import { useUpdateInterval } from "../../hooks.ts";
+import { useUrlClipParams } from "../../playlist/hooks.ts";
 import { formatElapsed } from "../../time.ts";
 import { useClipEditor } from "../clips/context.tsx";
-import { getTrackBackground } from "react-range";
-import { useUrlClipParams } from "../../playlist/hooks.ts";
 
 export function TimeSlider() {
   const fte = useFteController();
@@ -63,7 +63,7 @@ const SliderRoot = ({ max }: { max: number }) => {
   // keyboard shortcuts
   useEventListener(
     "keydown",
-    function (e: KeyboardEvent) {
+    (e: KeyboardEvent) => {
       if (!fte || fte.isConsoleOpen()) {
         return;
       }

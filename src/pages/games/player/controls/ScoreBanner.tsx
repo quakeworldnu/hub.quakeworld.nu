@@ -1,10 +1,10 @@
 import classNames from "classnames";
 import { useFteController } from "../../fte/hooks.ts";
+import type { TeamInfo } from "../../fte/types.ts";
+import { getPlayersMajorityColor } from "../../fte/util.ts";
 import { useUpdateInterval } from "../../hooks.ts";
-import { TeamInfo } from "../../fte/types.ts";
 import { toColoredHtml } from "../../qwstrings.ts";
 import { formatElapsed } from "../../time.ts";
-import { getPlayersMajorityColor } from "../../fte/util.ts";
 
 type ParticipantInfo = {
   name: string;

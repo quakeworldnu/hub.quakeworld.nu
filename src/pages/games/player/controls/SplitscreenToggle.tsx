@@ -1,6 +1,6 @@
 import { faColumns, faSquare } from "@fortawesome/free-solid-svg-icons";
-import { IconToggleButton } from "./IconButton.tsx";
 import { useFteController, useFteUpdateOnEvent } from "../../fte/hooks.ts";
+import { IconToggleButton } from "./IconButton.tsx";
 
 export const SplitscreenToggle = () => {
   useFteUpdateOnEvent("cl_splitscreen");

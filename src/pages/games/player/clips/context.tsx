@@ -1,6 +1,6 @@
-import { createContext, ReactNode, useContext, useState } from "react";
-import { useBoolean } from "usehooks-ts";
+import { type ReactNode, createContext, useContext, useState } from "react";
 import { query } from "urlcat";
+import { useBoolean } from "usehooks-ts";
 import { useCurrentDemoId } from "../../playlist/hooks.ts";
 
 type ClipEditorContextProps = {

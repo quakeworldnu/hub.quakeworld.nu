@@ -1,6 +1,6 @@
-import { memo } from "react";
+import { QuakeText, coloredQuakeName } from "@qwhub/QuakeText";
 import classNames from "classnames";
-import { coloredQuakeName, QuakeText } from "@qwhub/QuakeText";
+import { memo } from "react";
 import { ColoredFrags } from "./ColoredFrags";
 
 export const Scoreboard = ({

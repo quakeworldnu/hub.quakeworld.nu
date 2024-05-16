@@ -1,8 +1,8 @@
-import { useDemos } from "../context.tsx";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { usePlaylist } from "../../playlist/hooks.ts";
 import { btnSecondary, sizeSmall } from "../../ui/theme.ts";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { useDemos } from "../context.tsx";
 
 export const BulkActions = () => {
   const { demos, hasDemos } = useDemos();

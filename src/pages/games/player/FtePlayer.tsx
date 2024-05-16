@@ -1,13 +1,13 @@
 import classNames from "classnames";
 import { useIdleTimer } from "react-idle-timer";
-import { Controls } from "./Controls.tsx";
 import { useFteController, useFteLoader } from "../fte/hooks.ts";
-import { Demo } from "../services/supabase/supabase.types.ts";
+import type { FteAssets } from "../fte/types.ts";
+import type { Demo } from "../services/supabase/supabase.types.ts";
+import { Controls } from "./Controls.tsx";
 import { FteCanvas } from "./FteCanvas.tsx";
 import { useClipPlayback } from "./clips/hooks.ts";
-import { Teaminfo } from "./controls/Teaminfo.tsx";
 import { ScoreBanner } from "./controls/ScoreBanner.tsx";
-import { FteAssets } from "../fte/types.ts";
+import { Teaminfo } from "./controls/Teaminfo.tsx";
 
 export const FtePlayer = ({
   demo,

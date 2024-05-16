@@ -1,6 +1,6 @@
-import { Playlist } from "./playlist/Playlist.tsx";
 import { useState } from "react";
 import { useEventListener } from "./hooks.ts";
+import { Playlist } from "./playlist/Playlist.tsx";
 
 const minHeight = 480;
 

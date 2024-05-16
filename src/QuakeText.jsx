@@ -17,7 +17,7 @@ export const quakeTextToHtml = (text, color) => {
   let lastColor = "";
 
   for (let i = 0; i < text.length; ++i) {
-    let charColor = color[i];
+    const charColor = color[i];
 
     if (charColor !== lastColor) {
       if (i > 0) {
@@ -27,7 +27,7 @@ export const quakeTextToHtml = (text, color) => {
       result += `<span class="qw-color-${charColor}">`;
     }
 
-    let charValue = text[i];
+    const charValue = text[i];
 
     if (charValue === "<") {
       result += "&lt;";

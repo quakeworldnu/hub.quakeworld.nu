@@ -1,7 +1,7 @@
-import classNames from "classnames";
-import { SettingsToggleButton } from "@qwhub/site/settings/ServerSettings.jsx";
-import { useSelector } from "react-redux";
 import { selectFilteredServers } from "@qwhub/selectors";
+import { SettingsToggleButton } from "@qwhub/site/settings/ServerSettings.jsx";
+import classNames from "classnames";
+import { useSelector } from "react-redux";
 
 export default function SiteNavigation() {
   const servers = useSelector(selectFilteredServers);

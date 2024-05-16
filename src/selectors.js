@@ -1,5 +1,5 @@
-import { createSelector } from "@reduxjs/toolkit";
 import { filterServers } from "@qwhub/serverFilters";
+import { createSelector } from "@reduxjs/toolkit";
 
 export const selectServerFilters = (state) => state.settings.serverFilters;
 export const selectServers = (state) =>

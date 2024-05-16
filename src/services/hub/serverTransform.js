@@ -25,7 +25,7 @@ export const transformServer = (server) => {
 };
 
 const metaByServer = (server) => {
-  let spectator_names = server.spectator_names.concat(
+  const spectator_names = server.spectator_names.concat(
     server.qtv_stream.spectator_names,
   );
 
@@ -120,7 +120,7 @@ const supportsLastscores = (version) => {
       return false;
     }
     const parts = version.substring(0, "MVDSV 0.xx".length).split(" ");
-    const releaseNumber = parseFloat(parts[1]);
+    const releaseNumber = Number.parseFloat(parts[1]);
     const MIN_SUPPORTED_VERSION = 0.36;
     return releaseNumber >= MIN_SUPPORTED_VERSION;
   } catch (e) {

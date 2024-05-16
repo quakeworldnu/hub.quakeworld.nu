@@ -35,13 +35,13 @@ export function toPlainText(input: string) {
 
 export function toColoredHtml(
   input: string,
-  maxLength: number = 999,
-  keepNewLines: boolean = false,
+  maxLength = 999,
+  keepNewLines = false,
 ) {
   let str = "";
   let type = "normal";
 
-  const changeType = function (newType: string) {
+  const changeType = (newType: string) => {
     if (type !== newType) {
       if (type !== "normal") {
         str += "</span>";

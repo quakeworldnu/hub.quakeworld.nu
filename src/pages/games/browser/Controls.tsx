@@ -1,5 +1,5 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFloppyDisk, faPlay } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getDemoDownloadUrl } from "../services/supabase/demo.ts";
 
 export const PlayButton = ({ id }: { id: number }) => {

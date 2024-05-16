@@ -7,8 +7,8 @@ export const compareServers = (a, b) => {
   }
 
   // geo
-  let aIsInEurope = a.geo.region === "Europe";
-  let bIsInEurope = b.geo.region === "Europe";
+  const aIsInEurope = a.geo.region === "Europe";
+  const bIsInEurope = b.geo.region === "Europe";
   if (aIsInEurope && !bIsInEurope) {
     return -1;
   } else if (!aIsInEurope && bIsInEurope) {

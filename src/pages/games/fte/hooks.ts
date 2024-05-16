@@ -1,9 +1,9 @@
-import { useCounter, useEffectOnce, useInterval, useScript } from "usehooks-ts";
 import { useState } from "react";
+import { useCounter, useEffectOnce, useInterval, useScript } from "usehooks-ts";
+import { useEventListener } from "../hooks.ts";
 import { fteAsset } from "./assets.ts";
 import { FteController } from "./fteController.ts";
-import { FteAssets, FteModule, FtePreloadModule } from "./types.ts";
-import { useEventListener } from "../hooks.ts";
+import type { FteAssets, FteModule, FtePreloadModule } from "./types.ts";
 
 declare global {
   interface Window {
@@ -27,7 +27,7 @@ export function useFteLoader({
     window.Module = {
       canvas: document.getElementById("fteCanvas") as HTMLCanvasElement,
       files: assets,
-      setStatus: function (value) {
+      setStatus: (value) => {
         const assetRe = value.match(/.+ \((\d+)\/(\d+)\)/);
         const isLoadedAsset =
           assetRe && assetRe.length === 3 && assetRe[1] === assetRe[2];

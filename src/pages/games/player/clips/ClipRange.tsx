@@ -1,11 +1,11 @@
-import { getTrackBackground, Range } from "react-range";
-import classNames from "classnames";
-import { formatElapsed } from "../../time.ts";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGripLinesVertical } from "@fortawesome/free-solid-svg-icons";
-import { useClipEditor } from "./context.tsx";
-import { useFteController } from "../../fte/hooks.ts";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import classNames from "classnames";
 import { useState } from "react";
+import { Range, getTrackBackground } from "react-range";
+import { useFteController } from "../../fte/hooks.ts";
+import { formatElapsed } from "../../time.ts";
+import { useClipEditor } from "./context.tsx";
 
 export const ClipRange = () => {
   const fte = useFteController();

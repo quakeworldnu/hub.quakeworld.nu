@@ -1,4 +1,4 @@
-import { FteAssets } from "./types.ts";
+import type { FteAssets } from "./types.ts";
 
 const FTE_ASSETS_URL =
   "https://raw.githubusercontent.com/vikpe/fte-web-assets/main";

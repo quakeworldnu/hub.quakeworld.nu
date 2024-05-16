@@ -1,5 +1,5 @@
-import { useDemoScoreSpoiler } from "./hooks.ts";
 import classNames from "classnames";
+import { useDemoScoreSpoiler } from "./hooks.ts";
 
 export const ScoreSpoiler = ({ score }: { score: string }) => {
   const { isVisible, show } = useDemoScoreSpoiler();
