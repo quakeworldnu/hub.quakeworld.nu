@@ -52,7 +52,7 @@ export const Lastscores = ({ address, onClose }) => {
                   <th className="p-1 text-center" width={1}>
                     scores
                   </th>
-                  <th></th>
+                  <th />
                 </tr>
               </thead>
               <tbody>

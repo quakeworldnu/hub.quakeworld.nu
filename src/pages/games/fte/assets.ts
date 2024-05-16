@@ -20,7 +20,7 @@ export function getAssets(demoUrl: string, mapName: string): FteAssets {
 }
 
 function getDemoMountPath(demoFilename: string): string {
-  let mountPath;
+  let mountPath: string;
 
   if (demoFilename.endsWith(".gz")) {
     mountPath = "qw/match.mvd.gz";
@@ -34,8 +34,8 @@ function getDemoMountPath(demoFilename: string): string {
 }
 
 function getMapAssets(mapName: string): FteAssets {
-  const targetMapBsp = "id1/maps/" + mapName + ".bsp";
-  const targetMapLit = "id1/maps/" + mapName + ".lit";
+  const targetMapBsp = `id1/maps/${mapName}.bsp`;
+  const targetMapLit = `id1/maps/${mapName}.lit`;
   const mapUrl = `${GENERIC_ASSETS_URL}/maps/${mapName}/${mapName}`;
   return {
     [targetMapBsp]: `${mapUrl}.bsp`,

@@ -61,7 +61,8 @@ function useEndTime(): number | null {
 
   if (clipEditorIsEnabled) {
     return editorTo;
-  } else if (hasParams) {
+  }
+  if (hasParams) {
     return urlTo;
   }
 

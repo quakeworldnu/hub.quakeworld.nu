@@ -23,9 +23,9 @@ export const hubApi = createApi({
       query: (query = "") =>
         query ? `servers/mvdsv?${query}` : "servers/mvdsv",
       transformResponse: (servers) => {
-        servers = servers.map(transformServer);
-        servers.sort(compareServers);
-        return servers;
+        const servers_ = servers.map(transformServer);
+        servers_.sort(compareServers);
+        return servers_;
       },
     }),
     getStreams: build.query({

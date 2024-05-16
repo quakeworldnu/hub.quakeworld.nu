@@ -31,7 +31,8 @@ function useSeekEndTime(): number {
 
   if (editorIsEnabled) {
     return editorTo;
-  } else if (hasUrlParams) {
+  }
+  if (hasUrlParams) {
     return urlTo;
   }
   return 9999;

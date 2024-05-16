@@ -6,7 +6,8 @@ export function getPlayersMajorityColor(players: PlayerInfo[]): {
 } {
   if (players.length === 0) {
     return { top_color: 0, bottom_color: 0 };
-  } else if (players.length === 1) {
+  }
+  if (players.length === 1) {
     return {
       top_color: players[0].top_color,
       bottom_color: players[0].bottom_color,

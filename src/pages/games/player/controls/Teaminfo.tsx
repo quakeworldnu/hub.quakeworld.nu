@@ -36,7 +36,7 @@ export const Teaminfo = ({ showTeams }: { showTeams: boolean }) => {
               <div
                 className="font-bold"
                 dangerouslySetInnerHTML={{ __html: toColoredHtml(t.name) }}
-              ></div>
+              />
               {gameHasStarted && (
                 <div className="font-mono text-sm">{t.frags}</div>
               )}

@@ -34,9 +34,9 @@ const metaByServer = (server) => {
   if ("hostname" in server.settings) {
     if (
       "hostname_parsed" in server.settings &&
-      server.settings["hostname_parsed"] !== server.address
+      server.settings.hostname_parsed !== server.address
     ) {
-      addressTitle = server.settings["hostname_parsed"];
+      addressTitle = server.settings.hostname_parsed;
     } else {
       addressTitle = stripNonAscii(server.settings.hostname)
         .trim()
@@ -60,7 +60,7 @@ const metaByServer = (server) => {
     isStandBy: !isStarted,
     addressTitle,
     spectatorText,
-    mapName: server.settings["map"],
+    mapName: server.settings.map,
     matchtag: showMatchTag ? server.settings.matchtag : "",
     supportsLastscores: supportsLastscores(server.settings["*version"]),
   };

@@ -32,9 +32,9 @@ function useSeekStartTime(): number {
 
   if (editorFrom > 0) {
     return editorFrom;
-  } else if (urlFrom > 0) {
-    return urlFrom;
-  } else {
-    return 0;
   }
+  if (urlFrom > 0) {
+    return urlFrom;
+  }
+  return 0;
 }

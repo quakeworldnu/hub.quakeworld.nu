@@ -87,7 +87,8 @@ export const ServerBody = (props) => {
         onClose={() => setView(VIEWS.Scoreboard)}
       />
     );
-  } else if (view === VIEWS.Scoreboard) {
+  }
+  if (view === VIEWS.Scoreboard) {
     return (
       <Mapshot map={serverMeta.mapName}>
         <div className="flex flex-col h-full group py-4 min-h-[96px] sm:min-h-[200px] bg-gray-700/20">

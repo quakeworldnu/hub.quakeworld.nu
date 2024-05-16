@@ -41,7 +41,7 @@ export function TimeSlider() {
           "absolute bottom-24 text-xs font-mono px-2 py-1 bg-violet-800 text-white rounded",
         )}
         ref={tooltipRef}
-      ></div>
+      />
       <div className="w-full" ref={sliderWrapperRef}>
         <div ref={sliderRootRef}>
           <SliderRoot max={maxValue} />
@@ -134,7 +134,7 @@ const SliderRoot = ({ max }: { max: number }) => {
             max,
           }),
         }}
-      ></div>
+      />
 
       <Slider.Track
         className={classNames(

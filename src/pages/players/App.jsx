@@ -39,13 +39,17 @@ const PlayerTable = () => {
             <th className="w-48">Name</th>
             <th className="w-28 hidden md:table-cell">Status</th>
             <th className="min-w-[160px]">Server</th>
-            <th className="min-w-[160px] hidden sm:table-cell"></th>
-            <th></th>
+            <th className="min-w-[160px] hidden sm:table-cell" />
+            <th />
           </tr>
         </thead>
         <tbody>
           {clients.map((client) => (
-            <ClientRow client={client} server={serversObj[client.address]} />
+            <ClientRow
+              key={`${client.name}-${client.name_color}`}
+              client={client}
+              server={serversObj[client.address]}
+            />
           ))}
         </tbody>
       </table>

@@ -57,9 +57,7 @@ export const Playlist = () => {
         {isEmpty && (
           <div className="p-4 text-slate-400">Playlist is empty..</div>
         )}
-        {!isEmpty && (
-          <>{isEditing ? <EditablePlaylist /> : <ReadOnlyPlaylist />}</>
-        )}
+        {!isEmpty && (isEditing ? <EditablePlaylist /> : <ReadOnlyPlaylist />)}
       </div>
     </div>
   );

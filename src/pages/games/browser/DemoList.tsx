@@ -17,7 +17,7 @@ export const DemoList = ({ demos }: { demos: Demo[] | null }) => {
           <th className="p-2">Map</th>
           <th className="p-2">Title</th>
           <th className="p-2">Score</th>
-          <th className="p-2"></th>
+          <th className="p-2" />
         </tr>
       </thead>
       <tbody className="text-sm">

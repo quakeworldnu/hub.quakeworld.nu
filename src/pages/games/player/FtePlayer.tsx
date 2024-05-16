@@ -48,7 +48,9 @@ export const FtePlayer = ({
             </div>
 
             <div
-              className={`absolute hidden sm:flex scale-50 lg:scale-75 xl:scale-100 origin-bottom-right right-[6%] bottom-24 justify-center`}
+              className={
+                "absolute hidden sm:flex scale-50 lg:scale-75 xl:scale-100 origin-bottom-right right-[6%] bottom-24 justify-center"
+              }
             >
               <Teaminfo showTeams={isTeamplay} />
             </div>
@@ -93,7 +95,7 @@ export const FtePlayer = ({
             </svg>
             <div className="animate-pulse text-gray-400">
               {isLoadingAssets && <>Loading assets ({assetStatus.progress}%)</>}
-              {isInitializing && <>Initializing..</>}
+              {isInitializing && "Initializing.."}
             </div>
           </div>
         </div>

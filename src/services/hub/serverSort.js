@@ -2,7 +2,8 @@ export const compareServers = (a, b) => {
   // score
   if (a.score > b.score) {
     return -1;
-  } else if (a.score < b.score) {
+  }
+  if (a.score < b.score) {
     return 1;
   }
 
@@ -11,14 +12,16 @@ export const compareServers = (a, b) => {
   const bIsInEurope = b.geo.region === "Europe";
   if (aIsInEurope && !bIsInEurope) {
     return -1;
-  } else if (!aIsInEurope && bIsInEurope) {
+  }
+  if (!aIsInEurope && bIsInEurope) {
     return 1;
   }
 
   // address
   if (a.address < b.address) {
     return -1;
-  } else if (a.address > b.address) {
+  }
+  if (a.address > b.address) {
     return 1;
   }
 

@@ -29,6 +29,7 @@ export default function Events() {
                     src={e.logo_url}
                     width={18}
                     height={18}
+                    alt=""
                     className="inline mr-1"
                   />{" "}
                   {e.title}

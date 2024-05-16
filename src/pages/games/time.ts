@@ -8,11 +8,10 @@ export function secondsToMinutesAndSeconds(seconds: number): string {
 export function formatDuration(elapsed: number, total: number): string {
   if (elapsed < 0) {
     return `Countdown: ${-Math.floor(elapsed)}`;
-  } else {
-    const elapsedStr = secondsToMinutesAndSeconds(elapsed);
-    const totalStr = secondsToMinutesAndSeconds(total);
-    return `${elapsedStr} / ${totalStr}`;
   }
+  const elapsedStr = secondsToMinutesAndSeconds(elapsed);
+  const totalStr = secondsToMinutesAndSeconds(total);
+  return `${elapsedStr} / ${totalStr}`;
 }
 
 export function formatElapsed(elapsed: number): string {

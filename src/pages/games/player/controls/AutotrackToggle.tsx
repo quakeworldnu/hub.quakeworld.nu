@@ -6,7 +6,7 @@ export const AutotrackToggle = () => {
   useFteUpdateOnEvent("cl_autotrack");
 
   function handleClick() {
-    fte && fte.toggleAutotrack();
+    fte?.toggleAutotrack();
   }
 
   if (!fte) {

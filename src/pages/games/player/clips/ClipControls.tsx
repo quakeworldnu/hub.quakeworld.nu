@@ -50,7 +50,7 @@ export const ClipControls = () => {
       </div>
 
       <div className="flex flex-wrap justify-between my-3 gap-3">
-        <div className="hidden md:block w-32"></div>
+        <div className="hidden md:block w-32" />
         <AdjustControls />
         <div className="text-right">
           <CopyLinkButton />

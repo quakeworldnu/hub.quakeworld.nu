@@ -54,7 +54,7 @@ const TeamRow = memo((props) => {
         <ColoredFrags frags={frags} colors={colors} />
       </div>
       <TeamName name={name} name_color={name_color} />
-      <div></div>
+      <div />
     </div>
   );
 });

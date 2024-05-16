@@ -47,7 +47,7 @@ export function toColoredHtml(
         str += "</span>";
       }
       if (newType !== "normal") {
-        str += '<span class="qw-color-' + newType.toLowerCase() + '">';
+        str += `<span class="qw-color-${newType.toLowerCase()}">`;
       }
       type = newType;
     }

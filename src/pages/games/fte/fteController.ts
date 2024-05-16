@@ -79,7 +79,7 @@ export class FteController {
       window.FTEC.cbufadd(`${commandStr}\n`);
       this.dispatchEvent(command, { value });
     } catch (e) {
-      console.log("fte command error: " + e);
+      console.log(`fte command error: ${e}`);
     }
   }
 
@@ -136,7 +136,7 @@ export class FteController {
     const players = this.getPlayers();
     const teams: TeamInfo[] = [];
 
-    players.forEach((player) => {
+    for (const player of players) {
       const team = teams.find((team) => team.name === player.team);
 
       if (team) {
@@ -149,11 +149,11 @@ export class FteController {
           players: [player],
         });
       }
-    });
+    }
 
-    teams.forEach((team) => {
+    for (const team of teams) {
       team.players.sort((a, b) => a.name.localeCompare(b.name));
-    });
+    }
 
     return teams;
   }
