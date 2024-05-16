@@ -2,11 +2,10 @@ import { clamp } from "../math.ts";
 import {
   Autotrack,
   ControlSource,
-  type DemoPlayback,
-  type FTEC,
-  type FteModule,
-  type PlayerInfo,
-  type TeamInfo,
+  DemoPlayback,
+  FTEC,
+  FteModule,
+  Player,
 } from "./types.ts";
 
 export function fteEvent(name: string, detail: object) {
@@ -89,7 +88,9 @@ export class FteController {
 
   getDemoElapsedTime(): number {
     try {
-      return this.module.getDemoElapsedTime();
+      const state = this.module.getClientState();
+      const elapsed = state.gametime - state.matchgametimestart;
+      return elapsed + 10;
     } catch (e) {
       return 0;
     }
@@ -115,53 +116,38 @@ export class FteController {
     return this.getDemoTotalTime() - this.getGameStartTime();
   }
 
-  getPlayers(): PlayerInfo[] {
+  getPlayers(): Player[] {
     try {
-      const players = this.module.getPlayerInfo();
-      players.sort((a, b) => a.name.localeCompare(b.name));
+      const players: Player[] = [];
+
+      try {
+        const clientState = this.module.getClientState();
+
+        for (let i = 0; i < clientState.allocated_client_slots; i++) {
+          const player = clientState.getPlayer(i);
+
+          if (player.spectator !== 0 || "" === player.getNamePlain()) {
+            continue;
+          }
+
+          players.push(player);
+        }
+      } catch (e) {
+        //
+      }
+      players.sort((a, b) => a.getNamePlain().localeCompare(b.getNamePlain()));
       return players;
     } catch (e) {
       return [];
     }
   }
 
-  // getTrackedPlayer(): PlayerInfo | null {
-  //   const userid = this.getTrackUserid();
-  //   const players = this.module.getPlayerInfo();
-  //   const player = players.find((player) => player.id === userid);
-  //   return player || null;
-  // }
-
-  getTeams(): TeamInfo[] {
-    const players = this.getPlayers();
-    const teams: TeamInfo[] = [];
-
-    for (const player of players) {
-      const team = teams.find((team) => team.name === player.team);
-
-      if (team) {
-        team.players.push(player);
-        team.frags += player.frags;
-      } else {
-        teams.push({
-          name: player.team,
-          frags: player.frags,
-          players: [player],
-        });
-      }
-    }
-
-    for (const team of teams) {
-      team.players.sort((a, b) => a.name.localeCompare(b.name));
-    }
-
-    return teams;
-  }
-
   getTrackUserid() {
     try {
-      const seatIndex = 0; // index of screen in splitscreen
-      return this.module.getTrackUserid(seatIndex);
+      // const seatIndex = 0; // index of screen in splitscreen
+      // todo: fix
+      //  return this.module.getTrackUserid(seatIndex);
+      return 0;
     } catch (e) {
       return -1;
     }
@@ -307,7 +293,7 @@ export class FteController {
   }
 
   _trackByDelta(delta: 1 | -1) {
-    const all_ids = this.module.getPlayerInfo().map((p) => p.id);
+    const all_ids = this.getPlayers().map((p) => p.userid);
     const current_index = all_ids.indexOf(this.getTrackUserid());
     const new_index = (current_index + delta + all_ids.length) % all_ids.length;
     this.track(all_ids[new_index]);

@@ -1,4 +1,11 @@
-import type { PlayerInfo } from "./types.ts";
+export type PlayerInfo = {
+  id: number;
+  name: string;
+  team: string;
+  frags: number;
+  top_color: number;
+  bottom_color: number;
+};
 
 export function getPlayersMajorityColor(players: PlayerInfo[]): {
   top_color: number;

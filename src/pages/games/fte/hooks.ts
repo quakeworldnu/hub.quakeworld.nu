@@ -41,7 +41,7 @@ export function useFteLoader({
 
   useInterval(
     () => {
-      if (!fte && (window.Module as FteModule).getPlayerInfo) {
+      if (!fte && (window.Module as FteModule).getClientState) {
         const instance = FteController.createInstace(
           window.Module as FteModule,
           demoTotalTime,

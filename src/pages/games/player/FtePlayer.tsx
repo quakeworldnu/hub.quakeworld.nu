@@ -6,8 +6,6 @@ import type { Demo } from "../services/supabase/supabase.types.ts";
 import { Controls } from "./Controls.tsx";
 import { FteCanvas } from "./FteCanvas.tsx";
 import { useClipPlayback } from "./clips/hooks.ts";
-import { ScoreBanner } from "./controls/ScoreBanner.tsx";
-import { Teaminfo } from "./controls/Teaminfo.tsx";
 
 export const FtePlayer = ({
   demo,
@@ -31,8 +29,6 @@ export const FtePlayer = ({
     timeout: 2500,
   });
 
-  const isTeamplay = !["1on1"].includes(demo.mode);
-
   return (
     <div
       id="ftePlayer"
@@ -40,24 +36,7 @@ export const FtePlayer = ({
     >
       <div id="FullscreenContent">
         <FteCanvas />
-
-        {fte && (
-          <>
-            <div className={"absolute w-full pt-[2%]"}>
-              <ScoreBanner isTeamplay={isTeamplay} />
-            </div>
-
-            <div
-              className={
-                "absolute hidden sm:flex scale-50 lg:scale-75 xl:scale-100 origin-bottom-right right-[6%] bottom-24 justify-center"
-              }
-            >
-              <Teaminfo showTeams={isTeamplay} />
-            </div>
-          </>
-        )}
       </div>
-
       <div
         className={classNames(
           "absolute z-30 w-full h-full bg-black transition-opacity duration-700 pointer-events-none bg-cover",

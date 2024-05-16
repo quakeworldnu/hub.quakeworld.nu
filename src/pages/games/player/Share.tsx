@@ -7,7 +7,6 @@ import { query } from "urlcat";
 import { useCopyToClipboard, useToggle } from "usehooks-ts";
 import { useFteController } from "../fte/hooks.ts";
 import { useCurrentDemoId } from "../playlist/hooks.ts";
-import { toPlainText } from "../qwstrings.ts";
 import { formatElapsed } from "../time.ts";
 import { btnPrimary, sizeLarge, sizeSmall } from "../ui/theme.ts";
 
@@ -137,8 +136,8 @@ export const ShareDemoButton = () => {
                 >
                   <option value="auto">Autotrack</option>
                   {fte.getPlayers().map((player) => (
-                    <option key={player.id} value={player.id}>
-                      {toPlainText(player.name)}
+                    <option key={player.userid} value={player.userid}>
+                      {player.getNamePlain()}
                     </option>
                   ))}
                 </select>
