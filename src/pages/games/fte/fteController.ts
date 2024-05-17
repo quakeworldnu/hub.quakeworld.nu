@@ -1,6 +1,7 @@
 import { clamp } from "../math.ts";
 import {
   Autotrack,
+  ClientState,
   ControlSource,
   DemoPlayback,
   FTEC,
@@ -36,7 +37,6 @@ export class FteController {
     timeout: ReturnType<typeof setTimeout> | null;
   } = { demoTime: 0, timeout: null };
   private _demoSpeed = 100;
-  private _splitscreen = 0;
   private _autotrack: string = Autotrack.ON;
   private _consoleIsOpen = false;
 
@@ -87,9 +87,13 @@ export class FteController {
     fteEvent(name, { ...detail, source: this._controlSource });
   }
 
+  getClientState(): ClientState {
+    return this.module.getClientState();
+  }
+
   getDemoElapsedTime(): number {
     try {
-      const state = this.module.getClientState();
+      const state = this.getClientState();
       const elapsed = state.gametime - state.matchgametimestart;
       return elapsed + 10;
     } catch (e) {
@@ -122,7 +126,7 @@ export class FteController {
       const players: Player[] = [];
 
       try {
-        const clientState = this.module.getClientState();
+        const clientState = this.getClientState();
 
         for (let i = 0; i < clientState.allocated_client_slots; i++) {
           const player = clientState.getPlayer(i);
