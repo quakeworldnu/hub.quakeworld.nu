@@ -63,7 +63,6 @@ export class FteController {
       return FteController._instance;
     }
 
-    console.log("#################### FteController.new");
     this._module = module;
     this._lastVolume = this.getVolume();
 
@@ -407,7 +406,6 @@ export class FteController {
 
     // speed
     if (playback.demo_setspeed !== this.getDemoSpeed()) {
-      console.log("### set speed", playback.demo_setspeed);
       this.setDemoSpeed(playback.demo_setspeed);
     }
 
@@ -416,7 +414,6 @@ export class FteController {
     const shouldDemoJump = timeDelta > 3;
 
     if (shouldDemoJump) {
-      console.log("### demo jump", playback.demo_jump);
       this.demoJump(playback.demo_jump);
     }
 
