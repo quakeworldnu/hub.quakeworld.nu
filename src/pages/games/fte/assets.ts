@@ -198,11 +198,13 @@ function getStreambotAssets(): FteAssets {
     "textures/models/armor.mdl_0.jpg",
     "textures/models/armor.mdl_1.jpg",
     "textures/models/armor.mdl_2.jpg",
+    /*
     "textures/models/g_light.mdl_0.jpg",
     "textures/models/g_nail2.mdl_0.jpg",
     "textures/models/g_rock.mdl_0.jpg",
     "textures/models/g_rock2.mdl_0.jpg",
     "textures/models/g_shot.mdl_0.jpg",
+    */
     "textures/models/quaddama.mdl_0.png",
     /*
     "textures/models/v_light.mdl_0.jpg",
