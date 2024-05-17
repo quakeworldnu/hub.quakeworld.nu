@@ -1,5 +1,6 @@
 import { getMapTextures } from "./map_textures.ts";
 import type { FteAssets } from "./types.ts";
+import { idMaps } from "./idMaps.ts";
 
 const FTE_ASSETS_URL =
   "https://raw.githubusercontent.com/vikpe/fte-web-assets/main";
@@ -38,11 +39,14 @@ function getDemoMountPath(demoFilename: string): string {
 }
 
 function getMapAssets(mapName: string): FteAssets {
-  const mapUrl = `${GENERIC_ASSETS_URL}/maps/${mapName}/${mapName}`;
+  const mapDir = idMaps.includes(mapName) ? "maps_id1_gpl" : "maps";
+  const mapBaseUrl = `${GENERIC_ASSETS_URL}/${mapDir}/${mapName}/${mapName}`;
+  const locUrl = `${GENERIC_ASSETS_URL}/maps/${mapName}/${mapName}.loc`;
+
   return {
-    [`id1/maps/${mapName}.bsp`]: `${mapUrl}.bsp`,
-    [`id1/maps/${mapName}.lit`]: `${mapUrl}.lit`,
-    [`id1/locs/${mapName}.loc`]: `${mapUrl}.loc`,
+    [`id1/maps/${mapName}.bsp`]: `${mapBaseUrl}.bsp`,
+    [`id1/maps/${mapName}.lit`]: `${mapBaseUrl}.lit`,
+    [`id1/locs/${mapName}.loc`]: locUrl,
     ...getMapTextures(mapName),
   };
 }
@@ -55,17 +59,16 @@ function getStreambotAssets(): FteAssets {
     "skins/team.jpg",
     "skins/red.jpg",
     "skins/blue.jpg",
-
-    "gfx/sb_nails.png",
-    "gfx/sb_quad.png",
-    "gfx/sb_rocket.png",
-    "gfx/sb_shells.png",
     "gfx/sb_armor1.png",
     "gfx/sb_armor2.png",
     "gfx/sb_armor3.png",
     "gfx/sb_cells.png",
     "gfx/sb_invis.png",
     "gfx/sb_invuln.png",
+    "gfx/sb_nails.png",
+    "gfx/sb_quad.png",
+    "gfx/sb_rocket.png",
+    "gfx/sb_shells.png",
     "gfx/anum_0.png",
     "gfx/anum_1.png",
     "gfx/anum_2.png",
@@ -505,19 +508,19 @@ function getGeneralAssets(): FteAssets {
     "id1/textures/particles/v_shot2_flash.png",
     "id1/textures/sfx/quad.png",
     "id1/textures/#teleport.png",
-    "id1/textures/wad/inv_nails.png",
-    "id1/textures/wad/inv_rocket.png",
-    "id1/textures/wad/inv_shells.png",
-    "id1/textures/wad/sba1_key1.png",
-    "id1/textures/wad/sba1_key2.png",
-    "id1/textures/wad/sba2_key1.png",
-    "id1/textures/wad/sba2_key2.png",
-    "id1/textures/wad/sba3_key1.png",
-    "id1/textures/wad/sba3_key2.png",
-    "id1/textures/wad/sba4_key1.png",
-    "id1/textures/wad/sba4_key2.png",
-    "id1/textures/wad/sba5_key1.png",
-    "id1/textures/wad/sba5_key2.png",
+    "id1/gfx/inv_nails.png",
+    "id1/gfx/inv_rocket.png",
+    "id1/gfx/inv_shells.png",
+    "id1/gfx/sba1_key1.png",
+    "id1/gfx/sba1_key2.png",
+    "id1/gfx/sba2_key1.png",
+    "id1/gfx/sba2_key2.png",
+    "id1/gfx/sba3_key1.png",
+    "id1/gfx/sba3_key2.png",
+    "id1/gfx/sba4_key1.png",
+    "id1/gfx/sba4_key2.png",
+    "id1/gfx/sba5_key1.png",
+    "id1/gfx/sba5_key2.png",
   ];
 
   const assets: FteAssets = {
@@ -526,7 +529,8 @@ function getGeneralAssets(): FteAssets {
   };
 
   for (const path of filePaths) {
-    assets[path] = `${FTE_ASSETS_URL}/${path.replace("#", "%23")}`;
+    const sourcePath = path.replace("id1/gfx/", "id1/textures/wad/");
+    assets[path] = `${FTE_ASSETS_URL}/${sourcePath.replace("#", "%23")}`;
   }
 
   return assets;
