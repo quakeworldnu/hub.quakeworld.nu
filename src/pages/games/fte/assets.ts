@@ -270,7 +270,6 @@ function getGeneralAssets(): FteAssets {
     "default.fmf",
     "qw/fragfile.dat",
     "ctf/fragfile.dat",
-    "id1/gfx/ranking.png",
     "id1/gfx.wad",
     "id1/maps/b_batt0.bsp",
     "id1/maps/b_batt1.bsp",
