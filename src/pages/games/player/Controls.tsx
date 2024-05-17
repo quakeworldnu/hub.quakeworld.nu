@@ -9,7 +9,6 @@ import { PlayToggle } from "./controls/PlayToggle.tsx";
 import { SeekToEndButton } from "./controls/SeekToEndButton.tsx";
 import { SeekToStartButton } from "./controls/SeekToStartButton.tsx";
 import { SlowmotionToggle } from "./controls/SlowmotionToggle.tsx";
-import { SplitscreenToggle } from "./controls/SplitscreenToggle.tsx";
 import { TimeSlider } from "./controls/TimeSlider.tsx";
 import { Volume } from "./controls/Volume.tsx";
 
@@ -51,7 +50,6 @@ export const Controls = () => {
       <div className="hidden sm:flex w-1/3 space-x-2 items-center justify-end mb-2 ">
         <AutotrackToggle />
         <SlowmotionToggle />
-        <SplitscreenToggle />
         <FullscreenToggle />
       </div>
     </div>

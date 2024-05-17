@@ -112,7 +112,6 @@ export type DemoPlayback = {
   demo_jump: number;
   demo_setspeed: number;
   cl_autotrack: Autotrack | string;
-  cl_splitscreen: number;
   track: number;
 };
 

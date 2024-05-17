@@ -339,24 +339,6 @@ export class FteController {
     this.command("volume", this.getVolume());
   }
 
-  // split screen
-  getSplitScreen() {
-    return this._splitscreen;
-  }
-
-  toggleSplitscreen() {
-    this.setSplitscreen(this.getSplitScreen() === 0 ? 1 : 0);
-  }
-
-  setSplitscreen(value: 0 | 1) {
-    this._splitscreen = value;
-    this.command("cl_splitscreen", this.getSplitScreen());
-
-    if (this.getSplitScreen() > 0 && this.isPaused()) {
-      this.command("demo_nudge 1");
-    }
-  }
-
   // console
   toggleConsole() {
     this.command("toggleconsole");
