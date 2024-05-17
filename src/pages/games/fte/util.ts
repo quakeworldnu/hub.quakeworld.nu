@@ -1,28 +1,21 @@
-export type PlayerInfo = {
-  id: number;
-  name: string;
-  team: string;
-  frags: number;
-  top_color: number;
-  bottom_color: number;
-};
+import { Player } from "./types.ts";
 
-export function getPlayersMajorityColor(players: PlayerInfo[]): {
-  top_color: number;
-  bottom_color: number;
+export function getPlayersMajorityColor(players: Player[]): {
+  topcolor: number;
+  bottomcolor: number;
 } {
   if (players.length === 0) {
-    return { top_color: 0, bottom_color: 0 };
+    return { topcolor: 0, bottomcolor: 0 };
   }
   if (players.length === 1) {
     return {
-      top_color: players[0].top_color,
-      bottom_color: players[0].bottom_color,
+      topcolor: players[0].topcolor,
+      bottomcolor: players[0].bottomcolor,
     };
   }
 
   const colorPairs = players.map(
-    (p: PlayerInfo) => `${p.top_color}-${p.bottom_color}`,
+    (p: Player) => `${p.topcolor}-${p.bottomcolor}`,
   );
   const countPerPair: { [key: string]: number } = {};
 
@@ -38,9 +31,9 @@ export function getPlayersMajorityColor(players: PlayerInfo[]): {
     countPerPair[a] >= countPerPair[b] ? a : b,
   );
 
-  const [top_color, bottom_color] = majorityColorPair
+  const [topcolor, bottomcolor] = majorityColorPair
     .split("-")
     .map((x) => Number.parseInt(x, 10));
 
-  return { top_color, bottom_color };
+  return { topcolor, bottomcolor };
 }

@@ -9,8 +9,8 @@ import { Player } from "../../fte/types.ts";
 type Participant = {
   name: number[];
   frags: number;
-  // top_color: number;
-  // bottom_color: number;
+  topcolor: number;
+  bottomcolor: number;
 };
 
 function playerToParticipant(player: Player): Participant {
@@ -19,8 +19,8 @@ function playerToParticipant(player: Player): Participant {
   return {
     name: player.getName(),
     frags: player.frags,
-    // top_color: 0, // todo: fix
-    // bottom_color: 0, // todo: fix
+    topcolor: player.topcolor,
+    bottomcolor: player.bottomcolor,
   };
 }
 
@@ -84,8 +84,7 @@ const Participant = ({
       </div>
       <div
         className={classNames(
-          /*`qw-bgcolor-${participant.top_color}-${participant.bottom_color} text-center w-12 text-lg font-bold app-text-outline border border-black`,*/
-          `qw-bgcolor-${0}-${0} text-center w-12 text-lg font-bold app-text-outline border border-black`,
+          `qw-bgcolor-${participant.topcolor}-${participant.bottomcolor} text-center w-12 text-lg font-bold app-text-outline border border-black`,
           {
             "border-r-0": isFirst,
           },

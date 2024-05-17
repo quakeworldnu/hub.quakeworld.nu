@@ -89,6 +89,8 @@ export type Player = {
   userid: number;
   spectator: number;
   frags: number;
+  topcolor: number;
+  bottomcolor: number;
   getName: () => number[];
   getNamePlain: () => string;
   getTeam: () => number[];
@@ -100,7 +102,10 @@ export type Player = {
 
 export type Team = {
   name: number[];
+  namePlain: string;
   frags: number;
+  topcolor: number;
+  bottomcolor: number;
   players: Player[];
 };
 

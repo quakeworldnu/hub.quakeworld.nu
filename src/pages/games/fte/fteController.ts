@@ -1,14 +1,15 @@
 import { clamp } from "../math.ts";
 import {
   Autotrack,
+  Player,
   ClientState,
   ControlSource,
   DemoPlayback,
   FTEC,
   FteModule,
-  Player,
   Team,
 } from "./types.ts";
+import { getPlayersMajorityColor } from "./util.ts";
 
 export function fteEvent(name: string, detail: object) {
   const event = new CustomEvent(`fte.${name}`, { detail });
@@ -122,29 +123,25 @@ export class FteController {
   }
 
   getPlayers(): Player[] {
+    const players: Player[] = [];
+
     try {
-      const players: Player[] = [];
+      const state = this.getClientState();
 
-      try {
-        const clientState = this.getClientState();
+      for (let i = 0; i < state.allocated_client_slots; i++) {
+        const player = state.getPlayer(i);
 
-        for (let i = 0; i < clientState.allocated_client_slots; i++) {
-          const player = clientState.getPlayer(i);
-
-          if (player.spectator !== 0 || "" === player.getNamePlain()) {
-            continue;
-          }
-
-          players.push(player);
+        if (player.spectator !== 0 || "" === player.getNamePlain()) {
+          continue;
         }
-      } catch (e) {
-        //
+
+        players.push(player);
       }
-      players.sort((a, b) => a.getNamePlain().localeCompare(b.getNamePlain()));
-      return players;
     } catch (e) {
       return [];
     }
+    players.sort((a, b) => a.getNamePlain().localeCompare(b.getNamePlain()));
+    return players;
   }
 
   getTeams(): Team[] {
@@ -152,7 +149,9 @@ export class FteController {
     const teams: Team[] = [];
 
     for (const player of players) {
-      const team = teams.find((team) => team.name === player.getTeam());
+      const team = teams.find(
+        (team) => team.namePlain === player.getTeamPlain(),
+      );
 
       if (team) {
         team.players.push(player);
@@ -160,11 +159,22 @@ export class FteController {
       } else {
         teams.push({
           name: player.getTeam(),
+          namePlain: player.getTeamPlain(),
           frags: player.frags,
           players: [player],
+          topcolor: 0,
+          bottomcolor: 0,
         });
       }
     }
+
+    for (const team of teams) {
+      const { topcolor, bottomcolor } = getPlayersMajorityColor(team.players);
+      team.topcolor = topcolor;
+      team.bottomcolor = bottomcolor;
+    }
+
+    teams.sort((a, b) => a.namePlain.localeCompare(b.namePlain));
 
     return teams;
   }
