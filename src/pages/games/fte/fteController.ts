@@ -6,6 +6,7 @@ import {
   FTEC,
   FteModule,
   Player,
+  Team,
 } from "./types.ts";
 
 export function fteEvent(name: string, detail: object) {
@@ -140,6 +141,28 @@ export class FteController {
     } catch (e) {
       return [];
     }
+  }
+
+  getTeams(): Team[] {
+    const players = this.getPlayers();
+    const teams: Team[] = [];
+
+    for (const player of players) {
+      const team = teams.find((team) => team.name === player.getTeam());
+
+      if (team) {
+        team.players.push(player);
+        team.frags += player.frags;
+      } else {
+        teams.push({
+          name: player.getTeam(),
+          frags: player.frags,
+          players: [player],
+        });
+      }
+    }
+
+    return teams;
   }
 
   getTrackUserid() {

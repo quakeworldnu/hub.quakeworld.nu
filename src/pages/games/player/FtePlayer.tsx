@@ -6,6 +6,7 @@ import type { Demo } from "../services/supabase/supabase.types.ts";
 import { Controls } from "./Controls.tsx";
 import { FteCanvas } from "./FteCanvas.tsx";
 import { useClipPlayback } from "./clips/hooks.ts";
+import { ScoreBanner } from "./controls/ScoreBanner.tsx";
 
 export const FtePlayer = ({
   demo,
@@ -36,6 +37,12 @@ export const FtePlayer = ({
     >
       <div id="FullscreenContent">
         <FteCanvas />
+
+        {fte && (
+          <div className={"absolute w-full pt-[1%]"}>
+            <ScoreBanner />
+          </div>
+        )}
       </div>
       <div
         className={classNames(

@@ -98,6 +98,12 @@ export type Player = {
   getStatsFloat: () => { [key: number]: number };
 };
 
+export type Team = {
+  name: number[];
+  frags: number;
+  players: Player[];
+};
+
 export enum Autotrack {
   ON = "stats",
   OFF = "user",
