@@ -1,12 +1,12 @@
 import { clamp } from "../math.ts";
 import {
   Autotrack,
-  Player,
   ClientState,
   ControlSource,
   DemoPlayback,
   FTEC,
   FteModule,
+  Player,
   Team,
 } from "./types.ts";
 import { getPlayersMajorityColor } from "./util.ts";
@@ -93,9 +93,7 @@ export class FteController {
 
   getDemoElapsedTime(): number {
     try {
-      const state = this.getClientState();
-      const elapsed = state.gametime - state.matchgametimestart;
-      return elapsed + 10;
+      return this.module.getDemtime();
     } catch (e) {
       return 0;
     }

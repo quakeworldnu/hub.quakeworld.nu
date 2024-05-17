@@ -63,12 +63,8 @@ export type FteModule = FtePreloadModule & {
   IT_SIGIL3: number;
   IT_SIGIL4: number;
 
-  // execute: (command: string) => void;
   getClientState: () => ClientState;
-  // getDemoElapsedTime: () => number;
-  // getPlayerInfo: () => Player[];
-  // getMapName: () => string;
-  // getTimelimit: () => number;
+  getDemtime: () => number;
   // getTrackUserid: (seatIndex: number) => number;
 };
 
