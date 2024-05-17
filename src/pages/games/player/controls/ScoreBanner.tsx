@@ -52,9 +52,11 @@ export const ScoreBanner = () => {
           <Participant participant={participants[0]} index={0} />
           <Participant participant={participants[1]} index={1} />
         </div>
-        <div className="text-center mt-1 text-base font-mono font-bold app-text-outline text-yellow-200">
-          {formatElapsed(fte.getGameElapsedTime())}
-        </div>
+        {fte.hasStartedGame() && (
+          <div className="text-center mt-1 text-base font-mono font-bold app-text-outline text-yellow-200 app-effect-fade-in">
+            {formatElapsed(fte.getGameElapsedTime())}
+          </div>
+        )}
       </div>
     </div>
   );

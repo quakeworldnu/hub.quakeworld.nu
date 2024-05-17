@@ -122,6 +122,10 @@ export class FteController {
     return this.getDemoTotalTime() - this.getGameStartTime();
   }
 
+  hasStartedGame(): boolean {
+    return this.getGameStartTime() > 0;
+  }
+
   getPlayers(): Player[] {
     const players: Player[] = [];
 
