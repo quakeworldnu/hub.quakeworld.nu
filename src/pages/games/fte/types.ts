@@ -65,7 +65,7 @@ export type FteModule = FtePreloadModule & {
 
   getClientState: () => ClientState;
   getDemtime: () => number;
-  // getTrackUserid: (seatIndex: number) => number;
+  getTrackUserid: (seatIndex: number) => number;
 };
 
 export type ClientState = {

@@ -182,10 +182,8 @@ export class FteController {
 
   getTrackUserid() {
     try {
-      // const seatIndex = 0; // index of screen in splitscreen
-      // todo: fix
-      //  return this.module.getTrackUserid(seatIndex);
-      return 0;
+      const seatIndex = 0; // index of screen in splitscreen
+      return this.module.getTrackUserid(seatIndex);
     } catch (e) {
       return -1;
     }
