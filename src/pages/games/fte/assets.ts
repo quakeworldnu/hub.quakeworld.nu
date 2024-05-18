@@ -1,5 +1,6 @@
 import { getMapTextures } from "./map_textures.ts";
 import { FteAssets } from "./types.ts";
+import { idMaps } from "./idMaps.ts";
 
 const FTE_ASSETS_URL =
   "https://raw.githubusercontent.com/vikpe/fte-web-assets/main";
@@ -34,12 +35,14 @@ function getDemoMountPath(demoFilename: string): string {
 }
 
 function getMapAssets(mapName: string): FteAssets {
-  const targetMapBsp = "id1/maps/" + mapName + ".bsp";
-  const targetMapLit = "id1/maps/" + mapName + ".lit";
-  const mapUrl = `${GENERIC_ASSETS_URL}/maps/${mapName}/${mapName}`;
+  const mapDir = idMaps.includes(mapName) ? "maps_id1_gpl" : "maps";
+  const mapBaseUrl = `${GENERIC_ASSETS_URL}/${mapDir}/${mapName}/${mapName}`;
+  const locUrl = `${GENERIC_ASSETS_URL}/maps/${mapName}/${mapName}.loc`;
+
   return {
-    [targetMapBsp]: `${mapUrl}.bsp`,
-    [targetMapLit]: `${mapUrl}.lit`,
+    [`id1/maps/${mapName}.bsp`]: `${mapBaseUrl}.bsp`,
+    [`id1/maps/${mapName}.lit`]: `${mapBaseUrl}.lit`,
+    [`id1/locs/${mapName}.loc`]: locUrl,
     ...getMapTextures(mapName),
   };
 }
