@@ -1,6 +1,5 @@
 import classNames from "classnames";
 import { useFteController } from "../../fte/hooks.ts";
-// import { getPlayersMajorityColor } from "../../fte/util.ts";
 import { useUpdateInterval } from "../../hooks.ts";
 import { toColoredHtml } from "../../qwstrings.ts";
 import { formatElapsed } from "../../time.ts";
@@ -14,8 +13,6 @@ type Participant = {
 };
 
 function playerToParticipant(player: Player): Participant {
-  // const { top_color, bottom_color } = getPlayersMajorityColor(team.players);
-
   return {
     name: player.getName(),
     frags: player.frags,
