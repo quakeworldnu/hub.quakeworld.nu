@@ -21,7 +21,7 @@ export const FteCanvas = () => {
       switch (e.key) {
         case "Tab":
           e.preventDefault();
-          return fte.command("+showscores");
+          return fte.command("+__showscores");
         default:
           break;
       }
@@ -43,7 +43,7 @@ export const FteCanvas = () => {
           e.preventDefault();
           return fte.togglePlay();
         case "Tab":
-          return fte.command("-showscores");
+          return fte.command("-__showscores");
         default:
           break;
       }
