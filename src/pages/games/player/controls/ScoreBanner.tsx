@@ -49,7 +49,7 @@ export const ScoreBanner = () => {
           <Participant participant={participants[0]} index={0} />
           <Participant participant={participants[1]} index={1} />
         </div>
-        <div className="text-center mt-1 app-text-outline text-sm font-bold text-gray-400">
+        <div className="text-center mt-1 app-text-outline text-sm font-bold text-yellow-200">
           {formatElapsed(fte.getGameElapsedTime())}
         </div>
       </div>
