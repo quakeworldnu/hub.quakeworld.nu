@@ -1,6 +1,7 @@
 import { getMapTextures } from "./map_textures.ts";
 import type { FteAssets } from "./types.ts";
 import { idMaps } from "./idMaps.ts";
+import {ASSETS_VERSION} from "./meta.ts";
 
 const FTE_ASSETS_URL =
   "https://raw.githubusercontent.com/vikpe/fte-web-assets/main";
@@ -525,8 +526,8 @@ function getGeneralAssets(): FteAssets {
   ];
 
   const assets: FteAssets = {
-    "id1/config.cfg": fteAsset("config.cfg"),
-    "id1/hud.cfg": fteAsset("hud.cfg"),
+    "id1/config.cfg": fteAsset(`config.cfg?v=${ASSETS_VERSION}`),
+    "id1/hud.cfg": fteAsset(`hud.cfg?v=${ASSETS_VERSION}`),
   };
 
   for (const path of filePaths) {

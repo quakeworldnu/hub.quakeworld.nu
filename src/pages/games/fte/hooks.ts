@@ -4,6 +4,7 @@ import { useEventListener } from "../hooks.ts";
 import { fteAsset } from "./assets.ts";
 import { FteController } from "./fteController.ts";
 import type { FteAssets, FteModule, FtePreloadModule } from "./types.ts";
+import {ASSETS_VERSION} from "./meta.ts";
 
 declare global {
   interface Window {
@@ -18,7 +19,7 @@ export function useFteLoader({
   assets: FteAssets;
   demoTotalTime: number | null;
 }) {
-  const scriptPath = fteAsset("/ftewebgl.js");
+  const scriptPath = fteAsset(`/ftewebgl.js?version=${ASSETS_VERSION}`);
   const scriptStatus = useScript(scriptPath, { removeOnUnmount: true });
   const { count: loaded, increment } = useCounter(0);
   const [fte, setFte] = useState<undefined | FteController>(undefined);
