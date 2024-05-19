@@ -93,7 +93,7 @@ export class FteController {
 
   getDemoElapsedTime(): number {
     try {
-      return this.module.getDemtime();
+      return this.module.getDemoTime();
     } catch (e) {
       return 0;
     }

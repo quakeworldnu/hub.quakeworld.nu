@@ -6,7 +6,68 @@ export type FtePreloadModule = {
   setStatus: (value: string) => void;
 };
 
-export type FteModule = FtePreloadModule & {
+export type FteModule = FtePreloadModule &
+  FteContants & {
+    getClientState: () => ClientState;
+    getDemoTime: () => number;
+    getTrackUserid: (seatIndex: number) => number;
+  };
+
+export type ClientState = {
+  allocated_client_slots: number;
+  deathmatch: number;
+  teamplay: number;
+  getPlayer: (index: number) => Player;
+  getPlayerLocation: (index: number) => string;
+};
+
+export type Player = {
+  userid: number;
+  spectator: number;
+  frags: number;
+  topcolor: number;
+  bottomcolor: number;
+  getName: () => number[];
+  getNamePlain: () => string;
+  getTeam: () => number[];
+  getTeamPlain: () => string;
+  getWeaponStats: () => void;
+  getStats: () => { [key: number]: number };
+  getStatsFloat: () => { [key: number]: number };
+  setUserInfo: (key: string, value: string) => void;
+};
+
+export type Team = {
+  name: number[];
+  namePlain: string;
+  frags: number;
+  topcolor: number;
+  bottomcolor: number;
+  players: Player[];
+};
+
+export enum Autotrack {
+  ON = "stats",
+  OFF = "user",
+}
+
+export enum ControlSource {
+  USER = "user",
+  GROUP = "group",
+}
+
+export type DemoPlayback = {
+  demo_jump: number;
+  demo_setspeed: number;
+  cl_autotrack: Autotrack | string;
+  track: number;
+};
+
+export interface FTEC {
+  cbufadd: (command: string) => void;
+}
+
+export type FteContants = {
   STAT_HEALTH: number;
   STAT_WEAPONMODELI: number;
   STAT_AMMO: number;
@@ -62,66 +123,4 @@ export type FteModule = FtePreloadModule & {
   IT_SIGIL2: number;
   IT_SIGIL3: number;
   IT_SIGIL4: number;
-
-  getClientState: () => ClientState;
-  getDemtime: () => number;
-  getTrackUserid: (seatIndex: number) => number;
 };
-
-export type ClientState = {
-  allocated_client_slots: number;
-  deathmatch: number;
-  gametime: number;
-  matchgametimestart: number;
-  // matchstate: number;
-  teamplay: number;
-  time: number;
-
-  getPlayer: (index: number) => Player;
-  getPlayerLocation: (index: number) => string;
-};
-
-export type Player = {
-  userid: number;
-  spectator: number;
-  frags: number;
-  topcolor: number;
-  bottomcolor: number;
-  getName: () => number[];
-  getNamePlain: () => string;
-  getTeam: () => number[];
-  getTeamPlain: () => string;
-  getWeaponStats: () => void;
-  getStats: () => { [key: number]: number };
-  getStatsFloat: () => { [key: number]: number };
-};
-
-export type Team = {
-  name: number[];
-  namePlain: string;
-  frags: number;
-  topcolor: number;
-  bottomcolor: number;
-  players: Player[];
-};
-
-export enum Autotrack {
-  ON = "stats",
-  OFF = "user",
-}
-
-export enum ControlSource {
-  USER = "user",
-  GROUP = "group",
-}
-
-export type DemoPlayback = {
-  demo_jump: number;
-  demo_setspeed: number;
-  cl_autotrack: Autotrack | string;
-  track: number;
-};
-
-export interface FTEC {
-  cbufadd: (command: string) => void;
-}
