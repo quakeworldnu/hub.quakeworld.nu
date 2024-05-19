@@ -2,8 +2,8 @@ import classNames from "classnames";
 import { useFteController } from "../../fte/hooks.ts";
 import { useUpdateInterval } from "../../hooks.ts";
 import { toColoredHtml } from "../../qwstrings.ts";
-import { formatElapsed } from "../../time.ts";
 import { Player } from "../../fte/types.ts";
+import { formatElapsed } from "../../time.ts";
 
 type Participant = {
   name: number[];
@@ -43,17 +43,15 @@ export const ScoreBanner = () => {
   }
 
   return (
-    <div className="flex flex-col items-center app-effect-fade-in pointer-events-none select-none">
+    <div className="flex flex-col items-center pointer-events-none select-none">
       <div className="origin-top scale-50 sm:scale-75 md:scale-100 lg:scale-100 xl:scale-125 3xl:scale-150">
-        <div className="flex items-center">
+        <div className="flex items-center font-mono">
           <Participant participant={participants[0]} index={0} />
           <Participant participant={participants[1]} index={1} />
         </div>
-        {fte.hasStartedGame() && (
-          <div className="text-center mt-1 text-base font-mono font-bold app-text-outline text-yellow-200 app-effect-fade-in">
-            {formatElapsed(fte.getGameElapsedTime())}
-          </div>
-        )}
+        <div className="text-center mt-1 app-text-outline text-sm font-bold text-gray-400">
+          {formatElapsed(fte.getGameElapsedTime())}
+        </div>
       </div>
     </div>
   );
@@ -72,9 +70,9 @@ const Participant = ({
     <div className={"flex w-48 justify-end last:flex-row-reverse"}>
       <div className="flex items-center">
         <div
-          className={classNames("px-2 bg-black/50", {
-            "rounded-l": isFirst,
-            "rounded-r": !isFirst,
+          className={classNames("px-2 py-0.5 bg-black/50", {
+            "rounded-l pl-2.5": isFirst,
+            "rounded-r pr-2.5": !isFirst,
           })}
           dangerouslySetInnerHTML={{
             __html: toColoredHtml(String.fromCharCode(...participant.name)),
@@ -83,7 +81,7 @@ const Participant = ({
       </div>
       <div
         className={classNames(
-          `qw-bgcolor-${participant.topcolor}-${participant.bottomcolor} text-center w-12 text-lg font-bold app-text-outline border border-black`,
+          `qw-bgcolor-${participant.topcolor}-${participant.bottomcolor} w-12 text-center text-lg font-bold app-text-outline border border-black`,
           {
             "border-r-0": isFirst,
           },
