@@ -120,7 +120,7 @@ export class FteController {
   }
 
   hasStartedGame(): boolean {
-    return this.getGameStartTime() > 0;
+    return this.getGameElapsedTime() > 0;
   }
 
   getPlayers(): Player[] {
