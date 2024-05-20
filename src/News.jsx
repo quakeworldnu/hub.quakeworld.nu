@@ -1,5 +1,5 @@
-import React, { Fragment } from "react";
 import { useGetNewsQuery } from "@qwhub/services/hub/hub";
+import React, { Fragment } from "react";
 import { Heading } from "./Common";
 
 export default function News() {

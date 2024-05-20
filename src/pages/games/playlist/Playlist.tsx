@@ -1,6 +1,3 @@
-import { ReactNode, useEffect, useState } from "react";
-import { SortableItemList } from "./Sortable.tsx";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faList,
   faPlay,
@@ -8,12 +5,15 @@ import {
   faSort,
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import classNames from "classnames";
+import { type ReactNode, useEffect, useState } from "react";
 import { Timestamp } from "../Timestamp.tsx";
-import { useCurrentDemoId, usePlaylist } from "./hooks.ts";
 import type { Demo } from "../services/supabase/supabase.types.ts";
 import { Switch } from "../ui/Switch.tsx";
-import classNames from "classnames";
 import { btnSecondary, sizeSmall } from "../ui/theme.ts";
+import { SortableItemList } from "./Sortable.tsx";
+import { useCurrentDemoId, usePlaylist } from "./hooks.ts";
 
 export type PlaylistItem = {
   id: number;
@@ -57,9 +57,7 @@ export const Playlist = () => {
         {isEmpty && (
           <div className="p-4 text-slate-400">Playlist is empty..</div>
         )}
-        {!isEmpty && (
-          <>{isEditing ? <EditablePlaylist /> : <ReadOnlyPlaylist />}</>
-        )}
+        {!isEmpty && (isEditing ? <EditablePlaylist /> : <ReadOnlyPlaylist />)}
       </div>
     </div>
   );

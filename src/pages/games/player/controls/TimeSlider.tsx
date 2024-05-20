@@ -1,14 +1,14 @@
-import { useEffect, useRef, useState } from "react";
-import classNames from "classnames";
 import * as Slider from "@radix-ui/react-slider";
-import { useEventListener, useHover } from "usehooks-ts";
 import { useMouse, useThrottle } from "@uidotdev/usehooks";
-import { useUpdateInterval } from "../../hooks.ts";
+import classNames from "classnames";
+import { useEffect, useRef, useState } from "react";
+import { getTrackBackground } from "react-range";
+import { useEventListener, useHover } from "usehooks-ts";
 import { useFteController } from "../../fte/hooks.ts";
+import { useUpdateInterval } from "../../hooks.ts";
+import { useUrlClipParams } from "../../playlist/hooks.ts";
 import { formatElapsed } from "../../time.ts";
 import { useClipEditor } from "../clips/context.tsx";
-import { getTrackBackground } from "react-range";
-import { useUrlClipParams } from "../../playlist/hooks.ts";
 
 export function TimeSlider() {
   const fte = useFteController();
@@ -41,7 +41,7 @@ export function TimeSlider() {
           "absolute bottom-24 text-xs font-mono px-2 py-1 bg-violet-800 text-white rounded",
         )}
         ref={tooltipRef}
-      ></div>
+      />
       <div className="w-full" ref={sliderWrapperRef}>
         <div ref={sliderRootRef}>
           <SliderRoot max={maxValue} />
@@ -63,7 +63,7 @@ const SliderRoot = ({ max }: { max: number }) => {
   // keyboard shortcuts
   useEventListener(
     "keydown",
-    function (e: KeyboardEvent) {
+    (e: KeyboardEvent) => {
       if (!fte || fte.isConsoleOpen()) {
         return;
       }
@@ -87,7 +87,6 @@ const SliderRoot = ({ max }: { max: number }) => {
       if (jump < 0) {
         return;
       }
-      console.log("#".repeat(24), "throttledJump");
       fte.demoJump(throttledJump);
     }
   }, [fte, throttledJump]);
@@ -134,7 +133,7 @@ const SliderRoot = ({ max }: { max: number }) => {
             max,
           }),
         }}
-      ></div>
+      />
 
       <Slider.Track
         className={classNames(

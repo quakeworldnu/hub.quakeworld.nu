@@ -1,8 +1,8 @@
 import { faForwardStep } from "@fortawesome/free-solid-svg-icons";
-import { IconButton } from "./IconButton.tsx";
 import { useFteController } from "../../fte/hooks.ts";
-import { useClipEditor } from "../clips/context.tsx";
 import { useUrlClipParams } from "../../playlist/hooks.ts";
+import { useClipEditor } from "../clips/context.tsx";
+import { IconButton } from "./IconButton.tsx";
 
 export const SeekToEndButton = () => {
   const fte = useFteController();
@@ -31,7 +31,8 @@ function useSeekEndTime(): number {
 
   if (editorIsEnabled) {
     return editorTo;
-  } else if (hasUrlParams) {
+  }
+  if (hasUrlParams) {
     return urlTo;
   }
   return 9999;

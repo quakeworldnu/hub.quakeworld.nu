@@ -1,16 +1,15 @@
 import classNames from "classnames";
 import { useBoolean } from "usehooks-ts";
+import { useEventListener } from "../hooks.ts";
+import { useClipEditor } from "./clips/context.tsx";
 import { AutotrackToggle } from "./controls/AutotrackToggle.tsx";
 import { FullscreenToggle } from "./controls/FullscreenToggle.tsx";
-import { PlayToggle } from "./controls/PlayToggle.tsx";
-import { SlowmotionToggle } from "./controls/SlowmotionToggle.tsx";
 import { GameClock } from "./controls/GameClock.tsx";
-import { TimeSlider } from "./controls/TimeSlider.tsx";
-import { SplitscreenToggle } from "./controls/SplitscreenToggle.tsx";
-import { useClipEditor } from "./clips/context.tsx";
+import { PlayToggle } from "./controls/PlayToggle.tsx";
 import { SeekToEndButton } from "./controls/SeekToEndButton.tsx";
 import { SeekToStartButton } from "./controls/SeekToStartButton.tsx";
-import { useEventListener } from "../hooks.ts";
+import { SlowmotionToggle } from "./controls/SlowmotionToggle.tsx";
+import { TimeSlider } from "./controls/TimeSlider.tsx";
 import { Volume } from "./controls/Volume.tsx";
 
 export const Controls = () => {
@@ -51,7 +50,6 @@ export const Controls = () => {
       <div className="hidden sm:flex w-1/3 space-x-2 items-center justify-end mb-2 ">
         <AutotrackToggle />
         <SlowmotionToggle />
-        <SplitscreenToggle />
         <FullscreenToggle />
       </div>
     </div>

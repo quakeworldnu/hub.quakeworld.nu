@@ -1,11 +1,11 @@
-import React from "react";
-import { SiteHeader } from "@qwhub/site/Header";
-import { SiteFooter } from "@qwhub/site/Footer";
-import { coloredQuakeName, QuakeText } from "@qwhub/QuakeText";
-import { ServerAddress } from "@qwhub/servers/Server";
-import { useSelector } from "react-redux";
+import { QuakeText, coloredQuakeName } from "@qwhub/QuakeText";
 import { selectFilteredClients, selectFilteredServers } from "@qwhub/selectors";
+import { ServerAddress } from "@qwhub/servers/Server";
 import { ServerPoller } from "@qwhub/servers/Servers";
+import { SiteFooter } from "@qwhub/site/Footer";
+import { SiteHeader } from "@qwhub/site/Header";
+import React from "react";
+import { useSelector } from "react-redux";
 
 export const App = () => {
   return (
@@ -39,13 +39,17 @@ const PlayerTable = () => {
             <th className="w-48">Name</th>
             <th className="w-28 hidden md:table-cell">Status</th>
             <th className="min-w-[160px]">Server</th>
-            <th className="min-w-[160px] hidden sm:table-cell"></th>
-            <th></th>
+            <th className="min-w-[160px] hidden sm:table-cell" />
+            <th />
           </tr>
         </thead>
         <tbody>
           {clients.map((client) => (
-            <ClientRow client={client} server={serversObj[client.address]} />
+            <ClientRow
+              key={`${client.name}-${client.name_color}`}
+              client={client}
+              server={serversObj[client.address]}
+            />
           ))}
         </tbody>
       </table>

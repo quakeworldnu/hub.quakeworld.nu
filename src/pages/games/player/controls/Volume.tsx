@@ -1,6 +1,6 @@
 import { useFteController, useFteUpdateOnEvent } from "../../fte/hooks.ts";
-import { VolumeToggle } from "./VolumeToggle.tsx";
 import { VolumeSlider } from "./VolumeSlider.tsx";
+import { VolumeToggle } from "./VolumeToggle.tsx";
 
 export const Volume = () => {
   useFteUpdateOnEvent("volume");

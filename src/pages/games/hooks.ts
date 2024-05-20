@@ -1,6 +1,6 @@
 import {
-  useCounter,
   useEventListener as uhUseEventListener,
+  useCounter,
   useInterval,
 } from "usehooks-ts";
 

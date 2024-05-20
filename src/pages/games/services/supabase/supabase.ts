@@ -1,8 +1,8 @@
 import { createClient } from "@supabase/supabase-js";
 
-import { Database } from "./database.types.ts";
+import type { Database } from "./database.types.ts";
 
-import { GameMode } from "../../browser/settings/types.ts";
+import type { GameMode } from "../../browser/settings/types.ts";
 
 const supabase = createClient<Database>(
   import.meta.env.VITE_SUPABASE_URL,
@@ -13,7 +13,7 @@ export async function getDemo(id: number) {
   return supabase.from("demos").select("*").eq("id", id).limit(1).single();
 }
 
-function queryToFts(query: string = ""): string {
+function queryToFts(query = ""): string {
   const q = query.replace(/\s+/g, " ").trim();
 
   if (!q) {

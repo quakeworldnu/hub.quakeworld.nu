@@ -1,9 +1,9 @@
-import { useDemoSettings } from "./context.tsx";
 import { faBars, faTableCells } from "@fortawesome/free-solid-svg-icons";
-import { DisplayMode } from "./types.ts";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
 import { sizeSmall, toggleBtn, toggleBtnSelected } from "../../ui/theme.ts";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useDemoSettings } from "./context.tsx";
+import type { DisplayMode } from "./types.ts";
 
 export const DisplayModeBar = () => {
   const { displayMode, setDisplayMode } = useDemoSettings();

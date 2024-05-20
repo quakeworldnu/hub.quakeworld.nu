@@ -1,11 +1,11 @@
-import React, { Fragment, useState } from "react";
-import copyToClipboard from "copy-text-to-clipboard";
-import { Scoreboard } from "./Scoreboard";
-import { QuakeText } from "@qwhub/QuakeText";
 import { PrimaryButton, SecondaryButton } from "@qwhub/Buttons";
-import ServerStreams from "./ServerStreams";
+import { QuakeText } from "@qwhub/QuakeText";
 import { Lastscores } from "@qwhub/servers/Lastscores";
 import { Mapshot } from "@qwhub/servers/Mapshot";
+import copyToClipboard from "copy-text-to-clipboard";
+import React, { Fragment, useState } from "react";
+import { Scoreboard } from "./Scoreboard";
+import ServerStreams from "./ServerStreams";
 
 const VIEWS = {
   Scoreboard: "Scoreboard",
@@ -87,7 +87,8 @@ export const ServerBody = (props) => {
         onClose={() => setView(VIEWS.Scoreboard)}
       />
     );
-  } else if (view === VIEWS.Scoreboard) {
+  }
+  if (view === VIEWS.Scoreboard) {
     return (
       <Mapshot map={serverMeta.mapName}>
         <div className="flex flex-col h-full group py-4 min-h-[96px] sm:min-h-[200px] bg-gray-700/20">

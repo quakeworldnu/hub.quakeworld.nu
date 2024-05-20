@@ -1,7 +1,7 @@
-import React, { Fragment } from "react";
-import { useGetStreamsQuery } from "@qwhub/services/hub/hub";
-import { TwitchButton } from "./Buttons";
 import { Heading } from "@qwhub/Common";
+import { useGetStreamsQuery } from "@qwhub/services/hub/hub";
+import React, { Fragment } from "react";
+import { TwitchButton } from "./Buttons";
 
 export function FeaturedStreams() {
   const { data: streams = [] } = useGetStreamsQuery(null, {

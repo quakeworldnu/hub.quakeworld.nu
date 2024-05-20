@@ -1,6 +1,6 @@
-import { roundFloat } from "../../math.ts";
 import classNames from "classnames";
-import { ChangeEvent } from "react";
+import type { ChangeEvent } from "react";
+import { roundFloat } from "../../math.ts";
 
 type Props = {
   isMuted: boolean;

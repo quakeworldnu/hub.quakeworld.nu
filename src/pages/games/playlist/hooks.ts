@@ -1,7 +1,7 @@
 import { useLocalStorage } from "usehooks-ts";
-import { Demo } from "../services/supabase/supabase.types.ts";
 import { compareDemoDates } from "../services/supabase/demo.ts";
-import { PlaylistItem } from "./Playlist.tsx";
+import type { Demo } from "../services/supabase/supabase.types.ts";
+import type { PlaylistItem } from "./Playlist.tsx";
 
 function demoToPlaylistItem(demo: Demo): PlaylistItem {
   return { id: demo.id, demo };
@@ -10,7 +10,7 @@ function demoToPlaylistItem(demo: Demo): PlaylistItem {
 export function useCurrentDemoId(): number | undefined {
   const params = new URLSearchParams(window.location.search);
   const demoId = params.get("demoId");
-  return demoId ? parseInt(demoId) : undefined;
+  return demoId ? Number.parseInt(demoId) : undefined;
 }
 
 export function useUrlClipParams(): {
@@ -20,8 +20,8 @@ export function useUrlClipParams(): {
   hasParams: boolean;
 } {
   const params = new URLSearchParams(window.location.search);
-  const from = parseInt(params.get("from") || "0");
-  const to = parseInt(params.get("to") || "0");
+  const from = Number.parseInt(params.get("from") || "0");
+  const to = Number.parseInt(params.get("to") || "0");
   const track = params.get("track") || "auto";
   const hasParams = from > 0 && to > 0;
   return { from, to, track, hasParams };

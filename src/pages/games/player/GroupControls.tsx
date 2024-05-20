@@ -1,7 +1,7 @@
-import { useFteController, useFteEventBySource } from "../fte/hooks.ts";
-import { useUser } from "../services/convex/hooks.ts";
 import { useEffect, useState } from "react";
 import { Debug } from "../Debug.tsx";
+import { useFteController, useFteEventBySource } from "../fte/hooks.ts";
+import { useUser } from "../services/convex/hooks.ts";
 
 export const GroupControls = () => {
   const fte = useFteController();
@@ -15,7 +15,6 @@ export const GroupControls = () => {
         demo_jump: fte.getDemoElapsedTime(),
         demo_setspeed: fte.getDemoSpeed(),
         cl_autotrack: fte.getAutotrack(),
-        cl_splitscreen: fte.getSplitScreen(),
         track: fte.getTrackUserid(),
       });
     }
@@ -48,9 +47,6 @@ export const GroupControls = () => {
   });
   useFteEventBySource("cl_autotrack", "user", (e) => {
     updatePlayback({ cl_autotrack: e.detail.value });
-  });
-  useFteEventBySource("cl_splitscreen", "user", (e) => {
-    updatePlayback({ cl_splitscreen: e.detail.value });
   });
   useFteEventBySource("track", "user", (e) => {
     updatePlayback({ track: e.detail.value });

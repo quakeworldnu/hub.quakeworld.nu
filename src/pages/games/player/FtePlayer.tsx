@@ -1,13 +1,12 @@
 import classNames from "classnames";
 import { useIdleTimer } from "react-idle-timer";
-import { Controls } from "./Controls.tsx";
 import { useFteController, useFteLoader } from "../fte/hooks.ts";
-import { Demo } from "../services/supabase/supabase.types.ts";
+import type { FteAssets } from "../fte/types.ts";
+import type { Demo } from "../services/supabase/supabase.types.ts";
+import { Controls } from "./Controls.tsx";
 import { FteCanvas } from "./FteCanvas.tsx";
 import { useClipPlayback } from "./clips/hooks.ts";
-import { Teaminfo } from "./controls/Teaminfo.tsx";
 import { ScoreBanner } from "./controls/ScoreBanner.tsx";
-import { FteAssets } from "../fte/types.ts";
 
 export const FtePlayer = ({
   demo,
@@ -31,8 +30,6 @@ export const FtePlayer = ({
     timeout: 2500,
   });
 
-  const isTeamplay = !["1on1"].includes(demo.mode);
-
   return (
     <div
       id="ftePlayer"
@@ -42,20 +39,11 @@ export const FtePlayer = ({
         <FteCanvas />
 
         {fte && (
-          <>
-            <div className={"absolute w-full pt-[2%]"}>
-              <ScoreBanner isTeamplay={isTeamplay} />
-            </div>
-
-            <div
-              className={`absolute hidden sm:flex scale-50 lg:scale-75 xl:scale-100 origin-bottom-right right-[6%] bottom-24 justify-center`}
-            >
-              <Teaminfo showTeams={isTeamplay} />
-            </div>
-          </>
+          <div className={"absolute w-full pt-[1%]"}>
+            <ScoreBanner />
+          </div>
         )}
       </div>
-
       <div
         className={classNames(
           "absolute z-30 w-full h-full bg-black transition-opacity duration-700 pointer-events-none bg-cover",
@@ -93,7 +81,7 @@ export const FtePlayer = ({
             </svg>
             <div className="animate-pulse text-gray-400">
               {isLoadingAssets && <>Loading assets ({assetStatus.progress}%)</>}
-              {isInitializing && <>Initializing..</>}
+              {isInitializing && "Initializing.."}
             </div>
           </div>
         </div>

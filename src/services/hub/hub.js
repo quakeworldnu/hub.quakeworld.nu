@@ -1,7 +1,7 @@
+import { compareServers } from "@qwhub/services/hub/serverSort";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { transformDemos } from "./demoTransform";
 import { transformServer } from "./serverTransform";
-import { compareServers } from "@qwhub/services/hub/serverSort";
 
 export const hubApi = createApi({
   reducerPath: "hub",
@@ -23,9 +23,9 @@ export const hubApi = createApi({
       query: (query = "") =>
         query ? `servers/mvdsv?${query}` : "servers/mvdsv",
       transformResponse: (servers) => {
-        servers = servers.map(transformServer);
-        servers.sort(compareServers);
-        return servers;
+        const servers_ = servers.map(transformServer);
+        servers_.sort(compareServers);
+        return servers_;
       },
     }),
     getStreams: build.query({

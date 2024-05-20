@@ -1,8 +1,11 @@
-import { Demo, DemoParticipants } from "../services/supabase/supabase.types.ts";
 import { Timestamp } from "../Timestamp.tsx";
 import { ToggleButton } from "../playlist/Playlist.tsx";
-import { ScoreSpoiler } from "./ScoreSpoiler.tsx";
+import type {
+  Demo,
+  DemoParticipants,
+} from "../services/supabase/supabase.types.ts";
 import { DownloadButton, PlayButton } from "./Controls.tsx";
+import { ScoreSpoiler } from "./ScoreSpoiler.tsx";
 
 export const DemoList = ({ demos }: { demos: Demo[] | null }) => {
   return (
@@ -14,11 +17,13 @@ export const DemoList = ({ demos }: { demos: Demo[] | null }) => {
           <th className="p-2">Map</th>
           <th className="p-2">Title</th>
           <th className="p-2">Score</th>
-          <th className="p-2"></th>
+          <th className="p-2" />
         </tr>
       </thead>
       <tbody className="text-sm">
-        {demos?.map((demo) => <ListItem key={demo.id} demo={demo} />)}
+        {demos?.map((demo) => (
+          <ListItem key={demo.id} demo={demo} />
+        ))}
       </tbody>
     </table>
   );

@@ -1,9 +1,10 @@
-import { useCounter, useEffectOnce, useInterval, useScript } from "usehooks-ts";
 import { useState } from "react";
+import { useCounter, useEffectOnce, useInterval, useScript } from "usehooks-ts";
+import { useEventListener } from "../hooks.ts";
 import { fteAsset } from "./assets.ts";
 import { FteController } from "./fteController.ts";
-import { FteAssets, FteModule, FtePreloadModule } from "./types.ts";
-import { useEventListener } from "../hooks.ts";
+import type { FteAssets, FteModule, FtePreloadModule } from "./types.ts";
+import { FTE_VERSION } from "./meta.ts";
 
 declare global {
   interface Window {
@@ -18,7 +19,7 @@ export function useFteLoader({
   assets: FteAssets;
   demoTotalTime: number | null;
 }) {
-  const scriptPath = fteAsset("/ftewebgl.js");
+  const scriptPath = fteAsset(`/ftewebgl.js?version=${FTE_VERSION}`);
   const scriptStatus = useScript(scriptPath, { removeOnUnmount: true });
   const { count: loaded, increment } = useCounter(0);
   const [fte, setFte] = useState<undefined | FteController>(undefined);
@@ -27,7 +28,7 @@ export function useFteLoader({
     window.Module = {
       canvas: document.getElementById("fteCanvas") as HTMLCanvasElement,
       files: assets,
-      setStatus: function (value) {
+      setStatus: (value) => {
         const assetRe = value.match(/.+ \((\d+)\/(\d+)\)/);
         const isLoadedAsset =
           assetRe && assetRe.length === 3 && assetRe[1] === assetRe[2];
@@ -41,7 +42,7 @@ export function useFteLoader({
 
   useInterval(
     () => {
-      if (!fte && (window.Module as FteModule).getPlayerInfo) {
+      if (!fte && (window.Module as FteModule).getClientState) {
         const instance = FteController.createInstace(
           window.Module as FteModule,
           demoTotalTime,

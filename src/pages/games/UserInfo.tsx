@@ -1,8 +1,8 @@
-import { useUser } from "./services/convex/hooks";
 import { useConvex } from "convex/react";
-import { api } from "../../../convex/_generated/api";
 import copyTextToClipboard from "copy-text-to-clipboard";
 import { useRef } from "react";
+import { api } from "../../../convex/_generated/api";
+import { useUser } from "./services/convex/hooks";
 
 export function UserInfo() {
   const { user, group, createGroup, leaveGroup, joinGroup } = useUser();

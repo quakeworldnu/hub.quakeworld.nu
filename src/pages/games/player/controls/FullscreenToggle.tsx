@@ -1,7 +1,7 @@
 import { faExpand, faMinimize } from "@fortawesome/free-solid-svg-icons";
-import { IconToggleButton } from "./IconButton.tsx";
-import { toggleFullscreen } from "../../fullscreen.ts";
 import screenfull from "screenfull";
+import { toggleFullscreen } from "../../fullscreen.ts";
+import { IconToggleButton } from "./IconButton.tsx";
 
 export const FullscreenToggle = () => {
   function handleClick() {

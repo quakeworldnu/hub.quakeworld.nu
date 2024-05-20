@@ -1,14 +1,14 @@
+import { Player } from "@qwhub/pages/games/player/Player";
+import { ServerPoller } from "@qwhub/servers/Servers.jsx";
 import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
-import { SiteHeader } from "../../site/Header";
-import { SiteFooter } from "../../site/Footer";
-import { Browser } from "./browser/Browser";
-import { useCurrentDemoId } from "./playlist/hooks";
-import { useDemos } from "./browser/context.tsx";
-import { Sidebar } from "./Sidebar";
-import { Player } from "@qwhub/pages/games/player/Player";
 import { useElementSize } from "usehooks-ts";
-import { ServerPoller } from "@qwhub/servers/Servers.jsx";
+import { SiteFooter } from "../../site/Footer";
+import { SiteHeader } from "../../site/Header";
+import { Sidebar } from "./Sidebar";
+import { Browser } from "./browser/Browser";
+import { useDemos } from "./browser/context.tsx";
+import { useCurrentDemoId } from "./playlist/hooks";
 
 function getAppBodySize() {
   const el = document.getElementById("AppBody");

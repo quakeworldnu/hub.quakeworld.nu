@@ -1,9 +1,9 @@
 import { DemoGrid } from "./DemoGrid.tsx";
-import { DemoSettingsProvider, useDemoSettings } from "./settings/context.tsx";
 import { DemoList } from "./DemoList.tsx";
-import { Toolbar } from "./settings/Toolbar.tsx";
-import { Pagination } from "./settings/Pagination.tsx";
 import { DemoProvider, useDemos } from "./context.tsx";
+import { Pagination } from "./settings/Pagination.tsx";
+import { Toolbar } from "./settings/Toolbar.tsx";
+import { DemoSettingsProvider, useDemoSettings } from "./settings/context.tsx";
 
 export const Browser = () => {
   return (

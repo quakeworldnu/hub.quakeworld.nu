@@ -1,7 +1,7 @@
+import { selectFilteredServers } from "@qwhub/selectors";
+import { useGetServersQuery } from "@qwhub/services/hub/hub";
 import { useSelector } from "react-redux";
 import { Server } from "./Server";
-import { useGetServersQuery } from "@qwhub/services/hub/hub";
-import { selectFilteredServers } from "@qwhub/selectors";
 
 export default function Servers() {
   const servers = useSelector(selectFilteredServers);

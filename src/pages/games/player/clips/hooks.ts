@@ -1,7 +1,7 @@
-import { useUrlClipParams } from "../../playlist/hooks.ts";
+import { useEffect, useState } from "react";
 import { useInterval } from "usehooks-ts";
 import { useFteController } from "../../fte/hooks.ts";
-import { useEffect, useState } from "react";
+import { useUrlClipParams } from "../../playlist/hooks.ts";
 import { useClipEditor } from "./context.tsx";
 
 export function useClipPlayback() {
@@ -61,7 +61,8 @@ function useEndTime(): number | null {
 
   if (clipEditorIsEnabled) {
     return editorTo;
-  } else if (hasParams) {
+  }
+  if (hasParams) {
     return urlTo;
   }
 

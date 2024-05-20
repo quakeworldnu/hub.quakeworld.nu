@@ -1,7 +1,7 @@
-import { useDemoSettings } from "./context.tsx";
-import { GameMode } from "./types.ts";
 import classNames from "classnames";
 import { sizeSmall, toggleBtn, toggleBtnSelected } from "../../ui/theme.ts";
+import { useDemoSettings } from "./context.tsx";
+import type { GameMode } from "./types.ts";
 
 export const GameModeBar = () => {
   const { gameMode, setGameMode } = useDemoSettings();

@@ -1,28 +1,30 @@
+import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import { getDemo } from "../services/supabase/supabase";
 import { Timestamp } from "../Timestamp.tsx";
-import { Demo } from "../services/supabase/supabase.types.ts";
 import {
   getDemoDescription,
   getDemoDownloadUrl,
 } from "../services/supabase/demo.ts";
-import { FtePlayer } from "./FtePlayer.tsx";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
-import { EnableClipEditorButton } from "./clips/Clips.tsx";
-import { ClipControls } from "./clips/ClipControls.tsx";
-import { ClipEditorProvider, useClipEditor } from "./clips/context.tsx";
-import { ShareDemoButton } from "./Share.tsx";
+import { getDemo } from "../services/supabase/supabase";
+import type { Demo } from "../services/supabase/supabase.types.ts";
 import { btnSecondary, btnSuccess, sizeLarge } from "../ui/theme.ts";
+import { FtePlayer } from "./FtePlayer.tsx";
+import { ShareDemoButton } from "./Share.tsx";
 import { Shortcuts } from "./Shortcuts.tsx";
+import { ClipControls } from "./clips/ClipControls.tsx";
+import { EnableClipEditorButton } from "./clips/Clips.tsx";
+import { ClipEditorProvider, useClipEditor } from "./clips/context.tsx";
 
-import { Scoreboard } from "../browser/Scoreboard.tsx";
 import classNames from "classnames";
 import { useBoolean } from "usehooks-ts";
+import { Scoreboard } from "../browser/Scoreboard.tsx";
 import { getAssets } from "../fte/assets.ts";
+import { useFteController } from "../fte/hooks.ts";
 
 export const Player = ({ demoId }: { demoId: number }) => {
   const [demo, setDemo] = useState<Demo | null>(null);
+  const fte = useFteController();
 
   useEffect(() => {
     if (!demoId) {
@@ -36,6 +38,21 @@ export const Player = ({ demoId }: { demoId: number }) => {
 
     run();
   }, [demoId]);
+
+  useEffect(() => {
+    if (!fte || !demo) {
+      return;
+    }
+
+    if ("ctf" === demo.mode) {
+      fte.command("enemyskin", '""');
+      fte.command("teamskin", '""');
+
+      for (const p of fte.getPlayers()) {
+        p.setUserInfo("skin", p.getTeamPlain());
+      }
+    }
+  }, [fte]);
 
   if (!demo) {
     return <div>Loading...</div>;

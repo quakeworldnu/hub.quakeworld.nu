@@ -1,12 +1,12 @@
-import { useDemos } from "../context.tsx";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import { useDemoSettings } from "./context.tsx";
-import { ChangeEvent } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import type { ChangeEvent } from "react";
 import { btnSecondary, formInput, sizeSmall } from "../../ui/theme.ts";
+import { useDemos } from "../context.tsx";
+import { useDemoSettings } from "./context.tsx";
 
 const PER_PAGE = 20;
 export const Pagination = () => {
@@ -50,7 +50,7 @@ const PagNumberSelect = ({ pageCount = 1 }: { pageCount: number }) => {
   }
 
   function handleChange(e: ChangeEvent<HTMLSelectElement>) {
-    const pageNumber = parseInt(e.target.value);
+    const pageNumber = Number.parseInt(e.target.value);
     setPage(pageNumber);
   }
 

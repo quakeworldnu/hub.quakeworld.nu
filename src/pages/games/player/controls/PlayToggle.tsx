@@ -1,6 +1,6 @@
 import { faCirclePause, faCirclePlay } from "@fortawesome/free-solid-svg-icons";
-import { IconToggleButton } from "./IconButton.tsx";
 import { useFteController, useFteUpdateOnEvent } from "../../fte/hooks.ts";
+import { IconToggleButton } from "./IconButton.tsx";
 
 export const PlayToggle = () => {
   useFteUpdateOnEvent("demo_setspeed");

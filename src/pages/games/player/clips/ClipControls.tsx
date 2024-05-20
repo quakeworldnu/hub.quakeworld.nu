@@ -1,20 +1,20 @@
-import { ClipRange } from "./ClipRange.tsx";
-import { DisableClipEditorButton } from "./Clips.tsx";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCopy,
   faMinus,
   faPlus,
   faScissors,
 } from "@fortawesome/free-solid-svg-icons";
-import { useClipEditor } from "./context.tsx";
-import copyTextToClipboard from "copy-text-to-clipboard";
-import { useFteController, useFteEvent } from "../../fte/hooks.ts";
-import { formatElapsed } from "../../time.ts";
-import { clamp } from "../../math.ts";
-import { toast } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
+import copyTextToClipboard from "copy-text-to-clipboard";
+import { toast } from "react-toastify";
+import { useFteController, useFteEvent } from "../../fte/hooks.ts";
+import { clamp } from "../../math.ts";
+import { formatElapsed } from "../../time.ts";
 import { btnPrimary, sizeSmall } from "../../ui/theme.ts";
+import { ClipRange } from "./ClipRange.tsx";
+import { DisableClipEditorButton } from "./Clips.tsx";
+import { useClipEditor } from "./context.tsx";
 
 export const ClipControls = () => {
   const { setTrack } = useClipEditor();
@@ -50,7 +50,7 @@ export const ClipControls = () => {
       </div>
 
       <div className="flex flex-wrap justify-between my-3 gap-3">
-        <div className="hidden md:block w-32"></div>
+        <div className="hidden md:block w-32" />
         <AdjustControls />
         <div className="text-right">
           <CopyLinkButton />

@@ -1,12 +1,12 @@
 import {
+  type ReactNode,
   createContext,
-  ReactNode,
   useContext,
   useEffect,
   useState,
 } from "react";
-import { DemoBrowserSettings, DisplayMode, GameMode } from "./types.ts";
 import { useLocalStorage } from "usehooks-ts";
+import type { DemoBrowserSettings, DisplayMode, GameMode } from "./types.ts";
 
 type DemoBrowserSettingsProps = {
   displayMode: DisplayMode;

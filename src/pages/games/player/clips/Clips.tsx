@@ -1,9 +1,9 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose, faScissors } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
-import { useClipEditor } from "./context.tsx";
 import { useFteController } from "../../fte/hooks.ts";
 import { btnPrimary, sizeLarge } from "../../ui/theme.ts";
+import { useClipEditor } from "./context.tsx";
 
 const DEFAULT_CLIP_LENGTH = 60;
 
@@ -36,7 +36,7 @@ export const EnableClipEditorButton = () => {
       Math.max(fte.getDemoElapsedTime() - DEFAULT_CLIP_LENGTH, 0),
       fte.getDemoElapsedTime(),
     ]);
-    setTrack(fte.isUsingAutotrack() ? "auto" : fte.getTrackUserid());
+    setTrack(fte.isUsingAutotrack() ? "auto" : fte.getTrackUserid() || "");
     enable();
     fte.pause();
   }

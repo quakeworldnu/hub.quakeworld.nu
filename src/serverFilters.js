@@ -52,7 +52,7 @@ export function filterServers(servers, filters) {
   const gameModesExcludingOthers = modes.slice(0, -1);
 
   if (filters.modes.length !== modes.length) {
-    modes.forEach((mode) => {
+    for (const mode of modes) {
       const includeMode = filters.modes.includes(mode);
       if (!includeMode) {
         if ("other" === mode) {
@@ -63,28 +63,30 @@ export function filterServers(servers, filters) {
           filterOperations.push((s) => s.mode !== mode);
         }
       }
-    });
+    }
   }
 
   // regions
   if (filters.regions.length !== regions.length) {
-    regions.forEach((region) => {
+    for (const region of regions) {
       const includeRegion = filters.regions.includes(region);
       if (!includeRegion) {
         filterOperations.push((s) => s.geo.region !== region);
       }
-    });
+    }
   }
 
   // apply filters
-  filterOperations.forEach((filterOp) => {
-    if (servers.length === 0) {
-      return servers;
-    }
-    servers = servers.filter(filterOp);
-  });
+  let filtered_servers = servers;
 
-  return servers;
+  for (const filterOp of filterOperations) {
+    if (filtered_servers.length === 0) {
+      return filtered_servers;
+    }
+    filtered_servers = filtered_servers.filter(filterOp);
+  }
+
+  return filtered_servers;
 }
 
 export function equalsDefaultFilters(filters) {

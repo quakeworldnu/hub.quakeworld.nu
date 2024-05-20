@@ -1,14 +1,14 @@
-import React from "react";
+import Events from "@qwhub/Events";
+import ForumPosts from "@qwhub/ForumPosts";
+import GamesInSpotlight from "@qwhub/GamesInSpotlight";
+import News from "@qwhub/News";
+import { AllStreams } from "@qwhub/Streams";
+import WikiRecentChanges from "@qwhub/WikiRecentChanges";
+import Servers, { ServerPoller } from "@qwhub/servers/Servers";
+import { HorizontalSeparator } from "@qwhub/site/Common";
 import { SiteFooter } from "@qwhub/site/Footer";
 import { SiteHeader } from "@qwhub/site/Header";
-import Servers, { ServerPoller } from "@qwhub/servers/Servers";
-import GamesInSpotlight from "@qwhub/GamesInSpotlight";
-import Events from "@qwhub/Events";
-import { HorizontalSeparator } from "@qwhub/site/Common";
-import News from "@qwhub/News";
-import ForumPosts from "@qwhub/ForumPosts";
-import WikiRecentChanges from "@qwhub/WikiRecentChanges";
-import { AllStreams } from "@qwhub/Streams";
+import React from "react";
 
 export const App = () => {
   return (

@@ -1,6 +1,9 @@
-import { Demo, DemoParticipants } from "../services/supabase/supabase.types.ts";
 import classNames from "classnames";
 import { getMapshotCssUrl } from "../../../services/mapshots.ts";
+import type {
+  Demo,
+  DemoParticipants,
+} from "../services/supabase/supabase.types.ts";
 
 // eslint-disable-next-line
 // @ts-ignore

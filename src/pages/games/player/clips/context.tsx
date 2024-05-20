@@ -1,6 +1,6 @@
-import { createContext, ReactNode, useContext, useState } from "react";
-import { useBoolean } from "usehooks-ts";
+import { type ReactNode, createContext, useContext, useState } from "react";
 import { query } from "urlcat";
+import { useBoolean } from "usehooks-ts";
 import { useCurrentDemoId } from "../../playlist/hooks.ts";
 
 type ClipEditorContextProps = {
@@ -14,8 +14,8 @@ type ClipEditorContextProps = {
   setTo: (to: number) => void;
   range: number[];
   setRange: (range: number[]) => void;
-  track: number | "auto";
-  setTrack: (track: number | "auto") => void;
+  track: number | "auto" | "";
+  setTrack: (track: number | "auto" | "") => void;
   getUrl: () => string;
 };
 
@@ -45,7 +45,7 @@ export const ClipEditorProvider = ({ children }: { children: ReactNode }) => {
   } = useBoolean(false);
   const [from, setFrom] = useState<number>(0);
   const [to, setTo] = useState<number>(0);
-  const [track, setTrack] = useState<number | "auto">(0);
+  const [track, setTrack] = useState<number | "auto" | "">(0);
 
   function setRange([from, to]: number[]) {
     setFrom(Math.floor(from));

@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { localStorageSet } from "@qwhub/util";
 import { getInitialServerFilters } from "@qwhub/serverFilters";
+import { localStorageSet } from "@qwhub/util";
+import { createSlice } from "@reduxjs/toolkit";
 
 export const settingsSlice = createSlice({
   name: "settings",

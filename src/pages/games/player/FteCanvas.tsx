@@ -1,9 +1,9 @@
-import { MouseEvent, useRef } from "react";
-import { useEventListener } from "usehooks-ts";
-import { useFteController } from "../fte/hooks.ts";
+import { type MouseEvent, useRef } from "react";
 import { useSwipeable } from "react-swipeable";
 import { useDoubleTap } from "use-double-tap";
 import { useLongPress } from "use-long-press";
+import { useEventListener } from "usehooks-ts";
+import { useFteController } from "../fte/hooks.ts";
 import { toggleFullscreen } from "../fullscreen.ts";
 
 export const FteCanvas = () => {
@@ -13,7 +13,7 @@ export const FteCanvas = () => {
   // keyboard events
   useEventListener(
     "keydown",
-    function (e: KeyboardEvent) {
+    (e: KeyboardEvent) => {
       if (!fte || fte.isConsoleOpen()) {
         return;
       }
@@ -21,7 +21,7 @@ export const FteCanvas = () => {
       switch (e.key) {
         case "Tab":
           e.preventDefault();
-          return fte.command("+showscores");
+          return fte.command("+__showscores");
         default:
           break;
       }
@@ -29,7 +29,7 @@ export const FteCanvas = () => {
     documentRef,
   );
 
-  useEventListener("keyup", function (e: KeyboardEvent) {
+  useEventListener("keyup", (e: KeyboardEvent) => {
     if (!fte) {
       return;
     }
@@ -43,7 +43,7 @@ export const FteCanvas = () => {
           e.preventDefault();
           return fte.togglePlay();
         case "Tab":
-          return fte.command("-showscores");
+          return fte.command("-__showscores");
         default:
           break;
       }

@@ -1,16 +1,18 @@
 import classNames from "classnames";
-import { Demo } from "../services/supabase/supabase.types.ts";
 import { Timestamp } from "../Timestamp.tsx";
 import { ToggleButton } from "../playlist/Playlist.tsx";
+import type { Demo } from "../services/supabase/supabase.types.ts";
 import { btnSecondary } from "../ui/theme.ts";
-import { useDemoScoreSpoiler } from "./hooks.ts";
 import { DownloadButton } from "./Controls.tsx";
 import { ScoreboardLink } from "./Scoreboard.tsx";
+import { useDemoScoreSpoiler } from "./hooks.ts";
 
 export const DemoGrid = ({ demos }: { demos: Demo[] | null }) => {
   return (
     <div className="grid grid-cols-servers gap-4">
-      {demos?.map((demo) => <GridItem key={demo.id} demo={demo} />)}
+      {demos?.map((demo) => (
+        <GridItem key={demo.id} demo={demo} />
+      ))}
     </div>
   );
 };

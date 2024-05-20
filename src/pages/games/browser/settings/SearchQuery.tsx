@@ -1,9 +1,9 @@
-import { useDemoSettings } from "./context.tsx";
-import { ChangeEvent, useEffect, useState } from "react";
-import { useDebounce } from "usehooks-ts";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { type ChangeEvent, useEffect, useState } from "react";
+import { useDebounce } from "usehooks-ts";
 import { formInput } from "../../ui/theme.ts";
+import { useDemoSettings } from "./context.tsx";
 
 export const SearchQuery = () => {
   const { query, setQuery } = useDemoSettings();

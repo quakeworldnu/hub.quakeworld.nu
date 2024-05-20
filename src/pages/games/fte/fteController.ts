@@ -1,13 +1,15 @@
+import { clamp } from "../math.ts";
 import {
   Autotrack,
+  ClientState,
   ControlSource,
   DemoPlayback,
   FTEC,
   FteModule,
-  PlayerInfo,
-  TeamInfo,
+  Player,
+  Team,
 } from "./types.ts";
-import { clamp } from "../math.ts";
+import { getPlayersMajorityColor } from "./util.ts";
 
 export function fteEvent(name: string, detail: object) {
   const event = new CustomEvent(`fte.${name}`, { detail });
@@ -36,7 +38,6 @@ export class FteController {
     timeout: ReturnType<typeof setTimeout> | null;
   } = { demoTime: 0, timeout: null };
   private _demoSpeed = 100;
-  private _splitscreen = 0;
   private _autotrack: string = Autotrack.ON;
   private _consoleIsOpen = false;
 
@@ -62,7 +63,6 @@ export class FteController {
       return FteController._instance;
     }
 
-    console.log("#################### FteController.new");
     this._module = module;
     this._lastVolume = this.getVolume();
 
@@ -79,7 +79,7 @@ export class FteController {
       window.FTEC.cbufadd(`${commandStr}\n`);
       this.dispatchEvent(command, { value });
     } catch (e) {
-      console.log("fte command error: " + e);
+      console.log(`fte command error: ${e}`);
     }
   }
 
@@ -87,9 +87,13 @@ export class FteController {
     fteEvent(name, { ...detail, source: this._controlSource });
   }
 
+  getClientState(): ClientState {
+    return this.module.getClientState();
+  }
+
   getDemoElapsedTime(): number {
     try {
-      return this.module.getDemoElapsedTime();
+      return this.module.getDemoTime();
     } catch (e) {
       return 0;
     }
@@ -115,56 +119,84 @@ export class FteController {
     return this.getDemoTotalTime() - this.getGameStartTime();
   }
 
-  getPlayers(): PlayerInfo[] {
+  hasStartedGame(): boolean {
+    return this.getGameElapsedTime() > 0;
+  }
+
+  getPlayers(): Player[] {
+    const players: Player[] = [];
+
     try {
-      const players = this.module.getPlayerInfo();
-      players.sort((a, b) => a.name.localeCompare(b.name));
-      return players;
+      const state = this.getClientState();
+
+      for (let i = 0; i < state.allocated_client_slots; i++) {
+        const player = state.getPlayer(i);
+
+        if (player.spectator !== 0 || "" === player.getNamePlain()) {
+          continue;
+        }
+
+        players.push(player);
+      }
     } catch (e) {
       return [];
     }
+    players.sort((a, b) => a.getNamePlain().localeCompare(b.getNamePlain()));
+    return players;
   }
 
-  // getTrackedPlayer(): PlayerInfo | null {
-  //   const userid = this.getTrackUserid();
-  //   const players = this.module.getPlayerInfo();
-  //   const player = players.find((player) => player.id === userid);
-  //   return player || null;
-  // }
-
-  getTeams(): TeamInfo[] {
+  getTeams(): Team[] {
     const players = this.getPlayers();
-    const teams: TeamInfo[] = [];
+    const teams: Team[] = [];
 
-    players.forEach((player) => {
-      const team = teams.find((team) => team.name === player.team);
+    for (const player of players) {
+      const team = teams.find(
+        (team) => team.namePlain === player.getTeamPlain(),
+      );
 
       if (team) {
         team.players.push(player);
         team.frags += player.frags;
       } else {
         teams.push({
-          name: player.team,
+          name: player.getTeam(),
+          namePlain: player.getTeamPlain(),
           frags: player.frags,
           players: [player],
+          topcolor: 0,
+          bottomcolor: 0,
         });
       }
-    });
+    }
 
-    teams.forEach((team) => {
-      team.players.sort((a, b) => a.name.localeCompare(b.name));
-    });
+    for (const team of teams) {
+      const { topcolor, bottomcolor } = getPlayersMajorityColor(team.players);
+      team.topcolor = topcolor;
+      team.bottomcolor = bottomcolor;
+    }
+
+    teams.sort((a, b) => a.namePlain.localeCompare(b.namePlain));
 
     return teams;
   }
 
-  getTrackUserid() {
+  getTrackedPlayer(): Player | null {
     try {
       const seatIndex = 0; // index of screen in splitscreen
-      return this.module.getTrackUserid(seatIndex);
+      return this.getClientState().getPlayerView(seatIndex).getTrackedPlayer();
     } catch (e) {
-      return -1;
+      return null;
     }
+  }
+
+  getTrackUserid(): number | null {
+    const tracked_player = this.getTrackedPlayer();
+
+    if (tracked_player) {
+      return tracked_player.userid;
+    }
+
+    return null;
   }
 
   // demo playback
@@ -233,7 +265,7 @@ export class FteController {
 
   setDemoSpeed(speed: number) {
     this._lastDemoSpeed = this._demoSpeed;
-    this._demoSpeed = parseFloat(`${speed}`);
+    this._demoSpeed = Number.parseFloat(`${speed}`);
     this.command("demo_setspeed", this._demoSpeed);
   }
 
@@ -307,10 +339,18 @@ export class FteController {
   }
 
   _trackByDelta(delta: 1 | -1) {
-    const all_ids = this.module.getPlayerInfo().map((p) => p.id);
-    const current_index = all_ids.indexOf(this.getTrackUserid());
-    const new_index = (current_index + delta + all_ids.length) % all_ids.length;
-    this.track(all_ids[new_index]);
+    const current_userid = this.getTrackUserid();
+
+    if (!current_userid) {
+      return;
+    }
+
+    const all_userids = this.getPlayers().map((p) => p.userid);
+    const current_index = all_userids.indexOf(current_userid);
+    const new_index =
+      (current_index + delta + all_userids.length) % all_userids.length;
+    const new_userid = all_userids[new_index];
+    this.track(new_userid);
   }
 
   // volume
@@ -349,26 +389,8 @@ export class FteController {
 
   setVolume(value: number | string) {
     this._lastVolume = this.getVolume();
-    this._volume = parseFloat(`${value}`);
+    this._volume = Number.parseFloat(`${value}`);
     this.command("volume", this.getVolume());
-  }
-
-  // split screen
-  getSplitScreen() {
-    return this._splitscreen;
-  }
-
-  toggleSplitscreen() {
-    this.setSplitscreen(this.getSplitScreen() === 0 ? 1 : 0);
-  }
-
-  setSplitscreen(value: 0 | 1) {
-    this._splitscreen = value;
-    this.command("cl_splitscreen", this.getSplitScreen());
-
-    if (this.getSplitScreen() > 0 && this.isPaused()) {
-      this.command("demo_nudge 1");
-    }
   }
 
   // console
@@ -398,7 +420,6 @@ export class FteController {
 
     // speed
     if (playback.demo_setspeed !== this.getDemoSpeed()) {
-      console.log("### set speed", playback.demo_setspeed);
       this.setDemoSpeed(playback.demo_setspeed);
     }
 
@@ -407,7 +428,6 @@ export class FteController {
     const shouldDemoJump = timeDelta > 3;
 
     if (shouldDemoJump) {
-      console.log("### demo jump", playback.demo_jump);
       this.demoJump(playback.demo_jump);
     }
 

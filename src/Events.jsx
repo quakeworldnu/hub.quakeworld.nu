@@ -1,6 +1,6 @@
-import React, { Fragment } from "react";
 import { useGetEventsQuery } from "@qwhub/services/hub/hub";
 import _groupby from "lodash.groupby";
+import React, { Fragment } from "react";
 import { Heading } from "./Common";
 
 const wikiUrl = "https://www.quakeworld.nu/wiki/";
@@ -29,6 +29,7 @@ export default function Events() {
                     src={e.logo_url}
                     width={18}
                     height={18}
+                    alt=""
                     className="inline mr-1"
                   />{" "}
                   {e.title}
