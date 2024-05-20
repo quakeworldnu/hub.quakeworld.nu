@@ -10,8 +10,13 @@ export type FteModule = FtePreloadModule &
   FteContants & {
     getClientState: () => ClientState;
     getDemoTime: () => number;
-    getTrackUserid: (seatIndex: number) => number;
   };
+
+export type PlayerView = {
+  cam_spec_track: number;
+  playernum: number;
+  getTrackedPlayer: () => Player;
+};
 
 export type ClientState = {
   allocated_client_slots: number;
@@ -19,6 +24,7 @@ export type ClientState = {
   teamplay: number;
   getPlayer: (index: number) => Player;
   getPlayerLocation: (index: number) => string;
+  getPlayerView: (seatIndex: number) => PlayerView;
 };
 
 export type Player = {

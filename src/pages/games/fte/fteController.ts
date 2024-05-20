@@ -180,13 +180,23 @@ export class FteController {
     return teams;
   }
 
-  getTrackUserid() {
+  getTrackedPlayer(): Player | null {
     try {
       const seatIndex = 0; // index of screen in splitscreen
-      return this.module.getTrackUserid(seatIndex);
+      return this.getClientState().getPlayerView(seatIndex).getTrackedPlayer();
     } catch (e) {
-      return -1;
+      return null;
     }
+  }
+
+  getTrackUserid(): number | null {
+    const tracked_player = this.getTrackedPlayer();
+
+    if (tracked_player) {
+      return tracked_player.userid;
+    }
+
+    return null;
   }
 
   // demo playback
@@ -329,10 +339,18 @@ export class FteController {
   }
 
   _trackByDelta(delta: 1 | -1) {
-    const all_ids = this.getPlayers().map((p) => p.userid);
-    const current_index = all_ids.indexOf(this.getTrackUserid());
-    const new_index = (current_index + delta + all_ids.length) % all_ids.length;
-    this.track(all_ids[new_index]);
+    const current_userid = this.getTrackUserid();
+
+    if (!current_userid) {
+      return;
+    }
+
+    const all_userids = this.getPlayers().map((p) => p.userid);
+    const current_index = all_userids.indexOf(current_userid);
+    const new_index =
+      (current_index + delta + all_userids.length) % all_userids.length;
+    const new_userid = all_userids[new_index];
+    this.track(new_userid);
   }
 
   // volume
