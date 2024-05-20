@@ -36,7 +36,7 @@ export const EnableClipEditorButton = () => {
       Math.max(fte.getDemoElapsedTime() - DEFAULT_CLIP_LENGTH, 0),
       fte.getDemoElapsedTime(),
     ]);
-    setTrack(fte.isUsingAutotrack() ? "auto" : fte.getTrackUserid());
+    setTrack(fte.isUsingAutotrack() ? "auto" : fte.getTrackUserid() || "");
     enable();
     fte.pause();
   }
