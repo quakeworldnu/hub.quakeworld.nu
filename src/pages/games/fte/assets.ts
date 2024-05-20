@@ -199,23 +199,8 @@ function getStreambotAssets(): FteAssets {
     "textures/models/armor.mdl_0.jpg",
     "textures/models/armor.mdl_1.jpg",
     "textures/models/armor.mdl_2.jpg",
-    /*
-    "textures/models/g_light.mdl_0.jpg",
-    "textures/models/g_nail2.mdl_0.jpg",
-    "textures/models/g_rock.mdl_0.jpg",
-    "textures/models/g_rock2.mdl_0.jpg",
-    "textures/models/g_shot.mdl_0.jpg",
-    */
+
     "textures/models/quaddama.mdl_0.png",
-    /*
-    "textures/models/v_light.mdl_0.jpg",
-    "textures/models/v_nail.mdl_0.jpg",
-    "textures/models/v_nail2.mdl_0.jpg",
-    "textures/models/v_rock.mdl_0.jpg",
-    "textures/models/v_rock2.mdl_0.jpg",
-    "textures/models/v_shot.mdl_0.jpg",
-    "textures/models/v_shot2.mdl_0.jpg",
-    */
 
     "textures/tracker/axe.png",
     "textures/tracker/coil.png",
@@ -508,6 +493,20 @@ function getGeneralAssets(): FteAssets {
     "id1/textures/particles/smoke.png",
     "id1/textures/particles/v_rock2_flash.png",
     "id1/textures/particles/v_shot2_flash.png",
+    /*
+    "id1/textures/models/g_light.mdl_0.jpg",
+    "id1/textures/models/g_nail2.mdl_0.jpg",
+    "id1/textures/models/g_rock.mdl_0.jpg",
+    "id1/textures/models/g_rock2.mdl_0.jpg",
+    "id1/textures/models/g_shot.mdl_0.jpg",
+    "id1/textures/models/v_light.mdl_0.jpg",
+    "id1/textures/models/v_nail.mdl_0.jpg",
+    "id1/textures/models/v_nail2.mdl_0.jpg",
+    "id1/textures/models/v_rock.mdl_0.jpg",
+    "id1/textures/models/v_rock2.mdl_0.jpg",
+    "id1/textures/models/v_shot.mdl_0.jpg",
+    "id1/textures/models/v_shot2.mdl_0.jpg",
+    */
     "id1/textures/sfx/quad.png",
     "id1/textures/#teleport.png",
     "id1/gfx/inv_nails.png",
