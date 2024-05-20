@@ -10,7 +10,7 @@
     ],
     "headers": [
       {
-        "source": "**/*.html",
+        "source": "games/**",
         "headers": [
           {
             "key": "Cache-Control",
