@@ -73,8 +73,8 @@ export const FteCanvas = () => {
     onSingleTap: () => fte?.togglePlay(),
   });
 
-  const longPress = useLongPress(() => fte?.command("+showscores"), {
-    onFinish: () => fte?.command("-showscores"),
+  const longPress = useLongPress(() => fte?.command("+__showscores"), {
+    onFinish: () => fte?.command("-__showscores"),
   });
 
   const swipe = useSwipeable({
