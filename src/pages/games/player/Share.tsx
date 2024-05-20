@@ -16,7 +16,7 @@ export const ShareDemoButton = () => {
   const [gameElapsedTime, setGameElapsedTime] = useState<number>(0);
   const [useFrom, toggleUseFrom] = useToggle(false);
   const [isUsingAutotrack, setIsUsingAutotrack] = useState<boolean>(false);
-  const [trackUserId, setTrackUserId] = useState<number>(0);
+  const [trackUserId, setTrackUserId] = useState<number | "">(0);
   const [url, setUrl] = useState<string>(getUrl());
   const [, copyToClipboard] = useCopyToClipboard();
 
@@ -25,7 +25,7 @@ export const ShareDemoButton = () => {
       return;
     }
     fte.pause();
-    setTrackUserId(fte.getTrackUserid());
+    setTrackUserId(fte.getTrackUserid() || "");
     setGameElapsedTime(Math.floor(fte.getGameElapsedTime()));
     setIsUsingAutotrack(fte.isUsingAutotrack());
     setUrl(getUrl());
