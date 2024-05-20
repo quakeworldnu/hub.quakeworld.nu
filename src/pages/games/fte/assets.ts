@@ -1,7 +1,7 @@
 import { getMapTextures } from "./map_textures.ts";
 import type { FteAssets } from "./types.ts";
 import { idMaps } from "./idMaps.ts";
-import {ASSETS_VERSION} from "./meta.ts";
+import { ASSETS_VERSION } from "./meta.ts";
 
 const FTE_ASSETS_URL =
   "https://raw.githubusercontent.com/vikpe/fte-web-assets/main";
@@ -194,10 +194,16 @@ function getStreambotAssets(): FteAssets {
     "textures/bmodels/shot1sid.jpg",
     "textures/bmodels/shot1top.jpg",
 
-    "textures/models/armor.mdl_0.jpg",
-    "textures/models/armor.mdl_1.jpg",
-    "textures/models/armor.mdl_2.jpg",
-
+    "textures/models/armor.mdl_0.png",
+    "textures/models/armor.mdl_1.png",
+    "textures/models/armor.mdl_2.png",
+    "textures/models/backpack.mdl_0.jpg",
+    "textures/models/end1.mdl_0.png",
+    "textures/models/end2.mdl_0.png",
+    "textures/models/end3.mdl_0.png",
+    "textures/models/end4.mdl_0.png",
+    "textures/models/flag.mdl_0.jpg",
+    "textures/models/flag.mdl_1.jpg",
     "textures/models/quaddama.mdl_0.png",
 
     "textures/tracker/axe.png",
@@ -477,23 +483,18 @@ function getGeneralAssets(): FteAssets {
     "id1/sound/weapons/shotgn2.wav",
     "id1/sound/weapons/spike2.wav",
     "id1/sound/weapons/tink1.wav",
-    "id1/textures/grenade_glow.png",
+    "id1/textures/#lava1.jpg",
+    "id1/textures/#lava1_luma.jpg",
+    "id1/textures/#teleport.jpg",
     "id1/textures/grenade.png",
-    "id1/textures/#lava1_luma.png",
-    "id1/textures/#lava1.png",
-    "id1/textures/missile_glow.png",
+    "id1/textures/grenade_glow.png",
     "id1/textures/missile.png",
-    "id1/textures/models/backpack.mdl_0.png",
-    "id1/textures/models/end1.mdl_0.png",
-    "id1/textures/models/end2.mdl_0.png",
-    "id1/textures/models/end3.mdl_0.png",
-    "id1/textures/models/end4.mdl_0.png",
-    "id1/textures/models/flag.mdl_0.png",
-    "id1/textures/models/flag.mdl_1.png",
-    "id1/textures/models/gib1.mdl_0.png",
-    "id1/textures/models/gib2.mdl_0.png",
-    "id1/textures/models/h_player.mdl_0.png",
-    "id1/textures/models/v_axe.mdl_0.png",
+    "id1/textures/missile_glow.png",
+    "id1/textures/models/gib1.mdl_0.jpg",
+    "id1/textures/models/gib2.mdl_0.jpg",
+    "id1/textures/models/h_player.mdl_0.jpg",
+    "id1/textures/models/v_axe.mdl_0.jpg",
+    "id1/textures/sfx/quad.png",
     "id1/textures/particles/bubble.png",
     "id1/textures/particles/flame.png",
     "id1/textures/particles/generic.png",
@@ -515,8 +516,7 @@ function getGeneralAssets(): FteAssets {
     "id1/textures/models/v_shot.mdl_0.jpg",
     "id1/textures/models/v_shot2.mdl_0.jpg",
     */
-    "id1/textures/sfx/quad.png",
-    "id1/textures/#teleport.png",
+
     "id1/gfx/inv_nails.png",
     "id1/gfx/inv_rocket.png",
     "id1/gfx/inv_shells.png",
