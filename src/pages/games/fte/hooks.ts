@@ -19,7 +19,7 @@ export function useFteLoader({
   assets: FteAssets;
   demoTotalTime: number | null;
 }) {
-  const scriptPath = fteAsset(`/ftewebgl.js?version=${FTE_VERSION}`);
+  const scriptPath = fteAsset(`ftewebgl.js?version=${FTE_VERSION}`);
   const scriptStatus = useScript(scriptPath, { removeOnUnmount: true });
   const { count: loaded, increment } = useCounter(0);
   const [fte, setFte] = useState<undefined | FteController>(undefined);
