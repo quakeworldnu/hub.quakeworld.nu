@@ -32,7 +32,7 @@ export class FteController {
   private _lastVolume = 0.0;
   private _maxVolume = 0.2;
   private _lastDemoSpeed = 100;
-  private _lastTrackUserId = -1;
+  private _lastTrackUserId: number | null = null;
   private _trackTarget: {
     demoTime: number;
     timeout: ReturnType<typeof setTimeout> | null;
@@ -234,19 +234,18 @@ export class FteController {
 
   _restoreTrack() {
     const timeDiff = this.getDemoElapsedTime() - this._trackTarget.demoTime;
-    const acceptableDiff = 0.05;
 
+    const acceptableDiff = 0.15;
     if (!this._trackTarget.timeout || timeDiff > acceptableDiff) {
       return;
     }
-
     // disable new checks
     clearTimeout(this._trackTarget.timeout);
 
     // restore track
     if (this.isUsingAutotrack()) {
       this.enableAutotrack();
-    } else {
+    } else if (this._lastTrackUserId) {
       this.track(this._lastTrackUserId);
     }
   }
@@ -312,6 +311,7 @@ export class FteController {
   }
 
   disableAutotrack() {
+    this._lastTrackUserId = this.getTrackUserid();
     this.setAutotrack(Autotrack.OFF);
   }
 
@@ -324,7 +324,9 @@ export class FteController {
   }
 
   track(userid: number | string) {
-    this.disableAutotrack();
+    if (this.isUsingAutotrack()) {
+      this.disableAutotrack();
+    }
     const userid_ = Number(userid);
     this._lastTrackUserId = userid_;
     this.command("track", userid_);
