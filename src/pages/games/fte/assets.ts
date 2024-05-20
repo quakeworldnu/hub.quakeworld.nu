@@ -56,8 +56,6 @@ function getStreambotAssets(): FteAssets {
   const filePaths = [
     "textures/charsets/povo5f_xtm.png",
     "crosshairs/xtm01.png",
-    "skins/enemy.jpg",
-    "skins/team.jpg",
     "skins/red.jpg",
     "skins/blue.jpg",
     "gfx/sb_armor1.png",
@@ -335,6 +333,8 @@ function getGeneralAssets(): FteAssets {
     "id1/progs/w_shot.mdl",
     "id1/progs/w_shot2.mdl",
     "id1/scripts/shell.shader",
+    "id1/skins/enemy.jpg",
+    "id1/skins/team.jpg",
     "id1/sound/ambience/buzz1.wav",
     "id1/sound/ambience/comp1.wav",
     "id1/sound/ambience/drip1.wav",
