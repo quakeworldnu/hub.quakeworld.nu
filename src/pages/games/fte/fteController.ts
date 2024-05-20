@@ -234,8 +234,8 @@ export class FteController {
 
   _restoreTrack() {
     const timeDiff = this.getDemoElapsedTime() - this._trackTarget.demoTime;
+    const acceptableDiff = 1;
 
-    const acceptableDiff = 0.15;
     if (!this._trackTarget.timeout || timeDiff > acceptableDiff) {
       return;
     }
