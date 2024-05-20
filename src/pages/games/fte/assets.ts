@@ -1,7 +1,7 @@
-import { getMapTextures } from "./map_textures.ts";
-import type { FteAssets } from "./types.ts";
 import { idMaps } from "./idMaps.ts";
+import { getMapTextures } from "./map_textures.ts";
 import { ASSETS_VERSION } from "./meta.ts";
+import type { FteAssets } from "./types.ts";
 
 const FTE_ASSETS_URL =
   "https://raw.githubusercontent.com/vikpe/fte-web-assets/main";

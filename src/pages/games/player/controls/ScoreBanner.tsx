@@ -1,8 +1,8 @@
 import classNames from "classnames";
 import { useFteController } from "../../fte/hooks.ts";
+import { Player } from "../../fte/types.ts";
 import { useUpdateInterval } from "../../hooks.ts";
 import { toColoredHtml } from "../../qwstrings.ts";
-import { Player } from "../../fte/types.ts";
 import { formatElapsed } from "../../time.ts";
 
 type Participant = {

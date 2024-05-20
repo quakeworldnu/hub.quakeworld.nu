@@ -3,8 +3,8 @@ import { useCounter, useEffectOnce, useInterval, useScript } from "usehooks-ts";
 import { useEventListener } from "../hooks.ts";
 import { fteAsset } from "./assets.ts";
 import { FteController } from "./fteController.ts";
-import type { FteAssets, FteModule, FtePreloadModule } from "./types.ts";
 import { FTE_VERSION } from "./meta.ts";
+import type { FteAssets, FteModule, FtePreloadModule } from "./types.ts";
 
 declare global {
   interface Window {
