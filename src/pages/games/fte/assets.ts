@@ -1,6 +1,6 @@
 import { idMaps } from "./idMaps.ts";
 import { getMapTextures } from "./map_textures.ts";
-import { ASSETS_VERSION } from "./meta.ts";
+import { CONFIG_VERSION } from "./meta.ts";
 import type { FteAssets } from "./types.ts";
 
 const FTE_ASSETS_URL =
@@ -543,8 +543,8 @@ function getGeneralAssets(): FteAssets {
   ];
 
   const assets: FteAssets = {
-    "id1/config.cfg": fteAsset(`config.cfg?v=${ASSETS_VERSION}`),
-    "id1/hud.cfg": fteAsset(`hud.cfg?v=${ASSETS_VERSION}`),
+    "id1/config.cfg": fteAsset(`config.cfg?v=${CONFIG_VERSION}`),
+    "id1/hud.cfg": fteAsset(`hud.cfg?v=${CONFIG_VERSION}`),
   };
 
   for (const path of filePaths) {
