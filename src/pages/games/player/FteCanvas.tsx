@@ -21,7 +21,7 @@ export const FteCanvas = () => {
       switch (e.key) {
         case "Tab":
           e.preventDefault();
-          return fte.command("+__showscores");
+          return fte.command("+showscores");
         default:
           break;
       }
@@ -43,7 +43,7 @@ export const FteCanvas = () => {
           e.preventDefault();
           return fte.togglePlay();
         case "Tab":
-          return fte.command("-__showscores");
+          return fte.command("-showscores");
         default:
           break;
       }
@@ -73,8 +73,8 @@ export const FteCanvas = () => {
     onSingleTap: () => fte?.togglePlay(),
   });
 
-  const longPress = useLongPress(() => fte?.command("+__showscores"), {
-    onFinish: () => fte?.command("-__showscores"),
+  const longPress = useLongPress(() => fte?.command("+showscores"), {
+    onFinish: () => fte?.command("-showscores"),
   });
 
   const swipe = useSwipeable({
