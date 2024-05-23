@@ -1,8 +1,8 @@
 import {
   useEventListener as uhUseEventListener,
   useCounter,
-  useInterval,
   useEffectOnce,
+  useInterval,
 } from "usehooks-ts";
 
 export function useUpdateInterval(delay: number | null) {
