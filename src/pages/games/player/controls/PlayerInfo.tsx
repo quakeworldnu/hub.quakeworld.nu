@@ -177,16 +177,6 @@ const BestWeapon = ({
   return "";
 };
 
-const PlayerColors = ({ text, colors }: { text: string; colors: number[] }) => {
-  return (
-    <span
-      className={`w-full h-full font-bold text-center qw-bgcolor-${colors[0]}-${colors[1]}`}
-    >
-      <span className="sc-frags">{text}</span>
-    </span>
-  );
-};
-
 export const Armor = ({
   value,
   isGreen,
@@ -201,7 +191,7 @@ export const Armor = ({
   return (
     <span
       className={classNames({
-        "text-green-400": isGreen,
+        "text-green-500": isGreen,
         "text-[#ff0]": isYellow,
         "text-[#f00]": isRed,
       })}
