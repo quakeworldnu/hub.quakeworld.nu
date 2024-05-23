@@ -2,6 +2,7 @@ import {
   useEventListener as uhUseEventListener,
   useCounter,
   useInterval,
+  useEffectOnce,
 } from "usehooks-ts";
 
 export function useUpdateInterval(delay: number | null) {
@@ -23,4 +24,16 @@ export function useEventListener(
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   uhUseEventListener(eventName, handler);
+}
+
+export function useWakeLock() {
+  useEffectOnce(() => {
+    async function requestWakeLock() {
+      try {
+        await navigator.wakeLock.request("screen");
+      } catch (err) {}
+    }
+
+    requestWakeLock();
+  });
 }

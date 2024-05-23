@@ -5,10 +5,14 @@ import { useLongPress } from "use-long-press";
 import { useEventListener } from "usehooks-ts";
 import { useFteController } from "../fte/hooks.ts";
 import { toggleFullscreen } from "../fullscreen.ts";
+import { useWakeLock } from "../hooks.ts";
 
 export const FteCanvas = () => {
   const fte = useFteController();
   const documentRef = useRef<Document>(document);
+
+  // prevent screen idle
+  useWakeLock();
 
   // keyboard events
   useEventListener(
