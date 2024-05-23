@@ -26,13 +26,13 @@ export const Controls = () => {
   return (
     <div
       className={classNames(
-        "flex flex-wrap transition-opacity duration-500 bg-black/60 justify-between px-2 sm:px-4",
+        "flex flex-wrap transition-opacity duration-200 bg-black/60 justify-between px-2 sm:px-4",
         {
           "opacity-0": !showClipEditor && isIdle,
         },
       )}
     >
-      <div className="w-full justify-end">
+      <div className="w-full">
         <TimeSlider />
       </div>
 

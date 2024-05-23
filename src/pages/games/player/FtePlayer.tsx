@@ -7,6 +7,7 @@ import { Controls } from "./Controls.tsx";
 import { FteCanvas } from "./FteCanvas.tsx";
 import { useClipPlayback } from "./clips/hooks.ts";
 import { ScoreBanner } from "./controls/ScoreBanner.tsx";
+import { PlayerInfo } from "./controls/PlayerInfo.tsx";
 
 export const FtePlayer = ({
   demo,
@@ -27,7 +28,7 @@ export const FtePlayer = ({
     onIdle: () => dispatchEvent(new Event("demoplayer.mouse.idle")),
     onActive: () => dispatchEvent(new Event("demoplayer.mouse.active")),
     events: ["mousemove"],
-    timeout: 2500,
+    timeout: 2000,
   });
 
   return (
@@ -39,9 +40,19 @@ export const FtePlayer = ({
         <FteCanvas />
 
         {fte && (
-          <div className={"absolute w-full pt-[1%]"}>
-            <ScoreBanner />
-          </div>
+          <>
+            <div
+              className={
+                "absolute hidden sm:flex scale-50 lg:scale-75 xl:scale-100 origin-bottom-right right-[1%] bottom-24"
+              }
+            >
+              <PlayerInfo />
+            </div>
+
+            <div className={"absolute w-full pt-[1%]"}>
+              <ScoreBanner />
+            </div>
+          </>
         )}
       </div>
       <div

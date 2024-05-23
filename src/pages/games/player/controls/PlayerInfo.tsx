@@ -1,0 +1,224 @@
+import classNames from "classnames";
+import { useFteController, useFteUpdateOnEvent } from "../../fte/hooks.ts";
+import type { Player, Team } from "../../fte/types.ts";
+import { useUpdateInterval } from "../../hooks.ts";
+import { toColoredHtml } from "../../qwstrings.ts";
+
+const QuakeText = ({ name }: { name: number[] }) => {
+  return (
+    <span
+      dangerouslySetInnerHTML={{
+        __html: toColoredHtml(String.fromCharCode(...name)),
+      }}
+    />
+  );
+};
+
+export const PlayerInfo = () => {
+  useUpdateInterval(100);
+  useFteUpdateOnEvent("track");
+  const fte = useFteController();
+
+  if (!fte) {
+    return null;
+  }
+  const trackUserid = fte.getTrackUserid();
+  // const gameHasStarted = fte.getGameElapsedTime() > 0;
+
+  let teams: Team[];
+  const state = fte.getClientState();
+  const showTeams = state.teamplay > 0;
+
+  if (showTeams) {
+    teams = fte.getTeams();
+  } else {
+    teams = fte.getPlayers().map((p: Player) => ({
+      name: p.getName(),
+      namePlain: p.getNamePlain(),
+      frags: p.frags,
+      players: [p],
+      topcolor: p.topcolor,
+      bottomcolor: p.bottomcolor,
+    }));
+  }
+
+  const c = fte.module;
+
+  return (
+    <div className="select-none">
+      {teams.map((t: Team) => (
+        <div key={t.namePlain} className="mb-4">
+          {showTeams && (
+            <div className="flex justify-end mb-1">
+              <div
+                className={`px-2 text-center qw-bgcolor-${t.topcolor}-${t.bottomcolor} border text-sm font-bold app-text-shadow border-black/50`}
+              >
+                <QuakeText name={t.name} />: {t.frags}
+              </div>
+            </div>
+          )}
+          <div>
+            {t.players.map((p: Player) => {
+              const stats = p.getStats();
+              const items = stats[c.STAT_ITEMS];
+              const isAlive = stats[c.STAT_HEALTH] > 0;
+
+              return (
+                <button
+                  className={classNames(
+                    {
+                      "font-bold bg-black/50 rounded": p.userid === trackUserid,
+                      "text-gray-300": p.userid !== trackUserid,
+                    },
+                    "grid app-playerinfo-grid w-full gap-1 transition-colors focus:outline-none text-sm",
+                  )}
+                  key={p.userid}
+                  onClick={() => fte.track(p.userid)}
+                >
+                  <div className="app-effect-fade-in-children">
+                    <Powerups
+                      hasPent={(items & c.IT_INVULNERABILITY) !== 0}
+                      hasQuad={(items & c.IT_QUAD) !== 0}
+                      hasRing={(items & c.IT_INVISIBILITY) !== 0}
+                    />
+                  </div>
+                  <div className="whitespace-nowrap grow text-left">
+                    <QuakeText name={p.getName()} />
+                  </div>
+                  <div>
+                    <span className="qw-color-b font-bold">[</span>
+                    <span className="inline-block w-11">
+                      {p.getLocation().substring(0, 5)}
+                    </span>
+                    <span className="qw-color-b font-bold">]</span>
+                  </div>
+                  <div className="flex content-around justify-end">
+                    {isAlive && (
+                      <>
+                        <div className="text-right">
+                          <Armor
+                            value={stats[c.STAT_ARMOR]}
+                            isGreen={(items & c.IT_ARMOR1) !== 0}
+                            isYellow={(items & c.IT_ARMOR2) !== 0}
+                            isRed={(items & c.IT_ARMOR3) !== 0}
+                          />
+                        </div>
+                        <div className="mx-px">/</div>
+                        <div className="text-left w-6">
+                          <Health value={stats[c.STAT_HEALTH]} />
+                        </div>
+                      </>
+                    )}
+                  </div>
+                  <div className="uppercase app-effect-fade-in-children">
+                    <BestWeapon
+                      hasSsg={(items & c.IT_SUPER_SHOTGUN) !== 0}
+                      hasSng={(items & c.IT_SUPER_NAILGUN) !== 0}
+                      hasGl={(items & c.IT_GRENADE_LAUNCHER) !== 0}
+                      hasRl={(items & c.IT_ROCKET_LAUNCHER) !== 0}
+                      hasLg={(items & c.IT_LIGHTNING) !== 0}
+                    />
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const Powerups = ({
+  hasPent,
+  hasQuad,
+  hasRing,
+}: {
+  hasPent: boolean;
+  hasQuad: boolean;
+  hasRing: boolean;
+}) => {
+  return (
+    <>
+      {hasQuad && <span className="text-[#69f]">Q</span>}
+      {hasPent && <span className="text-[#f00]">P</span>}
+      {hasRing && <span className="text-[#ff0]">R</span>}
+    </>
+  );
+};
+
+const BestWeapon = ({
+  hasSsg,
+  hasSng,
+  hasGl,
+  hasRl,
+  hasLg,
+}: {
+  hasSsg: boolean;
+  hasSng: boolean;
+  hasGl: boolean;
+  hasRl: boolean;
+  hasLg: boolean;
+}) => {
+  if (hasRl || hasLg) {
+    return (
+      <>
+        {hasRl && <span className="text-amber-500 font-bold">rl</span>}
+        <span className="text-cyan-400 font-bold">{!hasRl && "l"}g</span>
+      </>
+    );
+  } else if (hasGl) {
+    return <span>gl</span>;
+  } else if (hasSng) {
+    return <span className="text-gray-400">sng</span>;
+  } else if (hasSsg) {
+    return <span className="text-gray-400">ssg</span>;
+  }
+  return "";
+};
+
+const PlayerColors = ({ text, colors }: { text: string; colors: number[] }) => {
+  return (
+    <span
+      className={`w-full h-full font-bold text-center qw-bgcolor-${colors[0]}-${colors[1]}`}
+    >
+      <span className="sc-frags">{text}</span>
+    </span>
+  );
+};
+
+export const Armor = ({
+  value,
+  isGreen,
+  isYellow,
+  isRed,
+}: {
+  value: number;
+  isGreen: boolean;
+  isYellow: boolean;
+  isRed: boolean;
+}) => {
+  return (
+    <span
+      className={classNames({
+        "text-green-400": isGreen,
+        "text-[#ff0]": isYellow,
+        "text-[#f00]": isRed,
+      })}
+    >
+      {value}
+    </span>
+  );
+};
+
+export const Health = ({ value }: { value: number }) => {
+  return (
+    <span
+      className={classNames({
+        "text-[#b00]": value < 25,
+      })}
+    >
+      {value}
+    </span>
+  );
+};

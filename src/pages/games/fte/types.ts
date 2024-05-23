@@ -33,6 +33,7 @@ export type Player = {
   frags: number;
   topcolor: number;
   bottomcolor: number;
+  getLocation: () => string;
   getName: () => number[];
   getNamePlain: () => string;
   getTeam: () => number[];
