@@ -119,6 +119,7 @@ export const PlayerInfo = () => {
                       hasLg={(items & c.IT_LIGHTNING) !== 0}
                     />
                   </div>
+                  <div>{player.frags}</div>
                 </button>
               );
             })}
