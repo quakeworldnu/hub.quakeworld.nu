@@ -27,7 +27,8 @@
       },
       "style": {
         "useForOf": "off",
-        "useImportType": "off"
+        "useImportType": "off",
+        "noUselessElse": "off"
       }
     }
   },
