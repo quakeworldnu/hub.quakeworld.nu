@@ -1,2 +1,2 @@
-export const CONFIG_VERSION = 3;
+export const CONFIG_VERSION = 4;
 export const FTE_VERSION = 2;
