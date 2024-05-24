@@ -40,7 +40,7 @@ export const ScoreBanner = () => {
   }
 
   return (
-    <div className="flex flex-col items-center pointer-events-none select-none">
+    <div className="flex flex-col items-center pointer-events-none select-none text-nowrap">
       <div className="flex items-center font-bold app-text-shadow">
         <Participant participant={participants[0]} index={0} />
         <Participant participant={participants[1]} index={1} />
