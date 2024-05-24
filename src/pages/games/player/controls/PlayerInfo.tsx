@@ -196,13 +196,18 @@ const BestWeapon = ({
   hasRl: boolean;
   hasLg: boolean;
 }) => {
-  if (hasRl || hasLg) {
+  const hasRlg = hasRl && hasLg;
+  if (hasRlg) {
     return (
       <>
-        {hasRl && <span className="text-amber-500">rl</span>}
-        <span className="text-cyan-400">{!hasRl && "l"}g</span>
+        <span className="text-amber-500">rl</span>
+        <span className="text-cyan-400">g</span>
       </>
     );
+  } else if (hasLg) {
+    return <span className="text-cyan-400">lg</span>;
+  } else if (hasRl) {
+    return <span className="text-amber-500">rl</span>;
   } else if (hasGl) {
     return <span>gl</span>;
   } else if (hasSng) {
