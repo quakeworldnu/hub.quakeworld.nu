@@ -49,7 +49,7 @@ export const Player = ({ demoId }: { demoId: number }) => {
       fte.command("teamskin", '""');
 
       for (const p of fte.getPlayers()) {
-        p.setUserInfo("skin", p.getTeamPlain());
+        p.setUserInfo("skin", `ctf_${p.getTeamPlain()}`);
       }
     }
   }, [fte]);

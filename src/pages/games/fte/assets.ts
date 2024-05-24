@@ -56,8 +56,8 @@ function getStreambotAssets(): FteAssets {
   const filePaths = [
     "textures/charsets/povo5f_xtm.png",
     "crosshairs/xtm01.png",
-    "skins/red.jpg",
-    "skins/blue.jpg",
+    "skins/ctf_blue.jpg",
+    "skins/ctf_red.jpg",
     "gfx/sb_armor1.png",
     "gfx/sb_armor2.png",
     "gfx/sb_armor3.png",
