@@ -7,6 +7,10 @@
 @import "react-modern-drawer/dist/index.css";
 @import "react-toastify/dist/ReactToastify.css";
 
+.app-playerinfo-grid {
+  grid-template-columns: 32px 1fr 80px 64px 36px 32px;
+}
+
 .EZDrawer .EZDrawer__container {
   @apply bg-slate-900 text-gray-300 h-full p-3;
 }
@@ -45,13 +49,13 @@
 }
 
 .app-text-outline {
-  text-shadow:
-    1px -1px 0 black,
-    -1px -1px 0 black,
-    1px 1px 0 black,
-    -1px 1px 0 black;
+  text-shadow: 1px -1px 0 black,
+  -1px -1px 0 black,
+  1px 1px 0 black,
+  -1px 1px 0 black;
 }
 
+.app-effect-fade-in-children > *,
 .app-effect-fade-in {
   will-change: opacity;
   animation: fadein 0.5s;

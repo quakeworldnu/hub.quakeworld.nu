@@ -8,7 +8,7 @@ const FTE_ASSETS_URL =
 const GENERIC_ASSETS_URL =
   "https://raw.githubusercontent.com/vikpe/qw-assets/main";
 
-const STREAMBOT_ASSETS_URL =
+export const STREAMBOT_ASSETS_URL =
   "https://raw.githubusercontent.com/vikpe/qw-streambot-ezquake/main";
 
 export function fteAsset(path: string) {
