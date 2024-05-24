@@ -1,15 +1,23 @@
 import classNames from "classnames";
-import { useFteController } from "../../fte/hooks.ts";
+import { useBoolean } from "usehooks-ts";
+import { useFteController, useFteEvent } from "../../fte/hooks.ts";
 import { Player } from "../../fte/types.ts";
 import { useUpdateInterval } from "../../hooks.ts";
 import { formatElapsed } from "../../time.ts";
 import { QuakeTextFromBytes } from "../QuakeText.tsx";
 
 export const ResponsiveScoreBanner = ({ scale }: { scale: number }) => {
+  const { value: showscores, setTrue, setFalse } = useBoolean(false);
+  useFteEvent("+showscores", setTrue);
+  useFteEvent("-showscores", setFalse);
+
   return (
     <div
       className={classNames(
         "absolute left-0 right-0 mx-auto origin-top w-px top-[3%]",
+        {
+          hidden: showscores,
+        },
       )}
       style={{ transform: `scale(${scale})` }}
     >
