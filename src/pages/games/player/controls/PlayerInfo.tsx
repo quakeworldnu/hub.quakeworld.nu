@@ -1,9 +1,9 @@
 import classNames from "classnames";
+import { STREAMBOT_ASSETS_URL } from "../../fte/assets.ts";
 import { useFteController, useFteUpdateOnEvent } from "../../fte/hooks.ts";
 import type { Player, Team } from "../../fte/types.ts";
 import { useUpdateInterval } from "../../hooks.ts";
 import { QuakeTextFromBytes } from "../QuakeText.tsx";
-import { STREAMBOT_ASSETS_URL } from "../../fte/assets.ts";
 
 export const ResponsivePlayerInfo = ({ scale }: { scale: number }) => {
   return (
@@ -53,11 +53,12 @@ export const PlayerInfo = () => {
       {teams.map((team: Team) => (
         <div key={team.namePlain} className="mt-4 first:mt-0">
           {showTeams && (
-            <div className="flex justify-end mb-1 mr-0.5">
+            <div className="flex justify-end items-center mb-1 mr-0.5 app-text-shadow space-x-2">
+              <QuakeTextFromBytes name={team.name} />
               <div
-                className={`px-1.5 text-center app-text-shadow rounded text-sm qw-bgcolor-${team.topcolor}-${team.bottomcolor}`}
+                className={`w-10 py-0.5 text-center rounded text-sm qw-bgcolor-${team.topcolor}-${team.bottomcolor}`}
               >
-                <QuakeTextFromBytes name={team.name} />: {team.frags}
+                {team.frags}
               </div>
             </div>
           )}

@@ -41,7 +41,7 @@ export const ScoreBanner = () => {
 
   return (
     <div className="flex flex-col items-center pointer-events-none select-none">
-      <div className="flex items-center font-mono">
+      <div className="flex items-center font-bold app-text-shadow">
         <Participant participant={participants[0]} index={0} />
         <Participant participant={participants[1]} index={1} />
       </div>
@@ -62,10 +62,10 @@ const Participant = ({
   const isFirst = index % 2 === 0;
 
   return (
-    <div className={"flex w-48 justify-end last:flex-row-reverse font-bold"}>
+    <div className={"flex w-48 justify-end last:flex-row-reverse"}>
       <div className="flex items-center">
         <div
-          className={classNames("px-2 py-0.5 bg-black/50", {
+          className={classNames("flex px-2 h-full items-center", {
             "rounded-l pl-2.5": isFirst,
             "rounded-r pr-2.5": !isFirst,
           })}
@@ -75,9 +75,9 @@ const Participant = ({
       </div>
       <div
         className={classNames(
-          `qw-bgcolor-${participant.topcolor}-${participant.bottomcolor} w-12 text-center text-lg font-bold app-text-shadow rounded-sm`,
+          `qw-bgcolor-${participant.topcolor}-${participant.bottomcolor} w-12 text-center text-lg rounded`,
           {
-            "border-r border-black": isFirst,
+            "border-r border-gray-800": isFirst,
           },
         )}
       >
