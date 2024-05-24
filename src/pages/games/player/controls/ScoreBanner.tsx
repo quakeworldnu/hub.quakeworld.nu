@@ -8,7 +8,9 @@ import { QuakeTextFromBytes } from "../QuakeText.tsx";
 export const ResponsiveScoreBanner = ({ scale }: { scale: number }) => {
   return (
     <div
-      className={classNames("absolute origin-top w-full top-[4%]")}
+      className={classNames(
+        "absolute left-0 right-0 mx-auto origin-top w-px top-[3%]",
+      )}
       style={{ transform: `scale(${scale})` }}
     >
       <ScoreBanner />
