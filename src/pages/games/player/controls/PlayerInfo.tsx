@@ -3,6 +3,7 @@ import { useFteController, useFteUpdateOnEvent } from "../../fte/hooks.ts";
 import type { Player, Team } from "../../fte/types.ts";
 import { useUpdateInterval } from "../../hooks.ts";
 import { QuakeTextFromBytes } from "../QuakeText.tsx";
+import { STREAMBOT_ASSETS_URL } from "../../fte/assets.ts";
 
 export const ResponsivePlayerInfo = ({ scale }: { scale: number }) => {
   return (
@@ -83,6 +84,10 @@ export const PlayerInfo = () => {
                       hasPent={(items & c.IT_INVULNERABILITY) !== 0}
                       hasQuad={(items & c.IT_QUAD) !== 0}
                       hasRing={(items & c.IT_INVISIBILITY) !== 0}
+                      hasSigil1={(items & c.IT_SIGIL1) !== 0}
+                      hasSigil2={(items & c.IT_SIGIL2) !== 0}
+                      hasSigil3={(items & c.IT_SIGIL3) !== 0}
+                      hasSigil4={(items & c.IT_SIGIL4) !== 0}
                     />
                   </div>
                   <div className="whitespace-nowrap grow text-left">
@@ -137,17 +142,39 @@ const Powerups = ({
   hasPent,
   hasQuad,
   hasRing,
+  hasSigil1,
+  hasSigil2,
+  hasSigil3,
+  hasSigil4,
 }: {
   hasPent: boolean;
   hasQuad: boolean;
   hasRing: boolean;
+  hasSigil1: boolean;
+  hasSigil2: boolean;
+  hasSigil3: boolean;
+  hasSigil4: boolean;
 }) => {
   return (
     <div className="flex space-x-1 px-1">
       {hasQuad && <span className="text-[#69f]">Q</span>}
       {hasPent && <span className="text-[#f00]">P</span>}
       {hasRing && <span className="text-[#ff0]">R</span>}
+      {hasSigil1 && <Sigil number={1} />}
+      {hasSigil2 && <Sigil number={2} />}
+      {hasSigil3 && <Sigil number={3} />}
+      {hasSigil4 && <Sigil number={4} />}
     </div>
+  );
+};
+
+export const Sigil = ({ number }: { number: number }) => {
+  return (
+    <img
+      src={`${STREAMBOT_ASSETS_URL}/qw/textures/wad/sb_sigil${number}.png`}
+      width={10}
+      height={20}
+    />
   );
 };
 
