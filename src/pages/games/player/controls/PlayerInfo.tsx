@@ -26,117 +26,121 @@ export const PlayerInfo = () => {
   if (!fte) {
     return null;
   }
-  const trackUserid = fte.getTrackUserid();
-  // const gameHasStarted = fte.getGameElapsedTime() > 0;
 
-  let teams: Team[];
-  const state = fte.getClientState();
-  const showTeams = state.teamplay > 0;
+  try {
+    const trackUserid = fte.getTrackUserid();
 
-  if (showTeams) {
-    teams = fte.getTeams();
-  } else {
-    teams = fte.getPlayers().map((p: Player) => ({
-      name: p.getName(),
-      namePlain: p.getNamePlain(),
-      frags: p.frags,
-      players: [p],
-      topcolor: p.topcolor,
-      bottomcolor: p.bottomcolor,
-    }));
-  }
+    let teams: Team[];
+    const state = fte.getClientState();
+    const showTeams = state.teamplay > 0;
 
-  const c = fte.module;
+    if (showTeams) {
+      teams = fte.getTeams();
+    } else {
+      teams = fte.getPlayers().map((p: Player) => ({
+        name: p.getName(),
+        namePlain: p.getNamePlain(),
+        frags: p.frags,
+        players: [p],
+        topcolor: p.topcolor,
+        bottomcolor: p.bottomcolor,
+      }));
+    }
 
-  return (
-    <div className="select-none font-bold">
-      {teams.map((team: Team) => (
-        <div key={team.namePlain} className="mt-4 first:mt-0">
-          {showTeams && (
-            <div className="flex justify-end items-center mb-1 mr-0.5 app-text-shadow space-x-2">
-              <QuakeTextFromBytes name={team.name} />
-              <div
-                className={`w-10 py-0.5 text-center rounded text-sm qw-bgcolor-${team.topcolor}-${team.bottomcolor}`}
-              >
-                {team.frags}
-              </div>
-            </div>
-          )}
-          <div>
-            {team.players.map((player: Player) => {
-              const stats = player.getStats();
-              const items = stats[c.STAT_ITEMS];
-              const isAlive = stats[c.STAT_HEALTH] > 0;
+    const c = fte.module;
 
-              return (
-                <button
-                  className={classNames(
-                    {
-                      "bg-black/50 rounded": player.userid === trackUserid,
-                      "text-gray-300": player.userid !== trackUserid,
-                    },
-                    "grid app-playerinfo-grid w-full gap-1 transition-colors focus:outline-none text-sm",
-                  )}
-                  key={player.userid}
-                  onClick={() => fte.track(player.userid)}
+    return (
+      <div className="select-none font-bold">
+        {teams.map((team: Team) => (
+          <div key={team.namePlain} className="mt-4 first:mt-0">
+            {showTeams && (
+              <div className="flex justify-end items-center mb-1 mr-0.5 app-text-shadow space-x-2">
+                <QuakeTextFromBytes name={team.name} />
+                <div
+                  className={`w-10 py-0.5 text-center rounded text-sm qw-bgcolor-${team.topcolor}-${team.bottomcolor}`}
                 >
-                  <div className="app-effect-fade-in-children">
-                    <Powerups
-                      hasPent={(items & c.IT_INVULNERABILITY) !== 0}
-                      hasQuad={(items & c.IT_QUAD) !== 0}
-                      hasRing={(items & c.IT_INVISIBILITY) !== 0}
-                      hasSigil1={(items & c.IT_SIGIL1) !== 0}
-                      hasSigil2={(items & c.IT_SIGIL2) !== 0}
-                      hasSigil3={(items & c.IT_SIGIL3) !== 0}
-                      hasSigil4={(items & c.IT_SIGIL4) !== 0}
-                    />
-                  </div>
-                  <div className="whitespace-nowrap grow text-left">
-                    <QuakeTextFromBytes name={player.getName()} />
-                  </div>
-                  <div>
-                    <span className="qw-color-b">[</span>
-                    <span className="inline-block w-11">
-                      {player.getLocation().substring(0, 5)}
-                    </span>
-                    <span className="qw-color-b">]</span>
-                  </div>
-                  <div className="flex content-around justify-end">
-                    {isAlive && (
-                      <>
-                        <div className="text-right">
-                          <Armor
-                            value={stats[c.STAT_ARMOR]}
-                            isGreen={(items & c.IT_ARMOR1) !== 0}
-                            isYellow={(items & c.IT_ARMOR2) !== 0}
-                            isRed={(items & c.IT_ARMOR3) !== 0}
-                          />
-                        </div>
-                        <div className="mx-0.5">/</div>
-                        <div className="text-left w-6">
-                          <Health value={stats[c.STAT_HEALTH]} />
-                        </div>
-                      </>
+                  {team.frags}
+                </div>
+              </div>
+            )}
+            <div>
+              {team.players.map((player: Player) => {
+                const stats = player.getStats();
+                const items = stats[c.STAT_ITEMS];
+                const isAlive = stats[c.STAT_HEALTH] > 0;
+
+                return (
+                  <button
+                    className={classNames(
+                      {
+                        "bg-black/50 rounded": player.userid === trackUserid,
+                        "text-gray-300": player.userid !== trackUserid,
+                      },
+                      "grid app-playerinfo-grid w-full gap-1 transition-colors focus:outline-none text-sm",
                     )}
-                  </div>
-                  <div className="uppercase app-effect-fade-in-children">
-                    <BestWeapon
-                      hasSsg={(items & c.IT_SUPER_SHOTGUN) !== 0}
-                      hasSng={(items & c.IT_SUPER_NAILGUN) !== 0}
-                      hasGl={(items & c.IT_GRENADE_LAUNCHER) !== 0}
-                      hasRl={(items & c.IT_ROCKET_LAUNCHER) !== 0}
-                      hasLg={(items & c.IT_LIGHTNING) !== 0}
-                    />
-                  </div>
-                  <div>{player.frags}</div>
-                </button>
-              );
-            })}
+                    key={player.userid}
+                    onClick={() => fte.track(player.userid)}
+                  >
+                    <div className="app-effect-fade-in-children">
+                      <Powerups
+                        hasPent={(items & c.IT_INVULNERABILITY) !== 0}
+                        hasQuad={(items & c.IT_QUAD) !== 0}
+                        hasRing={(items & c.IT_INVISIBILITY) !== 0}
+                        hasSigil1={(items & c.IT_SIGIL1) !== 0}
+                        hasSigil2={(items & c.IT_SIGIL2) !== 0}
+                        hasSigil3={(items & c.IT_SIGIL3) !== 0}
+                        hasSigil4={(items & c.IT_SIGIL4) !== 0}
+                      />
+                    </div>
+                    <div className="whitespace-nowrap grow text-left">
+                      <QuakeTextFromBytes name={player.getName()} />
+                    </div>
+                    <div>
+                      <span className="qw-color-b">[</span>
+                      <span className="inline-block w-11">
+                        {player.getLocation().substring(0, 5)}
+                      </span>
+                      <span className="qw-color-b">]</span>
+                    </div>
+                    <div className="flex content-around justify-end">
+                      {isAlive && (
+                        <>
+                          <div className="text-right">
+                            <Armor
+                              value={stats[c.STAT_ARMOR]}
+                              isGreen={(items & c.IT_ARMOR1) !== 0}
+                              isYellow={(items & c.IT_ARMOR2) !== 0}
+                              isRed={(items & c.IT_ARMOR3) !== 0}
+                            />
+                          </div>
+                          <div className="mx-0.5">/</div>
+                          <div className="text-left w-6">
+                            <Health value={stats[c.STAT_HEALTH]} />
+                          </div>
+                        </>
+                      )}
+                    </div>
+                    <div className="uppercase app-effect-fade-in-children">
+                      <BestWeapon
+                        hasSsg={(items & c.IT_SUPER_SHOTGUN) !== 0}
+                        hasSng={(items & c.IT_SUPER_NAILGUN) !== 0}
+                        hasGl={(items & c.IT_GRENADE_LAUNCHER) !== 0}
+                        hasRl={(items & c.IT_ROCKET_LAUNCHER) !== 0}
+                        hasLg={(items & c.IT_LIGHTNING) !== 0}
+                      />
+                    </div>
+                    <div>{player.frags}</div>
+                  </button>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      ))}
-    </div>
-  );
+        ))}
+      </div>
+    );
+  } catch (e) {
+    return null;
+  }
 };
 
 const Powerups = ({
