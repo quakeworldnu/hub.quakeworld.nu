@@ -1,13 +1,15 @@
 import classNames from "classnames";
 import { useIdleTimer } from "react-idle-timer";
+import { useElementSize } from "usehooks-ts";
 import { useFteController, useFteLoader } from "../fte/hooks.ts";
 import type { FteAssets } from "../fte/types.ts";
+import { roundFloat } from "../math.ts";
 import type { Demo } from "../services/supabase/supabase.types.ts";
 import { Controls } from "./Controls.tsx";
 import { FteCanvas } from "./FteCanvas.tsx";
 import { useClipPlayback } from "./clips/hooks.ts";
-import { ScoreBanner } from "./controls/ScoreBanner.tsx";
-import { PlayerInfo } from "./controls/PlayerInfo.tsx";
+import { ResponsivePlayerInfo } from "./controls/PlayerInfo.tsx";
+import { ResponsiveScoreBanner } from "./controls/ScoreBanner.tsx";
 
 export const FtePlayer = ({
   demo,
@@ -31,27 +33,23 @@ export const FtePlayer = ({
     timeout: 2000,
   });
 
+  const [playerRef, { width }] = useElementSize();
+  const defaultWidth = 1400;
+  const scale = roundFloat(width / defaultWidth, 2);
+
   return (
     <div
       id="ftePlayer"
       className={"relative w-full h-full bg-black aspect-video"}
+      ref={playerRef}
     >
       <div id="FullscreenContent">
         <FteCanvas />
 
         {fte && (
           <>
-            <div
-              className={
-                "absolute hidden sm:flex scale-50 lg:scale-75 xl:scale-100 origin-bottom-right right-[1%] bottom-24"
-              }
-            >
-              <PlayerInfo />
-            </div>
-
-            <div className={"absolute w-full pt-[1%]"}>
-              <ScoreBanner />
-            </div>
+            <ResponsivePlayerInfo scale={scale} />
+            <ResponsiveScoreBanner scale={scale} />
           </>
         )}
       </div>

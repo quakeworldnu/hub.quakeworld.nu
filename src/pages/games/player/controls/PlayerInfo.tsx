@@ -2,15 +2,18 @@ import classNames from "classnames";
 import { useFteController, useFteUpdateOnEvent } from "../../fte/hooks.ts";
 import type { Player, Team } from "../../fte/types.ts";
 import { useUpdateInterval } from "../../hooks.ts";
-import { toColoredHtml } from "../../qwstrings.ts";
+import { QuakeTextFromBytes } from "../QuakeText.tsx";
 
-const QuakeText = ({ name }: { name: number[] }) => {
+export const ResponsivePlayerInfo = ({ scale }: { scale: number }) => {
   return (
-    <span
-      dangerouslySetInnerHTML={{
-        __html: toColoredHtml(String.fromCharCode(...name)),
-      }}
-    />
+    <div
+      className={classNames(
+        "absolute origin-bottom-right right-[1%] bottom-[72px] md:bottom-[96px]",
+      )}
+      style={{ transform: `scale(${scale})` }}
+    >
+      <PlayerInfo />
+    </div>
   );
 };
 
@@ -53,7 +56,7 @@ export const PlayerInfo = () => {
               <div
                 className={`px-1.5 text-center app-text-shadow rounded text-sm qw-bgcolor-${team.topcolor}-${team.bottomcolor}`}
               >
-                <QuakeText name={team.name} />: {team.frags}
+                <QuakeTextFromBytes name={team.name} />: {team.frags}
               </div>
             </div>
           )}
@@ -83,7 +86,7 @@ export const PlayerInfo = () => {
                     />
                   </div>
                   <div className="whitespace-nowrap grow text-left">
-                    <QuakeText name={player.getName()} />
+                    <QuakeTextFromBytes name={player.getName()} />
                   </div>
                   <div>
                     <span className="qw-color-b">[</span>
