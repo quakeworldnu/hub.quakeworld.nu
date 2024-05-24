@@ -45,21 +45,21 @@ export const PlayerInfo = () => {
   const c = fte.module;
 
   return (
-    <div className="select-none">
-      {teams.map((t: Team) => (
-        <div key={t.namePlain} className="mb-4">
+    <div className="select-none font-bold">
+      {teams.map((team: Team) => (
+        <div key={team.namePlain} className="mt-4 first:mt-0">
           {showTeams && (
-            <div className="flex justify-end mb-1">
+            <div className="flex justify-end mb-1 mr-0.5">
               <div
-                className={`px-2 text-center qw-bgcolor-${t.topcolor}-${t.bottomcolor} border text-sm font-bold app-text-shadow border-black/50`}
+                className={`px-1.5 text-center app-text-shadow rounded text-sm qw-bgcolor-${team.topcolor}-${team.bottomcolor}`}
               >
-                <QuakeText name={t.name} />: {t.frags}
+                <QuakeText name={team.name} />: {team.frags}
               </div>
             </div>
           )}
           <div>
-            {t.players.map((p: Player) => {
-              const stats = p.getStats();
+            {team.players.map((player: Player) => {
+              const stats = player.getStats();
               const items = stats[c.STAT_ITEMS];
               const isAlive = stats[c.STAT_HEALTH] > 0;
 
@@ -67,13 +67,13 @@ export const PlayerInfo = () => {
                 <button
                   className={classNames(
                     {
-                      "font-bold bg-black/50 rounded": p.userid === trackUserid,
-                      "text-gray-300": p.userid !== trackUserid,
+                      "bg-black/50 rounded": player.userid === trackUserid,
+                      "text-gray-300": player.userid !== trackUserid,
                     },
                     "grid app-playerinfo-grid w-full gap-1 transition-colors focus:outline-none text-sm",
                   )}
-                  key={p.userid}
-                  onClick={() => fte.track(p.userid)}
+                  key={player.userid}
+                  onClick={() => fte.track(player.userid)}
                 >
                   <div className="app-effect-fade-in-children">
                     <Powerups
@@ -83,14 +83,14 @@ export const PlayerInfo = () => {
                     />
                   </div>
                   <div className="whitespace-nowrap grow text-left">
-                    <QuakeText name={p.getName()} />
+                    <QuakeText name={player.getName()} />
                   </div>
                   <div>
-                    <span className="qw-color-b font-bold">[</span>
+                    <span className="qw-color-b">[</span>
                     <span className="inline-block w-11">
-                      {p.getLocation().substring(0, 5)}
+                      {player.getLocation().substring(0, 5)}
                     </span>
-                    <span className="qw-color-b font-bold">]</span>
+                    <span className="qw-color-b">]</span>
                   </div>
                   <div className="flex content-around justify-end">
                     {isAlive && (
@@ -103,7 +103,7 @@ export const PlayerInfo = () => {
                             isRed={(items & c.IT_ARMOR3) !== 0}
                           />
                         </div>
-                        <div className="mx-px">/</div>
+                        <div className="mx-0.5">/</div>
                         <div className="text-left w-6">
                           <Health value={stats[c.STAT_HEALTH]} />
                         </div>
@@ -140,11 +140,11 @@ const Powerups = ({
   hasRing: boolean;
 }) => {
   return (
-    <>
+    <div className="flex space-x-1 px-1">
       {hasQuad && <span className="text-[#69f]">Q</span>}
       {hasPent && <span className="text-[#f00]">P</span>}
       {hasRing && <span className="text-[#ff0]">R</span>}
-    </>
+    </div>
   );
 };
 
@@ -164,8 +164,8 @@ const BestWeapon = ({
   if (hasRl || hasLg) {
     return (
       <>
-        {hasRl && <span className="text-amber-500 font-bold">rl</span>}
-        <span className="text-cyan-400 font-bold">{!hasRl && "l"}g</span>
+        {hasRl && <span className="text-amber-500">rl</span>}
+        <span className="text-cyan-400">{!hasRl && "l"}g</span>
       </>
     );
   } else if (hasGl) {
@@ -192,6 +192,7 @@ export const Armor = ({
   return (
     <span
       className={classNames({
+        "text-gray-400 font-normal": value === 0,
         "text-green-500": isGreen,
         "text-[#ff0]": isYellow,
         "text-[#f00]": isRed,
