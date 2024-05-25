@@ -30,7 +30,7 @@ export const ScoreBanner = () => {
   const fte = useFteController();
   useUpdateInterval(250);
 
-  if (!fte) {
+  if (!fte || fte.getGameElapsedTime() >= fte.getGameTotalTime()) {
     return null;
   }
 
