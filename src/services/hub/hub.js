@@ -11,10 +11,6 @@ export const hubApi = createApi({
       query: () => "demos",
       transformResponse: transformDemos,
     }),
-    getEvents: build.query({ query: () => "events" }),
-    getForumPosts: build.query({ query: () => "forum_posts" }),
-    getGamesInSpotlight: build.query({ query: () => "games_in_spotlight" }),
-    getNews: build.query({ query: () => "news" }),
     getServer: build.query({
       query: (address) => `servers/${address}`,
       transformResponse: (server) => transformServer(server),
@@ -42,21 +38,13 @@ export const hubApi = createApi({
         return lastscores.filter((e) => e.teams.length + e.players.length > 0);
       },
     }),
-    getWikiRecentChanges: build.query({
-      query: () => "wiki_recent_changes",
-    }),
   }),
 });
 
 export const {
   useGetDemosQuery,
-  useGetEventsQuery,
-  useGetForumPostsQuery,
-  useGetGamesInSpotlightQuery,
-  useGetNewsQuery,
   useGetServerQuery,
   useGetServersQuery,
   useGetStreamsQuery,
   useGetLastscoresQuery,
-  useGetWikiRecentChangesQuery,
 } = hubApi;
