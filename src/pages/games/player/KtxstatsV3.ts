@@ -18,23 +18,30 @@ export interface KtxstatsV3 {
 }
 
 export interface Player {
-  "top-color": number;
-  "bottom-color": number;
+  top_color: number;
+  bottom_color: number;
   ping: number;
   login: string;
   name: string;
   team: string;
-  stats: Stats;
-  dmg: Dmg;
-  xfer: number;
-  spree: Spree;
+  stats: PlayerStats;
+  dmg: PlayerDamage;
+  xfer_rl: number;
+  xfer_lg: number;
+  spree: {
+    max: number;
+    quad: number;
+  };
   control: number;
-  speed: { [key: string]: number };
+  speed: {
+    avg: number;
+    max: number;
+  };
   weapons: Weapons;
   items: Items;
 }
 
-export interface Dmg {
+export interface PlayerDamage {
   taken: number;
   given: number;
   team: number;
@@ -45,23 +52,24 @@ export interface Dmg {
 }
 
 export interface Items {
-  health_25: Ga;
-  health_100: Ga;
-  ya: Ga;
-  ra: Ga;
-  ga?: Ga;
+  health_15?: Health;
+  health_25?: Health;
+  health_100?: Health;
+  ya?: Armor;
+  ra?: Armor;
+  ga?: Armor;
 }
 
-export interface Ga {
+export interface Armor {
+  took: number;
+  time: number;
+}
+
+export interface Health {
   took: number;
 }
 
-export interface Spree {
-  max: number;
-  quad: number;
-}
-
-export interface Stats {
+export interface PlayerStats {
   frags: number;
   deaths: number;
   tk: number;
@@ -71,77 +79,40 @@ export interface Stats {
 }
 
 export interface Weapons {
-  axe: Axe;
-  sg: Sg;
-  ssg: Lg;
-  gl: Gl;
-  rl: Gl;
-  lg: Lg;
+  sg?: Weapon;
+  ng?: Weapon;
+  ssg?: Weapon;
+  sng?: Weapon;
+  gl?: Weapon;
+  rl?: Weapon;
+  lg?: Weapon;
 }
 
-export interface Axe {
-  acc: AxeAcc;
+export interface Weapon {
+  acc: {
+    attacks: number;
+    hits: number;
+  };
+  kills: WeaponKills;
   deaths: number;
-  damage?: Damage;
+  pickups: WeaponPickups;
+  damage: {
+    enemy: number;
+    team: number;
+  };
 }
 
-export interface AxeAcc {
-  attacks: number;
-  hits: number;
-}
-
-export interface Damage {
-  enemy: number;
-  team: number;
-}
-
-export interface Gl {
-  acc: GlAcc;
-  kills: Kills;
-  deaths: number;
-  pickups: GlPickups;
-  damage: Damage;
-}
-
-export interface GlAcc {
-  attacks: number;
-  hits: number;
-  real: number;
-  virtual: number;
-}
-
-export interface Kills {
+export interface WeaponKills {
   total: number;
   team: number;
   enemy: number;
   self: number;
 }
 
-export interface GlPickups {
+export interface WeaponPickups {
   dropped?: number;
   taken: number;
   "total-taken": number;
   "spawn-taken": number;
   "spawn-total-taken": number;
-}
-
-export interface Lg {
-  acc: AxeAcc;
-  kills: Kills;
-  deaths: number;
-  pickups: GlPickups;
-  damage: Damage;
-}
-
-export interface Sg {
-  acc: AxeAcc;
-  kills?: Kills;
-  deaths: number;
-  pickups: SgPickups;
-  damage: Damage;
-}
-
-export interface SgPickups {
-  dropped: number;
-  "total-taken": number;
 }
