@@ -9,7 +9,6 @@ import {
 import { getDemo } from "../services/supabase/supabase";
 import type { Demo } from "../services/supabase/supabase.types.ts";
 import { btnSecondary, btnSuccess, sizeLarge } from "../ui/theme.ts";
-import { FtePlayer } from "./FtePlayer.tsx";
 import { ShareDemoButton } from "./Share.tsx";
 import { Shortcuts } from "./Shortcuts.tsx";
 import { ClipControls } from "./clips/ClipControls.tsx";
@@ -17,10 +16,12 @@ import { EnableClipEditorButton } from "./clips/Clips.tsx";
 import { ClipEditorProvider, useClipEditor } from "./clips/context.tsx";
 
 import classNames from "classnames";
-import { useBoolean } from "usehooks-ts";
+import { useBoolean, useEffectOnce } from "usehooks-ts";
 import { Scoreboard } from "../browser/Scoreboard.tsx";
 import { getAssets } from "../fte/assets.ts";
 import { useFteController } from "../fte/hooks.ts";
+import { KtxstatsV3, toKtxstatsV3 } from "./KtxstatsV3.ts";
+import { toColoredHtml } from "../qwstrings.ts";
 
 export const Player = ({ demoId }: { demoId: number }) => {
   const [demo, setDemo] = useState<Demo | null>(null);
@@ -66,7 +67,7 @@ export const Player = ({ demoId }: { demoId: number }) => {
       <div className="lg:flex min-h-[200px]">
         <div className="flex flex-col grow">
           <div className="flex grow bg-black items-center justify-center max-h-[75vh]">
-            <FtePlayer demo={demo} assets={assets} />
+            {/*<FtePlayer demo={demo} assets={assets} />*/}
           </div>
           <DemoPlayerFooter demo={demo} />
         </div>
@@ -103,8 +104,9 @@ export const DemoPlayerFooter = ({ demo }: { demo: Demo }) => {
             </div>
           </div>
 
-          <div className="my-6">
+          <div className="my-6 flex space-x-24">
             <Result demo={demo} />
+            <Ktxstats sha256={demo.sha256} />
           </div>
 
           <hr className="my-6 border-slate-800" />
@@ -112,6 +114,63 @@ export const DemoPlayerFooter = ({ demo }: { demo: Demo }) => {
           <Shortcuts />
         </div>
       )}
+    </div>
+  );
+};
+
+async function getKtxstatsBySha256(sha256: string): Promise<null | KtxstatsV3> {
+  const CLOUDFRONT_URL = "https://d.quake.world";
+  try {
+    const res = await fetch(
+      `${CLOUDFRONT_URL}/${sha256_to_s3_key(sha256)}.mvd.ktxstats.json`,
+    );
+    if (res.ok) {
+      const stats = await res.text();
+      return toKtxstatsV3(stats);
+    }
+  } catch (e) {
+    console.log(e);
+  }
+
+  return null;
+}
+
+export function sha256_to_s3_key(sha256: string): string {
+  return sha256.substring(0, 3) + "/" + sha256;
+}
+
+const Ktxstats = ({ sha256 }: { sha256: str }) => {
+  const [stats, setStats] = useState<KtxstatsV3 | null>(null);
+
+  useEffectOnce(() => {
+    async function getAndSetStats() {
+      setStats(await getKtxstatsBySha256(sha256));
+    }
+
+    getAndSetStats();
+  });
+
+  if (!stats) {
+    return <div>NO STATS FOR U!</div>;
+  }
+
+  return (
+    <div>
+      <div className="font-bold text-slate-400 mb-2">Statistics</div>
+      <div className="flex space-x-8">
+        {stats.players.map((p) => (
+          <div>
+            <div
+              className="font-bold"
+              dangerouslySetInnerHTML={{ __html: toColoredHtml(p.name) }}
+            />
+            <div>{p.stats.frags}</div>
+            <div>{p.stats.deaths}</div>
+            <div>{p.stats.suicides}</div>
+            <div>{p.stats.tk}</div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
