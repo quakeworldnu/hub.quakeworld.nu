@@ -16,12 +16,11 @@ import { EnableClipEditorButton } from "./clips/Clips.tsx";
 import { ClipEditorProvider, useClipEditor } from "./clips/context.tsx";
 
 import classNames from "classnames";
-import { useBoolean, useEffectOnce } from "usehooks-ts";
+import { useBoolean } from "usehooks-ts";
 import { Scoreboard } from "../browser/Scoreboard.tsx";
-import { getAssets } from "../fte/assets.ts";
 import { useFteController } from "../fte/hooks.ts";
-import { KtxstatsV3, toKtxstatsV3 } from "./KtxstatsV3.ts";
 import { toColoredHtml } from "../qwstrings.ts";
+import { useKtxstats } from "./ktxstats.ts";
 
 export const Player = ({ demoId }: { demoId: number }) => {
   const [demo, setDemo] = useState<Demo | null>(null);
@@ -59,8 +58,8 @@ export const Player = ({ demoId }: { demoId: number }) => {
     return <div>Loading...</div>;
   }
 
-  const demoUrl = getDemoDownloadUrl(demo.s3_key);
-  const assets = getAssets(demoUrl, demo.map);
+  // const demoUrl = getDemoDownloadUrl(demo.s3_key);
+  // const assets = getAssets(demoUrl, demo.map);
 
   return (
     <ClipEditorProvider>
@@ -118,37 +117,8 @@ export const DemoPlayerFooter = ({ demo }: { demo: Demo }) => {
   );
 };
 
-async function getKtxstatsBySha256(sha256: string): Promise<null | KtxstatsV3> {
-  const CLOUDFRONT_URL = "https://d.quake.world";
-  try {
-    const res = await fetch(
-      `${CLOUDFRONT_URL}/${sha256_to_s3_key(sha256)}.mvd.ktxstats.json`,
-    );
-    if (res.ok) {
-      const stats = await res.text();
-      return toKtxstatsV3(stats);
-    }
-  } catch (e) {
-    console.log(e);
-  }
-
-  return null;
-}
-
-export function sha256_to_s3_key(sha256: string): string {
-  return sha256.substring(0, 3) + "/" + sha256;
-}
-
-const Ktxstats = ({ sha256 }: { sha256: str }) => {
-  const [stats, setStats] = useState<KtxstatsV3 | null>(null);
-
-  useEffectOnce(() => {
-    async function getAndSetStats() {
-      setStats(await getKtxstatsBySha256(sha256));
-    }
-
-    getAndSetStats();
-  });
+const Ktxstats = ({ sha256 }: { sha256: string }) => {
+  const stats = useKtxstats(sha256);
 
   if (!stats) {
     return <div>NO STATS FOR U!</div>;
@@ -159,7 +129,7 @@ const Ktxstats = ({ sha256 }: { sha256: str }) => {
       <div className="font-bold text-slate-400 mb-2">Statistics</div>
       <div className="flex space-x-8">
         {stats.players.map((p) => (
-          <div>
+          <div key={p.name}>
             <div
               className="font-bold"
               dangerouslySetInnerHTML={{ __html: toColoredHtml(p.name) }}
