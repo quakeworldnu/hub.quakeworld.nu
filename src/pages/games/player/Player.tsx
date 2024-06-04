@@ -93,7 +93,8 @@ export const DemoPlayerFooter = ({ demo }: { demo: Demo }) => {
             <div className="space-y-2">
               <div className="text-2xl font-bold">{demoDescription}</div>
               <div className="text-slate-400 text-sm">
-                <Timestamp timestamp={demo.timestamp} /> on {demo.source}
+                {formatDate(demo.timestamp)} (
+                <Timestamp timestamp={demo.timestamp} />) on {demo.source}
               </div>
             </div>
             <div className="flex flex-wrap items-start my-3 md:my-0 gap-3">
@@ -115,6 +116,14 @@ export const DemoPlayerFooter = ({ demo }: { demo: Demo }) => {
     </div>
   );
 };
+
+function formatDate(date: string | null): string {
+  if (!date) {
+    return "";
+  }
+
+  return date.substring(0, "YYYY-MM-DD HH:II".length).replace("T", " ");
+}
 
 const Result = ({ demo }: { demo: Demo }) => {
   const { setTrue: handleShowscoresClick, value: showScores } =
