@@ -280,7 +280,6 @@ function getGeneralAssets(): FteAssets {
     "id1/particles/grenade.cfg",
     "id1/particles/rocket.cfg",
     "id1/particles/runes.cfg",
-    "id1/particles/teleport.cfg",
     "id1/particles/torch.cfg",
     "id1/particles/particlefont.png",
     "id1/progs/armor.mdl",
