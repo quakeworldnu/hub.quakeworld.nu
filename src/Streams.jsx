@@ -1,22 +1,11 @@
 import { Heading } from "@qwhub/Common";
 import { useGetStreamsQuery } from "@qwhub/services/hub/hub";
-import React, { Fragment, useState } from "react";
-import { useTimeout } from "usehooks-ts";
+import React, { Fragment } from "react";
 import { TwitchButton } from "./Buttons";
 
-function useDelay(delay) {
-  const [skip, setSkip] = useState(true);
-  useTimeout(() => {
-    setSkip(false);
-  }, delay);
-  return skip;
-}
-
 export function FeaturedStreams() {
-  const skip = useDelay(1500);
   const { data: streams = [] } = useGetStreamsQuery(null, {
     pollingInterval: 15500,
-    skip,
   });
 
   return (
@@ -37,8 +26,7 @@ const FeaturedStream = (props) => {
 };
 
 export function AllStreams() {
-  const skip = useDelay(1520);
-  const { data: streams = [] } = useGetStreamsQuery(null, { skip });
+  const { data: streams = [] } = useGetStreamsQuery(null);
 
   return (
     <div className="app-links my-8">
