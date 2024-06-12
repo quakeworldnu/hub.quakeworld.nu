@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useCounter, useEffectOnce, useInterval, useScript } from "usehooks-ts";
 import { useEventListener } from "../hooks.ts";
-import { fteAsset } from "./assets.ts";
+import { cloudfrontUrl } from "./assets.ts";
 import { FteController } from "./fteController.ts";
 import { FTE_VERSION } from "./meta.ts";
 import type { FteAssets, FteModule, FtePreloadModule } from "./types.ts";
@@ -19,7 +19,7 @@ export function useFteLoader({
   assets: FteAssets;
   demoTotalTime: number | null;
 }) {
-  const scriptPath = fteAsset(`ftewebgl.js?version=${FTE_VERSION}`);
+  const scriptPath = cloudfrontUrl(`fte/ftewebgl.js?version=${FTE_VERSION}`);
   const scriptStatus = useScript(scriptPath, { removeOnUnmount: true });
   const { count: loaded, increment } = useCounter(0);
   const [fte, setFte] = useState<undefined | FteController>(undefined);
@@ -92,17 +92,17 @@ export function useFteController() {
   return fte;
 }
 
-export function useFteEventBySource(
-  eventName: string,
-  source: string,
-  callback: (e: CustomEvent) => void,
-) {
-  useEventListener(`fte.${eventName}`, (e: CustomEvent) => {
-    if (e.detail.source === source) {
-      callback(e);
-    }
-  });
-}
+// export function useFteEventBySource(
+//   eventName: string,
+//   source: string,
+//   callback: (e: CustomEvent) => void,
+// ) {
+//   useEventListener(`fte.${eventName}`, (e: CustomEvent) => {
+//     if (e.detail.source === source) {
+//       callback(e);
+//     }
+//   });
+// }
 
 export function useFteEvent(
   eventName: string,

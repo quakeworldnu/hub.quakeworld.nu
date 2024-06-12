@@ -1,9 +1,10 @@
 import classNames from "classnames";
-import { STREAMBOT_ASSETS_URL } from "../../fte/assets.ts";
 import { useFteController, useFteUpdateOnEvent } from "../../fte/hooks.ts";
 import type { Player, Team } from "../../fte/types.ts";
 import { useUpdateInterval } from "../../hooks.ts";
 import { QuakeTextFromBytes } from "../QuakeText.tsx";
+
+import { cloudfrontUrl } from "../../fte/assets.ts";
 
 export const ResponsivePlayerInfo = ({ scale }: { scale: number }) => {
   return (
@@ -174,13 +175,8 @@ const Powerups = ({
 };
 
 export const Sigil = ({ number }: { number: number }) => {
-  return (
-    <img
-      src={`${STREAMBOT_ASSETS_URL}/qw/textures/wad/sb_sigil${number}.png`}
-      width={10}
-      height={20}
-    />
-  );
+  const src = cloudfrontUrl(`/qw/textures/wad/sb_sigil${number}.png`);
+  return <img src={src} width={10} height={20} />;
 };
 
 const BestWeapon = ({
