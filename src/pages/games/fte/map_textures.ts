@@ -1,17 +1,16 @@
 import type { FteAssets } from "./types.ts";
 
-const MAP_ASSETS_URL =
-  "https://raw.githubusercontent.com/vikpe/qw-streambot-ezquake/main";
+import { cloudfrontUrl } from "./assets.ts";
 
 export function getMapTextures(mapName: string): FteAssets {
   const filenames = texturesPerMapName[mapName] ?? [];
-  const filepaths = filenames.map((t) => `id1/textures/${mapName}/${t}`);
+  const filepaths = filenames.map((t) =>
+    cloudfrontUrl(`fte/id1/textures/${mapName}/${t}`),
+  );
   const assets: FteAssets = {};
 
   for (const path of filepaths) {
-    assets[path] = `${MAP_ASSETS_URL}/${path
-      .replace("id1/", "qw/")
-      .replace("#", "%23")}`;
+    assets[path] = path;
   }
 
   return assets;
