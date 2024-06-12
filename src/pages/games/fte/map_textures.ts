@@ -4,13 +4,11 @@ import { cloudfrontUrl } from "./assets.ts";
 
 export function getMapTextures(mapName: string): FteAssets {
   const filenames = texturesPerMapName[mapName] ?? [];
-  const filepaths = filenames.map((t) =>
-    cloudfrontUrl(`fte/id1/textures/${mapName}/${t}`),
-  );
+  const filepaths = filenames.map((t) => `qw/textures/${mapName}/${t}`);
   const assets: FteAssets = {};
 
   for (const path of filepaths) {
-    assets[path] = path;
+    assets[path] = cloudfrontUrl(`fte/${path}`);
   }
 
   return assets;
