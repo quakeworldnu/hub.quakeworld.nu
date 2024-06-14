@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { useIdleTimer } from "react-idle-timer";
 import { useElementSize } from "usehooks-ts";
+import { getMapshotCssUrl } from "../../../services/mapshots.ts";
 import { useFteController, useFteLoader } from "../fte/hooks.ts";
 import type { FteAssets } from "../fte/types.ts";
 import { roundFloat } from "../math.ts";
@@ -61,7 +62,7 @@ export const FtePlayer = ({
           },
         )}
         style={{
-          backgroundImage: `url(https://raw.githubusercontent.com/vikpe/qw-mapshots/main/${demo.map}.jpg)`,
+          backgroundImage: getMapshotCssUrl(demo.map),
         }}
       >
         <div
