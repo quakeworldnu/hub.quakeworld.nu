@@ -30,7 +30,6 @@ const Games = () => {
       ) : (
         <GameList games={games} />
       )}
-      {isLoading && <div className="text-slate-400">Loading games...</div>}
 
       {!isLoading && !hasGames && (
         <div className="text-slate-400">No games found.</div>

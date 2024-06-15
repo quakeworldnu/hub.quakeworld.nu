@@ -15,7 +15,7 @@ export const Sidebar = () => {
 
   return (
     <div
-      className="my-6 max-w-[480px] 3xl:my-0 3xl:w-[420px]"
+      className="my-6 max-w-[480px] 3xl:my-0 3xl:w-[25%]"
       style={{ maxHeight }}
       id="AppSidebar"
     >

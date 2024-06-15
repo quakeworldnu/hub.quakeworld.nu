@@ -81,7 +81,7 @@ export async function searchGamesRows(settings: {
     qb = qb.textSearch("players_fts", fts);
   }
 
-  const limit = 20;
+  const limit = 15;
   const from = (settings.page - 1) * limit;
   const to = from + limit - 1;
   return qb.order("timestamp", { ascending: false }).range(from, to);
