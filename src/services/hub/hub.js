@@ -1,16 +1,11 @@
 import { compareServers } from "@qwhub/services/hub/serverSort";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { transformDemos } from "./demoTransform";
 import { transformServer } from "./serverTransform";
 
 export const hubApi = createApi({
   reducerPath: "hub",
   baseQuery: fetchBaseQuery({ baseUrl: "https://hubapi.quakeworld.nu/v2/" }),
   endpoints: (build) => ({
-    getDemos: build.query({
-      query: () => "demos",
-      transformResponse: transformDemos,
-    }),
     getServer: build.query({
       query: (address) => `servers/${address}`,
       transformResponse: (server) => transformServer(server),
@@ -42,7 +37,6 @@ export const hubApi = createApi({
 });
 
 export const {
-  useGetDemosQuery,
   useGetServerQuery,
   useGetServersQuery,
   useGetStreamsQuery,
