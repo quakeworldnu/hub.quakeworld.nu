@@ -3,14 +3,21 @@ import { createClient } from "@supabase/supabase-js";
 import type { Database } from "./database.types.ts";
 
 import type { GameMode } from "../../browser/settings/types.ts";
+import { Game } from "./supabase.types.ts";
 
 const supabase = createClient<Database>(
   import.meta.env.VITE_SUPABASE_URL,
   import.meta.env.VITE_SUPABASE_ANON_KEY,
 );
 
-export async function getDemo(id: number) {
-  return supabase.from("demos").select("*").eq("id", id).limit(1).single();
+export async function getGame(id: number): Promise<Game | null> {
+  const { data } = await supabase
+    .from("games")
+    .select("*")
+    .eq("id", id)
+    .limit(1)
+    .single();
+  return data || null;
 }
 
 function queryToFts(query = ""): string {
@@ -26,11 +33,11 @@ function queryToFts(query = ""): string {
     .join(" & ");
 }
 
-export async function searchDemosCount(settings: {
+export async function searchGamesCount(settings: {
   query: string;
   gameMode: GameMode;
 }): Promise<number> {
-  let qb = supabase.from("demos").select("count", { count: "exact" });
+  let qb = supabase.from("games").select("count", { count: "exact" });
   const { query, gameMode } = settings;
 
   if (gameMode !== "All") {
@@ -39,19 +46,19 @@ export async function searchDemosCount(settings: {
 
   const fts = queryToFts(query);
   if (fts) {
-    qb = qb.textSearch("fts", fts);
+    qb = qb.textSearch("players_fts", fts);
   }
 
   const result = await qb.single();
   return result?.count ?? 0;
 }
 
-export async function searchDemosRows(settings: {
+export async function searchGamesRows(settings: {
   query: string;
   gameMode: GameMode;
   page: number;
 }) {
-  let qb = supabase.from("demos").select("*");
+  let qb = supabase.from("games").select("*");
 
   const { query, gameMode } = settings;
 
@@ -61,7 +68,7 @@ export async function searchDemosRows(settings: {
 
   const fts = queryToFts(query);
   if (fts) {
-    qb = qb.textSearch("fts", fts);
+    qb = qb.textSearch("players_fts", fts);
   }
 
   const limit = 20;

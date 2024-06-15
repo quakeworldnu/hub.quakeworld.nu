@@ -6,13 +6,13 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[];
 
-export interface Database {
+export type Database = {
   public: {
     Tables: {
       demos: {
         Row: {
+          demo_source_url: string | null;
           duration: number;
-          event_id: number | null;
           filename: string;
           fts: unknown | null;
           id: number;
@@ -21,6 +21,7 @@ export interface Database {
           mode: string;
           participants: Json | null;
           participants_sha256: string;
+          qtv_address: string | null;
           s3_key: string;
           sha256: string;
           source: string;
@@ -28,8 +29,8 @@ export interface Database {
           title: string;
         };
         Insert: {
+          demo_source_url?: string | null;
           duration?: number;
-          event_id?: number | null;
           filename?: string;
           fts?: unknown | null;
           id?: number;
@@ -38,6 +39,7 @@ export interface Database {
           mode?: string;
           participants?: Json | null;
           participants_sha256?: string;
+          qtv_address?: string | null;
           s3_key?: string;
           sha256?: string;
           source?: string;
@@ -45,8 +47,8 @@ export interface Database {
           title?: string;
         };
         Update: {
+          demo_source_url?: string | null;
           duration?: number;
-          event_id?: number | null;
           filename?: string;
           fts?: unknown | null;
           id?: number;
@@ -55,64 +57,57 @@ export interface Database {
           mode?: string;
           participants?: Json | null;
           participants_sha256?: string;
+          qtv_address?: string | null;
           s3_key?: string;
           sha256?: string;
           source?: string;
           timestamp?: string | null;
           title?: string;
-        };
-        Relationships: [
-          {
-            foreignKeyName: "demos_event_id_fkey";
-            columns: ["event_id"];
-            isOneToOne: false;
-            referencedRelation: "events";
-            referencedColumns: ["id"];
-          },
-        ];
-      };
-      events: {
-        Row: {
-          date: string | null;
-          id: number;
-          name: string;
-          s3_dirname: string;
-        };
-        Insert: {
-          date?: string | null;
-          id?: number;
-          name?: string;
-          s3_dirname?: string;
-        };
-        Update: {
-          date?: string | null;
-          id?: number;
-          name?: string;
-          s3_dirname?: string;
         };
         Relationships: [];
       };
-      ignored_demos: {
+      games: {
         Row: {
-          filename: string;
+          demo_sha256: string | null;
+          demo_source_url: string | null;
           id: number;
+          map: string;
+          matchtag: string | null;
           mode: string;
-          reason: string;
-          sha256: string;
+          players: Json;
+          players_fts: unknown | null;
+          server_hostname: string | null;
+          team_names: string[] | null;
+          teams: Json;
+          timestamp: string;
         };
         Insert: {
-          filename?: string;
+          demo_sha256?: string | null;
+          demo_source_url?: string | null;
           id?: number;
+          map: string;
+          matchtag?: string | null;
           mode: string;
-          reason?: string;
-          sha256: string;
+          players: Json;
+          players_fts?: unknown | null;
+          server_hostname?: string | null;
+          team_names?: string[] | null;
+          teams: Json;
+          timestamp: string;
         };
         Update: {
-          filename?: string;
+          demo_sha256?: string | null;
+          demo_source_url?: string | null;
           id?: number;
+          map?: string;
+          matchtag?: string | null;
           mode?: string;
-          reason?: string;
-          sha256?: string;
+          players?: Json;
+          players_fts?: unknown | null;
+          server_hostname?: string | null;
+          team_names?: string[] | null;
+          teams?: Json;
+          timestamp?: string;
         };
         Relationships: [];
       };
@@ -155,6 +150,12 @@ export interface Database {
         };
         Returns: unknown;
       };
+      jsonb_array_to_text_array: {
+        Args: {
+          _js: Json;
+        };
+        Returns: string[];
+      };
       s3_key:
         | {
             Args: {
@@ -183,7 +184,7 @@ export interface Database {
         Args: {
           "": string;
         };
-        Returns: unknown;
+        Returns: string[];
       };
     };
     Enums: {
@@ -193,11 +194,13 @@ export interface Database {
       [_ in never]: never;
     };
   };
-}
+};
+
+type PublicSchema = Database[Extract<keyof Database, "public">];
 
 export type Tables<
   PublicTableNameOrOptions extends
-    | keyof (Database["public"]["Tables"] & Database["public"]["Views"])
+    | keyof (PublicSchema["Tables"] & PublicSchema["Views"])
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
@@ -210,10 +213,10 @@ export type Tables<
     }
     ? R
     : never
-  : PublicTableNameOrOptions extends keyof (Database["public"]["Tables"] &
-        Database["public"]["Views"])
-    ? (Database["public"]["Tables"] &
-        Database["public"]["Views"])[PublicTableNameOrOptions] extends {
+  : PublicTableNameOrOptions extends keyof (PublicSchema["Tables"] &
+        PublicSchema["Views"])
+    ? (PublicSchema["Tables"] &
+        PublicSchema["Views"])[PublicTableNameOrOptions] extends {
         Row: infer R;
       }
       ? R
@@ -222,7 +225,7 @@ export type Tables<
 
 export type TablesInsert<
   PublicTableNameOrOptions extends
-    | keyof Database["public"]["Tables"]
+    | keyof PublicSchema["Tables"]
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
@@ -233,8 +236,8 @@ export type TablesInsert<
     }
     ? I
     : never
-  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
-    ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
+  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
+    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
         Insert: infer I;
       }
       ? I
@@ -243,7 +246,7 @@ export type TablesInsert<
 
 export type TablesUpdate<
   PublicTableNameOrOptions extends
-    | keyof Database["public"]["Tables"]
+    | keyof PublicSchema["Tables"]
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
@@ -254,8 +257,8 @@ export type TablesUpdate<
     }
     ? U
     : never
-  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
-    ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
+  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
+    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
         Update: infer U;
       }
       ? U
@@ -264,13 +267,13 @@ export type TablesUpdate<
 
 export type Enums<
   PublicEnumNameOrOptions extends
-    | keyof Database["public"]["Enums"]
+    | keyof PublicSchema["Enums"]
     | { schema: keyof Database },
   EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
     : never = never,
 > = PublicEnumNameOrOptions extends { schema: keyof Database }
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
-  : PublicEnumNameOrOptions extends keyof Database["public"]["Enums"]
-    ? Database["public"]["Enums"][PublicEnumNameOrOptions]
+  : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
+    ? PublicSchema["Enums"][PublicEnumNameOrOptions]
     : never;
