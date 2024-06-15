@@ -8,7 +8,8 @@ import { btnSecondary, formInput, sizeSmall } from "../../ui/theme.ts";
 import { useGames } from "../context.tsx";
 import { useGameSettings } from "./context.tsx";
 
-const PER_PAGE = 20;
+const PER_PAGE = 15;
+
 export const Pagination = () => {
   const { count, hasGames } = useGames();
   const { page, nextPage, prevPage } = useGameSettings();
