@@ -7,26 +7,6 @@ function demoToPlaylistItem(demo: Demo): PlaylistItem {
   return { id: demo.id, demo };
 }
 
-export function useCurrentDemoId(): number | undefined {
-  const params = new URLSearchParams(window.location.search);
-  const demoId = params.get("demoId");
-  return demoId ? Number.parseInt(demoId) : undefined;
-}
-
-export function useUrlClipParams(): {
-  from: number;
-  to: number;
-  track: number | string;
-  hasParams: boolean;
-} {
-  const params = new URLSearchParams(window.location.search);
-  const from = Number.parseInt(params.get("from") || "0");
-  const to = Number.parseInt(params.get("to") || "0");
-  const track = params.get("track") || "auto";
-  const hasParams = from > 0 && to > 0;
-  return { from, to, track, hasParams };
-}
-
 export function usePlaylist() {
   const [playlist, setPlaylist] = useLocalStorage<PlaylistItem[]>("queue", []);
 

@@ -10,7 +10,7 @@ jobs:
     timeout-minutes: 5
     runs-on: ubuntu-latest
     env:
-      VITE_QUAKEWORLD_CLOUDFRONT_URL: '${{ secrets.VITE_QUAKEWORLD_CLOUDFRONT_URL }}'
+      VITE_DEMOS_CLOUDFRONT_URL: '${{ secrets.VITE_DEMOS_CLOUDFRONT_URL }}'
       VITE_ASSETS_CLOUDFRONT_URL: '${{ secrets.VITE_ASSETS_CLOUDFRONT_URL }}'
       VITE_SUPABASE_URL: '${{ secrets.VITE_SUPABASE_URL }}'
       VITE_SUPABASE_ANON_KEY: '${{ secrets.VITE_SUPABASE_ANON_KEY }}'

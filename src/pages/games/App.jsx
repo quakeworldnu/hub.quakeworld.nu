@@ -1,4 +1,4 @@
-import { Player } from "@qwhub/pages/games/player/Player";
+import { GameDetails } from "@qwhub/pages/games/player/GameDetails.tsx";
 import { ServerPoller } from "@qwhub/servers/Servers.jsx";
 import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
@@ -7,8 +7,9 @@ import { SiteFooter } from "../../site/Footer";
 import { SiteHeader } from "../../site/Header";
 import { Sidebar } from "./Sidebar";
 import { Browser } from "./browser/Browser";
-import { useDemos } from "./browser/context.tsx";
-import { useCurrentDemoId } from "./playlist/hooks";
+import { useGames } from "./browser/context.tsx";
+
+import { useCurrentGameId } from "./hooks";
 
 function getAppBodySize() {
   const el = document.getElementById("AppBody");
@@ -20,8 +21,8 @@ function getAppBodySize() {
 }
 
 export const App = () => {
-  const demoId = useCurrentDemoId();
-  const { isLoading } = useDemos();
+  const gameId = useCurrentGameId();
+  const { isLoading } = useGames();
 
   function handleAppBodySizeChange() {
     dispatchEvent(
@@ -49,8 +50,8 @@ export const App = () => {
       <div className="3xl:flex gap-6 my-4">
         <div className="w-full">
           <div id="AppBody" ref={bodyRef}>
-            {demoId && <Player demoId={demoId} />}
-            {!demoId && <Browser />}
+            {gameId && <GameDetails id={gameId} />}
+            {!gameId && <Browser />}
           </div>
         </div>
         <Sidebar />

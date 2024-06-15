@@ -10,7 +10,5 @@ export const LastscoresScoreboard = ({ lastscores }) => {
     }
   }
 
-  _players.sort((a, b) => b.frags - a.frags);
-
   return <Scoreboard players={_players} teams={teams} />;
 };

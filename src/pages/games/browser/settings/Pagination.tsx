@@ -5,16 +5,16 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { ChangeEvent } from "react";
 import { btnSecondary, formInput, sizeSmall } from "../../ui/theme.ts";
-import { useDemos } from "../context.tsx";
-import { useDemoSettings } from "./context.tsx";
+import { useGames } from "../context.tsx";
+import { useGameSettings } from "./context.tsx";
 
 const PER_PAGE = 20;
 export const Pagination = () => {
-  const { count, hasDemos } = useDemos();
-  const { page, nextPage, prevPage } = useDemoSettings();
+  const { count, hasGames } = useGames();
+  const { page, nextPage, prevPage } = useGameSettings();
   const pageCount = Math.ceil(count / PER_PAGE);
 
-  if (!hasDemos || pageCount < 2) {
+  if (!hasGames || pageCount < 2) {
     return null;
   }
 
@@ -43,7 +43,7 @@ export const Pagination = () => {
 };
 
 const PagNumberSelect = ({ pageCount = 1 }: { pageCount: number }) => {
-  const { page, setPage } = useDemoSettings();
+  const { page, setPage } = useGameSettings();
 
   if (pageCount < 2) {
     return null;

@@ -1,9 +1,10 @@
 export type DisplayMode = "Grid" | "List";
 export type GameMode = "All" | "1on1" | "2on2" | "4on4" | "Wipeout" | "CTF";
 
-export type DemoBrowserSettings = {
+export type GameBrowserSettings = {
   displayMode: DisplayMode;
   gameMode: GameMode;
-  query: string;
+  map: string;
+  playerQuery: string;
   page: number;
 };

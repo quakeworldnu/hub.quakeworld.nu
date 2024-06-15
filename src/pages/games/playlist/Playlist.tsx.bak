@@ -13,7 +13,8 @@ import type { Demo } from "../services/supabase/supabase.types.ts";
 import { Switch } from "../ui/Switch.tsx";
 import { btnSecondary, sizeSmall } from "../ui/theme.ts";
 import { SortableItemList } from "./Sortable.tsx";
-import { useCurrentDemoId, usePlaylist } from "./hooks.ts";
+import { usePlaylist } from "./hooks.ts";
+import {useCurrentDemoId} from "../hooks.ts";
 
 export type PlaylistItem = {
   id: number;
@@ -208,7 +209,7 @@ export const ReadOnlyItem = ({ item }: { item: PlaylistItem }) => {
     <a
       id={`PlaylistDemo-${item.demo.id}`}
       title="Play demo"
-      href={`/games/?demoId=${item.demo.id}`}
+      href={`/games/?gameId=${item.demo.id}`}
       className={classNames(
         "flex items-center justify-between p-2 pr-3 hover:bg-white/10 rounded group",
         {

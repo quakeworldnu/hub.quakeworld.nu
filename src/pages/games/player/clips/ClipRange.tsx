@@ -32,8 +32,8 @@ export const ClipRange = () => {
   }
 
   const min = 0;
-  const max = Math.ceil(fte?.getDemoTotalTime()) || 610;
-  const countdownLength = fte?.getGameStartTime();
+  const max = Math.ceil(fte?.getDemoDuration()) || 610;
+  const countdownLength = fte?.getMatchStartTime();
 
   return (
     <Range

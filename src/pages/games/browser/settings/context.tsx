@@ -6,46 +6,50 @@ import {
   useState,
 } from "react";
 import { useLocalStorage } from "usehooks-ts";
-import type { DemoBrowserSettings, DisplayMode, GameMode } from "./types.ts";
+import type { DisplayMode, GameBrowserSettings, GameMode } from "./types.ts";
 
-type DemoBrowserSettingsProps = {
+type GameBrowserSettingsProps = {
   displayMode: DisplayMode;
   setDisplayMode: (displayMode: DisplayMode) => void;
   gameMode: GameMode;
   setGameMode: (gameMode: GameMode) => void;
-  query: string;
-  setQuery: (query: string) => void;
+  map: string;
+  setMap: (query: string) => void;
+  playerQuery: string;
+  setPlayerQuery: (query: string) => void;
   page: number;
   setPage: (page: number) => void;
   nextPage: () => void;
   prevPage: () => void;
 };
 
-const defaultSettings: DemoBrowserSettings = {
+const defaultSettings: GameBrowserSettings = {
   displayMode: "Grid",
   gameMode: "All",
-  query: "",
+  map: "",
+  playerQuery: "",
   page: 1,
 };
 
-const DemoSettingsContext = createContext<DemoBrowserSettingsProps>({
+const GameSettingsContext = createContext<GameBrowserSettingsProps>({
   ...defaultSettings,
   setDisplayMode: () => {},
   setGameMode: () => {},
-  setQuery: () => {},
+  setMap: () => {},
+  setPlayerQuery: () => {},
   setPage: () => {},
   nextPage: () => {},
   prevPage: () => {},
 });
 
-export const DemoSettingsProvider = ({
+export const GameSettingsProvider = ({
   children,
   localStorageKey,
 }: {
   children: ReactNode;
   localStorageKey: string;
 }) => {
-  const [settings, setSettings] = useLocalStorage<DemoBrowserSettings>(
+  const [settings, setSettings] = useLocalStorage<GameBrowserSettings>(
     localStorageKey,
     defaultSettings,
   );
@@ -53,12 +57,13 @@ export const DemoSettingsProvider = ({
     settings.displayMode,
   );
   const [gameMode, setGameMode] = useState<GameMode>(settings.gameMode);
-  const [query, setQuery] = useState<string>(settings.query);
+  const [map, setMap] = useState<string>(settings.map);
+  const [playerQuery, setPlayerQuery] = useState<string>(settings.playerQuery);
   const [page, setPage] = useState<number>(settings.page);
 
   useEffect(() => {
-    setSettings({ displayMode, gameMode, query, page });
-  }, [displayMode, gameMode, query, page]);
+    setSettings({ displayMode, gameMode, map, playerQuery, page });
+  }, [displayMode, gameMode, map, playerQuery, page]);
 
   function nextPage() {
     setPage(page + 1);
@@ -73,8 +78,10 @@ export const DemoSettingsProvider = ({
     setDisplayMode,
     gameMode,
     setGameMode,
-    query,
-    setQuery,
+    map,
+    setMap,
+    playerQuery,
+    setPlayerQuery,
     page,
     setPage,
     nextPage,
@@ -82,10 +89,10 @@ export const DemoSettingsProvider = ({
   };
 
   return (
-    <DemoSettingsContext.Provider value={value}>
+    <GameSettingsContext.Provider value={value}>
       {children}
-    </DemoSettingsContext.Provider>
+    </GameSettingsContext.Provider>
   );
 };
 
-export const useDemoSettings = () => useContext(DemoSettingsContext);
+export const useGameSettings = () => useContext(GameSettingsContext);

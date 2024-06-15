@@ -7,29 +7,29 @@ import {
 } from "react";
 import { useIsFirstRender } from "usehooks-ts";
 import {
-  searchDemosCount,
-  searchDemosRows,
+  searchGamesCount,
+  searchGamesRows,
 } from "../services/supabase/supabase.ts";
-import type { Demo } from "../services/supabase/supabase.types.ts";
-import { useDemoSettings } from "./settings/context.tsx";
+import type { Game } from "../services/supabase/supabase.types.ts";
+import { useGameSettings } from "./settings/context.tsx";
 
-type DemoContextProps = {
-  demos: Demo[];
-  hasDemos: boolean;
+type GameContextProps = {
+  games: Game[];
+  hasGames: boolean;
   count: number;
   isLoading: boolean;
 };
 
-const DemoContext = createContext<DemoContextProps>({
-  demos: [],
-  hasDemos: false,
+const GameContext = createContext<GameContextProps>({
+  games: [],
+  hasGames: false,
   count: 0,
   isLoading: true,
 });
 
-export const DemoProvider = ({ children }: { children: ReactNode }) => {
-  const { setPage, query, gameMode, page } = useDemoSettings();
-  const [demos, setDemos] = useState<Demo[]>([]);
+export const GamesProvider = ({ children }: { children: ReactNode }) => {
+  const { setPage, playerQuery, gameMode, map, page } = useGameSettings();
+  const [games, setGames] = useState<Game[]>([]);
   const [count, setCount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const isFirstRender = useIsFirstRender();
@@ -37,24 +37,24 @@ export const DemoProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     async function run() {
       setIsLoading(true);
-      const count = await searchDemosCount({ gameMode, query });
+      const count = await searchGamesCount({ gameMode, map, playerQuery });
 
-      let demos: Demo[] = [];
+      let games: Game[] = [];
 
-      const settings = { gameMode, query, page: 1 };
+      const settings = { gameMode, map, playerQuery, page: 1 };
       if (count > 0) {
-        const { data } = await searchDemosRows(settings);
-        demos = data || [];
+        const { data } = await searchGamesRows(settings);
+        games = data || [];
       }
 
-      setDemos(demos);
+      setGames(games);
       setCount(count);
       setPage(1);
       setIsLoading(false);
     }
 
     run();
-  }, [query, gameMode]);
+  }, [playerQuery, gameMode, map]);
 
   useEffect(() => {
     if (isFirstRender) {
@@ -63,9 +63,9 @@ export const DemoProvider = ({ children }: { children: ReactNode }) => {
 
     async function run() {
       setIsLoading(true);
-      const settings = { query, gameMode, page };
-      const { data: demos } = await searchDemosRows(settings);
-      setDemos(demos || []);
+      const settings = { playerQuery, gameMode, map, page };
+      const { data: games } = await searchGamesRows(settings);
+      setGames(games || []);
       setIsLoading(false);
     }
 
@@ -73,13 +73,13 @@ export const DemoProvider = ({ children }: { children: ReactNode }) => {
   }, [page]);
 
   const value = {
-    demos,
-    hasDemos: demos.length > 0,
+    games,
+    hasGames: games.length > 0,
     count,
     isLoading,
   };
 
-  return <DemoContext.Provider value={value}>{children}</DemoContext.Provider>;
+  return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
 };
 
-export const useDemos = () => useContext(DemoContext);
+export const useGames = () => useContext(GameContext);

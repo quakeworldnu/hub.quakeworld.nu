@@ -1,6 +1,6 @@
 import type { FteAssets } from "./types.ts";
 
-import { cloudfrontUrl } from "./assets.ts";
+import { getAssetUrl } from "../services/cloudfront/cassets.ts";
 
 export function getMapTextures(mapName: string): FteAssets {
   const filenames = texturesPerMapName[mapName] ?? [];
@@ -8,7 +8,7 @@ export function getMapTextures(mapName: string): FteAssets {
   const assets: FteAssets = {};
 
   for (const path of filepaths) {
-    assets[path] = cloudfrontUrl(`fte/${path}`);
+    assets[path] = getAssetUrl(`fte/${path}`);
   }
 
   return assets;

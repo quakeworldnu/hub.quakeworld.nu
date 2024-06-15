@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useInterval } from "usehooks-ts";
 import { useFteController } from "../../fte/hooks.ts";
-import { useUrlClipParams } from "../../playlist/hooks.ts";
+import { useUrlClipParams } from "../../hooks.ts";
 import { useClipEditor } from "./context.tsx";
 
 export function useClipPlayback() {

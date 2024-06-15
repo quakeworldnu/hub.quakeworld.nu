@@ -2,19 +2,19 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { usePlaylist } from "../../playlist/hooks.ts";
 import { btnSecondary, sizeSmall } from "../../ui/theme.ts";
-import { useDemos } from "../context.tsx";
+import { useGames } from "../context.tsx";
 
 export const BulkActions = () => {
-  const { demos, hasDemos } = useDemos();
+  const { games, hasGames } = useGames();
   const { addMany } = usePlaylist();
 
   function handleClick() {
-    addMany(demos);
+    addMany(games);
   }
 
   return (
     <button
-      disabled={!hasDemos}
+      disabled={!hasGames}
       className={`${btnSecondary} ${sizeSmall}`}
       onClick={handleClick}
     >

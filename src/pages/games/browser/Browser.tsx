@@ -1,39 +1,38 @@
-import { DemoGrid } from "./DemoGrid.tsx";
-import { DemoList } from "./DemoList.tsx";
-import { DemoProvider, useDemos } from "./context.tsx";
+import { GameGrid } from "./GameGrid.tsx";
+import { GameList } from "./GameList.tsx";
+import { GamesProvider, useGames } from "./context.tsx";
 import { Pagination } from "./settings/Pagination.tsx";
 import { Toolbar } from "./settings/Toolbar.tsx";
-import { DemoSettingsProvider, useDemoSettings } from "./settings/context.tsx";
+import { GameSettingsProvider, useGameSettings } from "./settings/context.tsx";
 
 export const Browser = () => {
   return (
     <div className="space-y-4">
-      <DemoSettingsProvider localStorageKey="mainDemoBrowser.settings.v2">
-        <DemoProvider>
+      <GameSettingsProvider localStorageKey="mainDemoBrowser.settings.v3">
+        <GamesProvider>
           <Toolbar />
-          <Demos />
+          <Games />
           <Pagination />
-        </DemoProvider>
-      </DemoSettingsProvider>
+        </GamesProvider>
+      </GameSettingsProvider>
     </div>
   );
 };
 
-const Demos = () => {
-  const { displayMode } = useDemoSettings();
-  const { demos, hasDemos, isLoading } = useDemos();
+const Games = () => {
+  const { displayMode } = useGameSettings();
+  const { games, hasGames, isLoading } = useGames();
 
   return (
     <div>
       {displayMode === "Grid" ? (
-        <DemoGrid demos={demos} />
+        <GameGrid games={games} />
       ) : (
-        <DemoList demos={demos} />
+        <GameList games={games} />
       )}
-      {isLoading && <div className="text-slate-400">Loading demos...</div>}
 
-      {!isLoading && !hasDemos && (
-        <div className="text-slate-400">No demos found.</div>
+      {!isLoading && !hasGames && (
+        <div className="text-slate-400">No games found.</div>
       )}
     </div>
   );

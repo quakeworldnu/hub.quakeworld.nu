@@ -2,29 +2,28 @@ import classNames from "classnames";
 import { useIdleTimer } from "react-idle-timer";
 import { useElementSize } from "usehooks-ts";
 import { getMapshotCssUrl } from "../../../services/mapshots.ts";
+import { getAssets } from "../fte/assets.ts";
 import { useFteController, useFteLoader } from "../fte/hooks.ts";
-import type { FteAssets } from "../fte/types.ts";
 import { roundFloat } from "../math.ts";
-import type { Demo } from "../services/supabase/supabase.types.ts";
+import { getDownloadUrl } from "../services/cloudfront/cdemos.ts";
+import { DemoInfo } from "../services/cloudfront/types.ts";
 import { Controls } from "./Controls.tsx";
-import { FteCanvas } from "./FteCanvas.tsx";
+import { FteDemoPlayerCanvas } from "./FteDemoPlayerCanvas.tsx";
 import { useClipPlayback } from "./clips/hooks.ts";
 import { ResponsivePlayerInfo } from "./controls/PlayerInfo.tsx";
 import { ResponsiveScoreBanner } from "./controls/ScoreBanner.tsx";
 
-export const FtePlayer = ({
+export const FteDemoPlayer = ({
   demo,
-  assets,
+  mapName,
 }: {
-  demo: Demo;
-  assets: FteAssets;
+  demo: DemoInfo;
+  mapName: string;
 }) => {
   useClipPlayback();
+  const assets = getAssets(getDownloadUrl(demo.sha256), mapName);
   const { isLoadingAssets, isReady, assetStatus, isInitializing } =
-    useFteLoader({
-      assets,
-      demoTotalTime: demo.duration,
-    });
+    useFteLoader({ assets, demoDuration: demo.demo_duration });
   const fte = useFteController();
 
   useIdleTimer({
@@ -45,7 +44,7 @@ export const FtePlayer = ({
       ref={playerRef}
     >
       <div id="FullscreenContent">
-        <FteCanvas />
+        <FteDemoPlayerCanvas />
 
         {fte && (
           <>
@@ -62,7 +61,7 @@ export const FtePlayer = ({
           },
         )}
         style={{
-          backgroundImage: getMapshotCssUrl(demo.map),
+          backgroundImage: getMapshotCssUrl(mapName),
         }}
       >
         <div

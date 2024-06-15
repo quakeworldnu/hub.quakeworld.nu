@@ -3,7 +3,6 @@ import {
   Autotrack,
   ClientState,
   ControlSource,
-  DemoPlayback,
   FTEC,
   FteModule,
   Player,
@@ -28,7 +27,7 @@ export class FteController {
   // @ts-ignore
   private _module: FteModule;
   private _volume = 0.0;
-  private _demoTotalTime = 0.0;
+  private _demoDuration = 0.0;
   private _lastVolume = 0.0;
   private _maxVolume = 0.2;
   private _lastDemoSpeed = 100;
@@ -43,11 +42,11 @@ export class FteController {
 
   private static _instance: FteController | null = null;
 
-  static createInstace(module: FteModule, demoTotalTime: number | null) {
+  static createInstace(module: FteModule, demoDuration: number | null) {
     if (FteController._instance === null) {
       const fte = new FteController(module);
       fte.mute();
-      fte.setDemoTotalTime(demoTotalTime || 600);
+      fte.setDemoDuration(demoDuration || 600);
       FteController._instance = fte;
     }
 
@@ -99,28 +98,24 @@ export class FteController {
     }
   }
 
-  getDemoTotalTime(): number {
-    return this._demoTotalTime;
+  getDemoDuration(): number {
+    return this._demoDuration;
   }
 
-  setDemoTotalTime(value: number) {
-    this._demoTotalTime = value;
+  setDemoDuration(value: number) {
+    this._demoDuration = value;
   }
 
-  getGameStartTime(): number {
-    return this._demoTotalTime % 60;
+  getMatchStartTime(): number {
+    return this._demoDuration % 60;
   }
 
-  getGameElapsedTime(): number {
-    return this.getDemoElapsedTime() - this.getGameStartTime();
+  getMatchElapsedTime(): number {
+    return this.getDemoElapsedTime() - this.getMatchStartTime();
   }
 
-  getGameTotalTime(): number {
-    return this.getDemoTotalTime() - this.getGameStartTime();
-  }
-
-  hasStartedGame(): boolean {
-    return this.getGameElapsedTime() > 0;
+  getMatchDuration(): number {
+    return this.getDemoDuration() - this.getMatchStartTime();
   }
 
   getPlayers(): Player[] {
@@ -210,7 +205,7 @@ export class FteController {
     const newDemoTime = clamp(
       Math.floor(demoTime),
       0,
-      1.1 + this.getDemoTotalTime(),
+      1.1 + this.getDemoDuration(),
     );
 
     // skip shorter jumps than 1 second
@@ -405,36 +400,37 @@ export class FteController {
     return this._consoleIsOpen;
   }
 
-  // group
-  applyGroupPlayback(playback: DemoPlayback) {
-    this._controlSource = ControlSource.GROUP;
-
-    // track
-    if (playback.track !== this.getTrackUserid()) {
-      // console.log("### set track", playback.track);
-      this.track(playback.track);
-    }
-
-    if (playback.cl_autotrack !== this._autotrack) {
-      // console.log("### set autotrack", playback.cl_autotrack);
-      this.setAutotrack(playback.cl_autotrack);
-    }
-
-    // speed
-    if (playback.demo_setspeed !== this.getDemoSpeed()) {
-      this.setDemoSpeed(playback.demo_setspeed);
-    }
-
-    // demo jump
-    const timeDelta = Math.abs(playback.demo_jump - this.getDemoElapsedTime());
-    const shouldDemoJump = timeDelta > 3;
-
-    if (shouldDemoJump) {
-      this.demoJump(playback.demo_jump);
-    }
-
-    this._controlSource = ControlSource.USER;
-  }
+  //
+  // // group
+  // applyGroupPlayback(playback: DemoPlayback) {
+  //   this._controlSource = ControlSource.GROUP;
+  //
+  //   // track
+  //   if (playback.track !== this.getTrackUserid()) {
+  //     // console.log("### set track", playback.track);
+  //     this.track(playback.track);
+  //   }
+  //
+  //   if (playback.cl_autotrack !== this._autotrack) {
+  //     // console.log("### set autotrack", playback.cl_autotrack);
+  //     this.setAutotrack(playback.cl_autotrack);
+  //   }
+  //
+  //   // speed
+  //   if (playback.demo_setspeed !== this.getDemoSpeed()) {
+  //     this.setDemoSpeed(playback.demo_setspeed);
+  //   }
+  //
+  //   // demo jump
+  //   const timeDelta = Math.abs(playback.demo_jump - this.getDemoElapsedTime());
+  //   const shouldDemoJump = timeDelta > 3;
+  //
+  //   if (shouldDemoJump) {
+  //     this.demoJump(playback.demo_jump);
+  //   }
+  //
+  //   this._controlSource = ControlSource.USER;
+  // }
 }
 
 // captureCommandOutput(command: string) {

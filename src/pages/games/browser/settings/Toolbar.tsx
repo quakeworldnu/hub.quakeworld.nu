@@ -1,13 +1,14 @@
 import classNames from "classnames";
-import { useDemos } from "../context.tsx";
+import { useGames } from "../context.tsx";
 import { DisplayModeBar } from "./DisplayModeBar.tsx";
 import { GameModeBar } from "./GameModeBar.tsx";
 import { GlobalShowScoresToggle } from "./GlobalShowScoresToggle.tsx";
+import { MapName } from "./MapName.tsx";
 import { Pagination } from "./Pagination.tsx";
-import { SearchQuery } from "./SearchQuery.tsx";
+import { PlayerQuery } from "./PlayerQuery.tsx";
 
 export const Toolbar = () => {
-  const { isLoading } = useDemos();
+  const { isLoading } = useGames();
 
   return (
     <div
@@ -18,9 +19,9 @@ export const Toolbar = () => {
       <DisplayModeBar />
       <GlobalShowScoresToggle />
       <GameModeBar />
-      <SearchQuery />
+      <PlayerQuery />
+      <MapName />
       <Pagination />
-      {/*<BulkActions />*/}
     </div>
   );
 };

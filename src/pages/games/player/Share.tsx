@@ -6,14 +6,14 @@ import { toast } from "react-toastify";
 import { query } from "urlcat";
 import { useCopyToClipboard, useToggle } from "usehooks-ts";
 import { useFteController } from "../fte/hooks.ts";
-import { useCurrentDemoId } from "../playlist/hooks.ts";
+import { useCurrentGameId } from "../hooks.ts";
 import { formatElapsed } from "../time.ts";
 import { btnPrimary, sizeLarge, sizeSmall } from "../ui/theme.ts";
 
 export const ShareDemoButton = () => {
   const fte = useFteController();
-  const demoId = useCurrentDemoId();
-  const [gameElapsedTime, setGameElapsedTime] = useState<number>(0);
+  const gameId = useCurrentGameId();
+  const [gameElapsedTime, setMatchElapsedTime] = useState<number>(0);
   const [useFrom, toggleUseFrom] = useToggle(false);
   const [isUsingAutotrack, setIsUsingAutotrack] = useState<boolean>(false);
   const [trackUserId, setTrackUserId] = useState<number | "">(0);
@@ -26,7 +26,7 @@ export const ShareDemoButton = () => {
     }
     fte.pause();
     setTrackUserId(fte.getTrackUserid() || "");
-    setGameElapsedTime(Math.floor(fte.getGameElapsedTime()));
+    setMatchElapsedTime(Math.floor(fte.getMatchElapsedTime()));
     setIsUsingAutotrack(fte.isUsingAutotrack());
     setUrl(getUrl());
     copyToClipboardWithToast();
@@ -57,7 +57,7 @@ export const ShareDemoButton = () => {
       return base;
     }
 
-    const q: { [key: string]: string | number | undefined } = { demoId };
+    const q: { [key: string]: string | number | undefined } = { gameId };
 
     if (useFrom) {
       q.from = Math.floor(fte.getDemoElapsedTime());

@@ -1,7 +1,8 @@
 import { type ReactNode, createContext, useContext, useState } from "react";
 import { query } from "urlcat";
 import { useBoolean } from "usehooks-ts";
-import { useCurrentDemoId } from "../../playlist/hooks.ts";
+
+import { useCurrentGameId } from "../../hooks.ts";
 
 type ClipEditorContextProps = {
   isEnabled: boolean;
@@ -36,7 +37,7 @@ const ClipEditorContext = createContext<ClipEditorContextProps>({
 });
 
 export const ClipEditorProvider = ({ children }: { children: ReactNode }) => {
-  const demoId = useCurrentDemoId();
+  const demoId = useCurrentGameId();
   const {
     value: isEnabled,
     setTrue: enable,

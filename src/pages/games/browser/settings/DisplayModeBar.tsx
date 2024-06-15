@@ -2,11 +2,11 @@ import { faBars, faTableCells } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
 import { sizeSmall, toggleBtn, toggleBtnSelected } from "../../ui/theme.ts";
-import { useDemoSettings } from "./context.tsx";
+import { useGameSettings } from "./context.tsx";
 import type { DisplayMode } from "./types.ts";
 
 export const DisplayModeBar = () => {
-  const { displayMode, setDisplayMode } = useDemoSettings();
+  const { displayMode, setDisplayMode } = useGameSettings();
 
   const options = [
     { icon: faTableCells, label: "Grid", value: "Grid" },

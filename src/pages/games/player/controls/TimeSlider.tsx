@@ -5,8 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { getTrackBackground } from "react-range";
 import { useEventListener, useHover } from "usehooks-ts";
 import { useFteController } from "../../fte/hooks.ts";
-import { useUpdateInterval } from "../../hooks.ts";
-import { useUrlClipParams } from "../../playlist/hooks.ts";
+import { useUpdateInterval, useUrlClipParams } from "../../hooks.ts";
 import { formatElapsed } from "../../time.ts";
 import { useClipEditor } from "../clips/context.tsx";
 
@@ -17,8 +16,8 @@ export function TimeSlider() {
   const isHover = useHover(sliderWrapperRef);
   const [mouse, sliderRootRef] = useMouse<HTMLDivElement>();
 
-  const countdownLength = fte ? fte.getGameStartTime() : 10;
-  const maxValue = fte ? fte.getDemoTotalTime() : 1200;
+  const countdownLength = fte ? fte.getMatchStartTime() : 10;
+  const maxValue = fte ? fte.getDemoDuration() : 1200;
 
   useEffect(() => {
     if (!isHover || !tooltipRef.current) {
