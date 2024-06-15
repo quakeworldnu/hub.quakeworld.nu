@@ -34,19 +34,24 @@ function queryToFts(query = ""): string {
 }
 
 export async function searchGamesCount(settings: {
-  query: string;
+  map: string;
   gameMode: GameMode;
+  playerQuery: string;
 }): Promise<number> {
   let qb = supabase.from("games").select("count", { count: "exact" });
-  const { query, gameMode } = settings;
+  const { playerQuery, map, gameMode } = settings;
 
   if (gameMode !== "All") {
     qb = qb.eq("mode", gameMode.toLowerCase());
   }
 
-  const fts = queryToFts(query);
-  if (fts) {
-    qb = qb.textSearch("players_fts", fts);
+  if (map.length > 0) {
+    qb = qb.eq("map", map);
+  }
+
+  const players_fts = queryToFts(playerQuery);
+  if (players_fts) {
+    qb = qb.textSearch("players_fts", players_fts);
   }
 
   const result = await qb.single();
@@ -54,19 +59,24 @@ export async function searchGamesCount(settings: {
 }
 
 export async function searchGamesRows(settings: {
-  query: string;
   gameMode: GameMode;
+  map: string;
+  playerQuery: string;
   page: number;
 }) {
   let qb = supabase.from("games").select("*");
 
-  const { query, gameMode } = settings;
+  const { gameMode, map, playerQuery } = settings;
 
   if (gameMode !== "All") {
     qb = qb.eq("mode", gameMode.toLowerCase());
   }
 
-  const fts = queryToFts(query);
+  if (map.length > 0) {
+    qb = qb.eq("map", map);
+  }
+
+  const fts = queryToFts(playerQuery);
   if (fts) {
     qb = qb.textSearch("players_fts", fts);
   }

@@ -7,7 +7,7 @@ import { SiteFooter } from "../../site/Footer";
 import { SiteHeader } from "../../site/Header";
 import { Sidebar } from "./Sidebar";
 import { Browser } from "./browser/Browser";
-import { useDemos } from "./browser/context.tsx";
+import { useGames } from "./browser/context.tsx";
 
 import { useCurrentGameId } from "./hooks";
 
@@ -22,7 +22,7 @@ function getAppBodySize() {
 
 export const App = () => {
   const gameId = useCurrentGameId();
-  const { isLoading } = useDemos();
+  const { isLoading } = useGames();
 
   function handleAppBodySizeChange() {
     dispatchEvent(

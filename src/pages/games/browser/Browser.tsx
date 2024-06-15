@@ -1,27 +1,27 @@
 import { GameGrid } from "./GameGrid.tsx";
 import { GameList } from "./GameList.tsx";
-import { GamesProvider, useDemos } from "./context.tsx";
+import { GamesProvider, useGames } from "./context.tsx";
 import { Pagination } from "./settings/Pagination.tsx";
 import { Toolbar } from "./settings/Toolbar.tsx";
-import { DemoSettingsProvider, useDemoSettings } from "./settings/context.tsx";
+import { GameSettingsProvider, useGameSettings } from "./settings/context.tsx";
 
 export const Browser = () => {
   return (
     <div className="space-y-4">
-      <DemoSettingsProvider localStorageKey="mainDemoBrowser.settings.v2">
+      <GameSettingsProvider localStorageKey="mainDemoBrowser.settings.v3">
         <GamesProvider>
           <Toolbar />
-          <Demos />
+          <Games />
           <Pagination />
         </GamesProvider>
-      </DemoSettingsProvider>
+      </GameSettingsProvider>
     </div>
   );
 };
 
-const Demos = () => {
-  const { displayMode } = useDemoSettings();
-  const { games, hasGames, isLoading } = useDemos();
+const Games = () => {
+  const { displayMode } = useGameSettings();
+  const { games, hasGames, isLoading } = useGames();
 
   return (
     <div>
@@ -30,10 +30,10 @@ const Demos = () => {
       ) : (
         <GameList games={games} />
       )}
-      {isLoading && <div className="text-slate-400">Loading demos...</div>}
+      {isLoading && <div className="text-slate-400">Loading games...</div>}
 
       {!isLoading && !hasGames && (
-        <div className="text-slate-400">No demos found.</div>
+        <div className="text-slate-400">No games found.</div>
       )}
     </div>
   );

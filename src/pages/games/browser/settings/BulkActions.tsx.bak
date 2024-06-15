@@ -2,10 +2,10 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { usePlaylist } from "../../playlist/hooks.ts";
 import { btnSecondary, sizeSmall } from "../../ui/theme.ts";
-import { useDemos } from "../context.tsx";
+import { useGames } from "../context.tsx";
 
 export const BulkActions = () => {
-  const { games, hasGames } = useDemos();
+  const { games, hasGames } = useGames();
   const { addMany } = usePlaylist();
 
   function handleClick() {

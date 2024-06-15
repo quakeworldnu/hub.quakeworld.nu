@@ -11,7 +11,7 @@ import {
   searchGamesRows,
 } from "../services/supabase/supabase.ts";
 import type { Game } from "../services/supabase/supabase.types.ts";
-import { useDemoSettings } from "./settings/context.tsx";
+import { useGameSettings } from "./settings/context.tsx";
 
 type GameContextProps = {
   games: Game[];
@@ -28,7 +28,7 @@ const GameContext = createContext<GameContextProps>({
 });
 
 export const GamesProvider = ({ children }: { children: ReactNode }) => {
-  const { setPage, query, gameMode, page } = useDemoSettings();
+  const { setPage, playerQuery, gameMode, map, page } = useGameSettings();
   const [games, setGames] = useState<Game[]>([]);
   const [count, setCount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -37,11 +37,11 @@ export const GamesProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     async function run() {
       setIsLoading(true);
-      const count = await searchGamesCount({ gameMode, query });
+      const count = await searchGamesCount({ gameMode, map, playerQuery });
 
       let games: Game[] = [];
 
-      const settings = { gameMode, query, page: 1 };
+      const settings = { gameMode, map, playerQuery, page: 1 };
       if (count > 0) {
         const { data } = await searchGamesRows(settings);
         games = data || [];
@@ -54,7 +54,7 @@ export const GamesProvider = ({ children }: { children: ReactNode }) => {
     }
 
     run();
-  }, [query, gameMode]);
+  }, [playerQuery, gameMode, map]);
 
   useEffect(() => {
     if (isFirstRender) {
@@ -63,7 +63,7 @@ export const GamesProvider = ({ children }: { children: ReactNode }) => {
 
     async function run() {
       setIsLoading(true);
-      const settings = { query, gameMode, page };
+      const settings = { playerQuery, gameMode, map, page };
       const { data: games } = await searchGamesRows(settings);
       setGames(games || []);
       setIsLoading(false);
@@ -82,4 +82,4 @@ export const GamesProvider = ({ children }: { children: ReactNode }) => {
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
 };
 
-export const useDemos = () => useContext(GameContext);
+export const useGames = () => useContext(GameContext);
