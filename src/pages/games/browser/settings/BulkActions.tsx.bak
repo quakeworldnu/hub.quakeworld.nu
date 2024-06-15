@@ -5,16 +5,16 @@ import { btnSecondary, sizeSmall } from "../../ui/theme.ts";
 import { useDemos } from "../context.tsx";
 
 export const BulkActions = () => {
-  const { demos, hasDemos } = useDemos();
+  const { games, hasGames } = useDemos();
   const { addMany } = usePlaylist();
 
   function handleClick() {
-    addMany(demos);
+    addMany(games);
   }
 
   return (
     <button
-      disabled={!hasDemos}
+      disabled={!hasGames}
       className={`${btnSecondary} ${sizeSmall}`}
       onClick={handleClick}
     >

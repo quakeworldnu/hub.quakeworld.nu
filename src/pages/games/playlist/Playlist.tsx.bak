@@ -13,7 +13,8 @@ import type { Demo } from "../services/supabase/supabase.types.ts";
 import { Switch } from "../ui/Switch.tsx";
 import { btnSecondary, sizeSmall } from "../ui/theme.ts";
 import { SortableItemList } from "./Sortable.tsx";
-import { useCurrentDemoId, usePlaylist } from "./hooks.ts";
+import { usePlaylist } from "./hooks.ts";
+import {useCurrentDemoId} from "../hooks.ts";
 
 export type PlaylistItem = {
   id: number;
