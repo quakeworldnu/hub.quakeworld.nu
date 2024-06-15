@@ -7,7 +7,7 @@ import { useFteController } from "../fte/hooks.ts";
 import { toggleFullscreen } from "../fullscreen.ts";
 import { useWakeLock } from "../hooks.ts";
 
-export const FteCanvas = () => {
+export const FteDemoPlayerCanvas = () => {
   const fte = useFteController();
   const documentRef = useRef<Document>(document);
 

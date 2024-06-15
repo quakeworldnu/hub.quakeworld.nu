@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useCounter, useEffectOnce, useInterval, useScript } from "usehooks-ts";
 import { useEventListener } from "../hooks.ts";
-import { cloudfrontUrl } from "./assets.ts";
+import { getAssetUrl } from "../services/cloudfront/cassets.ts";
 import { FteController } from "./fteController.ts";
 import { FTE_VERSION } from "./meta.ts";
 import type { FteAssets, FteModule, FtePreloadModule } from "./types.ts";
@@ -14,12 +14,12 @@ declare global {
 
 export function useFteLoader({
   assets,
-  demoTotalTime,
+  demoDuration,
 }: {
   assets: FteAssets;
-  demoTotalTime: number | null;
+  demoDuration: number | null;
 }) {
-  const scriptPath = cloudfrontUrl(`fte/ftewebgl.js?version=${FTE_VERSION}`);
+  const scriptPath = getAssetUrl(`fte/ftewebgl.js?version=${FTE_VERSION}`);
   const scriptStatus = useScript(scriptPath, { removeOnUnmount: true });
   const { count: loaded, increment } = useCounter(0);
   const [fte, setFte] = useState<undefined | FteController>(undefined);
@@ -45,7 +45,7 @@ export function useFteLoader({
       if (!fte && (window.Module as FteModule).getClientState) {
         const instance = FteController.createInstace(
           window.Module as FteModule,
-          demoTotalTime,
+          demoDuration,
         );
         setFte(instance);
       }

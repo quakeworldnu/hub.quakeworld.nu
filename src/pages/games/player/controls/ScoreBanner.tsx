@@ -30,7 +30,7 @@ export const ScoreBanner = () => {
   const fte = useFteController();
   useUpdateInterval(250);
 
-  if (!fte || fte.getGameElapsedTime() >= fte.getGameTotalTime()) {
+  if (!fte || fte.getMatchElapsedTime() >= fte.getMatchDuration()) {
     return null;
   }
 
@@ -54,7 +54,7 @@ export const ScoreBanner = () => {
         <Participant participant={participants[1]} index={1} />
       </div>
       <div className="text-center mt-1 app-text-shadow font-bold text-yellow-200">
-        {formatElapsed(fte.getGameElapsedTime())}
+        {formatElapsed(fte.getMatchElapsedTime())}
       </div>
     </div>
   );

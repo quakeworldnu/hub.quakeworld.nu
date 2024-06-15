@@ -4,7 +4,7 @@ import type { Player, Team } from "../../fte/types.ts";
 import { useUpdateInterval } from "../../hooks.ts";
 import { QuakeTextFromBytes } from "../QuakeText.tsx";
 
-import { cloudfrontUrl } from "../../fte/assets.ts";
+import { getAssetUrl } from "../../services/cloudfront/cassets.ts";
 
 export const ResponsivePlayerInfo = ({ scale }: { scale: number }) => {
   return (
@@ -175,7 +175,7 @@ const Powerups = ({
 };
 
 export const Sigil = ({ number }: { number: number }) => {
-  const src = cloudfrontUrl(`/qw/textures/wad/sb_sigil${number}.png`);
+  const src = getAssetUrl(`/qw/textures/wad/sb_sigil${number}.png`);
   return <img src={src} width={10} height={20} />;
 };
 

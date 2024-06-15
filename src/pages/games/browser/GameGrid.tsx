@@ -1,33 +1,32 @@
 import classNames from "classnames";
 import { Timestamp } from "../Timestamp.tsx";
-import { ToggleButton } from "../playlist/Playlist.tsx";
-import type { Demo } from "../services/supabase/supabase.types.ts";
+import type { Game } from "../services/supabase/supabase.types.ts";
 import { btnSecondary } from "../ui/theme.ts";
 import { DownloadButton } from "./Controls.tsx";
 import { ScoreboardLink } from "./Scoreboard.tsx";
 import { useDemoScoreSpoiler } from "./hooks.ts";
 
-export const DemoGrid = ({ demos }: { demos: Demo[] | null }) => {
+export const GameGrid = ({ games }: { games: Game[] | null }) => {
   return (
     <div className="grid grid-cols-servers gap-4">
-      {demos?.map((demo) => (
-        <GridItem key={demo.id} demo={demo} />
+      {games?.map((game) => (
+        <GridItem key={game.id} game={game} />
       ))}
     </div>
   );
 };
 
-const GridItem = (props: { demo: Demo }) => {
-  const { demo } = props;
+const GridItem = (props: { game: Game }) => {
+  const { game } = props;
   const { isVisible, show } = useDemoScoreSpoiler();
 
   return (
     <div className="flex flex-col h-full">
-      <ScoreboardLink demo={demo} showScores={isVisible} />
+      <ScoreboardLink game={game} showScores={isVisible} />
 
       <div className="flex items-center mt-1 text-xs justify-between">
         <div className="w-1/3 text-slate-500">
-          <Timestamp timestamp={demo.timestamp} />
+          <Timestamp timestamp={game.timestamp} />
         </div>
         <div className="w-1/3">
           <button
@@ -39,10 +38,11 @@ const GridItem = (props: { demo: Demo }) => {
             Show scores
           </button>
         </div>
-        <div className="flex items-center space-x-1 w-1/3 justify-end">
-          <ToggleButton demo={demo} />
-          <DownloadButton s3_key={demo.s3_key} />
-        </div>
+        {game.demo_sha256 && (
+          <div className="flex items-center space-x-1 w-1/3 justify-end">
+            <DownloadButton sha256={game.demo_sha256} />
+          </div>
+        )}
       </div>
     </div>
   );

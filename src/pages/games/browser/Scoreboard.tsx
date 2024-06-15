@@ -1,8 +1,9 @@
 import classNames from "classnames";
 import { getMapshotCssUrl } from "../../../services/mapshots.ts";
 import type {
-  Demo,
-  DemoParticipants,
+  Game,
+  GamePlayer,
+  GameTeam,
 } from "../services/supabase/supabase.types.ts";
 
 // eslint-disable-next-line
@@ -11,52 +12,40 @@ import type {
 import { Scoreboard as LegacyScoreboard } from "../../../servers/Scoreboard.jsx";
 
 type ScoreboardProps = {
-  demo: Demo;
+  game: Game;
   showScores?: boolean;
   showMapName?: boolean;
 };
 
 export const Scoreboard = ({
-  demo,
+  game,
   showScores = false,
   showMapName = false,
 }: ScoreboardProps) => {
-  const { teams, players } = demo.participants as DemoParticipants;
-  const hasTeams = teams.length > 0;
-
-  const fixedTeams = [...teams];
-  const fixedPlayers = [...players];
-
-  if (hasTeams) {
-    for (let i = 0; i < fixedTeams.length; i++) {
-      for (let j = 0; j < fixedTeams[i].players.length; j++) {
-        fixedTeams[i].players[j].colors = fixedTeams[i].colors;
-        fixedTeams[i].players[j].team = fixedTeams[i].name;
-        fixedTeams[i].players[j].team_color = fixedTeams[i].name_color;
-        fixedPlayers.push(fixedTeams[i].players[j]);
-      }
-    }
-  }
-
-  if (showScores) {
-    fixedTeams.sort((a, b) => b.frags - a.frags);
-    fixedPlayers.sort((a, b) => b.frags - a.frags);
-  }
-
-  const isCustomMode = ["ctf", "wipeout"].includes(demo.mode);
+  // @ts-ignore
+  const fixedTeams = ([...game.teams] as GameTeam[]).map((v) => ({
+    colors: v.color,
+    ...v,
+  }));
+  // @ts-ignore
+  const fixedPlayers = ([...game.players] as GamePlayer[]).map((v) => ({
+    colors: v.color,
+    ...v,
+  }));
+  const isCustomMode = ["ctf", "wipeout"].includes(game.mode);
 
   return (
-    <div className="h-full bg-cover bg-center bg-no-repeat bg-[url(https://hub.quakeworld.nu/assets/img/default_mapshot.jpg)]">
+    <div className="h-full bg-cover bg-center bg-no-repeat bg-[url(https://a.quake.world/mapshots/default.jpg)]">
       {isCustomMode && (
         <div className="absolute">
-          <ModeRibbon mode={demo.mode} />
+          <ModeRibbon mode={game.mode} />
         </div>
       )}
 
       <div
         className={"h-full bg-no-repeat bg-center bg-cover"}
         style={{
-          backgroundImage: getMapshotCssUrl(demo.map),
+          backgroundImage: getMapshotCssUrl(game.map),
         }}
       >
         <div className="flex flex-col h-full bg-gray-700/20 py-4">
@@ -70,7 +59,7 @@ export const Scoreboard = ({
           {showMapName && (
             <div className="h-4 -mt-4 mr-3 self-end">
               <div className="bg-gray-900/70 px-1.5 py-0.5 rounded text-xs text-slate-300">
-                {demo.map}
+                {game.map}
               </div>
             </div>
           )}
@@ -81,23 +70,23 @@ export const Scoreboard = ({
 };
 
 type ScoreboardLinkProps = {
-  demo: Demo;
+  game: Game;
   showScores?: boolean;
 };
 
 export const ScoreboardLink = ({
-  demo,
+  game,
   showScores = false,
 }: ScoreboardLinkProps) => {
   return (
     <a
       title="Play demo"
-      href={`/games/?demoId=${demo.id}`}
+      href={`/games/?gameId=${game.id}`}
       className={classNames(
         "h-full hover:scale-105 transition-transform hover:z-20 hover:relative",
       )}
     >
-      <Scoreboard demo={demo} showScores={showScores} showMapName />
+      <Scoreboard game={game} showScores={showScores} showMapName />
     </a>
   );
 };

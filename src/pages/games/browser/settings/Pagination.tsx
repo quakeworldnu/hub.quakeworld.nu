@@ -10,11 +10,11 @@ import { useDemoSettings } from "./context.tsx";
 
 const PER_PAGE = 20;
 export const Pagination = () => {
-  const { count, hasDemos } = useDemos();
+  const { count, hasGames } = useDemos();
   const { page, nextPage, prevPage } = useDemoSettings();
   const pageCount = Math.ceil(count / PER_PAGE);
 
-  if (!hasDemos || pageCount < 2) {
+  if (!hasGames || pageCount < 2) {
     return null;
   }
 

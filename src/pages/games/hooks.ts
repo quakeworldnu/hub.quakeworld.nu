@@ -37,3 +37,30 @@ export function useWakeLock() {
     requestWakeLock();
   });
 }
+
+export function useCurrentGameId(): number | undefined {
+  const params = new URLSearchParams(window.location.search);
+  const gameId = params.get("gameId");
+
+  if (gameId) {
+    return Number.parseInt(gameId);
+  }
+
+  // legacy fallback
+  const demoId = params.get("demoId");
+  return demoId ? Number.parseInt(demoId) : undefined;
+}
+
+export function useUrlClipParams(): {
+  from: number;
+  to: number;
+  track: number | string;
+  hasParams: boolean;
+} {
+  const params = new URLSearchParams(window.location.search);
+  const from = Number.parseInt(params.get("from") || "0");
+  const to = Number.parseInt(params.get("to") || "0");
+  const track = params.get("track") || "auto";
+  const hasParams = from > 0 && to > 0;
+  return { from, to, track, hasParams };
+}

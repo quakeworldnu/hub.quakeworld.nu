@@ -1,44 +1,23 @@
+import { getAssetUrl } from "../services/cloudfront/cassets.ts";
 import { idMaps } from "./idMaps.ts";
 import { getMapTextures } from "./map_textures.ts";
 import { CONFIG_VERSION } from "./meta.ts";
 import type { FteAssets } from "./types.ts";
 
-const CLOUDFRONT_URL: string = import.meta.env.VITE_ASSETS_CLOUDFRONT_URL;
-
-export function cloudfrontUrl(path: string): string {
-  const path_ = path.replace("#", "%23").replace("+", "%2B");
-  return `${CLOUDFRONT_URL}/${path_}`;
-}
-
 export function getAssets(demoUrl: string, mapName: string): FteAssets {
-  const demoFilename = demoUrl.split("/").pop() || "";
   return {
     ...getGeneralAssets(),
-    [getDemoMountPath(demoFilename)]: demoUrl,
+    "qw/match.mvd.gz": demoUrl,
     ...getMapAssets(mapName),
   };
-}
-
-function getDemoMountPath(demoFilename: string): string {
-  let mountPath: string;
-
-  if (demoFilename.endsWith(".gz")) {
-    mountPath = "qw/match.mvd.gz";
-  } else if (demoFilename.endsWith(".mvd")) {
-    mountPath = "qw/match.mvd";
-  } else {
-    mountPath = "id1/match.dem";
-  }
-
-  return mountPath;
 }
 
 function getMapAssets(mapName: string): FteAssets {
   const mapBaseUrl = `maps/${mapName}`;
 
   const assets: FteAssets = {
-    [`id1/maps/${mapName}.bsp`]: cloudfrontUrl(`${mapBaseUrl}.bsp`),
-    [`id1/locs/${mapName}.loc`]: cloudfrontUrl(`${mapBaseUrl}.loc`),
+    [`id1/maps/${mapName}.bsp`]: getAssetUrl(`${mapBaseUrl}.bsp`),
+    [`id1/locs/${mapName}.loc`]: getAssetUrl(`${mapBaseUrl}.loc`),
   };
 
   if (idMaps.includes(mapName)) {
@@ -47,7 +26,7 @@ function getMapAssets(mapName: string): FteAssets {
 
   return {
     ...assets,
-    [`id1/maps/${mapName}.lit`]: cloudfrontUrl(`${mapBaseUrl}.lit`),
+    [`id1/maps/${mapName}.lit`]: getAssetUrl(`${mapBaseUrl}.lit`),
     ...getMapTextures(mapName),
   };
 }
@@ -536,13 +515,13 @@ function getGeneralAssets(): FteAssets {
   ];
 
   const assets: FteAssets = {
-    "id1/config.cfg": cloudfrontUrl(
+    "id1/config.cfg": getAssetUrl(
       `fte/id1/config.cfg?version=${CONFIG_VERSION}`,
     ),
   };
 
   for (const path of filePaths) {
-    assets[path] = cloudfrontUrl(`fte/${path}`);
+    assets[path] = getAssetUrl(`fte/${path}`);
   }
 
   return assets;

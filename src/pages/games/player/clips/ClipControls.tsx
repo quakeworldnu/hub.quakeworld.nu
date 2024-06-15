@@ -84,7 +84,7 @@ const AdjustControls = () => {
     return null;
   }
 
-  const countdownLength = fte.getGameStartTime();
+  const countdownLength = fte.getMatchStartTime();
   const rangeInGameTime = range.map((v) => v - countdownLength);
 
   return (
@@ -119,7 +119,7 @@ const AdjustRangeButton = ({
     if (!fte) {
       return;
     }
-    const newValue = clamp(current + delta, 0, fte.getDemoTotalTime());
+    const newValue = clamp(current + delta, 0, fte.getDemoDuration());
     onClick(newValue);
     fte.demoJump(newValue);
   }

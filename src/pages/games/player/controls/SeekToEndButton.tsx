@@ -1,6 +1,6 @@
 import { faForwardStep } from "@fortawesome/free-solid-svg-icons";
 import { useFteController } from "../../fte/hooks.ts";
-import { useUrlClipParams } from "../../playlist/hooks.ts";
+import { useUrlClipParams } from "../../hooks.ts";
 import { useClipEditor } from "../clips/context.tsx";
 import { IconButton } from "./IconButton.tsx";
 
