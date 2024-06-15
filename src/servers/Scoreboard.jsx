@@ -3,6 +3,10 @@ import classNames from "classnames";
 import { memo } from "react";
 import { ColoredFrags } from "./ColoredFrags";
 
+const sortByFrags = (a, b) => b.frags - a.frags;
+const sortByName = (a, b) =>
+  a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+
 export const Scoreboard = ({
   players = [],
   teams = [],
@@ -11,6 +15,14 @@ export const Scoreboard = ({
 }) => {
   const hasTeams = teams.length > 0;
   const showTeamColumn = hasTeams && teams.length <= 3;
+
+  if (showFrags) {
+    players = players.toSorted(sortByFrags);
+    teams = teams.toSorted(sortByFrags);
+  } else {
+    players = players.toSorted(sortByName);
+    teams = teams.toSorted(sortByName);
+  }
 
   return (
     <div
@@ -38,7 +50,7 @@ export const Scoreboard = ({
   );
 };
 
-const TeamRow = memo((props) => {
+const TeamRow = (props) => {
   const {
     name = "",
     name_color = "",
@@ -57,7 +69,7 @@ const TeamRow = memo((props) => {
       <div />
     </div>
   );
-});
+};
 
 const TeamName = memo((props) => {
   const { name = "", name_color = "" } = props;
@@ -126,8 +138,8 @@ const PlayerRow = (props) => {
   );
 };
 
-const Ping = memo((props) => {
+const Ping = (props) => {
   const { value } = props;
 
   return <span className="text-right text-xs opacity-50">{value}</span>;
-});
+};
