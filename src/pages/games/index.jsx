@@ -6,6 +6,13 @@ import App from "./App";
 import "@qwhub/styles/index.scss";
 import * as Sentry from "@sentry/react";
 
+function preventDefault(e) {
+  e.preventDefault();
+}
+
+window.addEventListener("dragover", preventDefault, false);
+window.addEventListener("drop", preventDefault, false);
+
 if (import.meta.env.PROD) {
   Sentry.init({
     dsn: import.meta.env.VITE_SENTRY_DSN,

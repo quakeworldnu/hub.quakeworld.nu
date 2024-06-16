@@ -10,6 +10,22 @@ const supabase = createClient<Database>(
   import.meta.env.VITE_SUPABASE_ANON_KEY,
 );
 
+export async function getGameIdBySha256(
+  sha256: string,
+): Promise<number | null> {
+  try {
+    const { data } = await supabase
+      .from("games")
+      .select("id")
+      .eq("demo_sha256", sha256)
+      .limit(1)
+      .single();
+    return data?.id ?? null;
+  } catch (error) {
+    return null;
+  }
+}
+
 export async function getGame(id: number): Promise<Game | null> {
   const { data } = await supabase
     .from("games")
