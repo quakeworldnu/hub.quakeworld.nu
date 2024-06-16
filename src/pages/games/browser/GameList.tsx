@@ -12,15 +12,15 @@ export const GameList = ({ games }: { games: Game[] | null }) => {
     <table className="text-left">
       <thead>
         <tr className="text-slate-300 text-xs">
-          <th className="p-2 min-w-[100px]">Date</th>
-          <th className="p-2">Score</th>
-          <th className="p-2" />
+          <th className="py-1 px-3 min-w-[100px]">Date</th>
+          <th className="py-1 px-3">Score</th>
+          <th className="py-1 px-3">Map</th>
+          <th className="py-1 px-3">Players/Teams</th>
+          <th className="py-1 px-3">Score</th>
         </tr>
       </thead>
       <tbody className="text-sm">
-        {games?.map((demo) => (
-          <ListItem key={demo.id} Game={demo} />
-        ))}
+        {games?.map((demo) => <ListItem key={demo.id} Game={demo} />)}
       </tbody>
     </table>
   );
@@ -29,13 +29,23 @@ export const GameList = ({ games }: { games: Game[] | null }) => {
 const ListItem = ({ Game }: { Game: Game }) => {
   return (
     <tr className="odd:bg-[#1a1a2a] hover:bg-white/10">
-      <td className="p-2 text-slate-400 text-xs">
+      <td className="py-1 px-3 text-slate-400 text-xs">
         <Timestamp timestamp={Game.timestamp} />
       </td>
-      <td className="p-2 text-slate-400 text-right">{Game.mode}</td>
-      <td className="p-2 text-slate-400">{Game.map}</td>
-      <td className="p-2">TODO</td>
-      <td className="text-center">
+      <td className="py-1 px-3 text-slate-400">{Game.mode}</td>
+      <td className="py-1 px-3 text-slate-400">{Game.map}</td>
+      <td className="py-1 px-3">
+        <a
+          href={`/games/?gameId=${Game.id}`}
+          className="text-blue-300 hover:text-white hover:underline"
+        >
+          {getDemoParticipants(
+            Game.teams as GameTeam[],
+            Game.players as GamePlayer[],
+          )}
+        </a>
+      </td>
+      <td className="text-center font-mono text-xs">
         <ScoreSpoiler
           score={getDemoScores(
             Game.teams as GameTeam[],
@@ -43,13 +53,28 @@ const ListItem = ({ Game }: { Game: Game }) => {
           )}
         />
       </td>
-      <td className="p-2 flex items-center space-x-2">
+      <td className="py-1 px-3 flex items-center space-x-2">
         <PlayButton id={Game.id} />
         {Game.demo_sha256 && <DownloadButton sha256={Game.demo_sha256} />}
       </td>
     </tr>
   );
 };
+
+function getDemoParticipants(
+  teams: GameTeam[] = [],
+  players: GamePlayer[] = [],
+): string {
+  let p: string[];
+
+  if (teams.length > 0) {
+    p = teams.map((t) => t.name);
+  } else {
+    p = players.map((t) => t.name);
+  }
+
+  return p.join(" vs ");
+}
 
 function getDemoScores(
   teams: GameTeam[] = [],
@@ -58,7 +83,6 @@ function getDemoScores(
   let p: number[];
 
   if (teams.length > 0) {
-    teams.sort((a, b) => a.name.localeCompare(b.name));
     p = teams.map((t) => t.frags);
   } else {
     p = players.map((p) => p.frags);
