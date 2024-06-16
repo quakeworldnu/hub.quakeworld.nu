@@ -46,7 +46,7 @@
     "@radix-ui/react-switch": "^1.0.3",
     "@reduxjs/toolkit": "^2.2.5",
     "@sentry/react": "^8.9.2",
-    "@supabase/supabase-js": "2.43.4",
+    "@supabase/supabase-js": "2.43.5",
     "@uidotdev/usehooks": "^2.4.1",
     "autoprefixer": "^10.4.19",
     "classnames": "^2.5.1",
