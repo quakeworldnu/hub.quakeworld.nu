@@ -1,4 +1,11 @@
-import { Player } from "./types.ts";
+import { Player } from "./fte/types.ts";
+
+export function getPlayerColor(color: number): number {
+  if (color < 0 || color > 13) {
+    return 0;
+  }
+  return color;
+}
 
 export function getPlayersMajorityColor(players: Player[]): {
   topcolor: number;

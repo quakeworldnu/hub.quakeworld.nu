@@ -8,7 +8,7 @@ import {
   Player,
   Team,
 } from "./types.ts";
-import { getPlayersMajorityColor } from "./util.ts";
+import { getPlayerColor, getPlayersMajorityColor } from "../quake_color.ts";
 
 export function fteEvent(name: string, detail: object) {
   const event = new CustomEvent(`fte.${name}`, { detail });
@@ -131,6 +131,8 @@ export class FteController {
           continue;
         }
 
+        player.topcolor = getPlayerColor(player.topcolor);
+        player.bottomcolor = getPlayerColor(player.bottomcolor);
         players.push(player);
       }
     } catch (e) {
