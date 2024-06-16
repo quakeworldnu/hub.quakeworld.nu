@@ -1,22 +1,22 @@
 import classNames from "classnames";
 import { Timestamp } from "../Timestamp.tsx";
-import type { Game } from "../services/supabase/supabase.types.ts";
+import { GameSearchEntry } from "../services/supabase/supabase.ts";
 import { btnSecondary } from "../ui/theme.ts";
 import { DownloadButton } from "./Controls.tsx";
 import { ScoreboardLink } from "./Scoreboard.tsx";
 import { useDemoScoreSpoiler } from "./hooks.ts";
 
-export const GameGrid = ({ games }: { games: Game[] | null }) => {
+export const GameGrid = ({ games }: { games: GameSearchEntry[] }) => {
   return (
     <div className="grid grid-cols-servers gap-4">
-      {games?.map((game) => (
+      {games.map((game: GameSearchEntry) => (
         <GridItem key={game.id} game={game} />
       ))}
     </div>
   );
 };
 
-const GridItem = (props: { game: Game }) => {
+const GridItem = (props: { game: GameSearchEntry }) => {
   const { game } = props;
   const { isVisible, show } = useDemoScoreSpoiler();
 

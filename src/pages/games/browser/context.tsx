@@ -7,14 +7,14 @@ import {
 } from "react";
 import { useIsFirstRender } from "usehooks-ts";
 import {
+  GameSearchEntry,
   searchGamesCount,
   searchGamesRows,
 } from "../services/supabase/supabase.ts";
-import type { Game } from "../services/supabase/supabase.types.ts";
 import { useGameSettings } from "./settings/context.tsx";
 
 type GameContextProps = {
-  games: Game[];
+  games: GameSearchEntry[];
   hasGames: boolean;
   count: number;
   isLoading: boolean;
@@ -29,7 +29,7 @@ const GameContext = createContext<GameContextProps>({
 
 export const GamesProvider = ({ children }: { children: ReactNode }) => {
   const { setPage, playerQuery, gameMode, map, page } = useGameSettings();
-  const [games, setGames] = useState<Game[]>([]);
+  const [games, setGames] = useState<GameSearchEntry[]>([]);
   const [count, setCount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const isFirstRender = useIsFirstRender();
@@ -38,13 +38,11 @@ export const GamesProvider = ({ children }: { children: ReactNode }) => {
     async function run() {
       setIsLoading(true);
       const count = await searchGamesCount({ gameMode, map, playerQuery });
+      let games: GameSearchEntry[] = [];
 
-      let games: Game[] = [];
-
-      const settings = { gameMode, map, playerQuery, page: 1 };
       if (count > 0) {
-        const { data } = await searchGamesRows(settings);
-        games = data || [];
+        const settings = { gameMode, map, playerQuery, page: 1 };
+        games = await searchGamesRows(settings);
       }
 
       setGames(games);
@@ -64,8 +62,7 @@ export const GamesProvider = ({ children }: { children: ReactNode }) => {
     async function run() {
       setIsLoading(true);
       const settings = { playerQuery, gameMode, map, page };
-      const { data: games } = await searchGamesRows(settings);
-      setGames(games || []);
+      setGames(await searchGamesRows(settings));
       setIsLoading(false);
     }
 

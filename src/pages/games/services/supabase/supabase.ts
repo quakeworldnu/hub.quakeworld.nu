@@ -3,7 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 import type { Database } from "./database.types.ts";
 
 import type { GameMode } from "../../browser/settings/types.ts";
-import { Game, GameFields } from "./supabase.types.ts";
+import { Game } from "./supabase.types.ts";
 
 const supabase = createClient<Database>(
   import.meta.env.VITE_SUPABASE_URL,
@@ -60,22 +60,20 @@ export async function searchGamesCount(settings: {
   return result?.count ?? 0;
 }
 
+export type GameSearchEntry = Pick<
+  Game,
+  "id" | "timestamp" | "mode" | "map" | "teams" | "players" | "demo_sha256"
+>;
+
 export async function searchGamesRows(settings: {
   gameMode: GameMode;
   map: string;
   playerQuery: string;
   page: number;
-}) {
-  const fields: GameFields[] = [
-    "id",
-    "timestamp",
-    "mode",
-    "map",
-    "teams",
-    "players",
-    "demo_sha256",
-  ];
-  let qb = supabase.from("games").select(fields.join(", "));
+}): Promise<GameSearchEntry[]> {
+  let qb = supabase
+    .from("games")
+    .select("id,timestamp,mode,map,teams,players,demo_sha256");
 
   const { gameMode, map, playerQuery } = settings;
 
@@ -95,5 +93,8 @@ export async function searchGamesRows(settings: {
   const limit = 15;
   const from = (settings.page - 1) * limit;
   const to = from + limit - 1;
-  return qb.order("timestamp", { ascending: false }).range(from, to);
+  const { data } = await qb
+    .order("timestamp", { ascending: false })
+    .range(from, to);
+  return data || [];
 }

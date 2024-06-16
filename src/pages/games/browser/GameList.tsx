@@ -1,13 +1,13 @@
 import { Timestamp } from "../Timestamp.tsx";
+import { GameSearchEntry } from "../services/supabase/supabase.ts";
 import type {
-  Game,
   GamePlayer,
   GameTeam,
 } from "../services/supabase/supabase.types.ts";
 import { DownloadButton, PlayButton } from "./Controls.tsx";
 import { ScoreSpoiler } from "./ScoreSpoiler.tsx";
 
-export const GameList = ({ games }: { games: Game[] | null }) => {
+export const GameList = ({ games }: { games: GameSearchEntry[] | null }) => {
   return (
     <table className="text-left">
       <thead>
@@ -28,7 +28,7 @@ export const GameList = ({ games }: { games: Game[] | null }) => {
   );
 };
 
-const ListItem = ({ Game }: { Game: Game }) => {
+const ListItem = ({ Game }: { Game: GameSearchEntry }) => {
   return (
     <tr className="odd:bg-[#1a1a2a] hover:bg-white/10">
       <td className="py-1 px-3 text-slate-400 text-xs">

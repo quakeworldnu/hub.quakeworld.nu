@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import { getMapshotCssUrl } from "../../../services/mapshots.ts";
 import type {
-  Game,
   GamePlayer,
   GameTeam,
 } from "../services/supabase/supabase.types.ts";
@@ -10,9 +9,10 @@ import type {
 // @ts-ignore
 // @typescript-eslint/ban-ts-comment
 import { Scoreboard as LegacyScoreboard } from "../../../servers/Scoreboard.jsx";
+import { GameSearchEntry } from "../services/supabase/supabase.ts";
 
 type ScoreboardProps = {
-  game: Game;
+  game: GameSearchEntry;
   showScores?: boolean;
   showMapName?: boolean;
 };
@@ -70,7 +70,7 @@ export const Scoreboard = ({
 };
 
 type ScoreboardLinkProps = {
-  game: Game;
+  game: GameSearchEntry;
   showScores?: boolean;
 };
 
