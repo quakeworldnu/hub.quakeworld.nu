@@ -3,7 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 import type { Database } from "./database.types.ts";
 
 import type { GameMode } from "../../browser/settings/types.ts";
-import { Game } from "./supabase.types.ts";
+import { Game, GameFields } from "./supabase.types.ts";
 
 const supabase = createClient<Database>(
   import.meta.env.VITE_SUPABASE_URL,
@@ -38,7 +38,9 @@ export async function searchGamesCount(settings: {
   gameMode: GameMode;
   playerQuery: string;
 }): Promise<number> {
-  let qb = supabase.from("games").select("count", { count: "exact" });
+  let qb = supabase
+    .from("games")
+    .select("count", { head: true, count: "estimated" });
   const { playerQuery, map, gameMode } = settings;
 
   if (gameMode !== "All") {
@@ -64,7 +66,8 @@ export async function searchGamesRows(settings: {
   playerQuery: string;
   page: number;
 }) {
-  let qb = supabase.from("games").select("*");
+  const fields: GameFields[] = ["id", "mode", "map", "teams", "players"];
+  let qb = supabase.from("games").select(fields.join(", "));
 
   const { gameMode, map, playerQuery } = settings;
 

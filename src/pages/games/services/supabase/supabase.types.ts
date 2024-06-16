@@ -4,6 +4,7 @@ export type Tables<T extends keyof Database["public"]["Tables"]> =
   Database["public"]["Tables"][T]["Row"];
 
 export type Game = Tables<"games">;
+export type GameFields = keyof Game;
 
 export type GamePlayer = {
   name: string;
