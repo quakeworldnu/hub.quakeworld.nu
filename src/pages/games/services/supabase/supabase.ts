@@ -66,7 +66,7 @@ export async function searchGamesRows(settings: {
   playerQuery: string;
   page: number;
 }) {
-  const fields: GameFields[] = ["id", "timestamp", "mode", "map", "teams", "players"];
+  const fields: GameFields[] = ["id", "timestamp", "mode", "map", "teams", "players", "demo_sha256"];
   let qb = supabase.from("games").select(fields.join(", "));
 
   const { gameMode, map, playerQuery } = settings;
