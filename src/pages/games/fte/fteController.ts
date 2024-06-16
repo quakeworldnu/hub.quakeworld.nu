@@ -1,4 +1,5 @@
 import { clamp } from "../math.ts";
+import { getPlayerColor, getPlayersMajorityColor } from "../quake_color.ts";
 import {
   Autotrack,
   ClientState,
@@ -8,7 +9,6 @@ import {
   Player,
   Team,
 } from "./types.ts";
-import { getPlayerColor, getPlayersMajorityColor } from "../quake_color.ts";
 
 export function fteEvent(name: string, detail: object) {
   const event = new CustomEvent(`fte.${name}`, { detail });

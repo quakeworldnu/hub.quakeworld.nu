@@ -20,7 +20,9 @@ export const GameList = ({ games }: { games: Game[] | null }) => {
         </tr>
       </thead>
       <tbody className="text-sm">
-        {games?.map((demo) => <ListItem key={demo.id} Game={demo} />)}
+        {games?.map((demo) => (
+          <ListItem key={demo.id} Game={demo} />
+        ))}
       </tbody>
     </table>
   );

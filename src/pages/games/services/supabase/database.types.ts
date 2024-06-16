@@ -4,142 +4,142 @@ export type Json =
   | boolean
   | null
   | { [key: string]: Json | undefined }
-  | Json[]
+  | Json[];
 
 export type Database = {
   public: {
     Tables: {
       games: {
         Row: {
-          demo_sha256: string | null
-          demo_source_url: string | null
-          id: number
-          map: string
-          matchtag: string | null
-          mode: string
-          players: Json
-          players_fts: unknown | null
-          server_hostname: string | null
-          team_names: string[] | null
-          teams: Json
-          timestamp: string
-        }
+          demo_sha256: string | null;
+          demo_source_url: string | null;
+          id: number;
+          map: string;
+          matchtag: string | null;
+          mode: string;
+          players: Json;
+          players_fts: unknown | null;
+          server_hostname: string | null;
+          team_names: string[] | null;
+          teams: Json;
+          timestamp: string;
+        };
         Insert: {
-          demo_sha256?: string | null
-          demo_source_url?: string | null
-          id?: number
-          map: string
-          matchtag?: string | null
-          mode: string
-          players: Json
-          players_fts?: unknown | null
-          server_hostname?: string | null
-          team_names?: string[] | null
-          teams: Json
-          timestamp: string
-        }
+          demo_sha256?: string | null;
+          demo_source_url?: string | null;
+          id?: number;
+          map: string;
+          matchtag?: string | null;
+          mode: string;
+          players: Json;
+          players_fts?: unknown | null;
+          server_hostname?: string | null;
+          team_names?: string[] | null;
+          teams: Json;
+          timestamp: string;
+        };
         Update: {
-          demo_sha256?: string | null
-          demo_source_url?: string | null
-          id?: number
-          map?: string
-          matchtag?: string | null
-          mode?: string
-          players?: Json
-          players_fts?: unknown | null
-          server_hostname?: string | null
-          team_names?: string[] | null
-          teams?: Json
-          timestamp?: string
-        }
-        Relationships: []
-      }
-    }
+          demo_sha256?: string | null;
+          demo_source_url?: string | null;
+          id?: number;
+          map?: string;
+          matchtag?: string | null;
+          mode?: string;
+          players?: Json;
+          players_fts?: unknown | null;
+          server_hostname?: string | null;
+          team_names?: string[] | null;
+          teams?: Json;
+          timestamp?: string;
+        };
+        Relationships: [];
+      };
+    };
     Views: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Functions: {
       get_current_gmt_time: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
+        Args: Record<PropertyKey, never>;
+        Returns: string;
+      };
       gtrgm_compress: {
         Args: {
-          "": unknown
-        }
-        Returns: unknown
-      }
+          "": unknown;
+        };
+        Returns: unknown;
+      };
       gtrgm_decompress: {
         Args: {
-          "": unknown
-        }
-        Returns: unknown
-      }
+          "": unknown;
+        };
+        Returns: unknown;
+      };
       gtrgm_in: {
         Args: {
-          "": unknown
-        }
-        Returns: unknown
-      }
+          "": unknown;
+        };
+        Returns: unknown;
+      };
       gtrgm_options: {
         Args: {
-          "": unknown
-        }
-        Returns: undefined
-      }
+          "": unknown;
+        };
+        Returns: undefined;
+      };
       gtrgm_out: {
         Args: {
-          "": unknown
-        }
-        Returns: unknown
-      }
+          "": unknown;
+        };
+        Returns: unknown;
+      };
       jsonb_array_to_text_array: {
         Args: {
-          _js: Json
-        }
-        Returns: string[]
-      }
+          _js: Json;
+        };
+        Returns: string[];
+      };
       s3_key:
         | {
             Args: {
-              name: string
-            }
-            Returns: unknown
+              name: string;
+            };
+            Returns: unknown;
           }
         | {
             Args: {
-              skey: string
-              auth: string
-            }
-            Returns: unknown
-          }
+              skey: string;
+              auth: string;
+            };
+            Returns: unknown;
+          };
       set_limit: {
         Args: {
-          "": number
-        }
-        Returns: number
-      }
+          "": number;
+        };
+        Returns: number;
+      };
       show_limit: {
-        Args: Record<PropertyKey, never>
-        Returns: number
-      }
+        Args: Record<PropertyKey, never>;
+        Returns: number;
+      };
       show_trgm: {
         Args: {
-          "": string
-        }
-        Returns: string[]
-      }
-    }
+          "": string;
+        };
+        Returns: string[];
+      };
+    };
     Enums: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     CompositeTypes: {
-      [_ in never]: never
-    }
-  }
-}
+      [_ in never]: never;
+    };
+  };
+};
 
-type PublicSchema = Database[Extract<keyof Database, "public">]
+type PublicSchema = Database[Extract<keyof Database, "public">];
 
 export type Tables<
   PublicTableNameOrOptions extends
@@ -152,7 +152,7 @@ export type Tables<
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
       Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
-      Row: infer R
+      Row: infer R;
     }
     ? R
     : never
@@ -160,11 +160,11 @@ export type Tables<
         PublicSchema["Views"])
     ? (PublicSchema["Tables"] &
         PublicSchema["Views"])[PublicTableNameOrOptions] extends {
-        Row: infer R
+        Row: infer R;
       }
       ? R
       : never
-    : never
+    : never;
 
 export type TablesInsert<
   PublicTableNameOrOptions extends
@@ -175,17 +175,17 @@ export type TablesInsert<
     : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Insert: infer I
+      Insert: infer I;
     }
     ? I
     : never
   : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
     ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
-        Insert: infer I
+        Insert: infer I;
       }
       ? I
       : never
-    : never
+    : never;
 
 export type TablesUpdate<
   PublicTableNameOrOptions extends
@@ -196,17 +196,17 @@ export type TablesUpdate<
     : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Update: infer U
+      Update: infer U;
     }
     ? U
     : never
   : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
     ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
-        Update: infer U
+        Update: infer U;
       }
       ? U
       : never
-    : never
+    : never;
 
 export type Enums<
   PublicEnumNameOrOptions extends
@@ -219,4 +219,4 @@ export type Enums<
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
     ? PublicSchema["Enums"][PublicEnumNameOrOptions]
-    : never
+    : never;
