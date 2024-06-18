@@ -16,8 +16,8 @@ export function TimeSlider() {
   const isHover = useHover(sliderWrapperRef);
   const [mouse, sliderRootRef] = useMouse<HTMLDivElement>();
 
-  const countdownLength = fte ? fte.getMatchStartTime() : 10;
-  const maxValue = fte ? fte.getDemoDuration() : 1200;
+  const countdownLength = fte ? fte.getCountdownDuration() : 10;
+  const maxValue = fte ? fte.getDemoDuration() : 1210;
 
   useEffect(() => {
     if (!isHover || !tooltipRef.current) {

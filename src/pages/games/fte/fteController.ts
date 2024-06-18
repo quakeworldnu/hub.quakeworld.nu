@@ -27,7 +27,8 @@ export class FteController {
   // @ts-ignore
   private _module: FteModule;
   private _volume = 0.0;
-  private _demoDuration = 0.0;
+  private _countdownDuration = 10.0;
+  private _demoDuration = 610.0;
   private _lastVolume = 0.0;
   private _maxVolume = 0.2;
   private _lastDemoSpeed = 100;
@@ -46,7 +47,7 @@ export class FteController {
     if (FteController._instance === null) {
       const fte = new FteController(module);
       fte.mute();
-      fte.setDemoDuration(demoDuration || 600);
+      fte.setDemoDuration(demoDuration || 610);
       FteController._instance = fte;
     }
 
@@ -106,16 +107,16 @@ export class FteController {
     this._demoDuration = value;
   }
 
-  getMatchStartTime(): number {
-    return this._demoDuration % 60;
+  getCountdownDuration(): number {
+    return this._countdownDuration;
   }
 
   getMatchElapsedTime(): number {
-    return this.getDemoElapsedTime() - this.getMatchStartTime();
+    return this.getDemoElapsedTime() - this.getCountdownDuration();
   }
 
   getMatchDuration(): number {
-    return this.getDemoDuration() - this.getMatchStartTime();
+    return this.getDemoDuration() - this.getCountdownDuration();
   }
 
   getPlayers(): Player[] {

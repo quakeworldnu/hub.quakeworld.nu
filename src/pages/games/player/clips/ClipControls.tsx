@@ -84,8 +84,7 @@ const AdjustControls = () => {
     return null;
   }
 
-  const countdownLength = fte.getMatchStartTime();
-  const rangeInGameTime = range.map((v) => v - countdownLength);
+  const rangeInGameTime = range.map((v) => v - fte.getCountdownDuration());
 
   return (
     <div className="flex flex-wrap grow items-center md:justify-center space-x-1 gap-y-1">

@@ -33,7 +33,7 @@ export const ClipRange = () => {
 
   const min = 0;
   const max = Math.ceil(fte?.getDemoDuration()) || 610;
-  const countdownLength = fte?.getMatchStartTime();
+  const countdownLength = fte?.getCountdownDuration();
 
   return (
     <Range
