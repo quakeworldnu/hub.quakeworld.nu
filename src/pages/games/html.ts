@@ -16,8 +16,8 @@ export function getDroppedFiles(e: DragEvent): File[] {
 export async function readFile(file: File): Promise<Uint8Array> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.onload = async function (event: ProgressEvent<FileReader>) {
-      let buffer = event.target?.result;
+    reader.onload = async (event: ProgressEvent<FileReader>) => {
+      const buffer = event.target?.result;
 
       if (buffer instanceof ArrayBuffer) {
         resolve(new Uint8Array(buffer));

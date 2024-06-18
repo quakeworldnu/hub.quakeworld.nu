@@ -1,9 +1,9 @@
+import { AppBody } from "@qwhub/pages/games/AppBody.tsx";
 import { ServerPoller } from "@qwhub/servers/Servers.jsx";
 import { ToastContainer } from "react-toastify";
 import { SiteFooter } from "../../site/Footer";
 import { SiteHeader } from "../../site/Header";
 import { Sidebar } from "./Sidebar";
-import { AppBody } from "@qwhub/pages/games/AppBody.tsx";
 
 export const App = () => {
   return (

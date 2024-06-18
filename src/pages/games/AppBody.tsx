@@ -1,12 +1,16 @@
+// import { Browser } from "./browser/Browser";
+// import { useGames } from "./browser/context.tsx";
+// import { useCurrentGameId } from "./hooks";
+import {
+  getDemoDuration,
+  getKtxstatsAsString,
+  getServerinfoAsObject,
+  getSha256,
+} from "mvdparser";
 import { DragEvent, useEffect } from "react";
 // import { GameDetails } from "./player/GameDetails.tsx";
 import { useElementSize } from "usehooks-ts";
 import { getDroppedFiles, readFile } from "./html.ts";
-import { sha256FromBytes } from "./crypto.ts";
-import { getGameIdBySha256 } from "./services/supabase/supabase.ts";
-// import { Browser } from "./browser/Browser";
-// import { useGames } from "./browser/context.tsx";
-// import { useCurrentGameId } from "./hooks";
 
 function getAppBodySize() {
   const el = document.getElementById("AppBody");
@@ -56,12 +60,14 @@ async function dropHandler(e: DragEvent) {
 
   for (const file of files) {
     const bytes = await readFile(file);
-    const sha256 = await sha256FromBytes(bytes);
+    const sha256 = await getSha256(bytes);
     // const gameId = await getGameIdBySha256(sha256);
     // console.log(file.name, sha256, `GAME ID: ${gameId}`);
     console.log(file.name, sha256);
 
-    console.log(getServerInfo(bytes));
+    console.log("\nduration", getDemoDuration(bytes));
+    console.log("\nserverinfo", getServerinfoAsObject(bytes));
+    console.log("\nktxstats", getKtxstatsAsString(bytes));
 
     // if (null === gameId) {
     //   // const endOfDemo = bytes.slice(-10);
@@ -74,25 +80,3 @@ async function dropHandler(e: DragEvent) {
     // }
   }
 }
-
-function getServerInfo(bytes: Uint8Array): string | null {
-  const MAX_LEN = 640;
-  const blobStr = String.fromCharCode(...bytes.slice(0, MAX_LEN));
-  const match = blobStr.match(/fullserverinfo "([^"]+)"/);
-
-  if (match) {
-    return match[1];
-  }
-
-  return null;
-}
-
-// function getKtxstats(bytes: Uint8Array): string | null {
-//   // {"version": "
-//   const needle = new Uint8Array([
-//     0x7b, 0x22, 0x76, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x22, 0x3a, 0x20,
-//   ]);
-//
-//   bytes.find()
-//
-// }
