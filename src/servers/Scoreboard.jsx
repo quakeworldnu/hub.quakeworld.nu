@@ -15,14 +15,9 @@ export const Scoreboard = ({
 }) => {
   const hasTeams = teams.length > 0;
   const showTeamColumn = hasTeams && teams.length <= 3;
-
-  if (showFrags) {
-    players = players.toSorted(sortByFrags);
-    teams = teams.toSorted(sortByFrags);
-  } else {
-    players = players.toSorted(sortByName);
-    teams = teams.toSorted(sortByName);
-  }
+  const sortFunc = showFrags ? sortByFrags : sortByName;
+  players.sort(sortFunc);
+  teams.sort(sortFunc);
 
   return (
     <div
