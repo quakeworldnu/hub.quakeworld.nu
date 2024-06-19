@@ -16,8 +16,10 @@ export const Scoreboard = ({
   const hasTeams = teams.length > 0;
   const showTeamColumn = hasTeams && teams.length <= 3;
   const sortFunc = showFrags ? sortByFrags : sortByName;
-  players.sort(sortFunc);
-  teams.sort(sortFunc);
+  const sortedPlayers = [...players];
+  sortedPlayers.sort(sortFunc);
+  const sortedTeams = [...teams];
+  sortedTeams.sort(sortFunc);
 
   return (
     <div
@@ -28,13 +30,13 @@ export const Scoreboard = ({
     >
       {showTeamColumn && (
         <>
-          {teams.map((team) => (
+          {sortedTeams.map((team) => (
             <TeamRow {...team} key={[team.name, team.name_color].join()} />
           ))}
           <div className="my-1.5 h-[1px] bg-gradient-to-r from-red-400/20 via-orange-400 to-orange-400/20" />
         </>
       )}
-      {players.slice(0, limit).map((player) => (
+      {sortedPlayers.slice(0, limit).map((player) => (
         <PlayerRow
           key={[player.name, player.name_color].join()}
           showTeam={hasTeams}
