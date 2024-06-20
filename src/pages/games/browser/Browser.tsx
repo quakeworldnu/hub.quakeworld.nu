@@ -25,6 +25,12 @@ const Games = () => {
 
   return (
     <div>
+      {isLoading && !hasGames && (
+        <div className="flex min-h-[25vh] text-gray-300 justify-center items-center bg-[#223]">
+          loading ..
+        </div>
+      )}
+
       {displayMode === "Grid" ? (
         <GameGrid games={games} />
       ) : (
