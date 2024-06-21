@@ -6,6 +6,7 @@ import { GlobalShowScoresToggle } from "./GlobalShowScoresToggle.tsx";
 import { MapName } from "./MapName.tsx";
 import { Pagination } from "./Pagination.tsx";
 import { PlayerQuery } from "./PlayerQuery.tsx";
+import { Teams } from "./Teams.tsx";
 
 export const Toolbar = () => {
   const { isLoading } = useGames();
@@ -20,6 +21,7 @@ export const Toolbar = () => {
       <GlobalShowScoresToggle />
       <GameModeBar />
       <PlayerQuery />
+      <Teams />
       <MapName />
       <Pagination />
     </div>

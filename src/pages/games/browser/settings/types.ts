@@ -6,5 +6,6 @@ export type GameBrowserSettings = {
   gameMode: GameMode;
   map: string;
   playerQuery: string;
+  teams: string;
   page: number;
 };

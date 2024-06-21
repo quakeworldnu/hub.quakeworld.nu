@@ -37,18 +37,23 @@ export async function searchGamesCount(settings: {
   map: string;
   gameMode: GameMode;
   playerQuery: string;
+  teams: string;
 }): Promise<number> {
   let qb = supabase
     .from("games")
     .select("count", { head: true, count: "estimated" });
-  const { playerQuery, map, gameMode } = settings;
+  const { playerQuery, teams, map, gameMode } = settings;
 
   if (gameMode !== "All") {
     qb = qb.eq("mode", gameMode.toLowerCase());
   }
 
   if (map.length > 0) {
-    qb = qb.eq("map", map);
+    qb = qb.eq("map", map.toLowerCase());
+  }
+
+  if (teams.length > 0) {
+    qb = qb.contains("team_names", teams.toLowerCase().split(" "));
   }
 
   const players_fts = queryToFts(playerQuery);
@@ -69,13 +74,14 @@ export async function searchGamesRows(settings: {
   gameMode: GameMode;
   map: string;
   playerQuery: string;
+  teams: string;
   page: number;
 }): Promise<GameSearchEntry[]> {
   let qb = supabase
     .from("games")
     .select("id,timestamp,mode,map,teams,players,demo_sha256");
 
-  const { gameMode, map, playerQuery } = settings;
+  const { gameMode, map, playerQuery, teams } = settings;
 
   if (gameMode !== "All") {
     qb = qb.eq("mode", gameMode.toLowerCase());
@@ -83,6 +89,10 @@ export async function searchGamesRows(settings: {
 
   if (map.length > 0) {
     qb = qb.eq("map", map);
+  }
+
+  if (teams.length > 0) {
+    qb = qb.contains("team_names", teams.toLowerCase().split(" "));
   }
 
   const fts = queryToFts(playerQuery);

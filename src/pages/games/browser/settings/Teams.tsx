@@ -1,13 +1,13 @@
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faUsers } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type ChangeEvent, useEffect, useState } from "react";
 import { useDebounce } from "usehooks-ts";
 import { formInput } from "../../ui/theme.ts";
 import { useGameSettings } from "./context.tsx";
 
-export const PlayerQuery = () => {
-  const { playerQuery, setPlayerQuery } = useGameSettings();
-  const [value, setValue] = useState<string>(playerQuery);
+export const Teams = () => {
+  const { teams, setTeams } = useGameSettings();
+  const [value, setValue] = useState<string>(teams);
   const debouncedValue = useDebounce<string>(value, 400);
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
@@ -15,24 +15,23 @@ export const PlayerQuery = () => {
   }
 
   useEffect(() => {
-    setPlayerQuery(debouncedValue);
+    setTeams(debouncedValue);
   }, [debouncedValue]);
 
   return (
     <label
       className="flex items-center ml-2"
-      title="Player(s), separate with space"
+      title="Team(s), separate with space"
     >
       <FontAwesomeIcon
-        icon={faUser}
+        icon={faUsers}
         className="z-10 text-slate-500 pointer-events-none"
         size="xs"
       />
       <input
-        autoFocus
         type="search"
         value={value}
-        className={`${formInput} -ml-6 pl-8 w-44`}
+        className={`${formInput} -ml-6 pl-8 w-32`}
         onChange={handleChange}
       />
     </label>
