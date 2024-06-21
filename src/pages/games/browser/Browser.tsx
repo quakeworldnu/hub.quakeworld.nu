@@ -8,7 +8,7 @@ import { GameSettingsProvider, useGameSettings } from "./settings/context.tsx";
 export const Browser = () => {
   return (
     <div className="space-y-4">
-      <GameSettingsProvider localStorageKey="mainDemoBrowser.settings.v3">
+      <GameSettingsProvider localStorageKey="mainDemoBrowser.settings.v4">
         <GamesProvider>
           <Toolbar />
           <Games />
