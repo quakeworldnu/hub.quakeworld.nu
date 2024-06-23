@@ -37,7 +37,7 @@ const ClipEditorContext = createContext<ClipEditorContextProps>({
 });
 
 export const ClipEditorProvider = ({ children }: { children: ReactNode }) => {
-  const demoId = useCurrentGameId();
+  const gameId = useCurrentGameId();
   const {
     value: isEnabled,
     setTrue: enable,
@@ -54,7 +54,7 @@ export const ClipEditorProvider = ({ children }: { children: ReactNode }) => {
   }
 
   function getUrl(): string {
-    const q = query({ demoId, from, to, track });
+    const q = query({ gameId, from, to, track });
     const base = window.location.href.split("?")[0];
     return `${base}?${q}`;
   }
