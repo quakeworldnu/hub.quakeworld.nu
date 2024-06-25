@@ -13,11 +13,12 @@ export function getAssets(demoUrl: string, mapName: string): FteAssets {
 }
 
 function getMapAssets(mapName: string): FteAssets {
-  const mapBaseUrl = `maps/${mapName}`;
+  const litDir = idMaps.includes(mapName) ? "lits/id1_gpl" : "maps";
 
   const assets: FteAssets = {
-    [`id1/maps/${mapName}.bsp`]: getAssetUrl(`${mapBaseUrl}.bsp`),
-    [`id1/locs/${mapName}.loc`]: getAssetUrl(`${mapBaseUrl}.loc`),
+    [`id1/maps/${mapName}.bsp`]: getAssetUrl(`maps/${mapName}.bsp`),
+    [`id1/locs/${mapName}.loc`]: getAssetUrl(`maps/${mapName}.loc`),
+    [`id1/maps/${mapName}.lit`]: getAssetUrl(`${litDir}/${mapName}.lit`),
   };
 
   if (idMaps.includes(mapName)) {
@@ -26,7 +27,6 @@ function getMapAssets(mapName: string): FteAssets {
 
   return {
     ...assets,
-    [`id1/maps/${mapName}.lit`]: getAssetUrl(`${mapBaseUrl}.lit`),
     ...getMapTextures(mapName),
   };
 }
