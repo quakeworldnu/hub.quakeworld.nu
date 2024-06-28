@@ -1,7 +1,7 @@
 import { getAssetUrl } from "../services/cloudfront/cassets.ts";
 import { idMaps } from "./idMaps.ts";
 import { getMapTextures } from "./map_textures.ts";
-import { CONFIG_VERSION } from "./meta.ts";
+import { CONFIG_VERSION, CSADDON_VERSION } from "./meta.ts";
 import type { FteAssets } from "./types.ts";
 
 export function getAssets(demoUrl: string, mapName: string): FteAssets {
@@ -517,6 +517,9 @@ function getGeneralAssets(): FteAssets {
   const assets: FteAssets = {
     "id1/config.cfg": getAssetUrl(
       `fte/id1/config.cfg?version=${CONFIG_VERSION}`,
+    ),
+    "qw/csaddon.dat": getAssetUrl(
+      `fte/qw/csaddon.dat?version=${CSADDON_VERSION}`,
     ),
   };
 
