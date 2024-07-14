@@ -1,6 +1,6 @@
 import { getAssetUrl } from "@qwhub/pages/games/services/cloudfront/cassets.ts";
-import { useState } from "react";
-import { useCounter, useEffectOnce, useInterval, useScript } from "usehooks-ts";
+import { useEffect, useState } from "react";
+import { useCounter, useInterval, useScript } from "usehooks-ts";
 import { useEventListener } from "../hooks.ts";
 import { FteController } from "./fteController.ts";
 import type { FteAssets, FteModule, FtePreloadModule } from "./types.ts";
@@ -24,7 +24,7 @@ export function useFteLoader({
   const { count: loaded, increment } = useCounter(0);
   const [fte, setFte] = useState<undefined | FteController>(undefined);
 
-  useEffectOnce(() => {
+  useEffect(() => {
     window.Module = {
       canvas: document.getElementById("fteCanvas") as HTMLCanvasElement,
       manifest: getAssetUrl("fte/default.fmf"),
@@ -39,7 +39,7 @@ export function useFteLoader({
         }
       },
     };
-  });
+  }, []);
 
   useInterval(
     () => {
