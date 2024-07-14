@@ -170,7 +170,7 @@ const SpectatorText = React.memo((props) => {
   );
 });
 
-const SpectatorButtons = (props) => {
+export const SpectatorButtons = (props) => {
   const { server } = props;
 
   return (
@@ -185,14 +185,25 @@ const SpectatorButtons = (props) => {
       </div>
 
       {server.qtv_stream.address !== "" && (
-        <div className="hidden sm:block">
-          <SecondaryButton
-            href={`qw://${server.qtv_stream.url}/qtvplay`}
-            count={server.qtv_stream.spectator_count}
-          >
-            QTV
-          </SecondaryButton>
-        </div>
+        <>
+          <div className="hidden sm:block">
+            <SecondaryButton
+              href={`/qtv/?address=${server.address}`}
+              count={server.qtv_stream.spectator_count}
+            >
+              Watch QTV
+            </SecondaryButton>
+          </div>
+
+          <div className="hidden sm:block">
+            <SecondaryButton
+              href={`qw://${server.qtv_stream.url}/qtvplay`}
+              count={server.qtv_stream.spectator_count}
+            >
+              Join QTV
+            </SecondaryButton>
+          </div>
+        </>
       )}
       {<ServerStreams address={server.address} />}
     </Fragment>
@@ -239,7 +250,7 @@ export const ServerAddress = (props) => {
   );
 };
 
-const ServerAddressTitle = React.memo((props) => {
+export const ServerAddressTitle = React.memo((props) => {
   const { cc, title } = props;
 
   return (

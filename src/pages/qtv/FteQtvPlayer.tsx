@@ -4,17 +4,20 @@ import {
   useFteLoader,
 } from "@qwhub/pages/games/fte/hooks.ts";
 import { QTV_FTE_VERSION } from "@qwhub/pages/games/fte/meta.ts";
+import { useEventListener } from "@qwhub/pages/games/hooks";
 import { roundFloat } from "@qwhub/pages/games/math.ts";
 import { LoadingSpinner } from "@qwhub/pages/games/player/FteDemoPlayer.tsx";
 import { FtePlayerCanvas } from "@qwhub/pages/games/player/FtePlayerCanvas.tsx";
 import { ResponsivePlayerInfo } from "@qwhub/pages/games/player/controls/PlayerInfo.tsx";
 import { ResponsiveScoreBanner } from "@qwhub/pages/games/player/controls/ScoreBanner.tsx";
 import { getAssetUrl } from "@qwhub/pages/games/services/cloudfront/cassets.ts";
+import { MvdsvServer } from "@qwhub/pages/qtv/types.ts";
 import classNames from "classnames";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useElementSize } from "usehooks-ts";
 
 export const FteQtvPlayer = () => {
+  const [server, setServer] = useState<MvdsvServer | null>(null);
   const assets = getQtvPlayerAssets();
   const scriptPath = getAssetUrl(
     `fte/ftewebgl_qtv.js?version=${QTV_FTE_VERSION}`,
@@ -24,12 +27,27 @@ export const FteQtvPlayer = () => {
   const fte = useFteController();
 
   useEffect(() => {
+    if (!fte || !server) {
+      return;
+    }
+
+    connect(server.qtv_stream.url);
+  }, [fte]);
+
+  function connect(url: string) {
     if (!fte) {
       return;
     }
 
-    console.log("FTE IS READY!!!");
-  }, [fte]);
+    fte.command("qtvplay", `tcp:${url}@wss://fteqtv.quake.world`);
+  }
+
+  useEventListener("hub.selectServer", ({ detail: server }) => {
+    if (!server) {
+      setServer(server);
+    }
+    connect(server.qtv_stream.url);
+  });
 
   const [playerRef, { width }] = useElementSize();
   const defaultWidth = 1400;
@@ -38,7 +56,7 @@ export const FteQtvPlayer = () => {
   return (
     <div
       id="ftePlayer"
-      className={"relative w-full h-full bg-black aspect-video"}
+      className={"relative w-full h-full max-h-[75vh] bg-black aspect-video"}
       ref={playerRef}
     >
       <div id="FullscreenContent">

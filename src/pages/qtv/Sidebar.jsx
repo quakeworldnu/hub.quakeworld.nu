@@ -1,4 +1,5 @@
-import { ServerRow } from "@qwhub/pages/qtv/ServerRow.jsx";
+import { selectServer } from "@qwhub/pages/qtv/App.jsx";
+import { ServerRow } from "@qwhub/pages/qtv/ServerRow.tsx";
 import { selectQtvServers } from "@qwhub/selectors.js";
 import { useSelector } from "react-redux";
 
@@ -15,7 +16,11 @@ export function QtvPlayerSidebar() {
       </div>
       <div className="">
         {servers.map((server) => (
-          <ServerRow key={server.address} server={server} />
+          <ServerRow
+            key={server.address}
+            server={server}
+            onClick={selectServer}
+          />
         ))}
       </div>
     </>
