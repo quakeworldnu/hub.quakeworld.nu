@@ -6,7 +6,13 @@ import { useUpdateInterval } from "../../hooks.ts";
 import { formatElapsed } from "../../time.ts";
 import { QuakeTextFromBytes } from "../QuakeText.tsx";
 
-export const ResponsiveScoreBanner = ({ scale }: { scale: number }) => {
+export const ResponsiveScoreBanner = ({
+  scale,
+  showClock = true,
+}: {
+  scale: number;
+  showClock?: boolean;
+}) => {
   const { value: showscores, setTrue, setFalse } = useBoolean(false);
   useFteEvent("+showscores", setTrue);
   useFteEvent("-showscores", setFalse);
@@ -21,19 +27,19 @@ export const ResponsiveScoreBanner = ({ scale }: { scale: number }) => {
       )}
       style={{ transform: `scale(${scale})` }}
     >
-      <ScoreBanner />
+      <ScoreBanner showClock={showClock} />
     </div>
   );
 };
 
-export const ScoreBanner = () => {
+export function ScoreBanner({ showClock = true }: { showClock?: boolean }) {
   return (
     <div className="flex flex-col items-center pointer-events-none select-none text-nowrap space-y-1">
       <Participants />
-      <GameClock />
+      {showClock && <GameClock />}
     </div>
   );
-};
+}
 
 export function GameClock() {
   const fte = useFteController();

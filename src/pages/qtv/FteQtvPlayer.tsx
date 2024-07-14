@@ -63,7 +63,7 @@ export const FteQtvPlayer = () => {
         {fte && (
           <>
             <ResponsivePlayerInfo scale={scale} />
-            <ResponsiveScoreBanner scale={scale} />
+            <ResponsiveScoreBanner scale={scale} showClock={false} />
           </>
         )}
       </div>
