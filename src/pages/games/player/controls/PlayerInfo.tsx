@@ -51,7 +51,13 @@ export const PlayerInfo = () => {
     return (
       <div className="select-none font-bold">
         {teams.map((team: Team) => (
-          <div key={team.namePlain} className="mt-4 first:mt-0">
+          <div
+            key={team.namePlain}
+            className={classNames("first:mt-0", {
+              "mt-1.5": !showTeams,
+              "mt-4": showTeams,
+            })}
+          >
             {showTeams && (
               <div className="flex justify-end items-center mb-1 mr-0.5 app-text-shadow space-x-2">
                 <QuakeTextFromBytes name={team.name} />
