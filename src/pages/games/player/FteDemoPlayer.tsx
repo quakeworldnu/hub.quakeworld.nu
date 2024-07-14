@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { useIdleTimer } from "react-idle-timer";
 import { useElementSize } from "usehooks-ts";
 import { getMapshotCssUrl } from "../../../services/mapshots.ts";
-import { getAssets } from "../fte/assets.ts";
+import { getDemoPlayerAssets } from "../fte/assets.ts";
 import { useFteController, useFteLoader } from "../fte/hooks.ts";
 import { roundFloat } from "../math.ts";
 import { getDownloadUrl } from "../services/cloudfront/cdemos.ts";
@@ -21,7 +21,7 @@ export const FteDemoPlayer = ({
   mapName: string;
 }) => {
   useClipPlayback();
-  const assets = getAssets(getDownloadUrl(demo.sha256), mapName);
+  const assets = getDemoPlayerAssets(getDownloadUrl(demo.sha256), mapName);
   const { isLoadingAssets, isReady, assetStatus, isInitializing } =
     useFteLoader({ assets, demoDuration: demo.demo_duration });
   const fte = useFteController();

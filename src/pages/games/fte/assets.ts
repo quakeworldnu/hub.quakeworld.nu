@@ -4,9 +4,18 @@ import { getMapTextures } from "./map_textures.ts";
 import { DEMO_CONFIG_VERSION, DEMO_CSADDON_VERSION } from "./meta.ts";
 import type { FteAssets } from "./types.ts";
 
-export function getAssets(demoUrl: string, mapName: string): FteAssets {
+export function getDemoPlayerAssets(
+  demoUrl: string,
+  mapName: string,
+): FteAssets {
   return {
     ...getGeneralAssets(),
+    "id1/config.cfg": getAssetUrl(
+      `fte/id1/config.cfg?version=${DEMO_CONFIG_VERSION}`,
+    ),
+    "qw/csaddon.dat": getAssetUrl(
+      `fte/qw/csaddon.dat?version=${DEMO_CSADDON_VERSION}`,
+    ),
     "qw/match.mvd.gz": demoUrl,
     ...getMapAssets(mapName),
   };
@@ -31,7 +40,7 @@ function getMapAssets(mapName: string): FteAssets {
   };
 }
 
-function getGeneralAssets(): FteAssets {
+export function getGeneralAssets(): FteAssets {
   const filePaths = [
     "default.fmf",
     "ctf/fragfile.dat",
@@ -499,29 +508,9 @@ function getGeneralAssets(): FteAssets {
     "id1/textures/tracker/tele.png",
     "id1/textures/tracker/tkills.png",
     "id1/textures/tracker/trap.png",
-
-    // "id1/textures/models/g_light.mdl_0.jpg",
-    // "id1/textures/models/g_nail2.mdl_0.jpg",
-    // "id1/textures/models/g_rock.mdl_0.jpg",
-    // "id1/textures/models/g_rock2.mdl_0.jpg",
-    // "id1/textures/models/g_shot.mdl_0.jpg",
-    // "id1/textures/models/v_light.mdl_0.jpg",
-    // "id1/textures/models/v_nail.mdl_0.jpg",
-    // "id1/textures/models/v_nail2.mdl_0.jpg",
-    // "id1/textures/models/v_rock.mdl_0.jpg",
-    // "id1/textures/models/v_rock2.mdl_0.jpg",
-    // "id1/textures/models/v_shot.mdl_0.jpg",
-    // "id1/textures/models/v_shot2.mdl_0.jpg",
   ];
 
-  const assets: FteAssets = {
-    "id1/config.cfg": getAssetUrl(
-      `fte/id1/config.cfg?version=${DEMO_CONFIG_VERSION}`,
-    ),
-    "qw/csaddon.dat": getAssetUrl(
-      `fte/qw/csaddon.dat?version=${DEMO_CSADDON_VERSION}`,
-    ),
-  };
+  const assets: FteAssets = {};
 
   for (const path of filePaths) {
     assets[path] = getAssetUrl(`fte/${path}`);
