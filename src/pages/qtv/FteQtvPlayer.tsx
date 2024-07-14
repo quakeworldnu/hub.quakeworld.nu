@@ -1,17 +1,15 @@
-import { getQtvPlayerAssets } from "@qwhub/pages/games/fte/assets.ts";
-import {
-  useFteController,
-  useFteLoader,
-} from "@qwhub/pages/games/fte/hooks.ts";
-import { QTV_FTE_VERSION } from "@qwhub/pages/games/fte/meta.ts";
+import { getQtvPlayerAssets } from "@qwhub/pages/games/fte/assets";
+import { useFteController, useFteLoader } from "@qwhub/pages/games/fte/hooks";
+import { QTV_FTE_VERSION } from "@qwhub/pages/games/fte/meta";
 import { useEventListener } from "@qwhub/pages/games/hooks";
-import { roundFloat } from "@qwhub/pages/games/math.ts";
-import { LoadingSpinner } from "@qwhub/pages/games/player/FteDemoPlayer.tsx";
-import { FtePlayerCanvas } from "@qwhub/pages/games/player/FtePlayerCanvas.tsx";
-import { ResponsivePlayerInfo } from "@qwhub/pages/games/player/controls/PlayerInfo.tsx";
-import { ResponsiveScoreBanner } from "@qwhub/pages/games/player/controls/ScoreBanner.tsx";
-import { getAssetUrl } from "@qwhub/pages/games/services/cloudfront/cassets.ts";
-import { MvdsvServer } from "@qwhub/pages/qtv/types.ts";
+import { roundFloat } from "@qwhub/pages/games/math";
+import { LoadingSpinner } from "@qwhub/pages/games/player/FteDemoPlayer";
+import { FtePlayerCanvas } from "@qwhub/pages/games/player/FtePlayerCanvas";
+import { ResponsivePlayerInfo } from "@qwhub/pages/games/player/controls/PlayerInfo";
+import { ResponsiveScoreBanner } from "@qwhub/pages/games/player/controls/ScoreBanner";
+import { getAssetUrl } from "@qwhub/pages/games/services/cloudfront/cassets";
+import { Controls } from "@qwhub/pages/qtv/Controls";
+import { MvdsvServer } from "@qwhub/pages/qtv/types";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { useElementSize } from "usehooks-ts";
@@ -64,7 +62,7 @@ export const FteQtvPlayer = () => {
 
         {fte && (
           <>
-            <ResponsivePlayerInfo scale={scale} preset="qtvPlayer" />
+            <ResponsivePlayerInfo scale={scale} />
             <ResponsiveScoreBanner scale={scale} />
           </>
         )}
@@ -92,6 +90,12 @@ export const FteQtvPlayer = () => {
           </div>
         </div>
       </div>
+
+      {fte && (
+        <div className={"absolute z-10 bottom-0 w-full"}>
+          <Controls />
+        </div>
+      )}
     </div>
   );
 };

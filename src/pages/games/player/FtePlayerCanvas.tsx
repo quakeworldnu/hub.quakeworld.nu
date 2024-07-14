@@ -1,4 +1,5 @@
 import { type MouseEvent, useRef } from "react";
+import { useIdleTimer } from "react-idle-timer";
 import { useSwipeable } from "react-swipeable";
 import { useDoubleTap } from "use-double-tap";
 import { useLongPress } from "use-long-press";
@@ -14,6 +15,15 @@ export type Config = {
 export const FtePlayerCanvas = ({ config }: { config: Config }) => {
   const fte = useFteController();
   const documentRef = useRef<Document>(document);
+
+  // pointer events
+  useIdleTimer({
+    element: document.getElementById("ftePlayer") || undefined,
+    onIdle: () => dispatchEvent(new Event("fteplayer.mouse.idle")),
+    onActive: () => dispatchEvent(new Event("fteplayer.mouse.active")),
+    events: ["mousemove"],
+    timeout: 2000,
+  });
 
   // prevent screen idle
   useWakeLock();

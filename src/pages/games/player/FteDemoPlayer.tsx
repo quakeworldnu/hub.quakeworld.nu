@@ -1,7 +1,6 @@
 import { DEMO_FTE_VERSION } from "@qwhub/pages/games/fte/meta.ts";
 import { getAssetUrl } from "@qwhub/pages/games/services/cloudfront/cassets.ts";
 import classNames from "classnames";
-import { useIdleTimer } from "react-idle-timer";
 import { useElementSize } from "usehooks-ts";
 import { getMapshotCssUrl } from "../../../services/mapshots.ts";
 import { getDemoPlayerAssets } from "../fte/assets.ts";
@@ -29,13 +28,6 @@ export const FteDemoPlayer = ({
     useFteLoader({ scriptPath, assets, demoDuration: demo.demo_duration });
   const fte = useFteController();
 
-  useIdleTimer({
-    onIdle: () => dispatchEvent(new Event("demoplayer.mouse.idle")),
-    onActive: () => dispatchEvent(new Event("demoplayer.mouse.active")),
-    events: ["mousemove"],
-    timeout: 2000,
-  });
-
   const [playerRef, { width }] = useElementSize();
   const defaultWidth = 1400;
   const scale = roundFloat(width / defaultWidth, 2);
@@ -51,7 +43,7 @@ export const FteDemoPlayer = ({
 
         {fte && (
           <>
-            <ResponsivePlayerInfo scale={scale} preset="demoPlayer" />
+            <ResponsivePlayerInfo scale={scale} />
             <ResponsiveScoreBanner scale={scale} />
           </>
         )}

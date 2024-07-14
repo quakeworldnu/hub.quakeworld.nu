@@ -6,16 +6,10 @@ import { QuakeTextFromBytes } from "../QuakeText.tsx";
 
 import { getAssetUrl } from "../../services/cloudfront/cassets.ts";
 
-export const ResponsivePlayerInfo = ({
-  scale,
-  preset,
-}: { scale: number; preset: "qtvPlayer" | "demoPlayer" }) => {
+export const ResponsivePlayerInfo = ({ scale }: { scale: number }) => {
   return (
     <div
-      className={classNames("absolute origin-bottom-right right-[1.5%]", {
-        "bottom-[72px] md:bottom-[96px]": preset === "demoPlayer",
-        "bottom-[3%]": preset === "qtvPlayer",
-      })}
+      className="absolute origin-bottom-right right-[1.5%] bottom-[72px] md:bottom-[96px]"
       style={{ transform: `scale(${scale})` }}
     >
       <PlayerInfo />
