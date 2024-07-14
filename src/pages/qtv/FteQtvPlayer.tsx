@@ -10,9 +10,11 @@ import { ResponsiveScoreBanner } from "@qwhub/pages/games/player/controls/ScoreB
 import { getAssetUrl } from "@qwhub/pages/games/services/cloudfront/cassets";
 import { Controls } from "@qwhub/pages/qtv/Controls";
 import classNames from "classnames";
+import { useState } from "react";
 import { useElementSize } from "usehooks-ts";
 
 export const FteQtvPlayer = () => {
+  const [lastKnownUrl, setLastKnownUrl] = useState("");
   const assets = getQtvPlayerAssets();
   const scriptPath = getAssetUrl(
     `fte/ftewebgl_qtv.js?version=${QTV_FTE_VERSION}`,
@@ -30,8 +32,16 @@ export const FteQtvPlayer = () => {
     fte.command("qtvplay", `tcp:${url}@wss://fteqtv.quake.world`);
   }
 
+  function reconnect() {
+    if (lastKnownUrl) {
+      connect(lastKnownUrl);
+    }
+  }
+
+  useEventListener("fte.event.disconnect", reconnect);
   useEventListener("hub.selectServer", ({ detail: selectedServer }) => {
     connect(selectedServer.qtv_stream.url);
+    setLastKnownUrl(selectedServer.qtv_stream.url);
   });
 
   const [playerRef, { width }] = useElementSize();

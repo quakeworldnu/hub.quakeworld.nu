@@ -5,6 +5,24 @@ import { useEventListener } from "../hooks.ts";
 import { FteController } from "./fteController.ts";
 import type { FteAssets, FteModule, FtePreloadModule } from "./types.ts";
 
+// parse log to dispatch special events
+(() => {
+  const log = console.log;
+
+  function customLog(...args: any[]) {
+    inspectMessage(args[0]);
+    log.apply(console, args);
+  }
+
+  console.log = customLog;
+})();
+
+function inspectMessage(message: string) {
+  if ("svc_disconnect: EndOfDemo" === message) {
+    window.dispatchEvent(new CustomEvent("fte.event.disconnect"));
+  }
+}
+
 declare global {
   interface Window {
     Module: FteModule | FtePreloadModule;
