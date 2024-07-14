@@ -56,7 +56,7 @@ const QtvPage = () => {
           <QtvPlayerFooter />
         </div>
 
-        <div className="lg:w-1/2 xl:w-1/3 order-first my-4">
+        <div className="lg:w-1/2 xl:w-1/3 max-w-[540px] order-first my-4">
           <QtvPlayerSidebar />
         </div>
       </div>
