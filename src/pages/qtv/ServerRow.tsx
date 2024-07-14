@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { useBoolean } from "usehooks-ts";
 import { Flag } from "./Flag";
 
-import { MvdsvServer } from "@qwhub/pages/qtv/types.ts";
+import { MvdsvServer } from "./types.ts";
 
 export function ServerRow({
   server,
@@ -16,12 +16,14 @@ export function ServerRow({
     setIsSelected(selectedServer.address === server.address);
   });
 
+  const title = server.title.replace(` [${server.settings.map}]`, "");
+
   return (
     <div
       className={classNames(
-        "p-3 flex flex-col cursor-pointer border-b border-b-[#334] hover:bg-white/10",
+        "py-3 px-2 flex flex-col cursor-pointer border-b border-b-[#334] hover:bg-[#242434] transition-colors",
         {
-          "border-l-4 pl-4 border-sky-800 bg-white/5": isSelected,
+          "border-l-4 pl-3 border-sky-800 bg-[#1d1d2d]": isSelected,
         },
       )}
       onClick={() => onClick(server)}
@@ -32,10 +34,11 @@ export function ServerRow({
             "font-bold": isSelected,
           })}
         >
-          <Flag cc={server.geo.cc} /> {server.title}{" "}
+          <Flag cc={server.geo.cc} /> {title}{" "}
           {"ffa" === server.mode && (
             <span className="text-xs text-slate-400">
-              - {server.player_slots.used}/{server.player_slots.total} players
+              - <strong>{server.settings.map}</strong> -{" "}
+              {server.player_slots.used}/{server.player_slots.total} players
             </span>
           )}
         </div>
@@ -46,7 +49,8 @@ export function ServerRow({
       </div>
       {"ffa" !== server.mode && (
         <div className="text-xs mt-1 text-slate-400">
-          {server.status.name} - {server.status.description}
+          <strong>{server.settings.map}</strong>: {server.status.name} -{" "}
+          {server.status.description}
         </div>
       )}
     </div>

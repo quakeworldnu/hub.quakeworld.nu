@@ -1,47 +1,52 @@
-import { PrimaryButton, SecondaryButton } from "@qwhub/Buttons.jsx";
+import { SecondaryButton } from "@qwhub/Buttons";
 import { useEventListener } from "@qwhub/pages/games/hooks";
-import { Mapshot } from "@qwhub/servers/Mapshot.jsx";
-import { ServerAddress } from "@qwhub/servers/Server.jsx";
-import ServersStreams from "@qwhub/servers/ServerStreams.jsx";
-import React, { useState } from "react";
+import { MvdsvServer } from "@qwhub/pages/qtv/types";
+import { selectQtvServers } from "@qwhub/selectors";
+import { Mapshot } from "@qwhub/servers/Mapshot";
+import { ServerAddress } from "@qwhub/servers/Server";
+import ServersStreams from "@qwhub/servers/ServerStreams";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 
 export function QtvPlayerFooter() {
-  const [server, setServer] = useState(null);
+  const servers: MvdsvServer[] = useSelector(selectQtvServers);
+  const [address, setAddress] = useState<string>("");
 
   useEventListener("hub.selectServer", ({ detail: server }) => {
-    setServer(server);
+    servers.find((s) => s.address === server.address) &&
+      setAddress(server.address);
   });
+
+  const server = servers.find((s) => s.address === address);
 
   if (!server) {
     return null;
   }
 
-  const JoinButtonEl =
-    server.player_slots.free > 0 ? PrimaryButton : SecondaryButton;
-
   return (
     <div className="flex flex-wrap justify-between gap-4 my-4">
-      <div className="flex gap-4">
-        <div className="h-20 w-28">
+      <div className="flex items-center gap-4">
+        <div className="hidden sm:block h-20 w-28">
           <Mapshot map={server.settings.map} />
         </div>
         <div className="">
           <div className="font-bold">{server.title}</div>
-          <div className="text-xs mt-px text-slate-200">
-            {server.status.name} - {server.status.description}
+          <div className="text-xs mt-1 text-slate-200">
+            <strong>{server.settings.map}</strong>: {server.status.name} -{" "}
+            {server.status.description}
           </div>
-          <div className="text-xs mt-2">
+          <div className="text-xs mt-3">
             <ServerAddress server={server} />
           </div>
         </div>
       </div>
       <div className="hidden sm:flex gap-3 h-6 md:h-8 text-xs">
-        <JoinButtonEl
+        <SecondaryButton
           href={`qw://${server.address}/`}
           className="flex items-center px-2"
         >
           Join as Player
-        </JoinButtonEl>
+        </SecondaryButton>
 
         <SecondaryButton
           href={`qw://${server.address}/observe`}

@@ -1,14 +1,19 @@
 import { getAssetUrl } from "../services/cloudfront/cassets.ts";
 import { idMaps } from "./idMaps.ts";
 import { getMapTextures } from "./map_textures.ts";
-import { DEMO_CONFIG_VERSION, DEMO_CSADDON_VERSION } from "./meta.ts";
+import {
+  DEMO_CONFIG_VERSION,
+  DEMO_CSADDON_VERSION,
+  QTV_CONFIG_VERSION,
+} from "./meta.ts";
 import type { FteAssets } from "./types.ts";
 
 export function getQtvPlayerAssets(): FteAssets {
   return {
     ...getGeneralAssets(),
-    // "id1/config.cfg": getAssetUrl(`fte/id1/config_qtv.cfg?version=${QTV_CONFIG_VERSION}`,),
-    "id1/config.cfg": "/config_qtv.cfg",
+    "id1/config.cfg": getAssetUrl(
+      `fte/id1/config_qtv.cfg?version=${QTV_CONFIG_VERSION}`,
+    ),
   };
 }
 

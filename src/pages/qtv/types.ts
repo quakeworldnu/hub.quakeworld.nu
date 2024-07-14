@@ -16,11 +16,15 @@ export type MvdsvServer = {
     total: number;
     used: number;
   };
-  geo: {
-    cc: string;
+  settings: {
+    map: string;
   };
   qtv_stream: {
     url: string;
     spectator_names: string[];
+    spectator_count: number;
+  };
+  geo: {
+    cc: string;
   };
 };

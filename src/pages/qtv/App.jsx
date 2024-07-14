@@ -1,12 +1,13 @@
-import { QtvPlayerFooter } from "@qwhub/pages/qtv/Footer.jsx";
-import { FteQtvPlayer } from "@qwhub/pages/qtv/FteQtvPlayer";
-import { QtvPlayerSidebar } from "@qwhub/pages/qtv/Sidebar.jsx";
-import { selectQtvServers } from "@qwhub/selectors.js";
+import { selectQtvServers } from "@qwhub/selectors";
 import { ServerPoller } from "@qwhub/servers/Servers";
 import { SiteFooter } from "@qwhub/site/Footer";
 import { SiteHeader } from "@qwhub/site/Header";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { QtvPlayerFooter } from "./Footer";
+import { FteQtvPlayer } from "./FteQtvPlayer";
+import { QtvPlayerSidebar } from "./Sidebar";
+import { selectServer } from "./events";
 
 export const App = () => {
   return (
@@ -14,7 +15,7 @@ export const App = () => {
       <SiteHeader />
       <QtvPage />
       <SiteFooter />
-      <ServerPoller pollingInterval={15} />
+      <ServerPoller pollingInterval={10} />
     </>
   );
 };
@@ -47,7 +48,7 @@ const QtvPage = () => {
 
   return (
     <div>
-      <div className="md:flex gap-x-4 ">
+      <div className="lg:flex gap-x-4 ">
         <div className="my-4 flex flex-col w-full">
           <div className="grow">
             <FteQtvPlayer />
@@ -55,14 +56,10 @@ const QtvPage = () => {
           <QtvPlayerFooter />
         </div>
 
-        <div className="md:w-1/3 xl:w-1/4 order-first my-4">
+        <div className="lg:w-1/2 xl:w-1/3 order-first my-4">
           <QtvPlayerSidebar />
         </div>
       </div>
     </div>
   );
 };
-
-export function selectServer(server) {
-  window.dispatchEvent(new CustomEvent("hub.selectServer", { detail: server }));
-}

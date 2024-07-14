@@ -1,10 +1,12 @@
-import { selectServer } from "@qwhub/pages/qtv/App.jsx";
-import { ServerRow } from "@qwhub/pages/qtv/ServerRow.tsx";
-import { selectQtvServers } from "@qwhub/selectors.js";
+import { MvdsvServer } from "@qwhub/pages/qtv/types.ts";
+// @ts-ignore
+import { selectQtvServers } from "@qwhub/selectors";
 import { useSelector } from "react-redux";
+import { ServerRow } from "./ServerRow";
+import { selectServer } from "./events";
 
 export function QtvPlayerSidebar() {
-  const servers = useSelector(selectQtvServers);
+  const servers: MvdsvServer[] = useSelector(selectQtvServers);
 
   return (
     <>
@@ -14,7 +16,13 @@ export function QtvPlayerSidebar() {
           <span className="text-slate-400">({servers.length})</span>
         </div>
       </div>
-      <div className="">
+      <div>
+        {0 === servers.length && (
+          <div className="py-4  text-center text-sm text-slate-400">
+            no active servers available
+          </div>
+        )}
+
         {servers.map((server) => (
           <ServerRow
             key={server.address}
