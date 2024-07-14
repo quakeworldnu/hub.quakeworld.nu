@@ -37,6 +37,7 @@ export const FteQtvPlayer = () => {
       return;
     }
 
+    fte.command("disconnect");
     fte.command("qtvplay", `tcp:${url}@wss://fteqtv.quake.world`);
   }
 
