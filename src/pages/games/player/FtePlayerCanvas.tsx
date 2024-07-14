@@ -7,7 +7,11 @@ import { useFteController } from "../fte/hooks.ts";
 import { toggleFullscreen } from "../fullscreen.ts";
 import { useWakeLock } from "../hooks.ts";
 
-export const FteDemoPlayerCanvas = () => {
+export type Config = {
+  preset: "demoPlayer" | "qtvPlayer";
+};
+
+export const FtePlayerCanvas = ({ config }: { config: Config }) => {
   const fte = useFteController();
   const documentRef = useRef<Document>(document);
 
@@ -45,7 +49,11 @@ export const FteDemoPlayerCanvas = () => {
           return fte.trackNext();
         case "ControlLeft":
           e.preventDefault();
-          return fte.togglePlay();
+
+          if (config.preset === "demoPlayer") {
+            fte.togglePlay();
+          }
+          break;
         case "Tab":
           return fte.command("-showscores");
         default:
@@ -61,6 +69,11 @@ export const FteDemoPlayerCanvas = () => {
 
   // pointer events
   function onDoubleTap(e: MouseEvent<HTMLCanvasElement>) {
+    if (config.preset === "qtvPlayer") {
+      toggleFullscreen("ftePlayer");
+      return;
+    }
+
     const { x } = relativeEventPositionInPercent(e);
     const threshold = 25;
 
@@ -74,7 +87,11 @@ export const FteDemoPlayerCanvas = () => {
   }
 
   const dblTap = useDoubleTap(onDoubleTap, 300, {
-    onSingleTap: () => fte?.togglePlay(),
+    onSingleTap: () => {
+      if (config.preset === "demoPlayer") {
+        fte?.togglePlay();
+      }
+    },
   });
 
   const longPress = useLongPress(() => fte?.command("+showscores"), {
