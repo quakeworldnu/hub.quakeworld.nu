@@ -28,11 +28,9 @@ export const ResponsiveScoreBanner = ({ scale }: { scale: number }) => {
 
 export const ScoreBanner = () => {
   return (
-    <div className="flex flex-col items-center pointer-events-none select-none text-nowrap">
+    <div className="flex flex-col items-center pointer-events-none select-none text-nowrap space-y-1">
       <Participants />
-      <div className="mt-1">
-        <GameClock />
-      </div>
+      <GameClock />
     </div>
   );
 };
@@ -69,7 +67,7 @@ export function Participants() {
     participants = fte.getPlayers().map(playerToParticipant);
   }
 
-  if (participants.length < 2) {
+  if (participants.length !== 2) {
     return null;
   }
 
