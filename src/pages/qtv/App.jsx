@@ -1,3 +1,4 @@
+import { useFteController } from "@qwhub/pages/games/fte/hooks";
 import { selectQtvServers } from "@qwhub/selectors";
 import { ServerPoller } from "@qwhub/servers/Servers";
 import { SiteFooter } from "@qwhub/site/Footer";
@@ -31,7 +32,10 @@ function useInitialServer() {
       return;
     }
 
-    setServer(servers[0]);
+    const address = new URLSearchParams(window.location.search).get("address");
+    const selectedServer =
+      servers.find((s) => s.address === address) || servers[0];
+    setServer(selectedServer);
   }, [servers]);
 
   return server;
@@ -39,12 +43,19 @@ function useInitialServer() {
 
 const QtvPage = () => {
   const server = useInitialServer();
+  const fte = useFteController();
 
   useEffect(() => {
     if (server) {
       selectServer(server);
     }
   }, [server]);
+
+  useEffect(() => {
+    if (fte && server) {
+      selectServer(server);
+    }
+  }, [fte]);
 
   return (
     <div>

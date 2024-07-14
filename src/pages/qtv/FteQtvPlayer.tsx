@@ -9,13 +9,10 @@ import { ResponsivePlayerInfo } from "@qwhub/pages/games/player/controls/PlayerI
 import { ResponsiveScoreBanner } from "@qwhub/pages/games/player/controls/ScoreBanner";
 import { getAssetUrl } from "@qwhub/pages/games/services/cloudfront/cassets";
 import { Controls } from "@qwhub/pages/qtv/Controls";
-import { MvdsvServer } from "@qwhub/pages/qtv/types";
 import classNames from "classnames";
-import { useEffect, useState } from "react";
 import { useElementSize } from "usehooks-ts";
 
 export const FteQtvPlayer = () => {
-  const [server, setServer] = useState<MvdsvServer | null>(null);
   const assets = getQtvPlayerAssets();
   const scriptPath = getAssetUrl(
     `fte/ftewebgl_qtv.js?version=${QTV_FTE_VERSION}`,
@@ -23,14 +20,6 @@ export const FteQtvPlayer = () => {
   const { isLoadingAssets, isReady, assetStatus, isInitializing } =
     useFteLoader({ scriptPath, assets });
   const fte = useFteController();
-
-  useEffect(() => {
-    if (!fte || !server) {
-      return;
-    }
-
-    connect(server.qtv_stream.url);
-  }, [fte]);
 
   function connect(url: string) {
     if (!fte) {
@@ -41,11 +30,8 @@ export const FteQtvPlayer = () => {
     fte.command("qtvplay", `tcp:${url}@wss://fteqtv.quake.world`);
   }
 
-  useEventListener("hub.selectServer", ({ detail: server }) => {
-    if (!server) {
-      setServer(server);
-    }
-    connect(server.qtv_stream.url);
+  useEventListener("hub.selectServer", ({ detail: selectedServer }) => {
+    connect(selectedServer.qtv_stream.url);
   });
 
   const [playerRef, { width }] = useElementSize();
