@@ -28,6 +28,7 @@ export function useFteLoader({
     window.Module = {
       canvas: document.getElementById("fteCanvas") as HTMLCanvasElement,
       manifest: getAssetUrl("fte/default.fmf"),
+      arguments: ["-manifest", "default.fmf"],
       files: assets,
       setStatus: (value) => {
         const assetRe = value.match(/.+ \((\d+)\/(\d+)\)/);
