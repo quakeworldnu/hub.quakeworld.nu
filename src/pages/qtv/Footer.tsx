@@ -62,7 +62,7 @@ export function QtvPlayerFooter() {
           Watch on QTV
         </SecondaryButton>
 
-        <ServersStreams server={server} />
+        <ServersStreams address={server.address} />
       </div>
     </div>
   );
