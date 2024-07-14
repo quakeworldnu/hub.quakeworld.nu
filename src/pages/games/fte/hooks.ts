@@ -25,10 +25,11 @@ export function useFteLoader({
   const [fte, setFte] = useState<undefined | FteController>(undefined);
 
   useEffect(() => {
+    const manifestUrl = getAssetUrl("fte/default.fmf");
     window.Module = {
       canvas: document.getElementById("fteCanvas") as HTMLCanvasElement,
-      manifest: getAssetUrl("fte/default.fmf"),
-      arguments: ["-manifest", "default.fmf"],
+      manifest: manifestUrl,
+      arguments: ["-manifest", manifestUrl],
       files: assets,
       setStatus: (value) => {
         const assetRe = value.match(/.+ \((\d+)\/(\d+)\)/);
