@@ -51,7 +51,7 @@ export const FteDemoPlayer = ({
 
         {fte && (
           <>
-            <ResponsivePlayerInfo scale={scale} />
+            <ResponsivePlayerInfo scale={scale} preset="demoPlayer" />
             <ResponsiveScoreBanner scale={scale} />
           </>
         )}
@@ -110,14 +110,3 @@ export function LoadingSpinner() {
     </svg>
   );
 }
-
-// const PlayerDebug = () => {
-//   useUpdateInterval(200);
-//   const fte = useFteController();
-//
-//   if (!fte) {
-//     return null;
-//   }
-//
-//   return <Debug value={fte.getPlayers()} />;
-// };
