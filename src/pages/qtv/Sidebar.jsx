@@ -7,8 +7,11 @@ export function QtvPlayerSidebar() {
 
   return (
     <>
-      <div className="flex items-center h-12 px-4 bg-white/15">
-        QTV Servers ({servers.length})
+      <div className="flex items-center h-10 px-4 bg-[#334] rounded text-sm">
+        <div>
+          <strong>QTV Servers</strong>{" "}
+          <span className="text-slate-400">({servers.length})</span>
+        </div>
       </div>
       <div className="">
         {servers.map((server) => (

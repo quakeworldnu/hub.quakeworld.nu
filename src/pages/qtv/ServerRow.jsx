@@ -1,14 +1,22 @@
+import { useFteController } from "@qwhub/pages/games/fte/hooks";
 import { totalSpectatorCount } from "@qwhub/servers/util.js";
 
 export function ServerRow({ server }) {
-  function handleClick(address) {
-    console.log("switch server to: ", address);
+  const fte = useFteController();
+
+  function handleClick(qtvStreamUrl) {
+    if (!fte) {
+      return;
+    }
+
+    console.log(`qtvplay tcp:${qtvStreamUrl}@wss://fteqtv.quake.world`);
+    fte.command("qtvplay", `tcp:${qtvStreamUrl}@wss://fteqtv.quake.world`);
   }
 
   return (
     <div
-      className="p-3 flex flex-col cursor-pointer border-b border-b-white/20 hover:bg-[#334] transition-colors"
-      onClick={() => handleClick(server.address)}
+      className="p-3 flex flex-col cursor-pointer border-b border-b-[#334] hover:bg-[#334] transition-colors"
+      onClick={() => handleClick(server.qtv_stream.url)}
     >
       <div className="flex justify-between items-center">
         <div className="text-sm">{server.title}</div>

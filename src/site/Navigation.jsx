@@ -28,6 +28,12 @@ export default function SiteNavigation() {
       url: "/",
     },
     {
+      title: "QTV",
+      shortDescription: "",
+      longDescription: "",
+      url: "/qtv/",
+    },
+    {
       title: "Players",
       shortDescription: playerCount + spectatorCount,
       longDescription: `${playerCount} players, ${spectatorCount} spectators`,

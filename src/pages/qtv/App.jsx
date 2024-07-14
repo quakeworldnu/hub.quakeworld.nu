@@ -1,4 +1,4 @@
-import { QtvPlayer } from "@qwhub/pages/qtv/Player.jsx";
+import { FteQtvPlayer } from "@qwhub/pages/qtv/FteQtvPlayer";
 import { QtvPlayerSidebar } from "@qwhub/pages/qtv/Sidebar.jsx";
 import { ServerPoller } from "@qwhub/servers/Servers";
 import { SiteFooter } from "@qwhub/site/Footer";
@@ -20,13 +20,13 @@ export default App;
 
 const QtvPage = () => {
   return (
-    <div className="my-6 debug">
-      <div className="md:flex">
-        <div className="grow bg-white/10">
-          <QtvPlayer />
+    <div>
+      <div className="md:flex gap-x-4 ">
+        <div className="grow my-4">
+          <FteQtvPlayer />
         </div>
 
-        <div className="md:w-1/3 xl:w-1/4 2xl:w-1/5 order-first">
+        <div className="md:w-1/3 xl:w-1/4 2xl:w-1/5 order-first my-4">
           <QtvPlayerSidebar />
         </div>
       </div>
