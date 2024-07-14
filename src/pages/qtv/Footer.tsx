@@ -1,9 +1,14 @@
+// @ts-ignore
 import { SecondaryButton } from "@qwhub/Buttons";
 import { useEventListener } from "@qwhub/pages/games/hooks";
 import { MvdsvServer } from "@qwhub/pages/qtv/types";
+// @ts-ignore
 import { selectQtvServers } from "@qwhub/selectors";
+// @ts-ignore
 import { Mapshot } from "@qwhub/servers/Mapshot";
+// @ts-ignore
 import { ServerAddress } from "@qwhub/servers/Server";
+// @ts-ignore
 import ServersStreams from "@qwhub/servers/ServerStreams";
 import { useState } from "react";
 import { useSelector } from "react-redux";
