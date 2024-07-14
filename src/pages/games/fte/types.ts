@@ -2,6 +2,7 @@ export type FteAssets = { [key: string]: string };
 
 export type FtePreloadModule = {
   canvas: HTMLCanvasElement;
+  manifest: string;
   files: object;
   setStatus: (value: string) => void;
 };
