@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { useCounter, useEffectOnce, useInterval, useScript } from "usehooks-ts";
 import { useEventListener } from "../hooks.ts";
-import { getAssetUrl } from "../services/cloudfront/cassets.ts";
 import { FteController } from "./fteController.ts";
-import { DEMO_FTE_VERSION } from "./meta.ts";
 import type { FteAssets, FteModule, FtePreloadModule } from "./types.ts";
 
 declare global {
@@ -13,13 +11,14 @@ declare global {
 }
 
 export function useFteLoader({
+  scriptPath,
   assets,
-  demoDuration,
+  demoDuration = null,
 }: {
+  scriptPath: string;
   assets: FteAssets;
-  demoDuration: number | null;
+  demoDuration?: number | null;
 }) {
-  const scriptPath = getAssetUrl(`fte/ftewebgl.js?version=${DEMO_FTE_VERSION}`);
   const scriptStatus = useScript(scriptPath, { removeOnUnmount: true });
   const { count: loaded, increment } = useCounter(0);
   const [fte, setFte] = useState<undefined | FteController>(undefined);
@@ -27,6 +26,7 @@ export function useFteLoader({
   useEffectOnce(() => {
     window.Module = {
       canvas: document.getElementById("fteCanvas") as HTMLCanvasElement,
+      manifest: "default.fmf",
       files: assets,
       setStatus: (value) => {
         const assetRe = value.match(/.+ \((\d+)\/(\d+)\)/);
