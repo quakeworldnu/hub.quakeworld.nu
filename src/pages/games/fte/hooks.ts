@@ -1,3 +1,4 @@
+import { getAssetUrl } from "@qwhub/pages/games/services/cloudfront/cassets.ts";
 import { useState } from "react";
 import { useCounter, useEffectOnce, useInterval, useScript } from "usehooks-ts";
 import { useEventListener } from "../hooks.ts";
@@ -26,7 +27,7 @@ export function useFteLoader({
   useEffectOnce(() => {
     window.Module = {
       canvas: document.getElementById("fteCanvas") as HTMLCanvasElement,
-      manifest: "default.fmf",
+      manifest: getAssetUrl("fte/default.fmf"),
       files: assets,
       setStatus: (value) => {
         const assetRe = value.match(/.+ \((\d+)\/(\d+)\)/);
