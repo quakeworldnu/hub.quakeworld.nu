@@ -67,7 +67,7 @@ const QtvPage = () => {
           <QtvPlayerFooter />
         </div>
 
-        <div className="lg:w-1/2 xl:w-1/3 max-w-[540px] order-first my-4">
+        <div className="lg:w-1/2 xl:w-1/3 lg:max-w-[540px] order-first my-4 max-h-[85vh] overflow-auto">
           <QtvPlayerSidebar />
         </div>
       </div>
