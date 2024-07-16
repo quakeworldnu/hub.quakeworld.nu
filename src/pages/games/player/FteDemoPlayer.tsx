@@ -38,7 +38,7 @@ export const FteDemoPlayer = ({
       className={"relative w-full h-full bg-black aspect-video"}
       ref={playerRef}
     >
-      <div id="FullscreenContent">
+      <div>
         <FtePlayerCanvas config={{ preset: "demoPlayer" }} />
 
         {fte && (

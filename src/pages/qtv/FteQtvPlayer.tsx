@@ -59,7 +59,7 @@ export const FteQtvPlayer = () => {
       className={"relative w-full h-full max-h-[75vh] bg-black aspect-video"}
       ref={playerRef}
     >
-      <div id="FullscreenContent">
+      <div>
         <FtePlayerCanvas config={{ preset: "qtvPlayer" }} />
 
         {fte && (
