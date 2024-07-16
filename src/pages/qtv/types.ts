@@ -16,6 +16,7 @@ export type MvdsvServer = {
     total: number;
     used: number;
   };
+  spectator_names: string[];
   settings: {
     map: string;
   };

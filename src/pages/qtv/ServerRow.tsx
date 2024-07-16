@@ -43,7 +43,7 @@ export function ServerRow({
           )}
         </div>
         <div className="flex text-xs w-12 items-center justify-end">
-          <div className="inline-block h-1.5 w-1.5 rounded-full bg-red-600 mr-1" />
+          <div className="inline-block h-1.5 w-1.5 rounded-full bg-red-600 mr-1 mb-px" />
           {totalSpectatorCount(server)}
         </div>
       </div>

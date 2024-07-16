@@ -28,6 +28,8 @@ export function QtvPlayerFooter() {
     return null;
   }
 
+  const title = server.title.replace(` [${server.settings.map}]`, "");
+
   return (
     <div className="flex flex-wrap justify-between gap-4 my-4">
       <div className="flex items-center gap-4">
@@ -35,13 +37,23 @@ export function QtvPlayerFooter() {
           <Mapshot map={server.settings.map} />
         </div>
         <div className="">
-          <div className="font-bold">{server.title}</div>
-          <div className="text-xs mt-1 text-slate-200">
+          <div className="font-bold">{title}</div>
+          <div className="text-sm mt-1 text-slate-300">
             <strong>{server.settings.map}</strong>: {server.status.name} -{" "}
             {server.status.description}
           </div>
-          <div className="text-xs mt-3">
-            <ServerAddress server={server} />
+          <div className="text-xs mt-2.5">
+            <div className="flex gap-4">
+              <ServerAddress server={server} />
+              <div className="text-right text-xs">
+                <div className="inline-block h-1.5 w-1.5 rounded-full bg-red-600 mr-1 mb-px" />
+                <span className="text-slate-300">
+                  {server.spectator_slots.used +
+                    server.qtv_stream.spectator_names.length}{" "}
+                  viewers
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
