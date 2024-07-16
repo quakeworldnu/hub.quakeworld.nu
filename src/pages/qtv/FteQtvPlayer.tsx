@@ -71,25 +71,20 @@ export const FteQtvPlayer = () => {
       </div>
       <div
         className={classNames(
-          "absolute z-30 w-full h-full bg-black transition-opacity duration-700 pointer-events-none bg-cover",
+          "absolute flex z-30 w-full h-full bg-black transition-opacity duration-1000 pointer-events-none items-center justify-center",
           {
             "opacity-0": isReady,
           },
         )}
       >
-        <div
-          className="flex w-full h-full items-center justify-center"
-          style={{
-            background: "radial-gradient(circle at center, black 0, #0009 80%)",
-          }}
-        >
-          <div className="flex items-center">
-            <LoadingSpinner />
+        <div className="flex">
+          <LoadingSpinner />
+          {!isReady && (
             <div className="animate-pulse text-gray-400">
               {isLoadingAssets && <>Loading assets ({assetStatus.progress}%)</>}
               {isInitializing && "Initializing.."}
             </div>
-          </div>
+          )}
         </div>
       </div>
 
