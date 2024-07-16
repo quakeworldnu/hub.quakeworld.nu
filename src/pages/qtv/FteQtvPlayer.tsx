@@ -32,6 +32,7 @@ export const FteQtvPlayer = () => {
 
     fte.command("disconnect");
     window.setTimeout(() => {
+      fte.command("closemenu");
       fte.command("qtvplay", `tcp:${url}@wss://fteqtv.quake.world`);
     }, CONNECTION_GRACE_TIMEOUT);
   }
