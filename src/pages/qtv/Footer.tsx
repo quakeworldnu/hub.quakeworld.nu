@@ -12,6 +12,7 @@ import { ServerAddress } from "@qwhub/servers/Server";
 import ServersStreams from "@qwhub/servers/ServerStreams";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { getMapshotCssUrl } from "@qwhub/services/mapshots.ts";
 
 export function QtvPlayerFooter() {
   const servers: MvdsvServer[] = useSelector(selectQtvServers);
@@ -33,9 +34,10 @@ export function QtvPlayerFooter() {
   return (
     <div className="flex flex-wrap justify-between gap-4 my-4">
       <div className="flex items-center gap-4">
-        <div className="hidden sm:block h-20 w-28">
-          <Mapshot map={server.settings.map} />
-        </div>
+        <div
+          className="hidden sm:block h-20 w-28 bg-cover rounded"
+          style={{ backgroundImage: getMapshotCssUrl(server.settings.map) }}
+        />
         <div className="">
           <div className="font-bold">{title}</div>
           <div className="text-sm mt-1 text-slate-300">
