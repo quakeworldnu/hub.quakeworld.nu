@@ -5,39 +5,6 @@ import { useEventListener } from "../hooks.ts";
 import { FteController } from "./fteController.ts";
 import type { FteAssets, FteModule, FtePreloadModule } from "./types.ts";
 
-// parse log to dispatch special events
-(() => {
-  const log = console.log;
-
-  function customLog(...args: any[]) {
-    inspectMessage(args[0]);
-    log.apply(console, args);
-  }
-
-  console.log = customLog;
-})();
-
-function inspectMessage(message: string) {
-  const event = eventByMessage(message);
-
-  if (event) {
-    window.dispatchEvent(event);
-  }
-}
-
-function eventByMessage(message: string): CustomEvent | null {
-  if (message.startsWith(`streaming "tcp:`)) {
-    return new CustomEvent("fte.event.qtv_play");
-  }
-
-  switch (message) {
-    case "svc_disconnect: EndOfDemo":
-      return new CustomEvent("fte.event.qtv_disconnect");
-    default:
-      return null;
-  }
-}
-
 declare global {
   interface Window {
     Module: FteModule | FtePreloadModule;

@@ -1,5 +1,6 @@
 import { getQtvPlayerAssets } from "@qwhub/pages/games/fte/assets";
 import { useFteController, useFteLoader } from "@qwhub/pages/games/fte/hooks";
+import { enableLogToEvents } from "@qwhub/pages/games/fte/log.ts";
 import { QTV_FTE_VERSION } from "@qwhub/pages/games/fte/meta";
 import { useEventListener } from "@qwhub/pages/games/hooks";
 import { roundFloat } from "@qwhub/pages/games/math";
@@ -14,6 +15,8 @@ import { useState } from "react";
 import { useElementSize } from "usehooks-ts";
 
 const DISCONNECT_TIMEOUT = 50; // ms
+
+enableLogToEvents();
 
 export const FteQtvPlayer = () => {
   const [lastKnownUrl, setLastKnownUrl] = useState("");
