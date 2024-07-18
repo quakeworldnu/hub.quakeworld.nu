@@ -13,7 +13,7 @@ import classNames from "classnames";
 import { useState } from "react";
 import { useElementSize } from "usehooks-ts";
 
-const CONNECTION_GRACE_TIMEOUT = 50; // ms
+const DISCONNECT_TIMEOUT = 50; // ms
 
 export const FteQtvPlayer = () => {
   const [lastKnownUrl, setLastKnownUrl] = useState("");
@@ -34,7 +34,7 @@ export const FteQtvPlayer = () => {
     window.setTimeout(() => {
       fte.command("closemenu");
       fte.command("qtvplay", `tcp:${url}@wss://fteqtv.quake.world`);
-    }, CONNECTION_GRACE_TIMEOUT);
+    }, DISCONNECT_TIMEOUT);
   }
 
   function reconnect() {
@@ -43,7 +43,7 @@ export const FteQtvPlayer = () => {
     }
   }
 
-  useEventListener("fte.event.disconnect", reconnect);
+  useEventListener("fte.event.qtv_disconnect", reconnect);
   useEventListener("hub.selectServer", ({ detail: selectedServer }) => {
     connect(selectedServer.qtv_stream.url);
     setLastKnownUrl(selectedServer.qtv_stream.url);

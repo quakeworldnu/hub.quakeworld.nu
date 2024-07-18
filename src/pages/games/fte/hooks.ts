@@ -18,8 +18,23 @@ import type { FteAssets, FteModule, FtePreloadModule } from "./types.ts";
 })();
 
 function inspectMessage(message: string) {
-  if ("svc_disconnect: EndOfDemo" === message) {
-    window.dispatchEvent(new CustomEvent("fte.event.disconnect"));
+  const event = eventByMessage(message);
+
+  if (event) {
+    window.dispatchEvent(event);
+  }
+}
+
+function eventByMessage(message: string): CustomEvent | null {
+  if (message.startsWith(`streaming "tcp:`)) {
+    return new CustomEvent("fte.event.qtv_play");
+  }
+
+  switch (message) {
+    case "svc_disconnect: EndOfDemo":
+      return new CustomEvent("fte.event.qtv_disconnect");
+    default:
+      return null;
   }
 }
 
