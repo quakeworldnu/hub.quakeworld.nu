@@ -58,7 +58,7 @@ export const QtvServerTilesToggle = ({
   return (
     <div className="px-3 text-sm">
       <Switch
-        label="Show servers"
+        label="Show servers (CTRL)"
         enabled={value}
         onClick={toggleQtvServerSelector}
       />
