@@ -81,7 +81,7 @@ export function QtvPlayerFooter() {
             href={`qw://${server.qtv_stream.url}/qtvplay`}
             count={server.qtv_stream.spectator_count}
           >
-            Watch on QTV
+            Join QTV
           </SecondaryButton>
 
           <ServersStreams address={server.address} />
