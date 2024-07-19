@@ -42,16 +42,14 @@ export function QtvServerSelectorOverlay({
   return (
     <div
       className={classNames(
-        "absolute z-10 w-full h-full transition-opacity duration-500 backdrop-blur overflow-auto",
+        "absolute z-10 grid items-center w-full h-full transition-opacity duration-500 backdrop-blur overflow-auto p-4",
         {
           "opacity-0 pointer-events-none": !isVisible,
         },
       )}
       onClick={() => hideQtvServerSelector()}
     >
-      <div className="p-4">
-        <QtvServerSelector />
-      </div>
+      <QtvServerSelector />
     </div>
   );
 }
@@ -62,9 +60,7 @@ export function QtvServerSelector() {
   return (
     <div className="grid grid-cols-servers">
       {0 === servers.length && (
-        <div className="py-4 text-center text-slate-400">
-          no active servers available
-        </div>
+        <div className="py-4 text-center">no active servers available</div>
       )}
 
       {servers.map((server, index) => (
