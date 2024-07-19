@@ -1,6 +1,7 @@
 // @ts-ignore
 import { SecondaryButton } from "@qwhub/Buttons";
 import { useEventListener } from "@qwhub/pages/games/hooks";
+import { Shortcuts, presets } from "@qwhub/pages/games/player/Shortcuts.tsx";
 import { QtvEvent } from "@qwhub/pages/qtv/events.ts";
 import { MvdsvServer } from "@qwhub/pages/qtv/types";
 // @ts-ignore
@@ -14,7 +15,6 @@ import ServersStreams from "@qwhub/servers/ServerStreams";
 import { getMapshotCssUrl } from "@qwhub/services/mapshots.ts";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Shortcuts, presets } from "@qwhub/pages/games/player/Shortcuts.tsx";
 
 export function QtvPlayerFooter() {
   const servers: MvdsvServer[] = useSelector(selectQtvServers);
@@ -35,14 +35,14 @@ export function QtvPlayerFooter() {
 
   return (
     <div>
-      <div className="flex flex-wrap justify-between gap-4 my-4">
-        <div className="flex items-center gap-4">
+      <div className="flex flex-wrap justify-between gap-4 my-6">
+        <div className="flex items-center gap-4 gap-x-6">
           <div
-            className="hidden sm:block h-20 w-28 bg-cover rounded"
+            className="hidden sm:block h-20 w-32 bg-cover bg-center rounded"
             style={{ backgroundImage: getMapshotCssUrl(server.settings.map) }}
           />
           <div className="">
-            <div className="font-bold">{title}</div>
+            <div className="font-bold sm:text-lg md:text-xl">{title}</div>
             <div className="text-sm mt-1 text-slate-300">
               <strong>{server.settings.map}</strong>: {server.status.name} -{" "}
               {server.status.description}
