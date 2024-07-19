@@ -40,6 +40,9 @@ export const FtePlayerCanvas = ({ config }: { config: Config }) => {
         case "Tab":
           e.preventDefault();
           return fte.command("+showscores");
+        case "Control":
+          e.preventDefault();
+          return dispatchEvent(new Event("hub.qtv.server_selector.toggle"));
         default:
           break;
       }

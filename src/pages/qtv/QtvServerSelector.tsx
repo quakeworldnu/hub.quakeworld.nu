@@ -1,18 +1,23 @@
-import {MvdsvServer} from "@qwhub/pages/qtv/types.ts";
+import { MvdsvServer } from "@qwhub/pages/qtv/types.ts";
 // @ts-ignore
-import {selectQtvServers} from "@qwhub/selectors.js";
+import { selectQtvServers } from "@qwhub/selectors.js";
 // @ts-ignore
-import {Mapshot} from "@qwhub/servers/Mapshot.jsx";
+import { Mapshot } from "@qwhub/servers/Mapshot.jsx";
 // @ts-ignore
-import {Scoreboard} from "@qwhub/servers/Scoreboard.jsx";
+import { Scoreboard } from "@qwhub/servers/Scoreboard.jsx";
 // @ts-ignore
-import {ServerBody} from "@qwhub/servers/Server.jsx";
-import {useSelector} from "react-redux";
+import { ServerBody } from "@qwhub/servers/Server.jsx";
+import { useSelector } from "react-redux";
 
-import {useEventListener} from "@qwhub/pages/games/hooks.ts";
-import {hideQtvServerSelector, QtvEvent, selectServer, showQtvServerSelector,} from "@qwhub/pages/qtv/events.ts";
+import { useEventListener } from "@qwhub/pages/games/hooks.ts";
+import {
+  QtvEvent,
+  hideQtvServerSelector,
+  selectServer,
+  showQtvServerSelector,
+} from "@qwhub/pages/qtv/events.ts";
 import classNames from "classnames";
-import {useBoolean} from "usehooks-ts";
+import { useBoolean } from "usehooks-ts";
 
 export function QtvServerSelectorOverlay({
   defaultVisible = true,
@@ -45,7 +50,7 @@ export function QtvServerSelectorOverlay({
       onClick={() => hideQtvServerSelector()}
     >
       <div className="p-4">
-        <QtvServerSelector/>
+        <QtvServerSelector />
       </div>
     </div>
   );
