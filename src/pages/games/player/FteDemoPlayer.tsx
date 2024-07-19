@@ -1,14 +1,15 @@
+import { DEMO_FTE_VERSION } from "@qwhub/pages/games/fte/meta.ts";
+import { getAssetUrl } from "@qwhub/pages/games/services/cloudfront/cassets.ts";
 import classNames from "classnames";
-import { useIdleTimer } from "react-idle-timer";
 import { useElementSize } from "usehooks-ts";
 import { getMapshotCssUrl } from "../../../services/mapshots.ts";
-import { getAssets } from "../fte/assets.ts";
+import { getDemoPlayerAssets } from "../fte/assets.ts";
 import { useFteController, useFteLoader } from "../fte/hooks.ts";
 import { roundFloat } from "../math.ts";
 import { getDownloadUrl } from "../services/cloudfront/cdemos.ts";
 import { DemoInfo } from "../services/cloudfront/types.ts";
 import { Controls } from "./Controls.tsx";
-import { FteDemoPlayerCanvas } from "./FteDemoPlayerCanvas.tsx";
+import { FtePlayerCanvas } from "./FtePlayerCanvas.tsx";
 import { useClipPlayback } from "./clips/hooks.ts";
 import { ResponsivePlayerInfo } from "./controls/PlayerInfo.tsx";
 import { ResponsiveScoreBanner } from "./controls/ScoreBanner.tsx";
@@ -21,17 +22,11 @@ export const FteDemoPlayer = ({
   mapName: string;
 }) => {
   useClipPlayback();
-  const assets = getAssets(getDownloadUrl(demo.sha256), mapName);
+  const assets = getDemoPlayerAssets(getDownloadUrl(demo.sha256), mapName);
+  const scriptPath = getAssetUrl(`fte/ftewebgl.js?version=${DEMO_FTE_VERSION}`);
   const { isLoadingAssets, isReady, assetStatus, isInitializing } =
-    useFteLoader({ assets, demoDuration: demo.demo_duration });
+    useFteLoader({ scriptPath, assets, demoDuration: demo.demo_duration });
   const fte = useFteController();
-
-  useIdleTimer({
-    onIdle: () => dispatchEvent(new Event("demoplayer.mouse.idle")),
-    onActive: () => dispatchEvent(new Event("demoplayer.mouse.active")),
-    events: ["mousemove"],
-    timeout: 2000,
-  });
 
   const [playerRef, { width }] = useElementSize();
   const defaultWidth = 1400;
@@ -43,8 +38,8 @@ export const FteDemoPlayer = ({
       className={"relative w-full h-full bg-black aspect-video"}
       ref={playerRef}
     >
-      <div id="FullscreenContent">
-        <FteDemoPlayerCanvas />
+      <div>
+        <FtePlayerCanvas config={{ preset: "demoPlayer" }} />
 
         {fte && (
           <>
@@ -71,23 +66,7 @@ export const FteDemoPlayer = ({
           }}
         >
           <div className="flex items-center">
-            <svg
-              className={
-                "w-6 h-6 mr-2 fill-violet-600 text-violet-800 animate-spin"
-              }
-              viewBox="0 0 100 101"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                fill="currentColor"
-              />
-              <path
-                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                fill="currentFill"
-              />
-            </svg>
+            <LoadingSpinner />
             <div className="animate-pulse text-gray-400">
               {isLoadingAssets && <>Loading assets ({assetStatus.progress}%)</>}
               {isInitializing && "Initializing.."}
@@ -104,13 +83,22 @@ export const FteDemoPlayer = ({
   );
 };
 
-// const PlayerDebug = () => {
-//   useUpdateInterval(200);
-//   const fte = useFteController();
-//
-//   if (!fte) {
-//     return null;
-//   }
-//
-//   return <Debug value={fte.getPlayers()} />;
-// };
+export function LoadingSpinner() {
+  return (
+    <svg
+      className={"w-6 h-6 mr-2 fill-violet-600 text-violet-800 animate-spin"}
+      viewBox="0 0 100 101"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+        fill="currentColor"
+      />
+      <path
+        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+        fill="currentFill"
+      />
+    </svg>
+  );
+}

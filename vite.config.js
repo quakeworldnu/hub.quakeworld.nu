@@ -1,4 +1,4 @@
-import { resolve } from "path";
+import { resolve } from "node:path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
@@ -10,6 +10,7 @@ export default defineConfig({
         main: resolve("./index.html"),
         games: resolve("./games/index.html"),
         players: resolve("./players/index.html"),
+        qtv: resolve("./qtv/index.html"),
         scoreboard: resolve("./scoreboard/index.html"),
       },
     },

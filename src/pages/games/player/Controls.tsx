@@ -20,13 +20,13 @@ export const Controls = () => {
     setFalse: setIsActive,
   } = useBoolean(false);
 
-  useEventListener("demoplayer.mouse.idle", setIsIdle);
-  useEventListener("demoplayer.mouse.active", setIsActive);
+  useEventListener("fteplayer.mouse.idle", setIsIdle);
+  useEventListener("fteplayer.mouse.active", setIsActive);
 
   return (
     <div
       className={classNames(
-        "flex flex-wrap transition-opacity duration-200 bg-black/60 justify-between px-2 sm:px-4",
+        "flex flex-wrap transition-opacity duration-200 bg-black/60 justify-between px-2",
         {
           "opacity-0": !showClipEditor && isIdle,
         },

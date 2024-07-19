@@ -1,9 +1,19 @@
 import { filterServers } from "@qwhub/serverFilters";
+import { totalSpectatorCount } from "@qwhub/servers/util.ts";
 import { createSelector } from "@reduxjs/toolkit";
 
 export const selectServerFilters = (state) => state.settings.serverFilters;
 export const selectServers = (state) =>
   state.hub.queries["getServers(null)"]?.data ?? [];
+
+export const selectQtvServers = createSelector(selectServers, (servers) => {
+  const result = servers.filter((s) => s.qtv_stream.url !== "");
+  result.sort((b, a) => {
+    const countDiff = totalSpectatorCount(a) - totalSpectatorCount(b);
+    return countDiff === 0 ? a.score - b.score : countDiff;
+  });
+  return result;
+});
 
 export const selectFilteredServers = createSelector(
   selectServerFilters,

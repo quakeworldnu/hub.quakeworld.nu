@@ -9,6 +9,7 @@ export default function SiteNavigation() {
   const serverCount = servers.length;
   let playerCount = 0;
   let spectatorCount = 0;
+  let qtvCount = 0;
 
   for (let i = 0; i < serverCount; i++) {
     const server = servers[i];
@@ -17,6 +18,7 @@ export default function SiteNavigation() {
 
     if ("" !== server.qtv_stream.address) {
       spectatorCount += server.qtv_stream.spectator_count;
+      qtvCount++;
     }
   }
 
@@ -26,6 +28,12 @@ export default function SiteNavigation() {
       shortDescription: serverCount,
       longDescription: serverCount,
       url: "/",
+    },
+    {
+      title: "QTV",
+      shortDescription: qtvCount,
+      longDescription: qtvCount,
+      url: "/qtv/",
     },
     {
       title: "Players",

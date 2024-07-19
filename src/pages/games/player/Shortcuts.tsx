@@ -1,23 +1,28 @@
 import { faHandPointer, faKeyboard } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export const Shortcuts = () => {
-  return (
-    <div className="flex flex-row flex-wrap gap-x-16 gap-y-8">
-      <div className="hidden sm:block">
-        <KeyboardShortcuts />
-      </div>
-      <MouseShortcuts />
-    </div>
-  );
-};
+interface ShortCutPreset {
+  keyboard: ShortCut[];
+  pointer: ShortCut[];
+}
 
-interface ShortcutInfo {
+interface ShortCut {
   keys: string[];
   description: string;
 }
 
-const ShortcutList = ({ shortcuts }: { shortcuts: ShortcutInfo[] }) => {
+export function Shortcuts({ preset }: { preset: ShortCutPreset }) {
+  return (
+    <div className="flex flex-row flex-wrap gap-x-16 gap-y-8 my-4">
+      <div className="hidden sm:block">
+        <KeyboardShortcuts shortcuts={preset.keyboard} />
+      </div>
+      <PointerShortcuts shortcuts={preset.pointer} />
+    </div>
+  );
+}
+
+const ShortcutList = ({ shortcuts }: { shortcuts: ShortCut[] }) => {
   // chunk shortcuts into groups of 4
   const chunkSize = 4;
   const chunkedShortcuts = [];
@@ -31,7 +36,7 @@ const ShortcutList = ({ shortcuts }: { shortcuts: ShortcutInfo[] }) => {
         <div className="space-y-2" key={i}>
           {chunk.map((shortcut, j) => (
             <div key={j} className="flex flex-row items-center space-x-4">
-              <div className="text-slate-400 text-sm w-32">
+              <div className="text-slate-400 text-sm w-40">
                 {shortcut.description}
               </div>
               <div className="flex items-center space-x-2">
@@ -51,8 +56,74 @@ const ShortcutList = ({ shortcuts }: { shortcuts: ShortcutInfo[] }) => {
   );
 };
 
-const KeyboardShortcuts = () => {
-  const shortcuts: ShortcutInfo[] = [
+function KeyboardShortcuts({ shortcuts }: { shortcuts: ShortCut[] }) {
+  return (
+    <div>
+      <div className="font-bold text-slate-300 mb-2">
+        <FontAwesomeIcon icon={faKeyboard} fixedWidth className="mr-1" />{" "}
+        Keyboard shortcuts
+      </div>
+      <ShortcutList shortcuts={shortcuts} />
+    </div>
+  );
+}
+
+function PointerShortcuts({ shortcuts }: { shortcuts: ShortCut[] }) {
+  return (
+    <div>
+      <div className="font-bold text-slate-300 mb-2">
+        <FontAwesomeIcon icon={faHandPointer} fixedWidth className="mr-1" />{" "}
+        Pointer shortcuts
+      </div>
+      <ShortcutList shortcuts={shortcuts} />
+    </div>
+  );
+}
+
+const commonShortcuts: ShortCutPreset = {
+  keyboard: [
+    {
+      keys: ["~"],
+      description: "Toggle console",
+    },
+    {
+      keys: ["Tab"],
+      description: "Toggle scoreboard",
+    },
+    {
+      keys: ["Space"],
+      description: "Track next player",
+    },
+  ],
+  pointer: [
+    {
+      keys: ["Long Press"],
+      description: "Toggle scoreboard",
+    },
+    {
+      keys: ["Double Tap (center)"],
+      description: "Toggle fullscreen",
+    },
+    {
+      keys: ["Swipe Left/Right"],
+      description: "Track next/previous player",
+    },
+  ],
+};
+
+const qtvPlayerShortcuts: ShortCutPreset = {
+  keyboard: [
+    ...commonShortcuts.keyboard,
+    {
+      keys: ["CTRL"],
+      description: "Toggle server selector",
+    },
+  ],
+  pointer: commonShortcuts.pointer,
+};
+
+const demoPlayerShortcuts: ShortCutPreset = {
+  keyboard: [
     {
       keys: ["~"],
       description: "Toggle console",
@@ -85,33 +156,8 @@ const KeyboardShortcuts = () => {
       keys: ["Shift", "<"],
       description: "Rewind 10 seconds",
     },
-    // {
-    //   keys: ["1"],
-    //   description: "Default graphics",
-    // },
-    // {
-    //   keys: ["2"],
-    //   description: "Vanilla Quake graphics",
-    // },
-    // {
-    //   keys: ["3"],
-    //   description: "Fast graphics",
-    // },
-  ];
-
-  return (
-    <div>
-      <div className="font-bold text-slate-300 mb-2">
-        <FontAwesomeIcon icon={faKeyboard} fixedWidth className="mr-1" />{" "}
-        Keyboard shortcuts
-      </div>
-      <ShortcutList shortcuts={shortcuts} />
-    </div>
-  );
-};
-
-const MouseShortcuts = () => {
-  const shortcuts: ShortcutInfo[] = [
+  ],
+  pointer: [
     {
       keys: ["Long Press"],
       description: "Toggle scoreboard",
@@ -136,15 +182,10 @@ const MouseShortcuts = () => {
       keys: ["Double Tap (left)"],
       description: "Rewind 10 seconds",
     },
-  ];
+  ],
+};
 
-  return (
-    <div>
-      <div className="font-bold text-slate-300 mb-2">
-        <FontAwesomeIcon icon={faHandPointer} fixedWidth className="mr-1" />{" "}
-        Pointer shortcuts
-      </div>
-      <ShortcutList shortcuts={shortcuts} />
-    </div>
-  );
+export const presets = {
+  demoPlayer: demoPlayerShortcuts,
+  qtvPlayer: qtvPlayerShortcuts,
 };

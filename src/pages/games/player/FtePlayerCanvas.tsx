@@ -1,4 +1,5 @@
 import { type MouseEvent, useRef } from "react";
+import { useIdleTimer } from "react-idle-timer";
 import { useSwipeable } from "react-swipeable";
 import { useDoubleTap } from "use-double-tap";
 import { useLongPress } from "use-long-press";
@@ -7,9 +8,22 @@ import { useFteController } from "../fte/hooks.ts";
 import { toggleFullscreen } from "../fullscreen.ts";
 import { useWakeLock } from "../hooks.ts";
 
-export const FteDemoPlayerCanvas = () => {
+export type Config = {
+  preset: "demoPlayer" | "qtvPlayer";
+};
+
+export const FtePlayerCanvas = ({ config }: { config: Config }) => {
   const fte = useFteController();
   const documentRef = useRef<Document>(document);
+
+  // pointer events
+  useIdleTimer({
+    element: document.getElementById("ftePlayer") || undefined,
+    onIdle: () => dispatchEvent(new Event("fteplayer.mouse.idle")),
+    onActive: () => dispatchEvent(new Event("fteplayer.mouse.active")),
+    events: ["mousemove"],
+    timeout: 2000,
+  });
 
   // prevent screen idle
   useWakeLock();
@@ -26,6 +40,9 @@ export const FteDemoPlayerCanvas = () => {
         case "Tab":
           e.preventDefault();
           return fte.command("+showscores");
+        case "Control":
+          e.preventDefault();
+          return dispatchEvent(new Event("hub.qtv.server_selector.toggle"));
         default:
           break;
       }
@@ -45,7 +62,11 @@ export const FteDemoPlayerCanvas = () => {
           return fte.trackNext();
         case "ControlLeft":
           e.preventDefault();
-          return fte.togglePlay();
+
+          if (config.preset === "demoPlayer") {
+            fte.togglePlay();
+          }
+          break;
         case "Tab":
           return fte.command("-showscores");
         default:
@@ -61,6 +82,11 @@ export const FteDemoPlayerCanvas = () => {
 
   // pointer events
   function onDoubleTap(e: MouseEvent<HTMLCanvasElement>) {
+    if (config.preset === "qtvPlayer") {
+      toggleFullscreen("ftePlayer");
+      return;
+    }
+
     const { x } = relativeEventPositionInPercent(e);
     const threshold = 25;
 
@@ -74,7 +100,11 @@ export const FteDemoPlayerCanvas = () => {
   }
 
   const dblTap = useDoubleTap(onDoubleTap, 300, {
-    onSingleTap: () => fte?.togglePlay(),
+    onSingleTap: () => {
+      if (config.preset === "demoPlayer") {
+        fte?.togglePlay();
+      }
+    },
   });
 
   const longPress = useLongPress(() => fte?.command("+showscores"), {

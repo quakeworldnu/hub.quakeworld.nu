@@ -1,7 +1,7 @@
+import { useEffect } from "react";
 import {
   useEventListener as uhUseEventListener,
   useCounter,
-  useEffectOnce,
   useInterval,
 } from "usehooks-ts";
 
@@ -27,7 +27,7 @@ export function useEventListener(
 }
 
 export function useWakeLock() {
-  useEffectOnce(() => {
+  useEffect(() => {
     async function requestWakeLock() {
       try {
         await navigator.wakeLock.request("screen");
@@ -35,7 +35,7 @@ export function useWakeLock() {
     }
 
     requestWakeLock();
-  });
+  }, []);
 }
 
 export function useCurrentGameId(): number | undefined {

@@ -9,9 +9,7 @@ import { getAssetUrl } from "../../services/cloudfront/cassets.ts";
 export const ResponsivePlayerInfo = ({ scale }: { scale: number }) => {
   return (
     <div
-      className={classNames(
-        "absolute origin-bottom-right right-[1%] bottom-[72px] md:bottom-[96px]",
-      )}
+      className="absolute origin-bottom-right right-[1.5%] bottom-[72px] md:bottom-[96px]"
       style={{ transform: `scale(${scale})` }}
     >
       <PlayerInfo />
@@ -53,7 +51,13 @@ export const PlayerInfo = () => {
     return (
       <div className="select-none font-bold">
         {teams.map((team: Team) => (
-          <div key={team.namePlain} className="mt-4 first:mt-0">
+          <div
+            key={team.namePlain}
+            className={classNames("first:mt-0", {
+              "mt-1.5": !showTeams,
+              "mt-4": showTeams,
+            })}
+          >
             {showTeams && (
               <div className="flex justify-end items-center mb-1 mr-0.5 app-text-shadow space-x-2">
                 <QuakeTextFromBytes name={team.name} />

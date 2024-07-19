@@ -6,7 +6,13 @@ import { useUpdateInterval } from "../../hooks.ts";
 import { formatElapsed } from "../../time.ts";
 import { QuakeTextFromBytes } from "../QuakeText.tsx";
 
-export const ResponsiveScoreBanner = ({ scale }: { scale: number }) => {
+export const ResponsiveScoreBanner = ({
+  scale,
+  showClock = true,
+}: {
+  scale: number;
+  showClock?: boolean;
+}) => {
   const { value: showscores, setTrue, setFalse } = useBoolean(false);
   useFteEvent("+showscores", setTrue);
   useFteEvent("-showscores", setFalse);
@@ -21,16 +27,40 @@ export const ResponsiveScoreBanner = ({ scale }: { scale: number }) => {
       )}
       style={{ transform: `scale(${scale})` }}
     >
-      <ScoreBanner />
+      <ScoreBanner showClock={showClock} />
     </div>
   );
 };
 
-export const ScoreBanner = () => {
+export function ScoreBanner({ showClock = true }: { showClock?: boolean }) {
+  return (
+    <div className="flex flex-col items-center pointer-events-none select-none text-nowrap space-y-1">
+      <Participants />
+      {showClock && <GameClock />}
+    </div>
+  );
+}
+
+export function GameClock() {
   const fte = useFteController();
   useUpdateInterval(250);
 
   if (!fte || fte.getMatchElapsedTime() >= fte.getMatchDuration()) {
+    return null;
+  }
+
+  return (
+    <div className="text-center app-text-shadow font-bold text-yellow-200">
+      {formatElapsed(fte.getMatchElapsedTime())}
+    </div>
+  );
+}
+
+export function Participants() {
+  const fte = useFteController();
+  useUpdateInterval(250);
+
+  if (!fte) {
     return null;
   }
 
@@ -43,22 +73,17 @@ export const ScoreBanner = () => {
     participants = fte.getPlayers().map(playerToParticipant);
   }
 
-  if (participants.length < 2) {
+  if (participants.length !== 2) {
     return null;
   }
 
   return (
-    <div className="flex flex-col items-center pointer-events-none select-none text-nowrap">
-      <div className="flex items-center font-bold app-text-shadow">
-        <Participant participant={participants[0]} index={0} />
-        <Participant participant={participants[1]} index={1} />
-      </div>
-      <div className="text-center mt-1 app-text-shadow font-bold text-yellow-200">
-        {formatElapsed(fte.getMatchElapsedTime())}
-      </div>
+    <div className="flex items-center font-bold app-text-shadow">
+      <Participant participant={participants[0]} index={0} />
+      <Participant participant={participants[1]} index={1} />
     </div>
   );
-};
+}
 
 const Participant = ({
   participant,
