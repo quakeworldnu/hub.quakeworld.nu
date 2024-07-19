@@ -1,4 +1,5 @@
 import { useFteController } from "@qwhub/pages/games/fte/hooks";
+import { Shortcuts, presets } from "@qwhub/pages/games/player/Shortcuts.tsx";
 import { getSearchParam } from "@qwhub/pages/qtv/url";
 import { selectQtvServers } from "@qwhub/selectors";
 import { ServerPoller } from "@qwhub/servers/Servers";
@@ -10,7 +11,6 @@ import { QtvPlayerFooter } from "./Footer";
 import { FteQtvPlayer } from "./FteQtvPlayer";
 import { QtvPlayerSidebar } from "./Sidebar";
 import { selectServer } from "./events";
-import { presets, Shortcuts } from "@qwhub/pages/games/player/Shortcuts.tsx";
 
 export const App = () => {
   return (
