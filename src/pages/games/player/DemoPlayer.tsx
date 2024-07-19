@@ -8,7 +8,7 @@ import { DemoInfo } from "../services/cloudfront/types.ts";
 import { btnSuccess, sizeLarge } from "../ui/theme.ts";
 import { FteDemoPlayer } from "./FteDemoPlayer.tsx";
 import { ShareDemoButton } from "./Share.tsx";
-import { Shortcuts } from "./Shortcuts.tsx";
+import { presets, Shortcuts } from "./Shortcuts.tsx";
 import { ClipControls } from "./clips/ClipControls.tsx";
 import { EnableClipEditorButton } from "./clips/Clips.tsx";
 import { ClipEditorProvider, useClipEditor } from "./clips/context.tsx";
@@ -100,7 +100,7 @@ const DemoPlayerFooter = ({ info }: { info: DemoInfo }) => {
 
           <hr className="my-6 border-slate-800" />
 
-          <Shortcuts />
+          <Shortcuts preset={presets.demoPlayer} />
         </div>
       )}
     </div>

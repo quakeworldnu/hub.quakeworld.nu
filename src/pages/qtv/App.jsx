@@ -10,6 +10,7 @@ import { QtvPlayerFooter } from "./Footer";
 import { FteQtvPlayer } from "./FteQtvPlayer";
 import { QtvPlayerSidebar } from "./Sidebar";
 import { selectServer } from "./events";
+import { presets, Shortcuts } from "@qwhub/pages/games/player/Shortcuts.tsx";
 
 export const App = () => {
   return (
@@ -70,6 +71,11 @@ const QtvPage = () => {
 
         <div className="lg:w-1/2 xl:w-1/3 lg:max-w-[540px] order-first my-4 max-h-[80vh] overflow-auto">
           <QtvPlayerSidebar />
+
+          <div className="lg:hidden">
+            <hr className="my-6 border-slate-800" />
+            <Shortcuts preset={presets.qtvPlayer} />
+          </div>
         </div>
       </div>
     </div>

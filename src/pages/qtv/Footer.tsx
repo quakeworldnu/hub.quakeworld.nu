@@ -14,6 +14,7 @@ import ServersStreams from "@qwhub/servers/ServerStreams";
 import { getMapshotCssUrl } from "@qwhub/services/mapshots.ts";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { Shortcuts, presets } from "@qwhub/pages/games/player/Shortcuts.tsx";
 
 export function QtvPlayerFooter() {
   const servers: MvdsvServer[] = useSelector(selectQtvServers);
@@ -33,56 +34,63 @@ export function QtvPlayerFooter() {
   const title = server.title.replace(` [${server.settings.map}]`, "");
 
   return (
-    <div className="flex flex-wrap justify-between gap-4 my-4">
-      <div className="flex items-center gap-4">
-        <div
-          className="hidden sm:block h-20 w-28 bg-cover rounded"
-          style={{ backgroundImage: getMapshotCssUrl(server.settings.map) }}
-        />
-        <div className="">
-          <div className="font-bold">{title}</div>
-          <div className="text-sm mt-1 text-slate-300">
-            <strong>{server.settings.map}</strong>: {server.status.name} -{" "}
-            {server.status.description}
-          </div>
-          <div className="text-xs mt-2.5">
-            <div className="flex gap-4">
-              <ServerAddress server={server} />
-              <div className="text-right text-xs">
-                <div className="inline-block h-1.5 w-1.5 rounded-full bg-red-600 mr-1 mb-px" />
-                <span className="text-slate-300">
-                  {server.spectator_slots.used +
-                    server.qtv_stream.spectator_names.length}{" "}
-                  viewers
-                </span>
+    <div>
+      <div className="flex flex-wrap justify-between gap-4 my-4">
+        <div className="flex items-center gap-4">
+          <div
+            className="hidden sm:block h-20 w-28 bg-cover rounded"
+            style={{ backgroundImage: getMapshotCssUrl(server.settings.map) }}
+          />
+          <div className="">
+            <div className="font-bold">{title}</div>
+            <div className="text-sm mt-1 text-slate-300">
+              <strong>{server.settings.map}</strong>: {server.status.name} -{" "}
+              {server.status.description}
+            </div>
+            <div className="text-xs mt-2.5">
+              <div className="flex gap-4">
+                <ServerAddress server={server} />
+                <div className="text-right text-xs">
+                  <div className="inline-block h-1.5 w-1.5 rounded-full bg-red-600 mr-1 mb-px" />
+                  <span className="text-slate-300">
+                    {server.spectator_slots.used +
+                      server.qtv_stream.spectator_names.length}{" "}
+                    viewers
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <div className="hidden sm:flex gap-3 h-6 md:h-8 text-xs">
+          <SecondaryButton
+            href={`qw://${server.address}/`}
+            className="flex items-center px-2"
+          >
+            Join as Player
+          </SecondaryButton>
+
+          <SecondaryButton
+            href={`qw://${server.address}/observe`}
+            count={server.spectator_slots.used}
+          >
+            Join as spectator
+          </SecondaryButton>
+
+          <SecondaryButton
+            href={`qw://${server.qtv_stream.url}/qtvplay`}
+            count={server.qtv_stream.spectator_count}
+          >
+            Watch on QTV
+          </SecondaryButton>
+
+          <ServersStreams address={server.address} />
+        </div>
       </div>
-      <div className="hidden sm:flex gap-3 h-6 md:h-8 text-xs">
-        <SecondaryButton
-          href={`qw://${server.address}/`}
-          className="flex items-center px-2"
-        >
-          Join as Player
-        </SecondaryButton>
 
-        <SecondaryButton
-          href={`qw://${server.address}/observe`}
-          count={server.spectator_slots.used}
-        >
-          Join as spectator
-        </SecondaryButton>
-
-        <SecondaryButton
-          href={`qw://${server.qtv_stream.url}/qtvplay`}
-          count={server.qtv_stream.spectator_count}
-        >
-          Watch on QTV
-        </SecondaryButton>
-
-        <ServersStreams address={server.address} />
+      <div className="hidden lg:block">
+        <hr className="my-6 border-slate-800" />
+        <Shortcuts preset={presets.qtvPlayer} />
       </div>
     </div>
   );
