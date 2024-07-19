@@ -4,6 +4,7 @@ import classNames from "classnames";
 import { useBoolean } from "usehooks-ts";
 import { Flag } from "./Flag";
 
+import { QtvEvent } from "@qwhub/pages/qtv/events.ts";
 import { MvdsvServer } from "./types.ts";
 
 export function ServerRow({
@@ -12,7 +13,7 @@ export function ServerRow({
 }: { server: MvdsvServer; onClick: (server: MvdsvServer) => void }) {
   const { value: isSelected, setValue: setIsSelected } = useBoolean(false);
 
-  useEventListener("hub.selectServer", ({ detail: selectedServer }) => {
+  useEventListener(QtvEvent.SelectServer, ({ detail: selectedServer }) => {
     setIsSelected(selectedServer.address === server.address);
   });
 

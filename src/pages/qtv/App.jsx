@@ -1,4 +1,5 @@
 import { useFteController } from "@qwhub/pages/games/fte/hooks";
+import { getSearchParam } from "@qwhub/pages/qtv/url";
 import { selectQtvServers } from "@qwhub/selectors";
 import { ServerPoller } from "@qwhub/servers/Servers";
 import { SiteFooter } from "@qwhub/site/Footer";
@@ -32,7 +33,7 @@ function useInitialServer() {
       return;
     }
 
-    const address = new URLSearchParams(window.location.search).get("address");
+    const address = getSearchParam("address");
     const selectedServer =
       servers.find((s) => s.address === address) || servers[0];
     setServer(selectedServer);

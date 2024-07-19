@@ -1,6 +1,7 @@
 // @ts-ignore
 import { SecondaryButton } from "@qwhub/Buttons";
 import { useEventListener } from "@qwhub/pages/games/hooks";
+import { QtvEvent } from "@qwhub/pages/qtv/events.ts";
 import { MvdsvServer } from "@qwhub/pages/qtv/types";
 // @ts-ignore
 import { selectQtvServers } from "@qwhub/selectors";
@@ -10,15 +11,15 @@ import { Mapshot } from "@qwhub/servers/Mapshot";
 import { ServerAddress } from "@qwhub/servers/Server";
 // @ts-ignore
 import ServersStreams from "@qwhub/servers/ServerStreams";
+import { getMapshotCssUrl } from "@qwhub/services/mapshots.ts";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { getMapshotCssUrl } from "@qwhub/services/mapshots.ts";
 
 export function QtvPlayerFooter() {
   const servers: MvdsvServer[] = useSelector(selectQtvServers);
   const [address, setAddress] = useState<string>("");
 
-  useEventListener("hub.selectServer", ({ detail: server }) => {
+  useEventListener(QtvEvent.SelectServer, ({ detail: server }) => {
     servers.find((s) => s.address === server.address) &&
       setAddress(server.address);
   });

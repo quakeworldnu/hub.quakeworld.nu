@@ -6,6 +6,20 @@ export type MvdsvServer = {
     name: string;
     description: string;
   };
+  players: {
+    name: string;
+    name_color: string;
+    team: string;
+    team_color: string;
+    frags: number;
+    ping: number;
+  }[];
+  teams: {
+    name: string;
+    name_color: string;
+    frags: number;
+    ping: number;
+  }[];
   player_slots: {
     free: number;
     total: number;

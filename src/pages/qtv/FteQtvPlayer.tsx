@@ -10,6 +10,8 @@ import { ResponsivePlayerInfo } from "@qwhub/pages/games/player/controls/PlayerI
 import { ResponsiveScoreBanner } from "@qwhub/pages/games/player/controls/ScoreBanner";
 import { getAssetUrl } from "@qwhub/pages/games/services/cloudfront/cassets";
 import { Controls } from "@qwhub/pages/qtv/Controls";
+import { QtvServerSelectorOverlay } from "@qwhub/pages/qtv/QtvServerSelector.tsx";
+import { QtvEvent } from "@qwhub/pages/qtv/events.ts";
 import classNames from "classnames";
 import { useState } from "react";
 import { useElementSize } from "usehooks-ts";
@@ -47,7 +49,7 @@ export const FteQtvPlayer = () => {
   }
 
   useEventListener("fte.event.qtv_disconnect", reconnect);
-  useEventListener("hub.selectServer", ({ detail: selectedServer }) => {
+  useEventListener(QtvEvent.SelectServer, ({ detail: selectedServer }) => {
     connect(selectedServer.qtv_stream.url);
     setLastKnownUrl(selectedServer.qtv_stream.url);
   });
@@ -72,6 +74,7 @@ export const FteQtvPlayer = () => {
           </>
         )}
       </div>
+      <QtvServerSelectorOverlay />
       <div
         className={classNames(
           "absolute flex z-30 w-full h-full bg-black transition-opacity duration-1000 pointer-events-none items-center justify-center",
@@ -92,7 +95,7 @@ export const FteQtvPlayer = () => {
       </div>
 
       {fte && (
-        <div className={"absolute z-10 bottom-0 w-full"}>
+        <div className={"absolute z-20 bottom-0 w-full"}>
           <Controls />
         </div>
       )}
