@@ -42,6 +42,7 @@ const ServerHeader = (props) => {
           <JoinButtonEl
             href={`qw://${server.address}/`}
             className="flex items-center px-5 text-lg rounded-lg"
+            title="Join as player"
           >
             Join
           </JoinButtonEl>
@@ -179,6 +180,7 @@ export const SpectatorButtons = (props) => {
         <SecondaryButton
           href={`qw://${server.address}/observe`}
           count={server.spectator_slots.used}
+          title="Join as spectator"
         >
           Spectate
         </SecondaryButton>
@@ -188,6 +190,7 @@ export const SpectatorButtons = (props) => {
         <SecondaryButton
           href={`/qtv/?address=${server.address}`}
           count={server.qtv_stream.spectator_count}
+          title="Watch QTV in browser"
         >
           QTV
         </SecondaryButton>
