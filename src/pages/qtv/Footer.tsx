@@ -66,22 +66,28 @@ export function QtvPlayerFooter() {
           <SecondaryButton
             href={`qw://${server.address}/`}
             className="flex items-center px-2"
+            title="Join as player"
           >
-            Join as Player
+            <QuakeLogo />
+            Join
           </SecondaryButton>
 
           <SecondaryButton
             href={`qw://${server.address}/observe`}
             count={server.spectator_slots.used}
+            title="Join as spectator"
           >
-            Join as spectator
+            <QuakeLogo />
+            Spectate
           </SecondaryButton>
 
           <SecondaryButton
             href={`qw://${server.qtv_stream.url}/qtvplay`}
             count={server.qtv_stream.spectator_count}
+            title="Join QTV"
           >
-            Join QTV
+            <QuakeLogo />
+            QTV
           </SecondaryButton>
 
           <ServersStreams address={server.address} />
@@ -93,5 +99,15 @@ export function QtvPlayerFooter() {
         <Shortcuts preset={presets.qtvPlayer} />
       </div>
     </div>
+  );
+}
+
+function QuakeLogo() {
+  return (
+    <img
+      src="/assets/img/quake_logo.svg"
+      className="w-3 invert mr-1.5"
+      alt="Quake logo"
+    />
   );
 }

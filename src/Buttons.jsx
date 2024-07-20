@@ -21,13 +21,14 @@ const themeSecondary = {
 };
 
 export const PrimaryButton = React.memo((props) => {
-  const { href = "#", children, className = "" } = props;
+  const { href = "#", children, className = "", title = "" } = props;
 
   return (
     <a
       href={href}
       target="_top"
       className={`${themePrimary.default} ${themePrimary.hover} ${className}`}
+      title={title}
     >
       {children}
     </a>
@@ -35,12 +36,13 @@ export const PrimaryButton = React.memo((props) => {
 });
 
 export const SecondaryButton = React.memo((props) => {
-  const { href, children, count = 0, className = "" } = props;
+  const { href, children, count = 0, className = "", title = "" } = props;
   return (
     <a
       href={href}
       target="_top"
       className={`flex items-center justify-center p-1 ${themeSecondary.default} ${themeSecondary.hover} ${className}`}
+      title={title}
     >
       {children}
 
