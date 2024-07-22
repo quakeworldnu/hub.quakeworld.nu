@@ -20,7 +20,7 @@ export const ResponsiveScoreBanner = ({
   return (
     <div
       className={classNames(
-        "absolute left-0 right-0 mx-auto origin-top w-px top-[3%]",
+        "absolute left-0 right-0 mx-auto origin-top w-px top-[3%] pointer-events-none",
         {
           hidden: showscores,
         },
