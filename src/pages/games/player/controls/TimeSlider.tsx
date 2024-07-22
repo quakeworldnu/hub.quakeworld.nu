@@ -37,7 +37,7 @@ export function TimeSlider() {
       <div
         className={classNames(
           { hidden: !isHover },
-          "absolute bottom-24 text-xs font-mono px-2 py-1 bg-violet-800 text-white rounded",
+          "absolute bottom-24 text-xs font-mono px-2 py-1 bg-violet-800 text-white rounded z-50",
         )}
         ref={tooltipRef}
       />

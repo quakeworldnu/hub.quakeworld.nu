@@ -14,12 +14,10 @@ export const AutotrackToggle = () => {
   }
 
   return (
-    <div className="px-3 text-sm">
-      <Switch
-        label="Autotrack"
-        enabled={fte.isUsingAutotrack()}
-        onClick={handleClick}
-      />
-    </div>
+    <Switch
+      label="Autotrack"
+      enabled={fte.isUsingAutotrack()}
+      onClick={handleClick}
+    />
   );
 };

@@ -24,17 +24,17 @@ export function Controls() {
   return (
     <div
       className={classNames(
-        "flex flex-wrap h-12 transition-opacity duration-200 bg-black/60 justify-between px-2",
+        "flex flex-wrap transition-opacity duration-200 bg-black/60 justify-between items-center sm:px-1 sm:gap-y-2",
         {
           "opacity-0": isIdle,
         },
       )}
     >
-      <div className="flex w-auto sm:w-1/3 sm:space-x-2 items-center">
+      <div className="flex items-center">
         <Volume />
       </div>
 
-      <div className="flex w-auto sm:w-2/3 space-x-2 items-center justify-end">
+      <div className="flex items-center gap-x-2">
         <div className="hidden sm:block">
           <QtvServerTilesToggle />
         </div>
@@ -56,7 +56,7 @@ export const QtvServerTilesToggle = ({
   useEventListener(QtvEvent.ShowServerSelector, setTrue);
 
   return (
-    <div className="px-3 text-sm">
+    <div className="text-xs sm:text-sm">
       <Switch
         label="Show servers (CTRL)"
         enabled={value}

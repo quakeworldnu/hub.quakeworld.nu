@@ -17,7 +17,7 @@ export const IconButton = ({
   return (
     <button
       className={
-        "flex h-6 w-10 sm:h-10 sm:w-12 items-center justify-center text-gray-300 hover:text-white sm:hover:scale-125 transition-transform"
+        "flex h-10 w-10 items-center justify-center text-gray-300 hover:text-white sm:hover:scale-125 transition-transform"
       }
       onClick={onClick}
       title={title}

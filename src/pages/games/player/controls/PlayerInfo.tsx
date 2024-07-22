@@ -9,7 +9,7 @@ import { getAssetUrl } from "../../services/cloudfront/cassets.ts";
 export const ResponsivePlayerInfo = ({ scale }: { scale: number }) => {
   return (
     <div
-      className="absolute origin-bottom-right right-[1.5%] bottom-[72px] md:bottom-[96px]"
+      className="absolute origin-bottom-right right-[1.5%] bottom-[72px] md:bottom-[96px] z-20"
       style={{ transform: `scale(${scale})` }}
     >
       <PlayerInfo />

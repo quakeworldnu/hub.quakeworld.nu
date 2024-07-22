@@ -26,31 +26,35 @@ export const Controls = () => {
   return (
     <div
       className={classNames(
-        "flex flex-wrap transition-opacity duration-200 bg-black/60 justify-between px-2",
+        "flex flex-wrap transition-opacity duration-200 bg-black/60 justify-between items-center sm:px-1",
         {
           "opacity-0": !showClipEditor && isIdle,
         },
       )}
     >
-      <div className="w-full">
+      <div className="w-full mx-2">
         <TimeSlider />
       </div>
 
-      <div className="flex w-full sm:w-1/3 sm:space-x-2 items-center mb-1 sm:mb-2">
+      <div className="flex items-center">
         <Volume />
         <GameClock />
       </div>
 
-      <div className="hidden sm:flex space-x-1 items-center justify-center mb-2">
+      <div className="hidden sm:flex gap-x-1 mb-2">
         <SeekToStartButton />
         <PlayToggle />
         <SeekToEndButton />
       </div>
 
-      <div className="hidden sm:flex w-1/3 space-x-2 items-center justify-end mb-2 ">
+      <div className="sm:flex gap-x-1">
         <AutotrackToggle />
-        <SlowmotionToggle />
-        <FullscreenToggle />
+        <div className="hidden sm:block">
+          <SlowmotionToggle />
+        </div>
+        <div className="hidden sm:block">
+          <FullscreenToggle />
+        </div>
       </div>
     </div>
   );

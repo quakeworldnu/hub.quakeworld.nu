@@ -9,18 +9,19 @@ type Props = {
 
 export const Switch = ({ label, enabled, onClick }: Props) => {
   return (
-    <div className="flex items-center cursor-pointer">
-      <label
-        className={classNames("pr-2 cursor-pointer select-none", {
+    <div
+      className="flex items-center cursor-pointer p-2 text-xs sm:text-sm"
+      onClick={onClick}
+    >
+      <span
+        className={classNames("pr-2 select-none", {
           "text-gray-300": !enabled,
           "font-bold": enabled,
         })}
-        htmlFor={label}
       >
         {label}
-      </label>
+      </span>
       <RadixSwitch.Root
-        onClick={() => onClick()}
         className={classNames(
           "w-10 h-5 rounded-full relative focus:shadow-black outline-none",
           {
