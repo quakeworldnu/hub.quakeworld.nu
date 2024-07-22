@@ -120,14 +120,19 @@ export const FtePlayerCanvas = ({ config }: { config: Config }) => {
   });
 
   return (
-    <canvas
-      id="fteCanvas"
-      className={"absolute w-full h-full"}
-      onContextMenu={(e) => e.preventDefault()}
-      {...dblTap}
-      {...longPress()}
-      {...swipe}
-    />
+    <div id="fteContainer">
+      <div
+        id="fteEventCapture"
+        className={"absolute z-10 w-full h-full"}
+        {...dblTap}
+        {...swipe}
+        {...longPress()}
+      />
+      <canvas
+        id="fteCanvas"
+        className={"absolute w-full h-full pointer-events-none"}
+      />
+    </div>
   );
 };
 

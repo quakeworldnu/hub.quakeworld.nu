@@ -95,7 +95,7 @@ export const FteQtvPlayer = () => {
       </div>
 
       {fte && (
-        <div className={"absolute z-20 bottom-0 w-full"}>
+        <div className={"absolute z-30 bottom-0 w-full"}>
           <Controls />
         </div>
       )}
