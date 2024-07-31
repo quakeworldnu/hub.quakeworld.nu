@@ -13,16 +13,21 @@ function useSeekToBegin() {
   const { from, track } = useUrlClipParams();
   const fte = useFteController();
 
+  function applyTrack() {
+    if (track !== "auto") {
+      fte?.track(track);
+    }
+  }
+
   useEffect(() => {
     if (!fte || from < 1) {
       return;
     }
 
-    if (track !== "auto") {
-      fte.track(track);
-    }
+    applyTrack();
     fte.demoJump(from);
     fte.pause();
+    window.setTimeout(applyTrack, 50);
   }, [fte]);
 }
 
