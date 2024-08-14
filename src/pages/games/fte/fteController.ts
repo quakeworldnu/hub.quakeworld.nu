@@ -221,16 +221,16 @@ export class FteController {
 
     this.command("demo_jump", newDemoTime);
 
-    // restore tracking on rewind
+    // restore playback on rewind (speed, track)
     if (newDemoTime < currentDemoTime) {
       this._trackTarget = {
         demoTime,
-        timeout: setInterval(() => this._restoreTrack(), 25),
+        timeout: setInterval(() => this._restorePlayback(), 25),
       };
     }
   }
 
-  _restoreTrack() {
+  _restorePlayback() {
     const timeDiff = this.getDemoElapsedTime() - this._trackTarget.demoTime;
     const acceptableDiff = 1;
 
@@ -246,6 +246,9 @@ export class FteController {
     } else if (this._lastTrackUserId) {
       this.track(this._lastTrackUserId);
     }
+
+    // restore demo speed
+    this.command("demo_setspeed", this._demoSpeed);
   }
 
   seekForward(delta: number) {
@@ -267,9 +270,7 @@ export class FteController {
   }
 
   play() {
-    if (this.isPaused()) {
-      this.setDemoSpeed(this._lastDemoSpeed);
-    }
+    this.setDemoSpeed(this._lastDemoSpeed);
   }
 
   isPlaying() {
@@ -281,9 +282,7 @@ export class FteController {
   }
 
   pause() {
-    if (this.isPlaying()) {
-      this.setDemoSpeed(0);
-    }
+    this.setDemoSpeed(0);
   }
 
   togglePlay() {
