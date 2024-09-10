@@ -1,5 +1,6 @@
 import settingsReducer from "@qwhub/settingsSlice";
 import { configureStore } from "@reduxjs/toolkit";
+import { fteqtvApi } from "./services/fteqtv";
 //import { setupListeners } from '@reduxjs/toolkit/query'
 import { hubApi } from "./services/hub/hub.js";
 
@@ -9,11 +10,14 @@ export const store = configureStore({
 
     // Add the generated reducer as a specific top-level slice
     [hubApi.reducerPath]: hubApi.reducer,
+    [fteqtvApi.reducerPath]: fteqtvApi.reducer,
   },
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(hubApi.middleware),
+    getDefaultMiddleware()
+      .concat(hubApi.middleware)
+      .concat(fteqtvApi.middleware),
 });
 export default store;
 
