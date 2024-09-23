@@ -2,8 +2,16 @@ import type { FteAssets } from "./types.ts";
 
 import { getAssetUrl } from "../services/cloudfront/cassets.ts";
 
+function stripSuffixes(mapName: string): string {
+  if (-1 === mapName.indexOf("beta")) {
+    return mapName;
+  }
+
+  return mapName.replace(/(.+?)[_\-]?beta(\d+)?$/gim, "$1");
+}
+
 export function getMapTextures(mapName: string): FteAssets {
-  const filenames = texturesPerMapName[mapName] ?? [];
+  const filenames = texturesPerMapName[stripSuffixes(mapName)] ?? [];
   const filepaths = filenames.map((t) => `qw/textures/${mapName}/${t}`);
   const assets: FteAssets = {};
 
@@ -88,7 +96,7 @@ const texturesPerMapName: { [key: string]: string[] } = {
     "wood2a.jpg",
     "wood3a.jpg",
   ],
-  nuke_beta2: [
+  nuke: [
     "#water_l_tg3.jpg",
     "+0~watergrid.jpg",
     "+1~watergrid.jpg",
@@ -183,7 +191,7 @@ const texturesPerMapName: { [key: string]: string[] } = {
     "wdwtrim02.jpg",
   ],
   schloss: ["016.jpg", "017.jpg", "019.jpg", "020.jpg", "040.jpg", "107.jpg"],
-  qobblestone_beta: [
+  qobblestone: [
     "#qobtele2.jpg",
     "003.jpg",
     "026.jpg",
