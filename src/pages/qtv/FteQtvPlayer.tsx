@@ -20,9 +20,9 @@ const DISCONNECT_TIMEOUT = 50; // ms
 
 enableLogToEvents();
 
-export const FteQtvPlayer = () => {
+export function FteQtvPlayer({ mapName }: { mapName: string }) {
   const [lastKnownUrl, setLastKnownUrl] = useState("");
-  const assets = getQtvPlayerAssets();
+  const assets = getQtvPlayerAssets(mapName);
   const scriptPath = getAssetUrl(
     `fte/ftewebgl_qtv.js?version=${QTV_FTE_VERSION}`,
   );
@@ -101,4 +101,4 @@ export const FteQtvPlayer = () => {
       )}
     </div>
   );
-};
+}

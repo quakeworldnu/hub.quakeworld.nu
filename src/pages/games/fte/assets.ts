@@ -8,12 +8,13 @@ import {
 } from "./meta.ts";
 import type { FteAssets } from "./types.ts";
 
-export function getQtvPlayerAssets(): FteAssets {
+export function getQtvPlayerAssets(mapName: string): FteAssets {
   return {
     ...getGeneralAssets(),
     "id1/config.cfg": getAssetUrl(
       `fte/id1/config_qtv.cfg?version=${QTV_CONFIG_VERSION}`,
     ),
+    ...getMapAssets(mapName),
   };
 }
 

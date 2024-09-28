@@ -64,7 +64,7 @@ const QtvPage = () => {
       <div className="lg:flex gap-x-4 ">
         <div className="my-4 flex flex-col w-full">
           <div className="grow">
-            <FteQtvPlayer />
+            {server && <FteQtvPlayer mapName={"bravado"} />}
           </div>
           <QtvPlayerFooter />
         </div>
