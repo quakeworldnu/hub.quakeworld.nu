@@ -64,7 +64,12 @@ const QtvPage = () => {
       <div className="lg:flex gap-x-4 ">
         <div className="my-4 flex flex-col w-full">
           <div className="grow">
-            {server && <FteQtvPlayer mapName={server.settings.map} />}
+            {server && (
+              <FteQtvPlayer
+                mapName={server.settings.map}
+                timelimit={server.settings.timelimit}
+              />
+            )}
           </div>
           <QtvPlayerFooter />
         </div>

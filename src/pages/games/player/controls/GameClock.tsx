@@ -12,12 +12,8 @@ export function GameDuration({
 }
 
 export function GameClock({ elapsed }: { elapsed: number }) {
-  if (null === elapsed) {
-    return null;
-  }
-
   return (
-    <div className="text-center app-text-shadow font-bold text-yellow-200">
+    <div className="text-center app-text-shadow font-bold text-yellow-200 app-effect-fade-in">
       {formatElapsed(elapsed)}
     </div>
   );

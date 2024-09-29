@@ -1,3 +1,4 @@
+import { el } from "@faker-js/faker";
 import { getQtvPlayerAssets } from "@qwhub/pages/games/fte/assets";
 import { useFteController, useFteLoader } from "@qwhub/pages/games/fte/hooks";
 import { enableLogToEvents } from "@qwhub/pages/games/fte/log.ts";
@@ -6,6 +7,7 @@ import { useEventListener } from "@qwhub/pages/games/hooks";
 import { roundFloat } from "@qwhub/pages/games/math";
 import { FtePlayerCanvas } from "@qwhub/pages/games/player/FtePlayerCanvas";
 import { LoadingSpinner } from "@qwhub/pages/games/player/LoadingSpinner.tsx";
+import { GameClock } from "@qwhub/pages/games/player/controls/GameClock.tsx";
 import { Participants } from "@qwhub/pages/games/player/controls/Participants.tsx";
 import { ResponsivePlayerInfo } from "@qwhub/pages/games/player/controls/PlayerInfo";
 import { ResponsiveTopBanner } from "@qwhub/pages/games/player/controls/TopBanner.tsx";
@@ -15,13 +17,21 @@ import { QtvServerSelectorOverlay } from "@qwhub/pages/qtv/QtvServerSelector.tsx
 import { QtvEvent } from "@qwhub/pages/qtv/events.ts";
 import classNames from "classnames";
 import { useState } from "react";
-import { useElementSize } from "usehooks-ts";
+import {
+  useBoolean,
+  useCounter,
+  useElementSize,
+  useInterval,
+} from "usehooks-ts";
 
 const DISCONNECT_TIMEOUT = 50; // ms
 
 enableLogToEvents();
 
-export function FteQtvPlayer({ mapName }: { mapName: string }) {
+export function FteQtvPlayer({
+  mapName,
+  timelimit,
+}: { mapName: string; timelimit: number }) {
   const [lastKnownUrl, setLastKnownUrl] = useState("");
   const assets = getQtvPlayerAssets(mapName);
   const scriptPath = getAssetUrl(
@@ -73,7 +83,7 @@ export function FteQtvPlayer({ mapName }: { mapName: string }) {
             <ResponsivePlayerInfo scale={scale} />
             <ResponsiveTopBanner scale={scale}>
               <Participants />
-              <div>heheheh!</div>
+              <QtvPlayerGameClock timelimit={timelimit} />
             </ResponsiveTopBanner>
           </>
         )}
@@ -105,4 +115,59 @@ export function FteQtvPlayer({ mapName }: { mapName: string }) {
       )}
     </div>
   );
+}
+
+function QtvPlayerGameClock({ timelimit }: { timelimit: number }) {
+  const elapsed = useQtvElapsedTime(timelimit);
+
+  if (undefined === elapsed) {
+    return null;
+  }
+  return <GameClock elapsed={elapsed} />;
+}
+
+function useQtvElapsedTime(timelimit: number): number | undefined {
+  const {
+    value: isMatchStarted,
+    setFalse: stopMatch,
+    setTrue: startMatch,
+  } = useBoolean(false);
+  const [elapsed, setElapsed] = useState<number | undefined>(undefined);
+
+  useEventListener("fte.event.qtv_play", reset);
+  useEventListener("fte.event.qtv_disconnect", reset);
+
+  function reset() {
+    stopMatch();
+    setElapsed(undefined);
+  }
+
+  useEventListener("game.match_begin", () => {
+    startMatch();
+    setElapsed(0);
+  });
+  useEventListener("game.match_end", stopMatch);
+  useEventListener("game.remaining_time", (e: CustomEvent) => {
+    if (isMatchStarted) {
+      return;
+    }
+
+    startMatch();
+    setElapsed(60 * timelimit - e.detail);
+  });
+
+  useInterval(
+    () => {
+      if (elapsed !== undefined) {
+        setElapsed(elapsed + 1);
+      }
+    },
+    isMatchStarted ? 1000 : null,
+  );
+
+  if (undefined === elapsed) {
+    return undefined;
+  } else {
+    return Math.min(elapsed, 60 * timelimit);
+  }
 }

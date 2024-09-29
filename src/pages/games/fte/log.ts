@@ -38,10 +38,32 @@ function eventByMessage(message: string): CustomEvent | null {
     return new CustomEvent("fte.event.qtv_play");
   }
 
+  const remainingTime = parseRemainingTime(message);
+
+  if (remainingTime) {
+    return new CustomEvent("game.remaining_time", { detail: remainingTime });
+  }
+
   switch (message) {
+    case "The match has begun!":
+      return new CustomEvent("game.match_begin");
+    case "The match is over":
+      return new CustomEvent("game.match_end");
     case "svc_disconnect: EndOfDemo":
       return new CustomEvent("fte.event.qtv_disconnect");
     default:
       return null;
   }
+}
+
+function parseRemainingTime(message: string): number | undefined {
+  const timeRegex = /\[(\d+)] (second|minute)/gi;
+  const match = timeRegex.exec(message);
+
+  if (!match || 0 === match.length) {
+    return undefined;
+  }
+
+  const value = Number.parseInt(match[1]);
+  return message.includes(" seconds") ? value : value * 60;
 }
