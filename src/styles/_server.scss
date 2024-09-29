@@ -20,7 +20,7 @@
   .server-progress-bar {
     $green: hsl(153, 53%, 53%);
     @apply flex relative h-[#{$height}] items-center;
-    background: linear-gradient(to right, darken($green, 20) 80%, $green);
+    background: linear-gradient(to right, adjust-color($green, $lightness: -20%) 80%, $green);
     transition: width 500ms ease-in-out;
 
     &:after {
