@@ -8,15 +8,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:convex": "npm-run-all convex:init --parallel convex:server dev",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "format": "biome check --write src",
     "lint": "biome lint src",
     "test": "vitest --coverage",
     "test:watch": "vitest --watch --coverage",
-    "convex:server": "convex dev",
-    "convex:init": "convex dev --run init --until-success",
     "supabase:types": "supabase gen types typescript --project-id ncsphkjfominimxztjip > src/pages/games/services/supabase/database.types.ts"
   },
   "devDependencies": {
@@ -50,7 +47,6 @@
     "@uidotdev/usehooks": "^2.4.1",
     "autoprefixer": "^10.4.20",
     "classnames": "^2.5.1",
-    "convex": "^1.13.2",
     "copy-text-to-clipboard": "^3.2.0",
     "dayjs": "^1.11.13",
     "firebase-tools": "^13.16.0",
