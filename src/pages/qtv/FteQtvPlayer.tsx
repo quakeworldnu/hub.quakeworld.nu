@@ -1,4 +1,3 @@
-import { el } from "@faker-js/faker";
 import { getQtvPlayerAssets } from "@qwhub/pages/games/fte/assets";
 import { useFteController, useFteLoader } from "@qwhub/pages/games/fte/hooks";
 import { enableLogToEvents } from "@qwhub/pages/games/fte/log.ts";
@@ -17,12 +16,7 @@ import { QtvServerSelectorOverlay } from "@qwhub/pages/qtv/QtvServerSelector.tsx
 import { QtvEvent } from "@qwhub/pages/qtv/events.ts";
 import classNames from "classnames";
 import { useState } from "react";
-import {
-  useBoolean,
-  useCounter,
-  useElementSize,
-  useInterval,
-} from "usehooks-ts";
+import { useBoolean, useElementSize, useInterval } from "usehooks-ts";
 
 const DISCONNECT_TIMEOUT = 50; // ms
 
