@@ -11,7 +11,7 @@ import {
 import classNames from "classnames";
 import { useBoolean } from "usehooks-ts";
 
-export function Controls() {
+export function FteQtvPlayerControls() {
   const {
     value: isIdle,
     setTrue: setIsIdle,
