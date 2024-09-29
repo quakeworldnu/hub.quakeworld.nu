@@ -4,12 +4,13 @@ import { enableLogToEvents } from "@qwhub/pages/games/fte/log.ts";
 import { QTV_FTE_VERSION } from "@qwhub/pages/games/fte/meta";
 import { useEventListener } from "@qwhub/pages/games/hooks";
 import { roundFloat } from "@qwhub/pages/games/math";
-import { LoadingSpinner } from "@qwhub/pages/games/player/FteDemoPlayer";
 import { FtePlayerCanvas } from "@qwhub/pages/games/player/FtePlayerCanvas";
+import { LoadingSpinner } from "@qwhub/pages/games/player/LoadingSpinner.tsx";
+import { Participants } from "@qwhub/pages/games/player/controls/Participants.tsx";
 import { ResponsivePlayerInfo } from "@qwhub/pages/games/player/controls/PlayerInfo";
-import { ResponsiveScoreBanner } from "@qwhub/pages/games/player/controls/ScoreBanner";
+import { ResponsiveTopBanner } from "@qwhub/pages/games/player/controls/TopBanner.tsx";
 import { getAssetUrl } from "@qwhub/pages/games/services/cloudfront/cassets";
-import { Controls } from "@qwhub/pages/qtv/Controls";
+import { FteQtvPlayerControls } from "@qwhub/pages/qtv/FteQtvPlayerControls.tsx";
 import { QtvServerSelectorOverlay } from "@qwhub/pages/qtv/QtvServerSelector.tsx";
 import { QtvEvent } from "@qwhub/pages/qtv/events.ts";
 import classNames from "classnames";
@@ -70,7 +71,10 @@ export function FteQtvPlayer({ mapName }: { mapName: string }) {
         {fte && (
           <>
             <ResponsivePlayerInfo scale={scale} />
-            <ResponsiveScoreBanner scale={scale} showClock={false} />
+            <ResponsiveTopBanner scale={scale}>
+              <Participants />
+              <div>heheheh!</div>
+            </ResponsiveTopBanner>
           </>
         )}
       </div>
@@ -96,7 +100,7 @@ export function FteQtvPlayer({ mapName }: { mapName: string }) {
 
       {fte && (
         <div className={"absolute z-30 bottom-0 w-full"}>
-          <Controls />
+          <FteQtvPlayerControls />
         </div>
       )}
     </div>

@@ -1,10 +1,11 @@
+import { useFteController } from "@qwhub/pages/games/fte/hooks.ts";
+import { GameDuration } from "@qwhub/pages/games/player/controls/GameClock.tsx";
 import classNames from "classnames";
 import { useBoolean } from "usehooks-ts";
-import { useEventListener } from "../hooks.ts";
+import { useEventListener, useUpdateInterval } from "../hooks.ts";
 import { useClipEditor } from "./clips/context.tsx";
 import { AutotrackToggle } from "./controls/AutotrackToggle.tsx";
 import { FullscreenToggle } from "./controls/FullscreenToggle.tsx";
-import { GameClock } from "./controls/GameClock.tsx";
 import { PlayToggle } from "./controls/PlayToggle.tsx";
 import { SeekToEndButton } from "./controls/SeekToEndButton.tsx";
 import { SeekToStartButton } from "./controls/SeekToStartButton.tsx";
@@ -12,7 +13,7 @@ import { SlowmotionToggle } from "./controls/SlowmotionToggle.tsx";
 import { TimeSlider } from "./controls/TimeSlider.tsx";
 import { Volume } from "./controls/Volume.tsx";
 
-export const Controls = () => {
+export const FteDemoPlayerControls = () => {
   const { isEnabled: showClipEditor } = useClipEditor();
   const {
     value: isIdle,
@@ -38,7 +39,7 @@ export const Controls = () => {
 
       <div className="flex items-center">
         <Volume />
-        <GameClock />
+        <DemoPlayerGameDuration />
       </div>
 
       <div className="hidden sm:flex gap-x-1 mb-2">
@@ -57,5 +58,21 @@ export const Controls = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+export const DemoPlayerGameDuration = () => {
+  const fte = useFteController();
+  useUpdateInterval(fte ? 200 : null);
+
+  if (!fte) {
+    return null;
+  }
+
+  return (
+    <GameDuration
+      elapsed={fte.getMatchElapsedTime()}
+      total={fte.getMatchDuration()}
+    />
   );
 };

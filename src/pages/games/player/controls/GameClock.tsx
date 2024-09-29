@@ -1,21 +1,24 @@
-import { useFteController } from "../../fte/hooks.ts";
-import { useUpdateInterval } from "../../hooks.ts";
-import { formatDuration } from "../../time.ts";
+import { formatDuration, formatElapsed } from "../../time.ts";
 
-export const GameClock = () => {
-  const fte = useFteController();
-  useUpdateInterval(fte ? 200 : null);
-
-  if (!fte) {
-    return null;
-  }
-
-  const elapsed = fte.getMatchElapsedTime();
-  const total = fte.getMatchDuration();
-
+export function GameDuration({
+  elapsed,
+  total,
+}: { elapsed: number; total: number }) {
   return (
     <div className="flex font-mono items-center px-2 whitespace-nowrap">
       {formatDuration(elapsed, total)}
     </div>
   );
-};
+}
+
+export function GameClock({ elapsed }: { elapsed: number }) {
+  if (null === elapsed) {
+    return null;
+  }
+
+  return (
+    <div className="text-center app-text-shadow font-bold text-yellow-200">
+      {formatElapsed(elapsed)}
+    </div>
+  );
+}
