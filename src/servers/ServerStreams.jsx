@@ -20,7 +20,6 @@ const ServersStreams = React.memo((props) => {
       key={stream.channel}
       channel={stream.channel}
       viewers={stream.viewers}
-      className="flex justify-center"
     />
   ));
 });

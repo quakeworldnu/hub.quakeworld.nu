@@ -175,8 +175,8 @@ export const SpectatorButtons = (props) => {
   const { server } = props;
 
   return (
-    <Fragment>
-      <div className="hidden sm:block">
+    <>
+      <div className="hidden sm:block sm:grow">
         <SecondaryButton
           href={`qw://${server.address}/observe`}
           count={server.spectator_slots.used}
@@ -187,16 +187,31 @@ export const SpectatorButtons = (props) => {
       </div>
 
       {server.qtv_stream.address !== "" && (
-        <SecondaryButton
-          href={`/qtv/?address=${server.address}`}
-          count={server.qtv_stream.spectator_count}
-          title="Watch QTV in browser"
-        >
-          QTV
-        </SecondaryButton>
+        <>
+          <div className="hidden sm:block sm:grow">
+            <SecondaryButton
+              key={"qtv"}
+              href={`qw://${server.qtv_stream.url}/qtvplay`}
+              count={server.qtv_stream.spectator_count}
+              title="Join QTV"
+            >
+              QTV
+            </SecondaryButton>
+          </div>
+          <div className="sm:grow">
+            <SecondaryButton
+              key={"qtv-web"}
+              href={`/qtv/?address=${server.address}`}
+              count={0}
+              title="Watch QTV in browser"
+            >
+              Web QTV
+            </SecondaryButton>
+          </div>
+        </>
       )}
       {<ServerStreams address={server.address} />}
-    </Fragment>
+    </>
   );
 };
 
@@ -204,10 +219,10 @@ const ServerFooter = (props) => {
   const { server } = props;
 
   return (
-    <div className="p-2 sm:p-3 border-t border-t-black bg-[#334] text-sm grid grid-cols-2 gap-2">
+    <div className="p-2 sm:p-3 border-t border-t-black bg-[#334] text-sm flex flex-wrap gap-2">
       <SpectatorButtons server={server} />
 
-      <div className="col-span-2">
+      <div className="w-full">
         <div className="flex text-xs justify-between">
           <ServerAddress server={server} />
 
