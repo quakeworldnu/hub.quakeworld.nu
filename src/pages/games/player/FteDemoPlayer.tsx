@@ -63,13 +63,14 @@ export const FteDemoPlayer = ({
           },
         )}
         style={{
-          backgroundImage: getMapshotCssUrl(mapName),
+          backgroundImage: getMapshotCssUrl(`lg/${mapName}`),
         }}
       >
         <div
           className="flex w-full h-full items-center justify-center"
           style={{
-            background: "radial-gradient(circle at center, black 0, #0009 80%)",
+            background:
+              "radial-gradient(circle at center, #0003 0, #0006 100%)",
           }}
         >
           <div className="flex items-center">
