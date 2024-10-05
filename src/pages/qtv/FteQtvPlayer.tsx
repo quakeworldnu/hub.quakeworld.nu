@@ -147,7 +147,7 @@ function useQtvElapsedTime(timelimit: number): number | undefined {
     }
 
     startMatch();
-    setElapsed(60 * timelimit - e.detail);
+    setElapsed(60 * timelimit - Number.parseInt(e.detail));
   });
 
   useInterval(
