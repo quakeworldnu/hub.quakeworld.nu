@@ -27,4 +27,11 @@ export default defineConfig({
   test: {
     environment: "jsdom",
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: "modern",
+      },
+    },
+  },
 });

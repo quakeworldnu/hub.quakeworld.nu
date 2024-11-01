@@ -1,3 +1,5 @@
+@use "sass:color";
+@use "sass:map";
 $qw-player-colors: (
         0: rgb(140, 140, 140),
         1: rgb(83, 59, 27),
@@ -18,8 +20,8 @@ $qw-player-colors: (
 @each $topValue, $topHex in $qw-player-colors {
   @each $bottomValue, $bottomHex in $qw-player-colors {
     .qw-bgcolor-#{$topValue}-#{$bottomValue} {
-      $topLight: adjust-color($topHex, $lightness: 5%);
-      $botLight: adjust-color($bottomHex, $lightness: 5%);
+      $topLight: color.adjust($topHex, $lightness: 5%);
+      $botLight: color.adjust($bottomHex, $lightness: 5%);
       $offsetY: 0;
       background: linear-gradient(
                       to bottom,
@@ -38,9 +40,9 @@ $qw-player-colors: (
 }
 
 .qw-color-g {
-  color: adjust-color(map-get($qw-player-colors, 12), $lightness: 25%);
+  color: color.adjust(map.get($qw-player-colors, 12), $lightness: 25%);
 }
 
 .qw-color-b {
-  color: adjust-color(map-get($qw-player-colors, 1), $lightness: 25%);
+  color: color.adjust(map.get($qw-player-colors, 1), $lightness: 25%);
 }

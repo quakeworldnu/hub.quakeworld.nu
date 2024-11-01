@@ -1,9 +1,9 @@
-@import "./scoreboard";
-@import "./font_roboto";
-@import "./quake_colors";
-@import "./server";
-@import "./tailwind";
-@import "./scrollbar";
+@use "scoreboard";
+@use "font_roboto";
+@use "quake_colors";
+@use "server";
+@use "tailwind";
+@use "scrollbar";
 @import "react-modern-drawer/dist/index.css";
 @import "react-toastify/dist/ReactToastify.css";
 
