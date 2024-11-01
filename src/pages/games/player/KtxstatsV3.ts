@@ -11,6 +11,7 @@ export interface KtxstatsV3 {
   port: number;
   mode: string;
   tl: number;
+  tp: number;
   dm: number;
   duration: number;
   demo: string;
@@ -18,8 +19,8 @@ export interface KtxstatsV3 {
 }
 
 export interface Player {
-  top_color: number;
-  bottom_color: number;
+  "top-color": number;
+  "bottom-color": number;
   ping: number;
   login: string;
   name: string;
@@ -58,9 +59,17 @@ export interface Items {
   ya?: Armor;
   ra?: Armor;
   ga?: Armor;
+  q?: Powerup;
+  p?: Powerup;
+  r?: Powerup;
 }
 
 export interface Armor {
+  took: number;
+  time: number;
+}
+
+export interface Powerup {
   took: number;
   time: number;
 }

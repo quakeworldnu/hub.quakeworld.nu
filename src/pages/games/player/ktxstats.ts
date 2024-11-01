@@ -4,8 +4,8 @@ import { KtxstatsV3, toKtxstatsV3 } from "./KtxstatsV3.ts";
 
 const CLOUDFRONT_URL = "https://d.quake.world";
 
-export function useKtxstats(sha256: string): KtxstatsV3 | null {
-  const [stats, setStats] = useState<KtxstatsV3 | null>(null);
+export function useKtxstats(sha256: string): KtxstatsV3 | null | undefined {
+  const [stats, setStats] = useState<KtxstatsV3 | null | undefined>(undefined);
 
   useEffectOnce(() => {
     async function init() {
