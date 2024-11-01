@@ -182,12 +182,12 @@ const DemoStatsTable = ({
   }
 
   const isTeamplay = stats.tp > 0;
+  const isCtf = "ctf" === stats.mode;
+  const isTeamDeathmatch = "team" === stats.mode;
 
   const sortedPlayers = stats.players.sort((a, b) => {
     return b.stats.frags - a.stats.frags;
   });
-
-  const None = () => <span className="text-slate-500">0</span>;
 
   return (
     <table className="text-sm text-right">
@@ -196,19 +196,31 @@ const DemoStatsTable = ({
           <th className="px-2 min-w-12">Frags</th>
           {isTeamplay && <th className="px-2 py-1.5 text-left">Team</th>}
           <th className="px-2 py-1.5 w-auto text-left">Name</th>
+          {isCtf && (
+            <>
+              <th className="px-2 min-w-12">Caps</th>
+              <th className="px-2 min-w-12">Defends</th>
+              <th className="px-2 min-w-12">Returns</th>
+            </>
+          )}
+
           <th className="px-2 min-w-12">Eff</th>
           <th className="px-2 min-w-12">Kills</th>
           <th className="px-2 min-w-12">Deaths</th>
           <th className="px-2 min-w-8">Bores</th>
-          {isTeamplay && <th className="px-2 min-w-12">TKs</th>}
+          {isTeamDeathmatch && <th className="px-2 min-w-12">TKs</th>}
           <th className="px-2 min-w-12">Given</th>
           <th className="px-2 min-w-12">Taken</th>
           <th className="px-2 min-w-8 text-[#0f0]">GA</th>
           <th className="px-2 min-w-8 text-[#ff0]">YA</th>
           <th className="px-2 min-w-8 text-[#f00]">RA</th>
           <th className="px-2 min-w-8 text-sky-300">MH</th>
-          <th className="px-2 min-w-12">SG%</th>
-          <th className="px-2 min-w-12">LG%</th>
+          {!isCtf && (
+            <>
+              <th className="px-2 min-w-12">SG%</th>
+              <th className="px-2 min-w-12">LG%</th>
+            </>
+          )}
 
           {isTeamplay && (
             <>
@@ -223,6 +235,14 @@ const DemoStatsTable = ({
               <th className="px-2 min-w-6 text-[#39f]">Q</th>
               <th className="px-2 min-w-6 text-[#f00]">P</th>
               <th className="px-2 min-w-6 text-[#ff0]">R</th>
+              {isCtf && (
+                <>
+                  <th className="px-2 min-w-6">Hst</th>
+                  <th className="px-2 min-w-6">Reg</th>
+                  <th className="px-2 min-w-6">Res</th>
+                  <th className="px-2 min-w-6">Str</th>
+                </>
+              )}
             </>
           )}
         </tr>
@@ -247,6 +267,19 @@ const DemoStatsTable = ({
             <td className="px-2 py-1.5 text-left">
               <QuakeTextFromByteString name={p.name} />
             </td>
+            {isCtf && (
+              <>
+                <td className="px-2">
+                  <Num value={p.ctf.caps} />
+                </td>
+                <td className="px-2">
+                  <Num value={p.ctf.defends} />
+                </td>
+                <td className="px-2">
+                  <Num value={p.ctf.returns} />
+                </td>
+              </>
+            )}
             <td className="px-2">
               {Math.round(
                 100 * (p.stats.frags / (p.stats.frags + p.stats.deaths)),
@@ -255,47 +288,68 @@ const DemoStatsTable = ({
             </td>
             <td className="px-2">{p.stats.kills}</td>
             <td className="px-2">{p.stats.deaths}</td>
-            <td className="px-2">{p.stats.suicides}</td>
-            {isTeamplay && <td className="px-2">{p.stats.tk}</td>}
+            <td className="px-2">
+              <Num value={p.stats.suicides} />
+            </td>
+            {isTeamDeathmatch && (
+              <td className="px-2">
+                <Num value={p.stats.tk} />
+              </td>
+            )}
             <td className="px-2">{p.dmg.given}</td>
             <td className="px-2">{p.dmg.taken}</td>
-            <td className="px-2 text-green-200">{p.items.ga?.took}</td>
-            <td className="px-2 text-yellow-200">{p.items.ya?.took}</td>
-            <td className="px-2 text-red-200">{p.items.ra?.took}</td>
-            <td className="px-2 text-sky-200">{p.items.health_100?.took}</td>
-            <td className="px-2">
-              {p.weapons.sg?.acc && (
-                <span>
-                  {Math.round(
-                    100 * (p.weapons.sg.acc.hits / p.weapons.sg.acc.attacks),
-                  )}
-                  %
-                </span>
-              )}
-            </td>{" "}
-            <td className="px-2">
-              {p.weapons.lg?.acc && (
-                <span>
-                  {Math.round(
-                    100 * (p.weapons.lg.acc.hits / p.weapons.lg.acc.attacks),
-                  )}
-                  %
-                </span>
-              )}
+            <td className="px-2 text-green-200">
+              <Num value={p.items.ga.took} />
             </td>
+            <td className="px-2 text-yellow-200">
+              <Num value={p.items.ya.took} />
+            </td>
+            <td className="px-2 text-red-200">
+              <Num value={p.items.ra.took} />
+            </td>
+            <td className="px-2 text-sky-200">
+              <Num value={p.items.health_100.took} />
+            </td>
+            {!isCtf && (
+              <>
+                <td className="px-2">
+                  {p.weapons.sg.acc.attacks > 0 && (
+                    <span>
+                      {Math.round(
+                        100 *
+                          (p.weapons.sg.acc.hits / p.weapons.sg.acc.attacks),
+                      )}
+                      %
+                    </span>
+                  )}
+                </td>
+                <td className="px-2">
+                  {p.weapons.lg.acc.attacks > 0 && (
+                    <span>
+                      {Math.round(
+                        100 *
+                          (p.weapons.lg.acc.hits / p.weapons.lg.acc.attacks),
+                      )}
+                      %
+                    </span>
+                  )}
+                </td>
+              </>
+            )}
+
             {isTeamplay && (
               <>
                 <td className="px-2">
                   {p.weapons.lg && (
                     <div className="flex gap-x-2">
                       <span className="w-5">
-                        {p.weapons.lg.pickups.taken ?? <None />}
+                        <Num value={p.weapons.lg.pickups.taken} />
                       </span>
                       <span className="w-5 text-green-200">
-                        {p.weapons.lg.kills.enemy ?? <None />}
+                        <Num value={p.weapons.lg.kills.enemy} />
                       </span>
                       <span className="w-5 text-red-200">
-                        {p.weapons.lg.pickups.dropped ?? <None />}
+                        <Num value={p.weapons.lg.pickups.dropped} />
                       </span>
                     </div>
                   )}
@@ -304,20 +358,33 @@ const DemoStatsTable = ({
                   {p.weapons.rl && (
                     <div className="flex gap-x-2">
                       <span className="w-5">
-                        {p.weapons.rl.pickups.taken ?? <None />}
+                        <Num value={p.weapons.rl.pickups.taken} />
                       </span>
                       <span className="w-5 text-green-200">
-                        {p.weapons.rl.kills.enemy ?? <None />}
+                        <Num value={p.weapons.rl.kills.enemy} />
                       </span>
                       <span className="w-5 text-red-200">
-                        {p.weapons.rl.pickups.dropped ?? <None />}
+                        <Num value={p.weapons.rl.pickups.dropped} />
                       </span>
                     </div>
                   )}
                 </td>
-                <td className="px-2">{p.items.q?.took ?? <None />}</td>
-                <td className="px-2">{p.items.p?.took ?? <None />}</td>
-                <td className="px-2">{p.items.r?.took ?? <None />}</td>
+                <td className="px-2">
+                  <Num value={p.items.q.took} />
+                </td>
+                <td className="px-2">
+                  <Num value={p.items.p.took} />
+                </td>
+                <td className="px-2">
+                  <Num value={p.items.r.took} />
+                </td>
+
+                {isCtf &&
+                  Object.values(p.ctf.runes).map((value, index) => (
+                    <td key={index} className="px-2">
+                      <Num value={value} />
+                    </td>
+                  ))}
               </>
             )}
           </tr>
@@ -326,6 +393,10 @@ const DemoStatsTable = ({
     </table>
   );
 };
+
+function Num({ value }: { value: number }) {
+  return 0 === value ? <span className="text-slate-500">0</span> : value;
+}
 
 const DemoScoreboard = ({
   game,
