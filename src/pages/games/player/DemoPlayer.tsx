@@ -1,43 +1,42 @@
-import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
+import { faFloppyDisk, faTrophy } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
-import { Timestamp } from "../Timestamp.tsx";
-import {
-  getDemoDescription,
-  getDemoDownloadUrl,
-} from "../services/supabase/demo.ts";
-import { getDemo } from "../services/supabase/supabase";
-import type { Demo } from "../services/supabase/supabase.types.ts";
-import { btnSecondary, btnSuccess, sizeLarge } from "../ui/theme.ts";
-import { ShareDemoButton } from "./Share.tsx";
-import { Shortcuts } from "./Shortcuts.tsx";
-import { ClipControls } from "./clips/ClipControls.tsx";
-import { EnableClipEditorButton } from "./clips/Clips.tsx";
-import { ClipEditorProvider, useClipEditor } from "./clips/context.tsx";
-
+// @ts-ignore
+import { Scoreboard } from "@qwhub/pages/games/browser/Scoreboard";
+import { Game } from "@qwhub/pages/games/services/supabase/supabase.types.ts";
 import classNames from "classnames";
+import { useEffect, useState } from "react";
 import { useBoolean } from "usehooks-ts";
-import { Scoreboard } from "../browser/Scoreboard.tsx";
-import { useFteController } from "../fte/hooks.ts";
-import { toColoredHtml } from "../qwstrings.ts";
-import { useKtxstats } from "./ktxstats.ts";
+import { Timestamp } from "../Timestamp";
+import { useFteController } from "../fte/hooks";
+import { getDownloadUrl, getInfo } from "../services/cloudfront/cdemos";
+import { DemoInfo } from "../services/cloudfront/types";
+import { btnSecondary, btnSuccess, sizeLarge } from "../ui/theme";
+import { FteDemoPlayer } from "./FteDemoPlayer";
+import { ShareDemoButton } from "./Share";
+import { Shortcuts, presets } from "./Shortcuts";
+import { ClipControls } from "./clips/ClipControls";
+import { EnableClipEditorButton } from "./clips/Clips";
+import { ClipEditorProvider, useClipEditor } from "./clips/context";
 
-export const Player = ({ demoId }: { demoId: number }) => {
-  const [demo, setDemo] = useState<Demo | null>(null);
+export const DemoPlayer = ({
+  game,
+  demo_sha256,
+}: { game: Game; demo_sha256: string }) => {
+  const [demo, setDemo] = useState<DemoInfo | null>(null);
   const fte = useFteController();
 
   useEffect(() => {
-    if (!demoId) {
-      return;
+    async function init() {
+      const demo = await getInfo(demo_sha256);
+      setDemo(demo);
+
+      if (demo) {
+        document.title = `${getDemoDescription(demo.filename)} - QuakeWorld Hub`;
+      }
     }
 
-    async function run() {
-      const { data } = await getDemo(demoId);
-      setDemo(data);
-    }
-
-    run();
-  }, [demoId]);
+    init();
+  }, []);
 
   useEffect(() => {
     if (!fte || !demo) {
@@ -58,106 +57,93 @@ export const Player = ({ demoId }: { demoId: number }) => {
     return <div>Loading...</div>;
   }
 
-  // const demoUrl = getDemoDownloadUrl(demo.s3_key);
-  // const assets = getAssets(demoUrl, demo.map);
-
   return (
     <ClipEditorProvider>
       <div className="lg:flex min-h-[200px]">
         <div className="flex flex-col grow">
           <div className="flex grow bg-black items-center justify-center max-h-[75vh]">
-            {/*<FtePlayer demo={demo} assets={assets} />*/}
+            <FteDemoPlayer demo={demo} mapName={game.map} />
           </div>
-          <DemoPlayerFooter demo={demo} />
+          <DemoPlayerFooter game={game} demo={demo} />
         </div>
       </div>
     </ClipEditorProvider>
   );
 };
 
-export const DemoPlayerFooter = ({ demo }: { demo: Demo }) => {
-  const { isEnabled: showClipEditor } = useClipEditor();
-  const demoDescription = getDemoDescription(demo);
+function getDemoDescription(filename: string): string {
+  return filename
+    .substring("yyyymmdd-hhii ".length)
+    .replace(/_/g, " ")
+    .replace(".mvd", "")
+    .replace("[", " [");
+}
 
-  useEffect(() => {
-    document.title = `${demoDescription} - QuakeWorld Hub`;
-  });
+const DemoPlayerFooter = ({ game, demo }: { game: Game; demo: DemoInfo }) => {
+  const { isEnabled: showClipEditor } = useClipEditor();
+  const demoDescription = getDemoDescription(demo.filename);
 
   return (
     <div className="py-6">
-      {showClipEditor ? (
-        <ClipControls />
-      ) : (
-        <div>
-          <div className="md:flex justify-between">
-            <div className="space-y-2">
-              <div className="text-2xl font-bold">{demoDescription}</div>
-              <div className="text-slate-400 text-sm">
-                <Timestamp timestamp={demo.timestamp} /> on {demo.source}
-              </div>
-            </div>
-            <div className="flex flex-wrap items-start my-3 md:my-0 gap-3">
-              <EnableClipEditorButton />
-              <ShareDemoButton />
-              <DownloadDemoButton s3_key={demo.s3_key} />
+      {showClipEditor && <ClipControls />}
+
+      <div className={classNames({ hidden: showClipEditor })}>
+        <div className="md:flex justify-between">
+          <div className="space-y-2">
+            <div className="text-2xl font-bold">{demoDescription}</div>
+            <div className="text-slate-400 text-sm">
+              {formatDate(demo.timestamp)} (
+              <Timestamp timestamp={demo.timestamp} />) on{" "}
+              {demo.server.hostname}
             </div>
           </div>
-
-          <div className="my-6 flex space-x-24">
-            <Result demo={demo} />
-            <Ktxstats sha256={demo.sha256} />
+          <div className="flex flex-wrap items-start my-3 md:my-0 gap-3">
+            <EnableClipEditorButton />
+            <ShareDemoButton />
+            <DownloadDemoButton s3_key={demo.sha256} />
           </div>
-
-          <hr className="my-6 border-slate-800" />
-
-          <Shortcuts />
         </div>
-      )}
-    </div>
-  );
-};
 
-const Ktxstats = ({ sha256 }: { sha256: string }) => {
-  const stats = useKtxstats(sha256);
+        <div className="my-6">
+          <ToggleableScoreboard game={game} />
+        </div>
 
-  if (!stats) {
-    return <div>NO STATS FOR U!</div>;
-  }
+        <hr className="my-6 border-slate-800" />
 
-  return (
-    <div>
-      <div className="font-bold text-slate-400 mb-2">Statistics</div>
-      <div className="flex space-x-8">
-        {stats.players.map((p) => (
-          <div key={p.name}>
-            <div
-              className="font-bold"
-              dangerouslySetInnerHTML={{ __html: toColoredHtml(p.name) }}
-            />
-            <div>{p.stats.frags}</div>
-            <div>{p.stats.deaths}</div>
-            <div>{p.stats.suicides}</div>
-            <div>{p.stats.tk}</div>
-          </div>
-        ))}
+        <Shortcuts preset={presets.demoPlayer} />
       </div>
     </div>
   );
 };
 
-const Result = ({ demo }: { demo: Demo }) => {
-  const { setTrue: handleShowscoresClick, value: showScores } =
-    useBoolean(false);
+function formatDate(date: string | null): string {
+  if (!date) {
+    return "";
+  }
+
+  return date.substring(0, "YYYY-MM-DD HH:II".length).replace("T", " ");
+}
+
+const ToggleableScoreboard = ({ game }: { game: Game }) => {
+  const { setTrue: show, value: showScores } = useBoolean(false);
 
   return (
     <div>
-      <div className="font-bold text-slate-400 mb-2">Scoreboard</div>
+      <div className="flex items-center text-sm font-bold mb-2 text-slate-300">
+        <FontAwesomeIcon
+          fixedWidth
+          icon={faTrophy}
+          className="mr-1.5 text-slate-400"
+        />
+        Scoreboard
+      </div>
       <div className="w-[340px] space-y-2">
-        <Scoreboard demo={demo} showScores={showScores} />
+        <Scoreboard game={game} showScores={showScores} />
         <button
-          onClick={handleShowscoresClick}
-          className={classNames(btnSecondary, "py-1.5 px-2 text-sm")}
-          disabled={showScores}
+          onClick={show}
+          className={classNames(btnSecondary, "py-1.5 px-2 text-xs", {
+            hidden: showScores,
+          })}
         >
           Show scores
         </button>
@@ -167,7 +153,7 @@ const Result = ({ demo }: { demo: Demo }) => {
 };
 
 export const DownloadDemoButton = ({ s3_key }: { s3_key: string }) => {
-  const demoUrl = getDemoDownloadUrl(s3_key);
+  const demoUrl = getDownloadUrl(s3_key);
 
   return (
     <a href={demoUrl} className={`${btnSuccess} ${sizeLarge}`}>

@@ -24,5 +24,5 @@ export const GameDetails = ({ id }: { id: number }) => {
     return <div>No demo available</div>;
   }
 
-  return <DemoPlayer sha256={game.demo_sha256} />;
+  return <DemoPlayer game={game} demo_sha256={game.demo_sha256} />;
 };
