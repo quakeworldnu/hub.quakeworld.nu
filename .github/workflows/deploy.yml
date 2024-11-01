@@ -17,10 +17,10 @@ jobs:
       VITE_SENTRY_ENVIRONMENT: '${{ secrets.VITE_SENTRY_ENVIRONMENT }}'
       VITE_SENTRY_DSN: '${{ secrets.VITE_SENTRY_DSN }}'
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'yarn'
