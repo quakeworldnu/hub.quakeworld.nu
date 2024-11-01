@@ -264,7 +264,7 @@ const DemoStatsTable = ({
             <td className="px-2 text-red-200">{p.items.ra?.took}</td>
             <td className="px-2 text-sky-200">{p.items.health_100?.took}</td>
             <td className="px-2">
-              {p.weapons.sg && (
+              {p.weapons.sg?.acc && (
                 <span>
                   {Math.round(
                     100 * (p.weapons.sg.acc.hits / p.weapons.sg.acc.attacks),
@@ -274,7 +274,7 @@ const DemoStatsTable = ({
               )}
             </td>{" "}
             <td className="px-2">
-              {p.weapons.lg && (
+              {p.weapons.lg?.acc && (
                 <span>
                   {Math.round(
                     100 * (p.weapons.lg.acc.hits / p.weapons.lg.acc.attacks),
