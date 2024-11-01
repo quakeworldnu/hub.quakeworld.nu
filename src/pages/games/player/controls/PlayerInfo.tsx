@@ -179,7 +179,7 @@ const Powerups = ({
 };
 
 export const Sigil = ({ number }: { number: number }) => {
-  const src = getAssetUrl(`/qw/textures/wad/sb_sigil${number}.png`);
+  const src = getAssetUrl(`fte/id1/gfx/sb_sigil${number}.png`);
   return <img src={src} width={10} height={20} />;
 };
 
