@@ -67,7 +67,14 @@ export async function searchGamesCount(settings: {
 
 export type GameSearchEntry = Pick<
   Game,
-  "id" | "timestamp" | "mode" | "map" | "teams" | "players" | "demo_sha256"
+  | "id"
+  | "timestamp"
+  | "mode"
+  | "matchtag"
+  | "map"
+  | "teams"
+  | "players"
+  | "demo_sha256"
 >;
 
 export async function searchGamesRows(settings: {
@@ -79,7 +86,7 @@ export async function searchGamesRows(settings: {
 }): Promise<GameSearchEntry[]> {
   let qb = supabase
     .from("games")
-    .select("id,timestamp,mode,map,teams,players,demo_sha256");
+    .select("id,timestamp,mode,matchtag,map,teams,players,demo_sha256");
 
   const { gameMode, map, playerQuery, teams } = settings;
 

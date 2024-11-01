@@ -7,6 +7,10 @@ import type {
 
 // eslint-disable-next-line
 // @ts-ignore
+import { Matchtag } from "@qwhub/servers/Server";
+
+// eslint-disable-next-line
+// @ts-ignore
 // @typescript-eslint/ban-ts-comment
 import { Scoreboard as LegacyScoreboard } from "../../../servers/Scoreboard.jsx";
 import { GameSearchEntry } from "../services/supabase/supabase.ts";
@@ -49,7 +53,8 @@ export const Scoreboard = ({
         }}
       >
         <div className="flex flex-col h-full bg-gray-700/20 py-4">
-          <div className="flex grow justify-center items-center min-h-[160px]">
+          <div className="flex flex-col grow justify-center items-center min-h-[160px]">
+            <Matchtag text={game.matchtag} />
             <LegacyScoreboard
               teams={fixedTeams}
               players={fixedPlayers}
