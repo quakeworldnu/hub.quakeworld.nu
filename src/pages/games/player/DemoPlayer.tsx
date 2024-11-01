@@ -2,28 +2,42 @@ import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { Timestamp } from "../Timestamp.tsx";
-import { useFteController } from "../fte/hooks.ts";
-import { getDownloadUrl, getInfo } from "../services/cloudfront/cdemos.ts";
-import { DemoInfo } from "../services/cloudfront/types.ts";
-import { btnSuccess, sizeLarge } from "../ui/theme.ts";
-import { FteDemoPlayer } from "./FteDemoPlayer.tsx";
+import {
+  getDemoDescription,
+  getDemoDownloadUrl,
+} from "../services/supabase/demo.ts";
+import { getDemo } from "../services/supabase/supabase";
+import type { Demo } from "../services/supabase/supabase.types.ts";
+import { btnSecondary, btnSuccess, sizeLarge } from "../ui/theme.ts";
 import { ShareDemoButton } from "./Share.tsx";
-import { Shortcuts, presets } from "./Shortcuts.tsx";
+import { Shortcuts } from "./Shortcuts.tsx";
 import { ClipControls } from "./clips/ClipControls.tsx";
 import { EnableClipEditorButton } from "./clips/Clips.tsx";
 import { ClipEditorProvider, useClipEditor } from "./clips/context.tsx";
 
-export const DemoPlayer = ({ sha256 }: { sha256: string }) => {
-  const [demo, setDemo] = useState<DemoInfo | null>(null);
+import classNames from "classnames";
+import { useBoolean } from "usehooks-ts";
+import { Scoreboard } from "../browser/Scoreboard.tsx";
+import { useFteController } from "../fte/hooks.ts";
+import { toColoredHtml } from "../qwstrings.ts";
+import { useKtxstats } from "./ktxstats.ts";
+
+export const Player = ({ demoId }: { demoId: number }) => {
+  const [demo, setDemo] = useState<Demo | null>(null);
   const fte = useFteController();
 
   useEffect(() => {
-    async function init() {
-      setDemo(await getInfo(sha256));
+    if (!demoId) {
+      return;
     }
 
-    init();
-  }, []);
+    async function run() {
+      const { data } = await getDemo(demoId);
+      setDemo(data);
+    }
+
+    run();
+  }, [demoId]);
 
   useEffect(() => {
     if (!fte || !demo) {
@@ -44,31 +58,26 @@ export const DemoPlayer = ({ sha256 }: { sha256: string }) => {
     return <div>Loading...</div>;
   }
 
+  // const demoUrl = getDemoDownloadUrl(demo.s3_key);
+  // const assets = getAssets(demoUrl, demo.map);
+
   return (
     <ClipEditorProvider>
       <div className="lg:flex min-h-[200px]">
         <div className="flex flex-col grow">
           <div className="flex grow bg-black items-center justify-center max-h-[75vh]">
-            <FteDemoPlayer demo={demo} mapName={demo.map} />
+            {/*<FtePlayer demo={demo} assets={assets} />*/}
           </div>
-          <DemoPlayerFooter info={demo} />
+          <DemoPlayerFooter demo={demo} />
         </div>
       </div>
     </ClipEditorProvider>
   );
 };
 
-function getDemoDescription(filename: string): string {
-  return filename
-    .substring("yyyymmdd-hhii ".length)
-    .replace(/_/g, " ")
-    .replace(".mvd", "")
-    .replace("[", " [");
-}
-
-const DemoPlayerFooter = ({ info }: { info: DemoInfo }) => {
+export const DemoPlayerFooter = ({ demo }: { demo: Demo }) => {
   const { isEnabled: showClipEditor } = useClipEditor();
-  const demoDescription = getDemoDescription(info.filename);
+  const demoDescription = getDemoDescription(demo);
 
   useEffect(() => {
     document.title = `${demoDescription} - QuakeWorld Hub`;
@@ -84,60 +93,81 @@ const DemoPlayerFooter = ({ info }: { info: DemoInfo }) => {
             <div className="space-y-2">
               <div className="text-2xl font-bold">{demoDescription}</div>
               <div className="text-slate-400 text-sm">
-                {formatDate(info.timestamp)} (
-                <Timestamp timestamp={info.timestamp} />) on{" "}
-                {info.server.hostname}
+                <Timestamp timestamp={demo.timestamp} /> on {demo.source}
               </div>
             </div>
             <div className="flex flex-wrap items-start my-3 md:my-0 gap-3">
               <EnableClipEditorButton />
               <ShareDemoButton />
-              <DownloadDemoButton s3_key={info.sha256} />
+              <DownloadDemoButton s3_key={demo.s3_key} />
             </div>
           </div>
 
-          <div className="my-6">{/*<Result game={info} />*/}</div>
+          <div className="my-6 flex space-x-24">
+            <Result demo={demo} />
+            <Ktxstats sha256={demo.sha256} />
+          </div>
 
           <hr className="my-6 border-slate-800" />
 
-          <Shortcuts preset={presets.demoPlayer} />
+          <Shortcuts />
         </div>
       )}
     </div>
   );
 };
 
-function formatDate(date: string | null): string {
-  if (!date) {
-    return "";
+const Ktxstats = ({ sha256 }: { sha256: string }) => {
+  const stats = useKtxstats(sha256);
+
+  if (!stats) {
+    return <div>NO STATS FOR U!</div>;
   }
 
-  return date.substring(0, "YYYY-MM-DD HH:II".length).replace("T", " ");
-}
+  return (
+    <div>
+      <div className="font-bold text-slate-400 mb-2">Statistics</div>
+      <div className="flex space-x-8">
+        {stats.players.map((p) => (
+          <div key={p.name}>
+            <div
+              className="font-bold"
+              dangerouslySetInnerHTML={{ __html: toColoredHtml(p.name) }}
+            />
+            <div>{p.stats.frags}</div>
+            <div>{p.stats.deaths}</div>
+            <div>{p.stats.suicides}</div>
+            <div>{p.stats.tk}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
-// const Result = ({ game }: { game: Game }) => {
-//   const { setTrue: handleShowscoresClick, value: showScores } =
-//     useBoolean(false);
-//
-//   return (
-//     <div>
-//       <div className="font-bold text-slate-400 mb-2">Scoreboard</div>
-//       <div className="w-[340px] space-y-2">
-//         <Scoreboard game={game} showScores={showScores} />
-//         <button
-//           onClick={handleShowscoresClick}
-//           className={classNames(btnSecondary, "py-1.5 px-2 text-sm")}
-//           disabled={showScores}
-//         >
-//           Show scores
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
+const Result = ({ demo }: { demo: Demo }) => {
+  const { setTrue: handleShowscoresClick, value: showScores } =
+    useBoolean(false);
+
+  return (
+    <div>
+      <div className="font-bold text-slate-400 mb-2">Scoreboard</div>
+      <div className="w-[340px] space-y-2">
+        <Scoreboard demo={demo} showScores={showScores} />
+        <button
+          onClick={handleShowscoresClick}
+          className={classNames(btnSecondary, "py-1.5 px-2 text-sm")}
+          disabled={showScores}
+        >
+          Show scores
+        </button>
+      </div>
+    </div>
+  );
+};
 
 export const DownloadDemoButton = ({ s3_key }: { s3_key: string }) => {
-  const demoUrl = getDownloadUrl(s3_key);
+  const demoUrl = getDemoDownloadUrl(s3_key);
 
   return (
     <a href={demoUrl} className={`${btnSuccess} ${sizeLarge}`}>
