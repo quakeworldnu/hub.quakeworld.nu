@@ -9,7 +9,13 @@ dayjs.extend(timezone);
 dayjs.extend(relativeTime);
 
 export const Timestamp = ({ timestamp }: { timestamp: string | null }) => {
-  const format = dayjs(timestamp).from(dayjs());
+  if (null === timestamp) {
+    return null;
+  }
 
-  return <>{format}</>;
+  const ts = dayjs(timestamp);
+  const relative = ts.from(dayjs());
+  const local = ts.format("YYYY-MM-DD HH:mm");
+
+  return <span title={local}>{relative}</span>;
 };
