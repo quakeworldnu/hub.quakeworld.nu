@@ -9,3 +9,8 @@ export const QuakeTextFromBytes = ({ name }: { name: number[] }) => {
     />
   );
 };
+
+export const QuakeTextFromByteString = ({ name }: { name: string }) => {
+  const bytes = name.split("").map((_, index) => name.charCodeAt(index));
+  return <QuakeTextFromBytes name={bytes} />;
+};

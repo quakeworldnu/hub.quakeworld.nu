@@ -78,7 +78,7 @@ const TeamName = memo((props) => {
         name.substring(0, maxLen),
         name_color.substring(0, maxLen),
       )}
-      className="px-1"
+      className="px-1 text-center"
     />
   );
 });
