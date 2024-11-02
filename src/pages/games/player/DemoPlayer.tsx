@@ -25,6 +25,7 @@ import { ClipEditorProvider, useClipEditor } from "./clips/context";
 
 import { FteDemoPlayer } from "@qwhub/pages/games/player/FteDemoPlayer";
 import { KtxstatsV3 } from "@qwhub/pages/games/player/KtxstatsV3.ts";
+import { getAssetUrl } from "@qwhub/pages/games/services/cloudfront/cassets.ts";
 // @ts-ignore
 import { ColoredFrags } from "@qwhub/servers/ColoredFrags.jsx";
 
@@ -194,10 +195,11 @@ const DemoStatsTable = ({
       <thead>
         <tr className="text-xs text-slate-300">
           <th className="px-2 min-w-12">Frags</th>
-          {isTeamplay && <th className="px-2 py-1.5 text-left">Team</th>}
-          <th className="px-2 py-1.5 w-auto text-left">Name</th>
+          {isTeamplay && <th className="px-2 py-1 text-left">Team</th>}
+          <th className="px-2 py-1 w-auto text-left">Name</th>
           {isCtf && (
             <>
+              <th className="px-2 min-w-12">Picks</th>
               <th className="px-2 min-w-12">Caps</th>
               <th className="px-2 min-w-12">Defends</th>
               <th className="px-2 min-w-12">Returns</th>
@@ -224,23 +226,39 @@ const DemoStatsTable = ({
 
           {isTeamplay && (
             <>
-              <th className="px-2 min-w-12">
-                LG (<abbr title="took">t</abbr> / <abbr title="killed">k</abbr>{" "}
-                / <abbr title="dropped">d</abbr>)
-              </th>
-              <th className="px-2 min-w-12">
-                RL (<abbr title="took">t</abbr> / <abbr title="killed">k</abbr>{" "}
-                / <abbr title="dropped">d</abbr>)
-              </th>
+              {isTeamDeathmatch && (
+                <>
+                  <th className="px-2 min-w-12">
+                    LG (<abbr title="took">t</abbr> /{" "}
+                    <abbr title="killed">k</abbr> /{" "}
+                    <abbr title="dropped">d</abbr>)
+                  </th>
+                  <th className="px-2 min-w-12">
+                    RL (<abbr title="took">t</abbr> /{" "}
+                    <abbr title="killed">k</abbr> /{" "}
+                    <abbr title="dropped">d</abbr>)
+                  </th>
+                </>
+              )}
+
               <th className="px-2 min-w-6 text-[#39f]">Q</th>
               <th className="px-2 min-w-6 text-[#f00]">P</th>
-              <th className="px-2 min-w-6 text-[#ff0]">R</th>
+              {!isCtf && <th className="px-2 min-w-6 text-[#ff0]">R</th>}
+
               {isCtf && (
                 <>
-                  <th className="px-2 min-w-6">Hst</th>
-                  <th className="px-2 min-w-6">Reg</th>
-                  <th className="px-2 min-w-6">Res</th>
-                  <th className="px-2 min-w-6">Str</th>
+                  <th className="px-2">
+                    <Rune number={1} title="Resistance" />
+                  </th>
+                  <th className="px-2 min-w-6">
+                    <Rune number={2} title="Strength" />
+                  </th>
+                  <th className="px-2 min-w-6">
+                    <Rune number={3} title="Haste" />
+                  </th>
+                  <th className="px-2 min-w-6">
+                    <Rune number={4} title="Regeneration" />
+                  </th>
                 </>
               )}
             </>
@@ -249,10 +267,7 @@ const DemoStatsTable = ({
       </thead>
       <tbody>
         {sortedPlayers.map((p, index) => (
-          <tr
-            key={index}
-            className="odd:bg-slate-950 hover:bg-slate-800 hover:font-bold"
-          >
+          <tr key={index} className="odd:bg-slate-950 hover:bg-slate-800">
             <td className="px-2 app-text-outline">
               <ColoredFrags
                 frags={p.stats.frags}
@@ -260,15 +275,18 @@ const DemoStatsTable = ({
               />
             </td>
             {isTeamplay && (
-              <td className="px-2 py-1.5 text-center">
+              <td className="px-2 py-1 text-center">
                 <QuakeTextFromByteString name={p.team} />
               </td>
             )}
-            <td className="px-2 py-1.5 text-left">
+            <td className="px-2 py-1 text-left">
               <QuakeTextFromByteString name={p.name} />
             </td>
             {isCtf && (
               <>
+                <td className="px-2">
+                  <Num value={p.ctf.pickups} />
+                </td>
                 <td className="px-2">
                   <Num value={p.ctf.caps} />
                 </td>
@@ -282,7 +300,7 @@ const DemoStatsTable = ({
             )}
             <td className="px-2">
               {Math.round(
-                100 * (p.stats.frags / (p.stats.frags + p.stats.deaths)),
+                100 * (p.stats.kills / (p.stats.kills + p.stats.deaths)),
               )}
               %
             </td>
@@ -339,50 +357,57 @@ const DemoStatsTable = ({
 
             {isTeamplay && (
               <>
-                <td className="px-2">
-                  {p.weapons.lg && (
-                    <div className="flex gap-x-2">
-                      <span className="w-5">
-                        <Num value={p.weapons.lg.pickups.taken} />
-                      </span>
-                      <span className="w-5 text-green-200">
-                        <Num value={p.weapons.lg.kills.enemy} />
-                      </span>
-                      <span className="w-5 text-red-200">
-                        <Num value={p.weapons.lg.pickups.dropped} />
-                      </span>
-                    </div>
-                  )}
-                </td>
-                <td className="px-2">
-                  {p.weapons.rl && (
-                    <div className="flex gap-x-2">
-                      <span className="w-5">
-                        <Num value={p.weapons.rl.pickups.taken} />
-                      </span>
-                      <span className="w-5 text-green-200">
-                        <Num value={p.weapons.rl.kills.enemy} />
-                      </span>
-                      <span className="w-5 text-red-200">
-                        <Num value={p.weapons.rl.pickups.dropped} />
-                      </span>
-                    </div>
-                  )}
-                </td>
+                {isTeamDeathmatch && (
+                  <>
+                    <td className="px-2">
+                      {p.weapons.lg && (
+                        <div className="flex gap-x-2">
+                          <span className="w-5">
+                            <Num value={p.weapons.lg.pickups.taken} />
+                          </span>
+                          <span className="w-5 text-green-200">
+                            <Num value={p.weapons.lg.kills.enemy} />
+                          </span>
+                          <span className="w-5 text-red-200">
+                            <Num value={p.weapons.lg.pickups.dropped} />
+                          </span>
+                        </div>
+                      )}
+                    </td>
+                    <td className="px-2">
+                      {p.weapons.rl && (
+                        <div className="flex gap-x-2">
+                          <span className="w-5">
+                            <Num value={p.weapons.rl.pickups.taken} />
+                          </span>
+                          <span className="w-5 text-green-200">
+                            <Num value={p.weapons.rl.kills.enemy} />
+                          </span>
+                          <span className="w-5 text-red-200">
+                            <Num value={p.weapons.rl.pickups.dropped} />
+                          </span>
+                        </div>
+                      )}
+                    </td>
+                  </>
+                )}
+
                 <td className="px-2">
                   <Num value={p.items.q.took} />
                 </td>
                 <td className="px-2">
                   <Num value={p.items.p.took} />
                 </td>
-                <td className="px-2">
-                  <Num value={p.items.r.took} />
-                </td>
+                {!isCtf && (
+                  <td className="px-2">
+                    <Num value={p.items.r.took} />
+                  </td>
+                )}
 
                 {isCtf &&
                   Object.values(p.ctf.runes).map((value, index) => (
                     <td key={index} className="px-2">
-                      <Num value={value} />
+                      <Num value={Math.round(100 * (value / 600))} suffix="%" />
                     </td>
                   ))}
               </>
@@ -394,9 +419,24 @@ const DemoStatsTable = ({
   );
 };
 
-function Num({ value }: { value: number }) {
-  return 0 === value ? <span className="text-slate-500">0</span> : value;
-}
+const Rune = ({ number, title }: { number: number; title: string }) => {
+  return (
+    <img
+      src={getAssetUrl(`fte/id1/gfx/sb_sigil${number}.png`)}
+      alt={title}
+      className="mx-auto"
+      width={10}
+    />
+  );
+};
+
+const Num = ({ value, suffix = "" }: { value: number; suffix?: string }) => {
+  return 0 === value ? (
+    <span className="text-slate-500">0</span>
+  ) : (
+    `${value}${suffix}`
+  );
+};
 
 const DemoScoreboard = ({
   game,
