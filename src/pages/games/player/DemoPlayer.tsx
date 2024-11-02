@@ -407,7 +407,7 @@ const DemoStatsTable = ({
                 {isCtf &&
                   Object.values(p.ctf.runes).map((value, index) => (
                     <td key={index} className="px-2">
-                      <Num value={Math.round(100 * (value / 600))} suffix="%" />
+                      <Num value={Math.round(100 * (value / stats.duration))} suffix="%" />
                     </td>
                   ))}
               </>
