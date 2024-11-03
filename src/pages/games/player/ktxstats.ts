@@ -1,11 +1,14 @@
+import {
+  KtxstatsV3E,
+  toKtxstatsV3Enhanced,
+} from "@qwhub/pages/games/player/KtxstatsV3Enchanced.ts";
 import { useState } from "react";
 import { useEffectOnce } from "usehooks-ts";
-import { KtxstatsV3, toKtxstatsV3 } from "./KtxstatsV3.ts";
 
 const CLOUDFRONT_URL = "https://d.quake.world";
 
-export function useKtxstats(sha256: string): KtxstatsV3 | null | undefined {
-  const [stats, setStats] = useState<KtxstatsV3 | null | undefined>(undefined);
+export function useKtxstats(sha256: string): KtxstatsV3E | null | undefined {
+  const [stats, setStats] = useState<KtxstatsV3E | null | undefined>(undefined);
 
   useEffectOnce(() => {
     async function init() {
@@ -18,18 +21,24 @@ export function useKtxstats(sha256: string): KtxstatsV3 | null | undefined {
   return stats;
 }
 
-async function getKtxstatsBySha256(sha256: string): Promise<null | KtxstatsV3> {
+async function getKtxstatsBySha256(
+  sha256: string,
+): Promise<null | KtxstatsV3E> {
+  console.log("getKtxstatsBySha256");
+
   try {
     const res = await fetch(
-      `${CLOUDFRONT_URL}/${sha256_to_s3_key(sha256)}.mvd.ktxstats.json`,
+      `${CLOUDFRONT_URL}/${sha256ToS3Key(sha256)}.mvd.ktxstats.json`,
     );
     if (res.ok) {
-      return toKtxstatsV3(await res.text());
+      return toKtxstatsV3Enhanced(await res.text());
     }
-  } catch (e) {}
+  } catch (e) {
+    console.log("FAIL: getKtxstatsBySha256", e);
+  }
   return null;
 }
 
-function sha256_to_s3_key(sha256: string): string {
+function sha256ToS3Key(sha256: string): string {
   return `${sha256.substring(0, 3)}/${sha256}`;
 }

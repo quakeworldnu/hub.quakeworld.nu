@@ -21,7 +21,7 @@ export const Teams = () => {
   return (
     <label
       className="flex items-center ml-2"
-      title="Team(s), separate with space"
+      title="TeamStats(s), separate with space"
     >
       <FontAwesomeIcon
         icon={faUsers}
