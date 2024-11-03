@@ -66,7 +66,7 @@ export const DemoPlayer = ({
       <div className="lg:flex min-h-[200px]">
         <div className="flex flex-col grow">
           <div className="flex grow bg-black items-center justify-center max-h-[75vh]">
-            {/*<FteDemoPlayer demo={demo} mapName={game.map} />*/}
+            <FteDemoPlayer demo={demo} mapName={game.map} />
           </div>
           <DemoPlayerFooter game={game} demo={demo} />
         </div>

@@ -11,7 +11,6 @@ import { QuakeTextFromByteString } from "@qwhub/pages/games/player/QuakeText.tsx
 import { useKtxstats } from "@qwhub/pages/games/player/ktxstats.ts";
 // @ts-ignore
 import { ColoredFrags } from "@qwhub/servers/ColoredFrags";
-import classNames from "classnames";
 
 export const DemoStats = ({ sha256 }: { sha256: string }) => {
   const stats = useKtxstats(sha256);
@@ -28,7 +27,6 @@ export const DemoStats = ({ sha256 }: { sha256: string }) => {
       </div>
       <div>
         <DemoStatsTable stats={stats} />
-        {/*<pre>{JSON.stringify(stats, null, 2)}</pre>*/}
       </div>
     </div>
   );
@@ -56,9 +54,6 @@ export const DemoStatsTable = ({
 
   return (
     <div>
-      {/*<div>*/}
-      {/*  <pre>{JSON.stringify(perTeam, null, 2)}</pre>*/}
-      {/*</div>*/}
       <table className="text-sm text-right">
         <thead>
           <tr className="text-xs text-slate-300">
