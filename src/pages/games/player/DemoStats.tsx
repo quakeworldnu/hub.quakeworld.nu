@@ -72,10 +72,21 @@ export const DemoStatsTable = ({
             <th className="px-2 min-w-12">Eff</th>
             <th className="px-2 min-w-12">Kills</th>
             <th className="px-2 min-w-12">Deaths</th>
+
             <th className="px-2 min-w-8">Bores</th>
             {isTeamDeathmatch && <th className="px-2 min-w-12">TKs</th>}
             <th className="px-2 min-w-12">Given</th>
             <th className="px-2 min-w-12">Taken</th>
+            {isTeamDeathmatch && (
+              <>
+                <th className="px-2 min-w-12">
+                  <abbr title="Damage dealth to enemy weapons">EWEP</abbr>
+                </th>
+                <th className="px-2 min-w-12">
+                  <abbr title="Average damage taken per death">To Die</abbr>
+                </th>
+              </>
+            )}
             <th className="px-2 min-w-8 text-[#0f0]">GA</th>
             <th className="px-2 min-w-8 text-[#ff0]">YA</th>
             <th className="px-2 min-w-8 text-[#f00]">RA</th>
@@ -185,6 +196,12 @@ export const DemoStatsTable = ({
                 )}
                 <td className="px-2">{p.dmg.given}</td>
                 <td className="px-2">{p.dmg.taken}</td>
+                {isTeamDeathmatch && (
+                  <>
+                    <td className="px-2">{p.dmg["enemy-weapons"]}</td>
+                    <td className="px-2">{p.dmg["taken-to-die"]}</td>
+                  </>
+                )}
                 <td className="px-2 text-green-200">
                   <Num value={p.items.ga.took} />
                 </td>

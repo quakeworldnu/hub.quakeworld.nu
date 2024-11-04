@@ -170,7 +170,7 @@ export function toKtxstatsV3Enhanced(json: string): KtxstatsV3E {
           getPlayerDefaults(),
         );
 
-        return {
+        const result = {
           ...accumulated,
           name: "",
           team: players[0].team,
@@ -178,6 +178,14 @@ export function toKtxstatsV3Enhanced(json: string): KtxstatsV3E {
           "bottom-color": players[0]["bottom-color"],
           playerCount: players.length,
         };
+
+        if (result.playerCount > 0) {
+          result.dmg["taken-to-die"] = Math.round(
+            result.dmg["taken-to-die"] / players.length,
+          );
+        }
+
+        return result;
       }),
     );
   }
