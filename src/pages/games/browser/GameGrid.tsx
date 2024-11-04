@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { Timestamp } from "../Timestamp.tsx";
 import { GameSearchEntry } from "../services/supabase/supabase.ts";
 import { btnSecondary } from "../ui/theme.ts";
-import { DownloadButton } from "./Controls.tsx";
+import { DownloadButton, StatsButton } from "./Controls.tsx";
 import { ScoreboardLink } from "./Scoreboard.tsx";
 import { useDemoScoreSpoiler } from "./hooks.ts";
 
@@ -39,7 +39,8 @@ const GridItem = (props: { game: GameSearchEntry }) => {
           </button>
         </div>
         {game.demo_sha256 && (
-          <div className="flex items-center space-x-1 w-1/3 justify-end">
+          <div className="flex items-center gap-x-1 w-1/3 justify-end">
+            <StatsButton sha256={game.demo_sha256} />
             <DownloadButton sha256={game.demo_sha256} />
           </div>
         )}

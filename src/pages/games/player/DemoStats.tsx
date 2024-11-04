@@ -11,6 +11,7 @@ import { QuakeTextFromByteString } from "@qwhub/pages/games/player/QuakeText.tsx
 import { useKtxstats } from "@qwhub/pages/games/player/ktxstats.ts";
 // @ts-ignore
 import { ColoredFrags } from "@qwhub/servers/ColoredFrags";
+import { Fragment } from "react";
 
 export const DemoStats = ({ sha256 }: { sha256: string }) => {
   const stats = useKtxstats(sha256);
@@ -141,7 +142,7 @@ export const DemoStatsTable = ({
         </thead>
         <tbody>
           {participants.map((p, index) => (
-            <>
+            <Fragment key={`row-${index}`}>
               {isTeamplay && index === stats.teamsStats.length && (
                 <>
                   <tr>
@@ -309,7 +310,7 @@ export const DemoStatsTable = ({
                   </>
                 )}
               </tr>
-            </>
+            </Fragment>
           ))}
         </tbody>
       </table>
