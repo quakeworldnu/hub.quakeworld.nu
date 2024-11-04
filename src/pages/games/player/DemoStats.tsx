@@ -143,9 +143,14 @@ export const DemoStatsTable = ({
           {participants.map((p, index) => (
             <>
               {isTeamplay && index === stats.teamsStats.length && (
-                <tr>
-                  <td colSpan={999} className="h-4" />
-                </tr>
+                <>
+                  <tr>
+                    <td colSpan={999} className="h-3.5" />
+                  </tr>
+                  <tr>
+                    <td colSpan={999} className="h-0" />
+                  </tr>
+                </>
               )}
               <tr key={index} className="odd:bg-slate-800 hover:bg-sky-900">
                 <td className="px-2 py-0.5 app-text-outline">
