@@ -24,8 +24,6 @@ export function useKtxstats(sha256: string): KtxstatsV3E | null | undefined {
 async function getKtxstatsBySha256(
   sha256: string,
 ): Promise<null | KtxstatsV3E> {
-  console.log("getKtxstatsBySha256");
-
   try {
     const res = await fetch(
       `${CLOUDFRONT_URL}/${sha256ToS3Key(sha256)}.mvd.ktxstats.json`,

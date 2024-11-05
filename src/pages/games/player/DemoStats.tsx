@@ -84,7 +84,12 @@ export const DemoStatsTable = ({
                   <abbr title="Damage dealth to enemy weapons">EWEP</abbr>
                 </th>
                 <th className="px-2 min-w-12">
-                  <abbr title="Average damage taken per death">To Die</abbr>
+                  <abbr
+                    title="Average damage taken per death"
+                    className="whitespace-nowrap"
+                  >
+                    To Die
+                  </abbr>
                 </th>
               </>
             )}

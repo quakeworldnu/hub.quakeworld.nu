@@ -155,7 +155,7 @@ export function toKtxstatsV3Enhanced(json: string): KtxstatsV3E {
   );
 
   // add accumulated stats per team
-  if (source.teams) {
+  if (source.teams && source.players.length > 2) {
     enchanced.teamsStats = pipe(
       enchanced.players,
       groupBy((player) => player.team),

@@ -8,9 +8,11 @@ import { DemoStats } from "@qwhub/pages/games/player/DemoStats.tsx";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogTitle,
   DialogTrigger,
 } from "@qwhub/shadcn/components/ui/dialog.tsx";
+import { useBoolean } from "usehooks-ts";
 import { getDownloadUrl } from "../services/cloudfront/cdemos.ts";
 
 export const PlayButton = ({ id }: { id: number }) => {
@@ -41,21 +43,25 @@ export const DownloadButton = ({ sha256 }: { sha256: string }) => {
 };
 
 export const StatsButton = ({ sha256 }: { sha256: string }) => {
+  const { value: isOpen, toggle: toggleOpen } = useBoolean(false);
+
   return (
-    <div>
-      <Dialog>
-        <DialogTitle>
-          <span className="sr-only">Stats</span>
-        </DialogTitle>
+    <>
+      {isOpen && (
+        <div className="absolute left-0 top-0 w-full h-full bg-black/80 z-40 max-w-full max-h-full overflow-hidden" />
+      )}
+      <Dialog modal={false} defaultOpen={isOpen} onOpenChange={toggleOpen}>
+        <DialogTitle className="sr-only">Stats</DialogTitle>
         <DialogTrigger asChild>
           <button className={secondaryBtnCls} title="Show stats">
             <FontAwesomeIcon fixedWidth icon={faChartPie} size={"lg"} />
           </button>
         </DialogTrigger>
-        <DialogContent className="bg-background max-w-fit overflow-auto">
+        <DialogContent className="bg-background min-w-64 min-h-20 max-w-fit overflow-auto">
+          <DialogDescription className="sr-only" aria-description="Stats" />
           <DemoStats sha256={sha256} />
         </DialogContent>
       </Dialog>
-    </div>
+    </>
   );
 };
