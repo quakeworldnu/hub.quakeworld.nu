@@ -47,7 +47,7 @@ export const DemoStatsTable = ({
 
   const isTeamplay = stats.teamsStats.length > 0;
   const isCtf = "ctf" === stats.mode;
-  const isTeamDeathmatch = "team" === stats.mode;
+  const isTeamDeathmatch = "team" === stats.mode && isTeamplay;
   const participants: Array<TeamStats | Player> = [
     ...stats.teamsStats,
     ...stats.players,
@@ -72,75 +72,90 @@ export const DemoStatsTable = ({
 
             <th className="px-2 min-w-12">Eff</th>
             <th className="px-2 min-w-12">Kills</th>
+            {!isTeamplay && (
+              <th className="px-2 min-w-12">
+                <abbr title="Spawnfrags">S.Frags</abbr>
+              </th>
+            )}
             <th className="px-2 min-w-12">Deaths</th>
 
             <th className="px-2 min-w-8">Bores</th>
             {isTeamDeathmatch && <th className="px-2 min-w-12">TKs</th>}
             <th className="px-2 min-w-12">Given</th>
             <th className="px-2 min-w-12">Taken</th>
+
             {isTeamDeathmatch && (
-              <>
-                <th className="px-2 min-w-12">
-                  <abbr title="Damage dealth to enemy weapons">EWEP</abbr>
-                </th>
-                <th className="px-2 min-w-12">
-                  <abbr
-                    title="Average damage taken per death"
-                    className="whitespace-nowrap"
-                  >
-                    To Die
-                  </abbr>
-                </th>
-              </>
+              <th className="px-2 min-w-12">
+                <abbr title="Damage dealth to enemy weapons">EWEP</abbr>
+              </th>
             )}
+
+            {!isCtf && (
+              <th className="px-2 min-w-12">
+                <abbr
+                  title="Average damage taken per death"
+                  className="whitespace-nowrap"
+                >
+                  To Die
+                </abbr>
+              </th>
+            )}
+
             <th className="px-2 min-w-8 text-[#0f0]">GA</th>
             <th className="px-2 min-w-8 text-[#ff0]">YA</th>
             <th className="px-2 min-w-8 text-[#f00]">RA</th>
             <th className="px-2 min-w-8 text-sky-300">MH</th>
+
             {!isCtf && (
               <>
-                <th className="px-2 min-w-12">SG%</th>
-                <th className="px-2 min-w-12">LG%</th>
+                <th className="px-2 min-w-10">SG%</th>
+                <th className="px-2 min-w-10">LG%</th>
+              </>
+            )}
+
+            {!isCtf && (
+              <th className="px-2 min-w-6">
+                <abbr title="Direct hits">RL#</abbr>
+              </th>
+            )}
+
+            {isTeamDeathmatch && (
+              <>
+                <th className="px-2 min-w-12">
+                  LG (<abbr title="took">t</abbr> /{" "}
+                  <abbr title="killed">k</abbr> / <abbr title="dropped">d</abbr>
+                  )
+                </th>
+                <th className="px-2 min-w-12">
+                  RL (<abbr title="took">t</abbr> /{" "}
+                  <abbr title="killed">k</abbr> / <abbr title="dropped">d</abbr>
+                  )
+                </th>
               </>
             )}
 
             {isTeamplay && (
               <>
-                {isTeamDeathmatch && (
-                  <>
-                    <th className="px-2 min-w-12">
-                      LG (<abbr title="took">t</abbr> /{" "}
-                      <abbr title="killed">k</abbr> /{" "}
-                      <abbr title="dropped">d</abbr>)
-                    </th>
-                    <th className="px-2 min-w-12">
-                      RL (<abbr title="took">t</abbr> /{" "}
-                      <abbr title="killed">k</abbr> /{" "}
-                      <abbr title="dropped">d</abbr>)
-                    </th>
-                  </>
-                )}
-
                 <th className="px-2 min-w-6 text-[#39f]">Q</th>
                 <th className="px-2 min-w-6 text-[#f00]">P</th>
                 {!isCtf && <th className="px-2 min-w-6 text-[#ff0]">R</th>}
+              </>
+            )}
 
-                {isCtf && (
-                  <>
-                    <th className="px-2">
-                      <Rune number={1} title="Resistance" />
-                    </th>
-                    <th className="px-2 min-w-6">
-                      <Rune number={2} title="Strength" />
-                    </th>
-                    <th className="px-2 min-w-6">
-                      <Rune number={3} title="Haste" />
-                    </th>
-                    <th className="px-2 min-w-6">
-                      <Rune number={4} title="Regeneration" />
-                    </th>
-                  </>
-                )}
+            {isCtf && (
+              <>
+                <th className="px-2">
+                  <Rune number={1} title="Resistance" />
+                </th>
+                <th className="px-2 min-w-6">
+                  <Rune number={2} title="Strength" />
+                </th>
+                <th className="px-2 min-w-6">
+                  <Rune number={3} title="Haste" />
+                </th>
+                <th className="px-2 min-w-6">
+                  <Rune number={4} title="Regeneration" />
+                </th>
               </>
             )}
           </tr>
@@ -170,7 +185,7 @@ export const DemoStatsTable = ({
                     <QuakeTextFromByteString name={p.team} />
                   </td>
                 )}
-                <td className="px-2 text-left">
+                <td className="px-2 text-left whitespace-nowrap">
                   <QuakeTextFromByteString name={p.name} />
                 </td>
                 {isCtf && (
@@ -196,23 +211,33 @@ export const DemoStatsTable = ({
                   %
                 </td>
                 <td className="px-2">{p.stats.kills}</td>
+
+                {!isTeamplay && (
+                  <td className="px-2">
+                    <Num value={p.stats["spawn-frags"]} />
+                  </td>
+                )}
+
                 <td className="px-2">{p.stats.deaths}</td>
                 <td className="px-2">
                   <Num value={p.stats.suicides} />
                 </td>
+
                 {isTeamDeathmatch && (
                   <td className="px-2">
                     <Num value={p.stats.tk} />
                   </td>
                 )}
+
                 <td className="px-2">{p.dmg.given}</td>
                 <td className="px-2">{p.dmg.taken}</td>
+
                 {isTeamDeathmatch && (
-                  <>
-                    <td className="px-2">{p.dmg["enemy-weapons"]}</td>
-                    <td className="px-2">{p.dmg["taken-to-die"]}</td>
-                  </>
+                  <td className="px-2">{p.dmg["enemy-weapons"]}</td>
                 )}
+
+                {!isCtf && <td className="px-2">{p.dmg["taken-to-die"]}</td>}
+
                 <td className="px-2 text-green-200">
                   <Num value={p.items.ga.took} />
                 </td>
@@ -254,43 +279,49 @@ export const DemoStatsTable = ({
                   </>
                 )}
 
+                {!isCtf && (
+                  <td className="px-2">
+                    <Num value={p.weapons.rl.acc.hits} />
+                  </td>
+                )}
+
+                {isTeamDeathmatch && (
+                  <>
+                    <td className="px-2">
+                      {p.weapons.lg && (
+                        <div className="flex gap-x-2">
+                          <span className="w-5">
+                            <Num value={p.weapons.lg.pickups.taken} />
+                          </span>
+                          <span className="w-5 text-green-200">
+                            <Num value={p.weapons.lg.kills.enemy} />
+                          </span>
+                          <span className="w-5 text-red-200">
+                            <Num value={p.weapons.lg.pickups.dropped} />
+                          </span>
+                        </div>
+                      )}
+                    </td>
+                    <td className="px-2">
+                      {p.weapons.rl && (
+                        <div className="flex gap-x-2">
+                          <span className="w-5">
+                            <Num value={p.weapons.rl.pickups.taken} />
+                          </span>
+                          <span className="w-5 text-green-200">
+                            <Num value={p.weapons.rl.kills.enemy} />
+                          </span>
+                          <span className="w-5 text-red-200">
+                            <Num value={p.weapons.rl.pickups.dropped} />
+                          </span>
+                        </div>
+                      )}
+                    </td>
+                  </>
+                )}
+
                 {isTeamplay && (
                   <>
-                    {isTeamDeathmatch && (
-                      <>
-                        <td className="px-2">
-                          {p.weapons.lg && (
-                            <div className="flex gap-x-2">
-                              <span className="w-5">
-                                <Num value={p.weapons.lg.pickups.taken} />
-                              </span>
-                              <span className="w-5 text-green-200">
-                                <Num value={p.weapons.lg.kills.enemy} />
-                              </span>
-                              <span className="w-5 text-red-200">
-                                <Num value={p.weapons.lg.pickups.dropped} />
-                              </span>
-                            </div>
-                          )}
-                        </td>
-                        <td className="px-2">
-                          {p.weapons.rl && (
-                            <div className="flex gap-x-2">
-                              <span className="w-5">
-                                <Num value={p.weapons.rl.pickups.taken} />
-                              </span>
-                              <span className="w-5 text-green-200">
-                                <Num value={p.weapons.rl.kills.enemy} />
-                              </span>
-                              <span className="w-5 text-red-200">
-                                <Num value={p.weapons.rl.pickups.dropped} />
-                              </span>
-                            </div>
-                          )}
-                        </td>
-                      </>
-                    )}
-
                     <td className="px-2">
                       <Num value={p.items.q.took} />
                     </td>
@@ -302,18 +333,18 @@ export const DemoStatsTable = ({
                         <Num value={p.items.r.took} />
                       </td>
                     )}
-
-                    {isCtf &&
-                      Object.values(p.ctf.runes).map((value, index) => (
-                        <td key={index} className="px-2">
-                          <Num
-                            value={Math.round(100 * (value / stats.duration))}
-                            suffix="%"
-                          />
-                        </td>
-                      ))}
                   </>
                 )}
+
+                {isCtf &&
+                  Object.values(p.ctf.runes).map((value, index) => (
+                    <td key={index} className="px-2">
+                      <Num
+                        value={Math.round(100 * (value / stats.duration))}
+                        suffix="%"
+                      />
+                    </td>
+                  ))}
               </tr>
             </Fragment>
           ))}

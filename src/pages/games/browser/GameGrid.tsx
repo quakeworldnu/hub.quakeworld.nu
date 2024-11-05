@@ -40,7 +40,9 @@ const GridItem = (props: { game: GameSearchEntry }) => {
         </div>
         {game.demo_sha256 && (
           <div className="flex items-center gap-x-1 w-1/3 justify-end">
-            <StatsButton sha256={game.demo_sha256} />
+            {game.mode !== "wipeout" && (
+              <StatsButton sha256={game.demo_sha256} />
+            )}
             <DownloadButton sha256={game.demo_sha256} />
           </div>
         )}
