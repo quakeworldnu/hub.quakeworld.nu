@@ -1,5 +1,5 @@
 function fixAddress(address) {
-  return address.replaceAll("10.0.0.10", "play.qwlan.pl");
+  return address.replaceAll("213.76.101.30", "play.qwlan.pl");
 }
 
 export const transformServer = (server) => {
