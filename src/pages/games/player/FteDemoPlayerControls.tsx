@@ -5,6 +5,7 @@ import { useBoolean } from "usehooks-ts";
 import { useEventListener, useUpdateInterval } from "../hooks.ts";
 import { useClipEditor } from "./clips/context.tsx";
 import { AutotrackToggle } from "./controls/AutotrackToggle.tsx";
+import { ConsoleToggle } from "./controls/ConsoleToggle.tsx";
 import { FullscreenToggle } from "./controls/FullscreenToggle.tsx";
 import { PlayToggle } from "./controls/PlayToggle.tsx";
 import { SeekToEndButton } from "./controls/SeekToEndButton.tsx";
@@ -53,6 +54,7 @@ export const FteDemoPlayerControls = () => {
         <div className="hidden sm:block">
           <SlowmotionToggle />
         </div>
+        <ConsoleToggle />
         <div className="hidden sm:block">
           <FullscreenToggle />
         </div>

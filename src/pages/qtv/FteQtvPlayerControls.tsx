@@ -1,5 +1,6 @@
 import { useEventListener } from "@qwhub/pages/games/hooks.ts";
 import { AutotrackToggle } from "@qwhub/pages/games/player/controls/AutotrackToggle.tsx";
+import { ConsoleToggle } from "@qwhub/pages/games/player/controls/ConsoleToggle.tsx";
 import { FullscreenToggle } from "@qwhub/pages/games/player/controls/FullscreenToggle.tsx";
 import { Volume } from "@qwhub/pages/games/player/controls/Volume.tsx";
 import { Switch } from "@qwhub/pages/games/ui/Switch.tsx";
@@ -39,6 +40,7 @@ export function FteQtvPlayerControls() {
           <QtvServerTilesToggle />
         </div>
         <AutotrackToggle />
+        <ConsoleToggle />
         <div className="hidden sm:block">
           <FullscreenToggle />
         </div>

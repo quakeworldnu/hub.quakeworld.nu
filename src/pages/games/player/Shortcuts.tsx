@@ -83,7 +83,7 @@ function PointerShortcuts({ shortcuts }: { shortcuts: ShortCut[] }) {
 const commonShortcuts: ShortCutPreset = {
   keyboard: [
     {
-      keys: ["~"],
+      keys: ["`"],
       description: "Toggle console",
     },
     {
@@ -125,7 +125,7 @@ const qtvPlayerShortcuts: ShortCutPreset = {
 const demoPlayerShortcuts: ShortCutPreset = {
   keyboard: [
     {
-      keys: ["~"],
+      keys: ["`"],
       description: "Toggle console",
     },
     {
