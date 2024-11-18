@@ -31,7 +31,7 @@ export class FteController {
   private _demoDuration = 610.0;
   private _lastVolume = 0.0;
   private _maxVolume = 0.2;
-  private _lastDemoSpeed = 100;
+  private _lastPositiveDemoSpeed = 100;
   private _lastTrackUserId: number | null = null;
   private _trackTarget: {
     demoTime: number;
@@ -264,13 +264,15 @@ export class FteController {
   }
 
   setDemoSpeed(speed: number) {
-    this._lastDemoSpeed = this._demoSpeed;
+    if (this._demoSpeed > 0) {
+      this._lastPositiveDemoSpeed = this._demoSpeed;
+    }
     this._demoSpeed = Number.parseFloat(`${speed}`);
     this.command("demo_setspeed", this._demoSpeed);
   }
 
   play() {
-    this.setDemoSpeed(this._lastDemoSpeed);
+    this.setDemoSpeed(this._lastPositiveDemoSpeed);
   }
 
   isPlaying() {
