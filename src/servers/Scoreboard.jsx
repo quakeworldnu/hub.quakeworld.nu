@@ -31,14 +31,14 @@ export const Scoreboard = ({
       {showTeamColumn && (
         <>
           {sortedTeams.map((team) => (
-            <TeamRow {...team} key={[team.name, team.name_color].join()} />
+            <TeamRow {...team} key={[team.name, team.name_color].join("-")} />
           ))}
           <div className="my-1.5 h-[1px] bg-gradient-to-r from-red-400/20 via-orange-400 to-orange-400/20" />
         </>
       )}
       {sortedPlayers.slice(0, limit).map((player) => (
         <PlayerRow
-          key={[player.name, player.name_color].join()}
+          key={player.id}
           showTeam={hasTeams}
           {...player}
         />
