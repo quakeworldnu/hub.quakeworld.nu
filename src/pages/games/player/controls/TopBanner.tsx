@@ -10,9 +10,10 @@ export const ResponsiveTopBanner = ({
   scale: number;
   children?: ReactNode;
 }) => {
-  const { value: showscores, setTrue, setFalse } = useBoolean(false);
+  const { value: showscores, setTrue, setFalse, toggle } = useBoolean(false);
   useFteEvent("+showscores", setTrue);
   useFteEvent("-showscores", setFalse);
+  useFteEvent("toggleconsole", toggle);
 
   return (
     <div
