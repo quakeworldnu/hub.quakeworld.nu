@@ -38,7 +38,7 @@ export const Scoreboard = ({
       )}
       {sortedPlayers.slice(0, limit).map((player) => (
         <PlayerRow
-          key={player.id}
+          key={player.id ?? [player.name, player.name_color].join()}
           showTeam={hasTeams}
           {...player}
         />
