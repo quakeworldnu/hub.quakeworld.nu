@@ -53,7 +53,7 @@ export const Scoreboard = ({
         }}
       >
         <div className="flex flex-col h-full bg-gray-700/20 py-4">
-          <div className="flex flex-col grow justify-center items-center min-h-[160px]">
+          <div className="flex flex-col grow justify-center items-center min-h-20 md:min-h-[160px]">
             <Matchtag text={game.matchtag} />
             <LegacyScoreboard
               teams={fixedTeams}
