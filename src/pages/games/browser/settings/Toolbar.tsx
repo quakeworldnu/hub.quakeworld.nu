@@ -7,6 +7,7 @@ import { MapName } from "./MapName.tsx";
 import { Pagination } from "./Pagination.tsx";
 import { PlayerQuery } from "./PlayerQuery.tsx";
 import { Teams } from "./Teams.tsx";
+import { Timeframe } from "./Timeframe.tsx";
 
 export const Toolbar = () => {
   const { isLoading } = useGames();
@@ -23,6 +24,7 @@ export const Toolbar = () => {
       <PlayerQuery />
       <Teams />
       <MapName />
+      <Timeframe />
       <Pagination />
     </div>
   );

@@ -5,6 +5,8 @@ import type { Database } from "./database.types.ts";
 import type { GameMode } from "../../browser/settings/types.ts";
 import { Game } from "./supabase.types.ts";
 
+const MS_PER_DAY = 24 * 60 * 60 * 1000;
+
 const supabase = createClient<Database>(
   import.meta.env.VITE_SUPABASE_URL,
   import.meta.env.VITE_SUPABASE_ANON_KEY,
@@ -38,6 +40,7 @@ export async function searchGamesCount(settings: {
   gameMode: GameMode;
   playerQuery: string;
   teams: string;
+  maxAge: number;
 }): Promise<number> {
   let qb = supabase
     .from("games")
@@ -61,6 +64,11 @@ export async function searchGamesCount(settings: {
     qb = qb.textSearch("players_fts", players_fts);
   }
 
+  if (settings.maxAge > 0) {
+    const minTimestamp = new Date(Date.now() - settings.maxAge * MS_PER_DAY);
+    qb = qb.gte("timestamp", minTimestamp.toISOString());
+  }
+
   const result = await qb.single();
   return result?.count ?? 0;
 }
@@ -82,6 +90,7 @@ export async function searchGamesRows(settings: {
   map: string;
   playerQuery: string;
   teams: string;
+  maxAge: number;
   page: number;
 }): Promise<GameSearchEntry[]> {
   let qb = supabase
@@ -105,6 +114,11 @@ export async function searchGamesRows(settings: {
   const fts = queryToFts(playerQuery);
   if (fts) {
     qb = qb.textSearch("players_fts", fts);
+  }
+
+  if (settings.maxAge > 0) {
+    const minTimestamp = new Date(Date.now() - settings.maxAge * MS_PER_DAY);
+    qb = qb.gte("timestamp", minTimestamp.toISOString());
   }
 
   const limit = 15;

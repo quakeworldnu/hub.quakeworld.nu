@@ -7,5 +7,6 @@ export type GameBrowserSettings = {
   map: string;
   playerQuery: string;
   teams: string;
+  maxAge: number;
   page: number;
 };

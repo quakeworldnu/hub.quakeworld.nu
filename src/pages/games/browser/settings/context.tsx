@@ -19,6 +19,8 @@ type GameBrowserSettingsProps = {
   setPlayerQuery: (query: string) => void;
   teams: string;
   setTeams: (query: string) => void;
+  maxAge: number;
+  setMaxAge: (maxAge: number) => void;
   page: number;
   setPage: (page: number) => void;
   nextPage: () => void;
@@ -31,6 +33,7 @@ const defaultSettings: GameBrowserSettings = {
   map: "",
   playerQuery: "",
   teams: "",
+  maxAge: 30,
   page: 1,
 };
 
@@ -41,6 +44,7 @@ const GameSettingsContext = createContext<GameBrowserSettingsProps>({
   setMap: () => {},
   setPlayerQuery: () => {},
   setTeams: () => {},
+  setMaxAge: () => {},
   setPage: () => {},
   nextPage: () => {},
   prevPage: () => {},
@@ -64,11 +68,20 @@ export const GameSettingsProvider = ({
   const [map, setMap] = useState<string>(settings.map);
   const [playerQuery, setPlayerQuery] = useState<string>(settings.playerQuery);
   const [teams, setTeams] = useState<string>(settings.teams);
+  const [maxAge, setMaxAge] = useState<number>(settings.maxAge);
   const [page, setPage] = useState<number>(settings.page);
 
   useEffect(() => {
-    setSettings({ displayMode, gameMode, map, playerQuery, teams, page });
-  }, [displayMode, gameMode, map, playerQuery, teams, page]);
+    setSettings({
+      displayMode,
+      gameMode,
+      map,
+      playerQuery,
+      teams,
+      maxAge,
+      page,
+    });
+  }, [displayMode, gameMode, map, playerQuery, teams, maxAge, page]);
 
   function nextPage() {
     setPage(page + 1);
@@ -89,6 +102,8 @@ export const GameSettingsProvider = ({
     setPlayerQuery,
     teams,
     setTeams,
+    maxAge,
+    setMaxAge,
     page,
     setPage,
     nextPage,
