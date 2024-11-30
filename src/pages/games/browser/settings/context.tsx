@@ -68,7 +68,7 @@ export const GameSettingsProvider = ({
   const [map, setMap] = useState<string>(settings.map);
   const [playerQuery, setPlayerQuery] = useState<string>(settings.playerQuery);
   const [teams, setTeams] = useState<string>(settings.teams);
-  const [maxAge, setMaxAge] = useState<number>(settings.maxAge ?? 30);
+  const [maxAge, setMaxAge] = useState<number>(settings.maxAge ?? defaultSettings.maxAge);
   const [page, setPage] = useState<number>(settings.page);
 
   useEffect(() => {
