@@ -16,7 +16,12 @@ import { QtvServerSelectorOverlay } from "@qwhub/pages/qtv/QtvServerSelector.tsx
 import { QtvEvent } from "@qwhub/pages/qtv/events.ts";
 import classNames from "classnames";
 import { useState } from "react";
-import { useBoolean, useElementSize, useInterval } from "usehooks-ts";
+import {
+  useBoolean,
+  useCounter,
+  useElementSize,
+  useInterval,
+} from "usehooks-ts";
 
 const DISCONNECT_TIMEOUT = 50; // ms
 
@@ -114,54 +119,42 @@ export function FteQtvPlayer({
 function QtvPlayerGameClock({ timelimit }: { timelimit: number }) {
   const elapsed = useQtvElapsedTime(timelimit);
 
-  if (undefined === elapsed) {
+  if (0 === elapsed) {
     return null;
   }
   return <GameClock elapsed={elapsed} />;
 }
 
-function useQtvElapsedTime(timelimit: number): number | undefined {
+function useQtvElapsedTime(timelimit: number): number {
   const {
-    value: isMatchStarted,
-    setFalse: stopMatch,
-    setTrue: startMatch,
+    value: isStarted,
+    setFalse: stop,
+    setTrue: start,
   } = useBoolean(false);
-  const [elapsed, setElapsed] = useState<number | undefined>(undefined);
+  const { count, increment, setCount, reset: resetCount } = useCounter(0);
+
+  function reset() {
+    stop();
+    resetCount();
+  }
+
+  function startAt(duration: number) {
+    if (isStarted || duration < 0) {
+      return;
+    }
+    start();
+    setCount(duration);
+  }
 
   useEventListener("fte.event.qtv_play", reset);
   useEventListener("fte.event.qtv_disconnect", reset);
-
-  function reset() {
-    stopMatch();
-    setElapsed(undefined);
-  }
-
-  useEventListener("game.match_begin", () => {
-    startMatch();
-    setElapsed(0);
-  });
-  useEventListener("game.match_end", stopMatch);
-  useEventListener("game.remaining_time", (e: CustomEvent) => {
-    if (isMatchStarted) {
-      return;
-    }
-
-    startMatch();
-    setElapsed(60 * timelimit - Number.parseInt(e.detail));
-  });
-
-  useInterval(
-    () => {
-      if (elapsed !== undefined) {
-        setElapsed(elapsed + 1);
-      }
-    },
-    isMatchStarted ? 1000 : null,
+  useEventListener("game.match_begin", () => startAt(0));
+  useEventListener("game.match_end", stop);
+  useEventListener("game.remaining_seconds", (e: CustomEvent) =>
+    startAt(60 * timelimit - Number.parseInt(e.detail)),
   );
+  useEventListener("game.overtime_minutes", () => startAt(60 * timelimit));
+  useInterval(increment, isStarted ? 1000 : null);
 
-  if (undefined === elapsed) {
-    return undefined;
-  } else {
-    return Math.min(elapsed, 60 * timelimit);
-  }
+  return count;
 }

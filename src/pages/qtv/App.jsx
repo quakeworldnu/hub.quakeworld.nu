@@ -67,7 +67,7 @@ const QtvPage = () => {
             {server && (
               <FteQtvPlayer
                 mapName={server.settings.map}
-                timelimit={server.settings.timelimit}
+                timelimit={Number.parseInt(server.settings.timelimit)}
               />
             )}
           </div>

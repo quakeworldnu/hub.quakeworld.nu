@@ -38,10 +38,20 @@ function eventByMessage(message: string): CustomEvent | null {
     return new CustomEvent("fte.event.qtv_play");
   }
 
-  const remainingTime = parseRemainingTime(message);
+  const remainingSeconds = parseRemainingTime(message);
 
-  if (remainingTime) {
-    return new CustomEvent("game.remaining_time", { detail: remainingTime });
+  if (remainingSeconds) {
+    return new CustomEvent("game.remaining_seconds", {
+      detail: remainingSeconds,
+    });
+  }
+
+  const overtimeMinutes = parseOvertime(message);
+
+  if (overtimeMinutes) {
+    return new CustomEvent("game.overtime_minutes", {
+      detail: overtimeMinutes,
+    });
   }
 
   switch (message) {
@@ -56,14 +66,24 @@ function eventByMessage(message: string): CustomEvent | null {
   }
 }
 
-function parseRemainingTime(message: string): number | undefined {
-  const timeRegex = /\[(\d+)] (second|minute)/gi;
-  const match = timeRegex.exec(message);
+function parseOvertime(message: string): number | undefined {
+  const matches = message.match(/\[(\d+)] minutes? overtime follows/gi);
 
-  if (!match || 0 === match.length) {
+  if (!matches || 0 === matches.length) {
     return undefined;
   }
 
-  const value = Number.parseInt(match[1]);
+  return Number.parseInt(matches[1]);
+}
+
+function parseRemainingTime(message: string): number | undefined {
+  const timeRegex = /\[(\d+)] (second|minute)/gi;
+  const matches = timeRegex.exec(message);
+
+  if (!matches || 0 === matches.length) {
+    return undefined;
+  }
+
+  const value = Number.parseInt(matches[1]);
   return message.includes(" seconds") ? value : value * 60;
 }
