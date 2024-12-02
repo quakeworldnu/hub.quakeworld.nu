@@ -32,8 +32,8 @@ export const FteDemoPlayer = ({
     useFteLoader({ scriptPath, assets, demoDuration: demo.demo_duration });
   const fte = useFteController();
 
-  const [playerRef, { width }] = useElementSize();
   const defaultWidth = 1400;
+  const [playerRef, { width = defaultWidth }] = useElementSize();
   const scale = roundFloat(width / defaultWidth, 2);
 
   return (
