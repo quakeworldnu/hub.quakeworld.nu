@@ -15,12 +15,12 @@ import { FteQtvPlayerControls } from "@qwhub/pages/qtv/FteQtvPlayerControls.tsx"
 import { QtvServerSelectorOverlay } from "@qwhub/pages/qtv/QtvServerSelector.tsx";
 import { QtvEvent } from "@qwhub/pages/qtv/events.ts";
 import classNames from "classnames";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   useBoolean,
   useCounter,
-  useElementSize,
   useInterval,
+  useResizeObserver,
 } from "usehooks-ts";
 
 const DISCONNECT_TIMEOUT = 50; // ms
@@ -64,15 +64,16 @@ export function FteQtvPlayer({
     setLastKnownUrl(selectedServer.qtv_stream.url);
   });
 
-  const [playerRef, { width }] = useElementSize();
+  const ref = useRef<HTMLDivElement>(null);
   const defaultWidth = 1400;
+  const { width = defaultWidth } = useResizeObserver({ ref });
   const scale = roundFloat(width / defaultWidth, 2);
 
   return (
     <div
       id="ftePlayer"
       className={"relative w-full h-full max-h-[75vh] bg-black aspect-video"}
-      ref={playerRef}
+      ref={ref}
     >
       <div>
         <FtePlayerCanvas config={{ preset: "qtvPlayer" }} />

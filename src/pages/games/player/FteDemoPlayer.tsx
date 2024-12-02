@@ -5,7 +5,8 @@ import { GameClock } from "@qwhub/pages/games/player/controls/GameClock.tsx";
 import { Participants } from "@qwhub/pages/games/player/controls/Participants.tsx";
 import { getAssetUrl } from "@qwhub/pages/games/services/cloudfront/cassets.ts";
 import classNames from "classnames";
-import { useElementSize } from "usehooks-ts";
+import { useRef } from "react";
+import { useResizeObserver } from "usehooks-ts";
 import { getMapshotCssUrl } from "../../../services/mapshots.ts";
 import { getDemoPlayerAssets } from "../fte/assets.ts";
 import { useFteController, useFteLoader } from "../fte/hooks.ts";
@@ -32,15 +33,16 @@ export const FteDemoPlayer = ({
     useFteLoader({ scriptPath, assets, demoDuration: demo.demo_duration });
   const fte = useFteController();
 
+  const ref = useRef<HTMLDivElement>(null);
   const defaultWidth = 1400;
-  const [playerRef, { width = defaultWidth }] = useElementSize();
+  const { width = defaultWidth } = useResizeObserver({ ref });
   const scale = roundFloat(width / defaultWidth, 2);
 
   return (
     <div
       id="ftePlayer"
       className={"relative w-full h-full bg-black aspect-video"}
-      ref={playerRef}
+      ref={ref}
     >
       <div>
         <FtePlayerCanvas config={{ preset: "demoPlayer" }} />
