@@ -4,6 +4,7 @@ import { DisplayModeBar } from "./DisplayModeBar.tsx";
 import { GameModeBar } from "./GameModeBar.tsx";
 import { GlobalShowScoresToggle } from "./GlobalShowScoresToggle.tsx";
 import { MapName } from "./MapName.tsx";
+import { Matchtag } from "./Matchtag.tsx";
 import { Pagination } from "./Pagination.tsx";
 import { PlayerQuery } from "./PlayerQuery.tsx";
 import { Teams } from "./Teams.tsx";
@@ -24,6 +25,7 @@ export const Toolbar = () => {
       <PlayerQuery />
       <Teams />
       <MapName />
+      <Matchtag />
       <Timeframe />
       <Pagination />
     </div>
