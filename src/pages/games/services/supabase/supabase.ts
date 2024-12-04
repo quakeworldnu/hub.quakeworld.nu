@@ -40,12 +40,13 @@ export async function searchGamesCount(settings: {
   gameMode: GameMode;
   playerQuery: string;
   teams: string;
+  matchtag: string;
   maxAge: number;
 }): Promise<number> {
   let qb = supabase
     .from("games")
     .select("count", { head: true, count: "estimated" });
-  const { playerQuery, teams, map, gameMode } = settings;
+  const { playerQuery, teams, map, gameMode, matchtag, maxAge } = settings;
 
   if (gameMode !== "All") {
     qb = qb.eq("mode", gameMode.toLowerCase());
@@ -64,8 +65,12 @@ export async function searchGamesCount(settings: {
     qb = qb.textSearch("players_fts", players_fts);
   }
 
-  if (settings.maxAge > 0) {
-    const minTimestamp = new Date(Date.now() - settings.maxAge * MS_PER_DAY);
+  if (matchtag.length > 0) {
+    qb = qb.ilike("matchtag", `%${matchtag}%`);
+  }
+
+  if (maxAge > 0) {
+    const minTimestamp = new Date(Date.now() - maxAge * MS_PER_DAY);
     qb = qb.gte("timestamp", minTimestamp.toISOString());
   }
 
@@ -90,6 +95,7 @@ export async function searchGamesRows(settings: {
   map: string;
   playerQuery: string;
   teams: string;
+  matchtag: string;
   maxAge: number;
   page: number;
 }): Promise<GameSearchEntry[]> {
@@ -97,7 +103,7 @@ export async function searchGamesRows(settings: {
     .from("games")
     .select("id,timestamp,mode,matchtag,map,teams,players,demo_sha256");
 
-  const { gameMode, map, playerQuery, teams } = settings;
+  const { gameMode, map, playerQuery, teams, matchtag, maxAge } = settings;
 
   if (gameMode !== "All") {
     qb = qb.eq("mode", gameMode.toLowerCase());
@@ -116,8 +122,12 @@ export async function searchGamesRows(settings: {
     qb = qb.textSearch("players_fts", fts);
   }
 
-  if (settings.maxAge > 0) {
-    const minTimestamp = new Date(Date.now() - settings.maxAge * MS_PER_DAY);
+  if (matchtag.length > 0) {
+    qb = qb.ilike("matchtag", `%${matchtag}%`);
+  }
+
+  if (maxAge > 0) {
+    const minTimestamp = new Date(Date.now() - maxAge * MS_PER_DAY);
     qb = qb.gte("timestamp", minTimestamp.toISOString());
   }
 

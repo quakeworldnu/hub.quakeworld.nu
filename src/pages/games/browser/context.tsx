@@ -28,7 +28,7 @@ const GameContext = createContext<GameContextProps>({
 });
 
 export const GamesProvider = ({ children }: { children: ReactNode }) => {
-  const { setPage, playerQuery, teams, gameMode, map, maxAge, page } =
+  const { setPage, playerQuery, teams, gameMode, map, matchtag, maxAge, page } =
     useGameSettings();
   const [games, setGames] = useState<GameSearchEntry[]>([]);
   const [count, setCount] = useState<number>(0);
@@ -42,13 +42,22 @@ export const GamesProvider = ({ children }: { children: ReactNode }) => {
         gameMode,
         map,
         teams,
+        matchtag,
         playerQuery,
         maxAge,
       });
       let games: GameSearchEntry[] = [];
 
       if (count > 0) {
-        const settings = { gameMode, map, playerQuery, teams, maxAge, page: 1 };
+        const settings = {
+          gameMode,
+          map,
+          playerQuery,
+          teams,
+          matchtag,
+          maxAge,
+          page: 1,
+        };
         games = await searchGamesRows(settings);
       }
 
@@ -59,7 +68,7 @@ export const GamesProvider = ({ children }: { children: ReactNode }) => {
     }
 
     run();
-  }, [playerQuery, teams, gameMode, map, maxAge]);
+  }, [playerQuery, teams, gameMode, map, matchtag, maxAge]);
 
   useEffect(() => {
     if (isFirstRender) {
@@ -68,7 +77,15 @@ export const GamesProvider = ({ children }: { children: ReactNode }) => {
 
     async function run() {
       setIsLoading(true);
-      const settings = { playerQuery, teams, gameMode, map, maxAge, page };
+      const settings = {
+        playerQuery,
+        teams,
+        gameMode,
+        map,
+        matchtag,
+        maxAge,
+        page,
+      };
       setGames(await searchGamesRows(settings));
       setIsLoading(false);
     }
