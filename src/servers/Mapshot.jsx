@@ -4,7 +4,7 @@ export function Mapshot({ map, children }) {
       <div
         className="h-full bg-cover bg-center"
         style={{
-          backgroundImage: `url(https://a.quake.world/mapshots/${map}.jpg)`,
+          backgroundImage: `url(https://a.quake.world/mapshots/${encodeURIComponent(map)}.jpg)`,
         }}
       >
         <div className="h-full bg-gray-700/20">{children}</div>
