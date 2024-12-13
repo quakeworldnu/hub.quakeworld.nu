@@ -1,7 +1,7 @@
 import {
   KtxstatsV3E,
   toKtxstatsV3Enhanced,
-} from "@qwhub/pages/games/player/KtxstatsV3Enchanced.ts";
+} from "@qwhub/pages/games/player/KtxstatsV3Enhanced.ts";
 import { useState } from "react";
 import { useEffectOnce } from "usehooks-ts";
 

@@ -4,7 +4,7 @@ import {
   faPlay,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { DemoStats } from "@qwhub/pages/games/player/DemoStats.tsx";
+import { DemoKtxStats } from "@qwhub/pages/games/player/DemoKtxStats.tsx";
 import {
   Dialog,
   DialogContent,
@@ -59,7 +59,7 @@ export const StatsButton = ({ sha256 }: { sha256: string }) => {
         </DialogTrigger>
         <DialogContent className="bg-background min-w-64 min-h-20 max-w-fit overflow-auto">
           <DialogDescription className="sr-only" aria-description="Stats" />
-          <DemoStats sha256={sha256} />
+          <DemoKtxStats sha256={sha256} />
         </DialogContent>
       </Dialog>
     </>

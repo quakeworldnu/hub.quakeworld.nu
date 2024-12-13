@@ -7,6 +7,7 @@ import {
   Weapon,
 } from "@qwhub/pages/games/player/KtxstatsV3.ts";
 import {
+  filter,
   groupBy,
   isObjectType,
   map,
@@ -148,6 +149,7 @@ export function toKtxstatsV3Enhanced(json: string): KtxstatsV3E {
   // players
   enchanced.players = pipe(
     enchanced.players,
+    filter((player) => player.ping !== 0), // ignore bogus/disconnected players
     map(
       (player) => mergeDeep(getPlayerDefaults(), player) as unknown as Player,
     ), // defaults

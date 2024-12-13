@@ -1,40 +1,23 @@
-import { getAssetUrl } from "@qwhub/pages/games/services/cloudfront/cassets.ts";
-
-import { faChartPie } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Player } from "@qwhub/pages/games/player/KtxstatsV3.ts";
 import {
   KtxstatsV3E,
   TeamStats,
-} from "@qwhub/pages/games/player/KtxstatsV3Enchanced.ts";
+} from "@qwhub/pages/games/player/KtxstatsV3Enhanced.ts";
 import { QuakeTextFromByteString } from "@qwhub/pages/games/player/QuakeText.tsx";
 import { useKtxstats } from "@qwhub/pages/games/player/ktxstats.ts";
+import { getAssetUrl } from "@qwhub/pages/games/services/cloudfront/cassets.ts";
 // @ts-ignore
 import { ColoredFrags } from "@qwhub/servers/ColoredFrags";
 import { Fragment } from "react";
 
-export const DemoStats = ({ sha256 }: { sha256: string }) => {
+export function DemoKtxStats({ sha256 }: { sha256: string }) {
   const stats = useKtxstats(sha256);
+  return <DemoKtxStatsTable stats={stats} />;
+}
 
-  return (
-    <div>
-      <div className="flex items-center text-sm font-bold mb-2 text-slate-300">
-        <FontAwesomeIcon
-          fixedWidth
-          icon={faChartPie}
-          className="mr-1.5 text-slate-400"
-        />
-        Stats
-      </div>
-      <div>
-        <DemoStatsTable stats={stats} />
-      </div>
-    </div>
-  );
-};
-export const DemoStatsTable = ({
+export function DemoKtxStatsTable({
   stats,
-}: { stats: KtxstatsV3E | null | undefined }) => {
+}: { stats: KtxstatsV3E | null | undefined }) {
   if (undefined === stats) {
     return <span className="text-sm text-slate-400">loading..</span>;
   } else if (null === stats) {
@@ -352,7 +335,7 @@ export const DemoStatsTable = ({
       </table>
     </div>
   );
-};
+}
 
 const Rune = ({ number, title }: { number: number; title: string }) => {
   return (

@@ -1,4 +1,9 @@
-import { faFloppyDisk, faTrophy } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChartPie,
+  faFloppyDisk,
+  faHandPointer,
+  faTrophy,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // @ts-ignore
 import { Scoreboard } from "@qwhub/pages/games/browser/Scoreboard";
@@ -17,7 +22,7 @@ import { ClipControls } from "./clips/ClipControls";
 import { EnableClipEditorButton } from "./clips/Clips";
 import { ClipEditorProvider, useClipEditor } from "./clips/context";
 
-import { DemoStats } from "@qwhub/pages/games/player/DemoStats.tsx";
+import { DemoKtxStats } from "@qwhub/pages/games/player/DemoKtxStats.tsx";
 import { FteDemoPlayer } from "@qwhub/pages/games/player/FteDemoPlayer";
 // @ts-ignore
 import { ColoredFrags } from "@qwhub/servers/ColoredFrags.jsx";
@@ -85,7 +90,7 @@ function getDemoDescription(filename: string): string {
 
 const DemoPlayerFooter = ({ game, demo }: { game: Game; demo: DemoInfo }) => {
   const { isEnabled: showClipEditor } = useClipEditor();
-  const { setTrue: toggleSpoilers, value: showSpoilers } = useBoolean(false);
+
   const demoDescription = getDemoDescription(demo.filename);
 
   return (
@@ -109,22 +114,7 @@ const DemoPlayerFooter = ({ game, demo }: { game: Game; demo: DemoInfo }) => {
           </div>
         </div>
 
-        <div className="my-6 flex flex-wrap gap-x-8 gap-y-6">
-          <div>
-            <DemoScoreboard game={game} showScores={showSpoilers} />
-            <button
-              onClick={toggleSpoilers}
-              className={classNames(btnSecondary, "py-1.5 px-2 text-xs mt-2", {
-                hidden: showSpoilers,
-              })}
-            >
-              Show scores / stats
-            </button>
-          </div>
-
-          {showSpoilers && <DemoStats sha256={demo.sha256} />}
-        </div>
-
+        <ScoreboardAndStats game={game} sha256={demo.sha256} />
         <hr className="my-6 border-slate-800" />
 
         <Shortcuts preset={presets.demoPlayer} />
@@ -132,6 +122,52 @@ const DemoPlayerFooter = ({ game, demo }: { game: Game; demo: DemoInfo }) => {
     </div>
   );
 };
+
+function ScoreboardAndStats({ game, sha256 }: { game: Game; sha256: string }) {
+  const { toggle: toggleSpoilers, value: showSpoilers } = useBoolean(false);
+
+  return (
+    <div className="my-6 flex flex-wrap items-stretch gap-x-8 gap-y-6">
+      <div>
+        <DemoScoreboard game={game} showScores={showSpoilers} />
+        <button
+          onClick={toggleSpoilers}
+          className={classNames(btnSecondary, "py-1.5 px-2 text-xs mt-2", {
+            hidden: showSpoilers,
+          })}
+        >
+          Show scores / stats
+        </button>
+      </div>
+
+      <div className="flex flex-col grow max-w-[40vw]">
+        <div className="flex items-center text-sm font-bold mb-2 text-slate-300">
+          <FontAwesomeIcon
+            fixedWidth
+            icon={faChartPie}
+            className="mr-1.5 text-slate-400"
+          />
+          Stats
+        </div>
+        {showSpoilers && <DemoKtxStats sha256={sha256} />}
+        {!showSpoilers && (
+          <div
+            className="flex grow items-center justify-center bg-[#151525] hover:bg-slate-800 cursor-pointer border border-slate-800 text-muted-foreground text-sm transition-colors"
+            onClick={toggleSpoilers}
+          >
+            <FontAwesomeIcon
+              fixedWidth
+              icon={faHandPointer}
+              className="mr-1.5 text-slate-400"
+            />
+            Click to show scores/stats
+          </div>
+        )}
+        <div className="h-10" />
+      </div>
+    </div>
+  );
+}
 
 function formatDate(date: string | null): string {
   if (!date) {
