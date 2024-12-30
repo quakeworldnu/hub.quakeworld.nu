@@ -36,9 +36,9 @@ export type Player = {
   topcolor: number;
   bottomcolor: number;
   getLocation: () => string;
-  getName: () => number[];
+  getName: () => Uint8Array;
   getNamePlain: () => string;
-  getTeam: () => number[];
+  getTeam: () => Uint8Array;
   getTeamPlain: () => string;
   getWeaponStats: () => void;
   getStats: () => { [key: number]: number };
@@ -47,7 +47,7 @@ export type Player = {
 };
 
 export type Team = {
-  name: number[];
+  name: Uint8Array;
   namePlain: string;
   frags: number;
   topcolor: number;

@@ -5,7 +5,7 @@ import { QuakeTextFromBytes } from "@qwhub/pages/games/player/QuakeText.tsx";
 import classNames from "classnames";
 
 export type Participant = {
-  name: number[];
+  name: Uint8Array;
   frags: number;
   topcolor: number;
   bottomcolor: number;
