@@ -128,7 +128,7 @@ export class FteController {
       for (let i = 0; i < state.allocated_client_slots; i++) {
         const player = state.getPlayer(i);
 
-        if (player.spectator !== 0 || "" === player.getNamePlain()) {
+        if (player.spectator !== 0 || ["", "[ServeMe]"].includes(player.getNamePlain())) {
           continue;
         }
 
