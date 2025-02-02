@@ -1,7 +1,7 @@
 import { getQtvPlayerAssets } from "@qwhub/pages/games/fte/assets";
 import { useFteController, useFteLoader } from "@qwhub/pages/games/fte/hooks";
 import { enableLogToEvents } from "@qwhub/pages/games/fte/log.ts";
-import { QTV_FTE_VERSION } from "@qwhub/pages/games/fte/meta";
+import { DEMO_FTE_VERSION } from "@qwhub/pages/games/fte/meta";
 import { useEventListener } from "@qwhub/pages/games/hooks";
 import { roundFloat } from "@qwhub/pages/games/math";
 import { FtePlayerCanvas } from "@qwhub/pages/games/player/FtePlayerCanvas";
@@ -34,7 +34,7 @@ export function FteQtvPlayer({
   const [lastKnownUrl, setLastKnownUrl] = useState("");
   const assets = getQtvPlayerAssets(mapName);
   const scriptPath = getAssetUrl(
-    `fte/ftewebgl_qtv.js?version=${QTV_FTE_VERSION}`,
+    `fte/ftewebgl.js?version=${DEMO_FTE_VERSION}`,
   );
   const { isLoadingAssets, isReady, assetStatus, isInitializing } =
     useFteLoader({ scriptPath, assets });
