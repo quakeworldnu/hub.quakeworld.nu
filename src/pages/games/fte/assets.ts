@@ -14,6 +14,9 @@ export function getQtvPlayerAssets(mapName: string): FteAssets {
     "id1/config.cfg": getAssetUrl(
       `fte/id1/config_qtv.cfg?version=${QTV_CONFIG_VERSION}`,
     ),
+    "qw/csaddon.dat": getAssetUrl(
+      `fte/qw/csaddon.dat?version=${DEMO_CSADDON_VERSION}`,
+    ),
     ...getMapAssets(mapName),
   };
 }
