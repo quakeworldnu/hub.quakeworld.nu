@@ -1,6 +1,6 @@
 export const DEMO_CONFIG_VERSION = 8;
-export const DEMO_FTE_VERSION = 6;
-export const DEMO_CSADDON_VERSION = 8;
+export const DEMO_FTE_VERSION = 7;
+export const DEMO_CSADDON_VERSION = 9;
 
 export const QTV_CONFIG_VERSION = 4;
 export const QTV_FTE_VERSION = 7;
