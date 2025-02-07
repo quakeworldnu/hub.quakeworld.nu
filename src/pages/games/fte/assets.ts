@@ -3,7 +3,6 @@ import { idMaps } from "./idMaps.ts";
 import { getMapTextures } from "./map_textures.ts";
 import {
   DEMO_CONFIG_VERSION,
-  DEMO_CSADDON_VERSION,
   QTV_CONFIG_VERSION,
 } from "./meta.ts";
 import type { FteAssets } from "./types.ts";
@@ -15,7 +14,7 @@ export function getQtvPlayerAssets(mapName: string): FteAssets {
       `fte/id1/config_qtv.cfg?version=${QTV_CONFIG_VERSION}`,
     ),
     "qw/csaddon.dat": getAssetUrl(
-      `fte/qw/csaddon.dat?version=${DEMO_CSADDON_VERSION}`,
+      "fte/versions/001/csaddon.dat",
     ),
     ...getMapAssets(mapName),
   };
@@ -31,7 +30,7 @@ export function getDemoPlayerAssets(
       `fte/id1/config.cfg?version=${DEMO_CONFIG_VERSION}`,
     ),
     "qw/csaddon.dat": getAssetUrl(
-      `fte/qw/csaddon.dat?version=${DEMO_CSADDON_VERSION}`,
+      "fte/versions/001/csaddon.dat",
     ),
     "qw/match.mvd.gz": demoUrl,
     ...getMapAssets(mapName),
