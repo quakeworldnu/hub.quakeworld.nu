@@ -1,7 +1,6 @@
 import { getQtvPlayerAssets } from "@qwhub/pages/games/fte/assets";
 import { useFteController, useFteLoader } from "@qwhub/pages/games/fte/hooks";
 import { enableLogToEvents } from "@qwhub/pages/games/fte/log.ts";
-import { DEMO_FTE_VERSION } from "@qwhub/pages/games/fte/meta";
 import { useEventListener } from "@qwhub/pages/games/hooks";
 import { roundFloat } from "@qwhub/pages/games/math";
 import { FtePlayerCanvas } from "@qwhub/pages/games/player/FtePlayerCanvas";
