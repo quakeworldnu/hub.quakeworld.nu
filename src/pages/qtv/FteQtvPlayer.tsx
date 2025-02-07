@@ -138,11 +138,13 @@ function useQtvElapsedTime(timelimit: number): number {
   }
 
   function startAt(duration: number) {
-    if (isStarted || duration < 0) {
-      return;
+    if (!isStarted) {
+      start();
     }
-    start();
-    setCount(duration);
+
+    if (duration >= 0) {
+      setCount(duration);
+    }
   }
 
   useEventListener("fte.event.qtv_play", reset);
