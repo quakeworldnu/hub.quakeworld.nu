@@ -1,4 +1,3 @@
-import { DEMO_FTE_VERSION } from "@qwhub/pages/games/fte/meta.ts";
 import { useUpdateInterval } from "@qwhub/pages/games/hooks.ts";
 import { LoadingSpinner } from "@qwhub/pages/games/player/LoadingSpinner.tsx";
 import { GameClock } from "@qwhub/pages/games/player/controls/GameClock.tsx";
