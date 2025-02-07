@@ -27,7 +27,7 @@ export const FteDemoPlayer = ({
 }) => {
   useClipPlayback();
   const assets = getDemoPlayerAssets(getDownloadUrl(demo.sha256), mapName);
-  const scriptPath = getAssetUrl(`fte/ftewebgl.js?version=${DEMO_FTE_VERSION}`);
+  const scriptPath = getAssetUrl("fte/versions/001/ftewebgl.js");
   const { isLoadingAssets, isReady, assetStatus, isInitializing } =
     useFteLoader({ scriptPath, assets, demoDuration: demo.demo_duration });
   const fte = useFteController();
