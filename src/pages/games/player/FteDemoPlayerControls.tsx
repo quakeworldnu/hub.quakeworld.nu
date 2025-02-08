@@ -1,5 +1,6 @@
 import { useFteController } from "@qwhub/pages/games/fte/hooks.ts";
 import { GameDuration } from "@qwhub/pages/games/player/controls/GameClock.tsx";
+import { XrayToggle } from "@qwhub/pages/games/player/controls/XrayToggle.tsx";
 import classNames from "classnames";
 import { useBoolean } from "usehooks-ts";
 import { useEventListener, useUpdateInterval } from "../hooks.ts";
@@ -50,6 +51,7 @@ export const FteDemoPlayerControls = () => {
       </div>
 
       <div className="sm:flex gap-x-1">
+        <XrayToggle />
         <AutotrackToggle />
         <div className="hidden sm:block">
           <SlowmotionToggle />
