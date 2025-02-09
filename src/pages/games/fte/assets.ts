@@ -1,10 +1,7 @@
 import { getAssetUrl } from "../services/cloudfront/cassets.ts";
 import { idMaps } from "./idMaps.ts";
 import { getMapTextures } from "./map_textures.ts";
-import {
-  DEMO_CONFIG_VERSION,
-  QTV_CONFIG_VERSION,
-} from "./meta.ts";
+import { DEMO_CONFIG_VERSION, QTV_CONFIG_VERSION } from "./meta.ts";
 import type { FteAssets } from "./types.ts";
 
 export function getQtvPlayerAssets(mapName: string): FteAssets {
@@ -12,9 +9,6 @@ export function getQtvPlayerAssets(mapName: string): FteAssets {
     ...getGeneralAssets(),
     "id1/config.cfg": getAssetUrl(
       `fte/id1/config_qtv.cfg?version=${QTV_CONFIG_VERSION}`,
-    ),
-    "qw/csaddon.dat": getAssetUrl(
-      "fte/versions/001/csaddon.dat",
     ),
     ...getMapAssets(mapName),
   };
@@ -28,9 +22,6 @@ export function getDemoPlayerAssets(
     ...getGeneralAssets(),
     "id1/config.cfg": getAssetUrl(
       `fte/id1/config.cfg?version=${DEMO_CONFIG_VERSION}`,
-    ),
-    "qw/csaddon.dat": getAssetUrl(
-      "fte/versions/001/csaddon.dat",
     ),
     "qw/match.mvd.gz": demoUrl,
     ...getMapAssets(mapName),
@@ -57,6 +48,10 @@ function getMapAssets(mapName: string): FteAssets {
 }
 
 export function getGeneralAssets(): FteAssets {
+  const assets: FteAssets = {
+    "qw/csaddon.dat": getAssetUrl("fte/csaddon/001/csaddon.dat"),
+  };
+
   const filePaths = [
     "default.fmf",
     "ctf/fragfile.dat",
@@ -525,8 +520,6 @@ export function getGeneralAssets(): FteAssets {
     "id1/textures/tracker/tkills.png",
     "id1/textures/tracker/trap.png",
   ];
-
-  const assets: FteAssets = {};
 
   for (const path of filePaths) {
     assets[path] = getAssetUrl(`fte/${path}`);
