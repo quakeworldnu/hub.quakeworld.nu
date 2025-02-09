@@ -103,7 +103,7 @@ export const PlayerInfo = () => {
                     <div>
                       <span className="qw-color-b">[</span>
                       <span className="inline-block w-11">
-                        {player.getLocation().substring(0, 5)}
+                        <PlayerLocation player={player} />
                       </span>
                       <span className="qw-color-b">]</span>
                     </div>
@@ -147,6 +147,14 @@ export const PlayerInfo = () => {
     return null;
   }
 };
+
+function PlayerLocation({ player }: { player: Player }) {
+  try {
+    return player.getLocation().substring(0, 5);
+  } catch (e) {
+    return null;
+  }
+}
 
 const Powerups = ({
   hasPent,
