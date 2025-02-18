@@ -32,9 +32,7 @@ export function FteQtvPlayer({
 }: { mapName: string; timelimit: number }) {
   const [lastKnownUrl, setLastKnownUrl] = useState("");
   const assets = getQtvPlayerAssets(mapName);
-  const scriptPath = getAssetUrl(
-    "fte/versions/001/ftewebgl.js",
-  );
+  const scriptPath = getAssetUrl("fte/versions/002/ftewebgl.js");
   const { isLoadingAssets, isReady, assetStatus, isInitializing } =
     useFteLoader({ scriptPath, assets });
   const fte = useFteController();
