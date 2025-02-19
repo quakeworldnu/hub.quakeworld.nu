@@ -15,7 +15,7 @@ export const ColoredFrags = memo((props) => {
 });
 
 export function fixColor(color) {
-  if (color < 0 || color > 13) {
+  if (color < 0 || color > 16) {
     return 0;
   }
   return color;
