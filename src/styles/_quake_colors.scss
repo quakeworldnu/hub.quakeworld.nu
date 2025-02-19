@@ -15,6 +15,9 @@ $qw-player-colors: (
         11: rgb(47, 67, 55),
         12: rgb(123, 99, 7),
         13: rgb(47, 47, 127),
+        14: rgb(183, 51, 15),
+        15: rgb(103, 0, 0),
+        16: rgb(0, 0, 0),
 );
 
 @each $topValue, $topHex in $qw-player-colors {

@@ -1,7 +1,7 @@
 import { Player } from "./fte/types.ts";
 
 export function getPlayerColor(color: number): number {
-  if (color < 0 || color > 13) {
+  if (color < 0 || color > 16) {
     return 0;
   }
   return color;
