@@ -6,7 +6,7 @@ import { useLongPress } from "use-long-press";
 import { useEventListener } from "usehooks-ts";
 import { useFteController } from "../fte/hooks.ts";
 import { toggleFullscreen } from "../fullscreen.ts";
-import { useWakeLock } from "../hooks.ts";
+import { useVisibilityChange, useWakeLock } from "../hooks.ts";
 
 export type Config = {
   preset: "demoPlayer" | "qtvPlayer";
@@ -23,6 +23,13 @@ export const FtePlayerCanvas = ({ config }: { config: Config }) => {
     onActive: () => dispatchEvent(new Event("fteplayer.mouse.active")),
     events: ["mousemove"],
     timeout: 2000,
+  });
+
+  // recheck pip
+  useVisibilityChange((state: DocumentVisibilityState) => {
+    if (state === "visible") {
+      fte?.command("pip recheck");
+    }
   });
 
   // prevent screen idle

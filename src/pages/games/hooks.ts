@@ -26,6 +26,21 @@ export function useEventListener(
   uhUseEventListener(eventName, handler);
 }
 
+export function useVisibilityChange(
+  onChange: (state: DocumentVisibilityState) => void,
+) {
+  useEffect(() => {
+    document.addEventListener("visibilitychange", () =>
+      onChange(document.visibilityState),
+    );
+    return () => {
+      document.removeEventListener("visibilitychange", () =>
+        onChange(document.visibilityState),
+      );
+    };
+  }, []);
+}
+
 export function useWakeLock() {
   useEffect(() => {
     async function requestWakeLock() {
