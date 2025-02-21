@@ -49,7 +49,7 @@ function getMapAssets(mapName: string): FteAssets {
 
 export function getGeneralAssets(): FteAssets {
   const assets: FteAssets = {
-    "qw/csaddon.dat": getAssetUrl("fte/csaddon/csaddon_002.dat"),
+    "qw/csaddon.dat": getAssetUrl("fte/csaddon/csaddon_003.dat"),
   };
 
   const filePaths = [
