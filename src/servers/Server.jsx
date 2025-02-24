@@ -245,11 +245,12 @@ const ServerFooter = (props) => {
 
 export const ServerAddress = (props) => {
   const { server } = props;
+  const serverHostport = server.settings.hostport || server.settings.hostname_parsed;
 
   return (
     <div
       className="server-address flex items-center cursor-pointer text-gray-400"
-      onClick={() => copyToClipboard(server.settings.hostname_parsed)}
+      onClick={() => copyToClipboard(serverHostport)}
       title="Copy IP to clipboard"
     >
       <ServerAddressTitle cc={server.geo.cc} title={server.meta.addressTitle} />
