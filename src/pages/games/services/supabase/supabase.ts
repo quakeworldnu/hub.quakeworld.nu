@@ -45,7 +45,7 @@ export async function searchGamesCount(settings: {
 }): Promise<number> {
   let qb = supabase
     .from("games")
-    .select("count", { head: true, count: "estimated" });
+    .select("count", { head: true, count: "exact" });
   const { playerQuery, teams, map, gameMode, matchtag, maxAge } = settings;
 
   if (gameMode !== "All") {
