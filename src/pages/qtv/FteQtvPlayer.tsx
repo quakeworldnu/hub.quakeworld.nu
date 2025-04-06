@@ -13,7 +13,7 @@ import { getAssetUrl } from "@qwhub/pages/games/services/cloudfront/cassets";
 import { FteQtvPlayerControls } from "@qwhub/pages/qtv/FteQtvPlayerControls.tsx";
 import { QtvServerSelectorOverlay } from "@qwhub/pages/qtv/QtvServerSelector.tsx";
 import { QtvEvent } from "@qwhub/pages/qtv/events.ts";
-import classNames from "classnames";
+import classnames from "classnames";
 import { useState } from "react";
 import {
   useBoolean,
@@ -29,7 +29,8 @@ enableLogToEvents();
 export function FteQtvPlayer({
   mapName,
   timelimit,
-}: { mapName: string; timelimit: number }) {
+  fullscreen = false,
+}: { mapName: string; timelimit: number; fullscreen?: boolean }) {
   const [lastKnownUrl, setLastKnownUrl] = useState("");
   const assets = getQtvPlayerAssets(mapName);
   const scriptPath = getAssetUrl("fte/versions/003/ftewebgl.js");
@@ -68,7 +69,10 @@ export function FteQtvPlayer({
   return (
     <div
       id="ftePlayer"
-      className={"relative w-full h-full max-h-[75vh] bg-black aspect-video"}
+      className={classnames("relative w-full h-full bg-black", {
+        "max-h-[75vh] aspect-video": !fullscreen,
+        "min-h-[100vh] max-h-full": fullscreen,
+      })}
       ref={playerRef}
     >
       <div>
@@ -86,7 +90,7 @@ export function FteQtvPlayer({
       </div>
       <QtvServerSelectorOverlay />
       <div
-        className={classNames(
+        className={classnames(
           "absolute flex z-30 w-full h-full bg-black transition-opacity duration-1000 pointer-events-none items-center justify-center",
           {
             "opacity-0": isReady,
@@ -113,7 +117,7 @@ export function FteQtvPlayer({
   );
 }
 
-function QtvPlayerGameClock({ timelimit }: { timelimit: number }) {
+export function QtvPlayerGameClock({ timelimit }: { timelimit: number }) {
   const elapsed = useQtvElapsedTime(timelimit);
 
   if (0 === elapsed) {

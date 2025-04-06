@@ -1,6 +1,6 @@
 import { resolve } from "node:path";
-import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -11,6 +11,7 @@ export default defineConfig({
         games: resolve("./games/index.html"),
         players: resolve("./players/index.html"),
         qtv: resolve("./qtv/index.html"),
+        qtvPopout: resolve("./qtv-popout/index.html"),
         scoreboard: resolve("./scoreboard/index.html"),
       },
     },

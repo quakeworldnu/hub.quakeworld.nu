@@ -245,7 +245,8 @@ const ServerFooter = (props) => {
 
 export const ServerAddress = (props) => {
   const { server } = props;
-  const serverHostport = server.settings.hostport || server.settings.hostname_parsed;
+  const serverHostport =
+    server.settings.hostport || server.settings.hostname_parsed;
 
   return (
     <div

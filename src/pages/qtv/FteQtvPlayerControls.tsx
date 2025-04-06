@@ -12,6 +12,7 @@ import {
 } from "@qwhub/pages/qtv/events.ts";
 import classNames from "classnames";
 import { useBoolean } from "usehooks-ts";
+import { PopoutButton } from "../games/player/controls/Popout";
 
 export function FteQtvPlayerControls() {
   const {
@@ -43,6 +44,9 @@ export function FteQtvPlayerControls() {
         <XrayToggle />
         <AutotrackToggle />
         <ConsoleToggle />
+        <div className="hidden lg:block">
+          <PopoutButton />
+        </div>
         <div className="hidden sm:block">
           <FullscreenToggle />
         </div>
