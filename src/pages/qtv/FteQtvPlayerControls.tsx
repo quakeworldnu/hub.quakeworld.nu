@@ -44,9 +44,8 @@ export function FteQtvPlayerControls() {
         <XrayToggle />
         <AutotrackToggle />
         <ConsoleToggle />
-        <div className="hidden lg:block">
-          <PopoutButton />
-        </div>
+        <PopoutButton />
+        
         <div className="hidden sm:block">
           <FullscreenToggle />
         </div>
