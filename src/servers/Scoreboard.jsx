@@ -116,7 +116,7 @@ const PlayerRow = (props) => {
       </div>
       {showTeam && <TeamName name={team} name_color={team_color} />}
       <span className="flex items-center">
-        {cc && (
+        {cc && cc !== 'none' && (
           <img
             src={`https://www.quakeworld.nu/images/flags/${cc.toLowerCase()}.gif`}
             alt={cc}
