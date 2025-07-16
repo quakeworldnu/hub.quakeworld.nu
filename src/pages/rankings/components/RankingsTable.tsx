@@ -1,5 +1,3 @@
-// @ts-ignore
-import { QuakeText, coloredQuakeName } from "@qwhub/QuakeText";
 import React, { useState, useMemo, useEffect } from "react";
 import classNames from "classnames";
 import { getPlayerRankings, PlayerRanking } from "../services/api";
@@ -266,7 +264,7 @@ export const RankingsTable: React.FC<RankingsTableProps> = ({ gameMode, region }
             <tr key={player.name} className="odd:bg-white/5 hover:bg-white/10">
               <td className="text-center px-3 py-2 text-gray-400">{index + 1}</td>
               <td className="px-3 py-2">
-                <QuakeText text={coloredQuakeName(player.name, player.name_color || "")} />
+                <div dangerouslySetInnerHTML={{ __html: player.name_html || player.name }} />
                 <div className="text-xs text-gray-500">{player.games_played} games</div>
               </td>
               <td className="text-right px-3 py-2">{player.efficiency.toFixed(1)}%</td>

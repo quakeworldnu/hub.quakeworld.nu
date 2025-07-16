@@ -8,6 +8,7 @@ const supabase = createClient(
 export interface PlayerRanking {
   name: string;
   name_color?: string;
+  name_html: string; // Pre-rendered HTML with color spans
   games_played: number;
   avg_frags: number;
   avg_deaths: number;
@@ -47,6 +48,187 @@ export interface PlayerRanking {
 //     ewep: number;
 //   }[];
 // }
+
+// Helper function to convert Quake names to HTML with proper coloring
+function quakeNameToColoredHtml(name: string): string {
+  let html = "";
+  let currentType = "normal";
+
+  const changeType = (newType: string) => {
+    if (currentType !== newType) {
+      if (currentType !== "normal") {
+        html += "</span>";
+      }
+      if (newType !== "normal") {
+        html += `<span class="qw-color-${newType}">`;
+      }
+      currentType = newType;
+    }
+  };
+
+  for (let i = 0; i < name.length; i++) {
+    let ch = name.charCodeAt(i);
+    const originalCh = ch;
+    
+    // Strip high bit if set
+    if (ch >= 128) {
+      ch = ch - 128;
+    }
+
+    // Handle special characters
+    if (ch < 16 || (ch >= 29 && ch <= 31)) {
+      changeType("normal");
+      html += "_";
+    } else if (ch === 16) {
+      changeType("g");
+      html += "[";
+    } else if (ch === 17) {
+      changeType("g");
+      html += "]";
+    } else if (ch >= 18 && ch <= 27) {
+      // Convert to numbers 0-9
+      const num = ch - 18 + 48;
+      changeType("g");
+      html += String.fromCharCode(num);
+    } else if (ch === 28) {
+      changeType("normal");
+      html += "•";
+    } else {
+      // Characters with original value >= 160 (128 + 32) are brown
+      if (originalCh >= 160) {
+        changeType("b");
+      } else {
+        changeType("normal");
+      }
+
+      // HTML escape special characters
+      if (ch === 60) { // <
+        html += "&lt;";
+      } else if (ch === 62) { // >
+        html += "&gt;";
+      } else if (ch === 34) { // "
+        html += "&quot;";
+      } else {
+        html += String.fromCharCode(ch);
+      }
+    }
+  }
+  
+  changeType("normal"); // Close any open span
+  return html;
+}
+
+// Simple name cleaning for comparison purposes
+function cleanQuakeName(name: string): string {
+  let result = "";
+  for (let i = 0; i < name.length; i++) {
+    let ch = name.charCodeAt(i);
+    
+    if (ch >= 128) {
+      ch = ch - 128;
+    }
+    
+    if (ch >= 18 && ch <= 27) {
+      ch = ch - 18 + 48; // Convert to 0-9
+    } else if (ch === 16) {
+      ch = 91; // [
+    } else if (ch === 17) {
+      ch = 93; // ]
+    } else if (ch === 28) {
+      result += "•";
+      continue;
+    } else if (ch < 16 || (ch >= 29 && ch <= 31)) {
+      result += "_";
+      continue;
+    }
+    
+    result += String.fromCharCode(ch);
+  }
+  return result;
+}
+
+// Clean name and color string together for Hub API format
+function cleanQuakeNameAndColor(name: string, colorStr: string): { name: string; color: string } {
+  let resultName = "";
+  let resultColor = "";
+  
+  for (let i = 0; i < name.length; i++) {
+    let ch = name.charCodeAt(i);
+    const colorChar = i < colorStr.length ? colorStr[i] : "w";
+    
+    // Convert special Quake characters
+    if (ch >= 128) {
+      ch = ch - 128;
+    }
+    
+    // Convert special characters
+    if (ch >= 18 && ch <= 27) {
+      ch = ch - 18 + 48;
+      resultName += String.fromCharCode(ch);
+      resultColor += colorChar;
+    } else if (ch === 16) {
+      resultName += "[";
+      resultColor += colorChar;
+    } else if (ch === 17) {
+      resultName += "]";
+      resultColor += colorChar;
+    } else if (ch === 28) {
+      resultName += "•";
+      resultColor += colorChar;
+    } else if (ch < 16 || (ch >= 29 && ch <= 31)) {
+      resultName += "_";
+      resultColor += colorChar;
+    } else {
+      resultName += String.fromCharCode(ch);
+      resultColor += colorChar;
+    }
+  }
+  
+  return { name: resultName, color: resultColor };
+}
+
+// Generate HTML from clean name and color string (Hub API format)
+function generateColoredHtml(name: string, colorStr: string): string {
+  let html = "";
+  let currentColor = "";
+  let inSpan = false;
+
+  for (let i = 0; i < name.length; i++) {
+    const color = i < colorStr.length ? colorStr[i] : "w";
+    
+    if (color !== currentColor) {
+      if (inSpan) {
+        html += "</span>";
+        inSpan = false;
+      }
+      
+      // Only create span for non-white colors
+      if (color !== "w") {
+        html += `<span class="qw-color-${color}">`;
+        inSpan = true;
+      }
+      
+      currentColor = color;
+    }
+    
+    const ch = name[i];
+    if (ch === "<") {
+      html += "&lt;";
+    } else if (ch === ">") {
+      html += "&gt;";
+    } else if (ch === '"') {
+      html += "&quot;";
+    } else {
+      html += ch;
+    }
+  }
+  
+  if (inSpan) {
+    html += "</span>";
+  }
+  
+  return html;
+}
 
 // Helper function to fetch KTX stats from CloudFront
 async function fetchKtxStats(sha256: string): Promise<any | null> {
@@ -295,12 +477,35 @@ export async function getPlayerRankings(
           gamesWithStats++;
           
           ktxStats.players.forEach((player: any) => {
-            const key = player.name.toLowerCase(); // Handle name variations
+            const cleanName = cleanQuakeName(player.name);
+            const key = cleanName.toLowerCase(); // Handle name variations
             
             if (!playerStatsMap.has(key)) {
+              // Get original name from the game's players array in Supabase
+              const gamePlayer = game.players?.find((p: any) => 
+                cleanQuakeName(p.name).toLowerCase() === key
+              );
+              
+              let nameHtml = "";
+              
+              if (gamePlayer) {
+                // Check if we have a color string (Hub API format) or need to use byte values
+                if (gamePlayer.name_color && gamePlayer.name_color.match(/^[wbg]+$/)) {
+                  // Hub API format: clean name with separate color string
+                  const cleaned = cleanQuakeNameAndColor(gamePlayer.name, gamePlayer.name_color);
+                  nameHtml = generateColoredHtml(cleaned.name, cleaned.color);
+                } else {
+                  // Byte value format: colors embedded in the name
+                  nameHtml = quakeNameToColoredHtml(gamePlayer.name);
+                }
+              } else {
+                // Fallback to byte value format
+                nameHtml = quakeNameToColoredHtml(player.name);
+              }
+              
               playerStatsMap.set(key, {
-                name: player.name,
-                name_color: player["top-color"]?.toString() || "",
+                name: cleanName,
+                name_html: nameHtml,
                 games: [],
               });
             }
@@ -373,7 +578,8 @@ export async function getPlayerRankings(
 
         return {
           name: player.name,
-          name_color: player.name_color,
+          name_color: "", // Not used anymore
+          name_html: player.name_html,
           games_played: gamesPlayed,
           avg_frags: totals.frags / gamesPlayed,
           avg_deaths: totals.deaths / gamesPlayed,
