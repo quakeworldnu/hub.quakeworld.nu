@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import classNames from "classnames";
-import { getPlayerRankings, PlayerRanking } from "../services/api";
+import { getPlayerRankings, PlayerRanking, ProgressCallback } from "../services/api";
 
 type SortDirection = "asc" | "desc";
 type SortColumn = 
@@ -33,6 +33,12 @@ export const RankingsTable: React.FC<RankingsTableProps> = ({ gameMode, region }
   const [rankings, setRankings] = useState<PlayerRanking[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [progress, setProgress] = useState<{
+    phase: string;
+    current?: number;
+    total?: number;
+    message: string;
+  } | null>(null);
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -40,11 +46,20 @@ export const RankingsTable: React.FC<RankingsTableProps> = ({ gameMode, region }
     async function fetchRankings() {
       setIsLoading(true);
       setError(null);
+      setProgress(null);
+      
+      const progressCallback: ProgressCallback = (prog) => {
+        if (!abortController.signal.aborted) {
+          setProgress(prog);
+        }
+      };
+      
       try {
-        const data = await getPlayerRankings(gameMode, region, 90, abortController.signal);
+        const data = await getPlayerRankings(gameMode, region, 90, abortController.signal, progressCallback);
         // Only update state if the request wasn't aborted
         if (!abortController.signal.aborted) {
           setRankings(data);
+          setProgress(null);
         }
       } catch (err: any) {
         // Only show error if it wasn't an abort
@@ -194,8 +209,40 @@ export const RankingsTable: React.FC<RankingsTableProps> = ({ gameMode, region }
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-64">
-        <div className="text-gray-400">Loading rankings...</div>
+      <div className="flex flex-col justify-center items-center h-64 space-y-4">
+        <div className="w-full max-w-md space-y-2">
+          <div className="text-gray-400 text-center">
+            {progress?.message || "Loading rankings..."}
+          </div>
+          {progress?.total && progress.current !== undefined && (
+            <div className="relative w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+              <div 
+                className="absolute top-0 left-0 h-full bg-gradient-to-r from-sky-600 to-sky-400 transition-all duration-300"
+                style={{ width: `${(progress.current / progress.total) * 100}%` }}
+              />
+            </div>
+          )}
+          {progress?.phase === 'fetching-games' && (
+            <div className="text-xs text-gray-500 text-center">
+              Fetching game data from server...
+            </div>
+          )}
+          {progress?.phase === 'filtering' && (
+            <div className="text-xs text-gray-500 text-center">
+              Applying region filter...
+            </div>
+          )}
+          {progress?.phase === 'fetching-stats' && (
+            <div className="text-xs text-gray-500 text-center">
+              Loading detailed statistics... This may take a while.
+            </div>
+          )}
+          {progress?.phase === 'aggregating' && (
+            <div className="text-xs text-gray-500 text-center">
+              Calculating player rankings...
+            </div>
+          )}
+        </div>
       </div>
     );
   }
@@ -217,7 +264,7 @@ export const RankingsTable: React.FC<RankingsTableProps> = ({ gameMode, region }
   }
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto animate-fadeIn">
       <table className="w-full text-sm">
         <thead className="text-gray-400 text-xs border-b border-gray-800">
           <tr>

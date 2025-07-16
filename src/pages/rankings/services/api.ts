@@ -255,11 +255,21 @@ async function fetchKtxStats(sha256: string, abortSignal?: AbortSignal): Promise
   }
 }
 
+export interface ProgressCallback {
+  (progress: {
+    phase: 'fetching-games' | 'filtering' | 'fetching-stats' | 'aggregating';
+    current?: number;
+    total?: number;
+    message: string;
+  }): void;
+}
+
 export async function getPlayerRankings(
   gameMode: string,
   region: string = "All",
   days: number = 90,
-  abortSignal?: AbortSignal
+  abortSignal?: AbortSignal,
+  onProgress?: ProgressCallback
 ): Promise<PlayerRanking[]> {
   // Calculate the date threshold
   const dateThreshold = new Date();
@@ -273,6 +283,12 @@ export async function getPlayerRankings(
   console.log(`Fetching rankings for ${gameMode} mode (db: ${dbMode}) in ${region} (last ${days} days)`);
 
   try {
+    // Report initial progress
+    onProgress?.({
+      phase: 'fetching-games',
+      message: `Loading ${gameMode} games from the last ${days} days...`
+    });
+    
     // Fetch all games from the last N days for the specified mode
     // Supabase has a default limit of 1000 rows, so we need to paginate
     let allGames: any[] = [];
@@ -310,6 +326,12 @@ export async function getPlayerRankings(
       // Log progress
       if (count) {
         console.log(`Fetched ${allGames.length} of ${count} ${dbMode} games...`);
+        onProgress?.({
+          phase: 'fetching-games',
+          current: allGames.length,
+          total: count,
+          message: `Loading games: ${allGames.length} of ${count}...`
+        });
       }
     }
     
@@ -320,6 +342,10 @@ export async function getPlayerRankings(
     // Filter by region if needed (based on server_hostname)
     let filteredGames = games;
     if (region !== "All") {
+      onProgress?.({
+        phase: 'filtering',
+        message: `Filtering games for ${region} region...`
+      });
       // More comprehensive region mapping based on common QW server patterns
       filteredGames = games.filter(game => {
         const hostname = game.server_hostname?.toLowerCase() || "";
@@ -460,6 +486,13 @@ export async function getPlayerRankings(
     let gamesWithStats = 0;
     let gamesWithoutStats = 0;
 
+    onProgress?.({
+      phase: 'fetching-stats',
+      current: 0,
+      total: filteredGames.length,
+      message: `Loading game statistics: 0 of ${filteredGames.length}...`
+    });
+
     // Process games in batches to avoid overwhelming the API
     const batchSize = 10;
     for (let i = 0; i < filteredGames.length; i += batchSize) {
@@ -549,6 +582,15 @@ export async function getPlayerRankings(
         })
       );
 
+      // Update progress after each batch
+      const processedCount = Math.min(i + batchSize, filteredGames.length);
+      onProgress?.({
+        phase: 'fetching-stats',
+        current: processedCount,
+        total: filteredGames.length,
+        message: `Loading game statistics: ${processedCount} of ${filteredGames.length}...`
+      });
+
       // Add a small delay between batches to avoid rate limiting
       if (i + batchSize < filteredGames.length) {
         await new Promise(resolve => setTimeout(resolve, 100));
@@ -561,6 +603,12 @@ export async function getPlayerRankings(
     console.log(`Total players found: ${playerStatsMap.size}`);
     const playersWithEnoughGames = Array.from(playerStatsMap.values()).filter(p => p.games.length >= 15);
     console.log(`Players with 15+ games: ${playersWithEnoughGames.length}`);
+    
+    // Report aggregation phase
+    onProgress?.({
+      phase: 'aggregating',
+      message: `Calculating rankings for ${playersWithEnoughGames.length} players...`
+    });
     
     // Calculate averages for each player
     const rankings: PlayerRanking[] = playersWithEnoughGames
