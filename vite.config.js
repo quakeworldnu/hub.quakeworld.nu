@@ -13,6 +13,7 @@ export default defineConfig({
         qtv: resolve("./qtv/index.html"),
         qtvPopout: resolve("./qtv-popout/index.html"),
         scoreboard: resolve("./scoreboard/index.html"),
+        rankings: resolve("./rankings/index.html"),
       },
     },
   },
