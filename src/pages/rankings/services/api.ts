@@ -231,12 +231,12 @@ function generateColoredHtml(name: string, colorStr: string): string {
 }
 
 // Helper function to fetch KTX stats from CloudFront
-async function fetchKtxStats(sha256: string): Promise<any | null> {
+async function fetchKtxStats(sha256: string, abortSignal?: AbortSignal): Promise<any | null> {
   const prefix = sha256.substring(0, 3);
   const url = `https://d.quake.world/${prefix}/${sha256}.mvd.ktxstats.json`;
   
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, { signal: abortSignal });
     if (!response.ok) {
       // Don't log 403/404 errors as they're common for missing stats
       if (response.status !== 403 && response.status !== 404) {
@@ -245,7 +245,11 @@ async function fetchKtxStats(sha256: string): Promise<any | null> {
       return null;
     }
     return await response.json();
-  } catch (error) {
+  } catch (error: any) {
+    if (error.name === 'AbortError') {
+      // Request was aborted, don't log
+      return null;
+    }
     console.error(`Failed to fetch KTX stats for ${sha256}:`, error);
     return null;
   }
@@ -254,7 +258,8 @@ async function fetchKtxStats(sha256: string): Promise<any | null> {
 export async function getPlayerRankings(
   gameMode: string,
   region: string = "All",
-  days: number = 90
+  days: number = 90,
+  abortSignal?: AbortSignal
 ): Promise<PlayerRanking[]> {
   // Calculate the date threshold
   const dateThreshold = new Date();
@@ -276,6 +281,11 @@ export async function getPlayerRankings(
     let hasMore = true;
     
     while (hasMore) {
+      // Check if request was aborted
+      if (abortSignal?.aborted) {
+        throw new DOMException('Request aborted', 'AbortError');
+      }
+      
       const rangeEnd = rangeStart + pageSize - 1;
       
       const { data: games, error, count } = await supabase
@@ -453,6 +463,11 @@ export async function getPlayerRankings(
     // Process games in batches to avoid overwhelming the API
     const batchSize = 10;
     for (let i = 0; i < filteredGames.length; i += batchSize) {
+      // Check if request was aborted before processing each batch
+      if (abortSignal?.aborted) {
+        throw new DOMException('Request aborted', 'AbortError');
+      }
+      
       const batch = filteredGames.slice(i, i + batchSize);
       
       await Promise.all(
@@ -462,7 +477,7 @@ export async function getPlayerRankings(
             return;
           }
           
-          const ktxStats = await fetchKtxStats(game.demo_sha256);
+          const ktxStats = await fetchKtxStats(game.demo_sha256, abortSignal);
           if (!ktxStats?.players) {
             gamesWithoutStats++;
             return;
@@ -604,7 +619,11 @@ export async function getPlayerRankings(
 
     return rankings;
 
-  } catch (error) {
+  } catch (error: any) {
+    if (error.name === 'AbortError') {
+      // Request was aborted, don't log or re-throw
+      return [];
+    }
     console.error("Error in getPlayerRankings:", error);
     throw error; // Re-throw the error to be handled by the component
   }

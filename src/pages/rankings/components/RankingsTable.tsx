@@ -35,21 +35,37 @@ export const RankingsTable: React.FC<RankingsTableProps> = ({ gameMode, region }
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    const abortController = new AbortController();
+    
     async function fetchRankings() {
       setIsLoading(true);
       setError(null);
       try {
-        const data = await getPlayerRankings(gameMode, region);
-        setRankings(data);
+        const data = await getPlayerRankings(gameMode, region, 90, abortController.signal);
+        // Only update state if the request wasn't aborted
+        if (!abortController.signal.aborted) {
+          setRankings(data);
+        }
       } catch (err: any) {
-        setError(err.message || "Failed to load rankings");
-        console.error(err);
+        // Only show error if it wasn't an abort
+        if (err.name !== 'AbortError') {
+          setError(err.message || "Failed to load rankings");
+          console.error(err);
+        }
       } finally {
-        setIsLoading(false);
+        // Only set loading to false if the request wasn't aborted
+        if (!abortController.signal.aborted) {
+          setIsLoading(false);
+        }
       }
     }
     
     fetchRankings();
+    
+    // Cleanup function to abort the request if component unmounts or dependencies change
+    return () => {
+      abortController.abort();
+    };
   }, [gameMode, region]);
 
   const handleSort = (column: SortColumn) => {
