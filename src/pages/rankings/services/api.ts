@@ -55,7 +55,13 @@ async function fetchKtxStats(sha256: string): Promise<any | null> {
   
   try {
     const response = await fetch(url);
-    if (!response.ok) return null;
+    if (!response.ok) {
+      // Don't log 403/404 errors as they're common for missing stats
+      if (response.status !== 403 && response.status !== 404) {
+        console.error(`Failed to fetch KTX stats for ${sha256}: ${response.status} ${response.statusText}`);
+      }
+      return null;
+    }
     return await response.json();
   } catch (error) {
     console.error(`Failed to fetch KTX stats for ${sha256}:`, error);
@@ -68,8 +74,6 @@ export async function getPlayerRankings(
   region: string = "All",
   days: number = 90
 ): Promise<PlayerRanking[]> {
-  console.log(`Fetching rankings for ${gameMode} mode in ${region} (last ${days} days)`);
-  
   // Calculate the date threshold
   const dateThreshold = new Date();
   dateThreshold.setDate(dateThreshold.getDate() - days);
@@ -78,21 +82,48 @@ export async function getPlayerRankings(
   // Map game mode to database mode values
   // Based on games page, it uses lowercase directly
   const dbMode = gameMode.toLowerCase();
+  
+  console.log(`Fetching rankings for ${gameMode} mode (db: ${dbMode}) in ${region} (last ${days} days)`);
 
   try {
-    // Fetch games from the last N days for the specified mode
-    const { data: games, error } = await supabase
-      .from("games")
-      .select("id, timestamp, demo_sha256, players, server_hostname")
-      .eq("mode", dbMode)
-      .gte("timestamp", isoDate)
-      .order("timestamp", { ascending: false })
-      .limit(2000); // Reasonable limit for performance
+    // Fetch all games from the last N days for the specified mode
+    // Supabase has a default limit of 1000 rows, so we need to paginate
+    let allGames: any[] = [];
+    let rangeStart = 0;
+    const pageSize = 1000;
+    let hasMore = true;
+    
+    while (hasMore) {
+      const rangeEnd = rangeStart + pageSize - 1;
+      
+      const { data: games, error, count } = await supabase
+        .from("games")
+        .select("id, timestamp, demo_sha256, players, server_hostname", { count: "exact" })
+        .eq("mode", dbMode)
+        .gte("timestamp", isoDate)
+        .order("timestamp", { ascending: false })
+        .range(rangeStart, rangeEnd);
 
-    if (error || !games) {
-      console.error("Error fetching games:", error);
-      throw new Error("Failed to retrieve game data from server");
+      if (error || !games) {
+        console.error("Error fetching games:", error);
+        throw new Error("Failed to retrieve game data from server");
+      }
+      
+      allGames = allGames.concat(games);
+      
+      // Check if we have more pages
+      hasMore = games.length === pageSize;
+      rangeStart += pageSize;
+      
+      // Log progress
+      if (count) {
+        console.log(`Fetched ${allGames.length} of ${count} ${dbMode} games...`);
+      }
     }
+    
+    const games = allGames;
+    console.log(`Found ${games.length} ${dbMode} games in last ${days} days`);
+    
 
     // Filter by region if needed (based on server_hostname)
     let filteredGames = games;
@@ -100,6 +131,12 @@ export async function getPlayerRankings(
       // More comprehensive region mapping based on common QW server patterns
       filteredGames = games.filter(game => {
         const hostname = game.server_hostname?.toLowerCase() || "";
+        
+        // Skip games without hostname
+        if (!hostname) {
+          console.log("Game without hostname found:", game.id);
+          return false;
+        }
         
         switch (region) {
           case "Europe":
@@ -141,39 +178,44 @@ export async function getPlayerRankings(
                    hostname.includes("brussels") ||
                    hostname.includes("kiev") ||
                    hostname.includes("europe") ||
-                   hostname.includes("eu-");
+                   hostname.includes("eu-") ||
+                   // Actual server patterns from the list
+                   hostname.includes("quake.se") ||
+                   hostname.includes("dm6.uk") ||
+                   hostname.includes("clanrot.org") ||
+                   hostname.includes("zasadzka") ||
+                   hostname.includes("de.quake.world") ||
+                   hostname.includes("nl.quake.world") ||
+                   hostname.includes("uk.clanrot") ||
+                   hostname.includes("pl.clanrot") ||
+                   hostname.includes("troopers.fi") ||
+                   hostname.includes("snapcase.net") ||
+                   hostname.includes("servequake.com") ||
+                   hostname.includes("baseq.fr") ||
+                   hostname.includes("predze.dk") ||
+                   hostname.includes("lgquad.ru") ||
+                   hostname.includes("0f.se") ||
+                   hostname.includes("funkyqw") ||
+                   hostname.includes("das pentagon") ||
+                   hostname.includes("gladius spb") ||
+                   hostname.includes("qw-group") ||
+                   hostname.includes("andehlag");
                    
           case "North America":
-            return hostname.includes(".us") || // USA
-                   hostname.includes(".ca") || // Canada
-                   hostname.includes(".mx") || // Mexico
-                   hostname.includes("dallas") ||
-                   hostname.includes("chicago") ||
-                   hostname.includes("newyork") ||
-                   hostname.includes("nyc") ||
-                   hostname.includes("ny.") ||
-                   hostname.includes("tx.") ||
-                   hostname.includes("ca.") ||
-                   hostname.includes("virginia") ||
-                   hostname.includes("oregon") ||
-                   hostname.includes("seattle") ||
-                   hostname.includes("losangeles") ||
-                   hostname.includes("la.") ||
-                   hostname.includes("miami") ||
-                   hostname.includes("atlanta") ||
-                   hostname.includes("denver") ||
-                   hostname.includes("phoenix") ||
-                   hostname.includes("toronto") ||
-                   hostname.includes("montreal") ||
-                   hostname.includes("vancouver") ||
-                   hostname.includes("mexico") ||
-                   hostname.includes("us-") ||
-                   hostname.includes("na-") ||
-                   hostname.includes("northamerica");
+            return hostname.includes("ny.quake.world") ||
+                   hostname.includes("la.quake.world") ||
+                   hostname.includes("dal.spawnfrag.com") ||
+                   hostname.includes("usqw") ||
+                   hostname.includes("wa.b1aze.com") ||
+                   hostname.includes("mom's basement") ||
+                   hostname.includes("the-den") ||
+                   hostname.includes("naqw"); // North American QuakeWorld
                    
           case "Australia":
             return hostname.includes(".au") || // Australia
                    hostname.includes(".nz") || // New Zealand
+                   hostname.includes("thickshaker") || // Australian servers
+                   hostname.includes("swoopshaker") || // Australian servers
                    hostname.includes("sydney") ||
                    hostname.includes("melbourne") ||
                    hostname.includes("perth") ||
@@ -208,7 +250,10 @@ export async function getPlayerRankings(
                    hostname.includes("caracas") ||
                    hostname.includes("montevideo") ||
                    hostname.includes("southamerica") ||
-                   hostname.includes("sa-");
+                   hostname.includes("sa-") ||
+                   // Actual server patterns from the list
+                   hostname.includes("quakeworld.com.br") ||
+                   hostname.includes("qlash brasil");
                    
           default:
             return true;
@@ -216,14 +261,12 @@ export async function getPlayerRankings(
       });
       
       console.log(`Filtered to ${filteredGames.length} games out of ${games.length} for region ${region}`);
-      
-      // Debug: Show sample of hostnames to understand patterns
-      const uniqueHostnames = [...new Set(games.map(g => g.server_hostname))].slice(0, 20);
-      console.log("Sample server hostnames:", uniqueHostnames);
     }
 
     // Aggregate player statistics
     const playerStatsMap = new Map<string, any>();
+    let gamesWithStats = 0;
+    let gamesWithoutStats = 0;
 
     // Process games in batches to avoid overwhelming the API
     const batchSize = 10;
@@ -232,12 +275,25 @@ export async function getPlayerRankings(
       
       await Promise.all(
         batch.map(async (game) => {
-          if (!game.demo_sha256) return;
+          if (!game.demo_sha256) {
+            gamesWithoutStats++;
+            return;
+          }
           
           const ktxStats = await fetchKtxStats(game.demo_sha256);
-          if (!ktxStats?.players) return;
+          if (!ktxStats?.players) {
+            gamesWithoutStats++;
+            return;
+          }
 
           // Process each player's stats
+          if (!ktxStats.players || ktxStats.players.length === 0) {
+            gamesWithoutStats++;
+            return;
+          }
+          
+          gamesWithStats++;
+          
           ktxStats.players.forEach((player: any) => {
             const key = player.name.toLowerCase(); // Handle name variations
             
@@ -278,9 +334,15 @@ export async function getPlayerRankings(
       }
     }
 
+    // Log stats
+    console.log(`Games with KTX stats: ${gamesWithStats}/${filteredGames.length} (${Math.round(gamesWithStats / filteredGames.length * 100)}%)`);
+    console.log(`Games without KTX stats: ${gamesWithoutStats}`);
+    console.log(`Total players found: ${playerStatsMap.size}`);
+    const playersWithEnoughGames = Array.from(playerStatsMap.values()).filter(p => p.games.length >= 15);
+    console.log(`Players with 15+ games: ${playersWithEnoughGames.length}`);
+    
     // Calculate averages for each player
-    const rankings: PlayerRanking[] = Array.from(playerStatsMap.values())
-      .filter(player => player.games.length >= 15) // Minimum games threshold
+    const rankings: PlayerRanking[] = playersWithEnoughGames
       .map(player => {
         const games = player.games;
         const gamesPlayed = games.length;
