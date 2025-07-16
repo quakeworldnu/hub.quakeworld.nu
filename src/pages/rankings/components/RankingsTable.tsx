@@ -219,32 +219,42 @@ export const RankingsTable: React.FC<RankingsTableProps> = ({ gameMode, region }
               Deaths
             </SortHeader>
             <SortHeader column="avgDamageGiven" className="text-right px-3 py-2">
-              Given
+              Damage
             </SortHeader>
             <SortHeader column="avgDamageTaken" className="text-right px-3 py-2 hidden sm:table-cell">
               Taken
             </SortHeader>
-            <SortHeader column="avgTeamDamage" className="text-right px-3 py-2 hidden sm:table-cell">
-              Team
-            </SortHeader>
-            <SortHeader column="avgTK" className="text-right px-3 py-2 hidden sm:table-cell">
-              TKs
-            </SortHeader>
-            <SortHeader column="avgEwep" className="text-right px-3 py-2 hidden md:table-cell">
-              eWep
-            </SortHeader>
+            {gameMode !== "1on1" && (
+              <SortHeader column="avgTeamDamage" className="text-right px-3 py-2 hidden sm:table-cell">
+                Team
+              </SortHeader>
+            )}
+            {gameMode !== "1on1" && (
+              <SortHeader column="avgTK" className="text-right px-3 py-2 hidden sm:table-cell">
+                TKs
+              </SortHeader>
+            )}
+            {gameMode !== "1on1" && gameMode !== "2on2" && (
+              <SortHeader column="avgEwep" className="text-right px-3 py-2 hidden md:table-cell">
+                eWep
+              </SortHeader>
+            )}
             <SortHeader column="avgToDie" className="text-right px-3 py-2 hidden md:table-cell">
               To Die
             </SortHeader>
             <SortHeader column="avgRLTook" className="text-right px-3 py-2 hidden md:table-cell">
               RL Took
             </SortHeader>
-            <SortHeader column="avgRLKills" className="text-right px-3 py-2 hidden md:table-cell">
-              RL Kills
-            </SortHeader>
-            <SortHeader column="avgRLDrops" className="text-right px-3 py-2 hidden md:table-cell">
-              RL Drops
-            </SortHeader>
+            {gameMode !== "1on1" && gameMode !== "2on2" && (
+              <SortHeader column="avgRLKills" className="text-right px-3 py-2 hidden md:table-cell">
+                RL Kills
+              </SortHeader>
+            )}
+            {gameMode !== "1on1" && gameMode !== "2on2" && (
+              <SortHeader column="avgRLDrops" className="text-right px-3 py-2 hidden md:table-cell">
+                RL Drops
+              </SortHeader>
+            )}
             <SortHeader column="avgSGAccuracy" className="text-right px-3 py-2 hidden lg:table-cell">
               SG%
             </SortHeader>
@@ -254,9 +264,11 @@ export const RankingsTable: React.FC<RankingsTableProps> = ({ gameMode, region }
             <SortHeader column="avgRLDirects" className="text-right px-3 py-2 hidden lg:table-cell">
               RLD
             </SortHeader>
-            <SortHeader column="avgQuads" className="text-right px-3 py-2 hidden xl:table-cell">
-              Quads
-            </SortHeader>
+            {gameMode !== "1on1" && (
+              <SortHeader column="avgQuads" className="text-right px-3 py-2 hidden xl:table-cell">
+                Quads
+              </SortHeader>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -276,27 +288,37 @@ export const RankingsTable: React.FC<RankingsTableProps> = ({ gameMode, region }
               <td className="text-right px-3 py-2 hidden sm:table-cell">
                 {player.avg_damage_taken.toFixed(0)}
               </td>
-              <td className="text-right px-3 py-2 hidden sm:table-cell">
-                {player.avg_team_damage.toFixed(0)}
-              </td>
-              <td className="text-right px-3 py-2 hidden sm:table-cell">
-                {player.avg_tk.toFixed(1)}
-              </td>
-              <td className="text-right px-3 py-2 hidden md:table-cell">
-                {player.avg_ewep.toFixed(1)}
-              </td>
+              {gameMode !== "1on1" && (
+                <td className="text-right px-3 py-2 hidden sm:table-cell">
+                  {player.avg_team_damage.toFixed(0)}
+                </td>
+              )}
+              {gameMode !== "1on1" && (
+                <td className="text-right px-3 py-2 hidden sm:table-cell">
+                  {player.avg_tk.toFixed(1)}
+                </td>
+              )}
+              {gameMode !== "1on1" && gameMode !== "2on2" && (
+                <td className="text-right px-3 py-2 hidden md:table-cell">
+                  {player.avg_ewep.toFixed(1)}
+                </td>
+              )}
               <td className="text-right px-3 py-2 hidden md:table-cell">
                 {player.avg_to_die.toFixed(1)}
               </td>
               <td className="text-right px-3 py-2 hidden md:table-cell">
                 {player.avg_rl_took.toFixed(1)}
               </td>
-              <td className="text-right px-3 py-2 hidden md:table-cell">
-                {player.avg_rl_kills.toFixed(1)}
-              </td>
-              <td className="text-right px-3 py-2 hidden md:table-cell">
-                {player.avg_rl_drops.toFixed(1)}
-              </td>
+              {gameMode !== "1on1" && gameMode !== "2on2" && (
+                <td className="text-right px-3 py-2 hidden md:table-cell">
+                  {player.avg_rl_kills.toFixed(1)}
+                </td>
+              )}
+              {gameMode !== "1on1" && gameMode !== "2on2" && (
+                <td className="text-right px-3 py-2 hidden md:table-cell">
+                  {player.avg_rl_drops.toFixed(1)}
+                </td>
+              )}
               <td className="text-right px-3 py-2 hidden lg:table-cell">
                 {player.avg_sg_accuracy.toFixed(1)}%
               </td>
@@ -306,9 +328,11 @@ export const RankingsTable: React.FC<RankingsTableProps> = ({ gameMode, region }
               <td className="text-right px-3 py-2 hidden lg:table-cell">
                 {player.avg_rl_directs.toFixed(1)}
               </td>
-              <td className="text-right px-3 py-2 hidden xl:table-cell">
-                {player.avg_quads_taken.toFixed(1)}
-              </td>
+              {gameMode !== "1on1" && (
+                <td className="text-right px-3 py-2 hidden xl:table-cell">
+                  {player.avg_quads_taken.toFixed(1)}
+                </td>
+              )}
             </tr>
           ))}
         </tbody>
