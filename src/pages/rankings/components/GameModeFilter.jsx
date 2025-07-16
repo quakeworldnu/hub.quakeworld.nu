@@ -1,6 +1,6 @@
 import classNames from "classnames";
 
-const gameModes = ["1on1", "2on2", "4on4", "Wipeout"];
+const gameModes = ["1on1", "2on2", "4on4"]; // Wipeout temporarily hidden until KTX stats are ready
 
 // Theme constants matching the games page
 const sizeSmall = "py-2 px-2.5 text-xs";

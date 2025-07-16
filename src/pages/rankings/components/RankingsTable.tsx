@@ -43,8 +43,8 @@ export const RankingsTable: React.FC<RankingsTableProps> = ({ gameMode, region }
       try {
         const data = await getPlayerRankings(gameMode, region);
         setRankings(data);
-      } catch (err) {
-        setError("Failed to load rankings");
+      } catch (err: any) {
+        setError(err.message || "Failed to load rankings");
         console.error(err);
       } finally {
         setIsLoading(false);
