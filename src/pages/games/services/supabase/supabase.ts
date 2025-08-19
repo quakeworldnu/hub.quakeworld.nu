@@ -14,7 +14,7 @@ const supabase = createClient<Database>(
 
 export async function getGame(id: number): Promise<Game | null> {
   const { data } = await supabase
-    .from("games")
+    .from("v1_games")
     .select("*")
     .eq("id", id)
     .limit(1)
@@ -44,7 +44,7 @@ export async function searchGamesCount(settings: {
   maxAge: number;
 }): Promise<number> {
   let qb = supabase
-    .from("games")
+    .from("v1_games")
     .select("count", { head: true, count: "exact" });
   const { playerQuery, teams, map, gameMode, matchtag, maxAge } = settings;
 
@@ -100,7 +100,7 @@ export async function searchGamesRows(settings: {
   page: number;
 }): Promise<GameSearchEntry[]> {
   let qb = supabase
-    .from("games")
+    .from("v1_games")
     .select("id,timestamp,mode,matchtag,map,teams,players,demo_sha256");
 
   const { gameMode, map, playerQuery, teams, matchtag, maxAge } = settings;

@@ -3,7 +3,7 @@ import type { Database } from "./database.types.ts";
 export type Tables<T extends keyof Database["public"]["Tables"]> =
   Database["public"]["Tables"][T]["Row"];
 
-export type Game = Tables<"games">;
+export type Game = Tables<"v1_games">;
 export type GameFields = keyof Game;
 
 export type GamePlayer = {
