@@ -1,6 +1,4 @@
 import { getAssetUrl } from "../services/cloudfront/cassets.ts";
-import { idMaps } from "./idMaps.ts";
-import { getMapTextures } from "./map_textures.ts";
 import { DEMO_CONFIG_VERSION, QTV_CONFIG_VERSION } from "./meta.ts";
 import type { FteAssets } from "./types.ts";
 
@@ -10,7 +8,7 @@ export function getQtvPlayerAssets(mapName: string): FteAssets {
     "id1/config.cfg": getAssetUrl(
       `fte/id1/config_qtv.cfg?version=${QTV_CONFIG_VERSION}`,
     ),
-    ...getMapAssets(mapName),
+    [`id1/maps/${mapName}.bsp`]: getAssetUrl(`maps/${mapName}.bsp`),
   };
 }
 
@@ -24,26 +22,7 @@ export function getDemoPlayerAssets(
       `fte/id1/config.cfg?version=${DEMO_CONFIG_VERSION}`,
     ),
     "qw/match.mvd.gz": demoUrl,
-    ...getMapAssets(mapName),
-  };
-}
-
-function getMapAssets(mapName: string): FteAssets {
-  const litDir = idMaps.includes(mapName) ? "lits/id1_gpl" : "maps";
-
-  const assets: FteAssets = {
     [`id1/maps/${mapName}.bsp`]: getAssetUrl(`maps/${mapName}.bsp`),
-    [`id1/locs/${mapName}.loc`]: getAssetUrl(`maps/${mapName}.loc`),
-    [`id1/maps/${mapName}.lit`]: getAssetUrl(`${litDir}/${mapName}.lit`),
-  };
-
-  if (idMaps.includes(mapName)) {
-    return assets;
-  }
-
-  return {
-    ...assets,
-    ...getMapTextures(mapName),
   };
 }
 
