@@ -51,6 +51,7 @@ const metaByServer = (server) => {
     !matchtag.includes("ezq") &&
     !matchtag.includes("enhanced") &&
     !matchtag.includes("client") &&
+    !matchtag.includes("h1.nu") &&
     server.title.includes(matchtag);
 
   const meta = {
