@@ -16,7 +16,7 @@ export const hubApi = createApi({
       transformResponse: (servers) => {
         const servers_ = servers.map(transformServer);
         servers_.sort(compareServers);
-        return servers_;
+        return servers_.filter((s) => s.players.length > 0);
       },
     }),
     getStreams: build.query({

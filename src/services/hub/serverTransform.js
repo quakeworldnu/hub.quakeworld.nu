@@ -1,15 +1,4 @@
-function fixAddress(address) {
-  return address.replaceAll("213.76.101.30", "play.qwlan.pl");
-}
-
 export const transformServer = (server) => {
-  // radomsko lan fix
-  server.address = fixAddress(server.address);
-  server.settings.hostname = fixAddress(server.settings.hostname);
-  server.settings.hostname_parsed = fixAddress(server.settings.hostname_parsed);
-  server.qtv_stream.address = fixAddress(server.qtv_stream.address);
-  server.qtv_stream.url = fixAddress(server.qtv_stream.url);
-
   // exclude [ServeMe]
   const index = server.spectator_names.indexOf("[ServeMe]");
 
@@ -20,6 +9,11 @@ export const transformServer = (server) => {
 
   // add meta data
   server.meta = metaByServer(server);
+
+  server.players = server.players.filter(
+    (p) => !p.name.replaceAll(" ", "").includes("h1.nu"),
+  );
+  server.playerCount = server.players.length;
 
   return server;
 };
@@ -50,10 +44,14 @@ const metaByServer = (server) => {
   const spectatorText = calcSpectatorText(spectator_names);
   const isStarted = "Started" === server.status.name;
 
+  const matchtag = (server.settings.matchtag ?? "").toLowerCase();
+
   const showMatchTag =
-    "matchtag" in server.settings &&
-    !server.settings.matchtag.includes("prac") &&
-    server.title.includes(server.settings.matchtag);
+    matchtag &&
+    !matchtag.includes("ezq") &&
+    !matchtag.includes("enhanced") &&
+    !matchtag.includes("client") &&
+    server.title.includes(matchtag);
 
   const meta = {
     isStarted,
