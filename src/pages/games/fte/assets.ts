@@ -1,5 +1,4 @@
 import { getAssetUrl } from "../services/cloudfront/cassets.ts";
-import { DEMO_CONFIG_VERSION, QTV_CONFIG_VERSION } from "./meta.ts";
 import type { FteAssets } from "./types.ts";
 
 export function getQtvPlayerAssets(mapName: string): FteAssets {
