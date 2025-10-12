@@ -5,9 +5,7 @@ import type { FteAssets } from "./types.ts";
 export function getQtvPlayerAssets(mapName: string): FteAssets {
   return {
     ...getGeneralAssets(),
-    "id1/config.cfg": getAssetUrl(
-      `fte/id1/config_qtv.cfg?version=${QTV_CONFIG_VERSION}`,
-    ),
+    "id1/config.cfg": getAssetUrl("fte/id1/config_qtv_v2.cfg"),
     [`id1/maps/${mapName}.bsp`]: getAssetUrl(`maps/${mapName}.bsp`),
   };
 }
@@ -18,9 +16,7 @@ export function getDemoPlayerAssets(
 ): FteAssets {
   return {
     ...getGeneralAssets(),
-    "id1/config.cfg": getAssetUrl(
-      `fte/id1/config.cfg?version=${DEMO_CONFIG_VERSION}`,
-    ),
+    "id1/config.cfg": getAssetUrl("fte/id1/config_v2.cfg"),
     "qw/match.mvd.gz": demoUrl,
     [`id1/maps/${mapName}.bsp`]: getAssetUrl(`maps/${mapName}.bsp`),
   };
