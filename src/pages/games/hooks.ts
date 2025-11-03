@@ -76,6 +76,6 @@ export function useUrlClipParams(): {
   const from = Number.parseInt(params.get("from") || "0");
   const to = Number.parseInt(params.get("to") || "0");
   const track = params.get("track") || "auto";
-  const hasParams = from > 0 && to > 0;
+  const hasParams = params.has("from") || params.has("track");
   return { from, to, track, hasParams };
 }

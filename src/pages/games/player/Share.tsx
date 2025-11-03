@@ -52,11 +52,6 @@ export const ShareDemoButton = () => {
       return "";
     }
 
-    const base = window.location.href.split("?")[0];
-    if (!gameElapsedTime) {
-      return base;
-    }
-
     const q: { [key: string]: string | number | undefined } = { gameId };
 
     if (useFrom) {
@@ -67,7 +62,13 @@ export const ShareDemoButton = () => {
       q.track = trackUserId;
     }
 
-    return `${base}?${query(q)}`;
+    const baseUrl = window.location.href.split("?")[0];
+
+    if (Object.keys(q).length > 0) {
+      return `${baseUrl}?${query(q)}`;
+    }
+
+    return baseUrl;
   }
 
   useEffect(() => {
