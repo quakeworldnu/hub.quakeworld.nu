@@ -10,7 +10,7 @@ export const App = () => {
   });
 
   return (
-    <div className="my-6 h-[400px] max-w-[480px]">
+    <div className="h-[400px] max-w-[480px]">
       <>
         {isSuccess && <ServerBody server={server} />}
         {!isSuccess && "Server has no players."}
