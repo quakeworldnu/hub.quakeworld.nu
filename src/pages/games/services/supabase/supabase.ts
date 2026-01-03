@@ -2,6 +2,7 @@ import { createClient } from "@supabase/supabase-js";
 
 import type { Database } from "./database.types.ts";
 
+import { Hostname } from "../../browser/settings/Hostname.tsx";
 import type { GameMode } from "../../browser/settings/types.ts";
 import { Game } from "./supabase.types.ts";
 
@@ -38,6 +39,7 @@ function queryToFts(query = ""): string {
 export async function searchGamesCount(settings: {
   map: string;
   gameMode: GameMode;
+  hostname: string;
   playerQuery: string;
   teams: string;
   matchtag: string;
@@ -46,7 +48,8 @@ export async function searchGamesCount(settings: {
   let qb = supabase
     .from("v1_games")
     .select("count", { head: true, count: "exact" });
-  const { playerQuery, teams, map, gameMode, matchtag, maxAge } = settings;
+  const { playerQuery, teams, map, gameMode, hostname, matchtag, maxAge } =
+    settings;
 
   if (gameMode !== "All") {
     qb = qb.eq("mode", gameMode.toLowerCase());
@@ -67,6 +70,10 @@ export async function searchGamesCount(settings: {
 
   if (matchtag.length > 0) {
     qb = qb.ilike("matchtag", `%${matchtag}%`);
+  }
+
+  if (Hostname.length > 0) {
+    qb = qb.ilike("server_hostname", `%${hostname}%`);
   }
 
   if (maxAge > 0) {
@@ -92,6 +99,7 @@ export type GameSearchEntry = Pick<
 
 export async function searchGamesRows(settings: {
   gameMode: GameMode;
+  hostname: string;
   map: string;
   playerQuery: string;
   teams: string;
@@ -103,7 +111,8 @@ export async function searchGamesRows(settings: {
     .from("v1_games")
     .select("id,timestamp,mode,matchtag,map,teams,players,demo_sha256");
 
-  const { gameMode, map, playerQuery, teams, matchtag, maxAge } = settings;
+  const { gameMode, hostname, map, playerQuery, teams, matchtag, maxAge } =
+    settings;
 
   if (gameMode !== "All") {
     qb = qb.eq("mode", gameMode.toLowerCase());
@@ -124,6 +133,10 @@ export async function searchGamesRows(settings: {
 
   if (matchtag.length > 0) {
     qb = qb.ilike("matchtag", `%${matchtag}%`);
+  }
+
+  if (hostname.length > 0) {
+    qb = qb.ilike("server_hostname", `%${hostname}%`);
   }
 
   if (maxAge > 0) {

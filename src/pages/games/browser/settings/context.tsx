@@ -13,6 +13,8 @@ type GameBrowserSettingsProps = {
   setDisplayMode: (displayMode: DisplayMode) => void;
   gameMode: GameMode;
   setGameMode: (gameMode: GameMode) => void;
+  hostname: string;
+  setHostname: (query: string) => void;
   map: string;
   setMap: (query: string) => void;
   playerQuery: string;
@@ -32,6 +34,7 @@ type GameBrowserSettingsProps = {
 const defaultSettings: GameBrowserSettings = {
   displayMode: "Grid",
   gameMode: "All",
+  hostname: "",
   map: "",
   playerQuery: "",
   teams: "",
@@ -44,6 +47,7 @@ const GameSettingsContext = createContext<GameBrowserSettingsProps>({
   ...defaultSettings,
   setDisplayMode: () => {},
   setGameMode: () => {},
+  setHostname: () => {},
   setMap: () => {},
   setPlayerQuery: () => {},
   setTeams: () => {},
@@ -69,6 +73,7 @@ export const GameSettingsProvider = ({
     settings.displayMode,
   );
   const [gameMode, setGameMode] = useState<GameMode>(settings.gameMode);
+  const [hostname, setHostname] = useState<string>(settings.hostname);
   const [map, setMap] = useState<string>(settings.map);
   const [playerQuery, setPlayerQuery] = useState<string>(settings.playerQuery);
   const [teams, setTeams] = useState<string>(settings.teams);
@@ -82,6 +87,7 @@ export const GameSettingsProvider = ({
     setSettings({
       displayMode,
       gameMode,
+      hostname,
       map,
       playerQuery,
       teams,
@@ -89,7 +95,17 @@ export const GameSettingsProvider = ({
       maxAge,
       page,
     });
-  }, [displayMode, gameMode, map, playerQuery, teams, matchtag, maxAge, page]);
+  }, [
+    displayMode,
+    gameMode,
+    hostname,
+    map,
+    playerQuery,
+    teams,
+    matchtag,
+    maxAge,
+    page,
+  ]);
 
   function nextPage() {
     setPage(page + 1);
@@ -104,6 +120,8 @@ export const GameSettingsProvider = ({
     setDisplayMode,
     gameMode,
     setGameMode,
+    hostname,
+    setHostname,
     map,
     setMap,
     playerQuery,

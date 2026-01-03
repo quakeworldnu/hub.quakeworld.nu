@@ -2,6 +2,7 @@ import classNames from "classnames";
 import { useGames } from "../context.tsx";
 import { DisplayModeBar } from "./DisplayModeBar.tsx";
 import { GameModeBar } from "./GameModeBar.tsx";
+import { Hostname } from "./Hostname.tsx";
 import { GlobalShowScoresToggle } from "./GlobalShowScoresToggle.tsx";
 import { MapName } from "./MapName.tsx";
 import { Matchtag } from "./Matchtag.tsx";
@@ -26,6 +27,7 @@ export const Toolbar = () => {
       <Teams />
       <MapName />
       <Matchtag />
+      <Hostname />
       <Timeframe />
       <Pagination />
     </div>
