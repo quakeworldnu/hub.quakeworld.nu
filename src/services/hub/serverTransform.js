@@ -88,6 +88,11 @@ const metaByServer = (server) => {
     meta.wrapperClassNames += " smod-hasfreeplayer_slots";
   }
 
+  // todo: qhlan
+  if (server.settings.hostname.toLowerCase().includes("qhlan")) {
+    meta.wrapperClassNames += " smod-qhlan";
+  }
+
   return meta;
 };
 

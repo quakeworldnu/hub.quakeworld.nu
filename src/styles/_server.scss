@@ -12,6 +12,10 @@
   &.smod-hasfreeplayer_slots {
     @include app-smod(#2397d1, 32px);
   }
+
+  &.smod-qhlan {
+    @include app-smod(#4b9f0e, 32px);
+  }
 }
 
 .server-progress {
