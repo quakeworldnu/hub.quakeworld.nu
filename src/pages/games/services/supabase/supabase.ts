@@ -2,7 +2,6 @@ import { createClient } from "@supabase/supabase-js";
 
 import type { Database } from "./database.types.ts";
 
-import { Hostname } from "../../browser/settings/Hostname.tsx";
 import type { GameMode } from "../../browser/settings/types.ts";
 import { Game } from "./supabase.types.ts";
 
