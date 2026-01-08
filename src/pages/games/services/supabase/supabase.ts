@@ -72,7 +72,7 @@ export async function searchGamesCount(settings: {
     qb = qb.ilike("matchtag", `%${matchtag}%`);
   }
 
-  if (Hostname.length > 0) {
+  if (hostname.length > 0) {
     qb = qb.ilike("server_hostname", `%${hostname}%`);
   }
 
