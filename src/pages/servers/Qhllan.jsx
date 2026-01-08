@@ -41,12 +41,14 @@ export function Qhlan2026() {
             11:00 &nbsp; 1on1
             <br />
             22:00 &nbsp; 4on4 draft ceremony
-            <br />
           </div>
           <div className="text-green-300 text-right">Friday</div>
           <div>11:00 &nbsp; 4on4 draft</div>
           <div className="text-green-300 text-right">Saturday</div>
-          <div>11:00 &nbsp; 4on4 clans</div>
+          <div>
+          11:00 &nbsp; 4on4 clans<br />
+          23:59 &nbsp; FFA Ends
+          </div>
           <div className="text-green-300 text-right">Sunday</div>
           <div>15:00 &nbsp; Doors close</div>
           <div className="col-span-2 text-center mt-2">
