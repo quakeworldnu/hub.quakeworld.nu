@@ -4,7 +4,6 @@ import { HorizontalSeparator } from "@qwhub/site/Common";
 import { SiteFooter } from "@qwhub/site/Footer";
 import { SiteHeader } from "@qwhub/site/Header";
 import React from "react";
-import { Qhlan2026 } from "./Qhllan";
 
 export const App = () => {
   return (
@@ -20,7 +19,6 @@ export const App = () => {
         </div>
 
         <div className="md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:block 3xl:w-96 gap-x-4 mt-4">
-          <Qhlan2026 />
           <AllStreams />
         </div>
       </div>
