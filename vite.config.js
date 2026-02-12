@@ -8,6 +8,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve("./index.html"),
+        demoPlayer: resolve("./demo-player/index.html"),
         games: resolve("./games/index.html"),
         players: resolve("./players/index.html"),
         qtv: resolve("./qtv/index.html"),

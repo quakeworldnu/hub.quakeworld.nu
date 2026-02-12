@@ -20,9 +20,11 @@ import { ResponsiveTopBanner } from "./controls/TopBanner.tsx";
 export const FteDemoPlayer = ({
   demo,
   mapName,
+  aspectRatio = "video",
 }: {
   demo: DemoInfo;
   mapName: string;
+  aspectRatio?: "auto" | "video";
 }) => {
   useClipPlayback();
   const assets = getDemoPlayerAssets(getDownloadUrl(demo.sha256), mapName);
@@ -38,7 +40,9 @@ export const FteDemoPlayer = ({
   return (
     <div
       id="ftePlayer"
-      className={"relative w-full h-full bg-black aspect-video"}
+      className={classNames("relative w-full h-full bg-black", {
+        "aspect-video": aspectRatio === "video",
+      })}
       ref={playerRef}
     >
       <div>
