@@ -26,10 +26,8 @@ export const App = () => {
             title="Support Antilag"
             description="Support the continued development of Antilag"
           />
-
-          <AllStreams />
-
           <ScheduledGames />
+          <AllStreams />
         </div>
       </div>
 
