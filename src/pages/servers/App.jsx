@@ -4,6 +4,7 @@ import { HorizontalSeparator } from "@qwhub/site/Common";
 import { SiteFooter } from "@qwhub/site/Footer";
 import { SiteHeader } from "@qwhub/site/Header";
 import React from "react";
+import { KoFiGoal } from "./SupportAntilag";
 
 export const App = () => {
   return (
@@ -18,8 +19,14 @@ export const App = () => {
           <HorizontalSeparator />
         </div>
 
-        <div className="md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:block 3xl:w-96 gap-x-4 mt-4">
+        <div className="md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:block 3xl:w-96 gap-4 mb-4">
           <AllStreams />
+
+          <KoFiGoal
+            project="carapace51218"
+            title="Support Antilag"
+            description="Support the continued development of Antilag"
+          />
         </div>
       </div>
 
