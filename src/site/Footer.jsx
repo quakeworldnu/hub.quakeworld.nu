@@ -9,17 +9,17 @@ export const SiteFooter = () => {
       <div className="footer my-6 sm text-gray-600 leading-loose mb-3 space-x-1 app-links">
         <a href="https://quake.world/">Quake.World</a>
         {delimiter}
-        <a href="https://www.quakeworld.nu/">QuakeWorld.nu</a>
-        {delimiter}
         <a href="https://discord.quake.world/">Discord</a>
         {delimiter}
-        <a href="https://www.twitch.tv/quakeworld">Twitch</a>
+        <a href="https://scheduler.quake.world">Game Scheduler</a>
         {delimiter}
         <a href="https://www.quakeworld.nu/wiki/Overview">Wiki</a>
         {delimiter}
         <a href="https://tools.quake.world/servers/">Servers</a>
         {delimiter}
         <a href="https://tools.quake.world/">Tools</a>
+        {delimiter}
+        <a href="https://www.twitch.tv/quakeworld">Twitch</a>
         {delimiter}
         <a
           href="https://github.com/quakeworldnu/hub.quakeworld.nu"
