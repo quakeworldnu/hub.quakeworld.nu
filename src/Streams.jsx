@@ -29,7 +29,7 @@ export function AllStreams() {
   const { data: streams = [] } = useGetStreamsQuery(null);
 
   return (
-    <div className="app-links my-8">
+    <div className="app-links">
       <div>
         <Heading text="Streams" icon="twitch_glitch_purple" iconSize={20} />
       </div>

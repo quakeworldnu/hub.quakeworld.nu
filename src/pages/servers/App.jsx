@@ -15,11 +15,11 @@ export const App = () => {
           <Servers />
         </div>
 
-        <div className="3xl:hidden">
+        <div className="w-full 3xl:hidden my-4">
           <HorizontalSeparator />
         </div>
 
-        <div className="md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:block 3xl:w-96 gap-4 mb-4">
+        <div className="flex flex-row flex-wrap my-4 gap-y-4 gap-x-8 3xl:w-96 3xl:my-0 3xl:flex-col">
           <AllStreams />
 
           <KoFiGoal
