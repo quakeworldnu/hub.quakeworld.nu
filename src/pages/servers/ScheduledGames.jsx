@@ -116,9 +116,38 @@ function MatchCardCompact({ match }) {
           {match.gameType}
         </span>
         <span className="text-xs text-muted-foreground">
-          {match.scheduledDate} {match.slotId?.replace("_", " ").toUpperCase()}
+          {iso8601_to_string(match.scheduledDateTime)}
         </span>
       </div>
     </a>
   );
+}
+
+function iso8601_to_string(isoString) {
+  const date = new Date(isoString); // parsed in local time automatically
+  const now = new Date();
+
+  const pad = (n) => n.toString().padStart(2, "0");
+
+  // Check if the date is today in local time
+  const isToday =
+    date.getFullYear() === now.getFullYear() &&
+    date.getMonth() === now.getMonth() &&
+    date.getDate() === now.getDate();
+
+  const hours = pad(date.getHours());
+  const minutes = pad(date.getMinutes());
+
+  if (isToday) {
+    return (
+      <strong>
+        Today at {hours}:{minutes}
+      </strong>
+    );
+  } else {
+    const year = date.getFullYear();
+    const month = pad(date.getMonth() + 1);
+    const day = pad(date.getDate());
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+  }
 }
