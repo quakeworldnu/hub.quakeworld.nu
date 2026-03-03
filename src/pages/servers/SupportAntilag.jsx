@@ -9,7 +9,7 @@ export function KoFiGoal({ project, description, title }) {
     async function fetchGoal() {
       try {
         const res = await fetch(
-          `https://vendor.quake.world/v1/ko-fin?project=${project}`,
+          `https://api.quake.world/v1/vendor/ko-fin?project=${project}`,
         );
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
