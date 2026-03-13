@@ -12,7 +12,7 @@ import { Matchtag } from "@qwhub/servers/Server";
 // eslint-disable-next-line
 // @ts-ignore
 // @typescript-eslint/ban-ts-comment
-import { Scoreboard as LegacyScoreboard } from "../../../servers/Scoreboard.jsx";
+import { LegacyScoreboard } from "../../../servers/LegacyScoreboard.jsx";
 import { GameSearchEntry } from "../services/supabase/supabase.ts";
 
 type ScoreboardProps = {

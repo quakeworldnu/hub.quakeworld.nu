@@ -1,4 +1,4 @@
-import { QuakeText, quakeNameFromUnicodeToHtml } from "@qwhub/QuakeText";
+import { QuakeText, coloredQuakeName } from "@qwhub/QuakeText";
 import classNames from "classnames";
 import { memo } from "react";
 import { ColoredFrags } from "./ColoredFrags";
@@ -7,7 +7,7 @@ const sortByFrags = (a, b) => b.frags - a.frags;
 const sortByName = (a, b) =>
   a.name.toLowerCase().localeCompare(b.name.toLowerCase());
 
-export const Scoreboard = ({
+export const LegacyScoreboard = ({
   players = [],
   teams = [],
   showFrags = true,
@@ -50,6 +50,7 @@ export const Scoreboard = ({
 const TeamRow = (props) => {
   const {
     name = "",
+    name_color = null,
     frags = 0,
     colors = [0, 0],
     ping = 0,
@@ -61,19 +62,20 @@ const TeamRow = (props) => {
       <div className="h-full py-px">
         <ColoredFrags frags={frags} colors={colors} />
       </div>
-      <TeamName name={name} />
+      <TeamName name={name} name_color={name_color} />
       <div />
     </div>
   );
 };
 
 const TeamName = memo((props) => {
-  const { name = "" } = props;
+  const { name = "", name_color = null } = props;
   const maxLen = 4;
+  const text = coloredQuakeName(name.substring(0, maxLen), name_color?.slice(0, maxLen) ?? null);
 
   return (
     <QuakeText
-      text={quakeNameFromUnicodeToHtml(name, maxLen)}
+      text={text}
       className="px-1 text-center"
     />
   );
@@ -82,11 +84,12 @@ const TeamName = memo((props) => {
 const PlayerRow = (props) => {
   const {
     name = "",
+    name_color = null,
     frags = 0,
     colors = [0, 0],
     team = "",
+    team_color = null,
     ping = 0,
-    cc = "",
     is_bot = false,
     showTeam = false,
   } = props;
@@ -108,23 +111,12 @@ const PlayerRow = (props) => {
       <div className="h-full py-px">
         <ColoredFrags frags={frags} colors={colors} />
       </div>
-      {showTeam && <TeamName name={team} />}
-      <span className="flex items-center">
-        {cc && cc !== 'none' && (
-          <img
-            src={`https://www.quakeworld.nu/images/flags/${cc.toLowerCase()}.gif`}
-            alt={cc}
-            width="16"
-            height="11"
-            className="mr-1"
-          />
-        )}
-        <QuakeText
-          tag="span"
-          text={quakeNameFromUnicodeToHtml(name)}
-          className={nameColumnClassNames}
-        />
-      </span>
+      {showTeam && <TeamName name={team} name_color={team_color} />}
+      <QuakeText
+        tag="span"
+        text={coloredQuakeName(name, name_color)}
+        className={nameColumnClassNames}
+      />
     </div>
   );
 };

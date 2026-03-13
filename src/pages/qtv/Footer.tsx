@@ -54,7 +54,7 @@ export function QtvPlayerFooter() {
                   <div className="inline-block h-1.5 w-1.5 rounded-full bg-red-600 mr-1 mb-px" />
                   <span className="text-slate-300">
                     {server.spectator_slots.used +
-                      server.qtv_stream.spectator_names.length}{" "}
+                      (server.qtv_stream?.client_names.length ?? 0)}{" "}
                     viewers
                   </span>
                 </div>
@@ -82,8 +82,8 @@ export function QtvPlayerFooter() {
           </SecondaryButton>
 
           <SecondaryButton
-            href={`qw://${server.qtv_stream.url}/qtvplay`}
-            count={server.qtv_stream.spectator_count}
+            href={`qw://${server.qtv_stream?.url}/qtvplay`}
+            count={server.qtv_stream?.client_names.length ?? 0}
             title="Join QTV"
           >
             <QuakeLogo />

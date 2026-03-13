@@ -8,58 +8,44 @@ import {
 } from "../src/serverFilters";
 
 // mock servers
-const s_1on1_africa = {
+const s_1on1 = {
   mode: "1on1",
-  geo: { region: "Africa" },
   players: [],
 };
-const s_2on2_europe = {
+const s_2on2 = {
   mode: "2on2",
-  geo: { region: "Europe" },
   players: [],
 };
-const s_ffa_europe_bots_and_players = {
+const s_ffa_bots_and_players = {
   mode: "ffa",
-  geo: { region: "Europe" },
   players: [{ is_bot: true }, { is_bot: true }],
 };
-const s_ffa_europe_only_bots = {
+const s_ffa_only_bots = {
   mode: "ffa",
-  geo: { region: "Europe" },
   players: [{ is_bot: true }, { is_bot: true }],
 };
-const s_racing_europe = {
+const s_racing = {
   mode: "racing",
-  geo: { region: "Europe" },
   players: [],
 };
-const s_other_oceania = {
+const s_other = {
   mode: "foo",
-  geo: { region: "Oceania" },
   players: [],
 };
 
 const servers = [
-  s_1on1_africa,
-  s_2on2_europe,
-  s_ffa_europe_bots_and_players,
-  s_ffa_europe_only_bots,
-  s_racing_europe,
-  s_other_oceania,
+  s_1on1,
+  s_2on2,
+  s_ffa_bots_and_players,
+  s_ffa_only_bots,
+  s_racing,
+  s_other,
 ];
 
 test("getDefaultServerFilters", () => {
   expect(getDefaultServerFilters()).toEqual({
     only_bots: true,
     modes: ["1on1", "2on2", "4on4", "ffa", "race", "fortress", "other"],
-    regions: [
-      "Africa",
-      "Asia",
-      "Europe",
-      "North America",
-      "Oceania",
-      "South America",
-    ],
   });
 });
 
@@ -68,14 +54,12 @@ test("getInitialServerFilters", () => {
     "serverFilters",
     JSON.stringify({
       modes: ["ffa", "other"],
-      regions: ["Europe"],
     }),
   );
 
   expect(getInitialServerFilters()).toEqual({
     only_bots: true,
     modes: ["ffa", "other"],
-    regions: ["Europe"],
   });
 });
 
@@ -104,7 +88,7 @@ describe("filterServers", () => {
     // exclude
     filters.only_bots = false;
     expect(
-      filterServers(servers, filters).includes(s_ffa_europe_only_bots),
+      filterServers(servers, filters).includes(s_ffa_only_bots),
     ).toBeFalsy();
   });
 
@@ -114,21 +98,9 @@ describe("filterServers", () => {
     filters.modes = ["2on2", "ffa"];
 
     expect(filterServers(servers, filters)).toEqual([
-      s_2on2_europe,
-      s_ffa_europe_bots_and_players,
-      s_ffa_europe_only_bots,
+      s_2on2,
+      s_ffa_bots_and_players,
+      s_ffa_only_bots,
     ]);
-  });
-
-  test("filter by region", () => {
-    const filters = getDefaultServerFilters();
-
-    // specific regions
-    filters.regions = ["Africa"];
-    expect(filterServers(servers, filters)).toEqual([s_1on1_africa]);
-
-    // no regions
-    filters.regions = [];
-    expect(filterServers(servers, filters)).toEqual([]);
   });
 });
