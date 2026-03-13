@@ -254,7 +254,7 @@ export const ServerAddress = (props) => {
       onClick={() => copyToClipboard(serverHostport)}
       title="Copy IP to clipboard"
     >
-      <ServerAddressTitle cc={server.geo.cc} title={server.meta.addressTitle} />
+      <ServerAddressTitle title={server.meta.addressTitle} />
       <img
         src="https://hub.quakeworld.nu/assets/img/icons/content_paste.svg"
         width="12"
@@ -266,19 +266,10 @@ export const ServerAddress = (props) => {
 };
 
 export const ServerAddressTitle = React.memo((props) => {
-  const { cc, title } = props;
+  const { title } = props;
 
   return (
     <div className="flex items-center max-w-[260px] truncate">
-      {cc && (
-        <img
-          src={`https://www.quakeworld.nu/images/flags/${cc.toLowerCase()}.gif`}
-          width="16"
-          height="11"
-          alt={cc}
-          className="inline mr-1 mb-[1px]"
-        />
-      )}
       {title}
     </div>
   );

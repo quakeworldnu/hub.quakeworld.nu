@@ -66,7 +66,7 @@ const metaByServer = (server) => {
 
   let maxPlayerCount = 8;
   const isTeamplay =
-    "teamplay" in server.settings && server.settings.teamplay > 0;
+    "teamplay" in server.settings && parseInt(server.settings.teamplay, 10) > 0;
 
   if (!isTeamplay) {
     maxPlayerCount += 2;

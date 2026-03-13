@@ -10,20 +10,10 @@ export const modes = [
   "other",
 ];
 
-export const regions = [
-  "Africa",
-  "Asia",
-  "Europe",
-  "North America",
-  "Oceania",
-  "South America",
-];
-
 export function getDefaultServerFilters() {
   const defaultValues = {
     only_bots: true,
     modes: [...modes],
-    regions: [...regions],
   };
   return Object.assign({}, defaultValues);
 }
@@ -66,16 +56,6 @@ export function filterServers(servers, filters) {
     }
   }
 
-  // regions
-  if (filters.regions.length !== regions.length) {
-    for (const region of regions) {
-      const includeRegion = filters.regions.includes(region);
-      if (!includeRegion) {
-        filterOperations.push((s) => s.geo.region !== region);
-      }
-    }
-  }
-
   // apply filters
   let filtered_servers = servers;
 
@@ -91,7 +71,6 @@ export function filterServers(servers, filters) {
 
 export function equalsDefaultFilters(filters) {
   return (
-    filters.regions.length === regions.length &&
     filters.modes.length === modes.length &&
     filters.only_bots
   );

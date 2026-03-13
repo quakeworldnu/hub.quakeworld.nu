@@ -8,15 +8,12 @@ export type MvdsvServer = {
   };
   players: {
     name: string;
-    name_color: string;
     team: string;
-    team_color: string;
     frags: number;
     ping: number;
   }[];
   teams: {
     name: string;
-    name_color: string;
     frags: number;
     ping: number;
   }[];
@@ -38,8 +35,5 @@ export type MvdsvServer = {
     url: string;
     spectator_names: string[];
     spectator_count: number;
-  };
-  geo: {
-    cc: string;
   };
 };
