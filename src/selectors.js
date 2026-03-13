@@ -26,10 +26,9 @@ export const selectFilteredClients = createSelector(
   (servers) => {
     const clients = [];
 
-    function addClient(name, name_color, status, address) {
+    function addClient(name, status, address) {
       clients.push({
         name,
-        name_color,
         status,
         address,
       });
@@ -40,16 +39,16 @@ export const selectFilteredClients = createSelector(
 
       for (const client of server.players) {
         if (!client.is_bot) {
-          addClient(client.name, client.name_color, "Playing", address);
+          addClient(client.name, "Playing", address);
         }
       }
 
       for (const clientName of server.spectator_names) {
-        addClient(clientName, "", "Spectating", address);
+        addClient(clientName, "Spectating", address);
       }
 
       for (const clientName of server.qtv_stream.spectator_names) {
-        addClient(clientName, "", "Spectating (QTV)", address);
+        addClient(clientName, "Spectating (QTV)", address);
       }
     }
 

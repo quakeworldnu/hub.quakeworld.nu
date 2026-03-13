@@ -1,4 +1,4 @@
-import { QuakeText, coloredQuakeName } from "@qwhub/QuakeText";
+import { QuakeText, quakeNameFromUnicodeToHtml } from "@qwhub/QuakeText";
 import { selectFilteredClients, selectFilteredServers } from "@qwhub/selectors";
 import { ServerAddress } from "@qwhub/servers/Server";
 import { ServerPoller } from "@qwhub/servers/Servers";
@@ -46,7 +46,7 @@ const PlayerTable = () => {
         <tbody>
           {clients.map((client) => (
             <ClientRow
-              key={`${client.name}-${client.name_color}`}
+              key={client.name}
               client={client}
               server={serversObj[client.address]}
             />
@@ -63,7 +63,7 @@ const ClientRow = (props) => {
   return (
     <tr className="odd:bg-white/5 hover:bg-white/10">
       <td>
-        <QuakeText text={coloredQuakeName(client.name, client.name_color)} />
+        <QuakeText text={quakeNameFromUnicodeToHtml(client.name)} />
         <div className="md:hidden text-xs text-gray-500">{client.status}</div>
       </td>
       <td className="text-xs text-gray-500 hidden md:table-cell">

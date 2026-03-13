@@ -1,4 +1,4 @@
-import { QuakeText, coloredQuakeName } from "@qwhub/QuakeText";
+import { QuakeText, quakeNameFromUnicodeToHtml } from "@qwhub/QuakeText";
 import classNames from "classnames";
 import { memo } from "react";
 import { ColoredFrags } from "./ColoredFrags";
@@ -31,14 +31,14 @@ export const Scoreboard = ({
       {showTeamColumn && (
         <>
           {sortedTeams.map((team) => (
-            <TeamRow {...team} key={[team.name, team.name_color].join("-")} />
+            <TeamRow {...team} key={team.name} />
           ))}
           <div className="my-1.5 h-[1px] bg-gradient-to-r from-red-400/20 via-orange-400 to-orange-400/20" />
         </>
       )}
       {sortedPlayers.slice(0, limit).map((player) => (
         <PlayerRow
-          key={player.id ?? [player.name, player.name_color].join()}
+          key={player.id ?? player.name}
           showTeam={hasTeams}
           {...player}
         />
@@ -50,7 +50,6 @@ export const Scoreboard = ({
 const TeamRow = (props) => {
   const {
     name = "",
-    name_color = "",
     frags = 0,
     colors = [0, 0],
     ping = 0,
@@ -62,22 +61,19 @@ const TeamRow = (props) => {
       <div className="h-full py-px">
         <ColoredFrags frags={frags} colors={colors} />
       </div>
-      <TeamName name={name} name_color={name_color} />
+      <TeamName name={name} />
       <div />
     </div>
   );
 };
 
 const TeamName = memo((props) => {
-  const { name = "", name_color = "" } = props;
+  const { name = "" } = props;
   const maxLen = 4;
 
   return (
     <QuakeText
-      text={coloredQuakeName(
-        name.substring(0, maxLen),
-        name_color.substring(0, maxLen),
-      )}
+      text={quakeNameFromUnicodeToHtml(name, maxLen)}
       className="px-1 text-center"
     />
   );
@@ -86,11 +82,9 @@ const TeamName = memo((props) => {
 const PlayerRow = (props) => {
   const {
     name = "",
-    name_color = "",
     frags = 0,
     colors = [0, 0],
     team = "",
-    team_color = "",
     ping = 0,
     cc = "",
     is_bot = false,
@@ -114,7 +108,7 @@ const PlayerRow = (props) => {
       <div className="h-full py-px">
         <ColoredFrags frags={frags} colors={colors} />
       </div>
-      {showTeam && <TeamName name={team} name_color={team_color} />}
+      {showTeam && <TeamName name={team} />}
       <span className="flex items-center">
         {cc && cc !== 'none' && (
           <img
@@ -127,7 +121,7 @@ const PlayerRow = (props) => {
         )}
         <QuakeText
           tag="span"
-          text={coloredQuakeName(name, name_color)}
+          text={quakeNameFromUnicodeToHtml(name)}
           className={nameColumnClassNames}
         />
       </span>
