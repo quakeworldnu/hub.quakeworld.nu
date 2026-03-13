@@ -32,8 +32,11 @@ export type MvdsvServer = {
     map: string;
   };
   qtv_stream: {
+    id: number;
+    name: string;
+    number: number;
+    address: string;
     url: string;
-    spectator_names: string[];
-    spectator_count: number;
-  };
+    client_names: string[];
+  } | null;
 };

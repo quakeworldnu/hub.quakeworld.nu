@@ -20,7 +20,7 @@ export const transformServer = (server) => {
 
 const metaByServer = (server) => {
   const spectator_names = server.spectator_names
-    .concat(server.qtv_stream.spectator_names)
+    .concat(server.qtv_stream?.client_names ?? [])
     .filter((n) => !n.includes("h1.nu"));
 
   let addressTitle;

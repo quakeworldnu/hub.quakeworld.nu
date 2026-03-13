@@ -194,13 +194,13 @@ export const SpectatorButtons = (props) => {
         </SecondaryButton>
       </div>
 
-      {server.qtv_stream.address !== "" && (
+      {server.qtv_stream !== null && (
         <>
           <div className="hidden sm:block sm:grow">
             <SecondaryButton
               key={"qtv"}
               href={`qw://${server.qtv_stream.url}/qtvplay`}
-              count={server.qtv_stream.spectator_count}
+              count={server.qtv_stream.client_names.length}
               title="Join QTV"
             >
               QTV

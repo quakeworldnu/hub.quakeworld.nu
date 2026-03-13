@@ -79,7 +79,7 @@ const ClientRow = (props) => {
         {server.title}
       </td>
       <td className="text-sm text-right space-x-2 hidden sm:table-cell">
-        {server.qtv_stream.address && (
+        {server.qtv_stream !== null && (
           <a
             href={`qw://${server.qtv_stream.url}/qtvplay`}
             className="text-blue-500 hover:text-white"

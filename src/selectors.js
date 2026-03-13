@@ -7,7 +7,7 @@ export const selectServers = (state) =>
   state.hub.queries["getServers(null)"]?.data ?? [];
 
 export const selectQtvServers = createSelector(selectServers, (servers) => {
-  const result = servers.filter((s) => s.qtv_stream.url !== "");
+  const result = servers.filter((s) => s.qtv_stream !== null);
   result.sort((b, a) => {
     const countDiff = totalSpectatorCount(a) - totalSpectatorCount(b);
     return countDiff === 0 ? a.score - b.score : countDiff;
@@ -47,7 +47,7 @@ export const selectFilteredClients = createSelector(
         addClient(clientName, "Spectating", address);
       }
 
-      for (const clientName of server.qtv_stream.spectator_names) {
+      for (const clientName of server.qtv_stream?.client_names ?? []) {
         addClient(clientName, "Spectating (QTV)", address);
       }
     }
