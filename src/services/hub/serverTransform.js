@@ -20,7 +20,7 @@ export const transformServer = (server) => {
 
 const metaByServer = (server) => {
   const spectator_names = server.spectator_names
-    .concat(server.qtv_stream?.client_names ?? [])
+    .concat(server.qtv_stream.spectator_names)
     .filter((n) => !n.includes("h1.nu"));
 
   let addressTitle;
@@ -66,7 +66,7 @@ const metaByServer = (server) => {
 
   let maxPlayerCount = 8;
   const isTeamplay =
-    "teamplay" in server.settings && parseInt(server.settings.teamplay, 10) > 0;
+    "teamplay" in server.settings && server.settings.teamplay > 0;
 
   if (!isTeamplay) {
     maxPlayerCount += 2;

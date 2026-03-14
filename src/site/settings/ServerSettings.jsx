@@ -2,6 +2,7 @@ import {
   equalsDefaultFilters,
   getDefaultServerFilters,
   modes,
+  regions,
 } from "@qwhub/serverFilters";
 import { setServerFilters, setShowSettings } from "@qwhub/settingsSlice";
 import { Field, Form, Formik, useFormikContext } from "formik";
@@ -97,6 +98,23 @@ const SettingsForm = () => {
                     label={mode}
                     value={mode}
                     isChecked={values.modes.includes(mode)}
+                  />
+                );
+              })}
+            </div>
+          </div>
+
+          <div>
+            <div className="font-bold text-sm mb-1">Regions</div>
+            <div className="text-sm space-y-0.5 max-w-xs columns-2">
+              {regions.map((region) => {
+                return (
+                  <Checkbox
+                    key={region}
+                    name={"regions"}
+                    label={region}
+                    value={region}
+                    isChecked={values.regions.includes(region)}
                   />
                 );
               })}

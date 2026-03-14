@@ -4,17 +4,15 @@ import { transformServer } from "./serverTransform";
 
 export const hubApi = createApi({
   reducerPath: "hub",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://api.quake.world/v1/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "https://hubapi.quakeworld.nu/v2/" }),
   endpoints: (build) => ({
     getServer: build.query({
       query: (address) => `servers/${address}`,
       transformResponse: (server) => transformServer(server),
     }),
     getServers: build.query({
-      query: (query = "") => {
-        const base = "servers?server_type=game_server&with_clients=true";
-        return query ? `${base}&${query}` : base;
-      },
+      query: (query = "") =>
+        query ? `servers/mvdsv?${query}` : "servers/mvdsv",
       transformResponse: (servers) => {
         const servers_ = servers.map(transformServer);
         servers_.sort(compareServers);
@@ -22,16 +20,10 @@ export const hubApi = createApi({
       },
     }),
     getStreams: build.query({
-      query: () => "vendor/twitch-streams",
-      transformResponse: (response) => {
-        const streams = (response.data ?? []).map((stream) => ({
-          ...stream,
-          channel: stream.user_login,
-          url: `https://www.twitch.tv/${stream.user_login}`,
-          viewers: stream.viewer_count,
-        }));
-        streams.sort((a, b) => b.viewers - a.viewers);
-        return streams;
+      query: () => "streams",
+      transformResponse: (servers) => {
+        servers.sort((a, b) => b.viewers - a.viewers);
+        return servers;
       },
     }),
     getLastscores: build.query({

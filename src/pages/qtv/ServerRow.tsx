@@ -2,6 +2,8 @@ import { useEventListener } from "@qwhub/pages/games/hooks";
 import { totalSpectatorCount } from "@qwhub/servers/util.ts";
 import classNames from "classnames";
 import { useBoolean } from "usehooks-ts";
+import { Flag } from "./Flag";
+
 import { QtvEvent } from "@qwhub/pages/qtv/events.ts";
 import { MvdsvServer } from "./types.ts";
 
@@ -33,7 +35,7 @@ export function ServerRow({
             "font-bold": isSelected,
           })}
         >
-          {title}{" "}
+          <Flag cc={server.geo.cc} /> {title}{" "}
           {"ffa" === server.mode && (
             <span className="text-xs text-slate-400">
               - <strong>{server.settings.map}</strong> -{" "}

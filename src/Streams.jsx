@@ -10,9 +10,11 @@ export function FeaturedStreams() {
 
   return (
     <div className="space-y-4 sm:space-y-0 sm:flex sm:space-x-4">
-      {streams.map((stream) => (
-        <FeaturedStream key={stream.channel} stream={stream} />
-      ))}
+      {streams
+        .filter((s) => s.is_featured)
+        .map((stream) => (
+          <FeaturedStream key={stream.channel} stream={stream} />
+        ))}
     </div>
   );
 }

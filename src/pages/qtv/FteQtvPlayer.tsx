@@ -58,8 +58,8 @@ export function FteQtvPlayer({
 
   useEventListener("fte.event.qtv_disconnect", reconnect);
   useEventListener(QtvEvent.SelectServer, ({ detail: selectedServer }) => {
-    connect(selectedServer.qtv_stream!.url);
-    setLastKnownUrl(selectedServer.qtv_stream!.url);
+    connect(selectedServer.qtv_stream.url);
+    setLastKnownUrl(selectedServer.qtv_stream.url);
   });
 
   const [playerRef, { width }] = useElementSize();
