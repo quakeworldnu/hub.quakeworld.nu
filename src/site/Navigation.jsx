@@ -16,8 +16,8 @@ export default function SiteNavigation() {
     playerCount += server.players.filter((p) => !p.is_bot).length;
     spectatorCount += server.spectator_slots.used;
 
-    if (server.qtv_stream !== null) {
-      spectatorCount += server.qtv_stream.client_names.length;
+    if ("" !== server.qtv_stream.address) {
+      spectatorCount += server.qtv_stream.spectator_count;
       qtvCount++;
     }
   }

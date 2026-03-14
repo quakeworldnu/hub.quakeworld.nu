@@ -7,7 +7,7 @@ export const selectServers = (state) =>
   state.hub.queries["getServers(null)"]?.data ?? [];
 
 export const selectQtvServers = createSelector(selectServers, (servers) => {
-  const result = servers.filter((s) => s.qtv_stream !== null);
+  const result = servers.filter((s) => s.qtv_stream.url !== "");
   result.sort((b, a) => {
     const countDiff = totalSpectatorCount(a) - totalSpectatorCount(b);
     return countDiff === 0 ? a.score - b.score : countDiff;
@@ -26,9 +26,10 @@ export const selectFilteredClients = createSelector(
   (servers) => {
     const clients = [];
 
-    function addClient(name, status, address) {
+    function addClient(name, name_color, status, address) {
       clients.push({
         name,
+        name_color,
         status,
         address,
       });
@@ -39,16 +40,16 @@ export const selectFilteredClients = createSelector(
 
       for (const client of server.players) {
         if (!client.is_bot) {
-          addClient(client.name, "Playing", address);
+          addClient(client.name, client.name_color, "Playing", address);
         }
       }
 
       for (const clientName of server.spectator_names) {
-        addClient(clientName, "Spectating", address);
+        addClient(clientName, "", "Spectating", address);
       }
 
-      for (const clientName of server.qtv_stream?.client_names ?? []) {
-        addClient(clientName, "Spectating (QTV)", address);
+      for (const clientName of server.qtv_stream.spectator_names) {
+        addClient(clientName, "", "Spectating (QTV)", address);
       }
     }
 
