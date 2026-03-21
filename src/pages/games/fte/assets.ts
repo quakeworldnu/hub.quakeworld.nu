@@ -5,7 +5,7 @@ export function getQtvPlayerAssets(mapName: string): FteAssets {
   return {
     ...getGeneralAssets(),
     "id1/config.cfg": getAssetUrl("fte/id1/config_qtv_v2.cfg"),
-    [`id1/maps/${mapName}.bsp`]: getAssetUrl(`maps/${mapName}.bsp`),
+    [`id1/maps/${mapName}.bsp`]: `https://assets.quake.world/maps_bundled/${mapName}.bsp`,
   };
 }
 
@@ -17,7 +17,7 @@ export function getDemoPlayerAssets(
     ...getGeneralAssets(),
     "id1/config.cfg": getAssetUrl("fte/id1/config_v2.cfg"),
     "qw/match.mvd.gz": demoUrl,
-    [`id1/maps/${mapName}.bsp`]: getAssetUrl(`maps/${mapName}.bsp`),
+    [`id1/maps/${mapName}.bsp`]: `https://assets.quake.world/maps_bundled/${mapName}.bsp`,
   };
 }
 
