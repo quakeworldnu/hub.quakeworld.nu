@@ -4,8 +4,8 @@ import type { FteAssets } from "./types.ts";
 export function getQtvPlayerAssets(mapName: string): FteAssets {
   return {
     ...getGeneralAssets(),
-    "id1/config.cfg": "/assets/fte/config_qtv_v3.cfg",
-    [`id1/maps/${mapName}.bsp`]: `https://assets.quake.world/maps_bundled/${mapName}.bsp`,
+    "id1/config.cfg": "/assets/fte/config_qtv_v4.cfg",
+    [`id1/maps/${mapName}.bsp`]: `https://assets.quake.world/maps/${mapName}.bsp`,
   };
 }
 
@@ -15,9 +15,9 @@ export function getDemoPlayerAssets(
 ): FteAssets {
   return {
     ...getGeneralAssets(),
-    "id1/config.cfg": "/assets/fte/config_v3.cfg",
+    "id1/config.cfg": "/assets/fte/config_v4.cfg",
     "qw/match.mvd.gz": demoUrl,
-    [`id1/maps/${mapName}.bsp`]: `https://assets.quake.world/maps_bundled/${mapName}.bsp`,
+    [`id1/maps/${mapName}.bsp`]: `https://assets.quake.world/maps/${mapName}.bsp`,
   };
 }
 
