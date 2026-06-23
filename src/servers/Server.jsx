@@ -125,7 +125,7 @@ export const ServerBody = (props) => {
           <div className="flex flex-col justify-center items-center h-full px-2">
             <Matchtag
               text={serverMeta.matchtag}
-              hostport={server.settings.hostport}
+              hostname={server.settings.hostname}
             />
             <Scoreboard
               players={server.players}
@@ -141,8 +141,8 @@ export const ServerBody = (props) => {
   }
 };
 
-export const Matchtag = ({ text = "", hostport = "" }) => {
-  if ((hostport ?? "").includes(".qwleague.com")) {
+export const Matchtag = ({ text = "", hostname = "" }) => {
+  if ((hostname ?? "").includes(".qwleague.com")) {
     return <QWLeagueBanner />;
   }
 
@@ -277,8 +277,8 @@ const ServerFooter = (props) => {
   );
 };
 
-const qwleagueCountryCode = (hostport) => {
-  const match = (hostport ?? "").match(/(?:^|\.)([a-z]{2})\.qwleague\.com/i);
+const qwleagueCountryCode = (hostname) => {
+  const match = (hostname ?? "").match(/(?:^|\.)([a-z]{2})\.qwleague\.com/i);
   return match ? match[1].toLowerCase() : "";
 };
 
@@ -286,7 +286,7 @@ export const ServerAddress = (props) => {
   const { server } = props;
   const serverHostport =
     server.settings.hostport || server.settings.hostname_parsed;
-  const cc = qwleagueCountryCode(server.settings.hostport) || server.geo.cc;
+  const cc = qwleagueCountryCode(server.settings.hostname) || server.geo.cc;
 
   return (
     <div
