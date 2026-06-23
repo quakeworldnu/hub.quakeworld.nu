@@ -277,10 +277,16 @@ const ServerFooter = (props) => {
   );
 };
 
+const qwleagueCountryCode = (hostport) => {
+  const match = (hostport ?? "").match(/(?:^|\.)([a-z]{2})\.qwleague\.com/i);
+  return match ? match[1].toLowerCase() : "";
+};
+
 export const ServerAddress = (props) => {
   const { server } = props;
   const serverHostport =
     server.settings.hostport || server.settings.hostname_parsed;
+  const cc = qwleagueCountryCode(server.settings.hostport) || server.geo.cc;
 
   return (
     <div
@@ -288,7 +294,7 @@ export const ServerAddress = (props) => {
       onClick={() => copyToClipboard(serverHostport)}
       title="Copy IP to clipboard"
     >
-      <ServerAddressTitle cc={server.geo.cc} title={server.meta.addressTitle} />
+      <ServerAddressTitle cc={cc} title={server.meta.addressTitle} />
       <img
         src="https://hub.quakeworld.nu/assets/img/icons/content_paste.svg"
         width="12"
