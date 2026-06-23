@@ -123,7 +123,10 @@ export const ServerBody = (props) => {
             )}
           </div>
           <div className="flex flex-col justify-center items-center h-full px-2">
-            <Matchtag text={serverMeta.matchtag} />
+            <Matchtag
+              text={serverMeta.matchtag}
+              hostport={server.settings.hostport}
+            />
             <Scoreboard
               players={server.players}
               teams={server.teams}
@@ -138,7 +141,11 @@ export const ServerBody = (props) => {
   }
 };
 
-export const Matchtag = ({ text = "" }) => {
+export const Matchtag = ({ text = "", hostport = "" }) => {
+  if ((hostport ?? "").includes(".qwleague.com")) {
+    return <QWLeagueBanner />;
+  }
+
   if (0 === (text ?? "").trim().length) {
     return null;
   }
@@ -147,6 +154,28 @@ export const Matchtag = ({ text = "" }) => {
     <div className="py-1.5 mb-3 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r from-red-600/0 via-red-600 app-text-shadow">
       {text}
     </div>
+  );
+};
+
+const QWLeagueBanner = () => {
+  return (
+    <a
+      href="https://qwleague.com"
+      target="_top"
+      title="QWLeague"
+      className="flex items-center justify-center py-1.5 mb-3 w-full bg-gradient-to-r from-black/0 via-black/70 hover:via-black/80 transition-colors app-text-shadow"
+    >
+      <img
+        src="/assets/img/qwleague_logo.webp"
+        alt=""
+        width="18"
+        height="16"
+        className="h-4 w-auto mr-[5px]"
+      />
+      <span className="uppercase font-bold tracking-widest text-xs text-orange-400">
+        QWLeague
+      </span>
+    </a>
   );
 };
 
