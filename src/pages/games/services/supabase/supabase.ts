@@ -94,6 +94,7 @@ export type GameSearchEntry = Pick<
   | "teams"
   | "players"
   | "demo_sha256"
+  | "server_hostname"
 >;
 
 export async function searchGamesRows(settings: {
@@ -108,7 +109,9 @@ export async function searchGamesRows(settings: {
 }): Promise<GameSearchEntry[]> {
   let qb = supabase
     .from("v1_games")
-    .select("id,timestamp,mode,matchtag,map,teams,players,demo_sha256");
+    .select(
+      "id,timestamp,mode,matchtag,map,teams,players,demo_sha256,server_hostname",
+    );
 
   const { gameMode, hostname, map, playerQuery, teams, matchtag, maxAge } =
     settings;
