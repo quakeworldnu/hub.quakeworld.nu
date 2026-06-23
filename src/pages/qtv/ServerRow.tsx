@@ -1,5 +1,8 @@
 import { useEventListener } from "@qwhub/pages/games/hooks";
-import { totalSpectatorCount } from "@qwhub/servers/util.ts";
+import {
+  qwleagueCountryCode,
+  totalSpectatorCount,
+} from "@qwhub/servers/util.ts";
 import classNames from "classnames";
 import { useBoolean } from "usehooks-ts";
 import { Flag } from "./Flag";
@@ -18,6 +21,7 @@ export function ServerRow({
   });
 
   const title = server.title.replace(` [${server.settings.map}]`, "");
+  const cc = qwleagueCountryCode(server.settings.hostname) || server.geo.cc;
 
   return (
     <div
@@ -35,7 +39,7 @@ export function ServerRow({
             "font-bold": isSelected,
           })}
         >
-          <Flag cc={server.geo.cc} /> {title}{" "}
+          <Flag cc={cc} /> {title}{" "}
           {"ffa" === server.mode && (
             <span className="text-xs text-slate-400">
               - <strong>{server.settings.map}</strong> -{" "}

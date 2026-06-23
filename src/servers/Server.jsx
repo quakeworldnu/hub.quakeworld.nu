@@ -2,6 +2,7 @@ import { PrimaryButton, SecondaryButton } from "@qwhub/Buttons";
 import { QuakeText } from "@qwhub/QuakeText";
 import { Lastscores } from "@qwhub/servers/Lastscores";
 import { Mapshot } from "@qwhub/servers/Mapshot";
+import { qwleagueCountryCode } from "@qwhub/servers/util.ts";
 import copyToClipboard from "copy-text-to-clipboard";
 import React, { Fragment, useState } from "react";
 import { Scoreboard } from "./Scoreboard";
@@ -275,11 +276,6 @@ const ServerFooter = (props) => {
       </div>
     </div>
   );
-};
-
-const qwleagueCountryCode = (hostname) => {
-  const match = (hostname ?? "").match(/(?:^|\.)([a-z]{2})\.qwleague\.com/i);
-  return match ? match[1].toLowerCase() : "";
 };
 
 export const ServerAddress = (props) => {

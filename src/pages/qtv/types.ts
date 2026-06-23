@@ -33,6 +33,7 @@ export type MvdsvServer = {
   spectator_names: string[];
   settings: {
     map: string;
+    hostname?: string;
   };
   qtv_stream: {
     url: string;
