@@ -1,3 +1,5 @@
+import { faBoltLightning } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SecondaryButton } from "@qwhub/Buttons";
 import { useEffect, useState } from "react";
 
@@ -31,8 +33,17 @@ export function KoFiGoal({ project, description, title }) {
   return (
     <div>
       <div className="border border-slate-700 rounded-md p-4 bg-slate-800">
-        <h2 className="text-lg font-bold">{title}</h2>
-        {description && <div className="mt-2 text-gray-300">{description}</div>}
+        <h2 className="text-lg font-bold">
+          <FontAwesomeIcon
+            icon={faBoltLightning}
+            fixedWidth
+            className="mr-2 text-yellow-400"
+          />
+          {title}
+        </h2>
+        {description && (
+          <div className="mt-2 text-gray-300 text-sm">{description}</div>
+        )}
 
         <div className="mt-4">
           <div className="w-full h-1.5 bg-slate-600 rounded overflow-hidden">
@@ -41,7 +52,7 @@ export function KoFiGoal({ project, description, title }) {
               style={{ width: `${progress}%` }}
             />
           </div>
-          <p className="mt-2 text-sm text-gray-300 text-muted-foreground">
+          <p className="mt-2 text-sm text-emerald-300">
             {progress}% of {currency}
             {goal} goal
           </p>

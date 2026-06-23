@@ -4,6 +4,7 @@ import { HorizontalSeparator } from "@qwhub/site/Common";
 import { SiteFooter } from "@qwhub/site/Footer";
 import { SiteHeader } from "@qwhub/site/Header";
 import React from "react";
+import { QWLeague } from "./QWLeague";
 import { ScheduledGames } from "./ScheduledGames";
 import { KoFiGoal } from "./SupportAntilag";
 
@@ -21,6 +22,7 @@ export const App = () => {
         </div>
 
         <div className="flex flex-row flex-wrap my-4 gap-y-6 gap-x-8 3xl:w-96 3xl:flex-col">
+          <QWLeague />
           <KoFiGoal
             project="carapace51218"
             title="Support Antilag"
