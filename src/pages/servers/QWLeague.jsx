@@ -7,7 +7,7 @@ export function QWLeague() {
     <a
       href="https://qwleague.com"
       target="_top"
-      className="block self-start border border-orange-900/60 rounded-md p-3 bg-orange-950/40 hover:bg-orange-900/40 hover:border-orange-800/70 transition-colors"
+      className="block self-start 3xl:self-stretch border border-orange-900/60 rounded-md p-3 bg-orange-950/40 hover:bg-orange-900/40 hover:border-orange-800/70 transition-colors"
     >
       <div className="flex items-center">
         <img
