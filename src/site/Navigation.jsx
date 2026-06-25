@@ -47,6 +47,12 @@ export default function SiteNavigation() {
       longDescription: "",
       url: "/games/",
     },
+    {
+      title: "Rankings",
+      shortDescription: "",
+      longDescription: "",
+      url: "/rankings/",
+    },
   ];
 
   return (

@@ -38,10 +38,21 @@ export default {
             transform: "translate(-50%, -50%) scale(1)",
           },
         },
+        fadeIn: {
+          from: {
+            opacity: "0",
+            transform: "translateY(5px)",
+          },
+          to: {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
       },
       animation: {
         overlayShow: "overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1)",
         contentShow: "contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1)",
+        fadeIn: "fadeIn 0.2s ease-out",
       },
       borderRadius: {
         lg: "var(--radius)",
