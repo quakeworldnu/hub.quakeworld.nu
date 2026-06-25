@@ -143,7 +143,7 @@ export const ServerBody = (props) => {
 };
 
 export const Matchtag = ({ text = "", hostname = "" }) => {
-  if (!(hostname ?? "").includes(".qwleague.com")) {
+  if ((hostname ?? "").includes(".qwleague.com")) {
     return <QWLeagueBanner />;
   }
 
