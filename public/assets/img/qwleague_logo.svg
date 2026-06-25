@@ -1,0 +1,61 @@
+<svg width="52" height="58" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M23 55.176 26 58l3-2.824V36h-6v19.176ZM42 33v9.648l-7 6.34V37.994l7-4.993ZM10 33v9.648l7 6.34V37.994l-7-4.993Z" fill="#000"/>
+    <circle opacity=".1" cx="16.5" cy="19.5" r="12.5" fill="url(#a)"/>
+    <circle opacity=".1" cx="16.5" cy="15.5" r="12.5" fill="url(#b)"/>
+    <circle opacity=".1" cx="34.5" cy="23.5" r="12.5" fill="url(#c)"/>
+    <circle opacity=".1" cx="32.5" cy="21.5" r="6.5" fill="url(#d)"/>
+    <path d="m48.8 34 3.2-3-3.2-3H46v6h2.8Z" fill="#F5370C"/>
+    <path d="m23 9 3-3 3 3v3h-6V9Z" fill="#FFCE63"/>
+    <path d="M3.2 34 0 31l3.2-3H6v6H3.2Z" fill="#F5370C"/>
+    <path d="M19.35 22.65 17 25v21.988l-7-6.34V21.352L17.013 15h2.338v7.65Z" fill="url(#e)"/>
+    <path d="M42 21.354v19.294l-7 6.34V25l-2.35-2.35V15h2.337L42 21.354Z" fill="url(#f)"/>
+    <path d="M23 53.176 26 56l3-2.824V34h-6v19.176Z" fill="url(#g)"/>
+    <path opacity=".5" fill="#FFCE63" d="M23 34h6v1h-6z"/>
+    <path fill="#fff" d="M23 11h6v1h-6z"/>
+    <circle opacity=".1" cx="10.5" cy="21.5" r="6.5" fill="url(#h)"/>
+    <circle opacity=".1" cx="14.5" cy="19.5" r="6.5" fill="url(#i)"/>
+    <circle opacity=".1" cx="27" cy="7" r="4" fill="url(#j)"/>
+    <path fill="#FFCE63" d="M20 6h1v1h-1zM22 2h1v1h-1zM16 0h1v1h-1z"/>
+    <defs>
+        <radialGradient id="a" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="rotate(90 -1.5 18) scale(12.5)">
+            <stop stop-color="#FF6B4A"/>
+            <stop offset="1" stop-color="#FF6B4A" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="b" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="rotate(90 .5 16) scale(12.5)">
+            <stop stop-color="#FF6B4A"/>
+            <stop offset="1" stop-color="#FF6B4A" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="c" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="rotate(90 5.5 29) scale(12.5)">
+            <stop stop-color="#FF6B4A"/>
+            <stop offset="1" stop-color="#FF6B4A" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="d" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="rotate(90 5.5 27) scale(6.5)">
+            <stop stop-color="#FF6B4A"/>
+            <stop offset="1" stop-color="#FF6B4A" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="h" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="rotate(90 -5.5 16) scale(6.5)">
+            <stop stop-color="#FFCE63"/>
+            <stop offset="1" stop-color="#FFCE63" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="i" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="rotate(90 -2.5 17) scale(6.5)">
+            <stop stop-color="#FFCE63"/>
+            <stop offset="1" stop-color="#FFCE63" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="j" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0 4 -4 0 27 7)">
+            <stop stop-color="#FFCE63"/>
+            <stop offset="1" stop-color="#FFCE63" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="e" x1="14.675" y1="15" x2="14.675" y2="46.988" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#FF6B4A"/>
+            <stop offset="1" stop-color="#F5370C"/>
+        </linearGradient>
+        <linearGradient id="f" x1="37.325" y1="15" x2="37.325" y2="46.988" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#FF6B4A"/>
+            <stop offset="1" stop-color="#F5370C"/>
+        </linearGradient>
+        <linearGradient id="g" x1="26" y1="34" x2="26" y2="45" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#FF6B4A"/>
+            <stop offset="1" stop-color="#F5370C"/>
+        </linearGradient>
+    </defs>
+</svg>

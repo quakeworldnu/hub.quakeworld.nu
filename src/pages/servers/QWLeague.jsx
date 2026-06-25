@@ -11,11 +11,11 @@ export function QWLeague() {
     >
       <div className="flex items-center">
         <img
-          src="/assets/img/qwleague_logo.webp"
+          src="/assets/img/qwleague_logo.svg"
           alt="QWLeague"
           className="h-7 w-auto"
         />
-        <h2 className="ml-3 text-lg font-bold text-orange-500">QWLeague</h2>
+        <h2 className="ml-1.5 text-lg font-bold text-[#ff3b1f]">QWLeague</h2>
         <FontAwesomeIcon
           icon={faChevronRight}
           className="ml-auto text-orange-400/70"

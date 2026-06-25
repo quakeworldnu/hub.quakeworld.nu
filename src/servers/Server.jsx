@@ -168,11 +168,11 @@ const QWLeagueBanner = () => {
     >
       <div className="flex items-center">
         <img
-          src="/assets/img/qwleague_logo.webp"
+          src="/assets/img/qwleague_logo.svg"
           alt="qwleague"
           className="h-5 w-auto mr-[5px]"
         />
-        <span className="uppercase font-bold tracking-widest text-xs text-orange-400">
+        <span className="uppercase font-bold tracking-widest text-xs text-[#ff3b1f]">
           QWLeague
         </span>
       </div>
