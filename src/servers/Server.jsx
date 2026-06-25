@@ -217,16 +217,19 @@ export const SpectatorButtons = (props) => {
 
   return (
     <>
-      <div className="hidden sm:block sm:grow">
-        <SecondaryButton
-          href={`qw://${server.address}/observe`}
-          count={server.spectator_slots.used}
-          title="Join as spectator"
-        >
-          Spectate
-        </SecondaryButton>
-      </div>
-
+      {
+        (server.spectator_slots.free > 0) && (
+          <div className="hidden sm:block sm:grow">
+            <SecondaryButton
+              href={`qw://${server.address}/observe`}
+              count={server.spectator_slots.used}
+              title="Join as spectator"
+            >
+              Spectate
+            </SecondaryButton>
+          </div>
+        )
+      }
       {server.qtv_stream.address !== "" && (
         <>
           <div className="hidden sm:block sm:grow">
