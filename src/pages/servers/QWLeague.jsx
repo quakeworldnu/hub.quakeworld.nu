@@ -13,9 +13,7 @@ export function QWLeague() {
         <img
           src="/assets/img/qwleague_logo.webp"
           alt="QWLeague"
-          width="36"
-          height="32"
-          className="h-8 w-auto"
+          className="h-7 w-auto"
         />
         <h2 className="ml-3 text-lg font-bold text-orange-500">QWLeague</h2>
         <FontAwesomeIcon
