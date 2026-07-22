@@ -173,12 +173,9 @@ const QWLeagueBanner = () => {
           className="h-5 w-auto mr-[5px]"
         />
         <span className="uppercase font-bold tracking-widest text-xs text-[#ff3b1f]">
-          QWLeague
+          QWLeague.com
         </span>
       </div>
-      <span className="mt-1 text-[11px] tracking-wide text-orange-200/90">
-        Register at QWLeague.com
-      </span>
     </a>
   );
 };
