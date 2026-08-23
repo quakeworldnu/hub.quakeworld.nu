@@ -97,11 +97,7 @@ const PlayerRow = (props) => {
     showTeam = false,
   } = props;
 
-  let pingText = `${Math.min(666, ping)} ms`;
-  if (ping > 0) {
-    pingText = is_bot ? "(bot)" : `${Math.min(666, ping)} ms`;
-  }
-
+  const pingText = is_bot ? "(bot)" : `${Math.min(666, ping)} ms`;
   let nameColumnClassNames = "truncate max-w-[160px]";
 
   if (is_bot) {
