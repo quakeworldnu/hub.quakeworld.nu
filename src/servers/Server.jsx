@@ -124,7 +124,10 @@ export const ServerBody = (props) => {
             )}
           </div>
           <div className="flex flex-col justify-center items-center h-full px-2">
-            <Matchtag />
+            <Matchtag
+              text={serverMeta.matchtag}
+              hostname={server.settings.hostname}
+            />
             <Scoreboard
               players={server.players}
               teams={server.teams}
