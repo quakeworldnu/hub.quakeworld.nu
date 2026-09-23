@@ -124,10 +124,7 @@ export const ServerBody = (props) => {
             )}
           </div>
           <div className="flex flex-col justify-center items-center h-full px-2">
-            <Matchtag
-              text={serverMeta.matchtag}
-              hostname={server.settings.hostname}
-            />
+            <Matchtag />
             <Scoreboard
               players={server.players}
               teams={server.teams}
@@ -143,17 +140,22 @@ export const ServerBody = (props) => {
 };
 
 export const Matchtag = ({ text = "", hostname = "" }) => {
-  if ((hostname ?? "").includes(".qwleague.com")) {
-    return <QWLeagueBanner />;
-  }
+  const showQwleagueBanner = (hostname ?? "").includes(".qwleague.com");
+  const showMatchtag = (text ?? "").trim().length > 0;
+  const showAnyBanner = showQwleagueBanner || showMatchtag;
 
-  if (0 === (text ?? "").trim().length) {
+  if (!showAnyBanner) {
     return null;
   }
 
   return (
-    <div className="py-1.5 mb-3 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r from-red-600/0 via-red-600 app-text-shadow">
-      {text}
+    <div className="mb-3">
+      {showQwleagueBanner && <QWLeagueBanner />}
+      {showMatchtag && (
+        <div className="py-1.5 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r from-red-600/0 via-red-600 app-text-shadow">
+          {text}
+        </div>
+      )}
     </div>
   );
 };
@@ -164,7 +166,7 @@ const QWLeagueBanner = () => {
       href="https://qwleague.com"
       target="_top"
       title="QWLeague"
-      className="flex flex-col items-center justify-center py-1.5 mb-3 w-full bg-gradient-to-r from-black/0 via-black/70 hover:via-black/80 transition-colors app-text-shadow"
+      className="flex flex-col items-center justify-center py-1.5 w-full bg-gradient-to-r from-black/0 via-black/70 hover:via-black transition-colors app-text-shadow"
     >
       <div className="flex items-center">
         <img
@@ -214,19 +216,17 @@ export const SpectatorButtons = (props) => {
 
   return (
     <>
-      {
-        (server.spectator_slots.free > 0) && (
-          <div className="hidden sm:block sm:grow">
-            <SecondaryButton
-              href={`qw://${server.address}/observe`}
-              count={server.spectator_slots.used}
-              title="Join as spectator"
-            >
-              Spectate
-            </SecondaryButton>
-          </div>
-        )
-      }
+      {server.spectator_slots.free > 0 && (
+        <div className="hidden sm:block sm:grow">
+          <SecondaryButton
+            href={`qw://${server.address}/observe`}
+            count={server.spectator_slots.used}
+            title="Join as spectator"
+          >
+            Spectate
+          </SecondaryButton>
+        </div>
+      )}
       {server.qtv_stream.address !== "" && (
         <>
           <div className="hidden sm:block sm:grow">
