@@ -149,7 +149,7 @@ export const Matchtag = ({ text = "", hostname = "" }) => {
   }
 
   return (
-    <div className="mb-3">
+    <div className="mb-3 w-full">
       {showQwleagueBanner && <QWLeagueBanner />}
       {showMatchtag && (
         <div className="py-1.5 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r from-red-600/0 via-red-600 app-text-shadow">
