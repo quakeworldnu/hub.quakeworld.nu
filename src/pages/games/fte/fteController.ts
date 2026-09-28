@@ -43,11 +43,16 @@ export class FteController {
 
   private static _instance: FteController | null = null;
 
-  static createInstace(module: FteModule, demoDuration: number | null) {
+  static createInstace(
+    module: FteModule,
+    demoDuration: number | null,
+    countdownDuration: number | null = null,
+  ) {
     if (FteController._instance === null) {
       const fte = new FteController(module);
       fte.mute();
       fte.setDemoDuration(demoDuration || 610);
+      fte.setCountdownDuration(countdownDuration || 10);
       FteController._instance = fte;
     }
 
@@ -109,6 +114,10 @@ export class FteController {
 
   getCountdownDuration(): number {
     return this._countdownDuration;
+  }
+
+  setCountdownDuration(value: number) {
+    this._countdownDuration = value;
   }
 
   getMatchElapsedTime(): number {

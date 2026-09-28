@@ -29,8 +29,15 @@ export const FteDemoPlayer = ({
   useClipPlayback();
   const assets = getDemoPlayerAssets(getDownloadUrl(demo.sha256), mapName);
   const scriptPath = getAssetUrl("fte/versions/004/ftewebgl.js");
+  const isQwleague = (demo.server?.hostname ?? "").includes(".qwleague.com");
+  const countdownDuration = isQwleague ? 15 : 10;
   const { isLoadingAssets, isReady, assetStatus, isInitializing } =
-    useFteLoader({ scriptPath, assets, demoDuration: demo.demo_duration });
+    useFteLoader({
+      scriptPath,
+      assets,
+      demoDuration: demo.demo_duration,
+      countdownDuration,
+    });
   const fte = useFteController();
 
   const [playerRef, { width }] = useElementSize();

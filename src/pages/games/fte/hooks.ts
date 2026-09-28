@@ -15,10 +15,12 @@ export function useFteLoader({
   scriptPath,
   assets,
   demoDuration = null,
+  countdownDuration = null,
 }: {
   scriptPath: string;
   assets: FteAssets;
   demoDuration?: number | null;
+  countdownDuration?: number | null;
 }) {
   const scriptStatus = useScript(scriptPath, { removeOnUnmount: true });
   const { count: loaded, increment } = useCounter(0);
@@ -49,6 +51,7 @@ export function useFteLoader({
         const instance = FteController.createInstace(
           window.Module as FteModule,
           demoDuration,
+          countdownDuration,
         );
         setFte(instance);
       }
