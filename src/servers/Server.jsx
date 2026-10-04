@@ -146,6 +146,11 @@ export const Matchtag = ({ text = "", hostname = "" }) => {
   const showQwleagueBanner = (hostname ?? "").includes(".qwleague.com");
   const showMatchtag = (text ?? "").trim().length > 0;
   const showAnyBanner = showQwleagueBanner || showMatchtag;
+  const isOfficial =
+    showQwleagueBanner && (text ?? "").toLowerCase().includes("official");
+  const matchtagColor = isOfficial
+    ? "from-yellow-500/0 via-yellow-500"
+    : "from-red-600/0 via-red-600";
 
   if (!showAnyBanner) {
     return null;
@@ -155,7 +160,9 @@ export const Matchtag = ({ text = "", hostname = "" }) => {
     <div className="mb-3 w-full">
       {showQwleagueBanner && <QWLeagueBanner />}
       {showMatchtag && (
-        <div className="py-1.5 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r from-red-600/0 via-red-600 app-text-shadow">
+        <div
+          className={`py-1.5 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r ${matchtagColor} app-text-shadow`}
+        >
           {text}
         </div>
       )}
