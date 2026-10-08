@@ -50,8 +50,7 @@ export function ScheduledGames({ status = "upcoming", teamTag }) {
 
   if (loading) return <div className="text-sm text-gray-400">Loading…</div>;
   if (error) return <div className="text-sm text-red-500">{error}</div>;
-  if (!games.length)
-    return null;
+  if (!games.length) return null;
 
   return (
     <div>

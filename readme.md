@@ -17,18 +17,18 @@ The backend API is located at https://hubapi.quakeworld.nu/v2/ ([source code](ht
 ### Setup
 1. `git clone git@github.com:quakeworldnu/hub.quakeworld.nu.git`
 3. `cd hub.quakeworld.nu`   
-3. `yarn install`
+3. `pnpm install`
 
 ### Local development
 Launch dev server at `http://localhost:5173` with HMR-enabled.
 ```
-yarn dev
+pnpm dev
 ```
 
 ### Build
 Build app to `/dist`
 ```
-yarn build
+pnpm build
 ```
 
 ## Related projects

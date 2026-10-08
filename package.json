@@ -5,6 +5,7 @@
   "author": "Viktor Persson",
   "license": "MIT",
   "repository": "vikpe/qw-server-browser",
+  "packageManager": "pnpm@10.34.5",
   "type": "module",
   "scripts": {
     "dev": "vite",

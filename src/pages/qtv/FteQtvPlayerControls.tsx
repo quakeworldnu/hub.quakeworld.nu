@@ -45,7 +45,7 @@ export function FteQtvPlayerControls() {
         <AutotrackToggle />
         <ConsoleToggle />
         <PopoutButton />
-        
+
         <div className="hidden sm:block">
           <FullscreenToggle />
         </div>
