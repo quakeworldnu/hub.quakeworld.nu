@@ -2,7 +2,11 @@ import { PrimaryButton, SecondaryButton } from "@qwhub/Buttons";
 import { QuakeText } from "@qwhub/QuakeText";
 import { Lastscores } from "@qwhub/servers/Lastscores";
 import { Mapshot } from "@qwhub/servers/Mapshot";
-import { qwleagueCountryCode } from "@qwhub/servers/util.ts";
+import {
+  isQwleagueHostname,
+  isQwleagueOfficial,
+  qwleagueCountryCode,
+} from "@qwhub/servers/util.ts";
 import copyToClipboard from "copy-text-to-clipboard";
 import React, { Fragment, useState } from "react";
 import { Scoreboard } from "./Scoreboard";
@@ -81,6 +85,7 @@ export const ServerBody = (props) => {
   const { server } = props;
   const serverMeta = server.meta;
   const [view, setView] = useState(VIEWS.Scoreboard);
+  const isQwleague = isQwleagueHostname(server.settings.hostname);
 
   if (view === VIEWS.Lastscores) {
     return (
@@ -93,48 +98,53 @@ export const ServerBody = (props) => {
   if (view === VIEWS.Scoreboard) {
     return (
       <Mapshot map={serverMeta.mapName}>
-        <div className="flex flex-col h-full group py-4 min-h-[96px] sm:min-h-[200px] bg-gray-700/20">
-          <div className="flex transition-opacity opacity-0 group-hover:opacity-100 ml-4 space-x-2 absolute">
-            <a
-              href={`https://hub.quakeworld.nu/scoreboard/?address=${server.address}`}
-              title="Show scoreboard in separate window"
-              className="p-1 rounded-full bg-gray-950 opacity-60 hover:opacity-100"
-              target="_top"
-            >
-              <img
-                src="https://hub.quakeworld.nu/assets/img/icons/launch.svg"
-                width={24}
-                height={24}
-                alt=""
-              />
-            </a>
-            {server.meta.supportsLastscores && (
-              <div
-                className="p-1 rounded-full bg-gray-950 cursor-pointer opacity-60 hover:opacity-100"
-                onClick={() => setView(VIEWS.Lastscores)}
+        <div className="flex flex-col h-full">
+          {isQwleague && (
+            <QWLeagueBanner
+              matchtag={serverMeta.matchtag}
+              hostname={server.settings.hostname}
+            />
+          )}
+          <div className="flex flex-col grow group py-4 min-h-[96px] sm:min-h-[200px] bg-gray-700/20">
+            <div className="flex transition-opacity opacity-0 group-hover:opacity-100 ml-4 space-x-2 absolute">
+              <a
+                href={`https://hub.quakeworld.nu/scoreboard/?address=${server.address}`}
+                title="Show scoreboard in separate window"
+                className="p-1 rounded-full bg-gray-950 opacity-60 hover:opacity-100"
+                target="_top"
               >
                 <img
-                  src="https://hub.quakeworld.nu/assets/img/icons/history.svg"
+                  src="https://hub.quakeworld.nu/assets/img/icons/launch.svg"
                   width={24}
                   height={24}
                   alt=""
-                  title="Show lastscores"
                 />
-              </div>
-            )}
-          </div>
-          <div className="flex flex-col justify-center items-center h-full px-2">
-            <Matchtag
-              text={serverMeta.matchtag}
-              hostname={server.settings.hostname}
-            />
-            <Scoreboard
-              players={server.players}
-              teams={server.teams}
-              limit={serverMeta.playerDisplay.visible}
-            />
-            <HiddenPlayers count={serverMeta.playerDisplay.hidden} />
-            <SpectatorText text={serverMeta.spectatorText} />
+              </a>
+              {server.meta.supportsLastscores && (
+                <div
+                  className="p-1 rounded-full bg-gray-950 cursor-pointer opacity-60 hover:opacity-100"
+                  onClick={() => setView(VIEWS.Lastscores)}
+                >
+                  <img
+                    src="https://hub.quakeworld.nu/assets/img/icons/history.svg"
+                    width={24}
+                    height={24}
+                    alt=""
+                    title="Show lastscores"
+                  />
+                </div>
+              )}
+            </div>
+            <div className="flex flex-col justify-center items-center grow px-2">
+              {!isQwleague && <Matchtag text={serverMeta.matchtag} />}
+              <Scoreboard
+                players={server.players}
+                teams={server.teams}
+                limit={serverMeta.playerDisplay.visible}
+              />
+              <HiddenPlayers count={serverMeta.playerDisplay.hidden} />
+              <SpectatorText text={serverMeta.spectatorText} />
+            </div>
           </div>
         </div>
       </Mapshot>
@@ -142,53 +152,47 @@ export const ServerBody = (props) => {
   }
 };
 
-export const Matchtag = ({ text = "", hostname = "" }) => {
-  const showQwleagueBanner = (hostname ?? "").includes(".qwleague.com");
-  const showMatchtag = (text ?? "").trim().length > 0;
-  const showAnyBanner = showQwleagueBanner || showMatchtag;
-  const isOfficial =
-    showQwleagueBanner && (text ?? "").toLowerCase().includes("official");
-  const matchtagColor = isOfficial
-    ? "from-yellow-500/0 via-yellow-500"
-    : "from-red-600/0 via-red-600";
-
-  if (!showAnyBanner) {
+export const Matchtag = ({ text = "" }) => {
+  if ((text ?? "").trim().length === 0) {
     return null;
   }
 
   return (
-    <div className="mb-3 w-full">
-      {showQwleagueBanner && <QWLeagueBanner />}
-      {showMatchtag && (
-        <div
-          className={`py-1.5 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r ${matchtagColor} app-text-shadow`}
-        >
-          {text}
-        </div>
-      )}
+    <div className="mb-3 py-1.5 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r from-red-600/0 via-red-600 app-text-shadow">
+      {text}
     </div>
   );
 };
 
-const QWLeagueBanner = () => {
+export const QWLeagueBanner = ({ matchtag = "", hostname = "" }) => {
+  const showMatchtag = (matchtag ?? "").trim().length > 0;
+  const matchtagColor = isQwleagueOfficial(hostname, matchtag)
+    ? "bg-yellow-500"
+    : "bg-red-600";
+
   return (
-    <a
-      href="https://qwleague.com"
-      target="_top"
-      title="QWLeague"
-      className="flex flex-col items-center justify-center py-1.5 w-full bg-gradient-to-r from-black/0 via-black/70 hover:via-black transition-colors app-text-shadow"
-    >
-      <div className="flex items-center">
+    <div className="flex items-stretch w-full bg-black/80 uppercase font-bold tracking-widest text-xs app-text-shadow">
+      {showMatchtag && (
+        <div
+          className={`py-1.5 pl-2 sm:pl-3 pr-5 ${matchtagColor} [clip-path:polygon(0_0,100%_0,calc(100%-8px)_100%,0_100%)]`}
+        >
+          {matchtag}
+        </div>
+      )}
+      <a
+        href="https://qwleague.com"
+        target="_top"
+        title="QWLeague"
+        className="flex items-center ml-auto py-1.5 px-2 sm:px-3 text-gray-300 hover:text-white transition-colors"
+      >
         <img
           src="/assets/img/qwleague_logo.svg"
           alt="qwleague"
-          className="h-5 w-auto mr-[5px]"
+          className="h-4 w-auto mr-[5px]"
         />
-        <span className="uppercase font-bold tracking-widest text-xs text-[#ff3b1f]">
-          QWLeague.com
-        </span>
-      </div>
-    </a>
+        QWLeague.com
+      </a>
+    </div>
   );
 };
 

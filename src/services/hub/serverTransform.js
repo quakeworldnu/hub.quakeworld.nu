@@ -1,3 +1,5 @@
+import { isQwleagueOfficial } from "@qwhub/servers/util.ts";
+
 export const transformServer = (server) => {
   // exclude [ServeMe]
   const index = server.spectator_names.indexOf("[ServeMe]");
@@ -82,6 +84,10 @@ const metaByServer = (server) => {
 
   if (showMatchTag) {
     meta.wrapperClassNames += " smod-matchtag";
+
+    if (isQwleagueOfficial(server.settings.hostname, matchtag)) {
+      meta.wrapperClassNames += " smod-qwleague-official";
+    }
   }
 
   if (server.player_slots.free > 0) {

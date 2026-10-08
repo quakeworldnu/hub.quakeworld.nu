@@ -1,3 +1,4 @@
+import { isQwleagueHostname } from "@qwhub/servers/util.ts";
 import classNames from "classnames";
 import { getMapshotCssUrl } from "../../../services/mapshots.ts";
 import type {
@@ -7,7 +8,7 @@ import type {
 
 // eslint-disable-next-line
 // @ts-ignore
-import { Matchtag } from "@qwhub/servers/Server";
+import { Matchtag, QWLeagueBanner } from "@qwhub/servers/Server";
 
 // eslint-disable-next-line
 // @ts-ignore
@@ -37,6 +38,7 @@ export const Scoreboard = ({
     ...v,
   }));
   const isCustomMode = ["ctf", "wipeout"].includes(game.mode);
+  const isQwleague = isQwleagueHostname(game.server_hostname);
 
   return (
     <div className="h-full bg-cover bg-center bg-no-repeat bg-[url(https://a.quake.world/mapshots/default.jpg)]">
@@ -52,22 +54,30 @@ export const Scoreboard = ({
           backgroundImage: getMapshotCssUrl(game.map),
         }}
       >
-        <div className="flex flex-col h-full bg-gray-700/20 py-4">
-          <div className="flex flex-col grow justify-center items-center min-h-20 md:min-h-[160px]">
-            <Matchtag text={game.matchtag} hostname={game.server_hostname} />
-            <LegacyScoreboard
-              teams={fixedTeams}
-              players={fixedPlayers}
-              showFrags={showScores}
+        <div className="flex flex-col h-full bg-gray-700/20">
+          {isQwleague && (
+            <QWLeagueBanner
+              matchtag={game.matchtag}
+              hostname={game.server_hostname}
             />
-          </div>
-          {showMapName && (
-            <div className="h-4 -mt-4 mr-3 self-end">
-              <div className="bg-gray-900/70 px-1.5 py-0.5 rounded text-xs text-slate-300">
-                {game.map}
-              </div>
-            </div>
           )}
+          <div className="flex flex-col grow py-4">
+            <div className="flex flex-col grow justify-center items-center min-h-20 md:min-h-[160px]">
+              {!isQwleague && <Matchtag text={game.matchtag} />}
+              <LegacyScoreboard
+                teams={fixedTeams}
+                players={fixedPlayers}
+                showFrags={showScores}
+              />
+            </div>
+            {showMapName && (
+              <div className="h-4 -mt-4 mr-3 self-end">
+                <div className="bg-gray-900/70 px-1.5 py-0.5 rounded text-xs text-slate-300">
+                  {game.map}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -9,6 +9,10 @@
     @include app-smod(#f00, 64px);
   }
 
+  &.smod-qwleague-official {
+    @include app-smod(#eab308, 64px);
+  }
+
   &.smod-hasfreeplayer_slots {
     @include app-smod(#2397d1, 32px);
   }
