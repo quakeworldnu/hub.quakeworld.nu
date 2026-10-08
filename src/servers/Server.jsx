@@ -171,7 +171,7 @@ export const QWLeagueBanner = ({ matchtag = "", hostname = "" }) => {
     : "bg-red-600";
 
   return (
-    <div className="flex items-stretch w-full bg-black/80 uppercase font-bold tracking-widest text-xs app-text-shadow">
+    <div className="flex items-stretch w-full bg-black/70 uppercase font-bold tracking-widest text-xs app-text-shadow">
       {showMatchtag && (
         <div
           className={`py-1.5 pl-2 sm:pl-3 pr-5 ${matchtagColor} [clip-path:polygon(0_0,100%_0,calc(100%-8px)_100%,0_100%)]`}
@@ -183,7 +183,7 @@ export const QWLeagueBanner = ({ matchtag = "", hostname = "" }) => {
         href="https://qwleague.com"
         target="_top"
         title="QWLeague"
-        className="flex items-center ml-auto py-1.5 px-2 sm:px-3 text-gray-300 hover:text-white transition-colors"
+        className="flex items-center ml-auto py-1.5 px-2 sm:px-3 text-[#999] hover:text-white transition-colors"
       >
         <img
           src="/assets/img/qwleague_logo.svg"
