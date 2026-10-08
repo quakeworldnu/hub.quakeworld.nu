@@ -4,18 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'src/**'
-      - 'public/**'
-      - '**/index.html'
-      - 'package.json'
-      - 'yarn.lock'
-      - 'vite.config.js'
-      - 'tailwind.config.js'
-      - 'postcss.config.js'
-      - 'tsconfig*.json'
-      - 'firebase.json'
-      - '.github/workflows/deploy.yml'
   workflow_dispatch:
 
 concurrency:
