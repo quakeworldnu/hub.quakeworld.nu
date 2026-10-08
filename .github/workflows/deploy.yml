@@ -4,10 +4,30 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - '**/index.html'
+      - 'package.json'
+      - 'yarn.lock'
+      - 'vite.config.js'
+      - 'tailwind.config.js'
+      - 'postcss.config.js'
+      - 'tsconfig*.json'
+      - 'firebase.json'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+permissions:
+  contents: read
 
 jobs:
   build_and_deploy:
-    timeout-minutes: 5
+    timeout-minutes: 10
     runs-on: ubuntu-latest
     env:
       VITE_DEMOS_CLOUDFRONT_URL: '${{ secrets.VITE_DEMOS_CLOUDFRONT_URL }}'
@@ -17,23 +37,29 @@ jobs:
       VITE_SENTRY_ENVIRONMENT: '${{ secrets.VITE_SENTRY_ENVIRONMENT }}'
       VITE_SENTRY_DSN: '${{ secrets.VITE_SENTRY_DSN }}'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: 20
-          cache: 'yarn'
+          node-version: 24
+
+      - name: Cache node_modules
+        id: node-modules-cache
+        uses: actions/cache@v6
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-node24-${{ hashFiles('yarn.lock') }}
 
       - name: Install
-        run: yarn install --immutable
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+        run: yarn install --frozen-lockfile --non-interactive
 
       - name: Build
         run: yarn build
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_QWSB_4B8AB }}'
           projectId: qwsb-4b8ab
           channelId: live
