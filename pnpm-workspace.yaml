@@ -1,8 +1,5 @@
 onlyBuiltDependencies:
-  - esbuild
   - supabase
 
 ignoredBuiltDependencies:
   - '@biomejs/biome'
-  - protobufjs
-  - re2
