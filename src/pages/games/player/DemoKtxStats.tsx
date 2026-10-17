@@ -66,6 +66,9 @@ export function DemoKtxStatsTable({
             {isTeamDeathmatch && <th className="px-2 min-w-12">TKs</th>}
             <th className="px-2 min-w-12">Given</th>
             <th className="px-2 min-w-12">Taken</th>
+            <th className="px-2 min-w-12">
+              <abbr title="Self damage">Self</abbr>
+            </th>
 
             {isTeamDeathmatch && (
               <th className="px-2 min-w-12">
@@ -214,6 +217,9 @@ export function DemoKtxStatsTable({
 
                 <td className="px-2">{p.dmg.given}</td>
                 <td className="px-2">{p.dmg.taken}</td>
+                <td className="px-2">
+                  <Num value={p.dmg.self} />
+                </td>
 
                 {isTeamDeathmatch && (
                   <td className="px-2">{p.dmg["enemy-weapons"]}</td>
