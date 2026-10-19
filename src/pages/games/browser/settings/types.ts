@@ -12,3 +12,12 @@ export type GameBrowserSettings = {
   maxAge: number;
   page: number;
 };
+
+export const gameModes: GameMode[] = [
+  "All",
+  "1on1",
+  "2on2",
+  "4on4",
+  "Wipeout",
+  "CTF",
+];

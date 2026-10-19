@@ -57,6 +57,8 @@ export const GamesProvider = ({ children }: { children: ReactNode }) => {
         maxAge,
       });
       let games: GameSearchEntry[] = [];
+      // keep page from url/storage on first load, reset when filters change
+      const nextPage = isFirstRender ? page : 1;
 
       if (count > 0) {
         const settings = {
@@ -67,14 +69,14 @@ export const GamesProvider = ({ children }: { children: ReactNode }) => {
           teams,
           matchtag,
           maxAge,
-          page: 1,
+          page: nextPage,
         };
         games = await searchGamesRows(settings);
       }
 
       setGames(games);
       setCount(count);
-      setPage(1);
+      setPage(nextPage);
       setIsLoading(false);
     }
 
