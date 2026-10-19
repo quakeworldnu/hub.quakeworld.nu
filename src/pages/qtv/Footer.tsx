@@ -3,7 +3,6 @@ import { SecondaryButton } from "@qwhub/Buttons";
 import { useEventListener } from "@qwhub/pages/games/hooks";
 import { Shortcuts, presets } from "@qwhub/pages/games/player/Shortcuts.tsx";
 import { QtvEvent } from "@qwhub/pages/qtv/events.ts";
-import { MvdsvServer } from "@qwhub/pages/qtv/types";
 // @ts-ignore
 import { selectQtvServers } from "@qwhub/selectors";
 // @ts-ignore
@@ -12,12 +11,18 @@ import { Mapshot } from "@qwhub/servers/Mapshot";
 import { ServerAddress } from "@qwhub/servers/Server";
 // @ts-ignore
 import ServersStreams from "@qwhub/servers/ServerStreams";
+import {
+  qtvClientCount,
+  statusText,
+  totalSpectatorCount,
+} from "@qwhub/servers/util.ts";
 import { getMapshotCssUrl } from "@qwhub/services/mapshots.ts";
+import type { Server } from "@qwhub/services/qworld/types.ts";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
 export function QtvPlayerFooter() {
-  const servers: MvdsvServer[] = useSelector(selectQtvServers);
+  const servers: Server[] = useSelector(selectQtvServers);
   const [address, setAddress] = useState<string>("");
 
   useEventListener(QtvEvent.SelectServer, ({ detail: server }) => {
@@ -31,7 +36,7 @@ export function QtvPlayerFooter() {
     return null;
   }
 
-  const title = server.title.replace(` [${server.settings.map}]`, "");
+  const title = server.meta.title.replace(` [${server.info.map}]`, "");
 
   return (
     <div>
@@ -39,13 +44,12 @@ export function QtvPlayerFooter() {
         <div className="flex items-center gap-4 gap-x-6">
           <div
             className="hidden sm:block h-20 w-32 bg-cover bg-center rounded"
-            style={{ backgroundImage: getMapshotCssUrl(server.settings.map) }}
+            style={{ backgroundImage: getMapshotCssUrl(server.info.map) }}
           />
           <div className="">
             <div className="font-bold sm:text-lg md:text-xl">{title}</div>
             <div className="text-sm mt-1 text-slate-300">
-              <strong>{server.settings.map}</strong>: {server.status.name} -{" "}
-              {server.status.description}
+              <strong>{server.info.map}</strong>: {statusText(server)}
             </div>
             <div className="text-xs mt-2.5">
               <div className="flex gap-4">
@@ -53,9 +57,7 @@ export function QtvPlayerFooter() {
                 <div className="text-right text-xs">
                   <div className="inline-block h-1.5 w-1.5 rounded-full bg-red-600 mr-1 mb-px" />
                   <span className="text-slate-300">
-                    {server.spectator_slots.used +
-                      server.qtv_stream.spectator_names.length}{" "}
-                    viewers
+                    {totalSpectatorCount(server)} viewers
                   </span>
                 </div>
               </div>
@@ -74,7 +76,7 @@ export function QtvPlayerFooter() {
 
           <SecondaryButton
             href={`qw://${server.address}/observe`}
-            count={server.spectator_slots.used}
+            count={server.spectators.length}
             title="Join as spectator"
           >
             <QuakeLogo />
@@ -82,15 +84,15 @@ export function QtvPlayerFooter() {
           </SecondaryButton>
 
           <SecondaryButton
-            href={`qw://${server.qtv_stream.url}/qtvplay`}
-            count={server.qtv_stream.spectator_count}
+            href={`qw://${server.qtv_stream?.url}/qtvplay`}
+            count={qtvClientCount(server)}
             title="Join QTV"
           >
             <QuakeLogo />
             QTV
           </SecondaryButton>
 
-          <ServersStreams address={server.address} />
+          <ServersStreams server={server} />
         </div>
       </div>
 

@@ -1,6 +1,6 @@
 import { LastscoresScoreboard } from "@qwhub/servers/LastscoresScoreboard";
 import { Mapshot } from "@qwhub/servers/Mapshot";
-import { useGetLastscoresQuery } from "@qwhub/services/hub/hub";
+import { useGetLastscoresQuery } from "@qwhub/services/qworld/api";
 import classNames from "classnames";
 import React, { useEffect, useState } from "react";
 

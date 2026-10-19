@@ -18,7 +18,7 @@ export const App = () => {
       <SiteHeader />
       <QtvPage />
       <SiteFooter />
-      <ServerPoller pollingInterval={10} />
+      <ServerPoller />
     </>
   );
 };
@@ -66,8 +66,8 @@ const QtvPage = () => {
           <div className="grow">
             {server && (
               <FteQtvPlayer
-                mapName={server.settings.map}
-                timelimit={Number.parseInt(server.settings.timelimit)}
+                mapName={server.info.map}
+                timelimit={Number.parseInt(server.info.timelimit)}
               />
             )}
           </div>

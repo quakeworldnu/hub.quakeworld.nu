@@ -1,4 +1,5 @@
 import { QuakeText, coloredQuakeName } from "@qwhub/QuakeText";
+import { getFlagUrl } from "@qwhub/services/flags.ts";
 import classNames from "classnames";
 import { memo } from "react";
 import { ColoredFrags } from "./ColoredFrags";
@@ -113,13 +114,7 @@ const PlayerRow = (props) => {
       {showTeam && <TeamName name={team} name_color={team_color} />}
       <span className="flex items-center">
         {cc && cc !== "none" && (
-          <img
-            src={`https://www.quakeworld.nu/images/flags/${cc.toLowerCase()}.gif`}
-            alt={cc}
-            width="16"
-            height="11"
-            className="mr-1"
-          />
+          <img src={getFlagUrl(cc)} alt={cc} className="h-3 w-auto mr-1.5" />
         )}
         <QuakeText
           tag="span"

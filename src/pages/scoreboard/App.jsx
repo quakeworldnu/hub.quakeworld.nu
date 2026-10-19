@@ -1,5 +1,5 @@
 import { ServerBody } from "@qwhub/servers/Server";
-import { useGetServerQuery } from "@qwhub/services/hub/hub";
+import { useGetServerQuery } from "@qwhub/services/qworld/api";
 import queryString from "query-string";
 import React from "react";
 

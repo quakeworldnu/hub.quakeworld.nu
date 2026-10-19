@@ -1,6 +1,7 @@
 import { useEventListener } from "@qwhub/pages/games/hooks";
 import {
   qwleagueCountryCode,
+  statusText,
   totalSpectatorCount,
 } from "@qwhub/servers/util.ts";
 import classNames from "classnames";
@@ -8,20 +9,20 @@ import { useBoolean } from "usehooks-ts";
 import { Flag } from "./Flag";
 
 import { QtvEvent } from "@qwhub/pages/qtv/events.ts";
-import { MvdsvServer } from "./types.ts";
+import type { Server } from "@qwhub/services/qworld/types.ts";
 
 export function ServerRow({
   server,
   onClick,
-}: { server: MvdsvServer; onClick: (server: MvdsvServer) => void }) {
+}: { server: Server; onClick: (server: Server) => void }) {
   const { value: isSelected, setValue: setIsSelected } = useBoolean(false);
 
   useEventListener(QtvEvent.SelectServer, ({ detail: selectedServer }) => {
     setIsSelected(selectedServer.address === server.address);
   });
 
-  const title = server.title.replace(` [${server.settings.map}]`, "");
-  const cc = qwleagueCountryCode(server.settings.hostname) || server.geo.cc;
+  const title = server.meta.title.replace(` [${server.info.map}]`, "");
+  const cc = qwleagueCountryCode(server.info.hostname) || server.meta.geo.cc;
 
   return (
     <div
@@ -40,10 +41,10 @@ export function ServerRow({
           })}
         >
           <Flag cc={cc} /> {title}{" "}
-          {"ffa" === server.mode && (
+          {"ffa" === server.meta.mode && (
             <span className="text-xs text-slate-400">
-              - <strong>{server.settings.map}</strong> -{" "}
-              {server.player_slots.used}/{server.player_slots.total} players
+              - <strong>{server.info.map}</strong> - {server.players.length}/
+              {server.player_limit} players
             </span>
           )}
         </div>
@@ -52,10 +53,9 @@ export function ServerRow({
           {totalSpectatorCount(server)}
         </div>
       </div>
-      {"ffa" !== server.mode && (
+      {"ffa" !== server.meta.mode && (
         <div className="text-xs mt-1 text-slate-400">
-          <strong>{server.settings.map}</strong>: {server.status.name} -{" "}
-          {server.status.description}
+          <strong>{server.info.map}</strong>: {statusText(server)}
         </div>
       )}
     </div>

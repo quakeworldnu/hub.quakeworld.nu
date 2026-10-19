@@ -1,13 +1,18 @@
 import { filterServers } from "@qwhub/serverFilters";
 import { totalSpectatorCount } from "@qwhub/servers/util.ts";
+import { qworldApi } from "@qwhub/services/qworld/api";
+import { isBot } from "@qwhub/services/qworld/server";
 import { createSelector } from "@reduxjs/toolkit";
+
+const selectServersResult = qworldApi.endpoints.getServers.select(null);
+const noServers = [];
 
 export const selectServerFilters = (state) => state.settings.serverFilters;
 export const selectServers = (state) =>
-  state.hub.queries["getServers(null)"]?.data ?? [];
+  selectServersResult(state).data ?? noServers;
 
 export const selectQtvServers = createSelector(selectServers, (servers) => {
-  const result = servers.filter((s) => s.qtv_stream.url !== "");
+  const result = servers.filter((s) => s.qtv_stream !== null);
   result.sort((b, a) => {
     const countDiff = totalSpectatorCount(a) - totalSpectatorCount(b);
     return countDiff === 0 ? a.score - b.score : countDiff;
@@ -26,35 +31,32 @@ export const selectFilteredClients = createSelector(
   (servers) => {
     const clients = [];
 
-    function addClient(name, name_color, status, address) {
-      clients.push({
-        name,
-        name_color,
-        status,
-        address,
-      });
+    function addClient(name, status, address) {
+      clients.push({ name, status, address });
     }
 
     for (const server of servers) {
       const address = server.address;
 
-      for (const client of server.players) {
-        if (!client.is_bot) {
-          addClient(client.name, client.name_color, "Playing", address);
+      for (const player of server.players) {
+        if (!isBot(player)) {
+          addClient(player.name, "Playing", address);
         }
       }
 
-      for (const clientName of server.spectator_names) {
-        addClient(clientName, "", "Spectating", address);
+      for (const spectator of server.spectators) {
+        addClient(spectator.name, "Spectating", address);
       }
 
-      for (const clientName of server.qtv_stream.spectator_names) {
-        addClient(clientName, "", "Spectating (QTV)", address);
+      for (const clientName of server.qtv_stream?.client_names ?? []) {
+        addClient(clientName, "Spectating (QTV)", address);
       }
     }
 
     clients.sort((a, b) => {
-      return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+      return a.name.ascii
+        .toLowerCase()
+        .localeCompare(b.name.ascii.toLowerCase());
     });
 
     return clients;

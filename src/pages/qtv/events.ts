@@ -1,5 +1,5 @@
-import { MvdsvServer } from "@qwhub/pages/qtv/types.ts";
 import { setSearchParam } from "@qwhub/pages/qtv/url.ts";
+import type { Server } from "@qwhub/services/qworld/types.ts";
 
 export function dispatchCustomEvent(
   eventName: string,
@@ -8,7 +8,7 @@ export function dispatchCustomEvent(
   window.dispatchEvent(new CustomEvent(eventName, { detail }));
 }
 
-export function selectServer(server: MvdsvServer) {
+export function selectServer(server: Server) {
   setSearchParam("address", server.address);
   dispatchCustomEvent(QtvEvent.SelectServer, server);
 }

@@ -54,11 +54,17 @@ export const SecondaryButton = React.memo((props) => {
 });
 
 export const TwitchButton = (props) => {
-  const { channel = "", title = "", viewers = 0, className = "" } = props;
+  const {
+    channel = "",
+    login = channel,
+    title = "",
+    viewers = 0,
+    className = "",
+  } = props;
 
   return (
     <a
-      href={`https://www.twitch.tv/${channel}`}
+      href={`https://www.twitch.tv/${login}`}
       title={title}
       rel="nofollow"
       target="_top"

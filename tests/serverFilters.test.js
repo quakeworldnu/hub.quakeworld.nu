@@ -1,4 +1,4 @@
-import {describe, expect, test} from "vitest";
+import { describe, expect, test } from "vitest";
 
 import {
   equalsDefaultFilters,
@@ -9,33 +9,27 @@ import {
 
 // mock servers
 const s_1on1_africa = {
-  mode: "1on1",
-  geo: { region: "Africa" },
+  meta: { mode: "1on1", geo: { region: "Africa" } },
   players: [],
 };
 const s_2on2_europe = {
-  mode: "2on2",
-  geo: { region: "Europe" },
+  meta: { mode: "2on2", geo: { region: "Europe" } },
   players: [],
 };
 const s_ffa_europe_bots_and_players = {
-  mode: "ffa",
-  geo: { region: "Europe" },
-  players: [{ is_bot: true }, { is_bot: true }],
+  meta: { mode: "ffa", geo: { region: "Europe" } },
+  players: [{ bot: { skill: 10 } }, { bot: { skill: 10 } }],
 };
 const s_ffa_europe_only_bots = {
-  mode: "ffa",
-  geo: { region: "Europe" },
-  players: [{ is_bot: true }, { is_bot: true }],
+  meta: { mode: "ffa", geo: { region: "Europe" } },
+  players: [{ bot: { skill: 10 } }, { bot: { skill: 10 } }],
 };
 const s_racing_europe = {
-  mode: "racing",
-  geo: { region: "Europe" },
+  meta: { mode: "racing", geo: { region: "Europe" } },
   players: [],
 };
 const s_other_oceania = {
-  mode: "foo",
-  geo: { region: "Oceania" },
+  meta: { mode: "foo", geo: { region: "Oceania" } },
   players: [],
 };
 
@@ -106,6 +100,11 @@ describe("filterServers", () => {
     expect(
       filterServers(servers, filters).includes(s_ffa_europe_only_bots),
     ).toBeFalsy();
+
+    // servers without players (spectators only) are not bot servers
+    expect(
+      filterServers(servers, filters).includes(s_1on1_africa),
+    ).toBeTruthy();
   });
 
   test("filter by mode", () => {

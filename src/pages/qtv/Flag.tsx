@@ -1,3 +1,5 @@
+import { getFlagUrl } from "@qwhub/services/flags.ts";
+
 export function Flag({ cc }: { cc: string }) {
   if (!cc) {
     return null;
@@ -5,10 +7,9 @@ export function Flag({ cc }: { cc: string }) {
 
   return (
     <img
-      src={`https://www.quakeworld.nu/images/flags/${cc.toLowerCase()}.gif`}
-      width="16"
-      height="11"
-      className="inline mr-1 mb-px"
+      src={getFlagUrl(cc)}
+      alt={cc}
+      className="inline h-3 w-auto mr-1.5 mb-px"
     />
   );
 }

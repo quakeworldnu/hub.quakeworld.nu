@@ -11,7 +11,7 @@ export const App = () => {
   return (
     <>
       <QtvPage />
-      <ServerPoller pollingInterval={10} />
+      <ServerPoller />
     </>
   );
 };
@@ -54,8 +54,8 @@ const QtvPage = () => {
     <>
       {server && (
         <FteQtvPlayer
-          mapName={server.settings.map}
-          timelimit={Number.parseInt(server.settings.timelimit)}
+          mapName={server.info.map}
+          timelimit={Number.parseInt(server.info.timelimit)}
           fullscreen
         />
       )}

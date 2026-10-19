@@ -1,5 +1,5 @@
 import { selectFilteredServers } from "@qwhub/selectors";
-import { useGetServersQuery } from "@qwhub/services/hub/hub";
+import { useGetServersQuery } from "@qwhub/services/qworld/api";
 import { useSelector } from "react-redux";
 import { Server } from "./Server";
 
@@ -17,7 +17,7 @@ export default function Servers() {
   );
 }
 
-export function ServerPoller({ pollingInterval = 8 }) {
+export function ServerPoller({ pollingInterval = 5 }) {
   useGetServersQuery(null, {
     pollingInterval: pollingInterval * 1000,
   });

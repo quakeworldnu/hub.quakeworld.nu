@@ -57,7 +57,7 @@ export const App = () => {
         <Sidebar />
       </div>
       <SiteFooter />
-      <ServerPoller pollingInterval={30} />
+      <ServerPoller />
       <ToastContainer
         hideProgressBar
         position="bottom-right"

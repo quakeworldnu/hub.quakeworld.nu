@@ -1,14 +1,16 @@
 import { TwitchButton } from "@qwhub/Buttons";
-import { useGetStreamsQuery } from "@qwhub/services/hub/hub";
+import { hasClient } from "@qwhub/servers/util.ts";
+import { useGetTwitchStreamsQuery } from "@qwhub/services/qworld/api";
+import { streamClientName } from "@qwhub/services/qworld/twitch";
 import React from "react";
 
 const ServersStreams = React.memo((props) => {
-  const { address } = props;
-  const { data: allStreams = [] } = useGetStreamsQuery(null, {
-    pollingInterval: 15500,
+  const { server } = props;
+  const { data: allStreams = [] } = useGetTwitchStreamsQuery(null, {
+    pollingInterval: 60_000,
   });
-  const streamsOnServer = allStreams.filter(
-    (s) => s.server_address === address,
+  const streamsOnServer = allStreams.filter((s) =>
+    hasClient(server, streamClientName(s)),
   );
 
   if (0 === streamsOnServer.length) {
@@ -17,9 +19,10 @@ const ServersStreams = React.memo((props) => {
 
   return streamsOnServer.map((stream) => (
     <TwitchButton
-      key={stream.channel}
-      channel={stream.channel}
-      viewers={stream.viewers}
+      key={stream.user_login}
+      login={stream.user_login}
+      channel={stream.user_name}
+      viewers={stream.viewer_count}
     />
   ));
 });

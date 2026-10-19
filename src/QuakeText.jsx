@@ -1,3 +1,4 @@
+import { parseQuakeText } from "@qwhub/services/qworld/quakeText";
 import React from "react";
 
 export const QuakeText = React.memo((props) => {
@@ -11,6 +12,12 @@ export const QuakeText = React.memo((props) => {
 
 export const coloredQuakeName = (name, color) =>
   color ? quakeTextToHtml(name, color) : name;
+
+// api.quake.world QuakeString => html
+export const quakeStringToHtml = (quakeString) => {
+  const { text, colors } = parseQuakeText(quakeString.unicode);
+  return quakeTextToHtml(text, colors);
+};
 
 export const quakeTextToHtml = (text, color) => {
   let result = "";

@@ -1,4 +1,4 @@
-import { QuakeText, coloredQuakeName } from "@qwhub/QuakeText";
+import { QuakeText, quakeStringToHtml } from "@qwhub/QuakeText";
 import { selectFilteredClients, selectFilteredServers } from "@qwhub/selectors";
 import { ServerAddress } from "@qwhub/servers/Server";
 import { ServerPoller } from "@qwhub/servers/Servers";
@@ -46,7 +46,7 @@ const PlayerTable = () => {
         <tbody>
           {clients.map((client) => (
             <ClientRow
-              key={`${client.name}-${client.name_color}`}
+              key={`${client.name.unicode}-${client.address}-${client.status}`}
               client={client}
               server={serversObj[client.address]}
             />
@@ -63,7 +63,7 @@ const ClientRow = (props) => {
   return (
     <tr className="odd:bg-white/5 hover:bg-white/10">
       <td>
-        <QuakeText text={coloredQuakeName(client.name, client.name_color)} />
+        <QuakeText text={quakeStringToHtml(client.name)} />
         <div className="md:hidden text-xs text-gray-500">{client.status}</div>
       </td>
       <td className="text-xs text-gray-500 hidden md:table-cell">
@@ -72,14 +72,14 @@ const ClientRow = (props) => {
       <td className="text-sm">
         <ServerAddress server={server} />
         <div className="md:hidden mt-1 text-xs text-gray-500">
-          {server.title}
+          {server.meta.title}
         </div>
       </td>
       <td className="text-xs text-gray-500 hidden md:table-cell">
-        {server.title}
+        {server.meta.title}
       </td>
       <td className="text-sm text-right space-x-2 hidden sm:table-cell">
-        {server.qtv_stream.address && (
+        {server.qtv_stream && (
           <a
             href={`qw://${server.qtv_stream.url}/qtvplay`}
             className="text-blue-500 hover:text-white"

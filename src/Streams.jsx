@@ -1,20 +1,19 @@
 import { Heading } from "@qwhub/Common";
-import { useGetStreamsQuery } from "@qwhub/services/hub/hub";
+import { useGetTwitchStreamsQuery } from "@qwhub/services/qworld/api";
+import { isFeaturedStream, streamUrl } from "@qwhub/services/qworld/twitch";
 import React, { Fragment } from "react";
 import { TwitchButton } from "./Buttons";
 
 export function FeaturedStreams() {
-  const { data: streams = [] } = useGetStreamsQuery(null, {
-    pollingInterval: 15500,
+  const { data: streams = [] } = useGetTwitchStreamsQuery(null, {
+    pollingInterval: 60_000,
   });
 
   return (
     <div className="space-y-4 sm:space-y-0 sm:flex sm:space-x-4">
-      {streams
-        .filter((s) => s.is_featured)
-        .map((stream) => (
-          <FeaturedStream key={stream.channel} stream={stream} />
-        ))}
+      {streams.filter(isFeaturedStream).map((stream) => (
+        <FeaturedStream key={stream.user_login} stream={stream} />
+      ))}
     </div>
   );
 }
@@ -22,11 +21,19 @@ export function FeaturedStreams() {
 const FeaturedStream = (props) => {
   const { stream } = props;
 
-  return <TwitchButton {...stream} className="block px-3 py-1.5 rounded-lg" />;
+  return (
+    <TwitchButton
+      login={stream.user_login}
+      channel={stream.user_name}
+      title={stream.title}
+      viewers={stream.viewer_count}
+      className="block px-3 py-1.5 rounded-lg"
+    />
+  );
 };
 
 export function AllStreams() {
-  const { data: streams = [] } = useGetStreamsQuery(null);
+  const { data: streams = [] } = useGetTwitchStreamsQuery(null);
 
   return (
     <div className="app-links">
@@ -41,15 +48,16 @@ export function AllStreams() {
 }
 
 const StreamListItem = ({ stream }) => {
-  const { channel, url, viewers, title = "" } = stream;
+  const { user_name, viewer_count, title = "" } = stream;
   const maxLength = 60;
 
   return (
     <Fragment>
-      <a href={url} className="inline-block ml-1.5" title={title}>
-        {channel}
+      <a href={streamUrl(stream)} className="inline-block ml-1.5" title={title}>
+        {user_name}
         <span>
-          ({viewers}) {title && <span>- {title.substring(0, maxLength)}</span>}
+          ({viewer_count}){" "}
+          {title && <span>- {title.substring(0, maxLength)}</span>}
         </span>
       </a>
       <br />

@@ -1,3 +1,4 @@
+import { isBot } from "@qwhub/services/qworld/server";
 import { localStorageGet } from "@qwhub/util";
 
 export const modes = [
@@ -45,7 +46,8 @@ export function filterServers(servers, filters) {
 
   // misc
   if (!filters.only_bots) {
-    filterOperations.push((s) => !s.players.every((p) => p.is_bot));
+    const hasOnlyBots = (s) => s.players.length > 0 && s.players.every(isBot);
+    filterOperations.push((s) => !hasOnlyBots(s));
   }
 
   // modes
@@ -57,10 +59,10 @@ export function filterServers(servers, filters) {
       if (!includeMode) {
         if ("other" === mode) {
           filterOperations.push((s) =>
-            gameModesExcludingOthers.includes(s.mode),
+            gameModesExcludingOthers.includes(s.meta.mode),
           );
         } else {
-          filterOperations.push((s) => s.mode !== mode);
+          filterOperations.push((s) => s.meta.mode !== mode);
         }
       }
     }
@@ -71,7 +73,7 @@ export function filterServers(servers, filters) {
     for (const region of regions) {
       const includeRegion = filters.regions.includes(region);
       if (!includeRegion) {
-        filterOperations.push((s) => s.geo.region !== region);
+        filterOperations.push((s) => s.meta.geo.region !== region);
       }
     }
   }

@@ -1,12 +1,12 @@
-import { MvdsvServer } from "@qwhub/pages/qtv/types.ts";
 // @ts-ignore
 import { selectQtvServers } from "@qwhub/selectors";
+import type { Server } from "@qwhub/services/qworld/types.ts";
 import { useSelector } from "react-redux";
 import { ServerRow } from "./ServerRow";
 import { selectServer } from "./events";
 
 export function QtvPlayerSidebar() {
-  const servers: MvdsvServer[] = useSelector(selectQtvServers);
+  const servers: Server[] = useSelector(selectQtvServers);
 
   return (
     <>

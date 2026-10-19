@@ -3,10 +3,16 @@ import { QuakeText } from "@qwhub/QuakeText";
 import { Lastscores } from "@qwhub/servers/Lastscores";
 import { Mapshot } from "@qwhub/servers/Mapshot";
 import {
+  freePlayerSlots,
+  freeSpectatorSlots,
   isQwleagueHostname,
   isQwleagueOfficial,
+  qtvClientCount,
   qwleagueCountryCode,
+  scoreboardPlayers,
+  scoreboardTeams,
 } from "@qwhub/servers/util.ts";
+import { getFlagUrl } from "@qwhub/services/flags.ts";
 import copyToClipboard from "copy-text-to-clipboard";
 import React, { Fragment, useState } from "react";
 import { Scoreboard } from "./Scoreboard";
@@ -32,16 +38,16 @@ const ServerProgress = React.memo((props) => {
 const ServerHeader = (props) => {
   const { server } = props;
   const JoinButtonEl =
-    server.player_slots.free > 0 ? PrimaryButton : SecondaryButton;
+    freePlayerSlots(server) > 0 ? PrimaryButton : SecondaryButton;
 
   return (
     <div className="border-b border-black">
       <div className="flex justify-between p-2 sm:p-3">
         <ServerStatus
-          mode={server.mode}
-          map={server.settings.map}
-          statusName={server.status.name}
-          statusDescription={server.status.description}
+          mode={server.meta.mode}
+          map={server.info.map}
+          statusName={server.meta.status.name}
+          statusDescription={server.meta.status.description}
         />
         <div className="hidden sm:flex">
           <JoinButtonEl
@@ -53,10 +59,12 @@ const ServerHeader = (props) => {
           </JoinButtonEl>
         </div>
       </div>
-      {server.time.total > 0 &&
-        ["Started", "Countdown"].includes(server.status.name) && (
-          <ServerProgress value={server.time.elapsed} max={server.time.total} />
-        )}
+      {server.meta.time.total > 0 && "Started" === server.meta.status.name && (
+        <ServerProgress
+          value={server.meta.time.elapsed}
+          max={server.meta.time.total}
+        />
+      )}
     </div>
   );
 };
@@ -67,7 +75,12 @@ const ServerStatus = React.memo((props) => {
   return (
     <div className="flex grow justify-between sm:block">
       <div>
-        <strong>{mode}</strong> on <strong>{map}</strong>
+        {mode && (
+          <>
+            <strong>{mode}</strong> on{" "}
+          </>
+        )}
+        <strong>{map}</strong>
       </div>
       <div>
         {["Started", "Countdown"].includes(statusName) && (
@@ -85,7 +98,7 @@ export const ServerBody = (props) => {
   const { server } = props;
   const serverMeta = server.meta;
   const [view, setView] = useState(VIEWS.Scoreboard);
-  const isQwleague = isQwleagueHostname(server.settings.hostname);
+  const isQwleague = isQwleagueHostname(server.info.hostname);
 
   if (view === VIEWS.Lastscores) {
     return (
@@ -97,12 +110,12 @@ export const ServerBody = (props) => {
   }
   if (view === VIEWS.Scoreboard) {
     return (
-      <Mapshot map={serverMeta.mapName}>
+      <Mapshot map={server.info.map}>
         <div className="flex flex-col h-full">
           {isQwleague && (
             <QWLeagueBanner
               matchtag={serverMeta.matchtag}
-              hostname={server.settings.hostname}
+              hostname={server.info.hostname}
             />
           )}
           <div className="flex flex-col grow group py-4 min-h-[96px] sm:min-h-[200px] bg-gray-700/20">
@@ -138,8 +151,8 @@ export const ServerBody = (props) => {
             <div className="flex flex-col justify-center items-center grow px-2">
               {!isQwleague && <Matchtag text={serverMeta.matchtag} />}
               <Scoreboard
-                players={server.players}
-                teams={server.teams}
+                players={scoreboardPlayers(server)}
+                teams={scoreboardTeams(server)}
                 limit={serverMeta.playerDisplay.visible}
               />
               <HiddenPlayers count={serverMeta.playerDisplay.hidden} />
@@ -230,24 +243,24 @@ export const SpectatorButtons = (props) => {
 
   return (
     <>
-      {server.spectator_slots.free > 0 && (
+      {freeSpectatorSlots(server) > 0 && (
         <div className="hidden sm:block sm:grow">
           <SecondaryButton
             href={`qw://${server.address}/observe`}
-            count={server.spectator_slots.used}
+            count={server.spectators.length}
             title="Join as spectator"
           >
             Spectate
           </SecondaryButton>
         </div>
       )}
-      {server.qtv_stream.address !== "" && (
+      {server.qtv_stream && (
         <>
           <div className="hidden sm:block sm:grow">
             <SecondaryButton
               key={"qtv"}
               href={`qw://${server.qtv_stream.url}/qtvplay`}
-              count={server.qtv_stream.spectator_count}
+              count={qtvClientCount(server)}
               title="Join QTV"
             >
               QTV
@@ -265,7 +278,7 @@ export const SpectatorButtons = (props) => {
           </div>
         </>
       )}
-      {<ServerStreams address={server.address} />}
+      {<ServerStreams server={server} />}
     </>
   );
 };
@@ -281,9 +294,7 @@ const ServerFooter = (props) => {
         <div className="flex text-xs justify-between">
           <ServerAddress server={server} />
 
-          {server.settings.ktxver && (
-            <KtxVersion version={server.settings.ktxver} />
-          )}
+          {server.info.ktxver && <KtxVersion version={server.info.ktxver} />}
         </div>
       </div>
     </div>
@@ -292,14 +303,12 @@ const ServerFooter = (props) => {
 
 export const ServerAddress = (props) => {
   const { server } = props;
-  const serverHostport =
-    server.settings.hostport || server.settings.hostname_parsed;
-  const cc = qwleagueCountryCode(server.settings.hostname) || server.geo.cc;
+  const cc = qwleagueCountryCode(server.info.hostname) || server.meta.geo.cc;
 
   return (
     <div
       className="server-address flex items-center cursor-pointer text-gray-400"
-      onClick={() => copyToClipboard(serverHostport)}
+      onClick={() => copyToClipboard(server.meta.hostport)}
       title="Copy IP to clipboard"
     >
       <ServerAddressTitle cc={cc} title={server.meta.addressTitle} />
@@ -320,11 +329,9 @@ export const ServerAddressTitle = React.memo((props) => {
     <div className="flex items-center max-w-[260px] truncate">
       {cc && (
         <img
-          src={`https://www.quakeworld.nu/images/flags/${cc.toLowerCase()}.gif`}
-          width="16"
-          height="11"
+          src={getFlagUrl(cc)}
           alt={cc}
-          className="inline mr-1 mb-[1px]"
+          className="inline h-3 w-auto mr-1.5 mb-[1px]"
         />
       )}
       {title}

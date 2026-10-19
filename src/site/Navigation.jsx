@@ -1,4 +1,6 @@
 import { selectFilteredServers } from "@qwhub/selectors";
+import { totalSpectatorCount } from "@qwhub/servers/util.ts";
+import { isBot } from "@qwhub/services/qworld/server";
 import { SettingsToggleButton } from "@qwhub/site/settings/ServerSettings.jsx";
 import classNames from "classnames";
 import { useSelector } from "react-redux";
@@ -13,11 +15,10 @@ export default function SiteNavigation() {
 
   for (let i = 0; i < serverCount; i++) {
     const server = servers[i];
-    playerCount += server.players.filter((p) => !p.is_bot).length;
-    spectatorCount += server.spectator_slots.used;
+    playerCount += server.players.filter((p) => !isBot(p)).length;
+    spectatorCount += totalSpectatorCount(server);
 
-    if ("" !== server.qtv_stream.address) {
-      spectatorCount += server.qtv_stream.spectator_count;
+    if (server.qtv_stream) {
       qtvCount++;
     }
   }

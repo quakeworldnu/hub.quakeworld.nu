@@ -1,4 +1,3 @@
-import { MvdsvServer } from "@qwhub/pages/qtv/types.ts";
 // @ts-ignore
 import { selectQtvServers } from "@qwhub/selectors.js";
 // @ts-ignore
@@ -7,6 +6,8 @@ import { Mapshot } from "@qwhub/servers/Mapshot.jsx";
 import { Scoreboard } from "@qwhub/servers/Scoreboard.jsx";
 // @ts-ignore
 import { ServerBody } from "@qwhub/servers/Server.jsx";
+import { scoreboardPlayers, scoreboardTeams } from "@qwhub/servers/util.ts";
+import type { Server } from "@qwhub/services/qworld/types.ts";
 import { useSelector } from "react-redux";
 
 import { useEventListener } from "@qwhub/pages/games/hooks.ts";
@@ -55,7 +56,7 @@ export function QtvServerSelectorOverlay({
 }
 
 export function QtvServerSelector() {
-  const servers: MvdsvServer[] = useSelector(selectQtvServers);
+  const servers: Server[] = useSelector(selectQtvServers);
 
   return (
     <div className="grid grid-cols-servers">
@@ -69,18 +70,18 @@ export function QtvServerSelector() {
           onClick={() => selectServer(server)}
           className="cursor-pointer border-2 border-slate-900 hover:border-sky-600 shadow hover:contrast-125"
         >
-          <Mapshot map={server.settings.map}>
+          <Mapshot map={server.info.map}>
             <div className="flex flex-col h-full bg-gray-700/20 py-4">
               <div className="flex grow justify-center items-center min-h-[160px]">
                 <Scoreboard
-                  teams={server.teams}
-                  players={server.players}
+                  teams={scoreboardTeams(server)}
+                  players={scoreboardPlayers(server)}
                   showFrags={true}
                 />
               </div>
               <div className="h-4 -mt-4 mr-3 self-end">
                 <div className="bg-gray-900/70 px-1.5 py-0.5 rounded text-xs text-slate-300">
-                  {server.settings.map}
+                  {server.info.map}
                 </div>
               </div>
             </div>
