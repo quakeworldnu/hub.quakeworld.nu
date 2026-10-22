@@ -79,3 +79,47 @@ export function useUrlClipParams(): {
   const hasParams = params.has("from") || params.has("track");
   return { from, to, track, hasParams };
 }
+
+// multiple clips, e.g. ?clip=60-90:3&clip=300-330 (from-to[:track] in demo seconds)
+// extends the legacy from/to/track params, which take precedence if present
+export type Clip = {
+  from: number;
+  to: number;
+  track: number | "auto";
+};
+
+const MAX_CLIPS = 20;
+const CLIP_RE = /^(\d+)-(\d+)(?::(\d+|auto))?$/;
+
+export function parseUrlClips(search: string): Clip[] {
+  const params = new URLSearchParams(search);
+  const hasLegacyParams = ["from", "to", "track"].some((k) => params.has(k));
+
+  if (hasLegacyParams) {
+    return [];
+  }
+
+  const clips: Clip[] = [];
+
+  for (const value of params.getAll("clip")) {
+    const match = value.match(CLIP_RE);
+
+    if (!match) {
+      continue;
+    }
+
+    const from = Number.parseInt(match[1]);
+    const to = Number.parseInt(match[2]);
+    const track = match[3] && match[3] !== "auto" ? Number(match[3]) : "auto";
+
+    if (from < to) {
+      clips.push({ from, to, track });
+    }
+  }
+
+  return clips.slice(0, MAX_CLIPS);
+}
+
+export function useUrlClips(): Clip[] {
+  return parseUrlClips(window.location.search);
+}

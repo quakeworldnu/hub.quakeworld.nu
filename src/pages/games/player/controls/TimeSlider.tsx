@@ -8,6 +8,7 @@ import { useFteController } from "../../fte/hooks.ts";
 import { useUpdateInterval, useUrlClipParams } from "../../hooks.ts";
 import { formatElapsed } from "../../time.ts";
 import { useClipEditor } from "../clips/context.tsx";
+import { useClipPlaylist } from "../clips/playlist.tsx";
 
 export function TimeSlider() {
   const fte = useFteController();
@@ -55,6 +56,7 @@ const SliderRoot = ({ max }: { max: number }) => {
   const documentRef = useRef<Document>(document);
   const { range: clipRange, isEnabled: clipEditorEnabled } = useClipEditor();
   const { from, to, hasParams } = useUrlClipParams();
+  const { clips } = useClipPlaylist();
   const [jump, setJump] = useState<number>(-1);
   const throttledJump = useThrottle(jump, 200);
   useUpdateInterval(fte ? 100 : null);
@@ -102,11 +104,15 @@ const SliderRoot = ({ max }: { max: number }) => {
 
   const min = 0;
   let range = [0, 0];
+  let rangeColors = ["#444", "#80f", "#444"];
 
   if (clipEditorEnabled) {
     range = clipRange;
   } else if (hasParams) {
     range = [from, to];
+  } else if (clips.length > 0) {
+    range = mergeRanges(clips.map((c) => [c.from, c.to])).flat();
+    rangeColors = [...range.map((_, i) => (i % 2 ? "#80f" : "#444")), "#444"];
   }
 
   const useRange = range[1] > 0;
@@ -127,7 +133,7 @@ const SliderRoot = ({ max }: { max: number }) => {
         style={{
           background: getTrackBackground({
             values: range,
-            colors: ["#444", "#80f", "#444"],
+            colors: rangeColors,
             min,
             max,
           }),
@@ -160,3 +166,21 @@ const SliderRoot = ({ max }: { max: number }) => {
     </Slider.Root>
   );
 };
+
+// sorted, non-overlapping ranges (required by getTrackBackground)
+function mergeRanges(ranges: number[][]): number[][] {
+  const sorted = [...ranges].sort((a, b) => a[0] - b[0]);
+  const merged: number[][] = [];
+
+  for (const [from, to] of sorted) {
+    const last = merged[merged.length - 1];
+
+    if (last && from <= last[1]) {
+      last[1] = Math.max(last[1], to);
+    } else {
+      merged.push([from, to]);
+    }
+  }
+
+  return merged;
+}

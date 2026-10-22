@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useInterval } from "usehooks-ts";
 import { useFteController, useFteEvent } from "../games/fte/hooks";
+import { useEventListener } from "../games/hooks";
 import { FteDemoPlayer } from "../games/player/FteDemoPlayer";
+import { CLIP_CHANGE_EVENT } from "../games/player/clips/playlist";
 import { getInfo } from "../games/services/cloudfront/cdemos";
 import { DemoInfo } from "../games/services/cloudfront/types";
 
@@ -9,7 +11,7 @@ const params = new URLSearchParams(window.location.search);
 const playerWidth = params.get("width");
 const playerHeight = params.get("height");
 
-function postMessage(key: string, value: string | number) {
+function postMessage(key: string, value: string | number | object) {
   window.parent.postMessage({ key, value }, "*");
 }
 
@@ -27,6 +29,10 @@ export const App = () => {
 
   useFteEvent("demo_jump", (e: CustomEvent) =>
     postMessage("seek", Number.parseInt(e.detail.value)),
+  );
+
+  useEventListener(CLIP_CHANGE_EVENT, (e: CustomEvent) =>
+    postMessage("clip", e.detail),
   );
 
   useInterval(() => {

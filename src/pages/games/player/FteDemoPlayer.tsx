@@ -14,18 +14,29 @@ import { DemoInfo } from "../services/cloudfront/types.ts";
 import { FteDemoPlayerControls } from "./FteDemoPlayerControls.tsx";
 import { FtePlayerCanvas } from "./FtePlayerCanvas.tsx";
 import { useClipPlayback } from "./clips/hooks.ts";
+import { ClipPlaylistProvider } from "./clips/playlist.tsx";
 import { ResponsivePlayerInfo } from "./controls/PlayerInfo.tsx";
 import { ResponsiveTopBanner } from "./controls/TopBanner.tsx";
 
-export const FteDemoPlayer = ({
-  demo,
-  mapName,
-  aspectRatio = "video",
-}: {
+type FteDemoPlayerProps = {
   demo: DemoInfo;
   mapName: string;
   aspectRatio?: "auto" | "video";
-}) => {
+};
+
+export const FteDemoPlayer = (props: FteDemoPlayerProps) => {
+  return (
+    <ClipPlaylistProvider>
+      <DemoPlayer {...props} />
+    </ClipPlaylistProvider>
+  );
+};
+
+const DemoPlayer = ({
+  demo,
+  mapName,
+  aspectRatio = "video",
+}: FteDemoPlayerProps) => {
   useClipPlayback();
   const assets = getDemoPlayerAssets(getDownloadUrl(demo.sha256), mapName);
   const scriptPath = getAssetUrl("fte/versions/004/ftewebgl.js");
