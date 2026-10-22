@@ -80,16 +80,17 @@ export function useUrlClipParams(): {
   return { from, to, track, hasParams };
 }
 
-// multiple clips, e.g. ?clip=60-90:3&clip=300-330 (from-to[:track] in demo seconds)
+// multiple clips, e.g. ?clip=60-90:3&clip=300-330:bps&clip=400-420
+// (from-to[:track] in demo seconds, track is userid, player name or auto)
 // extends the legacy from/to/track params, which take precedence if present
 export type Clip = {
   from: number;
   to: number;
-  track: number | "auto";
+  track: number | string; // userid, player name or "auto"
 };
 
 const MAX_CLIPS = 20;
-const CLIP_RE = /^(\d+)-(\d+)(?::(\d+|auto))?$/;
+const CLIP_RE = /^(\d+)-(\d+)(?::(.+))?$/;
 
 export function parseUrlClips(search: string): Clip[] {
   const params = new URLSearchParams(search);
@@ -110,7 +111,7 @@ export function parseUrlClips(search: string): Clip[] {
 
     const from = Number.parseInt(match[1]);
     const to = Number.parseInt(match[2]);
-    const track = match[3] && match[3] !== "auto" ? Number(match[3]) : "auto";
+    const track = parseClipTrack(match[3]);
 
     if (from < to) {
       clips.push({ from, to, track });
@@ -118,6 +119,14 @@ export function parseUrlClips(search: string): Clip[] {
   }
 
   return clips.slice(0, MAX_CLIPS);
+}
+
+function parseClipTrack(value: string | undefined): number | string {
+  if (!value) {
+    return "auto";
+  }
+
+  return /^\d+$/.test(value) ? Number(value) : value;
 }
 
 export function useUrlClips(): Clip[] {

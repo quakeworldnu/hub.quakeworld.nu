@@ -113,8 +113,17 @@ function jumpToClip(fte: FteController, clip: Clip) {
   function applyTrack() {
     if (clip.track === "auto") {
       fte.enableAutotrack();
+      return;
+    }
+
+    const userid = getTrackUserid(fte, clip.track);
+
+    if (userid !== null) {
+      fte.track(userid);
     } else {
-      fte.track(clip.track);
+      // unknown name: let fte resolve it
+      fte.disableAutotrack();
+      fte.command("track", clip.track);
     }
   }
 
@@ -122,4 +131,21 @@ function jumpToClip(fte: FteController, clip: Clip) {
   applyTrack();
   fte.demoJump(clip.from);
   window.setTimeout(applyTrack, 50);
+}
+
+// userid by userid or player name (case insensitive)
+function getTrackUserid(
+  fte: FteController,
+  track: number | string,
+): number | null {
+  if (typeof track === "number") {
+    return track;
+  }
+
+  const name = track.toLowerCase();
+  const player = fte
+    .getPlayers()
+    .find((p) => p.getNamePlain().toLowerCase() === name);
+
+  return player ? player.userid : null;
 }

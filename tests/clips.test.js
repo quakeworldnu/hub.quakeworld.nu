@@ -21,9 +21,21 @@ describe("parseUrlClips", () => {
   test("skips invalid clips", () => {
     expect(
       parseUrlClips(
-        "?clip=abc&clip=90-60&clip=60-60&clip=10-20:foo&clip=-5-10&clip=1-2",
+        "?clip=abc&clip=90-60&clip=60-60&clip=10-20:&clip=-5-10&clip=1-2",
       ),
     ).toEqual([{ from: 1, to: 2, track: "auto" }]);
+  });
+
+  test("track by player name", () => {
+    expect(
+      parseUrlClips(
+        "?clip=80-105:bps&clip=330-355:wd%E2%80%A2char&clip=1-2:12",
+      ),
+    ).toEqual([
+      { from: 80, to: 105, track: "bps" },
+      { from: 330, to: 355, track: "wd•char" },
+      { from: 1, to: 2, track: 12 },
+    ]);
   });
 
   test("max 20 clips", () => {
