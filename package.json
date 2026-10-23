@@ -16,7 +16,7 @@
     "test": "vitest --coverage",
     "test:watch": "vitest --watch --coverage",
     "bench": "vitest bench --run",
-    "supabase:types": "supabase gen types typescript --project-id ncsphkjfominimxztjip > src/lib/supabase/database.types.ts"
+    "supabase:types": "pnpm --silent dlx supabase@^2 gen types typescript --project-id ncsphkjfominimxztjip > src/lib/supabase/database.types.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "2.6.2",
@@ -25,7 +25,6 @@
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.2",
     "@vitest/coverage-v8": "^5.0.5",
-    "supabase": "^2.122.0",
     "tailwindcss": "^4.3.3",
     "typescript": "^7.0.2",
     "vite": "^8.3.5",

@@ -1,5 +1,2 @@
-onlyBuiltDependencies:
-  - supabase
-
 ignoredBuiltDependencies:
   - '@biomejs/biome'
