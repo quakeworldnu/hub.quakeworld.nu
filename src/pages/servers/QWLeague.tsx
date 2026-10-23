@@ -232,6 +232,13 @@ export function QWLeagueBanner({
   stats: QueueStats | null;
   className?: string;
 }) {
+  // qwleague.com not reachable (yet)
+  if (!stats) {
+    return null;
+  }
+
+  const showQueue = !(stats.matchmaking_enabled && stats.waiting === 0);
+
   return (
     <div
       className={classNames(
@@ -240,7 +247,11 @@ export function QWLeagueBanner({
       )}
     >
       <div className="flex flex-wrap items-center gap-x-6 gap-y-3 px-3 py-1.5 sm:px-4">
-        <div className="flex shrink-0 items-center gap-x-4 lg:block">
+        <div
+          className={classNames("flex shrink-0 items-center gap-x-4", {
+            "lg:block": showQueue,
+          })}
+        >
           <a
             href={QWLEAGUE_URL}
             target="_top"
@@ -257,16 +268,18 @@ export function QWLeagueBanner({
               QWLeague
             </h2>
           </a>
-          {stats?.matchmaking_enabled && (
+          {stats.matchmaking_enabled && (
             <div className="text-xs text-orange-200">
               <WaitingCount count={stats.waiting} /> in queue
             </div>
           )}
         </div>
 
-        <div className="w-full min-w-0 lg:w-auto lg:flex-1">
-          {stats && <BannerQueue stats={stats} />}
-        </div>
+        {showQueue && (
+          <div className="w-full min-w-0 lg:w-auto lg:flex-1">
+            <BannerQueue stats={stats} />
+          </div>
+        )}
       </div>
     </div>
   );
