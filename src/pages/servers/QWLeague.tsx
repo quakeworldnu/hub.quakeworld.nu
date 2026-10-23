@@ -70,8 +70,7 @@ function Queue({ stats }: { stats: QueueStats }) {
   return (
     <div className="mt-3">
       <div className="mb-1.5 text-sm text-orange-200">
-        <strong>{stats.waiting}</strong>{" "}
-        {stats.waiting === 1 ? "player" : "players"} in queue
+        <WaitingCount count={stats.waiting} /> in queue
       </div>
       <div className="grid grid-cols-2 gap-1.5">
         {sortedModes(stats).map(([mode, count]) => (
@@ -86,6 +85,24 @@ function Queue({ stats }: { stats: QueueStats }) {
         ))}
       </div>
     </div>
+  );
+}
+
+const WAITING_THRESHOLD = 5;
+
+function WaitingCount({ count }: { count: number }) {
+  if (count > 0 && count < WAITING_THRESHOLD) {
+    return (
+      <>
+        less than <strong>{WAITING_THRESHOLD}</strong> players
+      </>
+    );
+  }
+
+  return (
+    <>
+      <strong>{count}</strong> players
+    </>
   );
 }
 
