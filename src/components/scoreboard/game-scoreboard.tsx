@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { isQwleagueHostname } from "@/lib/qworld/server-utils";
-import { GameSearchEntry } from "@/lib/supabase/games";
+import type { GameSearchEntry } from "@/lib/supabase/games";
 import type { GamePlayer, GameTeam } from "@/lib/supabase/types";
 import { getMapshotCssUrl } from "@/utils/mapshots";
 import { Matchtag } from "./matchtag";

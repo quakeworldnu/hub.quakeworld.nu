@@ -1,5 +1,5 @@
 import { Timestamp } from "@/components/ui/timestamp";
-import { GameSearchEntry } from "@/lib/supabase/games";
+import type { GameSearchEntry } from "@/lib/supabase/games";
 import type { GamePlayer, GameTeam } from "@/lib/supabase/types";
 import { DownloadButton, PlayButton } from "./controls";
 import { ScoreSpoiler } from "./score-spoiler";

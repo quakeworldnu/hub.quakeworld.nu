@@ -2,13 +2,13 @@ import { clamp } from "@/utils/math";
 import { getPlayerColor, getPlayersMajorityColor } from "@/utils/quake-colors";
 import {
   Autotrack,
-  ClientState,
+  type ClientState,
   ControlSource,
-  FTEC,
+  type FTEC,
   type FteCommandEvent,
-  FteModule,
-  Player,
-  Team,
+  type FteModule,
+  type Player,
+  type Team,
 } from "./types";
 
 export function fteEvent(name: string, detail: FteCommandEvent["detail"]) {

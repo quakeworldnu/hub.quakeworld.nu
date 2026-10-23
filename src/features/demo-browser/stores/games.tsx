@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 import {
-  GameSearchEntry,
+  type GameSearchEntry,
   searchGamesCount,
   searchGamesRows,
 } from "@/lib/supabase/games";

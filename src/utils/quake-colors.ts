@@ -1,4 +1,4 @@
-import { Player } from "@/lib/fte/types";
+import type { Player } from "@/lib/fte/types";
 
 export function getPlayerColor(color: number): number {
   if (color < 0 || color > 16) {

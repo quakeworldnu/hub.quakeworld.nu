@@ -25,6 +25,7 @@ export const Pagination = () => {
   return (
     <div className="flex items-center space-x-3">
       <button
+        type="button"
         disabled={!hasPreviousPage}
         className={`${sizeSmall} ${btnSecondary}`}
         onClick={prevPage}
@@ -33,6 +34,7 @@ export const Pagination = () => {
       </button>
       <PagNumberSelect pageCount={pageCount} />
       <button
+        type="button"
         disabled={!hasNextPage}
         className={`${sizeSmall} ${btnSecondary}`}
         onClick={nextPage}

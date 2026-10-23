@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { lazy, Suspense, useEffect } from "react";
 import { getGame } from "@/lib/supabase/games";
-import { Game } from "@/lib/supabase/types";
+import type { Game } from "@/lib/supabase/types";
 
 // demo player is only needed on game pages, keep it out of the games browser bundle
 const loadDemoPlayer = () => import("./demo-player");

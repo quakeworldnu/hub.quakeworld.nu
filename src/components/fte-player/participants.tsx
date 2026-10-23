@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { QuakeTextFromBytes } from "@/components/ui/quake-text-bytes";
 import { useUpdateInterval } from "@/hooks/use-update-interval";
 import { useFteController } from "@/lib/fte/hooks";
-import { Player } from "@/lib/fte/types";
+import type { Player } from "@/lib/fte/types";
 
 export type Participant = {
   name: Uint8Array;

@@ -100,6 +100,7 @@ export const ShareDemoButton = () => {
   return (
     <>
       <button
+        type="button"
         className={`${btnPrimary} ${sizeLarge} md:mt-0 app-effect-fade-in`}
         onClick={handleOpenClick}
       >
@@ -125,6 +126,7 @@ export const ShareDemoButton = () => {
                 {url}
               </div>
               <button
+                type="button"
                 className={`${btnPrimary} ${sizeSmall}`}
                 onClick={() => copyToClipboardWithToast(url)}
               >
@@ -167,6 +169,7 @@ export const ShareDemoButton = () => {
         </div>
 
         <button
+          type="button"
           className="text-slate-300 hover:text-white bg-slate-700 hover:bg-slate-600 absolute top-2 right-3 flex h-6 w-6 items-center justify-center rounded-full border-slate-600"
           title="Close"
           onClick={() => setIsOpen(false)}

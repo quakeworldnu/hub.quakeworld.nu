@@ -23,7 +23,7 @@ import { EnableClipEditorButton } from "@/features/demo-player/clips/clips";
 import { getDownloadUrl, getInfo } from "@/lib/cloudfront/demos";
 import type { DemoInfo } from "@/lib/cloudfront/types";
 import { useFteController } from "@/lib/fte/hooks";
-import { Game } from "@/lib/supabase/types";
+import type { Game } from "@/lib/supabase/types";
 import { FteDemoPlayer } from "./fte-demo-player";
 import { ShareDemoButton } from "./share";
 
@@ -130,6 +130,7 @@ function ScoreboardAndStats({ game, sha256 }: { game: Game; sha256: string }) {
       <div>
         <DemoScoreboard game={game} showScores={showSpoilers} />
         <button
+          type="button"
           onClick={toggleSpoilers}
           className={clsx(btnSecondary, "py-1.5 px-2 text-xs mt-2", {
             hidden: showSpoilers,

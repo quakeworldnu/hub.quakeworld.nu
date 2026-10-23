@@ -12,12 +12,14 @@ declare global {
 export function enableLogToEvents() {
   const log = console.log;
 
-  function customLog(...args: any[]) {
-    if (ignoreMessage(args[0])) {
+  function customLog(...args: unknown[]) {
+    const message = String(args[0]);
+
+    if (ignoreMessage(message)) {
       return;
     }
 
-    inspectMessage(args[0]);
+    inspectMessage(message);
     log.apply(console, args);
   }
 

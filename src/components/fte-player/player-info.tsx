@@ -74,6 +74,7 @@ export const PlayerInfo = () => {
 
                 return (
                   <button
+                    type="button"
                     className={clsx(
                       {
                         "bg-black/50 rounded": player.userid === trackUserid,

@@ -2,7 +2,7 @@ import { PostgrestClient } from "@supabase/postgrest-js";
 import { env } from "@/config/env";
 import type { GameMode } from "@/types/games";
 import type { Database } from "./database.types";
-import { Game } from "./types";
+import type { Game } from "./types";
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 

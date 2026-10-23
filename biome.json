@@ -23,7 +23,6 @@
         "noAutofocus": "off",
         "noSvgWithoutTitle": "off",
         "useAltText": "off",
-        "useButtonType": "off",
         "useKeyWithClickEvents": "off",
         "noLabelWithoutControl": "off",
         "noStaticElementInteractions": "off"
@@ -36,12 +35,10 @@
         "noDangerouslySetInnerHtml": "off"
       },
       "suspicious": {
-        "noArrayIndexKey": "off",
-        "noExplicitAny": "off"
+        "noArrayIndexKey": "off"
       },
       "style": {
         "useForOf": "off",
-        "useImportType": "off",
         "noUselessElse": "off",
         "useFilenamingConvention": {
           "level": "error",

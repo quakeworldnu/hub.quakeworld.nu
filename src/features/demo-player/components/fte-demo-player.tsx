@@ -12,7 +12,7 @@ import { useClipPlayback } from "@/features/demo-player/clips/use-clip-playback"
 import { useUpdateInterval } from "@/hooks/use-update-interval";
 import { getAssetUrl } from "@/lib/cloudfront/assets";
 import { getDownloadUrl } from "@/lib/cloudfront/demos";
-import { DemoInfo } from "@/lib/cloudfront/types";
+import type { DemoInfo } from "@/lib/cloudfront/types";
 import { getDemoPlayerAssets } from "@/lib/fte/assets";
 import { useFteController, useFteLoader } from "@/lib/fte/hooks";
 import { getMapshotCssUrl } from "@/utils/mapshots";

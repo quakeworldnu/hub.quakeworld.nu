@@ -84,6 +84,7 @@ export const ServerSettings = () => {
           <div className="flex justify-between items-center border-b border-b-slate-700 pb-2">
             <div className="font-bold">Server filters</div>
             <button
+              type="button"
               onClick={onClose}
               className="p-1.5 bg-slate-700 hover:bg-slate-600 rounded-full"
             >
@@ -138,6 +139,7 @@ export const ServerSettings = () => {
           </div>
 
           <button
+            type="button"
             className="bg-slate-700 hover:bg-slate-600 rounded px-2.5 py-1.5 text-sm"
             onClick={onReset}
           >
@@ -187,6 +189,7 @@ export const SettingsToggleButton = () => {
 
   return (
     <button
+      type="button"
       onClick={showSettings}
       className={clsx(
         "flex items-center px-1.5 py-1 ml-auto rounded text-gray-300 text-xs border",

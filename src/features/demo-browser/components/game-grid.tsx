@@ -3,7 +3,7 @@ import { ScoreboardLink } from "@/components/scoreboard/game-scoreboard";
 import { btnSecondary } from "@/components/ui/theme";
 import { Timestamp } from "@/components/ui/timestamp";
 import { useDemoScoreSpoiler } from "@/features/demo-browser/hooks/use-demo-score-spoiler";
-import { GameSearchEntry } from "@/lib/supabase/games";
+import type { GameSearchEntry } from "@/lib/supabase/games";
 import { DownloadButton, StatsButton } from "./controls";
 
 export const GameGrid = ({ games }: { games: GameSearchEntry[] }) => {
@@ -30,6 +30,7 @@ const GridItem = (props: { game: GameSearchEntry }) => {
         </div>
         <div className="w-1/3">
           <button
+            type="button"
             onClick={show}
             className={clsx(btnSecondary, "py-1 px-1.5 mx-auto", {
               "opacity-0": isVisible,

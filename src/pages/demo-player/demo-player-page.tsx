@@ -3,7 +3,7 @@ import { useEventListener, useInterval } from "usehooks-ts";
 import { CLIP_CHANGE_EVENT } from "@/features/demo-player/clips/clip-playlist";
 import { FteDemoPlayer } from "@/features/demo-player/components/fte-demo-player";
 import { getInfo } from "@/lib/cloudfront/demos";
-import { DemoInfo } from "@/lib/cloudfront/types";
+import type { DemoInfo } from "@/lib/cloudfront/types";
 import { useFteController, useFteEvent } from "@/lib/fte/hooks";
 
 const params = new URLSearchParams(window.location.search);

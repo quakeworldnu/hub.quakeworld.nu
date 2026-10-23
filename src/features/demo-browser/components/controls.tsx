@@ -42,7 +42,12 @@ export const StatsButton = ({ sha256 }: { sha256: string }) => {
 
   return (
     <>
-      <button className={secondaryBtnCls} title="Show stats" onClick={open}>
+      <button
+        type="button"
+        className={secondaryBtnCls}
+        title="Show stats"
+        onClick={open}
+      >
         <FontAwesomeIcon fixedWidth icon={faChartPie} size={"lg"} />
       </button>
       <Dialog
@@ -53,6 +58,7 @@ export const StatsButton = ({ sha256 }: { sha256: string }) => {
       >
         <DemoKtxStats sha256={sha256} />
         <button
+          type="button"
           onClick={close}
           className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2"
         >

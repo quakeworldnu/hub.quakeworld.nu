@@ -2,8 +2,11 @@ import { Fragment } from "react";
 import { ColoredFrags } from "@/components/scoreboard/colored-frags";
 import { QuakeTextFromByteString } from "@/components/ui/quake-text-bytes";
 import { getAssetUrl } from "@/lib/cloudfront/assets";
-import { Player } from "@/lib/ktxstats/ktxstats-v3";
-import { KtxstatsV3E, TeamStats } from "@/lib/ktxstats/ktxstats-v3-enhanced";
+import type { Player } from "@/lib/ktxstats/ktxstats-v3";
+import type {
+  KtxstatsV3E,
+  TeamStats,
+} from "@/lib/ktxstats/ktxstats-v3-enhanced";
 import { useKtxstats } from "@/lib/ktxstats/use-ktxstats";
 
 export function DemoKtxStats({ sha256 }: { sha256: string }) {

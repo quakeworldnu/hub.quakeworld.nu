@@ -12,6 +12,7 @@ export const DisableClipEditorButton = () => {
 
   return (
     <button
+      type="button"
       className={clsx(
         "flex text-xs items-center py-1.5 px-2 rounded bg-slate-700 hover:bg-slate-600",
       )}
@@ -47,6 +48,7 @@ export const EnableClipEditorButton = () => {
 
   return (
     <button
+      type="button"
       className={`${btnPrimary} ${sizeLarge} app-effect-fade-in`}
       onClick={handleClick}
     >

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { KtxstatsV3E, toKtxstatsV3Enhanced } from "./ktxstats-v3-enhanced";
+import { type KtxstatsV3E, toKtxstatsV3Enhanced } from "./ktxstats-v3-enhanced";
 
 const CLOUDFRONT_URL = "https://d.quake.world";
 

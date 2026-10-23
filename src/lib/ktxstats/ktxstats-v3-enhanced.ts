@@ -9,7 +9,7 @@ import {
   sort,
   values,
 } from "remeda";
-import {
+import type {
   Armor,
   Health,
   KtxstatsV3,

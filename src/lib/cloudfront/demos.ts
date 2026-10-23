@@ -1,5 +1,5 @@
 import { env } from "@/config/env";
-import { DemoInfo } from "./types";
+import type { DemoInfo } from "./types";
 
 export const DEMOS_BASE_URL: string = env.demosCloudfrontUrl;
 
