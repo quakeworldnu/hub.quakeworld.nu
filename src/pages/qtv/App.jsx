@@ -1,12 +1,11 @@
 import { useFteController } from "@qwhub/pages/games/fte/hooks";
 import { Shortcuts, presets } from "@qwhub/pages/games/player/Shortcuts.tsx";
 import { getSearchParam } from "@qwhub/pages/qtv/url";
-import { selectQtvServers } from "@qwhub/selectors";
 import { ServerPoller } from "@qwhub/servers/Servers";
+import { useQtvServers } from "@qwhub/servers/hooks.ts";
 import { SiteFooter } from "@qwhub/site/Footer";
 import { SiteHeader } from "@qwhub/site/Header";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { QtvPlayerFooter } from "./Footer";
 import { FteQtvPlayer } from "./FteQtvPlayer";
 import { QtvPlayerSidebar } from "./Sidebar";
@@ -27,7 +26,7 @@ export default App;
 
 function useInitialServer() {
   const [server, setServer] = useState(null);
-  const servers = useSelector(selectQtvServers);
+  const servers = useQtvServers();
 
   useEffect(() => {
     if (!servers || server) {

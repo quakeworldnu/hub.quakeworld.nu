@@ -8,13 +8,14 @@ import { FontAwesomeIcon } from "@qwhub/FontAwesomeIcon";
 // @ts-ignore
 import { Scoreboard } from "@qwhub/pages/games/browser/Scoreboard";
 import { Game } from "@qwhub/pages/games/services/supabase/supabase.types.ts";
+import { useQuery } from "@tanstack/react-query";
 import classNames from "classnames";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useBoolean } from "usehooks-ts";
 import { Timestamp } from "../Timestamp";
 import { useFteController } from "../fte/hooks";
 import { getDownloadUrl, getInfo } from "../services/cloudfront/cdemos";
-import { DemoInfo } from "../services/cloudfront/types";
+import type { DemoInfo } from "../services/cloudfront/types";
 import { btnSecondary, btnSuccess, sizeLarge } from "../ui/theme";
 import { ShareDemoButton } from "./Share";
 import { Shortcuts, presets } from "./Shortcuts";
@@ -24,28 +25,22 @@ import { ClipEditorProvider, useClipEditor } from "./clips/context";
 
 import { DemoKtxStats } from "@qwhub/pages/games/player/DemoKtxStats.tsx";
 import { FteDemoPlayer } from "@qwhub/pages/games/player/FteDemoPlayer";
-// @ts-ignore
-import { ColoredFrags } from "@qwhub/servers/ColoredFrags.jsx";
 
 export const DemoPlayer = ({
   game,
   demo_sha256,
 }: { game: Game; demo_sha256: string }) => {
-  const [demo, setDemo] = useState<DemoInfo | null>(null);
+  const { data: demo = null } = useQuery({
+    queryKey: ["demoInfo", demo_sha256],
+    queryFn: () => getInfo(demo_sha256),
+  });
   const fte = useFteController();
 
   useEffect(() => {
-    async function init() {
-      const demo = await getInfo(demo_sha256);
-      setDemo(demo);
-
-      if (demo) {
-        document.title = `${getDemoDescription(demo.filename)} - QuakeWorld Hub`;
-      }
+    if (demo) {
+      document.title = `${getDemoDescription(demo.filename)} - QuakeWorld Hub`;
     }
-
-    init();
-  }, []);
+  }, [demo]);
 
   useEffect(() => {
     if (!fte || !demo) {

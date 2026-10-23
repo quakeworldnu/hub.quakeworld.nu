@@ -4,11 +4,10 @@ import { useEventListener } from "@qwhub/pages/games/hooks";
 import { Shortcuts, presets } from "@qwhub/pages/games/player/Shortcuts.tsx";
 import { QtvEvent } from "@qwhub/pages/qtv/events.ts";
 // @ts-ignore
-import { selectQtvServers } from "@qwhub/selectors";
-// @ts-ignore
 import { ServerAddress } from "@qwhub/servers/Server";
 // @ts-ignore
 import ServersStreams from "@qwhub/servers/ServerStreams";
+import { useQtvServers } from "@qwhub/servers/hooks.ts";
 import {
   qtvClientCount,
   statusText,
@@ -17,10 +16,9 @@ import {
 import { getMapshotCssUrl } from "@qwhub/services/mapshots.ts";
 import type { Server } from "@qwhub/services/qworld/types.ts";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 
 export function QtvPlayerFooter() {
-  const servers: Server[] = useSelector(selectQtvServers);
+  const servers: Server[] = useQtvServers();
   const [address, setAddress] = useState<string>("");
 
   useEventListener(QtvEvent.SelectServer, ({ detail: server }) => {

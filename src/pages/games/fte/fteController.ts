@@ -99,7 +99,7 @@ export class FteController {
   getDemoElapsedTime(): number {
     try {
       return this.module.getDemoTime();
-    } catch (e) {
+    } catch {
       return 0;
     }
   }
@@ -148,7 +148,7 @@ export class FteController {
         player.bottomcolor = getPlayerColor(player.bottomcolor);
         players.push(player);
       }
-    } catch (e) {
+    } catch {
       return [];
     }
     players.sort((a, b) => a.getNamePlain().localeCompare(b.getNamePlain()));
@@ -194,7 +194,7 @@ export class FteController {
     try {
       const seatIndex = 0; // index of screen in splitscreen
       return this.getClientState().getPlayerView(seatIndex).getTrackedPlayer();
-    } catch (e) {
+    } catch {
       return null;
     }
   }
@@ -415,56 +415,4 @@ export class FteController {
   isConsoleOpen() {
     return this._consoleIsOpen;
   }
-
-  //
-  // // group
-  // applyGroupPlayback(playback: DemoPlayback) {
-  //   this._controlSource = ControlSource.GROUP;
-  //
-  //   // track
-  //   if (playback.track !== this.getTrackUserid()) {
-  //     // console.log("### set track", playback.track);
-  //     this.track(playback.track);
-  //   }
-  //
-  //   if (playback.cl_autotrack !== this._autotrack) {
-  //     // console.log("### set autotrack", playback.cl_autotrack);
-  //     this.setAutotrack(playback.cl_autotrack);
-  //   }
-  //
-  //   // speed
-  //   if (playback.demo_setspeed !== this.getDemoSpeed()) {
-  //     this.setDemoSpeed(playback.demo_setspeed);
-  //   }
-  //
-  //   // demo jump
-  //   const timeDelta = Math.abs(playback.demo_jump - this.getDemoElapsedTime());
-  //   const shouldDemoJump = timeDelta > 3;
-  //
-  //   if (shouldDemoJump) {
-  //     this.demoJump(playback.demo_jump);
-  //   }
-  //
-  //   this._controlSource = ControlSource.USER;
-  // }
 }
-
-// captureCommandOutput(command: string) {
-//   const originalLog = console.log;
-//   const messages: string[] = [];
-//
-//   function captureLog() {
-//     messages.push(`${arguments[0]}`);
-//   }
-//
-//   console.log = captureLog;
-//
-//   try {
-//     this.command(command);
-//   } catch (e) {
-//     // ignore
-//   }
-//
-//   console.log = originalLog;
-//   return messages;
-// }

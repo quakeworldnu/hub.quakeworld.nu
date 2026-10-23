@@ -98,18 +98,6 @@ export function useFteController() {
   return fte;
 }
 
-// export function useFteEventBySource(
-//   eventName: string,
-//   source: string,
-//   callback: (e: CustomEvent) => void,
-// ) {
-//   useEventListener(`fte.${eventName}`, (e: CustomEvent) => {
-//     if (e.detail.source === source) {
-//       callback(e);
-//     }
-//   });
-// }
-
 export function useFteEvent(
   eventName: string,
   callback: (e: CustomEvent) => void,

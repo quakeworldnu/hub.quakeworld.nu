@@ -1,12 +1,11 @@
 import { LastscoresScoreboard } from "@qwhub/servers/LastscoresScoreboard";
 import { Mapshot } from "@qwhub/servers/Mapshot";
-import { useGetLastscoresQuery } from "@qwhub/services/qworld/api";
+import { useLastscores } from "@qwhub/services/qworld/queries.ts";
 import classNames from "classnames";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export const Lastscores = ({ address, onClose }) => {
-  const { data, isLoading, isSuccess, isError } =
-    useGetLastscoresQuery(address);
+  const { data, isLoading, isSuccess, isError } = useLastscores(address);
   const [showAllScores, setShowAllScores] = useState(false);
 
   return (

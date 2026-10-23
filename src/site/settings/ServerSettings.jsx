@@ -1,10 +1,12 @@
 import { equalsDefaultFilters } from "@qwhub/serverFilters";
-import { setShowSettings } from "@qwhub/settingsSlice";
+import {
+  setShowSettings,
+  useServerFilters,
+  useShowSettings,
+} from "@qwhub/settings.ts";
 import { Suspense, lazy, useEffect } from "react";
 import EZDrawer from "react-modern-drawer";
-import { useDispatch, useSelector } from "react-redux";
 
-import { selectServerFilters } from "@qwhub/selectors";
 import classNames from "classnames";
 
 // settings form (formik) is only needed when the drawer is opened,
@@ -25,13 +27,12 @@ function onIdle(callback) {
 }
 
 export const SettingsDrawer = () => {
-  const showSettings = useSelector((state) => state.settings.ui.showSettings);
-  const dispatch = useDispatch();
+  const showSettings = useShowSettings();
 
   useEffect(() => onIdle(loadServerSettingsForm), []);
 
   function onClose() {
-    dispatch(setShowSettings(false));
+    setShowSettings(false);
   }
 
   return (
@@ -42,7 +43,7 @@ export const SettingsDrawer = () => {
 };
 
 export const ServerSettings = () => {
-  const showSettings = useSelector((state) => state.settings.ui.showSettings);
+  const showSettings = useShowSettings();
 
   if (!showSettings) {
     return null;
@@ -56,13 +57,12 @@ export const ServerSettings = () => {
 };
 
 export const SettingsToggleButton = () => {
-  const dispatch = useDispatch();
-  const filters = useSelector(selectServerFilters);
+  const filters = useServerFilters();
   const hasModifiedFilters = !equalsDefaultFilters(filters);
 
   function showSettings(e) {
     e.preventDefault();
-    dispatch(setShowSettings(true));
+    setShowSettings(true);
   }
 
   return (

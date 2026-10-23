@@ -1,10 +1,9 @@
-import { selectFilteredServers } from "@qwhub/selectors";
-import { useGetServersQuery } from "@qwhub/services/qworld/api";
-import { useSelector } from "react-redux";
+import { useFilteredServers } from "@qwhub/servers/hooks.ts";
+import { useServers } from "@qwhub/services/qworld/queries.ts";
 import { Server } from "./Server";
 
 export default function Servers() {
-  const servers = useSelector(selectFilteredServers);
+  const servers = useFilteredServers();
 
   return (
     <div className="my-4 mb-6">
@@ -18,10 +17,7 @@ export default function Servers() {
 }
 
 export function ServerPoller({ pollingInterval = 5 }) {
-  useGetServersQuery(null, {
-    pollingInterval: pollingInterval * 1000,
-    // pause while page is hidden, refresh immediately when visible again
-    skipPollingIfUnfocused: true,
-    refetchOnFocus: true,
-  });
+  // pause while page is hidden, refresh immediately when visible again
+  useServers({ interval: pollingInterval * 1000, refetchOnFocus: true });
+  return null;
 }

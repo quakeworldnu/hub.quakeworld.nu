@@ -1,12 +1,13 @@
 import { ServerBody } from "@qwhub/servers/Server";
-import { useGetServerQuery } from "@qwhub/services/qworld/api";
+import { useServer } from "@qwhub/services/qworld/queries.ts";
 import queryString from "query-string";
-import React from "react";
 
 export const App = () => {
   const { address = "" } = queryString.parse(location.search);
-  const { data: server, isSuccess } = useGetServerQuery(address, {
-    pollingInterval: 5000,
+  // embedded page: keep polling while hidden
+  const { data: server, isSuccess } = useServer(address, {
+    interval: 5000,
+    inBackground: true,
   });
 
   return (

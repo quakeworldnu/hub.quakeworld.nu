@@ -14,7 +14,7 @@ import {
 } from "@qwhub/servers/util.ts";
 import { getFlagUrl } from "@qwhub/services/flags.ts";
 import copyToClipboard from "copy-text-to-clipboard";
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import { Scoreboard } from "./Scoreboard";
 import ServerStreams from "./ServerStreams";
 

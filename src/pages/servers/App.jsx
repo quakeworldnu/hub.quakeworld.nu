@@ -4,7 +4,6 @@ import { useQueueStats } from "@qwhub/services/qwleague/queue";
 import { HorizontalSeparator } from "@qwhub/site/Common";
 import { SiteFooter } from "@qwhub/site/Footer";
 import { SiteHeader } from "@qwhub/site/Header";
-import React from "react";
 import { QWLeague, QWLeagueBanner } from "./QWLeague";
 import { ScheduledGames } from "./ScheduledGames";
 import { KoFiGoal } from "./SupportAntilag";

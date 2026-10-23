@@ -2,10 +2,9 @@ import { useFteController } from "@qwhub/pages/games/fte/hooks";
 import { FteQtvPlayer } from "@qwhub/pages/qtv/FteQtvPlayer";
 import { selectServer } from "@qwhub/pages/qtv/events";
 import { getSearchParam } from "@qwhub/pages/qtv/url";
-import { selectQtvServers } from "@qwhub/selectors";
 import { ServerPoller } from "@qwhub/servers/Servers";
+import { useQtvServers } from "@qwhub/servers/hooks.ts";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 
 export const App = () => {
   return (
@@ -18,7 +17,7 @@ export const App = () => {
 
 function useInitialServer() {
   const [server, setServer] = useState(null);
-  const servers = useSelector(selectQtvServers);
+  const servers = useQtvServers();
 
   useEffect(() => {
     if (!servers || server) {

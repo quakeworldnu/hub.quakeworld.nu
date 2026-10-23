@@ -137,7 +137,7 @@ export const PlayerInfo = () => {
         ))}
       </div>
     );
-  } catch (e) {
+  } catch {
     return null;
   }
 };
@@ -145,7 +145,7 @@ export const PlayerInfo = () => {
 function PlayerLocation({ player }: { player: Player }) {
   try {
     return player.getLocation().substring(0, 5);
-  } catch (e) {
+  } catch {
     return null;
   }
 }

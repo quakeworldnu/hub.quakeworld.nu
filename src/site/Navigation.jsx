@@ -1,12 +1,11 @@
-import { selectFilteredServers } from "@qwhub/selectors";
+import { useFilteredServers } from "@qwhub/servers/hooks.ts";
 import { totalSpectatorCount } from "@qwhub/servers/util.ts";
 import { isBot } from "@qwhub/services/qworld/server";
 import { SettingsToggleButton } from "@qwhub/site/settings/ServerSettings.jsx";
 import classNames from "classnames";
-import { useSelector } from "react-redux";
 
 export default function SiteNavigation() {
-  const servers = useSelector(selectFilteredServers);
+  const servers = useFilteredServers();
 
   const serverCount = servers.length;
   let playerCount = 0;

@@ -35,12 +35,6 @@ export function useThrottle<T>(value: T, interval = 500): T {
   return throttledValue;
 }
 
-// export function useDebouncedElementSize(delay: number = 200) {
-//   const [ref, size_] = useElementSize();
-//   const size = useDebounce(size_, delay);
-//   return [ref, size];
-// }
-
 export function useEventListener(
   eventName: string,
   handler: (event: any) => void,
@@ -70,7 +64,7 @@ export function useWakeLock() {
     async function requestWakeLock() {
       try {
         await navigator.wakeLock.request("screen");
-      } catch (err) {}
+      } catch {}
     }
 
     requestWakeLock();
@@ -151,8 +145,4 @@ function parseClipTrack(value: string | undefined): number | string {
   }
 
   return /^\d+$/.test(value) ? Number(value) : value;
-}
-
-export function useUrlClips(): Clip[] {
-  return parseUrlClips(window.location.search);
 }

@@ -25,13 +25,18 @@ const supabase = new PostgrestClient<Database>(
   },
 );
 
-export async function getGame(id: number): Promise<Game | null> {
-  const { data } = await supabase
-    .from("v1_games")
-    .select("*")
-    .eq("id", id)
-    .limit(1)
-    .single();
+// signal: cancels the request (e.g. when a query is superseded)
+export async function getGame(
+  id: number,
+  signal?: AbortSignal,
+): Promise<Game | null> {
+  let qb = supabase.from("v1_games").select("*").eq("id", id).limit(1);
+
+  if (signal) {
+    qb = qb.abortSignal(signal);
+  }
+
+  const { data } = await qb.single();
   return data || null;
 }
 
@@ -48,15 +53,18 @@ function queryToFts(query = ""): string {
     .join(" & ");
 }
 
-export async function searchGamesCount(settings: {
-  map: string;
-  gameMode: GameMode;
-  hostname: string;
-  playerQuery: string;
-  teams: string;
-  matchtag: string;
-  maxAge: number;
-}): Promise<number> {
+export async function searchGamesCount(
+  settings: {
+    map: string;
+    gameMode: GameMode;
+    hostname: string;
+    playerQuery: string;
+    teams: string;
+    matchtag: string;
+    maxAge: number;
+  },
+  signal?: AbortSignal,
+): Promise<number> {
   let qb = supabase
     .from("v1_games")
     .select("count", { head: true, count: "exact" });
@@ -93,6 +101,10 @@ export async function searchGamesCount(settings: {
     qb = qb.gte("timestamp", minTimestamp.toISOString());
   }
 
+  if (signal) {
+    qb = qb.abortSignal(signal);
+  }
+
   const result = await qb.single();
   return result?.count ?? 0;
 }
@@ -110,16 +122,19 @@ export type GameSearchEntry = Pick<
   | "server_hostname"
 >;
 
-export async function searchGamesRows(settings: {
-  gameMode: GameMode;
-  hostname: string;
-  map: string;
-  playerQuery: string;
-  teams: string;
-  matchtag: string;
-  maxAge: number;
-  page: number;
-}): Promise<GameSearchEntry[]> {
+export async function searchGamesRows(
+  settings: {
+    gameMode: GameMode;
+    hostname: string;
+    map: string;
+    playerQuery: string;
+    teams: string;
+    matchtag: string;
+    maxAge: number;
+    page: number;
+  },
+  signal?: AbortSignal,
+): Promise<GameSearchEntry[]> {
   let qb = supabase
     .from("v1_games")
     .select(
@@ -162,6 +177,10 @@ export async function searchGamesRows(settings: {
   const limit = 15;
   const from = (settings.page - 1) * limit;
   const to = from + limit - 1;
+  if (signal) {
+    qb = qb.abortSignal(signal);
+  }
+
   const { data } = await qb
     .order("timestamp", { ascending: false })
     .range(from, to);

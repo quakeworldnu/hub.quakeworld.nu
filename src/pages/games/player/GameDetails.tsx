@@ -1,4 +1,5 @@
-import { Suspense, lazy, useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { Suspense, lazy, useEffect } from "react";
 import { getGame } from "../services/supabase/supabase.ts";
 import { Game } from "../services/supabase/supabase.types.ts";
 
@@ -9,21 +10,17 @@ const DemoPlayer = lazy(() =>
 );
 
 export const GameDetails = ({ id }: { id: number }) => {
-  const [game, setGame] = useState<Game | null>(null);
+  const { data: game = null } = useQuery<Game | null>({
+    queryKey: ["game", id],
+    queryFn: ({ signal }) => getGame(id, signal),
+    enabled: Boolean(id),
+  });
 
+  // fetch player code in parallel with game data
   useEffect(() => {
-    if (!id) {
-      return;
+    if (id) {
+      loadDemoPlayer();
     }
-
-    // fetch player code in parallel with game data
-    loadDemoPlayer();
-
-    async function init() {
-      setGame(await getGame(id));
-    }
-
-    init();
   }, [id]);
 
   if (!game) {

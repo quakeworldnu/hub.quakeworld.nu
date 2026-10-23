@@ -1,13 +1,9 @@
-// @ts-ignore
-import { selectQtvServers } from "@qwhub/selectors.js";
 import { Mapshot } from "@qwhub/servers/Mapshot.tsx";
 // @ts-ignore
 import { Scoreboard } from "@qwhub/servers/Scoreboard.jsx";
-// @ts-ignore
-import { ServerBody } from "@qwhub/servers/Server.jsx";
+import { useQtvServers } from "@qwhub/servers/hooks.ts";
 import { scoreboardPlayers, scoreboardTeams } from "@qwhub/servers/util.ts";
 import type { Server } from "@qwhub/services/qworld/types.ts";
-import { useSelector } from "react-redux";
 
 import { useEventListener } from "@qwhub/pages/games/hooks.ts";
 import {
@@ -55,7 +51,7 @@ export function QtvServerSelectorOverlay({
 }
 
 export function QtvServerSelector() {
-  const servers: Server[] = useSelector(selectQtvServers);
+  const servers: Server[] = useQtvServers();
 
   return (
     <div className="grid grid-cols-servers">

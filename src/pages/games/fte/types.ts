@@ -62,15 +62,7 @@ export enum Autotrack {
 
 export enum ControlSource {
   USER = "user",
-  GROUP = "group",
 }
-
-export type DemoPlayback = {
-  demo_jump: number;
-  demo_setspeed: number;
-  cl_autotrack: Autotrack | string;
-  track: number;
-};
 
 export interface FTEC {
   cbufadd: (command: string) => void;

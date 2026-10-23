@@ -127,7 +127,7 @@ const supportsLastscores = (version) => {
     const releaseNumber = Number.parseFloat(parts[1]);
     const MIN_SUPPORTED_VERSION = 0.36;
     return releaseNumber >= MIN_SUPPORTED_VERSION;
-  } catch (e) {
+  } catch {
     return false;
   }
 };

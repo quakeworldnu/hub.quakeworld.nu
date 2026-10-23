@@ -72,6 +72,3 @@ export const parseQuakeText = (
 
   return { text, colors };
 };
-
-export const toPlainText = (quakeString?: { unicode: string }): string =>
-  parseQuakeText(quakeString?.unicode).text;

@@ -8,7 +8,7 @@ export async function getInfo(sha256: string): Promise<DemoInfo | null> {
   try {
     const response = await fetch(url);
     return (await response.json()) as DemoInfo;
-  } catch (error) {}
+  } catch {}
 
   return null;
 }

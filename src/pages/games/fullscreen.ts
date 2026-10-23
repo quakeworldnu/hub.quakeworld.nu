@@ -13,7 +13,7 @@ export function toggleFullscreen(elementId: string) {
     } else {
       screenfull.request(element);
     }
-  } catch (e) {
+  } catch {
     // ignore
   }
 }

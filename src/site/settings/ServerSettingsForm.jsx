@@ -1,17 +1,16 @@
 import { getDefaultServerFilters, modes, regions } from "@qwhub/serverFilters";
-import { setServerFilters, setShowSettings } from "@qwhub/settingsSlice";
+import {
+  setServerFilters,
+  setShowSettings,
+  useServerFilters,
+} from "@qwhub/settings.ts";
 import { Field, Form, Formik, useFormikContext } from "formik";
-import { useDispatch, useSelector } from "react-redux";
-
-import { selectServerFilters } from "@qwhub/selectors";
 
 export const ServerSettingsForm = () => {
-  const serverFilters =
-    useSelector(selectServerFilters) || getDefaultServerFilters();
-  const dispatch = useDispatch();
+  const serverFilters = useServerFilters() || getDefaultServerFilters();
 
   function onSubmit(values) {
-    dispatch(setServerFilters(values));
+    setServerFilters(values);
   }
 
   return (
@@ -22,11 +21,10 @@ export const ServerSettingsForm = () => {
 };
 
 const SettingsForm = () => {
-  const dispatch = useDispatch();
   const { submitForm, setValues, values } = useFormikContext();
 
   function onClose() {
-    dispatch(setShowSettings(false));
+    setShowSettings(false);
   }
 
   async function onReset() {

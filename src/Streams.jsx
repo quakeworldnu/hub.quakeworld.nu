@@ -1,16 +1,13 @@
 import { Heading } from "@qwhub/Common";
-import { useGetTwitchStreamsQuery } from "@qwhub/services/qworld/api";
+import { useTwitchStreams } from "@qwhub/services/qworld/queries.ts";
 import { isFeaturedStream, streamUrl } from "@qwhub/services/qworld/twitch";
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import { TwitchButton } from "./Buttons";
 
 export function FeaturedStreams() {
-  const { data: streams = [] } = useGetTwitchStreamsQuery(null, {
-    pollingInterval: 60_000,
-    // pause while page is hidden, refresh immediately when visible again
-    skipPollingIfUnfocused: true,
-    refetchOnFocus: true,
-  });
+  // the only twitch poller on pages with a header (server cards only read the cache)
+  // pause while page is hidden, refresh immediately when visible again
+  const streams = useTwitchStreams({ interval: 60_000, refetchOnFocus: true });
 
   return (
     <div className="space-y-4 sm:space-y-0 sm:flex sm:space-x-4">
@@ -36,7 +33,7 @@ const FeaturedStream = (props) => {
 };
 
 export function AllStreams() {
-  const { data: streams = [] } = useGetTwitchStreamsQuery(null);
+  const streams = useTwitchStreams();
 
   return (
     <div className="app-links">

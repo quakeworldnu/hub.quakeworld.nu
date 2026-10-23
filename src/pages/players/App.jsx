@@ -1,11 +1,12 @@
 import { QuakeText, quakeStringToHtml } from "@qwhub/QuakeText";
-import { selectFilteredClients, selectFilteredServers } from "@qwhub/selectors";
 import { ServerAddress } from "@qwhub/servers/Server";
 import { ServerPoller } from "@qwhub/servers/Servers";
+import {
+  useFilteredClients,
+  useFilteredServers,
+} from "@qwhub/servers/hooks.ts";
 import { SiteFooter } from "@qwhub/site/Footer";
 import { SiteHeader } from "@qwhub/site/Header";
-import React from "react";
-import { useSelector } from "react-redux";
 
 export const App = () => {
   return (
@@ -23,8 +24,8 @@ export const App = () => {
 export default App;
 
 const PlayerTable = () => {
-  const clients = useSelector(selectFilteredClients);
-  const servers = useSelector(selectFilteredServers);
+  const clients = useFilteredClients();
+  const servers = useFilteredServers();
   const serversObj = [];
 
   for (let i = 0; i < servers.length; i++) {
