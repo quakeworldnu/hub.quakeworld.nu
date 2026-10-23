@@ -44,3 +44,29 @@ export function getPlayersMajorityColor(players: Player[]): {
 
   return { topcolor, bottomcolor };
 }
+
+if (import.meta.vitest) {
+  const { expect, test } = import.meta.vitest;
+  const player = (topcolor: number, bottomcolor: number) =>
+    ({ topcolor, bottomcolor }) as Player;
+
+  test("getPlayerColor", () => {
+    expect(getPlayerColor(4)).toBe(4);
+    expect(getPlayerColor(-1)).toBe(0);
+    expect(getPlayerColor(17)).toBe(0);
+  });
+
+  test("getPlayersMajorityColor", () => {
+    expect(getPlayersMajorityColor([])).toEqual({
+      topcolor: 0,
+      bottomcolor: 0,
+    });
+    expect(getPlayersMajorityColor([player(4, 11)])).toEqual({
+      topcolor: 4,
+      bottomcolor: 11,
+    });
+    expect(
+      getPlayersMajorityColor([player(4, 11), player(13, 13), player(13, 13)]),
+    ).toEqual({ topcolor: 13, bottomcolor: 13 });
+  });
+}

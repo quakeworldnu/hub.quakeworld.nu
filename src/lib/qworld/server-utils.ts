@@ -94,3 +94,54 @@ export function isQwleagueOfficial(
     (matchtag ?? "").toLowerCase().includes("official")
   );
 }
+
+if (import.meta.vitest) {
+  const { describe, expect, test } = import.meta.vitest;
+  const name = (ascii: string) => ({ ascii });
+  // partial server: only the fields read by the functions under test
+  const server = {
+    player_limit: 8,
+    spectator_limit: null,
+    info: { maxspectators: "4", teamplay: "2" },
+    meta: { status: { name: "Standby", description: "Waiting for players" } },
+    players: [{ name: name("Milton") }, { name: name("bps") }],
+    spectators: [{ name: name("[ServeMe]") }],
+    qtv_stream: { client_names: [name("vikpe")] },
+  } as unknown as Server;
+
+  test("slots and spectators", () => {
+    expect(freePlayerSlots(server)).toBe(6);
+    expect(freeSpectatorSlots(server)).toBe(3);
+    expect(qtvClientCount(server)).toBe(1);
+    expect(totalSpectatorCount(server)).toBe(2);
+  });
+
+  test("statusText", () => {
+    expect(statusText(server)).toBe("Standby - Waiting for players");
+    const unknown = {
+      meta: { status: { name: "Unknown", description: "No players" } },
+    } as unknown as Server;
+    expect(statusText(unknown)).toBe("No players");
+  });
+
+  test("hasClient", () => {
+    expect(hasClient(server, "MILTON")).toBe(true);
+    expect(hasClient(server, "vikpe")).toBe(true);
+    expect(hasClient(server, "xantom")).toBe(false);
+  });
+
+  describe("qwleague", () => {
+    test("qwleagueCountryCode", () => {
+      expect(qwleagueCountryCode("de.qwleague.com:28501")).toBe("de");
+      expect(qwleagueCountryCode("SE.qwleague.com")).toBe("se");
+      expect(qwleagueCountryCode("quake.se:28501")).toBe("");
+    });
+
+    test("isQwleagueOfficial", () => {
+      expect(isQwleagueOfficial("de.qwleague.com", "Official")).toBe(true);
+      expect(isQwleagueOfficial("de.qwleague.com", "prac")).toBe(false);
+      expect(isQwleagueOfficial("quake.se", "official")).toBe(false);
+      expect(isQwleagueOfficial(null, null)).toBe(false);
+    });
+  });
+}
