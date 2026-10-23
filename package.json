@@ -15,6 +15,7 @@
     "lint": "biome lint src",
     "test": "vitest --coverage",
     "test:watch": "vitest --watch --coverage",
+    "bench": "vitest bench --run",
     "supabase:types": "supabase gen types typescript --project-id ncsphkjfominimxztjip > src/pages/games/services/supabase/database.types.ts"
   },
   "devDependencies": {

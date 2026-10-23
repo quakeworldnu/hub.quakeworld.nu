@@ -42,6 +42,17 @@ const toColorCode = (byte: number): string => {
   return plainByte >= 18 && plainByte <= 27 ? "b" : "w";
 };
 
+// lookup tables, indexed by quake charset byte
+export const QUAKE_CHARS: readonly string[] = Array.from(
+  { length: 256 },
+  (_, byte) => toPlainChar(byte),
+);
+
+export const QUAKE_COLORS: readonly string[] = Array.from(
+  { length: 256 },
+  (_, byte) => toColorCode(byte),
+);
+
 // returns plain text and color codes, one color code per plain char
 export const parseQuakeText = (
   unicode = "",
@@ -51,9 +62,12 @@ export const parseQuakeText = (
 
   for (const char of unicode) {
     const byte = (char.codePointAt(0) ?? 0) & 0xff;
-    const plainChar = toPlainChar(byte);
-    text += plainChar;
-    colors += toColorCode(byte).repeat(plainChar.length);
+    const plainChar = QUAKE_CHARS[byte];
+
+    if (plainChar !== "") {
+      text += plainChar;
+      colors += QUAKE_COLORS[byte];
+    }
   }
 
   return { text, colors };
