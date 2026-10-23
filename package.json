@@ -37,7 +37,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@radix-ui/react-slider": "^1.6.1",
     "@radix-ui/react-switch": "^1.4.1",
-    "@supabase/postgrest-js": "1.19.4",
+    "@supabase/postgrest-js": "2.118.0",
     "@tanstack/react-query": "^5.104.5",
     "clsx": "^2.1.1",
     "react": "^19.3.1",
