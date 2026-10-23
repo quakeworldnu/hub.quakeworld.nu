@@ -1,11 +1,10 @@
 import clsx from "clsx";
-import { type RefObject, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
   useBoolean,
   useCounter,
   useEventListener,
   useInterval,
-  useResizeObserver,
 } from "usehooks-ts";
 import { FtePlayerCanvas } from "@/components/fte-player/fte-player-canvas";
 import { GameClock } from "@/components/fte-player/game-clock";
@@ -14,6 +13,7 @@ import { ResponsivePlayerInfo } from "@/components/fte-player/player-info";
 import { ResponsiveTopBanner } from "@/components/fte-player/top-banner";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { QtvEvent, toggleQtvServerSelector } from "@/features/qtv/events";
+import { useElementWidth } from "@/hooks/use-element-width";
 import { getAssetUrl } from "@/lib/cloudfront/assets";
 import { getQtvPlayerAssets } from "@/lib/fte/assets";
 import { useFteController, useFteLoader } from "@/lib/fte/hooks";
@@ -71,11 +71,7 @@ export function FteQtvPlayer({
   });
 
   const playerRef = useRef<HTMLDivElement>(null);
-  // usehooks-ts types predate react 19 refs (RefObject<T | null>)
-  const { width } = useResizeObserver({
-    ref: playerRef as RefObject<HTMLDivElement>,
-    box: "border-box",
-  });
+  const width = useElementWidth(playerRef);
   const defaultWidth = 1400;
   const scale = roundFloat((width ?? 0) / defaultWidth, 2);
 

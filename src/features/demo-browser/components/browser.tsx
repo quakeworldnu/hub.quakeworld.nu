@@ -3,8 +3,11 @@ import { Toolbar } from "@/features/demo-browser/components/settings/toolbar";
 import {
   GameSettingsProvider,
   useGameSettings,
-} from "@/features/demo-browser/stores/browser-settings";
-import { GamesProvider, useGames } from "@/features/demo-browser/stores/games";
+} from "@/features/demo-browser/providers/browser-settings";
+import {
+  GamesProvider,
+  useGames,
+} from "@/features/demo-browser/providers/games";
 import { GameGrid } from "./game-grid";
 import { GameList } from "./game-list";
 

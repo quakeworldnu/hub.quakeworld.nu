@@ -1,6 +1,5 @@
 import clsx from "clsx";
-import { type RefObject, useRef } from "react";
-import { useResizeObserver } from "usehooks-ts";
+import { useRef } from "react";
 import { FtePlayerCanvas } from "@/components/fte-player/fte-player-canvas";
 import { GameClock } from "@/components/fte-player/game-clock";
 import { Participants } from "@/components/fte-player/participants";
@@ -9,6 +8,7 @@ import { ResponsiveTopBanner } from "@/components/fte-player/top-banner";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { ClipPlaylistProvider } from "@/features/demo-player/clips/clip-playlist";
 import { useClipPlayback } from "@/features/demo-player/clips/use-clip-playback";
+import { useElementWidth } from "@/hooks/use-element-width";
 import { useUpdateInterval } from "@/hooks/use-update-interval";
 import { getAssetUrl } from "@/lib/cloudfront/assets";
 import { getDownloadUrl } from "@/lib/cloudfront/demos";
@@ -53,11 +53,7 @@ const DemoPlayer = ({
   const fte = useFteController();
 
   const playerRef = useRef<HTMLDivElement>(null);
-  // usehooks-ts types predate react 19 refs (RefObject<T | null>)
-  const { width } = useResizeObserver({
-    ref: playerRef as RefObject<HTMLDivElement>,
-    box: "border-box",
-  });
+  const width = useElementWidth(playerRef);
   const defaultWidth = 1400;
   const scale = roundFloat((width ?? 0) / defaultWidth, 2);
 

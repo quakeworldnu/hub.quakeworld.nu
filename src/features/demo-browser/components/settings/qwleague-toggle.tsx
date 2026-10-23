@@ -1,5 +1,5 @@
 import { Switch } from "@/components/ui/switch";
-import { useGameSettings } from "@/features/demo-browser/stores/browser-settings";
+import { useGameSettings } from "@/features/demo-browser/providers/browser-settings";
 
 const QWLEAGUE_HOSTNAME = "qwleague.com";
 

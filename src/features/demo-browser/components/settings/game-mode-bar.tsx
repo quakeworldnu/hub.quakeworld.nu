@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { sizeSmall, toggleBtn, toggleBtnSelected } from "@/components/ui/theme";
-import { useGameSettings } from "@/features/demo-browser/stores/browser-settings";
+import { useGameSettings } from "@/features/demo-browser/providers/browser-settings";
 import { type GameMode, gameModes } from "@/types/games";
 
 export const GameModeBar = () => {

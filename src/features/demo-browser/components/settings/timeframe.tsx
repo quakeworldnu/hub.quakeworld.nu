@@ -3,7 +3,7 @@ import clsx from "clsx";
 import type { ChangeEvent } from "react";
 import { FontAwesomeIcon } from "@/components/ui/icon";
 import { formInput } from "@/components/ui/theme";
-import { useGameSettings } from "@/features/demo-browser/stores/browser-settings";
+import { useGameSettings } from "@/features/demo-browser/providers/browser-settings";
 
 const options = [
   { value: 1, label: "Last day" },

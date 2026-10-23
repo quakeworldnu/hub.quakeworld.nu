@@ -5,8 +5,8 @@ import {
 import type { ChangeEvent } from "react";
 import { FontAwesomeIcon } from "@/components/ui/icon";
 import { btnSecondary, formInput, sizeSmall } from "@/components/ui/theme";
-import { useGameSettings } from "@/features/demo-browser/stores/browser-settings";
-import { useGames } from "@/features/demo-browser/stores/games";
+import { useGameSettings } from "@/features/demo-browser/providers/browser-settings";
+import { useGames } from "@/features/demo-browser/providers/games";
 
 const PER_PAGE = 15;
 

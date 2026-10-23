@@ -2,7 +2,7 @@ import { faBars, faTableCells } from "@fortawesome/free-solid-svg-icons";
 import clsx from "clsx";
 import { FontAwesomeIcon } from "@/components/ui/icon";
 import { sizeSmall, toggleBtn, toggleBtnSelected } from "@/components/ui/theme";
-import { useGameSettings } from "@/features/demo-browser/stores/browser-settings";
+import { useGameSettings } from "@/features/demo-browser/providers/browser-settings";
 import type { DisplayMode } from "@/types/games";
 
 export const DisplayModeBar = () => {

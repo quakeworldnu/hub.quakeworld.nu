@@ -1,16 +1,11 @@
 import * as Slider from "@radix-ui/react-slider";
 import clsx from "clsx";
-import {
-  type MouseEvent,
-  type RefObject,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { useEventListener, useHover } from "usehooks-ts";
+import { type MouseEvent, useEffect, useRef, useState } from "react";
+import { useEventListener } from "usehooks-ts";
 import { useClipEditor } from "@/features/demo-player/clips/clip-editor";
 import { useClipPlaylist } from "@/features/demo-player/clips/clip-playlist";
 import { getTrackBackground } from "@/features/demo-player/utils/track-background";
+import { useHover } from "@/hooks/use-hover";
 import { useThrottle } from "@/hooks/use-throttle";
 import { useUpdateInterval } from "@/hooks/use-update-interval";
 import { useFteController } from "@/lib/fte/hooks";
@@ -21,8 +16,7 @@ export function TimeSlider() {
   const fte = useFteController();
   const sliderWrapperRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement | null>(null);
-  // usehooks-ts types predate react 19 refs (RefObject<T | null>)
-  const isHover = useHover(sliderWrapperRef as RefObject<HTMLDivElement>);
+  const isHover = useHover(sliderWrapperRef);
   const sliderRootRef = useRef<HTMLDivElement | null>(null);
 
   const countdownLength = fte ? fte.getCountdownDuration() : 10;
