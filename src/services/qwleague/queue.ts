@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 // public (no auth), cors enabled for hub.quakeworld.nu
-const STREAM_URL = "https://qwleague.com/api/v1/public/stream";
+const STREAM_URL = "https://qwleague.com/api/public/stream";
 
 const MIN_RETRY_DELAY = 2_000;
 const MAX_RETRY_DELAY = 60_000;
