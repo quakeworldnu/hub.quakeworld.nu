@@ -72,14 +72,15 @@
       opacity: 1;
     }
   }
+  /* dialogs center themselves with the translate property, animate only the offset/scale */
   @keyframes contentShow {
     from {
       opacity: 0;
-      transform: translate(-50%, -48%) scale(0.96);
+      transform: translateY(2%) scale(0.96);
     }
     to {
       opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
+      transform: none;
     }
   }
 }
