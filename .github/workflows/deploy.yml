@@ -39,6 +39,9 @@ jobs:
       - name: Lint
         run: pnpm exec biome ci
 
+      - name: Check import rules
+        run: pnpm lint:deps
+
       - name: Test
         run: pnpm exec vitest run
 

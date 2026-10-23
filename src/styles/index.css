@@ -3,7 +3,7 @@
 /* app styles are unlayered: they take precedence over utilities (e.g. .server-address .app-icon) */
 @import "./scoreboard.css";
 @import "./fonts.css";
-@import "./quake_colors.css";
+@import "./quake-colors.css";
 @import "./server.css";
 
 @import "tailwindcss";

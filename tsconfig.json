@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "types": ["vite/client"],
+    "types": ["vite/client", "vitest/importMeta"],
     "useDefineForClassFields": true,
     "lib": ["ES2021", "DOM", "DOM.Iterable"],
     "module": "ESNext",
@@ -20,7 +20,7 @@
     "noFallthroughCasesInSwitch": true,
 
     "paths": {
-      "@qwhub/*": ["./src/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src"],

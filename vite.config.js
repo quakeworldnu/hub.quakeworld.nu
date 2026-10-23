@@ -21,10 +21,15 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
-      "@qwhub": resolve("./src"),
+      "@": resolve("./src"),
     },
+  },
+  // in-source tests (import.meta.vitest) are removed from production builds
+  define: {
+    "import.meta.vitest": "undefined",
   },
   test: {
     environment: "jsdom",
+    includeSource: ["src/**/*.{ts,tsx}"],
   },
 });

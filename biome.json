@@ -6,7 +6,7 @@
     "useIgnoreFile": true
   },
   "files": {
-    "includes": ["src/**", "tests/**"]
+    "includes": ["src/**"]
   },
   "assist": {
     "actions": {
@@ -42,7 +42,13 @@
       "style": {
         "useForOf": "off",
         "useImportType": "off",
-        "noUselessElse": "off"
+        "noUselessElse": "off",
+        "useFilenamingConvention": {
+          "level": "error",
+          "options": {
+            "filenameCases": ["kebab-case"]
+          }
+        }
       }
     }
   },
