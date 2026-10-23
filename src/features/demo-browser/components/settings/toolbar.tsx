@@ -1,19 +1,24 @@
+import {
+  faGlobe,
+  faServer,
+  faTag,
+  faUser,
+  faUsers,
+} from "@fortawesome/free-solid-svg-icons";
 import clsx from "clsx";
+import { useGameSettings } from "@/features/demo-browser/stores/browser-settings";
 import { useGames } from "@/features/demo-browser/stores/games";
 import { DisplayModeBar } from "./display-mode-bar";
 import { GameModeBar } from "./game-mode-bar";
 import { GlobalShowScoresToggle } from "./global-show-scores-toggle";
-import { Hostname } from "./hostname";
-import { MapName } from "./map-name";
-import { Matchtag } from "./matchtag";
 import { Pagination } from "./pagination";
-import { PlayerQuery } from "./player-query";
 import { QwleagueToggle } from "./qwleague-toggle";
-import { Teams } from "./teams";
+import { normalizeLowerTrim, SearchInput } from "./search-input";
 import { Timeframe } from "./timeframe";
 
 export const Toolbar = () => {
   const { isLoading } = useGames();
+  const settings = useGameSettings();
 
   return (
     <div
@@ -25,11 +30,45 @@ export const Toolbar = () => {
       <GlobalShowScoresToggle />
       <GameModeBar />
       <QwleagueToggle />
-      <PlayerQuery />
-      <Teams />
-      <MapName />
-      <Matchtag />
-      <Hostname />
+      <SearchInput
+        icon={faUser}
+        title="Player(s), separate with space"
+        className="w-44"
+        value={settings.playerQuery}
+        onChange={settings.setPlayerQuery}
+        autoFocus
+      />
+      <SearchInput
+        icon={faUsers}
+        title="Team(s), separate with space"
+        className="w-32"
+        value={settings.teams}
+        onChange={settings.setTeams}
+      />
+      <SearchInput
+        icon={faGlobe}
+        title="Map"
+        className="w-28"
+        value={settings.map}
+        onChange={settings.setMap}
+        normalize={normalizeLowerTrim}
+      />
+      <SearchInput
+        icon={faTag}
+        title="Matchtag"
+        className="w-24"
+        value={settings.matchtag}
+        onChange={settings.setMatchtag}
+        normalize={normalizeLowerTrim}
+      />
+      <SearchInput
+        icon={faServer}
+        title="Server hostname"
+        className="w-32"
+        value={settings.hostname}
+        onChange={settings.setHostname}
+        normalize={normalizeLowerTrim}
+      />
       <Timeframe />
       <Pagination />
     </div>

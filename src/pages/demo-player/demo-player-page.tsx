@@ -15,7 +15,7 @@ function postMessage(key: string, value: string | number | object) {
   window.parent.postMessage({ key, value }, "*");
 }
 
-export const App = () => {
+export const DemoPlayerPage = () => {
   const [demo, setDemo] = useState<DemoInfo | null>(null);
   const fte = useFteController();
 

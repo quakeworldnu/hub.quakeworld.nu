@@ -10,7 +10,7 @@ import type { Server } from "@/lib/qworld/types";
 import { SiteFooter } from "@/pages/layout/site-footer";
 import { SiteHeader } from "@/pages/layout/site-header";
 
-export const App = () => {
+export const PlayersPage = () => {
   return (
     <>
       <SiteHeader />
@@ -22,8 +22,6 @@ export const App = () => {
     </>
   );
 };
-
-export default App;
 
 const PlayerTable = () => {
   const clients = useFilteredClients();

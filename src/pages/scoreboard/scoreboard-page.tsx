@@ -1,7 +1,7 @@
 import { ServerBody } from "@/features/servers/components/server";
 import { useServer } from "@/lib/qworld/queries";
 
-export const App = () => {
+export const ScoreboardPage = () => {
   const address = new URLSearchParams(location.search).get("address") ?? "";
   // embedded page: keep polling while hidden
   const { data: server, isSuccess } = useServer(address, {
@@ -16,5 +16,3 @@ export const App = () => {
     </div>
   );
 };
-
-export default App;

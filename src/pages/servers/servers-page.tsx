@@ -11,7 +11,7 @@ import { KoFiGoal } from "@/features/support-goal/components/ko-fi-goal";
 import { SiteFooter } from "@/pages/layout/site-footer";
 import { SiteHeader } from "@/pages/layout/site-header";
 
-export const App = () => {
+export const ServersPage = () => {
   const qwleagueStats = useQueueStats();
 
   return (
@@ -46,5 +46,3 @@ export const App = () => {
     </>
   );
 };
-
-export default App;

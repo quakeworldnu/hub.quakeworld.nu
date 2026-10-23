@@ -8,7 +8,7 @@ import { SiteHeader } from "@/pages/layout/site-header";
 import { useCurrentGameId } from "@/utils/game-url";
 import { Sidebar } from "./sidebar";
 
-export const App = () => {
+export const GamesPage = () => {
   const gameId = useCurrentGameId();
 
   return (
@@ -34,5 +34,3 @@ export const App = () => {
     </div>
   );
 };
-
-export default App;

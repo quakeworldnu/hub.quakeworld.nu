@@ -1,7 +1,4 @@
-import ReactDOM from "react-dom/client";
-import { App } from "./demo-player-page";
-import "@/styles/index.css";
+import { renderPage } from "@/pages/render-page";
+import { DemoPlayerPage } from "./demo-player-page";
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <App />,
-);
+renderPage(<DemoPlayerPage />, { strictMode: false });

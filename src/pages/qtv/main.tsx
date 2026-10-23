@@ -1,14 +1,4 @@
-import { QueryClientProvider } from "@tanstack/react-query";
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { queryClient } from "@/lib/query-client";
-import App from "./qtv-page";
-import "@/styles/index.css";
+import { renderPage } from "@/pages/render-page";
+import { QtvPage } from "./qtv-page";
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <App />
-    </QueryClientProvider>
-  </React.StrictMode>,
-);
+renderPage(<QtvPage />);

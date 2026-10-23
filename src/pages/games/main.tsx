@@ -1,11 +1,4 @@
-import { QueryClientProvider } from "@tanstack/react-query";
-import ReactDOM from "react-dom/client";
-import { queryClient } from "@/lib/query-client";
-import App from "./games-page";
-import "@/styles/index.css";
+import { renderPage } from "@/pages/render-page";
+import { GamesPage } from "./games-page";
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <QueryClientProvider client={queryClient}>
-    <App />
-  </QueryClientProvider>,
-);
+renderPage(<GamesPage />, { strictMode: false });
