@@ -63,3 +63,12 @@
     clear: both;
   }
 }
+
+/*
+  skip rendering server cards far outside the viewport (long lists on narrow screens),
+  the first rows render normally. cards are ~360-430px tall
+*/
+.server-list > :nth-child(n + 5) {
+  content-visibility: auto;
+  contain-intrinsic-block-size: auto 400px;
+}
