@@ -4,6 +4,8 @@
 @use "server";
 @use "tailwind";
 @use "scrollbar";
+// must precede all other styles (fontawesome-svg-core used to inject it first in <head>)
+@import "@fortawesome/fontawesome-svg-core/styles.css";
 @import "react-modern-drawer/dist/index.css";
 @import "react-toastify/dist/ReactToastify.css";
 

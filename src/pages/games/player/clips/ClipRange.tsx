@@ -1,5 +1,5 @@
 import { faGripLinesVertical } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@qwhub/FontAwesomeIcon";
 import classNames from "classnames";
 import { useState } from "react";
 import { Range, getTrackBackground } from "react-range";

@@ -1,5 +1,5 @@
 import { faClose, faCopy, faShare } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@qwhub/FontAwesomeIcon";
 import * as Dialog from "@radix-ui/react-dialog";
 import { type ChangeEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";

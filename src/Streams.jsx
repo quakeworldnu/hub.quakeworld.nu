@@ -7,6 +7,9 @@ import { TwitchButton } from "./Buttons";
 export function FeaturedStreams() {
   const { data: streams = [] } = useGetTwitchStreamsQuery(null, {
     pollingInterval: 60_000,
+    // pause while page is hidden, refresh immediately when visible again
+    skipPollingIfUnfocused: true,
+    refetchOnFocus: true,
   });
 
   return (

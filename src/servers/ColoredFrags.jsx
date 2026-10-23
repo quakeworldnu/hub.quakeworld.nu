@@ -7,7 +7,7 @@ export const ColoredFrags = memo((props) => {
 
   return (
     <TagName
-      className={`w-full h-full font-bold text-center qw-bgcolor-${colors_[0]}-${colors_[1]}`}
+      className={`w-full h-full font-bold text-center qw-bgcolor qw-bgcolor-top-${colors_[0]} qw-bgcolor-bottom-${colors_[1]}`}
     >
       <span className="sc-frags">{frags}</span>
     </TagName>

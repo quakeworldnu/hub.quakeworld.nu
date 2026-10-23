@@ -3,7 +3,7 @@ import {
   faFloppyDisk,
   faPlay,
 } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@qwhub/FontAwesomeIcon";
 import { DemoKtxStats } from "@qwhub/pages/games/player/DemoKtxStats.tsx";
 import {
   Dialog,

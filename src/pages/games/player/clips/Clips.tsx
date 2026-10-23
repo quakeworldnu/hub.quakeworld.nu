@@ -1,5 +1,5 @@
 import { faClose, faScissors } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@qwhub/FontAwesomeIcon";
 import classNames from "classnames";
 import { useFteController } from "../../fte/hooks.ts";
 import { btnPrimary, sizeLarge } from "../../ui/theme.ts";

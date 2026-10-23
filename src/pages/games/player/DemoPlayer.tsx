@@ -4,7 +4,7 @@ import {
   faHandPointer,
   faTrophy,
 } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@qwhub/FontAwesomeIcon";
 // @ts-ignore
 import { Scoreboard } from "@qwhub/pages/games/browser/Scoreboard";
 import { Game } from "@qwhub/pages/games/services/supabase/supabase.types.ts";

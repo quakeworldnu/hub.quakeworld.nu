@@ -72,7 +72,7 @@ const Participant = ({
       </div>
       <div
         className={classNames(
-          `qw-bgcolor-${participant.topcolor}-${participant.bottomcolor} w-12 max-w-12 text-center text-lg rounded`,
+          `qw-bgcolor qw-bgcolor-top-${participant.topcolor} qw-bgcolor-bottom-${participant.bottomcolor} w-12 max-w-12 text-center text-lg rounded`,
           {
             "border-r border-gray-800": isFirst,
           },

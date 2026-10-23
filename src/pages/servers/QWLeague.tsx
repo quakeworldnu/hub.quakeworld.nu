@@ -1,5 +1,5 @@
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@qwhub/FontAwesomeIcon";
 import type { QueueStats } from "@qwhub/services/qwleague/queue";
 import classNames from "classnames";
 

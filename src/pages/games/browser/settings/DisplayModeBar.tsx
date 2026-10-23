@@ -1,5 +1,5 @@
 import { faBars, faTableCells } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@qwhub/FontAwesomeIcon";
 import classNames from "classnames";
 import { sizeSmall, toggleBtn, toggleBtnSelected } from "../../ui/theme.ts";
 import { useGameSettings } from "./context.tsx";

@@ -1,5 +1,5 @@
 import { faClock } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@qwhub/FontAwesomeIcon";
 import { useGameSettings } from "@qwhub/pages/games/browser/settings/context.tsx";
 import classNames from "classnames";
 import type { ChangeEvent } from "react";

@@ -1,4 +1,4 @@
-import { createClient } from "@supabase/supabase-js";
+import { PostgrestClient } from "@supabase/postgrest-js";
 
 import type { Database } from "./database.types.ts";
 
@@ -7,9 +7,22 @@ import { Game } from "./supabase.types.ts";
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
-const supabase = createClient<Database>(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY,
+// only the REST (PostgREST) part of supabase-js is used, skip auth/storage/realtime clients
+// same url and auth headers as supabase-js createClient() with the anon key
+const SUPABASE_URL: string = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_ANON_KEY: string = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const supabase = new PostgrestClient<Database>(
+  new URL(
+    "rest/v1",
+    SUPABASE_URL.endsWith("/") ? SUPABASE_URL : `${SUPABASE_URL}/`,
+  ).href,
+  {
+    headers: {
+      apikey: SUPABASE_ANON_KEY,
+      Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+    },
+    schema: "public",
+  },
 );
 
 export async function getGame(id: number): Promise<Game | null> {

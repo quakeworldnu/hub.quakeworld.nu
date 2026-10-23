@@ -1,6 +1,6 @@
 import settingsReducer from "@qwhub/settingsSlice";
 import { configureStore } from "@reduxjs/toolkit";
-//import { setupListeners } from '@reduxjs/toolkit/query'
+import { setupListeners } from "@reduxjs/toolkit/query";
 import { qworldApi } from "./services/qworld/api.js";
 
 export const store = configureStore({
@@ -17,6 +17,5 @@ export const store = configureStore({
 });
 export default store;
 
-// optional, but required for refetchOnFocus/refetchOnReconnect behaviors
-// see `setupListeners` docs - takes an optional callback as the 2nd arg for customization
-//setupListeners(store.dispatch)
+// tracks page visibility, required for skipPollingIfUnfocused/refetchOnFocus
+setupListeners(store.dispatch);

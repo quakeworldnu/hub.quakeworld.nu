@@ -60,7 +60,7 @@ export const PlayerInfo = () => {
               <div className="flex justify-end items-center mb-1 mr-0.5 app-text-shadow space-x-2">
                 <QuakeTextFromBytes name={team.name} />
                 <div
-                  className={`w-10 py-0.5 text-center rounded text-sm qw-bgcolor-${team.topcolor}-${team.bottomcolor}`}
+                  className={`w-10 py-0.5 text-center rounded text-sm qw-bgcolor qw-bgcolor-top-${team.topcolor} qw-bgcolor-bottom-${team.bottomcolor}`}
                 >
                   {team.frags}
                 </div>

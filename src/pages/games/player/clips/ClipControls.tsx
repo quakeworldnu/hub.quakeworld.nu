@@ -4,7 +4,7 @@ import {
   faPlus,
   faScissors,
 } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@qwhub/FontAwesomeIcon";
 import classNames from "classnames";
 import copyTextToClipboard from "copy-text-to-clipboard";
 import { toast } from "react-toastify";

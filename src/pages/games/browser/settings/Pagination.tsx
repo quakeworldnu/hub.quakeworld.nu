@@ -2,7 +2,7 @@ import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@qwhub/FontAwesomeIcon";
 import type { ChangeEvent } from "react";
 import { btnSecondary, formInput, sizeSmall } from "../../ui/theme.ts";
 import { useGames } from "../context.tsx";

@@ -20,5 +20,8 @@ export default function Servers() {
 export function ServerPoller({ pollingInterval = 5 }) {
   useGetServersQuery(null, {
     pollingInterval: pollingInterval * 1000,
+    // pause while page is hidden, refresh immediately when visible again
+    skipPollingIfUnfocused: true,
+    refetchOnFocus: true,
   });
 }

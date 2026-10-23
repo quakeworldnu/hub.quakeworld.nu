@@ -1,5 +1,5 @@
 import { faHandPointer, faKeyboard } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@qwhub/FontAwesomeIcon";
 
 interface ShortCutPreset {
   keyboard: ShortCut[];

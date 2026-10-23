@@ -1,9 +1,10 @@
-import type { IconProp, SizeProp } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import type { SizeProp } from "@fortawesome/fontawesome-svg-core";
+import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@qwhub/FontAwesomeIcon";
 
 type IconButtonProps = {
   onClick: () => void;
-  icon: IconProp;
+  icon: IconDefinition;
   size?: SizeProp;
   title?: string;
 };
@@ -30,9 +31,9 @@ export const IconButton = ({
 type IconToggleButtonProps = {
   onClick: () => void;
   enabledTitle?: string;
-  enabledIcon: IconProp;
+  enabledIcon: IconDefinition;
   disabledTitle?: string;
-  disabledIcon: IconProp;
+  disabledIcon: IconDefinition;
   size?: SizeProp;
   isEnabled?: boolean;
 };

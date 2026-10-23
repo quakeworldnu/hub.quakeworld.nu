@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   useEventListener as uhUseEventListener,
   useCounter,
@@ -9,6 +9,30 @@ export function useUpdateInterval(delay: number | null) {
   const { count, increment } = useCounter(0);
   useInterval(increment, delay);
   return count;
+}
+
+// same as useThrottle from @uidotdev/usehooks
+export function useThrottle<T>(value: T, interval = 500): T {
+  const [throttledValue, setThrottledValue] = useState<T>(value);
+  const lastUpdated = useRef<number | null>(null);
+
+  useEffect(() => {
+    const now = Date.now();
+
+    if (lastUpdated.current && now >= lastUpdated.current + interval) {
+      lastUpdated.current = now;
+      setThrottledValue(value);
+    } else {
+      const id = window.setTimeout(() => {
+        lastUpdated.current = now;
+        setThrottledValue(value);
+      }, interval);
+
+      return () => window.clearTimeout(id);
+    }
+  }, [value, interval]);
+
+  return throttledValue;
 }
 
 // export function useDebouncedElementSize(delay: number = 200) {

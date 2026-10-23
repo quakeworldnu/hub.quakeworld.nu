@@ -1,5 +1,5 @@
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@qwhub/FontAwesomeIcon";
 import { type ChangeEvent, useEffect, useState } from "react";
 import { useDebounce } from "usehooks-ts";
 import { formInput } from "../../ui/theme.ts";

@@ -1,11 +1,14 @@
 import * as Slider from "@radix-ui/react-slider";
-import { useMouse, useThrottle } from "@uidotdev/usehooks";
 import classNames from "classnames";
-import { useEffect, useRef, useState } from "react";
+import { type MouseEvent, useEffect, useRef, useState } from "react";
 import { getTrackBackground } from "react-range";
 import { useEventListener, useHover } from "usehooks-ts";
 import { useFteController } from "../../fte/hooks.ts";
-import { useUpdateInterval, useUrlClipParams } from "../../hooks.ts";
+import {
+  useThrottle,
+  useUpdateInterval,
+  useUrlClipParams,
+} from "../../hooks.ts";
 import { formatElapsed } from "../../time.ts";
 import { useClipEditor } from "../clips/context.tsx";
 import { useClipPlaylist } from "../clips/playlist.tsx";
@@ -15,23 +18,26 @@ export function TimeSlider() {
   const sliderWrapperRef = useRef(null);
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const isHover = useHover(sliderWrapperRef);
-  const [mouse, sliderRootRef] = useMouse<HTMLDivElement>();
+  const sliderRootRef = useRef<HTMLDivElement | null>(null);
 
   const countdownLength = fte ? fte.getCountdownDuration() : 10;
   const maxValue = fte ? fte.getDemoDuration() : 1210;
 
-  useEffect(() => {
-    if (!isHover || !tooltipRef.current) {
+  // update tooltip directly (no re-render), only while hovering the slider
+  function handleMouseMove(e: MouseEvent) {
+    if (!tooltipRef.current || !sliderRootRef.current) {
       return;
     }
 
-    const sliderWidth = sliderRootRef.current.getBoundingClientRect().width;
-    const progress = mouse.elementX / sliderWidth;
+    const { left, width: sliderWidth } =
+      sliderRootRef.current.getBoundingClientRect();
+    const elementX = e.pageX - (left + window.scrollX);
+    const progress = elementX / sliderWidth;
     const seekTime = Math.round(progress * maxValue);
 
     tooltipRef.current.textContent = formatElapsed(seekTime - countdownLength);
-    tooltipRef.current.style.left = `${mouse.elementX - 10}px`; // -10 to center tooltip
-  }, [isHover, mouse.elementX]);
+    tooltipRef.current.style.left = `${elementX - 10}px`; // -10 to center tooltip
+  }
 
   return (
     <>
@@ -42,7 +48,11 @@ export function TimeSlider() {
         )}
         ref={tooltipRef}
       />
-      <div className="w-full" ref={sliderWrapperRef}>
+      <div
+        className="w-full"
+        ref={sliderWrapperRef}
+        onMouseMove={handleMouseMove}
+      >
         <div ref={sliderRootRef}>
           <SliderRoot max={maxValue} />
         </div>

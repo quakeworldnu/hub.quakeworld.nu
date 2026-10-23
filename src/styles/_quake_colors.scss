@@ -20,26 +20,32 @@ $qw-player-colors: (
         16: rgb(0, 0, 0),
 );
 
-@each $topValue, $topHex in $qw-player-colors {
-  @each $bottomValue, $bottomHex in $qw-player-colors {
-    .qw-bgcolor-#{$topValue}-#{$bottomValue} {
-      $topLight: color.adjust($topHex, $lightness: 5%);
-      $botLight: color.adjust($bottomHex, $lightness: 5%);
-      $offsetY: 0;
-      background: linear-gradient(
-                      to bottom,
-                      transparent 0 $offsetY,
-                      $topLight $offsetY 50.5%,
-                      transparent 49.5% 100%
-      ),
-      linear-gradient(
-                      to top,
-                      transparent 0 $offsetY,
-                      $botLight $offsetY 50.5%,
-                      transparent 49.5% 100%
-      );
-    }
+// usage: "qw-bgcolor qw-bgcolor-top-{0-16} qw-bgcolor-bottom-{0-16}"
+// (an unknown top/bottom value leaves the var undefined, which voids the background)
+@each $value, $hex in $qw-player-colors {
+  .qw-bgcolor-top-#{$value} {
+    --qw-bgcolor-top: #{color.adjust($hex, $lightness: 5%)};
   }
+
+  .qw-bgcolor-bottom-#{$value} {
+    --qw-bgcolor-bottom: #{color.adjust($hex, $lightness: 5%)};
+  }
+}
+
+.qw-bgcolor {
+  $offsetY: 0;
+  background: linear-gradient(
+                  to bottom,
+                  transparent 0 $offsetY,
+                  var(--qw-bgcolor-top) $offsetY 50.5%,
+                  transparent 49.5% 100%
+  ),
+  linear-gradient(
+                  to top,
+                  transparent 0 $offsetY,
+                  var(--qw-bgcolor-bottom) $offsetY 50.5%,
+                  transparent 49.5% 100%
+  );
 }
 
 .qw-color-g {

@@ -1,6 +1,6 @@
 import { faBoltLightning } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SecondaryButton } from "@qwhub/Buttons";
+import { FontAwesomeIcon } from "@qwhub/FontAwesomeIcon";
 import { useEffect, useState } from "react";
 
 export function KoFiGoal({ project, description, title }) {
