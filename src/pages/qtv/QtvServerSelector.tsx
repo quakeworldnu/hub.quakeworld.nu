@@ -38,7 +38,7 @@ export function QtvServerSelectorOverlay({
   return (
     <div
       className={clsx(
-        "absolute z-10 grid items-center w-full h-full transition-opacity duration-500 backdrop-blur overflow-auto p-4",
+        "absolute z-10 grid items-center w-full h-full transition-opacity duration-500 backdrop-blur-sm overflow-auto p-4",
         {
           "opacity-0 pointer-events-none": !isVisible,
         },
@@ -63,7 +63,7 @@ export function QtvServerSelector() {
         <div
           key={[server.address, index].join("-")}
           onClick={() => selectServer(server)}
-          className="cursor-pointer border-2 border-slate-900 hover:border-sky-600 shadow hover:contrast-125"
+          className="cursor-pointer border-2 border-slate-900 hover:border-sky-600 shadow-sm hover:contrast-125"
         >
           <Mapshot map={server.info.map}>
             <div className="flex flex-col h-full bg-gray-700/20 py-4">

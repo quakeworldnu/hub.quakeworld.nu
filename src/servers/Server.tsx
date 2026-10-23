@@ -178,7 +178,7 @@ export const Matchtag = ({ text = "" }: { text?: string | null }) => {
   }
 
   return (
-    <div className="mb-3 py-1.5 uppercase font-bold tracking-widest text-xs text-center w-full bg-gradient-to-r from-red-600/0 via-red-600 app-text-shadow">
+    <div className="mb-3 py-1.5 uppercase font-bold tracking-widest text-xs text-center w-full bg-linear-to-r from-red-600/0 via-red-600 app-text-shadow">
       {text}
     </div>
   );
@@ -345,7 +345,7 @@ export const ServerAddressTitle = React.memo(
           <img
             src={getFlagUrl(cc)}
             alt={cc}
-            className="inline h-3 w-auto mr-1.5 mb-[1px]"
+            className="inline h-3 w-auto mr-1.5 mb-px"
           />
         )}
         {title}

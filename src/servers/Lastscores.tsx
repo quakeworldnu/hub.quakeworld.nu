@@ -17,7 +17,7 @@ export const Lastscores = ({
 
   return (
     <div className="h-full text-xs">
-      <div className="bg-gray-900 shadow flex items-center">
+      <div className="bg-gray-900 shadow-sm flex items-center">
         <div
           className="flex grow p-3 cursor-pointer hover:bg-black/70 hover:text-sky-300"
           onClick={onClose}
@@ -223,7 +223,7 @@ const TextSpoiler = ({
   isRevealed?: boolean;
 }) => {
   return (
-    <span className={clsx({ "blur-sm": !isRevealed })} title="Show scores">
+    <span className={clsx({ "blur-xs": !isRevealed })} title="Show scores">
       {text}
     </span>
   );

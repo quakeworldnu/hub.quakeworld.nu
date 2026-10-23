@@ -173,7 +173,7 @@ const SliderRoot = ({ max }: { max: number }) => {
 
       <Slider.Thumb
         className={clsx(
-          "block w-1 focus:outline-none pointer-events-none transition-size",
+          "block w-1 focus:outline-hidden pointer-events-none transition-size",
           {
             "h-5 bg-white": useRange,
             "h-3 bg-violet-500 group-hover:bg-white group-hover:h-5": !useRange,

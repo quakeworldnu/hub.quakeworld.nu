@@ -3,7 +3,7 @@ import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
 // Drop-in replacement for @fortawesome/react-fontawesome (supports the props used in this project).
 // Renders the same markup without bundling the fontawesome-svg-core runtime.
-// Styles: @fortawesome/fontawesome-svg-core/styles.css (imported in styles/index.scss)
+// Styles: @fortawesome/fontawesome-svg-core/styles.css (imported in styles/index.css)
 type FontAwesomeIconProps = {
   icon: IconDefinition;
   className?: string;

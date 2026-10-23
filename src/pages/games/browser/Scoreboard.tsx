@@ -106,7 +106,7 @@ const ModeRibbon = ({ mode }: { mode: string }) => {
     <div className="w-24 h-24 overflow-hidden">
       <div
         className={clsx(
-          "flex -translate-x-[45%] -translate-y-[195%] -rotate-45 origin-bottom-right h-8 w-48 bg-gradient-to-bl justify-center items-center z-10 text-white app-text-shadow font-bold text-sm",
+          "flex translate-x-[-45%] translate-y-[-195%] -rotate-45 origin-bottom-right h-8 w-48 bg-linear-to-bl justify-center items-center z-10 text-white app-text-shadow font-bold text-sm",
           {
             "from-amber-600 to-amber-900": mode === "ctf",
             "from-sky-600 to-sky-900": mode === "wipeout",

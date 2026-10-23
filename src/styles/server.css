@@ -1,0 +1,65 @@
+/* highlighted server cards: colored border (2px padding) */
+.server-wrapper {
+  &.smod-matchtag {
+    padding: 2px;
+    background: linear-gradient(to bottom, #f00, rgb(255 0 0 / 0.3));
+  }
+
+  &.smod-qwleague-official {
+    padding: 2px;
+    background: linear-gradient(to bottom, #eab308, rgb(234 179 8 / 0.3));
+  }
+
+  &.smod-hasfreeplayer_slots {
+    padding: 2px;
+    background: linear-gradient(to bottom, #2397d1, rgb(35 151 209 / 0.3));
+  }
+
+  &.smod-qhlan {
+    padding: 2px;
+    background: linear-gradient(to bottom, #4b9f0e, rgb(75 159 14 / 0.3));
+  }
+}
+
+.server-progress {
+  @apply bg-gray-400 h-[2px];
+
+  .server-progress-bar {
+    @apply flex relative h-[2px] items-center;
+    background: linear-gradient(
+      to right,
+      hsl(153 53% 33%) 80%,
+      hsl(153 53% 53%)
+    );
+    transition: width 500ms ease-in-out;
+
+    &:after {
+      @apply block absolute shadow-sm content-[''];
+      width: 8px;
+      height: 8px;
+      right: -4px;
+      border-radius: 8px;
+      background-color: hsl(153 53% 53%);
+      border: 1px solid rgb(0 0 0 / 0.5);
+    }
+  }
+}
+
+.server-address {
+  .app-icon {
+    display: none;
+  }
+
+  &:hover,
+  &:active {
+    .app-icon {
+      display: inline-block;
+    }
+  }
+
+  &::after {
+    content: "";
+    display: inline-block;
+    clear: both;
+  }
+}

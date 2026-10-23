@@ -79,7 +79,7 @@ export const PlayerInfo = () => {
                         "bg-black/50 rounded": player.userid === trackUserid,
                         "text-gray-300": player.userid !== trackUserid,
                       },
-                      "grid app-playerinfo-grid w-full gap-1 transition-colors focus:outline-none text-sm",
+                      "grid app-playerinfo-grid w-full gap-1 transition-colors focus:outline-hidden text-sm",
                     )}
                     key={player.userid}
                     onClick={() => fte.track(player.userid)}

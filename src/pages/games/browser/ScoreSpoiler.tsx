@@ -9,7 +9,7 @@ export const ScoreSpoiler = ({ score }: { score: string }) => {
       title="Show scores"
       onClick={show}
       className={clsx("inline-block p-2 cursor-pointer", {
-        "blur-sm": !isVisible,
+        "blur-xs": !isVisible,
       })}
     >
       {isVisible ? score : "xxx xxx"}

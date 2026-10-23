@@ -1,7 +1,7 @@
 import { isTwitchExtensionEmbedded } from "@qwhub/util";
 import React, { type ReactNode } from "react";
 
-const themeBaseDefault = "text-white rounded shadow-md border bg-gradient-to-b";
+const themeBaseDefault = "text-white rounded shadow-md border bg-linear-to-b";
 
 const themePrimary = {
   default: `${themeBaseDefault} from-blue-600 to-blue-700 border-blue-500`,

@@ -1,0 +1,165 @@
+/*
+  quake player colors 0-16 (lightened 5%)
+  usage: "qw-bgcolor qw-bgcolor-top-{0-16} qw-bgcolor-bottom-{0-16}"
+  (an unknown top/bottom value leaves the var undefined, which voids the background)
+*/
+.qw-bgcolor-top-0 {
+  --qw-bgcolor-top: #999999;
+}
+
+.qw-bgcolor-bottom-0 {
+  --qw-bgcolor-bottom: #999999;
+}
+
+.qw-bgcolor-top-1 {
+  --qw-bgcolor-top: #664921;
+}
+
+.qw-bgcolor-bottom-1 {
+  --qw-bgcolor-bottom: #664921;
+}
+
+.qw-bgcolor-top-2 {
+  --qw-bgcolor-top: #595982;
+}
+
+.qw-bgcolor-bottom-2 {
+  --qw-bgcolor-bottom: #595982;
+}
+
+.qw-bgcolor-top-3 {
+  --qw-bgcolor-top: #4e4e0a;
+}
+
+.qw-bgcolor-bottom-3 {
+  --qw-bgcolor-bottom: #4e4e0a;
+}
+
+.qw-bgcolor-top-4 {
+  --qw-bgcolor-top: #600000;
+}
+
+.qw-bgcolor-bottom-4 {
+  --qw-bgcolor-bottom: #600000;
+}
+
+.qw-bgcolor-top-5 {
+  --qw-bgcolor-top: #775909;
+}
+
+.qw-bgcolor-bottom-5 {
+  --qw-bgcolor-bottom: #775909;
+}
+
+.qw-bgcolor-top-6 {
+  --qw-bgcolor-top: #a24c3a;
+}
+
+.qw-bgcolor-bottom-6 {
+  --qw-bgcolor-bottom: #a24c3a;
+}
+
+.qw-bgcolor-top-7 {
+  --qw-bgcolor-top: #905e47;
+}
+
+.qw-bgcolor-bottom-7 {
+  --qw-bgcolor-bottom: #905e47;
+}
+
+.qw-bgcolor-top-8 {
+  --qw-bgcolor-top: #67414f;
+}
+
+.qw-bgcolor-bottom-8 {
+  --qw-bgcolor-bottom: #67414f;
+}
+
+.qw-bgcolor-top-9 {
+  --qw-bgcolor-top: #703c4a;
+}
+
+.qw-bgcolor-bottom-9 {
+  --qw-bgcolor-bottom: #703c4a;
+}
+
+.qw-bgcolor-top-10 {
+  --qw-bgcolor-top: #7a6351;
+}
+
+.qw-bgcolor-bottom-10 {
+  --qw-bgcolor-bottom: #7a6351;
+}
+
+.qw-bgcolor-top-11 {
+  --qw-bgcolor-top: #3a5243;
+}
+
+.qw-bgcolor-bottom-11 {
+  --qw-bgcolor-bottom: #3a5243;
+}
+
+.qw-bgcolor-top-12 {
+  --qw-bgcolor-top: #937608;
+}
+
+.qw-bgcolor-bottom-12 {
+  --qw-bgcolor-bottom: #937608;
+}
+
+.qw-bgcolor-top-13 {
+  --qw-bgcolor-top: #363692;
+}
+
+.qw-bgcolor-bottom-13 {
+  --qw-bgcolor-bottom: #363692;
+}
+
+.qw-bgcolor-top-14 {
+  --qw-bgcolor-top: #cf3a11;
+}
+
+.qw-bgcolor-bottom-14 {
+  --qw-bgcolor-bottom: #cf3a11;
+}
+
+.qw-bgcolor-top-15 {
+  --qw-bgcolor-top: #800000;
+}
+
+.qw-bgcolor-bottom-15 {
+  --qw-bgcolor-bottom: #800000;
+}
+
+.qw-bgcolor-top-16 {
+  --qw-bgcolor-top: #0d0d0d;
+}
+
+.qw-bgcolor-bottom-16 {
+  --qw-bgcolor-bottom: #0d0d0d;
+}
+
+.qw-bgcolor {
+  background:
+    linear-gradient(
+      to bottom,
+      transparent 0 0,
+      var(--qw-bgcolor-top) 0 50.5%,
+      transparent 49.5% 100%
+    ),
+    linear-gradient(
+      to top,
+      transparent 0 0,
+      var(--qw-bgcolor-bottom) 0 50.5%,
+      transparent 49.5% 100%
+    );
+}
+
+/* quake text colors (gold, brown), player colors 12 and 1 lightened 25% */
+.qw-color-g {
+  color: #f1c310;
+}
+
+.qw-color-b {
+  color: #b37f3a;
+}

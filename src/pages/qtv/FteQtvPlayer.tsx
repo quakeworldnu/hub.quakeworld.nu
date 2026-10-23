@@ -80,7 +80,7 @@ export function FteQtvPlayer({
       id="ftePlayer"
       className={clsx("relative w-full h-full bg-black", {
         "max-h-[75vh] aspect-video": !fullscreen,
-        "min-h-[100vh] max-h-full": fullscreen,
+        "min-h-screen max-h-full": fullscreen,
       })}
       ref={playerRef}
     >

@@ -47,7 +47,7 @@ export function QWLeague({ stats }: { stats: QueueStats | null }) {
       <a
         href={QWLEAGUE_URL}
         target="_top"
-        className="mt-4 flex items-center justify-center p-2 text-sm text-white rounded shadow-md border bg-gradient-to-b from-orange-900/40 to-orange-900/30 border-orange-800/30 transition-colors hover:from-orange-800/50 hover:to-orange-900/60 hover:border-orange-600"
+        className="mt-4 flex items-center justify-center p-2 text-sm text-white rounded shadow-md border bg-linear-to-b from-orange-900/40 to-orange-900/30 border-orange-800/30 transition-colors hover:from-orange-800/50 hover:to-orange-900/60 hover:border-orange-600"
       >
         Play at qwleague.com
         <FontAwesomeIcon icon={faChevronRight} className="ml-1.5 text-xs" />
@@ -242,7 +242,7 @@ export function QWLeagueBanner({
   return (
     <div
       className={clsx(
-        "rounded-md border border-orange-900/60 bg-gradient-to-r from-orange-950/80 via-orange-950/40 to-orange-950/20",
+        "rounded-md border border-orange-900/60 bg-linear-to-r from-orange-950/80 via-orange-950/40 to-orange-950/20",
         className,
       )}
     >

@@ -26,7 +26,7 @@ export const Switch = ({ label, enabled, onClick, title }: Props) => {
       </span>
       <RadixSwitch.Root
         className={clsx(
-          "w-10 h-5 rounded-full relative focus:shadow-black outline-none",
+          "w-10 h-5 rounded-full relative focus:shadow-black outline-hidden",
           {
             "bg-blue-400": enabled,
             "bg-gray-500": !enabled,

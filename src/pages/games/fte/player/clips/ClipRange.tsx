@@ -139,7 +139,7 @@ export const ClipRange = () => {
               onPointerDown={() => setDraggedIndex(index)}
               onKeyDown={() => setDraggedIndex(index)}
               onKeyUp={() => setDraggedIndex(-1)}
-              className="group relative block w-0 h-10 outline-none"
+              className="group relative block w-0 h-10 outline-hidden"
             >
               <div
                 className="absolute -top-1 -left-2 flex w-4 h-12 justify-center items-center bg-blue-700 hover:bg-blue-800 border border-transparent hover:border-white group-focus-visible:[outline:auto]"

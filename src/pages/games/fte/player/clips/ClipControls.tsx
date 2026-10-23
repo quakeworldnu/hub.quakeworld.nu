@@ -125,7 +125,7 @@ const AdjustRangeButton = ({
   return (
     <button
       className={clsx(
-        "flex items-center bg-gradient-to-b from-slate-600 to-slate-700 hover:from-slate-500 hover:to-slate-600 px-1.5 py-1 text-xs rounded",
+        "flex items-center bg-linear-to-b from-slate-600 to-slate-700 hover:from-slate-500 hover:to-slate-600 px-1.5 py-1 text-xs rounded",
         { "hidden sm:flex": Math.abs(delta) > 1 },
       )}
       onClick={handleClick}

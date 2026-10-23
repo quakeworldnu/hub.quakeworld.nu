@@ -1,13 +1,10 @@
-$frags-width: 36px;
-$ping-width: 42px;
-$team-width: 40px;
-
+/* columns: ping, frags, team, name */
 .scoreboard {
   @apply grid text-sm app-text-outline;
 
   .sc-row {
     @apply grid items-center gap-x-2;
-    grid-template-columns: $ping-width $frags-width $team-width auto;
+    grid-template-columns: 42px 36px 40px auto;
   }
 
   &.sc-hide-frags .sc-frags {
@@ -16,6 +13,6 @@ $team-width: 40px;
   }
 
   &.sc-hide-team .sc-row {
-    grid-template-columns: $ping-width $frags-width auto;
+    grid-template-columns: 42px 36px auto;
   }
 }
