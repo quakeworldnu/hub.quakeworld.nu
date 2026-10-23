@@ -1,17 +1,20 @@
 import * as RadixSwitch from "@radix-ui/react-switch";
 import classNames from "classnames";
+import type { ReactNode } from "react";
 
 type Props = {
-  label: string;
+  label: ReactNode;
   enabled: boolean;
   onClick: () => void;
+  title?: string;
 };
 
-export const Switch = ({ label, enabled, onClick }: Props) => {
+export const Switch = ({ label, enabled, onClick, title }: Props) => {
   return (
     <div
       className="flex items-center cursor-pointer p-2 text-xs sm:text-sm"
       onClick={onClick}
+      title={title}
     >
       <span
         className={classNames("pr-2 select-none", {
@@ -29,7 +32,7 @@ export const Switch = ({ label, enabled, onClick }: Props) => {
             "bg-gray-500": !enabled,
           },
         )}
-        id={label}
+        id={typeof label === "string" ? label : undefined}
       >
         <RadixSwitch.Thumb
           className={classNames(

@@ -8,6 +8,7 @@ import { MapName } from "./MapName.tsx";
 import { Matchtag } from "./Matchtag.tsx";
 import { Pagination } from "./Pagination.tsx";
 import { PlayerQuery } from "./PlayerQuery.tsx";
+import { QwleagueToggle } from "./QwleagueToggle.tsx";
 import { Teams } from "./Teams.tsx";
 import { Timeframe } from "./Timeframe.tsx";
 
@@ -23,6 +24,7 @@ export const Toolbar = () => {
       <DisplayModeBar />
       <GlobalShowScoresToggle />
       <GameModeBar />
+      <QwleagueToggle />
       <PlayerQuery />
       <Teams />
       <MapName />
