@@ -353,7 +353,8 @@ const KtxVersion = React.memo((props) => {
   );
 });
 
-export const Server = (props) => {
+// memo: unchanged servers keep their object identity between polls (rtk query structural sharing)
+export const Server = React.memo((props) => {
   const { server } = props;
 
   return (
@@ -365,4 +366,4 @@ export const Server = (props) => {
       </div>
     </div>
   );
-};
+});
