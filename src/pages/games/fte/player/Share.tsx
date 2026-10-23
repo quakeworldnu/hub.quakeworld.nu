@@ -25,11 +25,20 @@ export const ShareDemoButton = () => {
       return;
     }
     fte.pause();
-    setTrackUserId(fte.getTrackUserid() || "");
+    const currentTrackUserId = fte.getTrackUserid() || "";
+    const currentIsUsingAutotrack = fte.isUsingAutotrack();
+    setTrackUserId(currentTrackUserId);
     setMatchElapsedTime(Math.floor(fte.getMatchElapsedTime()));
-    setIsUsingAutotrack(fte.isUsingAutotrack());
-    setUrl(getUrl());
-    copyToClipboardWithToast();
+    setIsUsingAutotrack(currentIsUsingAutotrack);
+
+    // build the link from the current player state (state updates above apply on next render)
+    const currentUrl = buildUrl(
+      useFrom,
+      currentIsUsingAutotrack,
+      currentTrackUserId,
+    );
+    setUrl(currentUrl);
+    copyToClipboardWithToast(currentUrl);
     setIsOpen(true);
   }
 
@@ -43,24 +52,32 @@ export const ShareDemoButton = () => {
     }
   }
 
-  function copyToClipboardWithToast() {
-    navigator.clipboard.writeText(url);
+  function copyToClipboardWithToast(text: string) {
+    navigator.clipboard.writeText(text);
     toast("Link copied to clipboard");
   }
 
   function getUrl(): string {
+    return buildUrl(useFrom, isUsingAutotrack, trackUserId);
+  }
+
+  function buildUrl(
+    withFrom: boolean,
+    withAutotrack: boolean,
+    withTrackUserId: number | "",
+  ): string {
     if (!fte) {
       return "";
     }
 
     const q: { [key: string]: string | number | undefined } = { gameId };
 
-    if (useFrom) {
+    if (withFrom) {
       q.from = Math.floor(fte.getDemoElapsedTime());
     }
 
-    if (!isUsingAutotrack) {
-      q.track = trackUserId;
+    if (!withAutotrack) {
+      q.track = withTrackUserId;
     }
 
     const baseUrl = window.location.href.split("?")[0];
@@ -109,7 +126,7 @@ export const ShareDemoButton = () => {
               </div>
               <button
                 className={`${btnPrimary} ${sizeSmall}`}
-                onClick={copyToClipboardWithToast}
+                onClick={() => copyToClipboardWithToast(url)}
               >
                 <FontAwesomeIcon icon={faCopy} fixedWidth className="mr-1" />
                 Copy
