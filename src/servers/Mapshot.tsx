@@ -1,6 +1,13 @@
 import { getMapshotCssUrl } from "@qwhub/services/mapshots";
+import type { ReactNode } from "react";
 
-export function Mapshot({ map, children }) {
+export function Mapshot({
+  map,
+  children,
+}: {
+  map: string;
+  children?: ReactNode;
+}) {
   return (
     <div className="h-full bg-cover bg-center bg-[url(https://a.quake.world/mapshots/default.jpg)]">
       <div

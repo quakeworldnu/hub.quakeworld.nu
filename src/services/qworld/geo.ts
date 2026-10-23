@@ -1,8 +1,12 @@
+import type { Geo } from "./types.ts";
+
+export type GeoByIp = Record<string, Geo>;
+
 const GEO_URL =
   "https://raw.githubusercontent.com/vikpe/qw-servers-geoip/refs/heads/main/ip_to_geo.json";
 const MAX_AGE_MS = 60 * 60 * 1000;
 
-const emptyGeo = {
+const emptyGeo: Geo = {
   cc: "",
   country: "",
   region: "",
@@ -10,12 +14,12 @@ const emptyGeo = {
   coordinates: [0, 0],
 };
 
-let geoByIp = {};
+let geoByIp: GeoByIp = {};
 let fetchedAt = 0;
-let pending = null;
+let pending: Promise<void> | null = null;
 
 // ip => geo, updated daily upstream, refetched hourly
-export async function fetchGeo() {
+export async function fetchGeo(): Promise<GeoByIp> {
   if (Date.now() - fetchedAt < MAX_AGE_MS) {
     return geoByIp;
   }
@@ -37,4 +41,5 @@ export async function fetchGeo() {
   return geoByIp;
 }
 
-export const geoByIpOrEmpty = (geo, ip) => geo[ip] ?? emptyGeo;
+export const geoByIpOrEmpty = (geo: GeoByIp, ip: string): Geo =>
+  geo[ip] ?? emptyGeo;

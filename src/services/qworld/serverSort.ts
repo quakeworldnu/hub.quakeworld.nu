@@ -1,4 +1,6 @@
-export const compareServers = (a, b) => {
+import type { Server } from "./types.ts";
+
+export const compareServers = (a: Server, b: Server): number => {
   // score
   if (a.score > b.score) {
     return -1;

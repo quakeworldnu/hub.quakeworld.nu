@@ -1,5 +1,13 @@
+// @ts-ignore
 import { isBot } from "@qwhub/services/qworld/server";
+import type { Server } from "@qwhub/services/qworld/types.ts";
 import { localStorageGet } from "@qwhub/util";
+
+export type ServerFilters = {
+  only_bots: boolean;
+  modes: string[];
+  regions: string[];
+};
 
 export const modes = [
   "1on1",
@@ -20,8 +28,8 @@ export const regions = [
   "South America",
 ];
 
-export function getDefaultServerFilters() {
-  const defaultValues = {
+export function getDefaultServerFilters(): ServerFilters {
+  const defaultValues: ServerFilters = {
     only_bots: true,
     modes: [...modes],
     regions: [...regions],
@@ -29,24 +37,28 @@ export function getDefaultServerFilters() {
   return Object.assign({}, defaultValues);
 }
 
-export function getInitialServerFilters() {
+export function getInitialServerFilters(): ServerFilters {
   return Object.assign(
     {},
     getDefaultServerFilters(),
-    localStorageGet("serverFilters", {}),
+    localStorageGet<Partial<ServerFilters>>("serverFilters", {}),
   );
 }
 
-export function filterServers(servers, filters) {
+export function filterServers(
+  servers: Server[],
+  filters: ServerFilters,
+): Server[] {
   if (0 === servers.length) {
     return servers;
   }
 
-  const filterOperations = [];
+  const filterOperations: ((s: Server) => boolean)[] = [];
 
   // misc
   if (!filters.only_bots) {
-    const hasOnlyBots = (s) => s.players.length > 0 && s.players.every(isBot);
+    const hasOnlyBots = (s: Server) =>
+      s.players.length > 0 && s.players.every(isBot);
     filterOperations.push((s) => !hasOnlyBots(s));
   }
 
@@ -91,7 +103,7 @@ export function filterServers(servers, filters) {
   return filtered_servers;
 }
 
-export function equalsDefaultFilters(filters) {
+export function equalsDefaultFilters(filters: ServerFilters): boolean {
   return (
     filters.regions.length === regions.length &&
     filters.modes.length === modes.length &&

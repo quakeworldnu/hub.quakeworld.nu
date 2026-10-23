@@ -6,8 +6,6 @@ import { QtvEvent } from "@qwhub/pages/qtv/events.ts";
 // @ts-ignore
 import { selectQtvServers } from "@qwhub/selectors";
 // @ts-ignore
-import { Mapshot } from "@qwhub/servers/Mapshot";
-// @ts-ignore
 import { ServerAddress } from "@qwhub/servers/Server";
 // @ts-ignore
 import ServersStreams from "@qwhub/servers/ServerStreams";

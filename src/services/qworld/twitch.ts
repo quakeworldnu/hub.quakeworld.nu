@@ -1,5 +1,7 @@
+import type { TwitchStream } from "./types.ts";
+
 // featured twitch streamers: twitch login => in-game name
-export const streamers = {
+export const streamers: Record<string, string> = {
   "4ksae": "sae",
   amd_glad: "glad",
   ake_vader: "ake_vader",
@@ -36,10 +38,12 @@ export const streamers = {
   zorakwar: "Zorak",
 };
 
-export const isFeaturedStream = (stream) => stream.user_login in streamers;
+export const isFeaturedStream = (stream: TwitchStream): boolean =>
+  stream.user_login in streamers;
 
 // in-game name of the streamer
-export const streamClientName = (stream) =>
+export const streamClientName = (stream: TwitchStream): string =>
   streamers[stream.user_login] ?? stream.user_name;
 
-export const streamUrl = (stream) => `https://twitch.tv/${stream.user_login}`;
+export const streamUrl = (stream: TwitchStream): string =>
+  `https://twitch.tv/${stream.user_login}`;

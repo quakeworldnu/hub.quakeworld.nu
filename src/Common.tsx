@@ -1,6 +1,10 @@
-import React from "react";
-
-export function SvgIcon({ filename, size = 24 }) {
+export function SvgIcon({
+  filename,
+  size = 24,
+}: {
+  filename: string;
+  size?: number;
+}) {
   return (
     <img
       src={`https://hub.quakeworld.nu/assets/img/icons/${filename}.svg`}
@@ -17,6 +21,11 @@ export function Heading({
   icon = "",
   iconSize = 24,
   color = "text-gray-400",
+}: {
+  text?: string;
+  icon?: string;
+  iconSize?: number;
+  color?: string;
 }) {
   return (
     <div className={`flex items-center font-bold mb-1 ${color}`}>

@@ -1,7 +1,6 @@
 // @ts-ignore
 import { selectQtvServers } from "@qwhub/selectors.js";
-// @ts-ignore
-import { Mapshot } from "@qwhub/servers/Mapshot.jsx";
+import { Mapshot } from "@qwhub/servers/Mapshot.tsx";
 // @ts-ignore
 import { Scoreboard } from "@qwhub/servers/Scoreboard.jsx";
 // @ts-ignore

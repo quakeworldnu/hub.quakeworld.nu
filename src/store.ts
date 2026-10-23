@@ -1,6 +1,7 @@
 import settingsReducer from "@qwhub/settingsSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
+// @ts-ignore
 import { qworldApi } from "./services/qworld/api.js";
 
 export const store = configureStore({
@@ -16,6 +17,9 @@ export const store = configureStore({
     getDefaultMiddleware().concat(qworldApi.middleware),
 });
 export default store;
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
 // tracks page visibility, required for skipPollingIfUnfocused/refetchOnFocus
 setupListeners(store.dispatch);
