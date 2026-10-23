@@ -6,6 +6,7 @@ import {
 import { getSearchParam } from "@qwhub/pages/qtv/url";
 import { useQtvServers } from "@qwhub/servers/hooks.ts";
 import { ServerPoller } from "@qwhub/servers/Servers";
+import type { Server } from "@qwhub/services/qworld/types.ts";
 import { SiteFooter } from "@qwhub/site/Footer";
 import { SiteHeader } from "@qwhub/site/Header";
 import { useEffect, useState } from "react";
@@ -28,7 +29,7 @@ export const App = () => {
 export default App;
 
 function useInitialServer() {
-  const [server, setServer] = useState(null);
+  const [server, setServer] = useState<Server | null>(null);
   const servers = useQtvServers();
 
   useEffect(() => {

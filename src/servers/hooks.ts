@@ -25,7 +25,7 @@ export function useQtvServers(): Server[] {
   }, [servers]);
 }
 
-type Client = {
+export type Client = {
   name: QuakeString;
   status: string;
   address: string;

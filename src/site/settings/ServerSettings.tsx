@@ -12,6 +12,7 @@ import {
   useShowSettings,
 } from "@qwhub/settings.ts";
 import clsx from "clsx";
+import type { FormEvent, MouseEvent } from "react";
 import { useRef } from "react";
 
 export const SettingsDrawer = () => {
@@ -38,7 +39,11 @@ export const SettingsDrawer = () => {
 };
 
 // add/remove a value from a list of checked values
-function toggleValue(values, value, isChecked) {
+function toggleValue(
+  values: string[],
+  value: string,
+  isChecked: boolean,
+): string[] {
   return isChecked ? values.concat(value) : values.filter((v) => v !== value);
 }
 
@@ -59,12 +64,12 @@ export const ServerSettings = () => {
     setServerFilters(getDefaultServerFilters());
   }
 
-  function onChange(e) {
-    const { name, value, checked } = e.target;
+  function onChange(e: FormEvent<HTMLFormElement>) {
+    const { name, value, checked } = e.target as HTMLInputElement;
 
     if ("only_bots" === name) {
       setServerFilters({ ...values, only_bots: checked });
-    } else if ("modes" === name || "regions" === name) {
+    } else if (name === "modes" || name === "regions") {
       setServerFilters({
         ...values,
         [name]: toggleValue(values[name], value, checked),
@@ -144,7 +149,17 @@ export const ServerSettings = () => {
   );
 };
 
-const Checkbox = ({ name, label, value, isChecked }) => {
+const Checkbox = ({
+  name,
+  label,
+  value,
+  isChecked,
+}: {
+  name: string;
+  label: string;
+  value?: string;
+  isChecked: boolean;
+}) => {
   return (
     <div>
       <label className="inline-block cursor-pointer w-auto p-0.5 text-gray-300 hover:text-white select-none">
@@ -165,7 +180,7 @@ export const SettingsToggleButton = () => {
   const filters = useServerFilters();
   const hasModifiedFilters = !equalsDefaultFilters(filters);
 
-  function showSettings(e) {
+  function showSettings(e: MouseEvent) {
     e.preventDefault();
     setShowSettings(true);
   }

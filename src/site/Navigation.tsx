@@ -1,7 +1,7 @@
 import { useFilteredServers } from "@qwhub/servers/hooks.ts";
 import { totalSpectatorCount } from "@qwhub/servers/util.ts";
 import { isBot } from "@qwhub/services/qworld/server";
-import { SettingsToggleButton } from "@qwhub/site/settings/ServerSettings.jsx";
+import { SettingsToggleButton } from "@qwhub/site/settings/ServerSettings.tsx";
 import clsx from "clsx";
 
 export default function SiteNavigation() {
@@ -79,7 +79,17 @@ const PageSettings = () => {
   return null;
 };
 
-const NavLink = ({ title, shortDescription, longDescription, url }) => {
+const NavLink = ({
+  title,
+  shortDescription,
+  longDescription,
+  url,
+}: {
+  title: string;
+  shortDescription: string | number;
+  longDescription: string | number;
+  url: string;
+}) => {
   const isSelected = url === location.pathname;
 
   const cls = clsx(

@@ -1,16 +1,33 @@
 import { SecondaryButton } from "@qwhub/Buttons";
 import { Heading } from "@qwhub/Common";
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 
 const WEBSITE_URL = "https://scheduler.quake.world";
 const ENDPOINT =
   "https://europe-west3-matchscheduler-dev.cloudfunctions.net/getScheduledGames?limit=10";
 
-export function ScheduledGames({ status = "upcoming", teamTag }) {
-  const [games, setGames] = useState([]);
+// scheduler.quake.world api (subset)
+type Team = { id: string; tag: string; logo_url: string };
+
+type Match = {
+  id: string;
+  teamA: Team;
+  teamB: Team;
+  gameType: string;
+  scheduledDateTime: string;
+};
+
+export function ScheduledGames({
+  status = "upcoming",
+  teamTag,
+}: {
+  status?: string;
+  teamTag?: string;
+}) {
+  const [games, setGames] = useState<Match[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -36,8 +53,8 @@ export function ScheduledGames({ status = "upcoming", teamTag }) {
           throw new Error("API returned failure");
         }
       } catch (err) {
-        if (err.name !== "AbortError") {
-          setError(err.message);
+        if ((err as Error).name !== "AbortError") {
+          setError((err as Error).message);
         }
       } finally {
         setLoading(false);
@@ -70,7 +87,7 @@ export function ScheduledGames({ status = "upcoming", teamTag }) {
   );
 }
 
-function MatchCardCompact({ match }) {
+function MatchCardCompact({ match }: { match: Match }) {
   const h2hLink = `${WEBSITE_URL}/#/teams/${match.teamA.id}/h2h/${match.teamB.id}`;
 
   return (
@@ -122,11 +139,11 @@ function MatchCardCompact({ match }) {
   );
 }
 
-function iso8601_to_string(isoString) {
+function iso8601_to_string(isoString: string): ReactNode {
   const date = new Date(isoString); // parsed in local time automatically
   const now = new Date();
 
-  const pad = (n) => n.toString().padStart(2, "0");
+  const pad = (n: number) => n.toString().padStart(2, "0");
 
   // Check if the date is today in local time
   const isToday =

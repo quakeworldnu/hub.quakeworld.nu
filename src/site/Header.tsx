@@ -1,6 +1,6 @@
 import { FeaturedStreams } from "@qwhub/Streams";
 import SiteNavigation from "@qwhub/site/Navigation";
-import { SettingsDrawer } from "@qwhub/site/settings/ServerSettings.jsx";
+import { SettingsDrawer } from "@qwhub/site/settings/ServerSettings.tsx";
 import clsx from "clsx";
 
 export const SiteHeader = () => {

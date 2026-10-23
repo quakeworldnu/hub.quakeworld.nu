@@ -1,6 +1,7 @@
 import { Heading } from "@qwhub/Common";
 import { useTwitchStreams } from "@qwhub/services/qworld/queries.ts";
 import { isFeaturedStream, streamUrl } from "@qwhub/services/qworld/twitch";
+import type { TwitchStream } from "@qwhub/services/qworld/types.ts";
 import { Fragment } from "react";
 import { TwitchButton } from "./Buttons";
 
@@ -18,7 +19,7 @@ export function FeaturedStreams() {
   );
 }
 
-const FeaturedStream = (props) => {
+const FeaturedStream = (props: { stream: TwitchStream }) => {
   const { stream } = props;
 
   return (
@@ -47,7 +48,7 @@ export function AllStreams() {
   );
 }
 
-const StreamListItem = ({ stream }) => {
+const StreamListItem = ({ stream }: { stream: TwitchStream }) => {
   const { user_name, viewer_count, title = "" } = stream;
   const maxLength = 60;
 

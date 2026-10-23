@@ -1,5 +1,5 @@
 import { GameDetails } from "@qwhub/pages/games/fte/player/GameDetails.tsx";
-import { ServerPoller } from "@qwhub/servers/Servers.jsx";
+import { ServerPoller } from "@qwhub/servers/Servers.tsx";
 import { Toaster } from "@qwhub/Toast.tsx";
 import { StrictMode } from "react";
 import { SiteFooter } from "../../site/Footer";

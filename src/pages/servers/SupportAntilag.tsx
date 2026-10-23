@@ -3,8 +3,18 @@ import { SecondaryButton } from "@qwhub/Buttons";
 import { FontAwesomeIcon } from "@qwhub/FontAwesomeIcon";
 import { useEffect, useState } from "react";
 
-export function KoFiGoal({ project, description, title }) {
-  const [goalData, setGoalData] = useState(null);
+type KoFiGoalData = { progress: number; goal: number; currency: string };
+
+export function KoFiGoal({
+  project,
+  description,
+  title,
+}: {
+  project: string;
+  description: string;
+  title: string;
+}) {
+  const [goalData, setGoalData] = useState<KoFiGoalData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

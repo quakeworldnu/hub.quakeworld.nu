@@ -1,10 +1,12 @@
 import { QuakeText, quakeStringToHtml } from "@qwhub/QuakeText";
+import type { Client } from "@qwhub/servers/hooks.ts";
 import {
   useFilteredClients,
   useFilteredServers,
 } from "@qwhub/servers/hooks.ts";
 import { ServerAddress } from "@qwhub/servers/Server";
 import { ServerPoller } from "@qwhub/servers/Servers";
+import type { Server } from "@qwhub/services/qworld/types.ts";
 import { SiteFooter } from "@qwhub/site/Footer";
 import { SiteHeader } from "@qwhub/site/Header";
 
@@ -26,7 +28,7 @@ export default App;
 const PlayerTable = () => {
   const clients = useFilteredClients();
   const servers = useFilteredServers();
-  const serversObj = [];
+  const serversObj: Record<string, Server> = {};
 
   for (let i = 0; i < servers.length; i++) {
     serversObj[servers[i].address] = servers[i];
@@ -58,7 +60,7 @@ const PlayerTable = () => {
   );
 };
 
-const ClientRow = (props) => {
+const ClientRow = (props: { client: Client; server: Server }) => {
   const { client, server } = props;
 
   return (
