@@ -49,7 +49,7 @@ export const StatsButton = ({ sha256 }: { sha256: string }) => {
         open={isOpen}
         onClose={close}
         label="Stats"
-        className="animate-contentShow fixed left-[50%] top-[50%] m-0 grid w-full min-w-64 min-h-20 max-w-fit translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background text-inherit p-6 shadow-lg sm:rounded-lg overflow-auto backdrop:bg-black/80"
+        className="animate-contentShow fixed left-[50%] top-[50%] m-0 open:grid w-full min-w-64 min-h-20 max-w-fit translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background text-inherit p-6 shadow-lg sm:rounded-lg overflow-auto backdrop:bg-black/80"
       >
         <DemoKtxStats sha256={sha256} />
         <button
