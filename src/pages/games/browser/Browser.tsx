@@ -1,9 +1,9 @@
+import { GamesProvider, useGames } from "./context.tsx";
 import { GameGrid } from "./GameGrid.tsx";
 import { GameList } from "./GameList.tsx";
-import { GamesProvider, useGames } from "./context.tsx";
+import { GameSettingsProvider, useGameSettings } from "./settings/context.tsx";
 import { Pagination } from "./settings/Pagination.tsx";
 import { Toolbar } from "./settings/Toolbar.tsx";
-import { GameSettingsProvider, useGameSettings } from "./settings/context.tsx";
 
 export const Browser = () => {
   return (

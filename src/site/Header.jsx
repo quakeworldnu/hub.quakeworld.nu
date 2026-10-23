@@ -1,7 +1,7 @@
 import { FeaturedStreams } from "@qwhub/Streams";
 import SiteNavigation from "@qwhub/site/Navigation";
 import { SettingsDrawer } from "@qwhub/site/settings/ServerSettings.jsx";
-import classNames from "classnames";
+import clsx from "clsx";
 
 export const SiteHeader = () => {
   const showStreamsOnSm = ["/", "/players/"].includes(location.pathname);
@@ -27,7 +27,7 @@ export const SiteHeader = () => {
             </div>
           </div>
           <div
-            className={classNames("mt-2", {
+            className={clsx("mt-2", {
               "hidden sm:block": !showStreamsOnSm,
             })}
           >

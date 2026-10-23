@@ -1,9 +1,9 @@
-import { Timestamp } from "../Timestamp.tsx";
 import { GameSearchEntry } from "../services/supabase/supabase.ts";
 import type {
   GamePlayer,
   GameTeam,
 } from "../services/supabase/supabase.types.ts";
+import { Timestamp } from "../Timestamp.tsx";
 import { DownloadButton, PlayButton } from "./Controls.tsx";
 import { ScoreSpoiler } from "./ScoreSpoiler.tsx";
 

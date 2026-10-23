@@ -1,15 +1,18 @@
 import { useFteController } from "@qwhub/pages/games/fte/hooks";
-import { Shortcuts, presets } from "@qwhub/pages/games/player/Shortcuts.tsx";
+import {
+  presets,
+  Shortcuts,
+} from "@qwhub/pages/games/fte/player/Shortcuts.tsx";
 import { getSearchParam } from "@qwhub/pages/qtv/url";
-import { ServerPoller } from "@qwhub/servers/Servers";
 import { useQtvServers } from "@qwhub/servers/hooks.ts";
+import { ServerPoller } from "@qwhub/servers/Servers";
 import { SiteFooter } from "@qwhub/site/Footer";
 import { SiteHeader } from "@qwhub/site/Header";
 import { useEffect, useState } from "react";
+import { selectServer } from "./events";
 import { QtvPlayerFooter } from "./Footer";
 import { FteQtvPlayer } from "./FteQtvPlayer";
 import { QtvPlayerSidebar } from "./Sidebar";
-import { selectServer } from "./events";
 
 export const App = () => {
   return (
@@ -66,7 +69,7 @@ const QtvPage = () => {
             {server && (
               <FteQtvPlayer
                 mapName={server.info.map}
-                timelimit={Number.parseInt(server.info.timelimit)}
+                timelimit={Number.parseInt(server.info.timelimit, 10)}
               />
             )}
           </div>

@@ -1,6 +1,6 @@
-import { QuakeText, coloredQuakeName } from "@qwhub/QuakeText.tsx";
+import { coloredQuakeName, QuakeText } from "@qwhub/QuakeText.tsx";
 import { getFlagUrl } from "@qwhub/services/flags.ts";
-import classNames from "classnames";
+import clsx from "clsx";
 import { memo } from "react";
 import { ColoredFrags } from "./ColoredFrags.tsx";
 
@@ -47,7 +47,7 @@ export const Scoreboard = ({
 
   return (
     <div
-      className={classNames("scoreboard", {
+      className={clsx("scoreboard", {
         "sc-hide-team": !hasTeams,
         "sc-hide-frags": !showFrags,
       })}

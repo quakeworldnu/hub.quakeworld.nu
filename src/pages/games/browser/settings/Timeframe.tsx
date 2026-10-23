@@ -1,7 +1,7 @@
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@qwhub/FontAwesomeIcon";
 import { useGameSettings } from "@qwhub/pages/games/browser/settings/context.tsx";
-import classNames from "classnames";
+import clsx from "clsx";
 import type { ChangeEvent } from "react";
 import { formInput } from "../../ui/theme.ts";
 
@@ -18,7 +18,7 @@ export const Timeframe = () => {
   const { maxAge = 30, setMaxAge } = useGameSettings();
 
   function handleChange(e: ChangeEvent<HTMLSelectElement>) {
-    setMaxAge(Number.parseInt(e.target.value));
+    setMaxAge(Number.parseInt(e.target.value, 10));
   }
 
   return (
@@ -29,7 +29,7 @@ export const Timeframe = () => {
         size="xs"
       />
       <select
-        className={classNames(formInput, "-ml-6 pl-7 w-32")}
+        className={clsx(formInput, "-ml-6 pl-7 w-32")}
         onChange={handleChange}
         defaultValue={maxAge}
       >

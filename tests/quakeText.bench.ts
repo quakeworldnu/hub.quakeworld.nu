@@ -1,6 +1,6 @@
 import { bench, describe } from "vitest";
 
-import { quakeBytesToHtml } from "../src/pages/games/player/QuakeText";
+import { quakeBytesToHtml } from "../src/pages/games/fte/player/QuakeText";
 import { parseQuakeText } from "../src/services/qworld/quakeText";
 
 const ascii = (text: string) => [...text].map((c) => c.charCodeAt(0));

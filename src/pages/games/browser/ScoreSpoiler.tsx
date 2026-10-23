@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import clsx from "clsx";
 import { useDemoScoreSpoiler } from "./hooks.ts";
 
 export const ScoreSpoiler = ({ score }: { score: string }) => {
@@ -8,7 +8,7 @@ export const ScoreSpoiler = ({ score }: { score: string }) => {
     <span
       title="Show scores"
       onClick={show}
-      className={classNames("inline-block p-2 cursor-pointer", {
+      className={clsx("inline-block p-2 cursor-pointer", {
         "blur-sm": !isVisible,
       })}
     >

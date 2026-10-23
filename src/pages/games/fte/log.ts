@@ -73,7 +73,7 @@ function parseOvertime(message: string): number | undefined {
     return undefined;
   }
 
-  return Number.parseInt(matches[1]);
+  return Number.parseInt(matches[1], 10);
 }
 
 function parseRemainingTime(message: string): number | undefined {
@@ -84,6 +84,6 @@ function parseRemainingTime(message: string): number | undefined {
     return undefined;
   }
 
-  const value = Number.parseInt(matches[1]);
+  const value = Number.parseInt(matches[1], 10);
   return message.includes(" seconds") ? value : value * 60;
 }

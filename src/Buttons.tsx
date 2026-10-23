@@ -1,6 +1,5 @@
-import React, { type ReactNode } from "react";
-
 import { isTwitchExtensionEmbedded } from "@qwhub/util";
+import React, { type ReactNode } from "react";
 
 const themeBaseDefault = "text-white rounded shadow-md border bg-gradient-to-b";
 

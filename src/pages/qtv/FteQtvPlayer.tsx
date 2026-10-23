@@ -1,25 +1,25 @@
 import { getQtvPlayerAssets } from "@qwhub/pages/games/fte/assets";
 import { useFteController, useFteLoader } from "@qwhub/pages/games/fte/hooks";
 import { enableLogToEvents } from "@qwhub/pages/games/fte/log.ts";
+import { GameClock } from "@qwhub/pages/games/fte/player/controls/GameClock.tsx";
+import { Participants } from "@qwhub/pages/games/fte/player/controls/Participants.tsx";
+import { ResponsivePlayerInfo } from "@qwhub/pages/games/fte/player/controls/PlayerInfo";
+import { ResponsiveTopBanner } from "@qwhub/pages/games/fte/player/controls/TopBanner.tsx";
+import { FtePlayerCanvas } from "@qwhub/pages/games/fte/player/FtePlayerCanvas";
+import { LoadingSpinner } from "@qwhub/pages/games/fte/player/LoadingSpinner.tsx";
 import { useEventListener } from "@qwhub/pages/games/hooks";
 import { roundFloat } from "@qwhub/pages/games/math";
-import { FtePlayerCanvas } from "@qwhub/pages/games/player/FtePlayerCanvas";
-import { LoadingSpinner } from "@qwhub/pages/games/player/LoadingSpinner.tsx";
-import { GameClock } from "@qwhub/pages/games/player/controls/GameClock.tsx";
-import { Participants } from "@qwhub/pages/games/player/controls/Participants.tsx";
-import { ResponsivePlayerInfo } from "@qwhub/pages/games/player/controls/PlayerInfo";
-import { ResponsiveTopBanner } from "@qwhub/pages/games/player/controls/TopBanner.tsx";
 import { getAssetUrl } from "@qwhub/pages/games/services/cloudfront/cassets";
+import { QtvEvent } from "@qwhub/pages/qtv/events.ts";
 import { FteQtvPlayerControls } from "@qwhub/pages/qtv/FteQtvPlayerControls.tsx";
 import { QtvServerSelectorOverlay } from "@qwhub/pages/qtv/QtvServerSelector.tsx";
-import { QtvEvent } from "@qwhub/pages/qtv/events.ts";
-import classnames from "classnames";
-import { useState } from "react";
+import clsx from "clsx";
+import { type RefObject, useRef, useState } from "react";
 import {
   useBoolean,
   useCounter,
-  useElementSize,
   useInterval,
+  useResizeObserver,
 } from "usehooks-ts";
 
 const DISCONNECT_TIMEOUT = 50; // ms
@@ -30,7 +30,11 @@ export function FteQtvPlayer({
   mapName,
   timelimit,
   fullscreen = false,
-}: { mapName: string; timelimit: number; fullscreen?: boolean }) {
+}: {
+  mapName: string;
+  timelimit: number;
+  fullscreen?: boolean;
+}) {
   const [lastKnownUrl, setLastKnownUrl] = useState("");
   const assets = getQtvPlayerAssets(mapName);
   const scriptPath = getAssetUrl("fte/versions/004/ftewebgl.js");
@@ -62,14 +66,19 @@ export function FteQtvPlayer({
     setLastKnownUrl(selectedServer.qtv_stream.url);
   });
 
-  const [playerRef, { width }] = useElementSize();
+  const playerRef = useRef<HTMLDivElement>(null);
+  // usehooks-ts types predate react 19 refs (RefObject<T | null>)
+  const { width } = useResizeObserver({
+    ref: playerRef as RefObject<HTMLDivElement>,
+    box: "border-box",
+  });
   const defaultWidth = 1400;
-  const scale = roundFloat(width / defaultWidth, 2);
+  const scale = roundFloat((width ?? 0) / defaultWidth, 2);
 
   return (
     <div
       id="ftePlayer"
-      className={classnames("relative w-full h-full bg-black", {
+      className={clsx("relative w-full h-full bg-black", {
         "max-h-[75vh] aspect-video": !fullscreen,
         "min-h-[100vh] max-h-full": fullscreen,
       })}
@@ -90,7 +99,7 @@ export function FteQtvPlayer({
       </div>
       <QtvServerSelectorOverlay />
       <div
-        className={classnames(
+        className={clsx(
           "absolute flex z-30 w-full h-full bg-black transition-opacity duration-1000 pointer-events-none items-center justify-center",
           {
             "opacity-0": isReady,
@@ -154,7 +163,7 @@ function useQtvElapsedTime(timelimit: number): number {
   useEventListener("game.match_begin", () => startAt(0));
   useEventListener("game.match_end", stop);
   useEventListener("game.remaining_seconds", (e: CustomEvent) =>
-    startAt(60 * timelimit - Number.parseInt(e.detail)),
+    startAt(60 * timelimit - Number.parseInt(e.detail, 10)),
   );
   useEventListener("game.overtime_minutes", () => startAt(60 * timelimit));
   useInterval(increment, isStarted ? 1000 : null);

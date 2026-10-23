@@ -2,16 +2,11 @@ import {
   faChartPie,
   faFloppyDisk,
   faPlay,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
+import { Dialog } from "@qwhub/Dialog.tsx";
 import { FontAwesomeIcon } from "@qwhub/FontAwesomeIcon";
-import { DemoKtxStats } from "@qwhub/pages/games/player/DemoKtxStats.tsx";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-  DialogTrigger,
-} from "@qwhub/shadcn/components/ui/dialog.tsx";
+import { DemoKtxStats } from "@qwhub/pages/games/fte/player/DemoKtxStats.tsx";
 import { useBoolean } from "usehooks-ts";
 import { getDownloadUrl } from "../services/cloudfront/cdemos.ts";
 
@@ -43,24 +38,27 @@ export const DownloadButton = ({ sha256 }: { sha256: string }) => {
 };
 
 export const StatsButton = ({ sha256 }: { sha256: string }) => {
-  const { value: isOpen, toggle: toggleOpen } = useBoolean(false);
+  const { value: isOpen, setTrue: open, setFalse: close } = useBoolean(false);
 
   return (
     <>
-      {isOpen && (
-        <div className="absolute left-0 top-0 w-full h-full bg-black/80 z-40 max-w-full max-h-full overflow-hidden" />
-      )}
-      <Dialog modal={false} defaultOpen={isOpen} onOpenChange={toggleOpen}>
-        <DialogTitle className="sr-only">Stats</DialogTitle>
-        <DialogTrigger asChild>
-          <button className={secondaryBtnCls} title="Show stats">
-            <FontAwesomeIcon fixedWidth icon={faChartPie} size={"lg"} />
-          </button>
-        </DialogTrigger>
-        <DialogContent className="bg-background min-w-64 min-h-20 max-w-fit overflow-auto">
-          <DialogDescription className="sr-only" aria-description="Stats" />
-          <DemoKtxStats sha256={sha256} />
-        </DialogContent>
+      <button className={secondaryBtnCls} title="Show stats" onClick={open}>
+        <FontAwesomeIcon fixedWidth icon={faChartPie} size={"lg"} />
+      </button>
+      <Dialog
+        open={isOpen}
+        onClose={close}
+        label="Stats"
+        className="animate-contentShow fixed left-[50%] top-[50%] m-0 grid w-full min-w-64 min-h-20 max-w-fit translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background text-inherit p-6 shadow-lg sm:rounded-lg overflow-auto backdrop:bg-black/80"
+      >
+        <DemoKtxStats sha256={sha256} />
+        <button
+          onClick={close}
+          className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+        >
+          <FontAwesomeIcon icon={faXmark} className="h-4 w-4" />
+          <span className="sr-only">Close</span>
+        </button>
       </Dialog>
     </>
   );

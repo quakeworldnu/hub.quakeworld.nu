@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 
 import { quakeStringToHtml } from "../src/QuakeText";
-import { quakeBytesToHtml } from "../src/pages/games/player/QuakeText";
+import { quakeBytesToHtml } from "../src/pages/games/fte/player/QuakeText";
 
 const bytes = (...values: (number | string)[]) =>
   Uint8Array.from(

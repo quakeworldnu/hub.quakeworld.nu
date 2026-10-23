@@ -1,7 +1,7 @@
 import { useQtvServers } from "@qwhub/servers/hooks.ts";
 import type { Server } from "@qwhub/services/qworld/types.ts";
-import { ServerRow } from "./ServerRow";
 import { selectServer } from "./events";
+import { ServerRow } from "./ServerRow";
 
 export function QtvPlayerSidebar() {
   const servers: Server[] = useQtvServers();

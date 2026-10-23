@@ -6,15 +6,69 @@
 @use "scrollbar";
 // must precede all other styles (fontawesome-svg-core used to inject it first in <head>)
 @import "@fortawesome/fontawesome-svg-core/styles.css";
-@import "react-modern-drawer/dist/index.css";
-@import "react-toastify/dist/ReactToastify.css";
 
 .app-playerinfo-grid {
   grid-template-columns: 32px 1fr 80px 64px 36px 32px;
 }
 
-.EZDrawer .EZDrawer__container {
-  @apply bg-slate-900 text-gray-300 h-full p-3;
+// modal dialogs: keep scrolling inside the dialog (no scroll chaining to the page)
+dialog:modal {
+  overscroll-behavior: contain;
+}
+
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+// slide-in panel from the left (<dialog class="app-drawer">)
+.app-drawer {
+  @apply fixed inset-y-0 left-0 m-0 h-full max-h-none w-[320px] max-w-none bg-slate-900 text-gray-300 p-3;
+  translate: -100% 0;
+  transition:
+    translate 300ms ease,
+    overlay 300ms allow-discrete,
+    display 300ms allow-discrete;
+
+  &[open] {
+    translate: 0 0;
+
+    @starting-style {
+      translate: -100% 0;
+    }
+  }
+
+  &::backdrop {
+    background-color: rgb(0 0 0 / 0.4);
+    opacity: 0;
+    transition:
+      opacity 300ms ease,
+      overlay 300ms allow-discrete,
+      display 300ms allow-discrete;
+  }
+
+  &[open]::backdrop {
+    opacity: 1;
+
+    @starting-style {
+      opacity: 0;
+    }
+  }
+}
+
+// toast notification (popover)
+.app-toast {
+  @apply fixed inset-auto right-4 m-0 flex items-center min-h-16 w-80 max-w-[calc(100vw-2rem)] px-4 py-3 rounded-md shadow-lg bg-[#121212] text-white text-sm;
+  opacity: 1;
+  translate: 0 0;
+  transition:
+    opacity 200ms ease,
+    translate 200ms ease;
+
+  @starting-style {
+    opacity: 0;
+    translate: 1rem 0;
+  }
 }
 
 .debug {

@@ -1,10 +1,10 @@
-import classNames from "classnames";
-import { Timestamp } from "../Timestamp.tsx";
+import clsx from "clsx";
 import { GameSearchEntry } from "../services/supabase/supabase.ts";
+import { Timestamp } from "../Timestamp.tsx";
 import { btnSecondary } from "../ui/theme.ts";
 import { DownloadButton, StatsButton } from "./Controls.tsx";
-import { ScoreboardLink } from "./Scoreboard.tsx";
 import { useDemoScoreSpoiler } from "./hooks.ts";
+import { ScoreboardLink } from "./Scoreboard.tsx";
 
 export const GameGrid = ({ games }: { games: GameSearchEntry[] }) => {
   return (
@@ -31,7 +31,7 @@ const GridItem = (props: { game: GameSearchEntry }) => {
         <div className="w-1/3">
           <button
             onClick={show}
-            className={classNames(btnSecondary, "py-1 px-1.5 mx-auto", {
+            className={clsx(btnSecondary, "py-1 px-1.5 mx-auto", {
               "opacity-0": isVisible,
             })}
           >

@@ -1,6 +1,6 @@
 import {
-  type ServerFilters,
   getInitialServerFilters,
+  type ServerFilters,
 } from "@qwhub/serverFilters";
 import { localStorageSet } from "@qwhub/util";
 import { useSyncExternalStore } from "react";

@@ -1,10 +1,13 @@
 import { SecondaryButton } from "@qwhub/Buttons.tsx";
+import {
+  presets,
+  Shortcuts,
+} from "@qwhub/pages/games/fte/player/Shortcuts.tsx";
 import { useEventListener } from "@qwhub/pages/games/hooks";
-import { Shortcuts, presets } from "@qwhub/pages/games/player/Shortcuts.tsx";
 import { QtvEvent } from "@qwhub/pages/qtv/events.ts";
+import { useQtvServers } from "@qwhub/servers/hooks.ts";
 import { ServerAddress } from "@qwhub/servers/Server.tsx";
 import ServersStreams from "@qwhub/servers/ServerStreams.tsx";
-import { useQtvServers } from "@qwhub/servers/hooks.ts";
 import {
   qtvClientCount,
   statusText,

@@ -14,7 +14,6 @@ import {
 } from "@qwhub/servers/util.ts";
 import { getFlagUrl } from "@qwhub/services/flags.ts";
 import type { Server as ServerType } from "@qwhub/services/qworld/types.ts";
-import copyToClipboard from "copy-text-to-clipboard";
 import React, { useState } from "react";
 import { Scoreboard } from "./Scoreboard.tsx";
 import ServerStreams from "./ServerStreams.tsx";
@@ -322,7 +321,7 @@ export const ServerAddress = (props: { server: ServerType }) => {
   return (
     <div
       className="server-address flex items-center cursor-pointer text-gray-400"
-      onClick={() => copyToClipboard(server.meta.hostport)}
+      onClick={() => navigator.clipboard.writeText(server.meta.hostport)}
       title="Copy IP to clipboard"
     >
       <ServerAddressTitle cc={cc} title={server.meta.addressTitle} />

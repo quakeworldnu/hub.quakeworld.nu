@@ -1,6 +1,6 @@
 import { SecondaryButton } from "@qwhub/Buttons";
 import { Heading } from "@qwhub/Common";
-import classNames from "classnames";
+import clsx from "clsx";
 import { useEffect, useState } from "react";
 
 const WEBSITE_URL = "https://scheduler.quake.world";
@@ -107,7 +107,7 @@ function MatchCardCompact({ match }) {
 
       <div className="flex items-center justify-center gap-3 mt-0.5">
         <span
-          className={classNames("text-xs font-medium uppercase tracking-wide", {
+          className={clsx("text-xs font-medium uppercase tracking-wide", {
             "text-orange-400": match.gameType === "practice",
             "text-green-600": match.gameType === "official",
           })}

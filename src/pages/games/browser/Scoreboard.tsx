@@ -1,15 +1,13 @@
+import { Matchtag, QWLeagueBanner } from "@qwhub/servers/Server.tsx";
 import { isQwleagueHostname } from "@qwhub/servers/util.ts";
-import classNames from "classnames";
+import clsx from "clsx";
+import { Scoreboard as LegacyScoreboard } from "../../../servers/Scoreboard.tsx";
 import { getMapshotCssUrl } from "../../../services/mapshots.ts";
+import { GameSearchEntry } from "../services/supabase/supabase.ts";
 import type {
   GamePlayer,
   GameTeam,
 } from "../services/supabase/supabase.types.ts";
-
-import { Matchtag, QWLeagueBanner } from "@qwhub/servers/Server.tsx";
-
-import { Scoreboard as LegacyScoreboard } from "../../../servers/Scoreboard.tsx";
-import { GameSearchEntry } from "../services/supabase/supabase.ts";
 
 type ScoreboardProps = {
   game: GameSearchEntry;
@@ -107,7 +105,7 @@ const ModeRibbon = ({ mode }: { mode: string }) => {
   return (
     <div className="w-24 h-24 overflow-hidden">
       <div
-        className={classNames(
+        className={clsx(
           "flex -translate-x-[45%] -translate-y-[195%] -rotate-45 origin-bottom-right h-8 w-48 bg-gradient-to-bl justify-center items-center z-10 text-white app-text-shadow font-bold text-sm",
           {
             "from-amber-600 to-amber-900": mode === "ctf",

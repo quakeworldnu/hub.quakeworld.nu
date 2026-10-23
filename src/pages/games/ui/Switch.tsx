@@ -1,5 +1,5 @@
 import * as RadixSwitch from "@radix-ui/react-switch";
-import classNames from "classnames";
+import clsx from "clsx";
 import type { ReactNode } from "react";
 
 type Props = {
@@ -17,7 +17,7 @@ export const Switch = ({ label, enabled, onClick, title }: Props) => {
       title={title}
     >
       <span
-        className={classNames("pr-2 select-none", {
+        className={clsx("pr-2 select-none", {
           "text-gray-300": !enabled,
           "font-bold": enabled,
         })}
@@ -25,7 +25,7 @@ export const Switch = ({ label, enabled, onClick, title }: Props) => {
         {label}
       </span>
       <RadixSwitch.Root
-        className={classNames(
+        className={clsx(
           "w-10 h-5 rounded-full relative focus:shadow-black outline-none",
           {
             "bg-blue-400": enabled,
@@ -35,7 +35,7 @@ export const Switch = ({ label, enabled, onClick, title }: Props) => {
         id={typeof label === "string" ? label : undefined}
       >
         <RadixSwitch.Thumb
-          className={classNames(
+          className={clsx(
             "block w-4 h-4 rounded-full transition-transform duration-100 translate-x-0.5 will-change-transform",
             {
               "translate-x-[22px] bg-blue-800": enabled,

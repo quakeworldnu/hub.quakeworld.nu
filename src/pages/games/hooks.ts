@@ -40,7 +40,7 @@ export function useEventListener(
   handler: (event: any) => void,
 ) {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+  // @ts-expect-error
   uhUseEventListener(eventName, handler);
 }
 
@@ -55,6 +55,58 @@ export function useVisibilityChange(
       document.removeEventListener("visibilitychange", handleChange);
     };
   }, []);
+}
+
+// idle after `timeout` ms without mouse movement over the element (or document)
+export function useMouseIdle({
+  elementId,
+  timeout,
+  onIdle,
+  onActive,
+}: {
+  elementId: string;
+  timeout: number;
+  onIdle: () => void;
+  onActive: () => void;
+}) {
+  const callbacks = useRef({ onIdle, onActive });
+  callbacks.current = { onIdle, onActive };
+
+  useEffect(() => {
+    const target = document.getElementById(elementId) ?? document;
+    const throttleMs = 200;
+    let isIdle = false;
+    let lastMoveAt = 0;
+    let timer = window.setTimeout(setIdle, timeout);
+
+    function setIdle() {
+      isIdle = true;
+      callbacks.current.onIdle();
+    }
+
+    function handleMove() {
+      const now = Date.now();
+
+      if (now - lastMoveAt < throttleMs) {
+        return;
+      }
+      lastMoveAt = now;
+
+      if (isIdle) {
+        isIdle = false;
+        callbacks.current.onActive();
+      }
+
+      window.clearTimeout(timer);
+      timer = window.setTimeout(setIdle, timeout);
+    }
+
+    target.addEventListener("mousemove", handleMove);
+    return () => {
+      window.clearTimeout(timer);
+      target.removeEventListener("mousemove", handleMove);
+    };
+  }, [elementId, timeout]);
 }
 
 export function useWakeLock() {
@@ -74,12 +126,12 @@ export function useCurrentGameId(): number | undefined {
   const gameId = params.get("gameId");
 
   if (gameId) {
-    return Number.parseInt(gameId);
+    return Number.parseInt(gameId, 10);
   }
 
   // legacy fallback
   const demoId = params.get("demoId");
-  return demoId ? Number.parseInt(demoId) : undefined;
+  return demoId ? Number.parseInt(demoId, 10) : undefined;
 }
 
 export function useUrlClipParams(): {
@@ -89,8 +141,8 @@ export function useUrlClipParams(): {
   hasParams: boolean;
 } {
   const params = new URLSearchParams(window.location.search);
-  const from = Number.parseInt(params.get("from") || "0");
-  const to = Number.parseInt(params.get("to") || "0");
+  const from = Number.parseInt(params.get("from") || "0", 10);
+  const to = Number.parseInt(params.get("to") || "0", 10);
   const track = params.get("track") || "auto";
   const hasParams = params.has("from") || params.has("track");
   return { from, to, track, hasParams };
@@ -125,8 +177,8 @@ export function parseUrlClips(search: string): Clip[] {
       continue;
     }
 
-    const from = Number.parseInt(match[1]);
-    const to = Number.parseInt(match[2]);
+    const from = Number.parseInt(match[1], 10);
+    const to = Number.parseInt(match[2], 10);
     const track = parseClipTrack(match[3]);
 
     if (from < to) {

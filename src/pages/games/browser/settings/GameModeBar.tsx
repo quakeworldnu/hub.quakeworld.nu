@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import clsx from "clsx";
 import { sizeSmall, toggleBtn, toggleBtnSelected } from "../../ui/theme.ts";
 import { useGameSettings } from "./context.tsx";
 import { type GameMode, gameModes } from "./types.ts";
@@ -15,7 +15,7 @@ export const GameModeBar = () => {
       {gameModes.map((mode) => (
         <div
           key={mode}
-          className={classNames(`${toggleBtn} ${sizeSmall}`, {
+          className={clsx(`${toggleBtn} ${sizeSmall}`, {
             [toggleBtnSelected]: gameMode === mode,
           })}
           onClick={() => handleClick(mode)}

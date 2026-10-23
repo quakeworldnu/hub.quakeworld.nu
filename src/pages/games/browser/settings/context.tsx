@@ -1,6 +1,6 @@
 import {
-  type ReactNode,
   createContext,
+  type ReactNode,
   useContext,
   useEffect,
   useState,
@@ -70,7 +70,7 @@ function settingsFromQuery(): Partial<GameBrowserSettings> {
   const value = (key: keyof GameBrowserSettings) =>
     params.get(key) ?? String(defaultSettings[key]);
   const num = (key: keyof GameBrowserSettings) => {
-    const n = Number.parseInt(value(key));
+    const n = Number.parseInt(value(key), 10);
     return Number.isNaN(n) ? (defaultSettings[key] as number) : n;
   };
   const gameMode = value("gameMode") as GameMode;

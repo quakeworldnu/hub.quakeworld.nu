@@ -24,7 +24,7 @@ declare global {
 export class FteController {
   private _controlSource = ControlSource.USER;
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+  // @ts-expect-error
   private _module: FteModule;
   private _volume = 0.0;
   private _countdownDuration = 10.0;

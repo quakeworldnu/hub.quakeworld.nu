@@ -1,14 +1,14 @@
 import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@qwhub/FontAwesomeIcon";
 import { type ChangeEvent, useEffect, useState } from "react";
-import { useDebounce } from "usehooks-ts";
+import { useDebounceValue } from "usehooks-ts";
 import { formInput } from "../../ui/theme.ts";
 import { useGameSettings } from "./context.tsx";
 
 export const MapName = () => {
   const { map, setMap } = useGameSettings();
   const [value, setValue] = useState<string>(map);
-  const debouncedValue = useDebounce<string>(value, 400);
+  const [debouncedValue] = useDebounceValue<string>(value, 400);
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     setValue(e.target.value.toLowerCase().trim());

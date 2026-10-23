@@ -1,8 +1,6 @@
 import { PostgrestClient } from "@supabase/postgrest-js";
-
-import type { Database } from "./database.types.ts";
-
 import type { GameMode } from "../../browser/settings/types.ts";
+import type { Database } from "./database.types.ts";
 import { Game } from "./supabase.types.ts";
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;

@@ -51,7 +51,7 @@ const PagNumberSelect = ({ pageCount = 1 }: { pageCount: number }) => {
   }
 
   function handleChange(e: ChangeEvent<HTMLSelectElement>) {
-    const pageNumber = Number.parseInt(e.target.value);
+    const pageNumber = Number.parseInt(e.target.value, 10);
     setPage(pageNumber);
   }
 

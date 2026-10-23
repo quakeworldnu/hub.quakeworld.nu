@@ -1,9 +1,9 @@
 import { useFteController } from "@qwhub/pages/games/fte/hooks";
-import { FteQtvPlayer } from "@qwhub/pages/qtv/FteQtvPlayer";
 import { selectServer } from "@qwhub/pages/qtv/events";
+import { FteQtvPlayer } from "@qwhub/pages/qtv/FteQtvPlayer";
 import { getSearchParam } from "@qwhub/pages/qtv/url";
-import { ServerPoller } from "@qwhub/servers/Servers";
 import { useQtvServers } from "@qwhub/servers/hooks.ts";
+import { ServerPoller } from "@qwhub/servers/Servers";
 import { useEffect, useState } from "react";
 
 export const App = () => {
@@ -54,7 +54,7 @@ const QtvPage = () => {
       {server && (
         <FteQtvPlayer
           mapName={server.info.map}
-          timelimit={Number.parseInt(server.info.timelimit)}
+          timelimit={Number.parseInt(server.info.timelimit, 10)}
           fullscreen
         />
       )}

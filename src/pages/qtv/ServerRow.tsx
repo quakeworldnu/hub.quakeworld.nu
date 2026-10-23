@@ -1,20 +1,22 @@
 import { useEventListener } from "@qwhub/pages/games/hooks";
+import { QtvEvent } from "@qwhub/pages/qtv/events.ts";
 import {
   qwleagueCountryCode,
   statusText,
   totalSpectatorCount,
 } from "@qwhub/servers/util.ts";
-import classNames from "classnames";
+import type { Server } from "@qwhub/services/qworld/types.ts";
+import clsx from "clsx";
 import { useBoolean } from "usehooks-ts";
 import { Flag } from "./Flag";
-
-import { QtvEvent } from "@qwhub/pages/qtv/events.ts";
-import type { Server } from "@qwhub/services/qworld/types.ts";
 
 export function ServerRow({
   server,
   onClick,
-}: { server: Server; onClick: (server: Server) => void }) {
+}: {
+  server: Server;
+  onClick: (server: Server) => void;
+}) {
   const { value: isSelected, setValue: setIsSelected } = useBoolean(false);
 
   useEventListener(QtvEvent.SelectServer, ({ detail: selectedServer }) => {
@@ -26,7 +28,7 @@ export function ServerRow({
 
   return (
     <div
-      className={classNames(
+      className={clsx(
         "py-3 px-2 flex flex-col cursor-pointer border-b border-b-[#334] hover:bg-[#242434] transition-colors",
         {
           "border-l-4 pl-3 border-sky-800 bg-[#1d1d2d]": isSelected,
@@ -36,7 +38,7 @@ export function ServerRow({
     >
       <div className="flex justify-between items-center">
         <div
-          className={classNames("text-sm", {
+          className={clsx("text-sm", {
             "font-bold": isSelected,
           })}
         >

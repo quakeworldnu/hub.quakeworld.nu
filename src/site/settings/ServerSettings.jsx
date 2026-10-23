@@ -1,58 +1,163 @@
-import { equalsDefaultFilters } from "@qwhub/serverFilters";
+import { lightDismissFallback, useModalState } from "@qwhub/Dialog.tsx";
 import {
+  equalsDefaultFilters,
+  getDefaultServerFilters,
+  modes,
+  regions,
+} from "@qwhub/serverFilters";
+import {
+  setServerFilters,
   setShowSettings,
   useServerFilters,
   useShowSettings,
 } from "@qwhub/settings.ts";
-import { Suspense, lazy, useEffect } from "react";
-import EZDrawer from "react-modern-drawer";
-
-import classNames from "classnames";
-
-// settings form (formik) is only needed when the drawer is opened,
-// keep it out of the initial bundle and preload it when the browser is idle
-const loadServerSettingsForm = () => import("./ServerSettingsForm.jsx");
-const ServerSettingsForm = lazy(() =>
-  loadServerSettingsForm().then((m) => ({ default: m.ServerSettingsForm })),
-);
-
-function onIdle(callback) {
-  if ("requestIdleCallback" in window) {
-    const id = requestIdleCallback(callback);
-    return () => cancelIdleCallback(id);
-  }
-
-  const id = setTimeout(callback, 1);
-  return () => clearTimeout(id);
-}
+import clsx from "clsx";
+import { useRef } from "react";
 
 export const SettingsDrawer = () => {
   const showSettings = useShowSettings();
-
-  useEffect(() => onIdle(loadServerSettingsForm), []);
+  const ref = useRef(null);
+  useModalState(ref, showSettings);
 
   function onClose() {
     setShowSettings(false);
   }
 
   return (
-    <EZDrawer open={showSettings} onClose={onClose} direction="left" size={320}>
+    <dialog
+      ref={ref}
+      aria-label="Server filters"
+      className="app-drawer"
+      onClose={onClose}
+      onClick={lightDismissFallback}
+      closedby="any"
+    >
       <ServerSettings />
-    </EZDrawer>
+    </dialog>
   );
 };
 
+// add/remove a value from a list of checked values
+function toggleValue(values, value, isChecked) {
+  return isChecked ? values.concat(value) : values.filter((v) => v !== value);
+}
+
+// changes are applied immediately
 export const ServerSettings = () => {
   const showSettings = useShowSettings();
+  const values = useServerFilters() || getDefaultServerFilters();
 
   if (!showSettings) {
     return null;
   }
 
+  function onClose() {
+    setShowSettings(false);
+  }
+
+  function onReset() {
+    setServerFilters(getDefaultServerFilters());
+  }
+
+  function onChange(e) {
+    const { name, value, checked } = e.target;
+
+    if ("only_bots" === name) {
+      setServerFilters({ ...values, only_bots: checked });
+    } else if ("modes" === name || "regions" === name) {
+      setServerFilters({
+        ...values,
+        [name]: toggleValue(values[name], value, checked),
+      });
+    }
+  }
+
   return (
-    <Suspense fallback={null}>
-      <ServerSettingsForm />
-    </Suspense>
+    <form action="#" onSubmit={(e) => e.preventDefault()} onChange={onChange}>
+      <div>
+        <div className="space-y-4" id="SettingsForm">
+          <div className="flex justify-between items-center border-b border-b-slate-700 pb-2">
+            <div className="font-bold">Server filters</div>
+            <button
+              onClick={onClose}
+              className="p-1.5 bg-slate-700 hover:bg-slate-600 rounded-full"
+            >
+              <img
+                src="https://hub.quakeworld.nu/assets/img/icons/close.svg"
+                width={12}
+                height={12}
+              />
+            </button>
+          </div>
+
+          <div className="text-sm">
+            <Checkbox
+              name={"only_bots"}
+              label={"Show servers with only bots"}
+              isChecked={values.only_bots ?? false}
+            />
+          </div>
+
+          <div>
+            <div className="font-bold text-sm mb-1">Game modes</div>
+            <div className="text-sm space-y-0.5 max-w-xs columns-2">
+              {modes.map((mode) => {
+                return (
+                  <Checkbox
+                    key={mode}
+                    name={"modes"}
+                    label={mode}
+                    value={mode}
+                    isChecked={values.modes.includes(mode)}
+                  />
+                );
+              })}
+            </div>
+          </div>
+
+          <div>
+            <div className="font-bold text-sm mb-1">Regions</div>
+            <div className="text-sm space-y-0.5 max-w-xs columns-2">
+              {regions.map((region) => {
+                return (
+                  <Checkbox
+                    key={region}
+                    name={"regions"}
+                    label={region}
+                    value={region}
+                    isChecked={values.regions.includes(region)}
+                  />
+                );
+              })}
+            </div>
+          </div>
+
+          <button
+            className="bg-slate-700 hover:bg-slate-600 rounded px-2.5 py-1.5 text-sm"
+            onClick={onReset}
+          >
+            Reset all
+          </button>
+        </div>
+      </div>
+    </form>
+  );
+};
+
+const Checkbox = ({ name, label, value, isChecked }) => {
+  return (
+    <div>
+      <label className="inline-block cursor-pointer w-auto p-0.5 text-gray-300 hover:text-white select-none">
+        <input
+          type="checkbox"
+          name={name}
+          value={value}
+          checked={isChecked}
+          onChange={() => {}} // handled by the form
+        />
+        <span className="ml-1.5">{label}</span>
+      </label>
+    </div>
   );
 };
 
@@ -68,7 +173,7 @@ export const SettingsToggleButton = () => {
   return (
     <button
       onClick={showSettings}
-      className={classNames(
+      className={clsx(
         "flex items-center px-1.5 py-1 ml-auto rounded text-gray-300 text-xs border",
         {
           "bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-slate-200 border-slate-700 hover:border-slate-500":

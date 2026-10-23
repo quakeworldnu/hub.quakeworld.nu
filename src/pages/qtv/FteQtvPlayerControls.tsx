@@ -1,18 +1,18 @@
+import { AutotrackToggle } from "@qwhub/pages/games/fte/player/controls/AutotrackToggle.tsx";
+import { ConsoleToggle } from "@qwhub/pages/games/fte/player/controls/ConsoleToggle.tsx";
+import { FullscreenToggle } from "@qwhub/pages/games/fte/player/controls/FullscreenToggle.tsx";
+import { Volume } from "@qwhub/pages/games/fte/player/controls/Volume.tsx";
+import { XrayToggle } from "@qwhub/pages/games/fte/player/controls/XrayToggle.tsx";
 import { useEventListener } from "@qwhub/pages/games/hooks.ts";
-import { AutotrackToggle } from "@qwhub/pages/games/player/controls/AutotrackToggle.tsx";
-import { ConsoleToggle } from "@qwhub/pages/games/player/controls/ConsoleToggle.tsx";
-import { FullscreenToggle } from "@qwhub/pages/games/player/controls/FullscreenToggle.tsx";
-import { Volume } from "@qwhub/pages/games/player/controls/Volume.tsx";
-import { XrayToggle } from "@qwhub/pages/games/player/controls/XrayToggle.tsx";
 import { Switch } from "@qwhub/pages/games/ui/Switch.tsx";
 import {
-  QtvEvent,
   hideQtvServerSelector,
+  QtvEvent,
   toggleQtvServerSelector,
 } from "@qwhub/pages/qtv/events.ts";
-import classNames from "classnames";
+import clsx from "clsx";
 import { useBoolean } from "usehooks-ts";
-import { PopoutButton } from "../games/player/controls/Popout";
+import { PopoutButton } from "../games/fte/player/controls/Popout";
 
 export function FteQtvPlayerControls() {
   const {
@@ -26,7 +26,7 @@ export function FteQtvPlayerControls() {
 
   return (
     <div
-      className={classNames(
+      className={clsx(
         "flex flex-wrap transition-opacity duration-200 bg-black/60 justify-between items-center sm:px-1 sm:gap-y-2",
         {
           "opacity-0": isIdle,
@@ -56,7 +56,9 @@ export function FteQtvPlayerControls() {
 
 export const QtvServerTilesToggle = ({
   defaultVisible = false,
-}: { defaultVisible?: boolean }) => {
+}: {
+  defaultVisible?: boolean;
+}) => {
   const { value, setFalse, setTrue } = useBoolean(defaultVisible);
   useEventListener(QtvEvent.SelectServer, hideQtvServerSelector);
   useEventListener(QtvEvent.HideServerSelector, setFalse);

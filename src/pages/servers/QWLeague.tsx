@@ -1,7 +1,7 @@
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@qwhub/FontAwesomeIcon";
 import type { QueueStats } from "@qwhub/services/qwleague/queue";
-import classNames from "classnames";
+import clsx from "clsx";
 
 const QWLEAGUE_URL = "https://qwleague.com";
 
@@ -142,7 +142,7 @@ function ModeCard({
       href={`${QWLEAGUE_URL}/play?mode=${encodeURIComponent(mode)}`}
       target="_top"
       title={`Play ${label} (${count} in queue)`}
-      className={classNames(
+      className={clsx(
         "group flex flex-col justify-center rounded border px-2.5 py-1.5 transition-colors",
         {
           "border-orange-700/60 bg-orange-900/30 hover:border-orange-600 hover:bg-orange-900/50":
@@ -154,7 +154,7 @@ function ModeCard({
     >
       <div className="flex items-center gap-2">
         <span
-          className={classNames("text-sm font-semibold truncate", {
+          className={clsx("text-sm font-semibold truncate", {
             "text-orange-300": isActive,
             "text-orange-100/40 group-hover:text-orange-300": !isActive,
           })}
@@ -162,7 +162,7 @@ function ModeCard({
           {label}
         </span>
         <span
-          className={classNames("ml-auto text-lg font-bold leading-tight", {
+          className={clsx("ml-auto text-lg font-bold leading-tight", {
             "text-white": isActive,
             "text-orange-100/25 group-hover:text-white": !isActive,
           })}
@@ -207,7 +207,7 @@ function SlotRow({
         {Array.from({ length: slots }, (_, i) => (
           <span
             key={i}
-            className={classNames("size-2 rounded-full", {
+            className={clsx("size-2 rounded-full", {
               "bg-orange-500": i < count,
               "bg-white/10": i >= count,
             })}
@@ -241,14 +241,14 @@ export function QWLeagueBanner({
 
   return (
     <div
-      className={classNames(
+      className={clsx(
         "rounded-md border border-orange-900/60 bg-gradient-to-r from-orange-950/80 via-orange-950/40 to-orange-950/20",
         className,
       )}
     >
       <div className="flex flex-wrap items-center gap-x-6 gap-y-3 px-3 py-1.5 sm:px-4">
         <div
-          className={classNames("flex shrink-0 items-center gap-x-4", {
+          className={clsx("flex shrink-0 items-center gap-x-4", {
             "lg:block": showQueue,
           })}
         >
@@ -330,7 +330,7 @@ function ModeChip({
       href={`${QWLEAGUE_URL}/play?mode=${encodeURIComponent(mode)}`}
       target="_top"
       title={`Play ${label} (${count} in queue)`}
-      className={classNames(
+      className={clsx(
         "group flex items-center gap-2 rounded border px-2.5 py-1.5 transition-colors",
         {
           "border-orange-700/60 bg-orange-900/30 hover:border-orange-600 hover:bg-orange-900/50":
@@ -341,7 +341,7 @@ function ModeChip({
       )}
     >
       <span
-        className={classNames("text-sm font-semibold", {
+        className={clsx("text-sm font-semibold", {
           "text-orange-300": isActive,
           "text-orange-100/40 group-hover:text-orange-300": !isActive,
         })}
@@ -349,7 +349,7 @@ function ModeChip({
         {label}
       </span>
       <span
-        className={classNames("text-sm font-bold", {
+        className={clsx("text-sm font-bold", {
           "text-white": isActive,
           "text-orange-100/25 group-hover:text-white": !isActive,
         })}

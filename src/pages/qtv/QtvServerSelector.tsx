@@ -1,22 +1,23 @@
-import { Mapshot } from "@qwhub/servers/Mapshot.tsx";
-import { Scoreboard } from "@qwhub/servers/Scoreboard.tsx";
-import { useQtvServers } from "@qwhub/servers/hooks.ts";
-import { scoreboardPlayers, scoreboardTeams } from "@qwhub/servers/util.ts";
-import type { Server } from "@qwhub/services/qworld/types.ts";
-
 import { useEventListener } from "@qwhub/pages/games/hooks.ts";
 import {
-  QtvEvent,
   hideQtvServerSelector,
+  QtvEvent,
   selectServer,
   showQtvServerSelector,
 } from "@qwhub/pages/qtv/events.ts";
-import classNames from "classnames";
+import { useQtvServers } from "@qwhub/servers/hooks.ts";
+import { Mapshot } from "@qwhub/servers/Mapshot.tsx";
+import { Scoreboard } from "@qwhub/servers/Scoreboard.tsx";
+import { scoreboardPlayers, scoreboardTeams } from "@qwhub/servers/util.ts";
+import type { Server } from "@qwhub/services/qworld/types.ts";
+import clsx from "clsx";
 import { useBoolean } from "usehooks-ts";
 
 export function QtvServerSelectorOverlay({
   defaultVisible = true,
-}: { defaultVisible?: boolean }) {
+}: {
+  defaultVisible?: boolean;
+}) {
   const {
     value: isVisible,
     setFalse: hide,
@@ -36,7 +37,7 @@ export function QtvServerSelectorOverlay({
 
   return (
     <div
-      className={classNames(
+      className={clsx(
         "absolute z-10 grid items-center w-full h-full transition-opacity duration-500 backdrop-blur overflow-auto p-4",
         {
           "opacity-0 pointer-events-none": !isVisible,

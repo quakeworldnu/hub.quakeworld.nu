@@ -2,7 +2,7 @@ import { useFilteredServers } from "@qwhub/servers/hooks.ts";
 import { totalSpectatorCount } from "@qwhub/servers/util.ts";
 import { isBot } from "@qwhub/services/qworld/server";
 import { SettingsToggleButton } from "@qwhub/site/settings/ServerSettings.jsx";
-import classNames from "classnames";
+import clsx from "clsx";
 
 export default function SiteNavigation() {
   const servers = useFilteredServers();
@@ -82,7 +82,7 @@ const PageSettings = () => {
 const NavLink = ({ title, shortDescription, longDescription, url }) => {
   const isSelected = url === location.pathname;
 
-  const cls = classNames(
+  const cls = clsx(
     "hover:text-white border-b-2 py-1 mr-2.5 sm:mr-4",
     { "border-sky-600": isSelected },
     { "border-gray-700 hover:border-gray-500": !isSelected },

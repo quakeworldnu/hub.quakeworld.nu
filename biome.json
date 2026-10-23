@@ -1,19 +1,27 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-  "organizeImports": {
-    "enabled": true
+  "files": {
+    "includes": ["**", "!**/*.scss"]
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
   },
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
+      "preset": "recommended",
       "a11y": {
         "noAutofocus": "off",
         "noSvgWithoutTitle": "off",
         "useAltText": "off",
         "useButtonType": "off",
         "useKeyWithClickEvents": "off",
-        "noLabelWithoutControl": "off"
+        "noLabelWithoutControl": "off",
+        "noStaticElementInteractions": "off"
       },
       "correctness": {
         "noConstructorReturn": "off",

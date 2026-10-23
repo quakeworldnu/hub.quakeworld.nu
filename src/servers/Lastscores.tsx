@@ -2,7 +2,7 @@ import { LastscoresScoreboard } from "@qwhub/servers/LastscoresScoreboard.tsx";
 import { Mapshot } from "@qwhub/servers/Mapshot";
 import type { Lastscores as LastscoresEntry } from "@qwhub/services/qworld/lastscores.ts";
 import { useLastscores } from "@qwhub/services/qworld/queries.ts";
-import classNames from "classnames";
+import clsx from "clsx";
 import { useEffect, useState } from "react";
 
 export const Lastscores = ({
@@ -163,7 +163,7 @@ const DemoButtons = ({
   const demoUrls = toDemoUrls(demo, address);
 
   if (!demoUrls) {
-    return <></>;
+    return null;
   }
 
   const links = [
@@ -223,10 +223,7 @@ const TextSpoiler = ({
   isRevealed?: boolean;
 }) => {
   return (
-    <span
-      className={classNames({ "blur-sm": !isRevealed })}
-      title="Show scores"
-    >
+    <span className={clsx({ "blur-sm": !isRevealed })} title="Show scores">
       {text}
     </span>
   );

@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import clsx from "clsx";
 import { useGames } from "../context.tsx";
 import { DisplayModeBar } from "./DisplayModeBar.tsx";
 import { GameModeBar } from "./GameModeBar.tsx";
@@ -17,7 +17,7 @@ export const Toolbar = () => {
 
   return (
     <div
-      className={classNames("flex flex-wrap gap-x-6 gap-y-3 items-center ", {
+      className={clsx("flex flex-wrap gap-x-6 gap-y-3 items-center ", {
         "pointer-events-none": isLoading,
       })}
     >

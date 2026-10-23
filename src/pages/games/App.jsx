@@ -1,13 +1,12 @@
-import { GameDetails } from "@qwhub/pages/games/player/GameDetails.tsx";
+import { GameDetails } from "@qwhub/pages/games/fte/player/GameDetails.tsx";
 import { ServerPoller } from "@qwhub/servers/Servers.jsx";
+import { Toaster } from "@qwhub/Toast.tsx";
 import { StrictMode } from "react";
-import { ToastContainer } from "react-toastify";
 import { SiteFooter } from "../../site/Footer";
 import { SiteHeader } from "../../site/Header";
-import { Sidebar } from "./Sidebar";
 import { Browser } from "./browser/Browser";
-
 import { useCurrentGameId } from "./hooks";
+import { Sidebar } from "./Sidebar";
 
 export const App = () => {
   const gameId = useCurrentGameId();
@@ -31,12 +30,7 @@ export const App = () => {
       </div>
       <SiteFooter />
       <ServerPoller />
-      <ToastContainer
-        hideProgressBar
-        position="bottom-right"
-        theme="dark"
-        autoClose={1500}
-      />
+      <Toaster />
     </div>
   );
 };

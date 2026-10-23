@@ -1,6 +1,6 @@
 import { faBars, faTableCells } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@qwhub/FontAwesomeIcon";
-import classNames from "classnames";
+import clsx from "clsx";
 import { sizeSmall, toggleBtn, toggleBtnSelected } from "../../ui/theme.ts";
 import { useGameSettings } from "./context.tsx";
 import type { DisplayMode } from "./types.ts";
@@ -23,7 +23,7 @@ export const DisplayModeBar = () => {
         <div
           key={option.value}
           title={`Display as ${option.value}`}
-          className={classNames(`${toggleBtn} ${sizeSmall}`, {
+          className={clsx(`${toggleBtn} ${sizeSmall}`, {
             [toggleBtnSelected]: displayMode === option.value,
           })}
           onClick={() => handleClick(option.value)}

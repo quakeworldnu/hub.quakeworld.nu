@@ -1,4 +1,6 @@
-import screenfull from "screenfull";
+export function isFullscreen(): boolean {
+  return Boolean(document.fullscreenElement);
+}
 
 export function toggleFullscreen(elementId: string) {
   const element = document.getElementById(elementId);
@@ -8,10 +10,10 @@ export function toggleFullscreen(elementId: string) {
   }
 
   try {
-    if (screenfull.isFullscreen) {
-      screenfull.exit();
+    if (isFullscreen()) {
+      document.exitFullscreen().catch(() => {});
     } else {
-      screenfull.request(element);
+      element.requestFullscreen().catch(() => {});
     }
   } catch {
     // ignore
