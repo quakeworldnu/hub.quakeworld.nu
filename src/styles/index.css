@@ -228,6 +228,11 @@ body::-webkit-scrollbar {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(156, 156, 156)'><polygon points='00,00 100,00 50,50'/></svg>");
 }
 
+/* demo player: player info rows (columns: powerups, name, location, armor/health, weapon, frags) */
+.app-playerinfo-grid {
+  grid-template-columns: 32px 1fr 80px 64px 36px 32px;
+}
+
 /* closed dialogs/popovers stay hidden even if a display utility is applied (e.g. "grid") */
 dialog:not([open]),
 [popover]:not(:popover-open) {
