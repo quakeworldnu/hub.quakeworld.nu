@@ -6,14 +6,9 @@ import type {
   GameTeam,
 } from "../services/supabase/supabase.types.ts";
 
-// eslint-disable-next-line
-// @ts-ignore
-import { Matchtag, QWLeagueBanner } from "@qwhub/servers/Server";
+import { Matchtag, QWLeagueBanner } from "@qwhub/servers/Server.tsx";
 
-// eslint-disable-next-line
-// @ts-ignore
-// @typescript-eslint/ban-ts-comment
-import { Scoreboard as LegacyScoreboard } from "../../../servers/Scoreboard.jsx";
+import { Scoreboard as LegacyScoreboard } from "../../../servers/Scoreboard.tsx";
 import { GameSearchEntry } from "../services/supabase/supabase.ts";
 
 type ScoreboardProps = {
@@ -27,13 +22,12 @@ export const Scoreboard = ({
   showScores = false,
   showMapName = false,
 }: ScoreboardProps) => {
-  // @ts-ignore
-  const fixedTeams = ([...game.teams] as GameTeam[]).map((v) => ({
+  // teams/players are json columns
+  const fixedTeams = [...(game.teams as GameTeam[])].map((v) => ({
     colors: v.color,
     ...v,
   }));
-  // @ts-ignore
-  const fixedPlayers = ([...game.players] as GamePlayer[]).map((v) => ({
+  const fixedPlayers = [...(game.players as GamePlayer[])].map((v) => ({
     colors: v.color,
     ...v,
   }));
@@ -93,16 +87,19 @@ export const ScoreboardLink = ({
   game,
   showScores = false,
 }: ScoreboardLinkProps) => {
+  // the card link is an overlay instead of a wrapper, links can't be nested
+  // (the qwleague banner has its own link, raised above the overlay)
   return (
-    <a
-      title="Play demo"
-      href={`/games/?gameId=${game.id}`}
-      className={classNames(
-        "h-full hover:scale-105 transition-transform hover:z-20 hover:relative",
-      )}
-    >
+    <div className="relative h-full hover:scale-105 transition-transform hover:z-20">
       <Scoreboard game={game} showScores={showScores} showMapName />
-    </a>
+      <a
+        title="Play demo"
+        href={`/games/?gameId=${game.id}`}
+        className="absolute inset-0"
+      >
+        <span className="sr-only">Play demo</span>
+      </a>
+    </div>
   );
 };
 

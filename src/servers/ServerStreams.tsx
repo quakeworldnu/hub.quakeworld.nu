@@ -2,9 +2,10 @@ import { TwitchButton } from "@qwhub/Buttons";
 import { hasClient } from "@qwhub/servers/util.ts";
 import { useTwitchStreams } from "@qwhub/services/qworld/queries.ts";
 import { streamClientName } from "@qwhub/services/qworld/twitch";
+import type { Server } from "@qwhub/services/qworld/types.ts";
 import React from "react";
 
-const ServersStreams = React.memo((props) => {
+const ServersStreams = React.memo((props: { server: Server }) => {
   const { server } = props;
   // polled by <FeaturedStreams /> (site header)
   const allStreams = useTwitchStreams();

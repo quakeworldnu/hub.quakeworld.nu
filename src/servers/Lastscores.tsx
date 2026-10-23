@@ -1,10 +1,17 @@
-import { LastscoresScoreboard } from "@qwhub/servers/LastscoresScoreboard";
+import { LastscoresScoreboard } from "@qwhub/servers/LastscoresScoreboard.tsx";
 import { Mapshot } from "@qwhub/servers/Mapshot";
+import type { Lastscores as LastscoresEntry } from "@qwhub/services/qworld/lastscores.ts";
 import { useLastscores } from "@qwhub/services/qworld/queries.ts";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
 
-export const Lastscores = ({ address, onClose }) => {
+export const Lastscores = ({
+  address,
+  onClose,
+}: {
+  address: string;
+  onClose: () => void;
+}) => {
   const { data, isLoading, isSuccess, isError } = useLastscores(address);
   const [showAllScores, setShowAllScores] = useState(false);
 
@@ -48,7 +55,11 @@ export const Lastscores = ({ address, onClose }) => {
                   <th className="py-1 pr-3 text-right">mode</th>
                   <th className="p-1">participants</th>
                   <th className="p-1">map</th>
-                  <th className="p-1 text-center" width={1}>
+                  <th
+                    className="p-1 text-center"
+                    // @ts-expect-error legacy attribute, shrinks the column to fit
+                    width={1}
+                  >
                     scores
                   </th>
                   <th />
@@ -72,7 +83,7 @@ export const Lastscores = ({ address, onClose }) => {
   );
 };
 
-const Placeholder = ({ text }) => {
+const Placeholder = ({ text }: { text: string }) => {
   return (
     <div className="flex min-h-[96px] text-gray-300 justify-center items-center">
       {text}
@@ -80,7 +91,15 @@ const Placeholder = ({ text }) => {
   );
 };
 
-const LastscoresRow = ({ lastscores, showAllScores = false, address = "" }) => {
+const LastscoresRow = ({
+  lastscores,
+  showAllScores = false,
+  address = "",
+}: {
+  lastscores: LastscoresEntry;
+  showAllScores?: boolean;
+  address?: string;
+}) => {
   const { timestamp, mode, participants, map, scores, demo, players } =
     lastscores;
   const [showScoreboard, setShowScoreboard] = useState(false);
@@ -134,7 +153,13 @@ const LastscoresRow = ({ lastscores, showAllScores = false, address = "" }) => {
   );
 };
 
-const DemoButtons = ({ demo, address }) => {
+const DemoButtons = ({
+  demo,
+  address,
+}: {
+  demo: string | undefined;
+  address: string;
+}) => {
   const demoUrls = toDemoUrls(demo, address);
 
   if (!demoUrls) {
@@ -175,7 +200,10 @@ const DemoButtons = ({ demo, address }) => {
   );
 };
 
-function toDemoUrls(demoFilename, serverAddress) {
+function toDemoUrls(
+  demoFilename: string | undefined,
+  serverAddress: string,
+): { download: string; stream: string } | null {
   if (!demoFilename || !serverAddress.includes(":")) {
     return null;
   }
@@ -187,7 +215,13 @@ function toDemoUrls(demoFilename, serverAddress) {
   };
 }
 
-const TextSpoiler = ({ text, isRevealed = false }) => {
+const TextSpoiler = ({
+  text,
+  isRevealed = false,
+}: {
+  text: string;
+  isRevealed?: boolean;
+}) => {
   return (
     <span
       className={classNames({ "blur-sm": !isRevealed })}

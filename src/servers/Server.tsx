@@ -1,7 +1,7 @@
-import { PrimaryButton, SecondaryButton } from "@qwhub/Buttons";
-import { QuakeText } from "@qwhub/QuakeText";
-import { Lastscores } from "@qwhub/servers/Lastscores";
-import { Mapshot } from "@qwhub/servers/Mapshot";
+import { PrimaryButton, SecondaryButton } from "@qwhub/Buttons.tsx";
+import { QuakeText } from "@qwhub/QuakeText.tsx";
+import { Lastscores } from "@qwhub/servers/Lastscores.tsx";
+import { Mapshot } from "@qwhub/servers/Mapshot.tsx";
 import {
   freePlayerSlots,
   freeSpectatorSlots,
@@ -13,17 +13,18 @@ import {
   scoreboardTeams,
 } from "@qwhub/servers/util.ts";
 import { getFlagUrl } from "@qwhub/services/flags.ts";
+import type { Server as ServerType } from "@qwhub/services/qworld/types.ts";
 import copyToClipboard from "copy-text-to-clipboard";
 import React, { useState } from "react";
-import { Scoreboard } from "./Scoreboard";
-import ServerStreams from "./ServerStreams";
+import { Scoreboard } from "./Scoreboard.tsx";
+import ServerStreams from "./ServerStreams.tsx";
 
 const VIEWS = {
   Scoreboard: "Scoreboard",
   Lastscores: "Lastscores",
 };
 
-const ServerProgress = React.memo((props) => {
+const ServerProgress = React.memo((props: { value: number; max: number }) => {
   const { value, max } = props;
   const progress = 100 * (value / max);
   const width = `${progress}%`;
@@ -35,7 +36,7 @@ const ServerProgress = React.memo((props) => {
   );
 });
 
-const ServerHeader = (props) => {
+const ServerHeader = (props: { server: ServerType }) => {
   const { server } = props;
   const JoinButtonEl =
     freePlayerSlots(server) > 0 ? PrimaryButton : SecondaryButton;
@@ -69,7 +70,14 @@ const ServerHeader = (props) => {
   );
 };
 
-const ServerStatus = React.memo((props) => {
+type ServerStatusProps = {
+  mode: string;
+  map: string;
+  statusName: string;
+  statusDescription: string;
+};
+
+const ServerStatus = React.memo((props: ServerStatusProps) => {
   const { mode, map, statusName, statusDescription } = props;
 
   return (
@@ -94,7 +102,7 @@ const ServerStatus = React.memo((props) => {
   );
 });
 
-export const ServerBody = (props) => {
+export const ServerBody = (props: { server: ServerType }) => {
   const { server } = props;
   const serverMeta = server.meta;
   const [view, setView] = useState(VIEWS.Scoreboard);
@@ -165,7 +173,7 @@ export const ServerBody = (props) => {
   }
 };
 
-export const Matchtag = ({ text = "" }) => {
+export const Matchtag = ({ text = "" }: { text?: string | null }) => {
   if ((text ?? "").trim().length === 0) {
     return null;
   }
@@ -177,7 +185,13 @@ export const Matchtag = ({ text = "" }) => {
   );
 };
 
-export const QWLeagueBanner = ({ matchtag = "", hostname = "" }) => {
+export const QWLeagueBanner = ({
+  matchtag = "",
+  hostname = "",
+}: {
+  matchtag?: string | null;
+  hostname?: string | null;
+}) => {
   const showMatchtag = (matchtag ?? "").trim().length > 0;
   const matchtagColor = isQwleagueOfficial(hostname, matchtag)
     ? "bg-yellow-500"
@@ -196,7 +210,7 @@ export const QWLeagueBanner = ({ matchtag = "", hostname = "" }) => {
         href="https://qwleague.com"
         target="_top"
         title="QWLeague"
-        className="flex items-center ml-auto py-1.5 px-2 sm:px-3 text-[#999] hover:text-white transition-colors"
+        className="relative z-10 flex items-center ml-auto py-1.5 px-2 sm:px-3 text-[#999] hover:text-white transition-colors"
       >
         <img
           src="/assets/img/qwleague_logo.svg"
@@ -209,7 +223,7 @@ export const QWLeagueBanner = ({ matchtag = "", hostname = "" }) => {
   );
 };
 
-const HiddenPlayers = React.memo((props) => {
+const HiddenPlayers = React.memo((props: { count: number }) => {
   const { count } = props;
 
   if (0 === count) {
@@ -223,7 +237,7 @@ const HiddenPlayers = React.memo((props) => {
   );
 });
 
-const SpectatorText = React.memo((props) => {
+const SpectatorText = React.memo((props: { text: string }) => {
   const { text } = props;
 
   if ("" === text) {
@@ -238,7 +252,7 @@ const SpectatorText = React.memo((props) => {
   );
 });
 
-export const SpectatorButtons = (props) => {
+export const SpectatorButtons = (props: { server: ServerType }) => {
   const { server } = props;
 
   return (
@@ -283,7 +297,7 @@ export const SpectatorButtons = (props) => {
   );
 };
 
-const ServerFooter = (props) => {
+const ServerFooter = (props: { server: ServerType }) => {
   const { server } = props;
 
   return (
@@ -301,7 +315,7 @@ const ServerFooter = (props) => {
   );
 };
 
-export const ServerAddress = (props) => {
+export const ServerAddress = (props: { server: ServerType }) => {
   const { server } = props;
   const cc = qwleagueCountryCode(server.info.hostname) || server.meta.geo.cc;
 
@@ -322,24 +336,26 @@ export const ServerAddress = (props) => {
   );
 };
 
-export const ServerAddressTitle = React.memo((props) => {
-  const { cc, title } = props;
+export const ServerAddressTitle = React.memo(
+  (props: { cc: string; title: string }) => {
+    const { cc, title } = props;
 
-  return (
-    <div className="flex items-center max-w-[260px] truncate">
-      {cc && (
-        <img
-          src={getFlagUrl(cc)}
-          alt={cc}
-          className="inline h-3 w-auto mr-1.5 mb-[1px]"
-        />
-      )}
-      {title}
-    </div>
-  );
-});
+    return (
+      <div className="flex items-center max-w-[260px] truncate">
+        {cc && (
+          <img
+            src={getFlagUrl(cc)}
+            alt={cc}
+            className="inline h-3 w-auto mr-1.5 mb-[1px]"
+          />
+        )}
+        {title}
+      </div>
+    );
+  },
+);
 
-const KtxVersion = React.memo((props) => {
+const KtxVersion = React.memo((props: { version: string }) => {
   const { version } = props;
   const label = `KTX ${version}`;
 
@@ -354,7 +370,7 @@ const KtxVersion = React.memo((props) => {
 });
 
 // memo: unchanged servers keep their object identity between polls (rtk query structural sharing)
-export const Server = React.memo((props) => {
+export const Server = React.memo((props: { server: ServerType }) => {
   const { server } = props;
 
   return (

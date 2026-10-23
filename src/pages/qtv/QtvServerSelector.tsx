@@ -1,6 +1,5 @@
 import { Mapshot } from "@qwhub/servers/Mapshot.tsx";
-// @ts-ignore
-import { Scoreboard } from "@qwhub/servers/Scoreboard.jsx";
+import { Scoreboard } from "@qwhub/servers/Scoreboard.tsx";
 import { useQtvServers } from "@qwhub/servers/hooks.ts";
 import { scoreboardPlayers, scoreboardTeams } from "@qwhub/servers/util.ts";
 import type { Server } from "@qwhub/services/qworld/types.ts";

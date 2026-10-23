@@ -1,8 +1,61 @@
 // KTX stats entries (api.quake.world/v1/servers/{address}/lastscores) => hub lastscores
-import { parseQuakeText } from "./quakeText";
+import { parseQuakeText } from "./quakeText.ts";
+
+// api entry (subset of ktx stats)
+type KtxStatsPlayer = {
+  name?: string;
+  team?: string;
+  "top-color"?: number;
+  "bottom-color"?: number;
+  stats?: { frags?: number };
+  ping?: number;
+  bot?: unknown;
+};
+
+export type KtxStatsEntry = {
+  port: number;
+  date?: string;
+  mode: string;
+  map: string;
+  demo?: string;
+  players?: KtxStatsPlayer[];
+};
+
+export type LastscoresPlayer = {
+  name: string;
+  name_color: string;
+  team: string;
+  team_color: string;
+  colors: number[];
+  frags: number;
+  ping: number;
+  is_bot: boolean;
+};
+
+export type LastscoresTeam = {
+  name: string;
+  name_color: string;
+  frags: number;
+  ping: number;
+  colors: number[];
+};
+
+export type Lastscores = {
+  timestamp: string;
+  mode: string;
+  map: string;
+  demo: string | undefined;
+  participants: string;
+  scores: string;
+  players: LastscoresPlayer[];
+  teams: LastscoresTeam[];
+};
 
 // lastscores are per host, keep the games played on the given server
-export const toLastscores = (entries, address) => {
+export const toLastscores = (
+  entries: KtxStatsEntry[],
+  address: string,
+): Lastscores[] => {
   const port = Number.parseInt(address.split(":")[1], 10);
 
   return entries
@@ -10,10 +63,12 @@ export const toLastscores = (entries, address) => {
     .map(toEntry);
 };
 
-const toEntry = (entry) => {
-  const players = entry.players.map(toPlayer);
+const toEntry = (entry: KtxStatsEntry): Lastscores => {
+  // entries without players are filtered out above
+  const players = (entry.players ?? []).map(toPlayer);
   const teams = "team" === entry.mode ? toTeams(players) : [];
-  const participants = teams.length > 0 ? teams : players;
+  const participants: { name: string; frags: number }[] =
+    teams.length > 0 ? teams : players;
 
   return {
     timestamp: (entry.date ?? "").substring(0, "YYYY-MM-DD HH:MM".length),
@@ -28,13 +83,13 @@ const toEntry = (entry) => {
 };
 
 // "4on4_red_vs_blue[dm3]20261019-1608.mvd" => "4on4"
-const demoMode = (demo = "") => {
+const demoMode = (demo = ""): string => {
   const index = demo.indexOf("_");
   return index === -1 ? "" : demo.substring(0, index);
 };
 
 // row for <Scoreboard />
-const toPlayer = (player) => {
+const toPlayer = (player: KtxStatsPlayer): LastscoresPlayer => {
   const name = parseQuakeText(player.name ?? "");
   const team = parseQuakeText(player.team ?? "");
 
@@ -50,8 +105,8 @@ const toPlayer = (player) => {
   };
 };
 
-const toTeams = (players) => {
-  const teamsByName = new Map();
+const toTeams = (players: LastscoresPlayer[]): LastscoresTeam[] => {
+  const teamsByName = new Map<string, LastscoresPlayer[]>();
 
   for (const player of players) {
     teamsByName.set(player.team, [
@@ -76,8 +131,8 @@ const toTeams = (players) => {
   return teams;
 };
 
-const mostCommonColors = (players) => {
-  const counts = new Map();
+const mostCommonColors = (players: LastscoresPlayer[]): number[] => {
+  const counts = new Map<string, number>();
 
   for (const { colors } of players) {
     const key = colors.join(",");

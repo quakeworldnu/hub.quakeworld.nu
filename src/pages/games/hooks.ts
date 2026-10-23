@@ -48,13 +48,11 @@ export function useVisibilityChange(
   onChange: (state: DocumentVisibilityState) => void,
 ) {
   useEffect(() => {
-    document.addEventListener("visibilitychange", () =>
-      onChange(document.visibilityState),
-    );
+    // same function reference for add/remove, otherwise the listener is never removed
+    const handleChange = () => onChange(document.visibilityState);
+    document.addEventListener("visibilitychange", handleChange);
     return () => {
-      document.removeEventListener("visibilitychange", () =>
-        onChange(document.visibilityState),
-      );
+      document.removeEventListener("visibilitychange", handleChange);
     };
   }, []);
 }

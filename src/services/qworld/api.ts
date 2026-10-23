@@ -1,8 +1,6 @@
 import { fetchGeo } from "./geo.ts";
-// @ts-ignore
-import { toLastscores } from "./lastscores";
-// @ts-ignore
-import { isGameServer, toServer } from "./server";
+import { type KtxStatsEntry, toLastscores } from "./lastscores.ts";
+import { isGameServer, toServer } from "./server.ts";
 import { compareServers } from "./serverSort.ts";
 import type { GameServer, Server, TwitchStream } from "./types.ts";
 
@@ -61,6 +59,6 @@ export async function fetchTwitchStreams(): Promise<TwitchStream[]> {
 }
 
 export async function fetchLastscores(address: string) {
-  const entries = await get<unknown[]>(`servers/${address}/lastscores`);
+  const entries = await get<KtxStatsEntry[]>(`servers/${address}/lastscores`);
   return toLastscores(entries, address);
 }

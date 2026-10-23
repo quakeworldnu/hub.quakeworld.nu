@@ -1,8 +1,7 @@
 import { filterServers } from "@qwhub/serverFilters";
 import { totalSpectatorCount } from "@qwhub/servers/util.ts";
 import { useServers } from "@qwhub/services/qworld/queries.ts";
-// @ts-ignore
-import { isBot } from "@qwhub/services/qworld/server";
+import { isBot } from "@qwhub/services/qworld/server.ts";
 import type { QuakeString, Server } from "@qwhub/services/qworld/types.ts";
 import { useServerFilters } from "@qwhub/settings.ts";
 import { useMemo } from "react";

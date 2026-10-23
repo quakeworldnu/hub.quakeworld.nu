@@ -1,5 +1,4 @@
-// @ts-ignore
-import { isBot } from "@qwhub/services/qworld/server";
+import { isBot } from "@qwhub/services/qworld/server.ts";
 import type { Server } from "@qwhub/services/qworld/types.ts";
 import { localStorageGet } from "@qwhub/util";
 

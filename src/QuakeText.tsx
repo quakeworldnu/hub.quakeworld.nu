@@ -1,25 +1,32 @@
-import { parseQuakeText } from "@qwhub/services/qworld/quakeText";
-import React from "react";
+import { parseQuakeText } from "@qwhub/services/qworld/quakeText.ts";
+import type { QuakeString } from "@qwhub/services/qworld/types.ts";
+import React, { type ElementType } from "react";
 
-export const QuakeText = React.memo((props) => {
+type QuakeTextProps = {
+  text: string; // html
+  tag?: string;
+  className?: string;
+};
+
+export const QuakeText = React.memo((props: QuakeTextProps) => {
   const { text, tag = "div", className } = props;
-  const TagName = `${tag}`;
+  const TagName = `${tag}` as ElementType;
 
   return (
     <TagName {...{ className }} dangerouslySetInnerHTML={{ __html: text }} />
   );
 });
 
-export const coloredQuakeName = (name, color) =>
+export const coloredQuakeName = (name: string, color: string): string =>
   color ? quakeTextToHtml(name, color) : name;
 
 // api.quake.world QuakeString => html
-export const quakeStringToHtml = (quakeString) => {
+export const quakeStringToHtml = (quakeString: QuakeString): string => {
   const { text, colors } = parseQuakeText(quakeString.unicode);
   return quakeTextToHtml(text, colors);
 };
 
-export const quakeTextToHtml = (text, color) => {
+export const quakeTextToHtml = (text: string, color: string): string => {
   let result = "";
   let lastColor = "";
 

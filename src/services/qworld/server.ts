@@ -1,13 +1,24 @@
 import { isQwleagueOfficial } from "@qwhub/servers/util.ts";
-import { geoByIpOrEmpty } from "./geo";
+import { type GeoByIp, geoByIpOrEmpty } from "./geo.ts";
+import type {
+  Bot,
+  GameServer,
+  Geo,
+  Player,
+  Server,
+  ServerMeta,
+  ServerStatus,
+} from "./types.ts";
 
-export const isBot = (client) => Boolean(client.bot);
+export const isBot = (client: { bot: Bot | null }): boolean =>
+  Boolean(client.bot);
 
-export const isGameServer = (server) => server.server_type === "game";
+export const isGameServer = (server: { server_type: string }): boolean =>
+  server.server_type === "game";
 
 // v1 game server => hub server (v1 game server + meta)
-export const toServer = (gameServer, geo) => {
-  const server = {
+export const toServer = (gameServer: GameServer, geo: GeoByIp): Server => {
+  const server: GameServer = {
     ...gameServer,
     players: gameServer.players.filter(
       (p) => !p.name.ascii.replaceAll(" ", "").includes("h1.nu"),
@@ -16,13 +27,13 @@ export const toServer = (gameServer, geo) => {
       (s) => !isBot(s) && s.name.ascii !== "[ServeMe]",
     ),
   };
-  server.meta = toMeta(server, geoByIpOrEmpty(geo, server.ip));
-  return server;
+  return { ...server, meta: toMeta(server, geoByIpOrEmpty(geo, server.ip)) };
 };
 
-const toInt = (value) => Number.parseInt(value ?? "0", 10) || 0;
+const toInt = (value: string | undefined): number =>
+  Number.parseInt(value ?? "0", 10) || 0;
 
-const toMeta = (server, geo) => {
+const toMeta = (server: GameServer, geo: Geo): ServerMeta => {
   const { info } = server;
   const mode = server.game_mod ?? server.player_mode ?? gamedirMode(info);
   const statusText = info.status ?? "";
@@ -83,9 +94,13 @@ const toMeta = (server, geo) => {
   };
 };
 
-const stripNonAscii = (str) => str.replace(/[^ -~]+/g, "");
+const stripNonAscii = (str: string): string => str.replace(/[^ -~]+/g, "");
 
-const toAddressTitle = (address, hostport, hostname) => {
+const toAddressTitle = (
+  address: string,
+  hostport: string,
+  hostname: string | undefined,
+): string => {
   if (undefined === hostname) {
     return address;
   }
@@ -100,7 +115,7 @@ const toAddressTitle = (address, hostport, hostname) => {
     .trim();
 };
 
-const toSpectatorText = (server) => {
+const toSpectatorText = (server: GameServer): string => {
   const maxLength = 88;
   const more = "..";
   const qtvClientNames = server.qtv_stream?.client_names ?? [];
@@ -118,7 +133,7 @@ const toSpectatorText = (server) => {
   return text;
 };
 
-const supportsLastscores = (version) => {
+const supportsLastscores = (version: string): boolean => {
   try {
     if (!version.includes("MVDSV")) {
       return false;
@@ -133,16 +148,20 @@ const supportsLastscores = (version) => {
 };
 
 // mod name for servers the api can't classify, e.g. "mtfcoop2"
-const gamedirMode = (info) => {
+const gamedirMode = (info: GameServer["info"]): string => {
   const gamedir = (info["*gamedir"] ?? info.gamedir ?? "").toLowerCase();
   return ["", "qw", "id1", "ktx"].includes(gamedir) ? "" : gamedir;
 };
 
 // mode helpers
-const isXonX = (mode) => /^\d+on\d+$/.test(mode);
-const isFfa = (mode) => mode === "ffa";
+const isXonX = (mode: string): boolean => /^\d+on\d+$/.test(mode);
+const isFfa = (mode: string): boolean => mode === "ffa";
 
-const toStatus = (status, mode, server) => {
+const toStatus = (
+  status: string,
+  mode: string,
+  server: GameServer,
+): ServerStatus => {
   if (mode === "race") {
     return { name: "Standby", description: "Racing" };
   }
@@ -184,7 +203,7 @@ const toStatus = (status, mode, server) => {
   return { name: "Unknown", description: status };
 };
 
-const toTime = (timelimit, status) => {
+const toTime = (timelimit: number, status: string): ServerMeta["time"] => {
   const minLeftNeedle = " min left";
   const remaining = status.includes(minLeftNeedle)
     ? toInt(status.replace(minLeftNeedle, ""))
@@ -193,7 +212,11 @@ const toTime = (timelimit, status) => {
   return { total: timelimit, elapsed: timelimit - remaining, remaining };
 };
 
-const toTitle = (mode, info, players) => {
+const toTitle = (
+  mode: string,
+  info: GameServer["info"],
+  players: Player[],
+): string => {
   const map = info.map ? ` [${info.map}]` : "";
   const matchtag = parseMatchtag(info.matchtag ?? "");
   const prefix = [matchtag, mode].filter(Boolean).join(" / ");
@@ -202,12 +225,13 @@ const toTitle = (mode, info, players) => {
     return `${prefix}${map}`;
   }
 
-  const byName = (a, b) => (a.toLowerCase() < b.toLowerCase() ? -1 : 1);
+  const byName = (a: string, b: string) =>
+    a.toLowerCase() < b.toLowerCase() ? -1 : 1;
   const playerNames = players.map((p) => p.name.ascii);
   const teamNames = new Set(players.map((p) => p.team.ascii));
   const isTeamplay = toInt(info.teamplay) > 0;
-  let participants;
-  let delimiter;
+  let participants: string[];
+  let delimiter: string;
 
   if (isTeamplay && mode !== "1on1" && mode !== "coop" && teamNames.size <= 2) {
     participants = [...teamNames].map((teamName) => {
@@ -240,7 +264,7 @@ const toTitle = (mode, info, players) => {
     : `${participantList}${map}`;
 };
 
-const parseMatchtag = (matchtag) => {
+const parseMatchtag = (matchtag: string): string => {
   const result = matchtag
     .replace(/[^\p{L}\p{N} -]+/gu, " ")
     .replace(/[ -]{2,}/g, (m) => m[0])
@@ -271,7 +295,7 @@ const hostnamePattern =
   /^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?(\.[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)+$/;
 
 // "qw.foppa.dk:28501 #1" => "qw.foppa.dk:28501", fallback to address
-export const parseHostname = (address, hostname = "") => {
+export const parseHostname = (address: string, hostname = ""): string => {
   if (!hostname.includes(".")) {
     return address;
   }

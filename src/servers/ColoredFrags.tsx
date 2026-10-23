@@ -1,8 +1,14 @@
-import { memo } from "react";
+import { type ElementType, memo } from "react";
 
-export const ColoredFrags = memo((props) => {
+type ColoredFragsProps = {
+  tag?: string;
+  frags?: number | string;
+  colors?: number[];
+};
+
+export const ColoredFrags = memo((props: ColoredFragsProps) => {
   const { tag = "div", frags = "", colors = [0, 0] } = props;
-  const TagName = `${tag}`;
+  const TagName = `${tag}` as ElementType;
   const colors_ = colors.map(fixColor);
 
   return (
@@ -14,7 +20,7 @@ export const ColoredFrags = memo((props) => {
   );
 });
 
-export function fixColor(color) {
+export function fixColor(color: number): number {
   if (color < 0 || color > 16) {
     return 0;
   }

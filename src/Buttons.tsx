@@ -1,4 +1,4 @@
-import React from "react";
+import React, { type ReactNode } from "react";
 
 import { isTwitchExtensionEmbedded } from "@qwhub/util";
 
@@ -20,7 +20,14 @@ const themeSecondary = {
   hover: themePrimary.hover,
 };
 
-export const PrimaryButton = React.memo((props) => {
+type ButtonProps = {
+  href?: string;
+  children?: ReactNode;
+  className?: string;
+  title?: string;
+};
+
+export const PrimaryButton = React.memo((props: ButtonProps) => {
   const { href = "#", children, className = "", title = "" } = props;
 
   return (
@@ -35,25 +42,35 @@ export const PrimaryButton = React.memo((props) => {
   );
 });
 
-export const SecondaryButton = React.memo((props) => {
-  const { href, children, count = 0, className = "", title = "" } = props;
-  return (
-    <a
-      href={href}
-      target="_top"
-      className={`flex items-center justify-center p-1 ${themeSecondary.default} ${themeSecondary.hover} ${className}`}
-      title={title}
-    >
-      {children}
+export const SecondaryButton = React.memo(
+  (props: ButtonProps & { count?: number }) => {
+    const { href, children, count = 0, className = "", title = "" } = props;
+    return (
+      <a
+        href={href}
+        target="_top"
+        className={`flex items-center justify-center p-1 ${themeSecondary.default} ${themeSecondary.hover} ${className}`}
+        title={title}
+      >
+        {children}
 
-      {count > 0 && (
-        <span className="ml-1 text-gray-400 text-xs">({count})</span>
-      )}
-    </a>
-  );
-});
+        {count > 0 && (
+          <span className="ml-1 text-gray-400 text-xs">({count})</span>
+        )}
+      </a>
+    );
+  },
+);
 
-export const TwitchButton = (props) => {
+type TwitchButtonProps = {
+  channel?: string;
+  login?: string;
+  title?: string;
+  viewers?: number;
+  className?: string;
+};
+
+export const TwitchButton = (props: TwitchButtonProps) => {
   const {
     channel = "",
     login = channel,

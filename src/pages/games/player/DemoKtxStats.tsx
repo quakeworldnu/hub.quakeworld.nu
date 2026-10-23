@@ -6,8 +6,7 @@ import {
 import { QuakeTextFromByteString } from "@qwhub/pages/games/player/QuakeText.tsx";
 import { useKtxstats } from "@qwhub/pages/games/player/ktxstats.ts";
 import { getAssetUrl } from "@qwhub/pages/games/services/cloudfront/cassets.ts";
-// @ts-ignore
-import { ColoredFrags } from "@qwhub/servers/ColoredFrags";
+import { ColoredFrags } from "@qwhub/servers/ColoredFrags.tsx";
 import { Fragment } from "react";
 
 export function DemoKtxStats({ sha256 }: { sha256: string }) {

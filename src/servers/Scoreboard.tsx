@@ -1,11 +1,29 @@
-import { QuakeText, coloredQuakeName } from "@qwhub/QuakeText";
+import { QuakeText, coloredQuakeName } from "@qwhub/QuakeText.tsx";
 import { getFlagUrl } from "@qwhub/services/flags.ts";
 import classNames from "classnames";
 import { memo } from "react";
-import { ColoredFrags } from "./ColoredFrags";
+import { ColoredFrags } from "./ColoredFrags.tsx";
 
-const sortByFrags = (a, b) => b.frags - a.frags;
-const sortByName = (a, b) =>
+// rows from live servers, lastscores and games
+export type ScoreboardTeam = {
+  name: string;
+  name_color?: string;
+  frags: number;
+  colors?: number[];
+  ping?: number;
+};
+
+export type ScoreboardPlayer = ScoreboardTeam & {
+  id?: number;
+  team?: string;
+  team_color?: string;
+  cc?: string;
+  is_bot?: boolean;
+};
+
+type Row = { name: string; frags: number };
+const sortByFrags = (a: Row, b: Row) => b.frags - a.frags;
+const sortByName = (a: Row, b: Row) =>
   a.name.toLowerCase().localeCompare(b.name.toLowerCase());
 
 export const Scoreboard = ({
@@ -13,6 +31,11 @@ export const Scoreboard = ({
   teams = [],
   showFrags = true,
   limit = 20,
+}: {
+  players?: ScoreboardPlayer[];
+  teams?: ScoreboardTeam[];
+  showFrags?: boolean;
+  limit?: number;
 }) => {
   const hasTeams = teams.length > 0;
   const showTeamColumn = hasTeams && teams.length <= 3;
@@ -48,7 +71,7 @@ export const Scoreboard = ({
   );
 };
 
-const TeamRow = (props) => {
+const TeamRow = (props: ScoreboardTeam) => {
   const {
     name = "",
     name_color = "",
@@ -69,7 +92,7 @@ const TeamRow = (props) => {
   );
 };
 
-const TeamName = memo((props) => {
+const TeamName = memo((props: { name?: string; name_color?: string }) => {
   const { name = "", name_color = "" } = props;
   const maxLen = 4;
 
@@ -84,7 +107,7 @@ const TeamName = memo((props) => {
   );
 });
 
-const PlayerRow = (props) => {
+const PlayerRow = (props: ScoreboardPlayer & { showTeam?: boolean }) => {
   const {
     name = "",
     name_color = "",
@@ -126,7 +149,7 @@ const PlayerRow = (props) => {
   );
 };
 
-const Ping = (props) => {
+const Ping = (props: { value: string }) => {
   const { value } = props;
 
   return <span className="text-right text-xs opacity-50">{value}</span>;

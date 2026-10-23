@@ -1,5 +1,6 @@
 import { GameDetails } from "@qwhub/pages/games/player/GameDetails.tsx";
 import { ServerPoller } from "@qwhub/servers/Servers.jsx";
+import { StrictMode } from "react";
 import { ToastContainer } from "react-toastify";
 import { SiteFooter } from "../../site/Footer";
 import { SiteHeader } from "../../site/Header";
@@ -18,7 +19,12 @@ export const App = () => {
         <div className="w-full">
           <div>
             {gameId && <GameDetails id={gameId} />}
-            {!gameId && <Browser />}
+            {/* strict mode except for the demo player (fte engine is a global singleton) */}
+            {!gameId && (
+              <StrictMode>
+                <Browser />
+              </StrictMode>
+            )}
           </div>
         </div>
         <Sidebar />
