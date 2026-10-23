@@ -13,7 +13,20 @@ export type Config = {
   preset: "demoPlayer" | "qtvPlayer";
 };
 
-export const FtePlayerCanvas = ({ config }: { config: Config }) => {
+declare global {
+  interface WindowEventMap {
+    "fteplayer.mouse.idle": Event;
+    "fteplayer.mouse.active": Event;
+  }
+}
+
+export const FtePlayerCanvas = ({
+  config,
+  onControlKey,
+}: {
+  config: Config;
+  onControlKey?: () => void;
+}) => {
   const fte = useFteController();
   const documentRef = useRef<Document>(document);
 
@@ -49,7 +62,7 @@ export const FtePlayerCanvas = ({ config }: { config: Config }) => {
           return fte.command("+showscores");
         case "Control":
           e.preventDefault();
-          return dispatchEvent(new Event("hub.qtv.server_selector.toggle"));
+          return onControlKey?.();
         default:
           break;
       }

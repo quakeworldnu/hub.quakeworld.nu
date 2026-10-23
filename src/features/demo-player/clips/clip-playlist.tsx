@@ -13,6 +13,12 @@ import { type Clip, parseUrlClips } from "@/utils/game-url";
 
 export const CLIP_CHANGE_EVENT = "hub.clips.change";
 
+declare global {
+  interface WindowEventMap {
+    [CLIP_CHANGE_EVENT]: CustomEvent<{ index: number; total: number }>;
+  }
+}
+
 type ClipPlaylistContextProps = {
   clips: Clip[];
   activeIndex: number;

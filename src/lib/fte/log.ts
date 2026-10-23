@@ -1,3 +1,14 @@
+declare global {
+  interface WindowEventMap {
+    "fte.event.qtv_play": Event;
+    "fte.event.qtv_disconnect": Event;
+    "game.match_begin": Event;
+    "game.match_end": Event;
+    "game.remaining_seconds": CustomEvent<number>;
+    "game.overtime_minutes": CustomEvent<number>;
+  }
+}
+
 export function enableLogToEvents() {
   const log = console.log;
 

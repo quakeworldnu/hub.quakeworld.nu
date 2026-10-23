@@ -1,10 +1,10 @@
 import { useState } from "react";
+import { useEventListener } from "usehooks-ts";
 import { presets, Shortcuts } from "@/components/fte-player/shortcuts";
 import { ServerAddress } from "@/components/server/server-address";
 import ServersStreams from "@/components/streams/server-streams";
 import { SecondaryButton } from "@/components/ui/buttons";
 import { QtvEvent } from "@/features/qtv/events";
-import { useEventListener } from "@/hooks/use-event-listener";
 import { useQtvServers } from "@/lib/qworld/server-hooks";
 import {
   qtvClientCount,

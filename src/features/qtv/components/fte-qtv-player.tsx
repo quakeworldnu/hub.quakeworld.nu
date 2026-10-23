@@ -3,6 +3,7 @@ import { type RefObject, useRef, useState } from "react";
 import {
   useBoolean,
   useCounter,
+  useEventListener,
   useInterval,
   useResizeObserver,
 } from "usehooks-ts";
@@ -12,8 +13,7 @@ import { Participants } from "@/components/fte-player/participants";
 import { ResponsivePlayerInfo } from "@/components/fte-player/player-info";
 import { ResponsiveTopBanner } from "@/components/fte-player/top-banner";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
-import { QtvEvent } from "@/features/qtv/events";
-import { useEventListener } from "@/hooks/use-event-listener";
+import { QtvEvent, toggleQtvServerSelector } from "@/features/qtv/events";
 import { getAssetUrl } from "@/lib/cloudfront/assets";
 import { getQtvPlayerAssets } from "@/lib/fte/assets";
 import { useFteController, useFteLoader } from "@/lib/fte/hooks";
@@ -62,6 +62,10 @@ export function FteQtvPlayer({
 
   useEventListener("fte.event.qtv_disconnect", reconnect);
   useEventListener(QtvEvent.SelectServer, ({ detail: selectedServer }) => {
+    // only qtv servers are selectable
+    if (!selectedServer.qtv_stream) {
+      return;
+    }
     connect(selectedServer.qtv_stream.url);
     setLastKnownUrl(selectedServer.qtv_stream.url);
   });
@@ -85,7 +89,10 @@ export function FteQtvPlayer({
       ref={playerRef}
     >
       <div>
-        <FtePlayerCanvas config={{ preset: "qtvPlayer" }} />
+        <FtePlayerCanvas
+          config={{ preset: "qtvPlayer" }}
+          onControlKey={toggleQtvServerSelector}
+        />
 
         {fte && (
           <>
@@ -162,8 +169,8 @@ function useQtvElapsedTime(timelimit: number): number {
   useEventListener("fte.event.qtv_disconnect", reset);
   useEventListener("game.match_begin", () => startAt(0));
   useEventListener("game.match_end", stop);
-  useEventListener("game.remaining_seconds", (e: CustomEvent) =>
-    startAt(60 * timelimit - Number.parseInt(e.detail, 10)),
+  useEventListener("game.remaining_seconds", (e) =>
+    startAt(60 * timelimit - e.detail),
   );
   useEventListener("game.overtime_minutes", () => startAt(60 * timelimit));
   useInterval(increment, isStarted ? 1000 : null);

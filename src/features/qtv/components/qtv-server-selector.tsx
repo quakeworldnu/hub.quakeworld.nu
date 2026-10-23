@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { useBoolean } from "usehooks-ts";
+import { useBoolean, useEventListener } from "usehooks-ts";
 import { Mapshot } from "@/components/scoreboard/mapshot";
 import { Scoreboard } from "@/components/scoreboard/scoreboard";
 import {
@@ -8,7 +8,6 @@ import {
   selectServer,
   showQtvServerSelector,
 } from "@/features/qtv/events";
-import { useEventListener } from "@/hooks/use-event-listener";
 import { useQtvServers } from "@/lib/qworld/server-hooks";
 import { scoreboardPlayers, scoreboardTeams } from "@/lib/qworld/server-utils";
 import type { Server } from "@/lib/qworld/types";

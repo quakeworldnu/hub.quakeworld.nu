@@ -1,7 +1,6 @@
 import clsx from "clsx";
-import { useBoolean } from "usehooks-ts";
+import { useBoolean, useEventListener } from "usehooks-ts";
 import { QtvEvent } from "@/features/qtv/events";
-import { useEventListener } from "@/hooks/use-event-listener";
 import {
   qwleagueCountryCode,
   statusText,

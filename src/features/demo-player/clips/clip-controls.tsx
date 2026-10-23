@@ -18,14 +18,15 @@ import { DisableClipEditorButton } from "./clips";
 export const ClipControls = () => {
   const { setTrack } = useClipEditor();
 
-  useFteEvent("cl_autotrack", (e: CustomEvent) => {
+  useFteEvent("cl_autotrack", (e) => {
     if (e.detail.value === "stats") {
       setTrack("auto");
     }
   });
 
-  useFteEvent("track", (e: CustomEvent) => {
-    setTrack(e.detail.value);
+  useFteEvent("track", (e) => {
+    // track is a player userid (or a clip track)
+    setTrack(e.detail.value as number);
   });
 
   return (

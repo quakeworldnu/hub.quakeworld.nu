@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { useBoolean } from "usehooks-ts";
+import { useBoolean, useEventListener } from "usehooks-ts";
 import { AutotrackToggle } from "@/components/fte-player/autotrack-toggle";
 import { ConsoleToggle } from "@/components/fte-player/console-toggle";
 import { FullscreenToggle } from "@/components/fte-player/fullscreen-toggle";
@@ -7,7 +7,6 @@ import { GameDuration } from "@/components/fte-player/game-clock";
 import { Volume } from "@/components/fte-player/volume";
 import { XrayToggle } from "@/components/fte-player/xray-toggle";
 import { useClipEditor } from "@/features/demo-player/clips/clip-editor";
-import { useEventListener } from "@/hooks/use-event-listener";
 import { useUpdateInterval } from "@/hooks/use-update-interval";
 import { useFteController } from "@/lib/fte/hooks";
 import { AutoplayToggle } from "./autoplay-toggle";

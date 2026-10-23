@@ -5,12 +5,13 @@ import {
   ClientState,
   ControlSource,
   FTEC,
+  type FteCommandEvent,
   FteModule,
   Player,
   Team,
 } from "./types";
 
-export function fteEvent(name: string, detail: object) {
+export function fteEvent(name: string, detail: FteCommandEvent["detail"]) {
   const event = new CustomEvent(`fte.${name}`, { detail });
   window.dispatchEvent(event);
 }
@@ -88,7 +89,7 @@ export class FteController {
     }
   }
 
-  dispatchEvent(name: string, detail: object) {
+  dispatchEvent(name: string, detail: { value?: string | number }) {
     fteEvent(name, { ...detail, source: this._controlSource });
   }
 

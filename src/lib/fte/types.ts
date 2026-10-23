@@ -64,6 +64,12 @@ export enum ControlSource {
   USER = "user",
 }
 
+// dispatched as `fte.<command>` for every command sent to fte
+export type FteCommandEvent = CustomEvent<{
+  value?: string | number;
+  source: ControlSource;
+}>;
+
 export interface FTEC {
   cbufadd: (command: string) => void;
 }

@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { useBoolean } from "usehooks-ts";
+import { useBoolean, useEventListener } from "usehooks-ts";
 import { AutotrackToggle } from "@/components/fte-player/autotrack-toggle";
 import { ConsoleToggle } from "@/components/fte-player/console-toggle";
 import { FullscreenToggle } from "@/components/fte-player/fullscreen-toggle";
@@ -11,7 +11,6 @@ import {
   QtvEvent,
   toggleQtvServerSelector,
 } from "@/features/qtv/events";
-import { useEventListener } from "@/hooks/use-event-listener";
 import { PopoutButton } from "./popout-button";
 
 export function FteQtvPlayerControls() {

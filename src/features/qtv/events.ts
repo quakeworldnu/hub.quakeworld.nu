@@ -1,10 +1,16 @@
 import type { Server } from "@/lib/qworld/types";
 import { setSearchParam } from "@/utils/search-params";
 
-export function dispatchCustomEvent(
-  eventName: string,
-  detail: object | string = {},
-) {
+declare global {
+  interface WindowEventMap {
+    [QtvEvent.SelectServer]: CustomEvent<Server>;
+    [QtvEvent.ShowServerSelector]: Event;
+    [QtvEvent.HideServerSelector]: Event;
+    [QtvEvent.ToggleServerSelector]: Event;
+  }
+}
+
+function dispatchCustomEvent(eventName: QtvEvent, detail?: Server) {
   window.dispatchEvent(new CustomEvent(eventName, { detail }));
 }
 

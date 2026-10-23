@@ -1,9 +1,18 @@
 import { useEffect, useState } from "react";
-import { useCounter, useInterval, useScript } from "usehooks-ts";
-import { useEventListener } from "@/hooks/use-event-listener";
+import {
+  useCounter,
+  useEventListener,
+  useInterval,
+  useScript,
+} from "usehooks-ts";
 import { getAssetUrl } from "@/lib/cloudfront/assets";
 import { FteController } from "./fte-controller";
-import type { FteAssets, FteModule, FtePreloadModule } from "./types";
+import type {
+  FteAssets,
+  FteCommandEvent,
+  FteModule,
+  FtePreloadModule,
+} from "./types";
 
 declare global {
   interface Window {
@@ -100,9 +109,13 @@ export function useFteController() {
 
 export function useFteEvent(
   eventName: string,
-  callback: (e: CustomEvent) => void,
+  callback: (e: FteCommandEvent) => void,
 ) {
-  useEventListener(`fte.${eventName}`, callback);
+  // command names are dynamic, so these events aren't declared in WindowEventMap
+  useEventListener(
+    `fte.${eventName}` as keyof WindowEventMap,
+    callback as (e: Event) => void,
+  );
 }
 
 export function useFteUpdateOnEvent(eventName: string) {

@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { useInterval } from "usehooks-ts";
+import { useEventListener, useInterval } from "usehooks-ts";
 import { CLIP_CHANGE_EVENT } from "@/features/demo-player/clips/clip-playlist";
 import { FteDemoPlayer } from "@/features/demo-player/components/fte-demo-player";
-import { useEventListener } from "@/hooks/use-event-listener";
 import { getInfo } from "@/lib/cloudfront/demos";
 import { DemoInfo } from "@/lib/cloudfront/types";
 import { useFteController, useFteEvent } from "@/lib/fte/hooks";
@@ -11,7 +10,7 @@ const params = new URLSearchParams(window.location.search);
 const playerWidth = params.get("width");
 const playerHeight = params.get("height");
 
-function postMessage(key: string, value: string | number | object) {
+function postMessage(key: string, value: unknown) {
   window.parent.postMessage({ key, value }, "*");
 }
 
@@ -19,21 +18,17 @@ export const DemoPlayerPage = () => {
   const [demo, setDemo] = useState<DemoInfo | null>(null);
   const fte = useFteController();
 
-  useFteEvent("track", (e: CustomEvent) =>
-    postMessage("track", e.detail.value),
+  useFteEvent("track", (e) => postMessage("track", e.detail.value));
+
+  useFteEvent("demo_setspeed", (e) =>
+    postMessage("set_speed", Number.parseInt(String(e.detail.value), 10)),
   );
 
-  useFteEvent("demo_setspeed", (e: CustomEvent) =>
-    postMessage("set_speed", Number.parseInt(e.detail.value, 10)),
+  useFteEvent("demo_jump", (e) =>
+    postMessage("seek", Number.parseInt(String(e.detail.value), 10)),
   );
 
-  useFteEvent("demo_jump", (e: CustomEvent) =>
-    postMessage("seek", Number.parseInt(e.detail.value, 10)),
-  );
-
-  useEventListener(CLIP_CHANGE_EVENT, (e: CustomEvent) =>
-    postMessage("clip", e.detail),
-  );
+  useEventListener(CLIP_CHANGE_EVENT, (e) => postMessage("clip", e.detail));
 
   useInterval(() => {
     if (!fte) {
