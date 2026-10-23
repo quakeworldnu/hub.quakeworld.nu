@@ -29,7 +29,6 @@ export default defineConfig({
     "import.meta.vitest": "undefined",
   },
   test: {
-    environment: "jsdom",
     includeSource: ["src/**/*.{ts,tsx}"],
   },
 });

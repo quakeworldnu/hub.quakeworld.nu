@@ -111,7 +111,7 @@ export function equalsDefaultFilters(filters: ServerFilters): boolean {
 }
 
 if (import.meta.vitest) {
-  const { describe, expect, test } = import.meta.vitest;
+  const { describe, expect, test, vi } = import.meta.vitest;
 
   // mock servers
   const s_1on1_africa = {
@@ -164,19 +164,15 @@ if (import.meta.vitest) {
   });
 
   test("getInitialServerFilters", () => {
-    localStorage.setItem(
-      "serverFilters",
-      JSON.stringify({
-        modes: ["ffa", "other"],
-        regions: ["Europe"],
-      }),
-    );
+    const stored = { modes: ["ffa", "other"], regions: ["Europe"] };
+    vi.stubGlobal("localStorage", { getItem: () => JSON.stringify(stored) });
 
     expect(getInitialServerFilters()).toEqual({
       only_bots: true,
       modes: ["ffa", "other"],
       regions: ["Europe"],
     });
+    vi.unstubAllGlobals();
   });
 
   test("equalsDefaultFilters", () => {
