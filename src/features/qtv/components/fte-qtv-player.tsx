@@ -50,7 +50,7 @@ export function FteQtvPlayer({
     fte.command("disconnect");
     window.setTimeout(() => {
       fte.command("closemenu");
-      fte.command("qtvplay", `tcp:${url}@wss://fteqtv.quake.world`);
+      fte.command("qtvplay", `tcp:${url}@wss://qtv.quake.world`);
     }, DISCONNECT_TIMEOUT);
   }
 
