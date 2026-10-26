@@ -3,8 +3,17 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script>
+        // firebase default subdomains (*.web.app, *.firebaseapp.com) cannot be disabled; redirect to the custom domain
+        const host = window.location.hostname;
+        if (host.endsWith(".web.app") || host.endsWith(".firebaseapp.com")) {
+            const { pathname, search, hash } = window.location;
+            window.location.replace(`https://hub.quakeworld.nu${pathname}${search}${hash}`);
+        }
+    </script>
     <title>Demos / Recent Games - QuakeWorld Hub</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+    <link rel="canonical" href="https://hub.quakeworld.nu/games/" />
     <link rel="preload" href="/assets/fonts/roboto-v20-latin-400.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preconnect" href="https://api.quake.world" crossorigin>
     <link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
