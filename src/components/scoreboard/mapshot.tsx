@@ -13,7 +13,7 @@ export function Mapshot({
       <div
         className="h-full bg-cover bg-center"
         style={{
-          backgroundImage: getMapshotCssUrl(map),
+          backgroundImage: getMapshotCssUrl(map, 1280),
         }}
       >
         <div className="h-full bg-gray-700/20">{children}</div>

@@ -41,7 +41,7 @@ export const Scoreboard = ({
       <div
         className={"h-full bg-no-repeat bg-center bg-cover"}
         style={{
-          backgroundImage: getMapshotCssUrl(game.map),
+          backgroundImage: getMapshotCssUrl(game.map, 1280),
         }}
       >
         <div className="flex flex-col h-full bg-gray-700/20">

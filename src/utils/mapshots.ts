@@ -1,7 +1,5 @@
-export function getMapshotUrl(map: string): string {
-  return `https://assets.quake.world/mapshots/sm/${map}.webp`;
-}
+type MapshotWidth = 640 | 1280 | 1920;
 
-export function getMapshotCssUrl(map: string): string {
-  return `url(${getMapshotUrl(map)})`;
+export function getMapshotCssUrl(map: string, width: MapshotWidth): string {
+  return `url(https://media.quake.world/mapshots/${width}/${map}.webp)`;
 }

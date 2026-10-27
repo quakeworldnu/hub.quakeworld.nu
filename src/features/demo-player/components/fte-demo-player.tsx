@@ -85,7 +85,7 @@ const DemoPlayer = ({
           },
         )}
         style={{
-          backgroundImage: getMapshotCssUrl(`lg/${mapName}`),
+          backgroundImage: getMapshotCssUrl(mapName, 1280),
         }}
       >
         <div

@@ -41,7 +41,7 @@ export function QtvPlayerFooter() {
         <div className="flex items-center gap-4 gap-x-6">
           <div
             className="hidden sm:block h-20 w-32 bg-cover bg-center rounded"
-            style={{ backgroundImage: getMapshotCssUrl(server.info.map) }}
+            style={{ backgroundImage: getMapshotCssUrl(server.info.map, 640) }}
           />
           <div className="">
             <div className="font-bold sm:text-lg md:text-xl">{title}</div>
