@@ -9,7 +9,7 @@ import clsx from "clsx";
 import { useEffect } from "react";
 import { useBoolean } from "usehooks-ts";
 import { presets, Shortcuts } from "@/components/fte-player/shortcuts";
-import { DemoKtxStats } from "@/components/ktxstats/ktx-stats";
+import { FteKtxStats } from "@/components/ktxstats/ktx-stats";
 import { Scoreboard } from "@/components/scoreboard/game-scoreboard";
 import { FontAwesomeIcon } from "@/components/ui/icon";
 import { btnSecondary, btnSuccess, sizeLarge } from "@/components/ui/theme";
@@ -55,7 +55,8 @@ export const DemoPlayer = ({
       fte.command("enemyskin", '""');
       fte.command("teamskin", '""');
 
-      for (const p of fte.getPlayers()) {
+      // engine player objects (setUserInfo)
+      for (const p of fte.getClientState().getPlayers()) {
         p.setUserInfo("skin", `ctf_${p.getTeamPlain()}`);
       }
     }
@@ -113,7 +114,7 @@ const DemoPlayerFooter = ({ game, demo }: { game: Game; demo: DemoInfo }) => {
           </div>
         </div>
 
-        <ScoreboardAndStats game={game} sha256={demo.sha256} />
+        <ScoreboardAndStats game={game} />
         <hr className="my-6 border-slate-800" />
 
         <Shortcuts preset={presets.demoPlayer} />
@@ -122,7 +123,7 @@ const DemoPlayerFooter = ({ game, demo }: { game: Game; demo: DemoInfo }) => {
   );
 };
 
-function ScoreboardAndStats({ game, sha256 }: { game: Game; sha256: string }) {
+function ScoreboardAndStats({ game }: { game: Game }) {
   const { toggle: toggleSpoilers, value: showSpoilers } = useBoolean(false);
 
   return (
@@ -149,7 +150,7 @@ function ScoreboardAndStats({ game, sha256 }: { game: Game; sha256: string }) {
           />
           Stats
         </div>
-        {showSpoilers && <DemoKtxStats sha256={sha256} />}
+        {showSpoilers && <FteKtxStats />}
         {!showSpoilers && (
           <div
             className="flex grow items-center justify-center bg-[#151525] hover:bg-slate-800 cursor-pointer border border-slate-800 text-muted-foreground text-sm transition-colors"

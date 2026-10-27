@@ -2,10 +2,14 @@ import clsx from "clsx";
 import { useBoolean, useEventListener } from "usehooks-ts";
 import { AutotrackToggle } from "@/components/fte-player/autotrack-toggle";
 import { ConsoleToggle } from "@/components/fte-player/console-toggle";
-import { FullscreenToggle } from "@/components/fte-player/fullscreen-toggle";
+import {
+  FullscreenToggle,
+  FullWindowToggle,
+} from "@/components/fte-player/fullscreen-toggle";
 import { GameDuration } from "@/components/fte-player/game-clock";
+import { MinimapToggle } from "@/components/fte-player/minimap-toggle";
+import { SettingsToggle } from "@/components/fte-player/settings";
 import { Volume } from "@/components/fte-player/volume";
-import { XrayToggle } from "@/components/fte-player/xray-toggle";
 import { useClipEditor } from "@/features/demo-player/clips/clip-editor";
 import { useUpdateInterval } from "@/hooks/use-update-interval";
 import { useFteController } from "@/lib/fte/hooks";
@@ -56,12 +60,16 @@ export const FteDemoPlayerControls = () => {
       </div>
 
       <div className="sm:flex sm:flex-wrap sm:justify-end sm:justify-self-end gap-x-1">
-        <XrayToggle />
         <AutotrackToggle />
+        <MinimapToggle />
+        <ConsoleToggle />
         <div className="hidden sm:block">
           <SlowmotionToggle />
         </div>
-        <ConsoleToggle />
+        <SettingsToggle />
+        <div className="hidden sm:block">
+          <FullWindowToggle />
+        </div>
         <div className="hidden sm:block">
           <FullscreenToggle />
         </div>

@@ -2,16 +2,13 @@ import clsx from "clsx";
 import { useBoolean, useEventListener } from "usehooks-ts";
 import { AutotrackToggle } from "@/components/fte-player/autotrack-toggle";
 import { ConsoleToggle } from "@/components/fte-player/console-toggle";
-import { FullscreenToggle } from "@/components/fte-player/fullscreen-toggle";
-import { Volume } from "@/components/fte-player/volume";
-import { XrayToggle } from "@/components/fte-player/xray-toggle";
-import { Switch } from "@/components/ui/switch";
 import {
-  hideQtvServerSelector,
-  QtvEvent,
-  toggleQtvServerSelector,
-} from "@/features/qtv/events";
-import { PopoutButton } from "./popout-button";
+  FullscreenToggle,
+  FullWindowToggle,
+} from "@/components/fte-player/fullscreen-toggle";
+import { MinimapToggle } from "@/components/fte-player/minimap-toggle";
+import { SettingsToggle } from "@/components/fte-player/settings";
+import { Volume } from "@/components/fte-player/volume";
 
 export function FteQtvPlayerControls() {
   const {
@@ -37,14 +34,14 @@ export function FteQtvPlayerControls() {
       </div>
 
       <div className="flex items-center gap-x-2">
-        <div className="hidden sm:block">
-          <QtvServerTilesToggle />
-        </div>
-        <XrayToggle />
         <AutotrackToggle />
+        <MinimapToggle />
         <ConsoleToggle />
-        <PopoutButton />
+        <SettingsToggle />
 
+        <div className="hidden sm:block">
+          <FullWindowToggle />
+        </div>
         <div className="hidden sm:block">
           <FullscreenToggle />
         </div>
@@ -52,24 +49,3 @@ export function FteQtvPlayerControls() {
     </div>
   );
 }
-
-export const QtvServerTilesToggle = ({
-  defaultVisible = false,
-}: {
-  defaultVisible?: boolean;
-}) => {
-  const { value, setFalse, setTrue } = useBoolean(defaultVisible);
-  useEventListener(QtvEvent.SelectServer, hideQtvServerSelector);
-  useEventListener(QtvEvent.HideServerSelector, setFalse);
-  useEventListener(QtvEvent.ShowServerSelector, setTrue);
-
-  return (
-    <div className="text-xs sm:text-sm">
-      <Switch
-        label="Show servers (CTRL)"
-        enabled={value}
-        onClick={toggleQtvServerSelector}
-      />
-    </div>
-  );
-};

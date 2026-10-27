@@ -35,18 +35,9 @@ importers:
       react-dom:
         specifier: ^19.3.1
         version: 19.3.1(react@19.3.1)
-      react-swipeable:
-        specifier: ^7.0.2
-        version: 7.0.2(react@19.3.1)
       remeda:
         specifier: ^2.53.0
         version: 2.53.0
-      use-double-tap:
-        specifier: ^1.3.7
-        version: 1.3.7(react@19.3.1)
-      use-long-press:
-        specifier: ^3.3.0
-        version: 3.3.0(react@19.3.1)
       usehooks-ts:
         specifier: ^3.1.1
         version: 3.1.1(react@19.3.1)
@@ -1182,11 +1173,6 @@ packages:
     peerDependencies:
       react: ^19.3.1
 
-  react-swipeable@7.0.2:
-    resolution: {integrity: sha512-v1Qx1l+aC2fdxKa9aKJiaU/ZxmJ5o98RMoFwUqAAzVWUcxgfHFXDDruCKXhw6zIYXm6V64JiHgP9f6mlME5l8w==}
-    peerDependencies:
-      react: ^16.8.3 || ^17 || ^18 || ^19.0.0 || ^19.0.0-rc
-
   react@19.3.1:
     resolution: {integrity: sha512-QNhWdt7nrgVWWQG58QuGsAR3jv3Hbe4mb4vz7w2csnHavciZJgda1CPNaldF6eVxv90ud3jUXpKlHL69gO38yw==}
     engines: {node: '>=0.10.0'}
@@ -1276,16 +1262,6 @@ packages:
   undici@8.12.3:
     resolution: {integrity: sha512-+fdndUTwBP86cVjihTp21hZHo7d6oj1c/47XPA3lL8mM0XHs+C4EkcjmgRsFnFk2f/UONGDy9ItBItmXsLOQHw==}
     engines: {node: '>=22.19.0'}
-
-  use-double-tap@1.3.7:
-    resolution: {integrity: sha512-OOgpAtT1U96D8jX6w/ODWhLMDpS92wVYIQyQQ0hDnOgLrPHNrkYSjTnkoPT41GaO30xF5OBJ7mAxF34sHxnLng==}
-    peerDependencies:
-      react: '>=16.8.0'
-
-  use-long-press@3.3.0:
-    resolution: {integrity: sha512-Yedz46ILxsb1BTS6kUzpV/wyEZPUlJDq+8Oat0LP1eOZQHbS887baJHJbIGENqCo8wTKNxmoTHLdY8lU/e+wvw==}
-    peerDependencies:
-      react: '>=16.8.0'
 
   usehooks-ts@3.1.1:
     resolution: {integrity: sha512-I4diPp9Cq6ieSUH2wu+fDAVQO43xwtulo+fKEidHUwZPnYImbtkTjzIJYcDcJqxgmX31GVqNFURodvcgHcW0pA==}
@@ -2238,10 +2214,6 @@ snapshots:
       react: 19.3.1
       scheduler: 0.28.0
 
-  react-swipeable@7.0.2(react@19.3.1):
-    dependencies:
-      react: 19.3.1
-
   react@19.3.1: {}
 
   readdirp@5.1.1:
@@ -2353,14 +2325,6 @@ snapshots:
 
   undici@8.12.3:
     optional: true
-
-  use-double-tap@1.3.7(react@19.3.1):
-    dependencies:
-      react: 19.3.1
-
-  use-long-press@3.3.0(react@19.3.1):
-    dependencies:
-      react: 19.3.1
 
   usehooks-ts@3.1.1(react@19.3.1):
     dependencies:

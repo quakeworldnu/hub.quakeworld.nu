@@ -1,4 +1,3 @@
-import { presets, Shortcuts } from "@/components/fte-player/shortcuts";
 import { FteQtvPlayer } from "@/features/qtv/components/fte-qtv-player";
 import { QtvPlayerFooter } from "@/features/qtv/components/qtv-footer";
 import { QtvPlayerSidebar } from "@/features/qtv/components/qtv-sidebar";
@@ -6,15 +5,21 @@ import { useInitialQtvServer } from "@/features/qtv/hooks/use-initial-qtv-server
 import { ServerPoller } from "@/features/servers/components/servers";
 import { SiteFooter } from "@/pages/layout/site-footer";
 import { SiteHeader } from "@/pages/layout/site-header";
+import { isEmbedded } from "@/utils/embed";
 
+// app layout: header + body + footer fill the viewport, only the server list scrolls
 export const QtvPage = () => {
   return (
-    <>
-      <SiteHeader />
+    <div className="flex flex-col h-dvh">
+      <div className="shrink-0">
+        <SiteHeader />
+      </div>
       <QtvContent />
-      <SiteFooter />
+      <div className="shrink-0">
+        <SiteFooter />
+      </div>
       <ServerPoller />
-    </>
+    </div>
   );
 };
 
@@ -22,27 +27,21 @@ const QtvContent = () => {
   const server = useInitialQtvServer();
 
   return (
-    <div>
-      <div className="lg:flex gap-x-4 ">
-        <div className="my-4 flex flex-col w-full">
-          <div className="grow">
-            {server && (
-              <FteQtvPlayer
-                mapName={server.info.map}
-                timelimit={Number.parseInt(server.info.timelimit, 10)}
-              />
-            )}
-          </div>
-          <QtvPlayerFooter />
+    <div className="flex flex-1 min-h-0 my-4">
+      {!isEmbedded() && <QtvPlayerSidebar />}
+      <div className="flex flex-col flex-1 min-w-0 min-h-0">
+        <div className="flex-1 min-h-0">
+          {server ? (
+            <FteQtvPlayer mapName={server.info.map} />
+          ) : (
+            <div className="h-full grid place-items-center text-slate-400">
+              Select a server to watch.
+            </div>
+          )}
         </div>
-
-        <div className="lg:w-1/2 xl:w-1/3 lg:max-w-[540px] order-first my-4 max-h-[80vh] overflow-auto">
-          <QtvPlayerSidebar />
-
-          <div className="lg:hidden">
-            <hr className="my-6 border-slate-800" />
-            <Shortcuts preset={presets.qtvPlayer} />
-          </div>
+        {/* same width as the player, the sidebar stretches alongside */}
+        <div className="shrink-0">
+          <QtvPlayerFooter />
         </div>
       </div>
     </div>

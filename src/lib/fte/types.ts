@@ -6,54 +6,83 @@ export type FtePreloadModule = {
   manifest: string;
   files: object;
   setStatus: (value: string) => void;
+  onFteReady: () => void; // called by the engine once initialized
+  onHubRequest: (name: string) => void; // called by the engine (`hub_request <name>`)
 };
 
-export type FteModule = FtePreloadModule &
-  FteContants & {
-    getClientState: () => ClientState;
-    getDemoTime: () => number;
-  };
-
-export type PlayerView = {
-  cam_spec_track: number;
-  playernum: number;
-  getTrackedPlayer: () => Player;
+// the engine api used by the hub (vikpe/fteqw fork)
+export type FteModule = FtePreloadModule & {
+  getClientState: () => ClientState;
+  getCvar: (name: string) => string;
+  command: (name: string, value?: string | number) => void;
+  getParticipants: () => Participants;
+  getAutotrackMode: () => string; // "user" (off), "high", "killer", "mod", "stats"
+  getTrackedUserid: () => number; // -1 when not tracking
+  isConsoleOpen: () => boolean;
+  getKtxStats: () => string | null; // ktx stats json embedded in the demo
 };
 
 export type ClientState = {
-  allocated_client_slots: number;
-  deathmatch: number;
-  teamplay: number;
-  getPlayer: (index: number) => Player;
-  getPlayerLocation: (index: number) => string;
-  getPlayerView: (seatIndex: number) => PlayerView;
+  getPlayers: () => Player[]; // active players, engine slot order
+  getDemoInfo: () => DemoInfo | null;
+  getMatchElapsed: () => number | null; // ms, tracked from status/overtime prints
 };
 
+// all times in ms. null until the demo scan has finished, and when no demo file
+// is playing (qtv, live)
+export type DemoInfo = Readonly<{
+  format: "mvd" | "qwd" | "nq" | "?";
+  elapsed_ms: number; // seek target while seeking
+  total_ms: number;
+  timelimit_ms: number;
+  countdown_ms: number; // 0 if no countdown was found
+  overtime_ms: number;
+  intermission_ms: number;
+  pov_user_id: number;
+  is_single_pov: boolean;
+}>;
+
+// engine player object, for userinfo changes (e.g. ctf skins)
 export type Player = {
   userid: number;
-  spectator: number;
-  frags: number;
-  topcolor: number;
-  bottomcolor: number;
-  getLocation: () => string;
-  getName: () => Uint8Array;
-  getNamePlain: () => string;
-  getTeam: () => Uint8Array;
   getTeamPlain: () => string;
-  getWeaponStats: () => void;
-  getStats: () => { [key: number]: number };
-  getStatsFloat: () => { [key: number]: number };
   setUserInfo: (key: string, value: string) => void;
 };
 
-export type Team = {
-  name: Uint8Array;
-  namePlain: string;
+// Module.getParticipants(): the engine participant model (also used by its title and hud)
+export type Participants = Readonly<{
+  players: ParticipantPlayer[]; // no spectators, sorted by name_ascii
+  teams: ParticipantTeam[]; // only with >2 players and exactly 2 teams, sorted by name_ascii
+}>;
+
+export type ParticipantPlayer = Readonly<{
+  userid: number;
   frags: number;
-  topcolor: number;
-  bottomcolor: number;
-  players: Player[];
-};
+  name: string;
+  name_ascii: string;
+  name_bytes: Uint8Array;
+  team: string;
+  team_ascii: string;
+  team_bytes: Uint8Array;
+  top_color: number; // palette slot 0..16
+  bottom_color: number;
+  top_rgb: string; // "#rrggbb"
+  bottom_rgb: string;
+  is_bot: boolean;
+  is_tracked: boolean;
+}>;
+
+export type ParticipantTeam = Readonly<{
+  name: string;
+  name_ascii: string;
+  name_bytes: Uint8Array;
+  frags: number; // sum of the players
+  top_color: number; // majority among the players
+  bottom_color: number;
+  top_rgb: string;
+  bottom_rgb: string;
+  player_count: number;
+}>;
 
 export enum Autotrack {
   ON = "stats",
@@ -73,61 +102,3 @@ export type FteCommandEvent = CustomEvent<{
 export interface FTEC {
   cbufadd: (command: string) => void;
 }
-
-export type FteContants = {
-  STAT_HEALTH: number;
-  STAT_WEAPONMODELI: number;
-  STAT_AMMO: number;
-  STAT_ARMOR: number;
-  STAT_WEAPONFRAME: number;
-  STAT_SHELLS: number;
-  STAT_NAILS: number;
-  STAT_ROCKETS: number;
-  STAT_CELLS: number;
-  STAT_ACTIVEWEAPON: number;
-  STAT_TOTALSECRETS: number;
-  STAT_TOTALMONSTERS: number;
-  STAT_SECRETS: number;
-  STAT_MONSTERS: number;
-  STAT_ITEMS: number;
-  STAT_VIEWHEIGHT: number;
-  STAT_TIME: number;
-  STAT_MATCHSTARTTIME: number;
-
-  W_AXE: number;
-  W_SHOTGUN: number;
-  W_SUPER_SHOTGUN: number;
-  W_NAILGUN: number;
-  W_SUPER_NAILGUN: number;
-  W_GRENADE_LAUNCHER: number;
-  W_ROCKET_LAUNCHER: number;
-  W_LIGHTNING: number;
-
-  IT_SHOTGUN: number;
-  IT_SUPER_SHOTGUN: number;
-  IT_NAILGUN: number;
-  IT_SUPER_NAILGUN: number;
-  IT_GRENADE_LAUNCHER: number;
-  IT_ROCKET_LAUNCHER: number;
-  IT_LIGHTNING: number;
-  IT_SUPER_LIGHTNING: number;
-  IT_SHELLS: number;
-  IT_NAILS: number;
-  IT_ROCKETS: number;
-  IT_CELLS: number;
-  IT_AXE: number;
-  IT_ARMOR1: number;
-  IT_ARMOR2: number;
-  IT_ARMOR3: number;
-  IT_SUPERHEALTH: number;
-  IT_KEY1: number;
-  IT_KEY2: number;
-  IT_INVISIBILITY: number;
-  IT_INVULNERABILITY: number;
-  IT_SUIT: number;
-  IT_QUAD: number;
-  IT_SIGIL1: number;
-  IT_SIGIL2: number;
-  IT_SIGIL3: number;
-  IT_SIGIL4: number;
-};

@@ -3,17 +3,16 @@ import { useRef } from "react";
 import { FtePlayerCanvas } from "@/components/fte-player/fte-player-canvas";
 import { GameClock } from "@/components/fte-player/game-clock";
 import { Participants } from "@/components/fte-player/participants";
-import { ResponsivePlayerInfo } from "@/components/fte-player/player-info";
+import { FteSettings } from "@/components/fte-player/settings";
 import { ResponsiveTopBanner } from "@/components/fte-player/top-banner";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { ClipPlaylistProvider } from "@/features/demo-player/clips/clip-playlist";
 import { useClipPlayback } from "@/features/demo-player/clips/use-clip-playback";
 import { useElementWidth } from "@/hooks/use-element-width";
 import { useUpdateInterval } from "@/hooks/use-update-interval";
-import { getAssetUrl } from "@/lib/cloudfront/assets";
 import { getDownloadUrl } from "@/lib/cloudfront/demos";
 import type { DemoInfo } from "@/lib/cloudfront/types";
-import { getDemoPlayerAssets } from "@/lib/fte/assets";
+import { getDemoPlayerAssets, getFteBuildUrl } from "@/lib/fte/assets";
 import { useFteController, useFteLoader } from "@/lib/fte/hooks";
 import { getMapshotCssUrl } from "@/utils/mapshots";
 import { roundFloat } from "@/utils/math";
@@ -40,7 +39,7 @@ const DemoPlayer = ({
 }: FteDemoPlayerProps) => {
   useClipPlayback();
   const assets = getDemoPlayerAssets(getDownloadUrl(demo.sha256), mapName);
-  const scriptPath = getAssetUrl("fte/versions/004/ftewebgl.js");
+  const scriptPath = getFteBuildUrl("ftewebgl.js");
   const isQwleague = (demo.server?.hostname ?? "").includes(".qwleague.com");
   const countdownDuration = isQwleague ? 15 : 10;
   const { isLoadingAssets, isReady, assetStatus, isInitializing } =
@@ -66,11 +65,10 @@ const DemoPlayer = ({
       ref={playerRef}
     >
       <div>
-        <FtePlayerCanvas config={{ preset: "demoPlayer" }} />
+        <FtePlayerCanvas />
 
         {fte && (
           <>
-            <ResponsivePlayerInfo scale={scale} />
             <ResponsiveTopBanner scale={scale}>
               <Participants />
               <DemoLargeGameClock />
@@ -78,6 +76,7 @@ const DemoPlayer = ({
           </>
         )}
       </div>
+      <FteSettings />
       <div
         className={clsx(
           "absolute z-30 w-full h-full bg-black transition-opacity duration-700 pointer-events-none bg-cover",

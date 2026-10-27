@@ -1,73 +1,48 @@
 import clsx from "clsx";
-import { useRef, useState } from "react";
-import {
-  useBoolean,
-  useCounter,
-  useEventListener,
-  useInterval,
-} from "usehooks-ts";
+import { useRef } from "react";
+import { useEventListener } from "usehooks-ts";
 import { FtePlayerCanvas } from "@/components/fte-player/fte-player-canvas";
 import { GameClock } from "@/components/fte-player/game-clock";
 import { Participants } from "@/components/fte-player/participants";
-import { ResponsivePlayerInfo } from "@/components/fte-player/player-info";
+import { FteSettings } from "@/components/fte-player/settings";
 import { ResponsiveTopBanner } from "@/components/fte-player/top-banner";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
-import { QtvEvent, toggleQtvServerSelector } from "@/features/qtv/events";
+import { QtvEvent } from "@/features/qtv/events";
 import { useElementWidth } from "@/hooks/use-element-width";
-import { getAssetUrl } from "@/lib/cloudfront/assets";
-import { getQtvPlayerAssets } from "@/lib/fte/assets";
+import { useUpdateInterval } from "@/hooks/use-update-interval";
+import { getFteBuildUrl, getQtvPlayerAssets } from "@/lib/fte/assets";
+import { FteController } from "@/lib/fte/fte-controller";
 import { useFteController, useFteLoader } from "@/lib/fte/hooks";
-import { enableLogToEvents } from "@/lib/fte/log";
 import { roundFloat } from "@/utils/math";
 import { FteQtvPlayerControls } from "./fte-qtv-player-controls";
-import { QtvServerSelectorOverlay } from "./qtv-server-selector";
 
-const DISCONNECT_TIMEOUT = 50; // ms
-
-enableLogToEvents();
-
-export function FteQtvPlayer({
-  mapName,
-  timelimit,
-  fullscreen = false,
-}: {
-  mapName: string;
-  timelimit: number;
-  fullscreen?: boolean;
-}) {
-  const [lastKnownUrl, setLastKnownUrl] = useState("");
+export function FteQtvPlayer({ mapName }: { mapName: string }) {
   const assets = getQtvPlayerAssets(mapName);
-  const scriptPath = getAssetUrl("fte/versions/004/ftewebgl.js");
+  const scriptPath = getFteBuildUrl("ftewebgl.js");
   const { isLoadingAssets, isReady, assetStatus, isInitializing } =
     useFteLoader({ scriptPath, assets });
   const fte = useFteController();
 
   function connect(url: string) {
+    // the singleton, not `fte`: the select event can arrive before this
+    // component's useFteController has picked up the instance
+    const fte = FteController.getInstance();
+
     if (!fte) {
       return;
     }
 
-    fte.command("disconnect");
-    window.setTimeout(() => {
-      fte.command("closemenu");
-      fte.command("qtvplay", `tcp:${url}@wss://qtv.quake.world`);
-    }, DISCONNECT_TIMEOUT);
+    // qtvplay swaps streams once the new one is ready; no disconnect needed.
+    fte.command("qtvplay", `tcp:${url}@wss://qtv.quake.world`);
   }
 
-  function reconnect() {
-    if (lastKnownUrl) {
-      connect(lastKnownUrl);
-    }
-  }
-
-  useEventListener("fte.event.qtv_disconnect", reconnect);
+  // the engine reconnects by itself when a stream ends
   useEventListener(QtvEvent.SelectServer, ({ detail: selectedServer }) => {
     // only qtv servers are selectable
     if (!selectedServer.qtv_stream) {
       return;
     }
     connect(selectedServer.qtv_stream.url);
-    setLastKnownUrl(selectedServer.qtv_stream.url);
   });
 
   const playerRef = useRef<HTMLDivElement>(null);
@@ -78,29 +53,22 @@ export function FteQtvPlayer({
   return (
     <div
       id="ftePlayer"
-      className={clsx("relative w-full h-full bg-black", {
-        "max-h-[75vh] aspect-video": !fullscreen,
-        "min-h-screen max-h-full": fullscreen,
-      })}
+      className="relative w-full h-full bg-black"
       ref={playerRef}
     >
       <div>
-        <FtePlayerCanvas
-          config={{ preset: "qtvPlayer" }}
-          onControlKey={toggleQtvServerSelector}
-        />
+        <FtePlayerCanvas />
 
         {fte && (
           <>
-            <ResponsivePlayerInfo scale={scale} />
             <ResponsiveTopBanner scale={scale}>
               <Participants />
-              <QtvPlayerGameClock timelimit={timelimit} />
+              <QtvPlayerGameClock />
             </ResponsiveTopBanner>
           </>
         )}
       </div>
-      <QtvServerSelectorOverlay />
+      <FteSettings />
       <div
         className={clsx(
           "absolute flex z-30 w-full h-full bg-black transition-opacity duration-1000 pointer-events-none items-center justify-center",
@@ -129,47 +97,14 @@ export function FteQtvPlayer({
   );
 }
 
-export function QtvPlayerGameClock({ timelimit }: { timelimit: number }) {
-  const elapsed = useQtvElapsedTime(timelimit);
+export function QtvPlayerGameClock() {
+  const fte = useFteController();
+  useUpdateInterval(fte ? 250 : null);
+  const elapsed = fte?.getStreamMatchElapsedTime() ?? null;
 
-  if (0 === elapsed) {
+  if (elapsed === null) {
     return null;
   }
+
   return <GameClock elapsed={elapsed} />;
-}
-
-function useQtvElapsedTime(timelimit: number): number {
-  const {
-    value: isStarted,
-    setFalse: stop,
-    setTrue: start,
-  } = useBoolean(false);
-  const { count, increment, setCount, reset: resetCount } = useCounter(0);
-
-  function reset() {
-    stop();
-    resetCount();
-  }
-
-  function startAt(duration: number) {
-    if (!isStarted) {
-      start();
-    }
-
-    if (duration >= 0) {
-      setCount(duration);
-    }
-  }
-
-  useEventListener("fte.event.qtv_play", reset);
-  useEventListener("fte.event.qtv_disconnect", reset);
-  useEventListener("game.match_begin", () => startAt(0));
-  useEventListener("game.match_end", stop);
-  useEventListener("game.remaining_seconds", (e) =>
-    startAt(60 * timelimit - e.detail),
-  );
-  useEventListener("game.overtime_minutes", () => startAt(60 * timelimit));
-  useInterval(increment, isStarted ? 1000 : null);
-
-  return count;
 }

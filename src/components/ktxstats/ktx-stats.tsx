@@ -7,10 +7,16 @@ import type {
   KtxstatsV3E,
   TeamStats,
 } from "@/lib/ktxstats/ktxstats-v3-enhanced";
-import { useKtxstats } from "@/lib/ktxstats/use-ktxstats";
+import { useFteKtxstats, useKtxstats } from "@/lib/ktxstats/use-ktxstats";
 
 export function DemoKtxStats({ sha256 }: { sha256: string }) {
   const stats = useKtxstats(sha256);
+  return <DemoKtxStatsTable stats={stats} />;
+}
+
+// stats of the demo playing in fte
+export function FteKtxStats() {
+  const stats = useFteKtxstats();
   return <DemoKtxStatsTable stats={stats} />;
 }
 

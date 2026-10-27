@@ -1,11 +1,20 @@
 import { getAssetUrl } from "@/lib/cloudfront/assets";
 import type { FteAssets } from "./types";
 
+// fte build (vikpe/fteqw ci artifacts: engine + hub addon), one <date>-<shorthash> dir per build.
+// older builds stay in place for cached/third-party versions of the hub
+const FTE_BUILD_URL =
+  "https://assets.quake.world/qworld/fte/2026-10-27-2b63195";
+
+export function getFteBuildUrl(file: "ftewebgl.js" | "csaddon.dat"): string {
+  return `${FTE_BUILD_URL}/${file}`;
+}
+
 export function getQtvPlayerAssets(mapName: string): FteAssets {
   return {
     ...getGeneralAssets(),
-    "id1/config.cfg": "/assets/fte/config_qtv_v5.cfg",
-    [`id1/maps/${mapName}.bsp`]: `https://assets.quake.world/maps/${mapName}.bsp`,
+    "id1/config.cfg": "/assets/fte/config_qtv_v6.cfg",
+    [`id1/maps/${mapName}.bsp`]: `https://assets.quake.world/maps/${mapName}.bsp.gz`,
   };
 }
 
@@ -15,15 +24,22 @@ export function getDemoPlayerAssets(
 ): FteAssets {
   return {
     ...getGeneralAssets(),
-    "id1/config.cfg": "/assets/fte/config_v5.cfg",
+    "id1/config.cfg": "/assets/fte/config_v6.cfg",
     "qw/match.mvd.gz": demoUrl,
-    [`id1/maps/${mapName}.bsp`]: `https://assets.quake.world/maps/${mapName}.bsp`,
+    [`id1/maps/${mapName}.bsp`]: `https://assets.quake.world/maps/${mapName}.bsp.gz`,
   };
 }
 
 export function getGeneralAssets(): FteAssets {
   const assets: FteAssets = {
-    "qw/csaddon.dat": getAssetUrl("fte/csaddon/csaddon_003.dat"),
+    "qw/csaddon.dat": getFteBuildUrl("csaddon.dat"),
+
+    // settings: crosshairs and charsets not on the cdn
+    "id1/crosshairs/circle.png": "/assets/fte/crosshairs/circle.png",
+    "id1/crosshairs/crosshair.png": "/assets/fte/crosshairs/crosshair.png",
+    "id1/crosshairs/square.png": "/assets/fte/crosshairs/square.png",
+    "id1/textures/charsets/default.png": "/assets/fte/charsets/default.png",
+    "id1/textures/charsets/graybugs.png": "/assets/fte/charsets/graybugs.png",
   };
 
   const filePaths = [

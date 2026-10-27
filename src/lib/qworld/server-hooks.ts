@@ -3,7 +3,6 @@ import { useServerFilters } from "@/stores/settings";
 import { useServers } from "./queries";
 import { isBot } from "./server";
 import { filterServers } from "./server-filters";
-import { totalSpectatorCount } from "./server-utils";
 import type { QuakeString, Server } from "./types";
 
 export function useFilteredServers(): Server[] {
@@ -12,15 +11,15 @@ export function useFilteredServers(): Server[] {
   return useMemo(() => filterServers(servers, filters), [servers, filters]);
 }
 
+// servers with players and a qtv stream, highest score first
 export function useQtvServers(): Server[] {
   const servers = useServers();
 
   return useMemo(() => {
-    const result = servers.filter((s) => s.qtv_stream !== null);
-    result.sort((b, a) => {
-      const countDiff = totalSpectatorCount(a) - totalSpectatorCount(b);
-      return countDiff === 0 ? a.score - b.score : countDiff;
-    });
+    const result = servers.filter(
+      (s) => s.qtv_stream !== null && s.players.length > 0,
+    );
+    result.sort((a, b) => b.score - a.score);
     return result;
   }, [servers]);
 }

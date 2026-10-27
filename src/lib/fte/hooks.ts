@@ -6,6 +6,7 @@ import {
   useScript,
 } from "usehooks-ts";
 import { getAssetUrl } from "@/lib/cloudfront/assets";
+import { toggleFullscreen } from "@/utils/fullscreen";
 import { FteController } from "./fte-controller";
 import type {
   FteAssets,
@@ -34,6 +35,9 @@ export function useFteLoader({
   const scriptStatus = useScript(scriptPath, { removeOnUnmount: true });
   const { count: loaded, increment } = useCounter(0);
   const [fte, setFte] = useState<undefined | FteController>(undefined);
+  // the api bindings exist before the engine has initialized (configs exec'd),
+  // commands sent before that are lost
+  const [isEngineReady, setIsEngineReady] = useState(false);
 
   useEffect(() => {
     const manifestUrl = getAssetUrl("fte/default.fmf");
@@ -42,6 +46,12 @@ export function useFteLoader({
       manifest: manifestUrl,
       arguments: ["-manifest", manifestUrl],
       files: assets,
+      onFteReady: () => setIsEngineReady(true),
+      onHubRequest: (name) => {
+        if (name === "fullscreen") {
+          toggleFullscreen("ftePlayer");
+        }
+      },
       setStatus: (value) => {
         const assetRe = value.match(/.+ \((\d+)\/(\d+)\)/);
         const isLoadedAsset =
@@ -56,7 +66,7 @@ export function useFteLoader({
 
   useInterval(
     () => {
-      if (!fte && (window.Module as FteModule).getClientState) {
+      if (!fte && isEngineReady) {
         const instance = FteController.createInstace(
           window.Module as FteModule,
           demoDuration,
@@ -118,7 +128,9 @@ export function useFteEvent(
   );
 }
 
+// re-render on hub commands, and poll for changes made in the engine (binds, gestures)
 export function useFteUpdateOnEvent(eventName: string) {
   const { increment } = useCounter(0);
   useFteEvent(eventName, increment);
+  useInterval(increment, 250);
 }

@@ -1,14 +1,12 @@
-import { clamp } from "@/utils/math";
-import { getPlayerColor, getPlayersMajorityColor } from "@/utils/quake-colors";
 import {
   Autotrack,
   type ClientState,
   ControlSource,
+  type DemoInfo,
   type FTEC,
   type FteCommandEvent,
   type FteModule,
-  type Player,
-  type Team,
+  type Participants,
 } from "./types";
 
 export function fteEvent(name: string, detail: FteCommandEvent["detail"]) {
@@ -27,20 +25,11 @@ export class FteController {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
   private _module: FteModule;
-  private _volume = 0.0;
   private _countdownDuration = 10.0;
   private _demoDuration = 610.0;
+  private _demoInfo: DemoInfo | null = null;
   private _lastVolume = 0.0;
   private _maxVolume = 0.2;
-  private _lastPositiveDemoSpeed = 100;
-  private _lastTrackUserId: number | null = null;
-  private _trackTarget: {
-    demoTime: number;
-    timeout: ReturnType<typeof setTimeout> | null;
-  } = { demoTime: 0, timeout: null };
-  private _demoSpeed = 100;
-  private _autotrack: string = Autotrack.ON;
-  private _consoleIsOpen = false;
 
   private static _instance: FteController | null = null;
 
@@ -70,7 +59,6 @@ export class FteController {
     }
 
     this._module = module;
-    this._lastVolume = this.getVolume();
 
     return this;
   }
@@ -97,24 +85,37 @@ export class FteController {
     return this.module.getClientState();
   }
 
-  getDemoElapsedTime(): number {
+  // last known demo info, the engine returns null until it's available (e.g. while loading)
+  getDemoInfo(): DemoInfo | null {
     try {
-      return this.module.getDemoTime();
+      this._demoInfo = this.getClientState().getDemoInfo() ?? this._demoInfo;
     } catch {
-      return 0;
+      // keep last value
     }
+
+    return this._demoInfo;
   }
 
+  getDemoElapsedTime(): number {
+    return (this.getDemoInfo()?.elapsed_ms ?? 0) / 1000;
+  }
+
+  // from the engine when available, else the database duration
   getDemoDuration(): number {
-    return this._demoDuration;
+    const info = this.getDemoInfo();
+    return info ? info.total_ms / 1000 : this._demoDuration;
   }
 
   setDemoDuration(value: number) {
     this._demoDuration = value;
   }
 
+  // from the engine when available, else the hostname based guess
   getCountdownDuration(): number {
-    return this._countdownDuration;
+    const info = this.getDemoInfo();
+    return info && info.countdown_ms > 0
+      ? info.countdown_ms / 1000
+      : this._countdownDuration;
   }
 
   setCountdownDuration(value: number) {
@@ -125,143 +126,47 @@ export class FteController {
     return this.getDemoElapsedTime() - this.getCountdownDuration();
   }
 
-  getMatchDuration(): number {
-    return this.getDemoDuration() - this.getCountdownDuration();
-  }
-
-  getPlayers(): Player[] {
-    const players: Player[] = [];
-
+  // seconds since the match started (qtv), tracked by the engine. null before the match
+  getStreamMatchElapsedTime(): number | null {
     try {
-      const state = this.getClientState();
-
-      for (let i = 0; i < state.allocated_client_slots; i++) {
-        const player = state.getPlayer(i);
-
-        if (
-          player.spectator !== 0 ||
-          ["", "[ServeMe]"].includes(player.getNamePlain())
-        ) {
-          continue;
-        }
-
-        player.topcolor = getPlayerColor(player.topcolor);
-        player.bottomcolor = getPlayerColor(player.bottomcolor);
-        players.push(player);
-      }
-    } catch {
-      return [];
-    }
-    players.sort((a, b) => a.getNamePlain().localeCompare(b.getNamePlain()));
-    return players;
-  }
-
-  getTeams(): Team[] {
-    const players = this.getPlayers();
-    const teams: Team[] = [];
-
-    for (const player of players) {
-      const team = teams.find(
-        (team) => team.namePlain === player.getTeamPlain(),
-      );
-
-      if (team) {
-        team.players.push(player);
-        team.frags += player.frags;
-      } else {
-        teams.push({
-          name: player.getTeam(),
-          namePlain: player.getTeamPlain(),
-          frags: player.frags,
-          players: [player],
-          topcolor: 0,
-          bottomcolor: 0,
-        });
-      }
-    }
-
-    for (const team of teams) {
-      const { topcolor, bottomcolor } = getPlayersMajorityColor(team.players);
-      team.topcolor = topcolor;
-      team.bottomcolor = bottomcolor;
-    }
-
-    teams.sort((a, b) => a.namePlain.localeCompare(b.namePlain));
-
-    return teams;
-  }
-
-  getTrackedPlayer(): Player | null {
-    try {
-      const seatIndex = 0; // index of screen in splitscreen
-      return this.getClientState().getPlayerView(seatIndex).getTrackedPlayer();
+      const ms = this.getClientState().getMatchElapsed();
+      return ms === null ? null : ms / 1000;
     } catch {
       return null;
     }
   }
 
-  getTrackUserid(): number | null {
-    const tracked_player = this.getTrackedPlayer();
+  getMatchDuration(): number {
+    return this.getDemoDuration() - this.getCountdownDuration();
+  }
 
-    if (tracked_player) {
-      return tracked_player.userid;
+  getParticipants(): Participants {
+    try {
+      return this.module.getParticipants();
+    } catch {
+      return { players: [], teams: [] };
     }
+  }
 
-    return null;
+  getTrackUserid(): number | null {
+    try {
+      const userid = this.module.getTrackedUserid();
+      return userid >= 0 ? userid : null;
+    } catch {
+      return null;
+    }
   }
 
   // demo playback
+  // demo-relative seconds. the engine clamps to the demo length, ignores jumps
+  // shorter than 1 second and keeps speed and tracked player on rewind
   demoJump(demoTime: number) {
-    // clear existing track targets
-    if (this._trackTarget.timeout) {
-      clearTimeout(this._trackTarget.timeout);
+    try {
+      this.module.command("demo_jump", demoTime);
+      this.dispatchEvent("demo_jump", { value: Math.floor(demoTime) });
+    } catch (e) {
+      console.log(`fte command error: ${e}`);
     }
-
-    // clamp demo time
-    const newDemoTime = clamp(
-      Math.floor(demoTime),
-      0,
-      1.1 + this.getDemoDuration(),
-    );
-
-    // skip shorter jumps than 1 second
-    const currentDemoTime = Math.floor(this.getDemoElapsedTime());
-    const delta = Math.abs(newDemoTime - currentDemoTime);
-
-    if (delta < 1) {
-      return;
-    }
-
-    this.command("demo_jump", newDemoTime);
-
-    // restore playback on rewind (speed, track)
-    if (newDemoTime < currentDemoTime) {
-      this._trackTarget = {
-        demoTime,
-        timeout: setInterval(() => this._restorePlayback(), 25),
-      };
-    }
-  }
-
-  _restorePlayback() {
-    const timeDiff = this.getDemoElapsedTime() - this._trackTarget.demoTime;
-    const acceptableDiff = 1;
-
-    if (!this._trackTarget.timeout || timeDiff > acceptableDiff) {
-      return;
-    }
-    // disable new checks
-    clearTimeout(this._trackTarget.timeout);
-
-    // restore track
-    if (this.isUsingAutotrack()) {
-      this.enableAutotrack();
-    } else if (this._lastTrackUserId) {
-      this.track(this._lastTrackUserId);
-    }
-
-    // restore demo speed
-    this.command("demo_setspeed", this._demoSpeed);
   }
 
   seekForward(delta: number) {
@@ -272,20 +177,16 @@ export class FteController {
     this.demoJump(this.getDemoElapsedTime() - delta);
   }
 
-  getDemoSpeed() {
-    return this._demoSpeed;
+  // state is read from the engine: binds and gestures change it without the hub
+
+  // percent (cl_demospeed is a fraction)
+  getDemoSpeed(): number {
+    const speed = Number.parseFloat(this.module.getCvar("cl_demospeed"));
+    return Number.isNaN(speed) ? 0 : Math.round(speed * 100);
   }
 
   setDemoSpeed(speed: number) {
-    if (this._demoSpeed > 0) {
-      this._lastPositiveDemoSpeed = this._demoSpeed;
-    }
-    this._demoSpeed = Number.parseFloat(`${speed}`);
-    this.command("demo_setspeed", this._demoSpeed);
-  }
-
-  play() {
-    this.setDemoSpeed(this._lastPositiveDemoSpeed);
+    this.command("demo_setspeed", speed);
   }
 
   isPlaying() {
@@ -296,85 +197,76 @@ export class FteController {
     return !this.isPlaying();
   }
 
-  pause() {
-    this.setDemoSpeed(0);
+  // the engine restores the last positive speed on resume
+  togglePlay() {
+    this.command("demo_toggle_pause");
   }
 
-  togglePlay() {
-    this.isPlaying() ? this.pause() : this.play();
+  play() {
+    if (this.isPaused()) {
+      this.togglePlay();
+    }
+  }
+
+  pause() {
+    if (this.isPlaying()) {
+      this.togglePlay();
+    }
   }
 
   // track
   getAutotrack(): string {
-    return this._autotrack;
+    try {
+      return this.module.getAutotrackMode();
+    } catch {
+      return Autotrack.OFF;
+    }
   }
 
   isUsingAutotrack() {
-    return this._autotrack === Autotrack.ON;
-  }
-
-  setAutotrack(value: string) {
-    this._autotrack = value;
-    this.command("cl_autotrack", this.getAutotrack());
+    return this.getAutotrack() !== Autotrack.OFF;
   }
 
   enableAutotrack() {
-    this.setAutotrack(Autotrack.ON);
+    this.command("autotrack", Autotrack.ON);
   }
 
+  // the camera stays on the currently tracked player
   disableAutotrack() {
-    this._lastTrackUserId = this.getTrackUserid();
-    this.setAutotrack(Autotrack.OFF);
+    this.command("autotrack", Autotrack.OFF);
   }
 
   toggleAutotrack() {
-    if (this.isUsingAutotrack()) {
-      this.disableAutotrack();
-    } else {
-      this.enableAutotrack();
-    }
+    this.command("autotrack_toggle");
   }
 
-  track(userid: number | string) {
-    if (this.isUsingAutotrack()) {
-      this.disableAutotrack();
+  // userid or player name, also switches autotrack off
+  track(player: number | string) {
+    const userid = Number(player);
+
+    if (`${player}`.trim() !== "" && Number.isInteger(userid)) {
+      this.command("track_userid", userid);
+    } else {
+      this.command("track", `"${`${player}`.replaceAll('"', "")}"`);
     }
-    const userid_ = Number(userid);
-    this._lastTrackUserId = userid_;
-    this.command("track", userid_);
   }
 
   trackNext() {
-    this._trackByDelta(1);
+    this.command("track_next");
   }
 
   trackPrev() {
-    this._trackByDelta(-1);
-  }
-
-  _trackByDelta(delta: 1 | -1) {
-    const current_userid = this.getTrackUserid();
-
-    if (!current_userid) {
-      return;
-    }
-
-    const all_userids = this.getPlayers().map((p) => p.userid);
-    const current_index = all_userids.indexOf(current_userid);
-    const new_index =
-      (current_index + delta + all_userids.length) % all_userids.length;
-    const new_userid = all_userids[new_index];
-    this.track(new_userid);
+    this.command("track_prev");
   }
 
   // volume
   mute() {
-    this._lastVolume = this._volume;
+    this._lastVolume = this.getVolume();
     this.setVolume(0);
   }
 
   isMuted() {
-    return 0 === this._volume;
+    return 0 === this.getVolume();
   }
 
   unmute() {
@@ -393,8 +285,9 @@ export class FteController {
     }
   }
 
-  getVolume() {
-    return this._volume;
+  getVolume(): number {
+    const volume = Number.parseFloat(this.module.getCvar("volume"));
+    return Number.isNaN(volume) ? 0 : volume;
   }
 
   getMaxVolume() {
@@ -403,17 +296,95 @@ export class FteController {
 
   setVolume(value: number | string) {
     this._lastVolume = this.getVolume();
-    this._volume = Number.parseFloat(`${value}`);
-    this.command("volume", this.getVolume());
+    this.command("volume", Number.parseFloat(`${value}`));
   }
 
   // console
   toggleConsole() {
     this.command("toggleconsole");
-    this._consoleIsOpen = !this.isConsoleOpen();
   }
 
-  isConsoleOpen() {
-    return this._consoleIsOpen;
+  isConsoleOpen(): boolean {
+    try {
+      return this.module.isConsoleOpen();
+    } catch {
+      return false;
+    }
   }
+}
+
+if (import.meta.vitest) {
+  const { describe, expect, test } = import.meta.vitest;
+
+  const demoInfo = (info: Partial<DemoInfo>): DemoInfo => ({
+    format: "mvd",
+    elapsed_ms: 0,
+    total_ms: 0,
+    timelimit_ms: 0,
+    countdown_ms: 0,
+    overtime_ms: 0,
+    intermission_ms: 0,
+    pov_user_id: 0,
+    is_single_pov: false,
+    ...info,
+  });
+
+  function controller(getDemoInfo: () => DemoInfo | null) {
+    const module = {
+      getClientState: () => ({ getDemoInfo }),
+    } as unknown as FteModule;
+    const fte = new FteController(module);
+    fte.setDemoDuration(610);
+    fte.setCountdownDuration(15);
+    return fte;
+  }
+
+  describe("demo info", () => {
+    test("no info: fallback values", () => {
+      const fte = controller(() => null);
+      expect(fte.getDemoElapsedTime()).toBe(0);
+      expect(fte.getDemoDuration()).toBe(610);
+      expect(fte.getCountdownDuration()).toBe(15);
+    });
+
+    test("info replaces fallback values", () => {
+      const fte = controller(() =>
+        demoInfo({
+          elapsed_ms: 42_500,
+          total_ms: 1_210_000,
+          countdown_ms: 10_000,
+        }),
+      );
+      expect(fte.getDemoElapsedTime()).toBe(42.5);
+      expect(fte.getDemoDuration()).toBe(1210);
+      expect(fte.getCountdownDuration()).toBe(10);
+      expect(fte.getMatchElapsedTime()).toBe(32.5);
+      expect(fte.getMatchDuration()).toBe(1200);
+    });
+
+    test("no countdown found: fallback countdown", () => {
+      const fte = controller(() => demoInfo({ total_ms: 600_000 }));
+      expect(fte.getCountdownDuration()).toBe(15);
+    });
+
+    test("keeps last value when the engine returns null", () => {
+      let info: DemoInfo | null = demoInfo({
+        elapsed_ms: 5000,
+        total_ms: 9000,
+      });
+      const fte = controller(() => info);
+      expect(fte.getDemoElapsedTime()).toBe(5);
+      info = null;
+      expect(fte.getDemoElapsedTime()).toBe(5);
+      expect(fte.getDemoDuration()).toBe(9);
+    });
+
+    test("engine error: fallback values", () => {
+      const fte = controller(() => {
+        throw new Error("not loaded");
+      });
+      expect(fte.getDemoElapsedTime()).toBe(0);
+      expect(fte.getDemoDuration()).toBe(610);
+    });
+  });
 }

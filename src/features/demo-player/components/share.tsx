@@ -158,9 +158,9 @@ export const ShareDemoButton = () => {
                 onChange={handleTrackChange}
               >
                 <option value="auto">Autotrack</option>
-                {fte.getPlayers().map((player) => (
+                {fte.getParticipants().players.map((player) => (
                   <option key={player.userid} value={player.userid}>
-                    {player.getNamePlain()}
+                    {player.name_ascii}
                   </option>
                 ))}
               </select>

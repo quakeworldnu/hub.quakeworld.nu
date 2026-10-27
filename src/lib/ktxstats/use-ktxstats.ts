@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useInterval } from "usehooks-ts";
+import { useFteController } from "@/lib/fte/hooks";
 import { type KtxstatsV3E, toKtxstatsV3Enhanced } from "./ktxstats-v3-enhanced";
 
 const CLOUDFRONT_URL = "https://d.quake.world";
@@ -13,6 +15,30 @@ export function useKtxstats(sha256: string): KtxstatsV3E | null | undefined {
 
     init();
   }, []);
+
+  return stats;
+}
+
+// stats embedded in the demo playing in fte. undefined until the engine's demo scan is done
+export function useFteKtxstats(): KtxstatsV3E | null | undefined {
+  const fte = useFteController();
+  const [stats, setStats] = useState<KtxstatsV3E | null | undefined>(undefined);
+
+  useInterval(
+    () => {
+      if (!fte?.getDemoInfo()) {
+        return;
+      }
+
+      try {
+        const json = fte.module.getKtxStats();
+        setStats(json ? toKtxstatsV3Enhanced(json) : null);
+      } catch {
+        setStats(null);
+      }
+    },
+    stats === undefined ? 500 : null,
+  );
 
   return stats;
 }

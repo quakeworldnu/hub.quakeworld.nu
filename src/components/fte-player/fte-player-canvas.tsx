@@ -1,17 +1,8 @@
-import { type MouseEvent, useRef } from "react";
-import { useSwipeable } from "react-swipeable";
-import { useDoubleTap } from "use-double-tap";
-import { useLongPress } from "use-long-press";
-import { useEventListener } from "usehooks-ts";
+import { useEffect, useRef } from "react";
+import { useEventListener, useResizeObserver } from "usehooks-ts";
 import { useMouseIdle } from "@/hooks/use-mouse-idle";
-import { useVisibilityChange } from "@/hooks/use-visibility-change";
 import { useWakeLock } from "@/hooks/use-wake-lock";
-import { useFteController } from "@/lib/fte/hooks";
-import { toggleFullscreen } from "@/utils/fullscreen";
-
-export type Config = {
-  preset: "demoPlayer" | "qtvPlayer";
-};
+import { exitFullWindow } from "@/utils/fullscreen";
 
 declare global {
   interface WindowEventMap {
@@ -20,16 +11,7 @@ declare global {
   }
 }
 
-export const FtePlayerCanvas = ({
-  config,
-  onControlKey,
-}: {
-  config: Config;
-  onControlKey?: () => void;
-}) => {
-  const fte = useFteController();
-  const documentRef = useRef<Document>(document);
-
+export const FtePlayerCanvas = () => {
   // pointer events
   useMouseIdle({
     elementId: "ftePlayer",
@@ -38,133 +20,51 @@ export const FtePlayerCanvas = ({
     onActive: () => dispatchEvent(new Event("fteplayer.mouse.active")),
   });
 
-  // recheck pip
-  useVisibilityChange((state: DocumentVisibilityState) => {
-    if (state === "visible") {
-      fte?.command("pip recheck");
-    }
-  });
-
   // prevent screen idle
   useWakeLock();
 
-  // keyboard events
-  useEventListener(
-    "keydown",
-    (e: KeyboardEvent) => {
-      if (!fte || fte.isConsoleOpen()) {
-        return;
-      }
+  // never leave the page clipped by full-window mode
+  useEffect(() => exitFullWindow, []);
 
-      switch (e.key) {
-        case "Tab":
-          e.preventDefault();
-          return fte.command("+showscores");
-        case "Control":
-          e.preventDefault();
-          return onControlKey?.();
-        default:
-          break;
-      }
-    },
-    documentRef,
-  );
-
-  useEventListener("keyup", (e: KeyboardEvent) => {
-    if (!fte) {
-      return;
-    }
-
-    if (!fte.isConsoleOpen()) {
-      switch (e.code) {
-        case "Space":
-          e.preventDefault();
-          return fte.trackNext();
-        case "ControlLeft":
-          e.preventDefault();
-
-          if (config.preset === "demoPlayer") {
-            fte.togglePlay();
-          }
-          break;
-        case "Tab":
-          return fte.command("-showscores");
-        default:
-          break;
-      }
-    }
-
-    if (["Backquote"].includes(e.code)) {
-      e.preventDefault();
-      return fte.toggleConsole();
-    }
+  // fte resizes its framebuffer on window "resize" only: forward any canvas size
+  // change (layout, sidebar, fullscreen, window)
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  useResizeObserver({
+    ref: canvasRef as React.RefObject<HTMLCanvasElement>,
+    onResize: () => window.dispatchEvent(new Event("resize")),
   });
 
-  // pointer events
-  function onDoubleTap(e: MouseEvent<HTMLCanvasElement>) {
-    if (config.preset === "qtvPlayer") {
-      toggleFullscreen("ftePlayer");
-      return;
-    }
-
-    const { x } = relativeEventPositionInPercent(e);
-    const threshold = 25;
-
-    if (x < threshold) {
-      fte?.seekBackward(10);
-    } else if (x > 100 - threshold) {
-      fte?.seekForward(10);
-    } else {
-      toggleFullscreen("ftePlayer");
+  // keyboard events
+  // typing in page inputs (e.g. settings): stop before fte's document capture
+  // listeners, which would preventDefault and run engine binds. default action still applies
+  function stopFromEditable(e: KeyboardEvent) {
+    if (isEditable(e.target)) {
+      e.stopPropagation();
     }
   }
 
-  const dblTap = useDoubleTap(onDoubleTap, 300, {
-    onSingleTap: () => {
-      if (config.preset === "demoPlayer") {
-        fte?.togglePlay();
-      }
-    },
-  });
+  useEventListener("keydown", stopFromEditable, undefined, true);
+  useEventListener("keypress", stopFromEditable, undefined, true);
+  useEventListener("keyup", stopFromEditable, undefined, true);
 
-  const longPress = useLongPress(() => fte?.command("+showscores"), {
-    onFinish: () => fte?.command("-showscores"),
-  });
-
-  const swipe = useSwipeable({
-    onSwipedLeft: () => fte?.trackPrev(),
-    onSwipedRight: () => fte?.trackNext(),
-    trackMouse: true,
-    swipeDuration: 500,
-    preventScrollOnSwipe: true,
-  });
+  // shortcuts (tab, space, ctrl, console) are engine binds, see public/assets/fte/config_*.cfg
 
   return (
+    // pointer input (player info, minimap, aim, gestures) is handled by the engine
     <div id="fteContainer">
-      <div
-        id="fteEventCapture"
-        className={"absolute z-10 w-full h-full"}
-        {...dblTap}
-        {...swipe}
-        {...longPress()}
-      />
       <canvas
         id="fteCanvas"
-        className={"absolute w-full h-full pointer-events-none"}
+        ref={canvasRef}
+        className={"absolute w-full h-full"}
       />
     </div>
   );
 };
 
-function relativeEventPositionInPercent(e: MouseEvent<HTMLCanvasElement>): {
-  x: number;
-  y: number;
-} {
-  const targetElementWidth = (e.target as HTMLCanvasElement).clientWidth;
-  const targetElementHeight = (e.target as HTMLCanvasElement).clientHeight;
-
-  return {
-    x: Math.round((100 * e.clientX) / targetElementWidth),
-    y: Math.round((100 * e.clientY) / targetElementHeight),
-  };
+function isEditable(target: EventTarget | null): boolean {
+  return (
+    target instanceof HTMLElement &&
+    (target.isContentEditable ||
+      ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName))
+  );
 }

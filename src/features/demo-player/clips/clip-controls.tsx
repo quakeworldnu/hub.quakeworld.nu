@@ -5,10 +5,12 @@ import {
   faScissors,
 } from "@fortawesome/free-solid-svg-icons";
 import clsx from "clsx";
+import { useRef } from "react";
+import { useInterval } from "usehooks-ts";
 import { FontAwesomeIcon } from "@/components/ui/icon";
 import { btnPrimary, sizeSmall } from "@/components/ui/theme";
 import { toast } from "@/components/ui/toast";
-import { useFteController, useFteEvent } from "@/lib/fte/hooks";
+import { useFteController } from "@/lib/fte/hooks";
 import { clamp } from "@/utils/math";
 import { formatElapsed } from "@/utils/time";
 import { useClipEditor } from "./clip-editor";
@@ -17,17 +19,22 @@ import { DisableClipEditorButton } from "./clips";
 
 export const ClipControls = () => {
   const { setTrack } = useClipEditor();
+  const fte = useFteController();
+  const lastTrack = useRef<number | string | null>(null);
 
-  useFteEvent("cl_autotrack", (e) => {
-    if (e.detail.value === "stats") {
-      setTrack("auto");
+  // follow the engine camera (hub controls, binds, gestures, player info clicks)
+  useInterval(() => {
+    if (!fte) {
+      return;
     }
-  });
 
-  useFteEvent("track", (e) => {
-    // track is a player userid (or a clip track)
-    setTrack(e.detail.value as number);
-  });
+    const track = fte.isUsingAutotrack() ? "auto" : fte.getTrackUserid();
+
+    if (track !== null && track !== lastTrack.current) {
+      lastTrack.current = track;
+      setTrack(track);
+    }
+  }, 250);
 
   return (
     <div className="px-4 py-px bg-slate-800 rounded-xl">

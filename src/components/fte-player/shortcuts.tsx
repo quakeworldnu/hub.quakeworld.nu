@@ -111,17 +111,6 @@ const commonShortcuts: ShortCutPreset = {
   ],
 };
 
-const qtvPlayerShortcuts: ShortCutPreset = {
-  keyboard: [
-    ...commonShortcuts.keyboard,
-    {
-      keys: ["CTRL"],
-      description: "Toggle server selector",
-    },
-  ],
-  pointer: commonShortcuts.pointer,
-};
-
 const demoPlayerShortcuts: ShortCutPreset = {
   keyboard: [
     {
@@ -187,5 +176,5 @@ const demoPlayerShortcuts: ShortCutPreset = {
 
 export const presets = {
   demoPlayer: demoPlayerShortcuts,
-  qtvPlayer: qtvPlayerShortcuts,
+  qtvPlayer: commonShortcuts,
 };

@@ -2,15 +2,15 @@ import clsx from "clsx";
 import { QuakeTextFromBytes } from "@/components/ui/quake-text-bytes";
 import { useUpdateInterval } from "@/hooks/use-update-interval";
 import { useFteController } from "@/lib/fte/hooks";
-import type { Player } from "@/lib/fte/types";
 
-export type Participant = {
-  name: Uint8Array;
+type Side = {
+  name_bytes: Uint8Array;
   frags: number;
-  topcolor: number;
-  bottomcolor: number;
+  top_color: number;
+  bottom_color: number;
 };
 
+// two sides: teams, else a 1on1
 export function Participants() {
   const fte = useFteController();
   useUpdateInterval(250);
@@ -19,41 +19,27 @@ export function Participants() {
     return null;
   }
 
-  let participants: Participant[];
-  const state = fte.getClientState();
+  const { players, teams } = fte.getParticipants();
+  const sides: Side[] =
+    teams.length === 2 ? teams : players.length === 2 ? players : [];
 
-  if (state.teamplay > 0) {
-    participants = fte.getTeams();
-  } else {
-    participants = fte.getPlayers().map(playerToParticipant);
-  }
-
-  if (participants.length !== 2) {
+  if (sides.length !== 2) {
     return null;
   }
 
   return (
     <div className="flex items-center font-bold app-text-shadow">
-      <Participant participant={participants[0]} index={0} />
-      <Participant participant={participants[1]} index={1} />
+      <Participant participant={sides[0]} index={0} />
+      <Participant participant={sides[1]} index={1} />
     </div>
   );
-}
-
-function playerToParticipant(player: Player): Participant {
-  return {
-    name: player.getName(),
-    frags: player.frags,
-    topcolor: player.topcolor,
-    bottomcolor: player.bottomcolor,
-  };
 }
 
 const Participant = ({
   participant,
   index,
 }: {
-  participant: Participant;
+  participant: Side;
   index: number;
 }) => {
   const isFirst = index % 2 === 0;
@@ -67,12 +53,12 @@ const Participant = ({
             "rounded-r pr-2.5": !isFirst,
           })}
         >
-          <QuakeTextFromBytes name={participant.name} />
+          <QuakeTextFromBytes name={participant.name_bytes} />
         </div>
       </div>
       <div
         className={clsx(
-          `qw-bgcolor qw-bgcolor-top-${participant.topcolor} qw-bgcolor-bottom-${participant.bottomcolor} w-12 max-w-12 text-center text-lg rounded`,
+          `qw-bgcolor qw-bgcolor-top-${participant.top_color} qw-bgcolor-bottom-${participant.bottom_color} w-12 max-w-12 text-center text-lg rounded`,
           {
             "border-r border-gray-800": isFirst,
           },

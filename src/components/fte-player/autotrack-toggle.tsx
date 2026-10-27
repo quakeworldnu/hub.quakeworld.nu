@@ -3,7 +3,7 @@ import { useFteController, useFteUpdateOnEvent } from "@/lib/fte/hooks";
 
 export const AutotrackToggle = () => {
   const fte = useFteController();
-  useFteUpdateOnEvent("cl_autotrack");
+  useFteUpdateOnEvent("autotrack");
 
   function handleClick() {
     fte?.toggleAutotrack();

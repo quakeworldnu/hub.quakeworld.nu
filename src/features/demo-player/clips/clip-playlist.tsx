@@ -122,15 +122,8 @@ function jumpToClip(fte: FteController, clip: Clip) {
       return;
     }
 
-    const userid = getTrackUserid(fte, clip.track);
-
-    if (userid !== null) {
-      fte.track(userid);
-    } else {
-      // unknown name: let fte resolve it
-      fte.disableAutotrack();
-      fte.command("track", clip.track);
-    }
+    // unknown name: let fte resolve it
+    fte.track(getTrackUserid(fte, clip.track) ?? clip.track);
   }
 
   // set track before jumping, a rewind restores the last track when done
@@ -150,8 +143,8 @@ function getTrackUserid(
 
   const name = track.toLowerCase();
   const player = fte
-    .getPlayers()
-    .find((p) => p.getNamePlain().toLowerCase() === name);
+    .getParticipants()
+    .players.find((p) => p.name_ascii.toLowerCase() === name);
 
   return player ? player.userid : null;
 }
