@@ -101,7 +101,11 @@ export function QtvPlayerSidebar() {
               <FontAwesomeIcon icon={faAnglesLeft} />
             </button>
           </div>
-          <div className="space-y-1 flex-1 min-h-0 overflow-y-auto">
+          <div
+            className={clsx("flex-1 min-h-0 overflow-y-auto", {
+              "space-y-1": displayMode === "brief",
+            })}
+          >
             {servers.map((server) => (
               <ServerLink
                 key={server.address}
@@ -181,7 +185,10 @@ const ServerLink = ({
   return (
     <a
       href={`/qtv/?address=${server.address}`}
-      className="block hover:bg-[#242434] aria-[current=true]:border-l-3 border-sky-600 aria-[current=true]:bg-[#242434] text-sm"
+      className={clsx(
+        "block hover:bg-[#242434] aria-[current=true]:border-l-3 border-l-sky-600 aria-[current=true]:bg-[#242434] text-sm",
+        { "not-last:border-b border-b-[#334]": isDetailed },
+      )}
       aria-current={isSelected ? "true" : undefined}
       onClick={(e) => {
         e.preventDefault();
