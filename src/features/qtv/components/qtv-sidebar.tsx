@@ -168,6 +168,15 @@ const ServerLink = ({
   const cc = countryCode(server);
   const isQwleague = isQwleagueHostname(server.info.hostname);
   const showBanner = isDetailed && isQwleague;
+  const spectators = spectatorCount > 0 && (
+    <>
+      <DotDelimiter />
+      <span title={`${spectatorCount} spectators`}>
+        <span className="inline-block h-1.5 w-1.5 rounded-full bg-red-600 mr-1 mb-px" />
+        {spectatorCount}
+      </span>
+    </>
+  );
 
   return (
     <a
@@ -226,23 +235,24 @@ const ServerLink = ({
             )}
             {server.info.map} <DotDelimiter />
             {server.info.status}
-            {spectatorCount > 0 && (
-              <>
-                <DotDelimiter />
-                <span title={`${spectatorCount} spectators`}>
-                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-red-600 mr-1 mb-px" />
-                  {spectatorCount}
-                </span>
-              </>
-            )}
+            {isDetailed && spectators}
             {matchtag && !showBanner && (
               <>
                 <DotDelimiter />
+                {isQwleague && (
+                  <img
+                    src="/assets/img/qwleague_logo.svg"
+                    alt="qwleague"
+                    title="QWLeague"
+                    className="h-3.5 w-auto mr-1"
+                  />
+                )}
                 <span className="uppercase font-bold bg-linear-to-b from-pink-400 to-pink-600 bg-clip-text text-transparent">
                   {matchtag}
                 </span>
               </>
             )}
+            {!isDetailed && spectators}
           </span>
         </div>
       </div>
