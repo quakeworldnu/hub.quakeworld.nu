@@ -105,7 +105,7 @@ const DemoPlayer = ({
         </div>
       </div>
       {fte && (
-        <div className={"absolute z-30 bottom-0 w-full"}>
+        <div id="ftePlayerControls" className={"absolute z-30 bottom-0 w-full"}>
           <FteDemoPlayerControls />
         </div>
       )}

@@ -15,7 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import clsx from "clsx";
 import { type ReactNode, useEffect, useRef, useState } from "react";
-import { useBoolean, useEventListener } from "usehooks-ts";
+import { useBoolean, useEventListener, useResizeObserver } from "usehooks-ts";
 import { FontAwesomeIcon } from "@/components/ui/icon";
 import { Switch } from "@/components/ui/switch";
 import { getAssetUrl } from "@/lib/cloudfront/assets";
@@ -86,6 +86,15 @@ type SetSetting = <K extends keyof Settings>(
 ) => void;
 
 const SettingsPanel = ({ fte }: { fte: FteController }) => {
+  // end above the player controls bar (its height differs per player and wraps)
+  const controlsRef = useRef<HTMLElement>(
+    document.getElementById("ftePlayerControls"),
+  );
+  const { height: controlsHeight = 0 } = useResizeObserver({
+    ref: controlsRef as React.RefObject<HTMLElement>,
+    box: "border-box",
+  });
+
   // synced from the engine each time the panel opens
   const [settings, setSettings] = useState<Settings>(() =>
     readSettings(fte.module),
@@ -102,7 +111,10 @@ const SettingsPanel = ({ fte }: { fte: FteController }) => {
   }
 
   return (
-    <div className="absolute z-40 inset-y-0 right-0 w-md max-w-full flex flex-col bg-slate-900/95 text-sm">
+    <div
+      className="absolute z-40 top-0 right-0 w-md max-w-full flex flex-col bg-slate-900/95 text-sm"
+      style={{ bottom: controlsHeight }}
+    >
       <div className="flex h-12 px-4 shrink-0 items-center justify-between border-b border-white/10">
         <div className="text-slate-300 text-lg flex items-center gap-2">
           <FontAwesomeIcon icon={faGear} /> Settings

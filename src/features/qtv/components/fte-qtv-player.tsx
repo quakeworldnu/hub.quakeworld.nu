@@ -89,7 +89,7 @@ export function FteQtvPlayer({ mapName }: { mapName: string }) {
       </div>
 
       {fte && (
-        <div className={"absolute z-30 bottom-0 w-full"}>
+        <div id="ftePlayerControls" className={"absolute z-30 bottom-0 w-full"}>
           <FteQtvPlayerControls />
         </div>
       )}
