@@ -40,6 +40,14 @@ export function useFteLoader({
   const [isEngineReady, setIsEngineReady] = useState(false);
 
   useEffect(() => {
+    // a config saved by `cfg_save` (fte.cfg) runs after the hub config and overrides it
+    // (e.g. stale cl_download_mapsrc). the hub persists its settings in hub_settings.cfg
+    try {
+      localStorage.removeItem("id1/fte.cfg");
+    } catch {
+      // storage unavailable
+    }
+
     const manifestUrl = getAssetUrl("fte/default.fmf");
     window.Module = {
       canvas: document.getElementById("fteCanvas") as HTMLCanvasElement,
