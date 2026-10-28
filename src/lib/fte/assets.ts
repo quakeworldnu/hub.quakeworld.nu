@@ -13,7 +13,7 @@ export function getFteBuildUrl(file: "ftewebgl.js" | "csaddon.dat"): string {
 export function getQtvPlayerAssets(mapName: string): FteAssets {
   return {
     ...getGeneralAssets(),
-    [`id1/maps/${mapName}.bsp`]: `https://assets.quake.world/maps/${mapName}.bsp.gz`,
+    [`id1/maps/${mapName}.bsp`]: getMapUrl(mapName),
   };
 }
 
@@ -24,8 +24,67 @@ export function getDemoPlayerAssets(
   return {
     ...getGeneralAssets(),
     "qw/match.mvd.gz": demoUrl,
-    [`id1/maps/${mapName}.bsp`]: `https://assets.quake.world/maps/${mapName}.bsp.gz`,
+    [`id1/maps/${mapName}.bsp`]: getMapUrl(mapName),
   };
+}
+
+// maps whose lit ships separately (legacy maps + GPL id levels), served as
+// packaged/<map>.bsp.gz with lit and loc appended. same list as fte's hub_packaged_maps
+const PACKAGED_MAPS: ReadonlySet<string> = new Set([
+  "aerowalk",
+  "bravado",
+  "ctf2m1",
+  "ctf2m2",
+  "ctf5",
+  "ctf8",
+  "endif",
+  "povdmm4",
+  "schloss",
+  "shifter",
+  "ztndm3",
+  "dm1",
+  "dm2",
+  "dm3",
+  "dm4",
+  "dm5",
+  "dm6",
+  "e1m1",
+  "e1m2",
+  "e1m3",
+  "e1m4",
+  "e1m5",
+  "e1m6",
+  "e1m7",
+  "e1m8",
+  "e2m1",
+  "e2m2",
+  "e2m3",
+  "e2m4",
+  "e2m5",
+  "e2m6",
+  "e2m7",
+  "e3m1",
+  "e3m2",
+  "e3m3",
+  "e3m4",
+  "e3m5",
+  "e3m6",
+  "e3m7",
+  "e4m1",
+  "e4m2",
+  "e4m3",
+  "e4m4",
+  "e4m5",
+  "e4m6",
+  "e4m7",
+  "e4m8",
+  "start",
+  "end",
+]);
+
+function getMapUrl(mapName: string): string {
+  const dir = PACKAGED_MAPS.has(mapName) ? "maps/packaged" : "maps";
+  return `https://assets.quake.world/${dir}/${mapName}.bsp.gz`;
 }
 
 export function getGeneralAssets(): FteAssets {
