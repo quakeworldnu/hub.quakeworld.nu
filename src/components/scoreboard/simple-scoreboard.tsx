@@ -12,6 +12,8 @@ type Participant = {
   bot?: Bot | null;
 };
 
+const FFA_PLAYER_LIMIT = 10;
+
 // compact scoreboard: teams side by side, 1on1 players side by side, otherwise a single list
 export const SimpleScoreboard = ({
   players = [],
@@ -42,6 +44,7 @@ const Scores = ({
 }) => {
   const showTeams = 2 === teams.length;
   let playerGroups: Player[][];
+  let hiddenPlayerCount = 0;
 
   if (showTeams) {
     playerGroups = pipe(
@@ -56,6 +59,12 @@ const Scores = ({
       groupBy((p) => p.name.ascii),
       values(),
     );
+  } else if ("ffa" === mode) {
+    // top fraggers only. a single hidden player takes the same space as "+1 players"
+    const limit =
+      players.length > FFA_PLAYER_LIMIT + 1 ? FFA_PLAYER_LIMIT : players.length;
+    playerGroups = [sortBy(players, [(p) => p.frags, "desc"]).slice(0, limit)];
+    hiddenPlayerCount = players.length - limit;
   } else {
     playerGroups = [players];
   }
@@ -88,6 +97,11 @@ const Scores = ({
               isEven={index % 2 === 0 && isTwoColumns}
             />
           ))}
+          {hiddenPlayerCount > 0 && (
+            <div className="mt-1 text-xs text-center text-slate-400">
+              +{hiddenPlayerCount} players
+            </div>
+          )}
         </div>
       ))}
     </div>
