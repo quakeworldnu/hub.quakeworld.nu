@@ -4,7 +4,7 @@ import type { FteAssets } from "./types";
 // fte build (vikpe/fteqw ci artifacts: engine + hub addon), one <date>-<shorthash> dir per build.
 // older builds stay in place for cached/third-party versions of the hub
 const FTE_BUILD_URL =
-  "https://assets.quake.world/qworld/fte/2026-10-28-e684293";
+  "https://assets.quake.world/qworld/fte/2026-10-28-8dd3bd8";
 
 export function getFteBuildUrl(file: "ftewebgl.js" | "csaddon.dat"): string {
   return `${FTE_BUILD_URL}/${file}`;
