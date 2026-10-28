@@ -2,6 +2,12 @@ import clsx from "clsx";
 import type { ReactNode } from "react";
 import { useBoolean } from "usehooks-ts";
 import { useFteEvent } from "@/lib/fte/hooks";
+import { roundFloat } from "@/utils/math";
+
+// designed for a 1400px wide player, floored so the text stays legible on phones
+export function getBannerScale(playerWidth: number): number {
+  return Math.max(0.6, roundFloat(playerWidth / 1400, 2));
+}
 
 export const ResponsiveTopBanner = ({
   scale,

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-// idle after `timeout` ms without mouse movement over the element (or document)
+// idle after `timeout` ms without mouse movement or pointer presses (touch taps) over the element (or document)
 export function useMouseIdle({
   elementId,
   timeout,
@@ -44,10 +44,13 @@ export function useMouseIdle({
       timer = window.setTimeout(setIdle, timeout);
     }
 
+    // capture: the engine canvas handles (and may stop) pointer events
     target.addEventListener("mousemove", handleMove);
+    target.addEventListener("pointerdown", handleMove, true);
     return () => {
       window.clearTimeout(timer);
       target.removeEventListener("mousemove", handleMove);
+      target.removeEventListener("pointerdown", handleMove, true);
     };
   }, [elementId, timeout]);
 }

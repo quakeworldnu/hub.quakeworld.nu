@@ -111,9 +111,12 @@ const SettingsPanel = ({ fte }: { fte: FteController }) => {
   }
 
   return (
+    // phones: full-screen overlay, the player is too small to host a sidebar
     <div
-      className="absolute z-40 top-0 right-0 w-md max-w-full flex flex-col bg-slate-900/95 text-sm"
-      style={{ bottom: controlsHeight }}
+      className="fixed inset-0 z-50 sm:absolute sm:inset-auto sm:z-40 sm:top-0 sm:right-0 sm:bottom-(--controls-height) sm:w-md sm:max-w-full flex flex-col bg-slate-900/95 text-sm"
+      style={
+        { "--controls-height": `${controlsHeight}px` } as React.CSSProperties
+      }
     >
       <div className="flex h-12 px-4 shrink-0 items-center justify-between border-b border-white/10">
         <div className="text-slate-300 text-lg flex items-center gap-2">

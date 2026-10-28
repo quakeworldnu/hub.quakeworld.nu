@@ -25,7 +25,7 @@ export const VolumeSlider = ({
   return (
     <input
       type="range"
-      className={clsx({ grayscale: isMuted }, "h-10 w-14 sm:w-24 mr-2")}
+      className={clsx({ grayscale: isMuted }, "hidden sm:block h-10 w-24 mr-2")}
       min={0}
       max={maxVolume}
       step={stepSize}

@@ -20,6 +20,8 @@ import { SeekToStartButton } from "./seek-to-start-button";
 import { SlowmotionToggle } from "./slowmotion-toggle";
 import { TimeSlider } from "./time-slider";
 
+// single row at every width: phones (below sm) get the essentials, keyboard/power-user
+// toggles (minimap, console, slowmotion) wait for lg
 export const FteDemoPlayerControls = () => {
   const { isEnabled: showClipEditor } = useClipEditor();
   const {
@@ -49,27 +51,35 @@ export const FteDemoPlayerControls = () => {
         <DemoPlayerGameDuration />
       </div>
 
-      <div className="hidden sm:flex gap-x-1 mb-2 relative">
-        <SeekToStartButton />
+      <div className="flex gap-x-1 sm:mb-2 relative">
+        <div className="hidden sm:block">
+          <SeekToStartButton />
+        </div>
         <PlayToggle />
-        <SeekToEndButton />
+        <div className="hidden sm:block">
+          <SeekToEndButton />
+        </div>
         {/* positioned outside the flow to keep the playback buttons centered */}
         <div className="absolute left-full top-0 h-10 hidden xl:flex items-center whitespace-nowrap">
           <AutoplayToggle />
         </div>
       </div>
 
-      <div className="sm:flex sm:flex-wrap sm:justify-end sm:justify-self-end gap-x-1">
-        <AutotrackToggle />
-        <MinimapToggle />
-        <ConsoleToggle />
+      <div className="flex flex-wrap justify-end sm:justify-self-end gap-x-1">
         <div className="hidden sm:block">
+          <AutotrackToggle />
+        </div>
+        <div className="hidden lg:block">
+          <MinimapToggle />
+        </div>
+        <div className="hidden lg:block">
+          <ConsoleToggle />
+        </div>
+        <div className="hidden lg:block">
           <SlowmotionToggle />
         </div>
         <SettingsToggle />
-        <div className="hidden sm:block">
-          <FullWindowToggle />
-        </div>
+        <FullWindowToggle />
         <div className="hidden sm:block">
           <FullscreenToggle />
         </div>

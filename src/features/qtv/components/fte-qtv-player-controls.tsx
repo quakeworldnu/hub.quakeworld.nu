@@ -35,13 +35,15 @@ export function FteQtvPlayerControls() {
 
       <div className="flex items-center gap-x-2">
         <AutotrackToggle />
-        <MinimapToggle />
-        <ConsoleToggle />
-        <SettingsToggle />
-
-        <div className="hidden sm:block">
-          <FullWindowToggle />
+        <div className="hidden lg:block">
+          <MinimapToggle />
         </div>
+        {/* the console needs a keyboard */}
+        <div className="hidden lg:block">
+          <ConsoleToggle />
+        </div>
+        <SettingsToggle />
+        <FullWindowToggle />
         <div className="hidden sm:block">
           <FullscreenToggle />
         </div>

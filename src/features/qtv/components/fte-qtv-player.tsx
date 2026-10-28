@@ -5,7 +5,10 @@ import { FtePlayerCanvas } from "@/components/fte-player/fte-player-canvas";
 import { GameClock } from "@/components/fte-player/game-clock";
 import { Participants } from "@/components/fte-player/participants";
 import { FteSettings } from "@/components/fte-player/settings";
-import { ResponsiveTopBanner } from "@/components/fte-player/top-banner";
+import {
+  getBannerScale,
+  ResponsiveTopBanner,
+} from "@/components/fte-player/top-banner";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { QtvEvent } from "@/features/qtv/events";
 import { useElementWidth } from "@/hooks/use-element-width";
@@ -13,7 +16,6 @@ import { useUpdateInterval } from "@/hooks/use-update-interval";
 import { getFteBuildUrl, getQtvPlayerAssets } from "@/lib/fte/assets";
 import { FteController } from "@/lib/fte/fte-controller";
 import { useFteController, useFteLoader } from "@/lib/fte/hooks";
-import { roundFloat } from "@/utils/math";
 import { FteQtvPlayerControls } from "./fte-qtv-player-controls";
 
 export function FteQtvPlayer({ mapName }: { mapName: string }) {
@@ -47,8 +49,7 @@ export function FteQtvPlayer({ mapName }: { mapName: string }) {
 
   const playerRef = useRef<HTMLDivElement>(null);
   const width = useElementWidth(playerRef);
-  const defaultWidth = 1400;
-  const scale = roundFloat((width ?? 0) / defaultWidth, 2);
+  const scale = getBannerScale(width ?? 0);
 
   return (
     <div

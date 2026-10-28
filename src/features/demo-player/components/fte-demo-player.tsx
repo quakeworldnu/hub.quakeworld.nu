@@ -4,7 +4,10 @@ import { FtePlayerCanvas } from "@/components/fte-player/fte-player-canvas";
 import { GameClock } from "@/components/fte-player/game-clock";
 import { Participants } from "@/components/fte-player/participants";
 import { FteSettings } from "@/components/fte-player/settings";
-import { ResponsiveTopBanner } from "@/components/fte-player/top-banner";
+import {
+  getBannerScale,
+  ResponsiveTopBanner,
+} from "@/components/fte-player/top-banner";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { ClipPlaylistProvider } from "@/features/demo-player/clips/clip-playlist";
 import { useClipPlayback } from "@/features/demo-player/clips/use-clip-playback";
@@ -15,7 +18,6 @@ import type { DemoInfo } from "@/lib/cloudfront/types";
 import { getDemoPlayerAssets, getFteBuildUrl } from "@/lib/fte/assets";
 import { useFteController, useFteLoader } from "@/lib/fte/hooks";
 import { getMapshotCssUrl } from "@/utils/mapshots";
-import { roundFloat } from "@/utils/math";
 import { FteDemoPlayerControls } from "./fte-demo-player-controls";
 
 type FteDemoPlayerProps = {
@@ -53,14 +55,14 @@ const DemoPlayer = ({
 
   const playerRef = useRef<HTMLDivElement>(null);
   const width = useElementWidth(playerRef);
-  const defaultWidth = 1400;
-  const scale = roundFloat((width ?? 0) / defaultWidth, 2);
+  const scale = getBannerScale(width ?? 0);
 
   return (
     <div
       id="ftePlayer"
+      // max-h: landscape phones, keep the controls reachable without scrolling
       className={clsx("relative w-full h-full bg-black", {
-        "aspect-video": aspectRatio === "video",
+        "aspect-video max-h-dvh": aspectRatio === "video",
       })}
       ref={playerRef}
     >
