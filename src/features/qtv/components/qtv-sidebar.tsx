@@ -6,7 +6,7 @@ import {
   faSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import clsx from "clsx";
-import { type ReactNode, useState } from "react";
+import { Fragment, type ReactNode, useState } from "react";
 import { useEventListener, useLocalStorage, useMediaQuery } from "usehooks-ts";
 import { QWLeagueBanner } from "@/components/scoreboard/qwleague-banner";
 import { SimpleScoreboard } from "@/components/scoreboard/simple-scoreboard";
@@ -173,11 +173,23 @@ const ServerLink = ({
   const isQwleague = isQwleagueHostname(server.info.hostname);
   const showBanner = isDetailed && isQwleague;
   const spectators = spectatorCount > 0 && (
+    <span title={`${spectatorCount} spectators`}>
+      <span className="inline-block h-1.5 w-1.5 rounded-full bg-red-600 mr-1 mb-px" />
+      {spectatorCount}
+    </span>
+  );
+  const matchtagLabel = matchtag && !showBanner && (
     <>
-      <DotDelimiter />
-      <span title={`${spectatorCount} spectators`}>
-        <span className="inline-block h-1.5 w-1.5 rounded-full bg-red-600 mr-1 mb-px" />
-        {spectatorCount}
+      {isQwleague && (
+        <img
+          src="/assets/img/qwleague_logo.svg"
+          alt="qwleague"
+          title="QWLeague"
+          className="h-3.5 w-auto mr-1"
+        />
+      )}
+      <span className="uppercase font-bold bg-linear-to-b from-pink-400 to-pink-600 bg-clip-text text-transparent">
+        {matchtag}
       </span>
     </>
   );
@@ -230,42 +242,51 @@ const ServerLink = ({
         )}
         <div className={clsx("text-xs", { "text-center mt-2": isDetailed })}>
           <span className="inline-flex items-center text-slate-400">
-            {mode && (
-              <>
-                {mode} <DotDelimiter />
-              </>
+            {isDetailed ? (
+              <DotDelimited
+                items={[
+                  mode,
+                  server.info.map,
+                  server.info.status,
+                  spectators,
+                  matchtagLabel,
+                ]}
+              />
+            ) : (
+              <DotDelimited
+                items={[
+                  mode,
+                  `${server.players.length}/${server.player_limit}`,
+                  server.info.map,
+                  server.info.status,
+                  matchtagLabel,
+                  spectators,
+                ]}
+              />
             )}
-            {!isDetailed && (
-              <>
-                {server.players.length}/{server.player_limit} <DotDelimiter />
-              </>
-            )}
-            {server.info.map} <DotDelimiter />
-            {server.info.status}
-            {isDetailed && spectators}
-            {matchtag && !showBanner && (
-              <>
-                <DotDelimiter />
-                {isQwleague && (
-                  <img
-                    src="/assets/img/qwleague_logo.svg"
-                    alt="qwleague"
-                    title="QWLeague"
-                    className="h-3.5 w-auto mr-1"
-                  />
-                )}
-                <span className="uppercase font-bold bg-linear-to-b from-pink-400 to-pink-600 bg-clip-text text-transparent">
-                  {matchtag}
-                </span>
-              </>
-            )}
-            {!isDetailed && spectators}
           </span>
         </div>
       </div>
     </a>
   );
 };
+
+// delimiters only between present items
+const DotDelimited = ({ items }: { items: ReactNode[] }) => (
+  <>
+    {items
+      .filter(
+        (item) =>
+          item !== null && item !== undefined && item !== false && item !== "",
+      )
+      .map((item, index) => (
+        <Fragment key={index}>
+          {index > 0 && <DotDelimiter />}
+          {item}
+        </Fragment>
+      ))}
+  </>
+);
 
 const DotDelimiter = () => (
   <span className="inline-flex mx-1.5 bg-slate-600 size-[0.3em] min-w-[0.3em] min-h-[0.3em] rounded-full align-middle" />
