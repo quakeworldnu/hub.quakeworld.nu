@@ -1,7 +1,6 @@
 import * as Slider from "@radix-ui/react-slider";
 import clsx from "clsx";
 import { type MouseEvent, useEffect, useRef, useState } from "react";
-import { useEventListener } from "usehooks-ts";
 import { useClipEditor } from "@/features/demo-player/clips/clip-editor";
 import { useClipPlaylist } from "@/features/demo-player/clips/clip-playlist";
 import { getTrackBackground } from "@/features/demo-player/utils/track-background";
@@ -62,35 +61,12 @@ export function TimeSlider() {
 
 const SliderRoot = ({ max }: { max: number }) => {
   const fte = useFteController();
-  const documentRef = useRef<Document>(document);
   const { range: clipRange, isEnabled: clipEditorEnabled } = useClipEditor();
   const { from, to, hasParams } = useUrlClipParams();
   const { clips } = useClipPlaylist();
   const [jump, setJump] = useState<number>(-1);
   const throttledJump = useThrottle(jump, 200);
   useUpdateInterval(fte ? 100 : null);
-
-  // keyboard shortcuts
-  useEventListener(
-    "keydown",
-    (e: KeyboardEvent) => {
-      if (!fte || fte.isConsoleOpen()) {
-        return;
-      }
-
-      const jumpDelta = e.shiftKey ? 10 : 1;
-
-      switch (e.key) {
-        case "ArrowLeft":
-          return setJump(fte.getDemoElapsedTime() - jumpDelta);
-        case "ArrowRight":
-          return setJump(fte.getDemoElapsedTime() + jumpDelta);
-        default:
-          break;
-      }
-    },
-    documentRef,
-  );
 
   useEffect(() => {
     if (fte) {
