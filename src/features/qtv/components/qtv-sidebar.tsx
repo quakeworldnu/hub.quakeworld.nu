@@ -209,12 +209,15 @@ const ServerLink = ({
         selectServer(server);
       }}
     >
+      {/* inset: flush with the card edge it reads as belonging to the card above */}
       {showBanner && (
-        <QWLeagueBanner
-          matchtag={server.meta.matchtag}
-          hostname={server.info.hostname}
-          isLink={false}
-        />
+        <div className="px-3 pt-3">
+          <QWLeagueBanner
+            matchtag={server.meta.matchtag}
+            hostname={server.info.hostname}
+            isLink={false}
+          />
+        </div>
       )}
       <div className={clsx({ "py-4": isDetailed, "pl-4 py-2": !isDetailed })}>
         {isDetailed ? (
