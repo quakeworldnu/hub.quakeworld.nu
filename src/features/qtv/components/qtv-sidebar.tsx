@@ -26,7 +26,9 @@ type DisplayMode = "brief" | "detailed";
 
 export function QtvPlayerSidebar() {
   const servers = useQtvServers();
-  const isSmallDevice = useMediaQuery("(max-width: 767px)");
+  const isSmallDevice = useMediaQuery(
+    "(max-width: 767px), (max-height: 500px)",
+  );
   // derived from viewport size until the user toggles it
   const [userExpanded, setUserExpanded] = useState<boolean | null>(null);
   const isExpanded = userExpanded ?? !isSmallDevice;

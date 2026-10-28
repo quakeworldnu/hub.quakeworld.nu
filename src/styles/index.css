@@ -9,6 +9,8 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:is(.dark *));
+/* landscape phones */
+@custom-variant short (@media (max-height: 500px));
 
 @theme {
   --font-*: initial;
