@@ -229,7 +229,7 @@ export const SpectatorButtons = (props: { server: ServerType }) => {
               QTV
             </SecondaryButton>
           </div>
-          <div className="sm:grow">
+          <div className="hidden sm:block sm:grow">
             <SecondaryButton
               key={"qtv-web"}
               href={`/qtv/?address=${server.address}`}
@@ -254,10 +254,20 @@ const ServerFooter = (props: { server: ServerType }) => {
       <SpectatorButtons server={server} />
 
       <div className="w-full">
-        <div className="flex text-xs justify-between">
+        <div className="flex items-center text-xs justify-between">
           <ServerAddress server={server} />
 
           {server.info.ktxver && <KtxVersion version={server.info.ktxver} />}
+
+          {server.qtv_stream && (
+            <SecondaryButton
+              href={`/qtv/?address=${server.address}`}
+              className="sm:hidden px-2 py-0.5"
+              title="Watch QTV in browser"
+            >
+              Web QTV
+            </SecondaryButton>
+          )}
         </div>
       </div>
     </div>
@@ -270,7 +280,7 @@ const KtxVersion = React.memo((props: { version: string }) => {
 
   return (
     <div
-      className="text-right w-20 overflow-hidden whitespace-nowrap text-ellipsis text-white/40"
+      className="hidden sm:block text-right w-20 overflow-hidden whitespace-nowrap text-ellipsis text-white/40"
       title={label}
     >
       {label}
