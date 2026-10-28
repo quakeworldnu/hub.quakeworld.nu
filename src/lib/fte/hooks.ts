@@ -25,11 +25,13 @@ declare global {
 export function useFteLoader({
   scriptPath,
   assets,
+  startCommand,
   demoDuration = null,
   countdownDuration = null,
 }: {
   scriptPath: string;
   assets: FteAssets;
+  startCommand?: string;
   demoDuration?: number | null;
   countdownDuration?: number | null;
 }) {
@@ -53,7 +55,12 @@ export function useFteLoader({
     window.Module = {
       canvas: document.getElementById("fteCanvas") as HTMLCanvasElement,
       manifest: manifestUrl,
-      arguments: ["-manifest", manifestUrl],
+      // +commands run after config.cfg. one arg per token, fte quotes args with spaces
+      arguments: [
+        "-manifest",
+        manifestUrl,
+        ...(startCommand ? `+${startCommand}`.split(" ") : []),
+      ],
       files: assets,
       onFteReady: () => setIsEngineReady(true),
       onHubRequest: (name) => {

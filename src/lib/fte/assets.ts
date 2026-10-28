@@ -13,7 +13,6 @@ export function getFteBuildUrl(file: "ftewebgl.js" | "csaddon.dat"): string {
 export function getQtvPlayerAssets(mapName: string): FteAssets {
   return {
     ...getGeneralAssets(),
-    "id1/config.cfg": "/assets/fte/config_qtv_v6.cfg",
     [`id1/maps/${mapName}.bsp`]: `https://assets.quake.world/maps/${mapName}.bsp.gz`,
   };
 }
@@ -24,7 +23,6 @@ export function getDemoPlayerAssets(
 ): FteAssets {
   return {
     ...getGeneralAssets(),
-    "id1/config.cfg": "/assets/fte/config_v6.cfg",
     "qw/match.mvd.gz": demoUrl,
     [`id1/maps/${mapName}.bsp`]: `https://assets.quake.world/maps/${mapName}.bsp.gz`,
   };
@@ -32,6 +30,7 @@ export function getDemoPlayerAssets(
 
 export function getGeneralAssets(): FteAssets {
   const assets: FteAssets = {
+    "id1/config.cfg": "/assets/fte/config_v7.cfg",
     "qw/csaddon.dat": getFteBuildUrl("csaddon.dat"),
 
     // settings: crosshairs and charsets not on the cdn

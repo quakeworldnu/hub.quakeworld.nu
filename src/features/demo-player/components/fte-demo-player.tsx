@@ -1,18 +1,9 @@
 import clsx from "clsx";
-import { useRef } from "react";
 import { FtePlayerCanvas } from "@/components/fte-player/fte-player-canvas";
-import { GameClock } from "@/components/fte-player/game-clock";
-import { Participants } from "@/components/fte-player/participants";
 import { FteSettings } from "@/components/fte-player/settings";
-import {
-  getBannerScale,
-  ResponsiveTopBanner,
-} from "@/components/fte-player/top-banner";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { ClipPlaylistProvider } from "@/features/demo-player/clips/clip-playlist";
 import { useClipPlayback } from "@/features/demo-player/clips/use-clip-playback";
-import { useElementWidth } from "@/hooks/use-element-width";
-import { useUpdateInterval } from "@/hooks/use-update-interval";
 import { getDownloadUrl } from "@/lib/cloudfront/demos";
 import type { DemoInfo } from "@/lib/cloudfront/types";
 import { getDemoPlayerAssets, getFteBuildUrl } from "@/lib/fte/assets";
@@ -48,14 +39,11 @@ const DemoPlayer = ({
     useFteLoader({
       scriptPath,
       assets,
+      startCommand: "playdemo match",
       demoDuration: demo.demo_duration,
       countdownDuration,
     });
   const fte = useFteController();
-
-  const playerRef = useRef<HTMLDivElement>(null);
-  const width = useElementWidth(playerRef);
-  const scale = getBannerScale(width ?? 0);
 
   return (
     <div
@@ -64,19 +52,9 @@ const DemoPlayer = ({
       className={clsx("relative w-full h-full bg-black", {
         "aspect-video max-h-dvh": aspectRatio === "video",
       })}
-      ref={playerRef}
     >
       <div>
         <FtePlayerCanvas />
-
-        {fte && (
-          <>
-            <ResponsiveTopBanner scale={scale}>
-              <Participants />
-              <DemoLargeGameClock />
-            </ResponsiveTopBanner>
-          </>
-        )}
       </div>
       <FteSettings />
       <div
@@ -114,14 +92,3 @@ const DemoPlayer = ({
     </div>
   );
 };
-
-function DemoLargeGameClock() {
-  const fte = useFteController();
-  useUpdateInterval(250);
-
-  if (!fte || fte.getMatchElapsedTime() >= fte.getMatchDuration()) {
-    return null;
-  }
-
-  return <GameClock elapsed={fte.getMatchElapsedTime()} />;
-}

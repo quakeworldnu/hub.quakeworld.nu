@@ -126,16 +126,6 @@ export class FteController {
     return this.getDemoElapsedTime() - this.getCountdownDuration();
   }
 
-  // seconds since the match started (qtv), tracked by the engine. null before the match
-  getStreamMatchElapsedTime(): number | null {
-    try {
-      const ms = this.getClientState().getMatchElapsed();
-      return ms === null ? null : ms / 1000;
-    } catch {
-      return null;
-    }
-  }
-
   getMatchDuration(): number {
     return this.getDemoDuration() - this.getCountdownDuration();
   }
@@ -169,14 +159,6 @@ export class FteController {
     }
   }
 
-  seekForward(delta: number) {
-    this.demoJump(this.getDemoElapsedTime() + delta);
-  }
-
-  seekBackward(delta: number) {
-    this.demoJump(this.getDemoElapsedTime() - delta);
-  }
-
   // state is read from the engine: binds and gestures change it without the hub
 
   // percent (cl_demospeed is a fraction)
@@ -193,19 +175,9 @@ export class FteController {
     return this.getDemoSpeed() > 0;
   }
 
-  isPaused() {
-    return !this.isPlaying();
-  }
-
   // the engine restores the last positive speed on resume
   togglePlay() {
     this.command("demo_toggle_pause");
-  }
-
-  play() {
-    if (this.isPaused()) {
-      this.togglePlay();
-    }
   }
 
   pause() {
@@ -231,11 +203,6 @@ export class FteController {
     this.command("autotrack", Autotrack.ON);
   }
 
-  // the camera stays on the currently tracked player
-  disableAutotrack() {
-    this.command("autotrack", Autotrack.OFF);
-  }
-
   toggleAutotrack() {
     this.command("autotrack_toggle");
   }
@@ -249,14 +216,6 @@ export class FteController {
     } else {
       this.command("track", `"${`${player}`.replaceAll('"', "")}"`);
     }
-  }
-
-  trackNext() {
-    this.command("track_next");
-  }
-
-  trackPrev() {
-    this.command("track_prev");
   }
 
   // volume

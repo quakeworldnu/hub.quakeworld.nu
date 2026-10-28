@@ -105,7 +105,7 @@ export function enqueueSetting<K extends keyof Settings>(
 }
 
 // persistence: only settings the user changed, so other hub config defaults still apply.
-// fte reads files from localStorage, the hub configs end with `exec hub_settings.cfg`
+// fte reads files from localStorage, the hub config runs `exec hub_settings.cfg`
 const STORED_SETTINGS_KEY = "fte.settings";
 const SETTINGS_CONFIG_FILE = "id1/hub_settings.cfg";
 

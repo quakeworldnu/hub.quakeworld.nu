@@ -19,11 +19,3 @@ export function usePolledState<T>(
 
   return [value, refresh];
 }
-
-export function usePolledValue<T>(
-  read: () => T,
-  delay: number | null,
-  key?: (value: T) => unknown,
-): T {
-  return usePolledState(read, delay, key)[0];
-}

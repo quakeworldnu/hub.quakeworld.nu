@@ -20,8 +20,8 @@ import { SeekToStartButton } from "./seek-to-start-button";
 import { SlowmotionToggle } from "./slowmotion-toggle";
 import { TimeSlider } from "./time-slider";
 
-// single row at every width: phones (below sm) get the essentials, keyboard/power-user
-// toggles (minimap, console, slowmotion) wait for lg
+// single row at every width: phones (below sm) get the essentials (no game duration, the
+// engine draws a game clock), keyboard/power-user toggles (minimap, console, slowmotion) wait for lg
 export const FteDemoPlayerControls = () => {
   const { isEnabled: showClipEditor } = useClipEditor();
   const {
@@ -48,7 +48,9 @@ export const FteDemoPlayerControls = () => {
 
       <div className="flex items-center sm:justify-self-start">
         <Volume />
-        <DemoPlayerGameDuration />
+        <div className="hidden sm:block">
+          <DemoPlayerGameDuration />
+        </div>
       </div>
 
       <div className="flex gap-x-1 sm:mb-2 relative">

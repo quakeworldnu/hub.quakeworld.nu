@@ -1,18 +1,9 @@
 import clsx from "clsx";
-import { useRef } from "react";
 import { useEventListener } from "usehooks-ts";
 import { FtePlayerCanvas } from "@/components/fte-player/fte-player-canvas";
-import { GameClock } from "@/components/fte-player/game-clock";
-import { Participants } from "@/components/fte-player/participants";
 import { FteSettings } from "@/components/fte-player/settings";
-import {
-  getBannerScale,
-  ResponsiveTopBanner,
-} from "@/components/fte-player/top-banner";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { QtvEvent } from "@/features/qtv/events";
-import { useElementWidth } from "@/hooks/use-element-width";
-import { useUpdateInterval } from "@/hooks/use-update-interval";
 import { getFteBuildUrl, getQtvPlayerAssets } from "@/lib/fte/assets";
 import { FteController } from "@/lib/fte/fte-controller";
 import { useFteController, useFteLoader } from "@/lib/fte/hooks";
@@ -47,27 +38,10 @@ export function FteQtvPlayer({ mapName }: { mapName: string }) {
     connect(selectedServer.qtv_stream.url);
   });
 
-  const playerRef = useRef<HTMLDivElement>(null);
-  const width = useElementWidth(playerRef);
-  const scale = getBannerScale(width ?? 0);
-
   return (
-    <div
-      id="ftePlayer"
-      className="relative w-full h-full bg-black"
-      ref={playerRef}
-    >
+    <div id="ftePlayer" className="relative w-full h-full bg-black">
       <div>
         <FtePlayerCanvas />
-
-        {fte && (
-          <>
-            <ResponsiveTopBanner scale={scale}>
-              <Participants />
-              <QtvPlayerGameClock />
-            </ResponsiveTopBanner>
-          </>
-        )}
       </div>
       <FteSettings />
       <div
@@ -96,16 +70,4 @@ export function FteQtvPlayer({ mapName }: { mapName: string }) {
       )}
     </div>
   );
-}
-
-export function QtvPlayerGameClock() {
-  const fte = useFteController();
-  useUpdateInterval(fte ? 250 : null);
-  const elapsed = fte?.getStreamMatchElapsedTime() ?? null;
-
-  if (elapsed === null) {
-    return null;
-  }
-
-  return <GameClock elapsed={elapsed} />;
 }
