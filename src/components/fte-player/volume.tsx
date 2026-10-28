@@ -1,18 +1,15 @@
-import { useFteController, useFteUpdateOnEvent } from "@/lib/fte/hooks";
+import { useFteController, useFtePolledValue } from "@/lib/fte/hooks";
 import { VolumeSlider } from "./volume-slider";
 import { VolumeToggle } from "./volume-toggle";
 
 export const Volume = () => {
-  useFteUpdateOnEvent("volume");
-
   const fte = useFteController();
+  const volume = useFtePolledValue("volume", () => fte?.getVolume() ?? 0);
+  const isMuted = useFtePolledValue("volume", () => fte?.isMuted() ?? false);
 
   if (!fte) {
     return null;
   }
-
-  const volume = fte.getVolume();
-  const isMuted = fte.isMuted();
 
   function handleToggleClick() {
     if (!fte) {

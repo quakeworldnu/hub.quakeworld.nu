@@ -1,7 +1,8 @@
 import clsx from "clsx";
 import { QuakeTextFromBytes } from "@/components/ui/quake-text-bytes";
-import { useUpdateInterval } from "@/hooks/use-update-interval";
+import { usePolledValue } from "@/hooks/use-polled-value";
 import { useFteController } from "@/lib/fte/hooks";
+import type { Participants as FteParticipants } from "@/lib/fte/types";
 
 type Side = {
   name_bytes: Uint8Array;
@@ -13,15 +14,16 @@ type Side = {
 // two sides: teams, else a 1on1
 export function Participants() {
   const fte = useFteController();
-  useUpdateInterval(250);
-
-  if (!fte) {
-    return null;
-  }
-
-  const { players, teams } = fte.getParticipants();
-  const sides: Side[] =
-    teams.length === 2 ? teams : players.length === 2 ? players : [];
+  const sides = usePolledValue(
+    () => (fte ? getSides(fte.getParticipants()) : []),
+    fte ? 250 : null,
+    (value) =>
+      value
+        .map(
+          (s) => `${s.name_bytes}:${s.frags}:${s.top_color}:${s.bottom_color}`,
+        )
+        .join("|"),
+  );
 
   if (sides.length !== 2) {
     return null;
@@ -33,6 +35,10 @@ export function Participants() {
       <Participant participant={sides[1]} index={1} />
     </div>
   );
+}
+
+function getSides({ players, teams }: FteParticipants): Side[] {
+  return teams.length === 2 ? teams : players.length === 2 ? players : [];
 }
 
 const Participant = ({

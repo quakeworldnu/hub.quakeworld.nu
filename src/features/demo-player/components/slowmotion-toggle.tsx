@@ -1,13 +1,16 @@
 import { faStopwatch, faStopwatch20 } from "@fortawesome/free-solid-svg-icons";
 import { IconToggleButton } from "@/components/fte-player/icon-button";
-import { useFteController, useFteUpdateOnEvent } from "@/lib/fte/hooks";
+import { useFteController, useFtePolledValue } from "@/lib/fte/hooks";
 
 const slow = 20;
 const normal = 100;
 
 export const SlowmotionToggle = () => {
-  useFteUpdateOnEvent("demo_setspeed");
   const fte = useFteController();
+  const currentSpeed = useFtePolledValue(
+    "demo_setspeed",
+    () => fte?.getDemoSpeed() ?? normal,
+  );
 
   function handleClick() {
     if (!fte) {
@@ -21,7 +24,6 @@ export const SlowmotionToggle = () => {
     return null;
   }
 
-  const currentSpeed = fte.getDemoSpeed();
   const isSlowmotion = currentSpeed === slow;
 
   return (

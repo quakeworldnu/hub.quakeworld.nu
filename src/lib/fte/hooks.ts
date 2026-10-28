@@ -5,6 +5,7 @@ import {
   useInterval,
   useScript,
 } from "usehooks-ts";
+import { usePolledState } from "@/hooks/use-polled-value";
 import { getAssetUrl } from "@/lib/cloudfront/assets";
 import { toggleFullscreen } from "@/utils/fullscreen";
 import { FteController } from "./fte-controller";
@@ -136,9 +137,14 @@ export function useFteEvent(
   );
 }
 
-// re-render on hub commands, and poll for changes made in the engine (binds, gestures)
-export function useFteUpdateOnEvent(eventName: string) {
-  const { increment } = useCounter(0);
-  useFteEvent(eventName, increment);
-  useInterval(increment, 250);
+// engine state read on hub commands, and polled for changes made in the engine
+// (binds, gestures). re-renders only when the value changes
+export function useFtePolledValue<T>(
+  eventName: string,
+  read: () => T,
+  key?: (value: T) => unknown,
+): T {
+  const [value, refresh] = usePolledState(read, 250, key);
+  useFteEvent(eventName, refresh);
+  return value;
 }

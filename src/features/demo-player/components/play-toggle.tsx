@@ -1,10 +1,13 @@
 import { faCirclePause, faCirclePlay } from "@fortawesome/free-solid-svg-icons";
 import { IconToggleButton } from "@/components/fte-player/icon-button";
-import { useFteController, useFteUpdateOnEvent } from "@/lib/fte/hooks";
+import { useFteController, useFtePolledValue } from "@/lib/fte/hooks";
 
 export const PlayToggle = () => {
-  useFteUpdateOnEvent("demo_setspeed");
   const fte = useFteController();
+  const isPlaying = useFtePolledValue(
+    "demo_setspeed",
+    () => fte?.isPlaying() ?? false,
+  );
 
   function handleClick() {
     if (!fte) {
@@ -21,7 +24,7 @@ export const PlayToggle = () => {
     <IconToggleButton
       size={"2xl"}
       onClick={handleClick}
-      isEnabled={fte.isPlaying()}
+      isEnabled={isPlaying}
       enabledTitle="Pause"
       enabledIcon={faCirclePause}
       disabledTitle="Play"

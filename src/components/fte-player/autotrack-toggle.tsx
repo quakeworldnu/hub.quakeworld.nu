@@ -1,9 +1,12 @@
 import { Switch } from "@/components/ui/switch";
-import { useFteController, useFteUpdateOnEvent } from "@/lib/fte/hooks";
+import { useFteController, useFtePolledValue } from "@/lib/fte/hooks";
 
 export const AutotrackToggle = () => {
   const fte = useFteController();
-  useFteUpdateOnEvent("autotrack");
+  const isEnabled = useFtePolledValue(
+    "autotrack",
+    () => fte?.isUsingAutotrack() ?? false,
+  );
 
   function handleClick() {
     fte?.toggleAutotrack();
@@ -13,11 +16,5 @@ export const AutotrackToggle = () => {
     return null;
   }
 
-  return (
-    <Switch
-      label="Autotrack"
-      enabled={fte.isUsingAutotrack()}
-      onClick={handleClick}
-    />
-  );
+  return <Switch label="Autotrack" enabled={isEnabled} onClick={handleClick} />;
 };
