@@ -5,6 +5,7 @@ import type { FteModule } from "./types";
 export type NumericalSettings = {
   cl_item_timers: number;
   r_drawflat: number;
+  r_dynamic: number;
   contrast: number;
   gamma: number;
   crosshairsize: number;
@@ -13,6 +14,7 @@ export type NumericalSettings = {
   xray: number;
   sensitivity: number;
   m_pitch: number;
+  qtv_buffertime: number;
 };
 
 export type Settings = NumericalSettings & {
@@ -28,11 +30,13 @@ export type ToggleSetting =
   | "cl_item_timers"
   | "powcam_enabled"
   | "xray"
-  | "r_drawflat";
+  | "r_drawflat"
+  | "r_dynamic";
 
 export const defaultSettings: Settings = {
   cl_item_timers: 1,
   r_drawflat: 0,
+  r_dynamic: 1,
   contrast: 1.1,
   gamma: 0.9,
   gl_font: "",
@@ -47,6 +51,7 @@ export const defaultSettings: Settings = {
   xray: 1,
   sensitivity: 5,
   m_pitch: 0.022,
+  qtv_buffertime: 1,
 };
 
 // registered by csaddon.dat, empty until it has loaded

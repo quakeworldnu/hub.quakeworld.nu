@@ -7,6 +7,7 @@ import {
   faFillDrip,
   faFont,
   faGear,
+  faLightbulb,
   faPaintRoller,
   faShirt,
   faStopwatch,
@@ -40,6 +41,7 @@ const CROSSHAIRS = ["circle", "square", "crosshair"];
 const CHARSETS = ["default", "povo5f_xtm", "graybugs"];
 const SKIN_COLORS = ["blue", "cyan", "green", "pink", "red", "white", "yellow"];
 const SKIN_VARIANTS = ["", "_solid"];
+const QTV_BUFFER_TIMES = [1, 3, 5];
 
 function skinUrl(skin: string): string {
   return getAssetUrl(`fte/id1/skins/${skin}.jpg`);
@@ -219,6 +221,13 @@ const SettingsPanel = ({ fte }: { fte: FteController }) => {
             />
           </Row>
           <SettingToggle
+            icon={faLightbulb}
+            title="Dynamic lighting"
+            description="Powerups, rockets and explosions (cost fps)"
+            enabled={settings.r_dynamic !== 0}
+            onClick={() => toggleSetting("r_dynamic")}
+          />
+          <SettingToggle
             icon={faPaintRoller}
             title="Drawflat"
             description="Render walls and floors with flat colors"
@@ -337,10 +346,20 @@ const SettingsPanel = ({ fte }: { fte: FteController }) => {
         </Section>
 
         <div className="px-4 py-2">
-          <Row title="Name" description="Shown in QTV">
+          <Row title="Name in QTV" description="Visible to other viewers">
             <NameInput
               value={settings.name}
               onChange={(name) => setSetting("name", name)}
+            />
+          </Row>
+          <Row
+            title="QTV buffer"
+            description="In seconds, higher is smoother but delayed"
+          >
+            <ButtonGroup
+              options={QTV_BUFFER_TIMES}
+              value={settings.qtv_buffertime}
+              onSelect={(v) => setSetting("qtv_buffertime", v)}
             />
           </Row>
         </div>
@@ -449,6 +468,34 @@ const Row = ({
     </div>
   );
 };
+
+const ButtonGroup = ({
+  options,
+  value,
+  onSelect,
+}: {
+  options: number[];
+  value: number;
+  onSelect: (value: number) => void;
+}) => (
+  <div className="flex">
+    {options.map((option) => (
+      <button
+        type="button"
+        key={option}
+        className={clsx(
+          "px-3 h-8 text-sm first:rounded-l last:rounded-r border border-[#334]",
+          option === value
+            ? "bg-slate-600 text-white"
+            : "bg-white/5 hover:bg-white/10 hover:text-white",
+        )}
+        onClick={() => onSelect(option)}
+      >
+        {option}
+      </button>
+    ))}
+  </div>
+);
 
 const NumericalInput = ({
   value,
