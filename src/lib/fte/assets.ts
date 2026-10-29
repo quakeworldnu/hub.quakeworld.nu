@@ -89,7 +89,7 @@ function getMapUrl(mapName: string): string {
 
 export function getGeneralAssets(): FteAssets {
   const assets: FteAssets = {
-    "id1/config.cfg": "/assets/fte/config_v9.cfg",
+    "id1/config.cfg": "/assets/fte/config_v10.cfg",
     "qw/csaddon.dat": getFteBuildUrl("csaddon.dat"),
 
     // settings: crosshairs and charsets not on the cdn
