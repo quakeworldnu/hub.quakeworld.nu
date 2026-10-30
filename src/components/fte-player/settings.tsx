@@ -98,9 +98,7 @@ const SettingsPanel = ({ fte }: { fte: FteController }) => {
   });
 
   // synced from the engine each time the panel opens
-  const [settings, setSettings] = useState<Settings>(() =>
-    readSettings(fte.module),
-  );
+  const [settings, setSettings] = useState<Settings>(() => readSettings(fte));
 
   const setSetting: SetSetting = (key, value) => {
     setSettings((s) => ({ ...s, [key]: value }));

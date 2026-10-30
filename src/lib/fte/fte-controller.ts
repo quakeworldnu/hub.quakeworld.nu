@@ -81,6 +81,14 @@ export class FteController {
     fteEvent(name, { ...detail, source: this._controlSource });
   }
 
+  getCvar(name: string): string {
+    try {
+      return this.module.getCvar(name);
+    } catch {
+      return "";
+    }
+  }
+
   getClientState(): ClientState {
     return this.module.getClientState();
   }
@@ -163,7 +171,7 @@ export class FteController {
 
   // percent (cl_demospeed is a fraction)
   getDemoSpeed(): number {
-    const speed = Number.parseFloat(this.module.getCvar("cl_demospeed"));
+    const speed = Number.parseFloat(this.getCvar("cl_demospeed"));
     return Number.isNaN(speed) ? 0 : Math.round(speed * 100);
   }
 
@@ -245,7 +253,7 @@ export class FteController {
   }
 
   getVolume(): number {
-    const volume = Number.parseFloat(this.module.getCvar("volume"));
+    const volume = Number.parseFloat(this.getCvar("volume"));
     return Number.isNaN(volume) ? 0 : volume;
   }
 

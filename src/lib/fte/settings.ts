@@ -57,11 +57,11 @@ export const defaultSettings: Settings = {
 // registered by csaddon.dat, empty until it has loaded
 const addonKeys: (keyof Settings)[] = ["xray", "powcam_enabled"];
 
-export function readSettings(module: FteModule): Settings {
+export function readSettings(fte: Pick<FteController, "getCvar">): Settings {
   const settings: Record<string, string | number> = { ...defaultSettings };
 
   for (const [key, defaultValue] of Object.entries(defaultSettings)) {
-    const value = module.getCvar(key);
+    const value = fte.getCvar(key);
 
     if (value === "" && addonKeys.includes(key as keyof Settings)) {
       continue;

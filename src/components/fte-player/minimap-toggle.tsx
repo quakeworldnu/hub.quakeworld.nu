@@ -9,7 +9,7 @@ export const MinimapToggle = () => {
   const fte = useFteController();
   const mode = useFtePolledValue(
     "minimap_mode",
-    () => Number.parseInt(fte?.module.getCvar("minimap_mode") ?? "", 10) || 0,
+    () => Number.parseInt(fte?.getCvar("minimap_mode") ?? "", 10) || 0,
   );
 
   if (!fte) {
