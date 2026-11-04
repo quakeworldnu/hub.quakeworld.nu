@@ -9,6 +9,7 @@ import { useEventListener } from "usehooks-ts";
 import {
   DISPLAY_MODE_CHANGE,
   isFullscreen,
+  isFullscreenSupported,
   isFullWindow,
   toggleFullscreen,
   toggleFullWindow,
@@ -25,6 +26,11 @@ function useDisplayModeUpdate() {
 export const FullscreenToggle = () => {
   useDisplayModeUpdate();
   const isEnabled = isFullscreen();
+
+  // the full-window toggle already covers it
+  if (!isFullscreenSupported()) {
+    return null;
+  }
 
   return (
     <IconToggleButton

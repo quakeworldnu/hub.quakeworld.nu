@@ -49,10 +49,21 @@ export function isFullscreen(): boolean {
   return !isFullWindow() && Boolean(document.fullscreenElement);
 }
 
+// iphone safari has fullscreen for <video> only
+export function isFullscreenSupported(): boolean {
+  return Boolean(document.fullscreenEnabled);
+}
+
+// full-window stands in where fullscreen is unsupported (iphone)
 export function toggleFullscreen(elementId: string) {
   const element = document.getElementById(elementId);
 
   if (!element) {
+    return;
+  }
+
+  if (!isFullscreenSupported()) {
+    toggleFullWindow(elementId);
     return;
   }
 
