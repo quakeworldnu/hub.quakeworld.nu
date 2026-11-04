@@ -36,7 +36,7 @@ export const FteDemoPlayerControls = () => {
   return (
     <div
       className={clsx(
-        "flex flex-wrap sm:grid sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] transition-opacity duration-200 bg-black/60 justify-between items-center sm:px-1",
+        "flex flex-wrap sm:grid sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] transition-opacity duration-200 bg-black/60 justify-between items-center p-safe-area sm:[--p-safe-area-min:0.25rem]",
         {
           "opacity-0": !showClipEditor && isIdle,
         },

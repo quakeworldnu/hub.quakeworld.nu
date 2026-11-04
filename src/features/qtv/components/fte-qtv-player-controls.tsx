@@ -23,7 +23,7 @@ export function FteQtvPlayerControls() {
   return (
     <div
       className={clsx(
-        "flex flex-wrap transition-opacity duration-200 bg-black/60 justify-between items-center sm:px-1 sm:gap-y-2",
+        "flex flex-wrap transition-opacity duration-200 bg-black/60 justify-between items-center p-safe-area sm:[--p-safe-area-min:0.25rem] sm:gap-y-2",
         {
           "opacity-0": isIdle,
         },

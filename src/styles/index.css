@@ -125,6 +125,13 @@
   text-shadow: rgb(0 0 0 / 0.5) 1px 1px 1px;
 }
 
+/* full-window on notched iphones: clear the rounded corners and home indicator (insets are 0 elsewhere) */
+@utility p-safe-area {
+  padding-left: max(var(--p-safe-area-min, 0px), env(safe-area-inset-left));
+  padding-right: max(var(--p-safe-area-min, 0px), env(safe-area-inset-right));
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
