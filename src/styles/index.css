@@ -342,3 +342,9 @@ dialog::backdrop {
 kbd {
   @apply text-slate-200 text-xs bg-slate-800 py-1 px-1.5 rounded font-mono border border-slate-700;
 }
+
+@media (display-mode: standalone) {
+  body {
+    padding-top: 1.25rem;
+  }
+}
