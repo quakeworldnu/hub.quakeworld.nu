@@ -16,15 +16,26 @@ export function useMouseIdle({
   callbacks.current = { onIdle, onActive };
 
   useEffect(() => {
-    const target = document.getElementById(elementId) ?? document;
+    const target: GlobalEventHandlers =
+      document.getElementById(elementId) ?? document;
     const throttleMs = 200;
     let isIdle = false;
+    let isTouchHeld = false;
     let lastMoveAt = 0;
     let timer = window.setTimeout(setIdle, timeout);
 
     function setIdle() {
+      if (isTouchHeld) {
+        return;
+      }
+
       isIdle = true;
       callbacks.current.onIdle();
+    }
+
+    function restartTimer() {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(setIdle, timeout);
     }
 
     function handleMove() {
@@ -40,17 +51,32 @@ export function useMouseIdle({
         callbacks.current.onActive();
       }
 
-      window.clearTimeout(timer);
-      timer = window.setTimeout(setIdle, timeout);
+      restartTimer();
+    }
+
+    function handlePointerDown(e: PointerEvent) {
+      isTouchHeld = e.pointerType === "touch";
+      handleMove();
+    }
+
+    function handlePointerUp(e: PointerEvent) {
+      if (e.pointerType === "touch" && isTouchHeld) {
+        isTouchHeld = false;
+        restartTimer();
+      }
     }
 
     // capture: the engine canvas handles (and may stop) pointer events
     target.addEventListener("mousemove", handleMove);
-    target.addEventListener("pointerdown", handleMove, true);
+    target.addEventListener("pointerdown", handlePointerDown, true);
+    window.addEventListener("pointerup", handlePointerUp, true);
+    window.addEventListener("pointercancel", handlePointerUp, true);
     return () => {
       window.clearTimeout(timer);
       target.removeEventListener("mousemove", handleMove);
-      target.removeEventListener("pointerdown", handleMove, true);
+      target.removeEventListener("pointerdown", handlePointerDown, true);
+      window.removeEventListener("pointerup", handlePointerUp, true);
+      window.removeEventListener("pointercancel", handlePointerUp, true);
     };
   }, [elementId, timeout]);
 }
