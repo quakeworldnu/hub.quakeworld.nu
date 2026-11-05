@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import type { FormEvent, MouseEvent } from "react";
 import { useRef } from "react";
+import { GlobalShowScoresToggle } from "@/components/scoreboard/global-show-scores-toggle";
 import { lightDismissFallback, useModalState } from "@/components/ui/dialog";
 import {
   equalsDefaultFilters,
@@ -95,6 +96,13 @@ export const ServerSettings = () => {
               />
             </button>
           </div>
+
+          {/* larger screens have the toggle in the site navigation */}
+          {"/" === location.pathname && (
+            <div className="sm:hidden -mx-2 -my-2">
+              <GlobalShowScoresToggle />
+            </div>
+          )}
 
           <div className="text-sm">
             <Checkbox

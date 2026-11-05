@@ -7,6 +7,7 @@ import { ServerAddress } from "@/components/server/server-address";
 import ServerStreams from "@/components/streams/server-streams";
 import { PrimaryButton, SecondaryButton } from "@/components/ui/buttons";
 import { QuakeText } from "@/components/ui/quake-text";
+import { useShowScores } from "@/hooks/use-show-scores";
 import {
   freePlayerSlots,
   freeSpectatorSlots,
@@ -101,8 +102,11 @@ const ServerStatus = React.memo((props: ServerStatusProps) => {
   );
 });
 
-export const ServerBody = (props: { server: ServerType }) => {
-  const { server } = props;
+export const ServerBody = (props: {
+  server: ServerType;
+  showScores?: boolean;
+}) => {
+  const { server, showScores = true } = props;
   const serverMeta = server.meta;
   const [view, setView] = useState(VIEWS.Scoreboard);
   const isQwleague = isQwleagueHostname(server.info.hostname);
@@ -161,6 +165,8 @@ export const ServerBody = (props: { server: ServerType }) => {
                 players={scoreboardPlayers(server)}
                 teams={scoreboardTeams(server)}
                 limit={serverMeta.playerDisplay.visible}
+                showFrags={showScores}
+                presorted={showScores}
               />
               <HiddenPlayers count={serverMeta.playerDisplay.hidden} />
               <SpectatorText text={serverMeta.spectatorText} />
@@ -291,12 +297,13 @@ const KtxVersion = React.memo((props: { version: string }) => {
 // memo: unchanged servers keep their object identity between polls (rtk query structural sharing)
 export const Server = React.memo((props: { server: ServerType }) => {
   const { server } = props;
+  const [showScores] = useShowScores();
 
   return (
     <div className={`w-full flex flex-col ${server.meta.wrapperClassNames}`}>
       <div className="server flex flex-col h-full bg-[#445]">
         <ServerHeader server={server} />
-        <ServerBody server={server} />
+        <ServerBody server={server} showScores={showScores} />
         <ServerFooter server={server} />
       </div>
     </div>

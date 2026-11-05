@@ -21,29 +21,37 @@ export type ScoreboardPlayer = ScoreboardTeam & {
   is_bot?: boolean;
 };
 
-type Row = { name: string; frags: number };
-const sortByFrags = (a: Row, b: Row) => b.frags - a.frags;
-const sortByName = (a: Row, b: Row) =>
-  a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+type Row = { name: string; frags: number; team?: string };
+const compareText = (a = "", b = "") =>
+  a.toLowerCase().localeCompare(b.toLowerCase());
+
+// shown: frags desc, team asc (if teamplay), name asc
+// hidden: team asc (if teamplay), name asc
+const compareRows =
+  (showFrags: boolean, hasTeams: boolean) =>
+  (a: Row, b: Row): number =>
+    (showFrags ? b.frags - a.frags : 0) ||
+    (hasTeams ? compareText(a.team, b.team) : 0) ||
+    compareText(a.name, b.name);
 
 export const Scoreboard = ({
   players = [],
   teams = [],
   showFrags = true,
   limit = 20,
+  presorted = false,
 }: {
   players?: ScoreboardPlayer[];
   teams?: ScoreboardTeam[];
   showFrags?: boolean;
   limit?: number;
+  presorted?: boolean; // rows are already in display order
 }) => {
   const hasTeams = teams.length > 0;
   const showTeamColumn = hasTeams && teams.length <= 3;
-  const sortFunc = showFrags ? sortByFrags : sortByName;
-  const sortedPlayers = [...players];
-  sortedPlayers.sort(sortFunc);
-  const sortedTeams = [...teams];
-  sortedTeams.sort(sortFunc);
+  const sortFunc = compareRows(showFrags, hasTeams);
+  const sortedPlayers = presorted ? players : [...players].sort(sortFunc);
+  const sortedTeams = presorted ? teams : [...teams].sort(sortFunc);
 
   return (
     <div
@@ -154,3 +162,69 @@ const Ping = (props: { value: string }) => {
 
   return <span className="text-right text-xs opacity-50">{value}</span>;
 };
+
+if (import.meta.vitest) {
+  const { describe, expect, test } = import.meta.vitest;
+  const rows = [
+    { name: "bps", team: "red", frags: 5 },
+    { name: "Alpha", team: "red", frags: 5 },
+    { name: "milton", team: "blue", frags: 5 },
+    { name: "xantom", team: "blue", frags: 9 },
+    { name: "Zeke", team: "Alpha", frags: 1 },
+  ];
+  const sortedNames = (showFrags: boolean, hasTeams: boolean) =>
+    [...rows].sort(compareRows(showFrags, hasTeams)).map((r) => r.name);
+
+  describe("compareRows", () => {
+    test("shown: frags desc, team asc, name asc", () => {
+      expect(sortedNames(true, true)).toEqual([
+        "xantom",
+        "milton",
+        "Alpha",
+        "bps",
+        "Zeke",
+      ]);
+    });
+
+    test("shown, no teamplay: frags desc, name asc", () => {
+      expect(sortedNames(true, false)).toEqual([
+        "xantom",
+        "Alpha",
+        "bps",
+        "milton",
+        "Zeke",
+      ]);
+    });
+
+    test("hidden: team asc, name asc", () => {
+      expect(sortedNames(false, true)).toEqual([
+        "Zeke",
+        "milton",
+        "xantom",
+        "Alpha",
+        "bps",
+      ]);
+    });
+
+    test("hidden, no teamplay: name asc", () => {
+      expect(sortedNames(false, false)).toEqual([
+        "Alpha",
+        "bps",
+        "milton",
+        "xantom",
+        "Zeke",
+      ]);
+    });
+
+    test("team rows: frags desc, name asc", () => {
+      const teams = [
+        { name: "red", frags: 3 },
+        { name: "Blue", frags: 3 },
+        { name: "alpha", frags: 7 },
+      ];
+      expect(
+        [...teams].sort(compareRows(true, true)).map((t) => t.name),
+      ).toEqual(["alpha", "Blue", "red"]);
+    });
+  });
+}

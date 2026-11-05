@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { GlobalShowScoresToggle } from "@/components/scoreboard/global-show-scores-toggle";
 import { SettingsToggleButton } from "@/features/servers/components/server-filters";
 import { isBot } from "@/lib/qworld/server";
 import { useFilteredServers } from "@/lib/qworld/server-hooks";
@@ -50,17 +51,24 @@ export default function SiteNavigation() {
   ];
 
   return (
-    <div className="flex items-center text-xs sm:text-sm text-gray-400">
-      {pageLinks.map((p) => (
-        <NavLink
-          key={p.url}
-          title={p.title}
-          shortDescription={p.shortDescription}
-          longDescription={p.longDescription}
-          url={p.url}
-        />
-      ))}
-      <PageSettings />
+    <div className="flex flex-wrap items-center text-xs sm:text-sm text-gray-400">
+      <div className="flex items-center grow sm:grow-0">
+        {pageLinks.map((p) => (
+          <NavLink
+            key={p.url}
+            title={p.title}
+            shortDescription={p.shortDescription}
+            longDescription={p.longDescription}
+            url={p.url}
+          />
+        ))}
+        <PageSettings />
+      </div>
+      {"/" === location.pathname && (
+        <div className="hidden sm:block ml-auto lg:ml-2">
+          <GlobalShowScoresToggle />
+        </div>
+      )}
     </div>
   );
 }

@@ -1,8 +1,9 @@
 import { useEffect } from "react";
-import { useLocalStorage, useToggle } from "usehooks-ts";
+import { useToggle } from "usehooks-ts";
+import { useShowScores } from "@/hooks/use-show-scores";
 
 export function useDemoScoreSpoiler() {
-  const [globalShow] = useLocalStorage<boolean>("demoBrowserShowScores", false);
+  const [globalShow] = useShowScores();
   const [isVisible, toggleVisible, setIsVisible] = useToggle(globalShow);
 
   useEffect(() => {
