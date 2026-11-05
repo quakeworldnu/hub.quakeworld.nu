@@ -14,7 +14,7 @@ export const GamesPage = () => {
   return (
     <div className="flex flex-col">
       <SiteHeader />
-      <div className="3xl:flex gap-6 my-4">
+      <div className="3xl:flex gap-6 mb-4">
         <div className="w-full">
           <div>
             {gameId && <GameDetails id={gameId} />}

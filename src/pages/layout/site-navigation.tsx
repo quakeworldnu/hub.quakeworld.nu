@@ -26,26 +26,22 @@ export default function SiteNavigation() {
   const pageLinks = [
     {
       title: "Servers",
-      shortDescription: serverCount,
-      longDescription: serverCount,
+      description: serverCount,
       url: "/",
     },
     {
       title: "QTV",
-      shortDescription: qtvCount,
-      longDescription: qtvCount,
+      description: qtvCount,
       url: "/qtv/",
     },
     {
       title: "Players",
-      shortDescription: playerCount + spectatorCount,
-      longDescription: `${playerCount} players, ${spectatorCount} spectators`,
+      description: `${playerCount} players, ${spectatorCount} spectators`,
       url: "/players/",
     },
     {
       title: "Demos / Recent games",
-      shortDescription: "",
-      longDescription: "",
+      description: "",
       url: "/games/",
     },
   ];
@@ -57,15 +53,14 @@ export default function SiteNavigation() {
           <NavLink
             key={p.url}
             title={p.title}
-            shortDescription={p.shortDescription}
-            longDescription={p.longDescription}
+            description={p.description}
             url={p.url}
           />
         ))}
         <PageSettings />
       </div>
       {"/" === location.pathname && (
-        <div className="hidden sm:block ml-auto lg:ml-2">
+        <div className="hidden xl:block ml-2">
           <ShowServerScoresToggle />
         </div>
       )}
@@ -89,13 +84,11 @@ const PageSettings = () => {
 
 const NavLink = ({
   title,
-  shortDescription,
-  longDescription,
+  description,
   url,
 }: {
   title: string;
-  shortDescription: string | number;
-  longDescription: string | number;
+  description: string | number;
   url: string;
 }) => {
   const isSelected = url === location.pathname;
@@ -106,17 +99,11 @@ const NavLink = ({
     { "border-gray-700 hover:border-gray-500": !isSelected },
   );
 
-  const hasDescription = `${shortDescription}${longDescription}`.length > 0;
-
   return (
     <a href={url} className={cls}>
       <strong>{title}</strong>
-      {hasDescription && (
-        <>
-          {" "}
-          <span className="text-xs sm:hidden">({shortDescription})</span>
-          <span className="text-xs hidden sm:inline">({longDescription})</span>
-        </>
+      {"" !== description && (
+        <span className="text-xs hidden md:inline"> ({description})</span>
       )}
     </a>
   );

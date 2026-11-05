@@ -33,7 +33,7 @@ const PlayerTable = () => {
   }
 
   return (
-    <div className="mt-4 mb-6">
+    <div className="mb-6">
       <table className="text-left w-full lg:w-auto [&_td]:p-2.5 [&_th]:p-2.5">
         <thead className="text-gray-400 text-sm">
           <tr>

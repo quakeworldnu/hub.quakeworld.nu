@@ -7,7 +7,7 @@ import { TwitchButton } from "./twitch-button";
 
 const ServersStreams = React.memo((props: { server: Server }) => {
   const { server } = props;
-  // polled by <FeaturedStreams /> (site header)
+  // polled by <TwitchStreamsPoller /> (site header)
   const allStreams = useTwitchStreams();
   const streamsOnServer = allStreams.filter((s) =>
     hasClient(server, streamClientName(s)),
@@ -21,7 +21,7 @@ const ServersStreams = React.memo((props: { server: Server }) => {
     <TwitchButton
       key={stream.user_login}
       login={stream.user_login}
-      channel={stream.user_name}
+      label={streamClientName(stream)}
       viewers={stream.viewer_count}
     />
   ));

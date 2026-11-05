@@ -8,21 +8,15 @@ const themeTwitch = {
 };
 
 type TwitchButtonProps = {
-  channel?: string;
-  login?: string;
+  label: string;
+  login: string;
   title?: string;
   viewers?: number;
   className?: string;
 };
 
 export const TwitchButton = (props: TwitchButtonProps) => {
-  const {
-    channel = "",
-    login = channel,
-    title = "",
-    viewers = 0,
-    className = "",
-  } = props;
+  const { label, login, title = "", viewers = 0, className = "" } = props;
 
   return (
     <a
@@ -43,7 +37,7 @@ export const TwitchButton = (props: TwitchButtonProps) => {
             className="inline"
           />
         )}
-        <strong>{channel}</strong>
+        <strong>{label}</strong>
         {viewers > 0 && (
           <span className="text-gray-400 text-xs">({viewers})</span>
         )}

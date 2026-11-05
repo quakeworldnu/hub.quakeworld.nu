@@ -17,7 +17,7 @@ export const ServersPage = () => {
   return (
     <>
       <SiteHeader />
-      <QWLeagueBanner stats={qwleagueStats} className="mt-4 3xl:hidden" />
+      <QWLeagueBanner stats={qwleagueStats} className="mb-4 3xl:hidden" />
       <div className="3xl:flex 3xl:gap-x-8 4xl:gap-x-10">
         <div className="grow">
           <Servers />
@@ -27,7 +27,7 @@ export const ServersPage = () => {
           <HorizontalSeparator />
         </div>
 
-        <div className="flex flex-row flex-wrap my-4 gap-y-6 gap-x-8 3xl:w-96 3xl:flex-col">
+        <div className="flex flex-row flex-wrap mb-4 gap-y-6 gap-x-8 3xl:w-96 3xl:flex-col">
           <div className="hidden 3xl:block">
             <QWLeague stats={qwleagueStats} />
           </div>
