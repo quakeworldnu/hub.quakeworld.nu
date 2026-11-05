@@ -6,11 +6,11 @@ import {
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import clsx from "clsx";
-import { GlobalShowScoresToggle } from "@/components/scoreboard/global-show-scores-toggle";
 import { useGameSettings } from "@/features/demo-browser/providers/browser-settings";
 import { useGames } from "@/features/demo-browser/providers/games";
 import { DisplayModeBar } from "./display-mode-bar";
 import { GameModeBar } from "./game-mode-bar";
+import { GlobalShowScoresToggle } from "./global-show-scores-toggle";
 import { Pagination } from "./pagination";
 import { QwleagueToggle } from "./qwleague-toggle";
 import { normalizeLowerTrim, SearchInput } from "./search-input";

@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import type { FormEvent, MouseEvent } from "react";
 import { useRef } from "react";
-import { GlobalShowScoresToggle } from "@/components/scoreboard/global-show-scores-toggle";
 import { lightDismissFallback, useModalState } from "@/components/ui/dialog";
 import {
   equalsDefaultFilters,
@@ -15,6 +14,7 @@ import {
   useServerFilters,
   useShowSettings,
 } from "@/stores/settings";
+import { ShowServerScoresToggle } from "./show-server-scores-toggle";
 
 export const SettingsDrawer = () => {
   const showSettings = useShowSettings();
@@ -100,7 +100,7 @@ export const ServerSettings = () => {
           {/* larger screens have the toggle in the site navigation */}
           {"/" === location.pathname && (
             <div className="sm:hidden -mx-2 -my-2">
-              <GlobalShowScoresToggle />
+              <ShowServerScoresToggle />
             </div>
           )}
 

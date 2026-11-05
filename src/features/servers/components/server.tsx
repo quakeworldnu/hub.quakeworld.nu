@@ -7,7 +7,7 @@ import { ServerAddress } from "@/components/server/server-address";
 import ServerStreams from "@/components/streams/server-streams";
 import { PrimaryButton, SecondaryButton } from "@/components/ui/buttons";
 import { QuakeText } from "@/components/ui/quake-text";
-import { useShowScores } from "@/hooks/use-show-scores";
+import { useShowServerScores } from "@/features/servers/hooks/use-show-server-scores";
 import {
   freePlayerSlots,
   freeSpectatorSlots,
@@ -297,7 +297,7 @@ const KtxVersion = React.memo((props: { version: string }) => {
 // memo: unchanged servers keep their object identity between polls (rtk query structural sharing)
 export const Server = React.memo((props: { server: ServerType }) => {
   const { server } = props;
-  const [showScores] = useShowScores();
+  const [showScores] = useShowServerScores();
 
   return (
     <div className={`w-full flex flex-col ${server.meta.wrapperClassNames}`}>

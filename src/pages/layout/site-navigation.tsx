@@ -1,6 +1,6 @@
 import clsx from "clsx";
-import { GlobalShowScoresToggle } from "@/components/scoreboard/global-show-scores-toggle";
 import { SettingsToggleButton } from "@/features/servers/components/server-filters";
+import { ShowServerScoresToggle } from "@/features/servers/components/show-server-scores-toggle";
 import { isBot } from "@/lib/qworld/server";
 import { useFilteredServers } from "@/lib/qworld/server-hooks";
 import { totalSpectatorCount } from "@/lib/qworld/server-utils";
@@ -66,7 +66,7 @@ export default function SiteNavigation() {
       </div>
       {"/" === location.pathname && (
         <div className="hidden sm:block ml-auto lg:ml-2">
-          <GlobalShowScoresToggle />
+          <ShowServerScoresToggle />
         </div>
       )}
     </div>
