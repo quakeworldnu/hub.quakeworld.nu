@@ -99,7 +99,7 @@ export const ServerSettings = () => {
 
           {/* larger screens have the toggle in the site navigation */}
           {"/" === location.pathname && (
-            <div className="sm:hidden -mx-2 -my-2">
+            <div className="sm:hidden -mx-2 -mt-2 mb-4">
               <ShowServerScoresToggle />
             </div>
           )}
