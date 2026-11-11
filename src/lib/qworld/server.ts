@@ -1,4 +1,5 @@
 import { type GeoByIp, geoByIpOrEmpty } from "./geo";
+import { isRadomskoHost, radomskoGeo } from "./radomsko";
 import { isQwleagueOfficial } from "./server-utils";
 import type {
   Bot,
@@ -27,7 +28,14 @@ export const toServer = (gameServer: GameServer, geo: GeoByIp): Server => {
       (s) => !isBot(s) && s.name.ascii !== "[ServeMe]",
     ),
   };
-  return { ...server, meta: toMeta(server, geoByIpOrEmpty(geo, server.ip)) };
+  return { ...server, meta: toMeta(server, serverGeo(server, geo)) };
+};
+
+const serverGeo = (server: GameServer, geo: GeoByIp): Geo => {
+  if (isRadomskoHost(server.info.hostname, server.info.hostport)) {
+    return radomskoGeo;
+  }
+  return geoByIpOrEmpty(geo, server.ip);
 };
 
 const toInt = (value: string | undefined): number =>

@@ -13,6 +13,7 @@ import { GameModeBar } from "./game-mode-bar";
 import { GlobalShowScoresToggle } from "./global-show-scores-toggle";
 import { Pagination } from "./pagination";
 import { QwleagueToggle } from "./qwleague-toggle";
+import { RadomskoToggle } from "./radomsko-toggle";
 import { normalizeLowerTrim, SearchInput } from "./search-input";
 import { Timeframe } from "./timeframe";
 
@@ -30,6 +31,7 @@ export const Toolbar = () => {
       <GlobalShowScoresToggle />
       <GameModeBar />
       <QwleagueToggle />
+      <RadomskoToggle />
       <SearchInput
         icon={faUser}
         title="Player(s), separate with space"

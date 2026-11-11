@@ -1,9 +1,17 @@
+import {
+  isRadomskoServer,
+  useRadomskoFilter,
+} from "@/features/servers/hooks/use-radomsko-filter";
 import { useServers } from "@/lib/qworld/queries";
 import { useFilteredServers } from "@/lib/qworld/server-hooks";
 import { Server } from "./server";
 
 export default function Servers() {
-  const servers = useFilteredServers();
+  const filteredServers = useFilteredServers();
+  const [onlyRadomsko] = useRadomskoFilter();
+  const servers = onlyRadomsko
+    ? filteredServers.filter(isRadomskoServer)
+    : filteredServers;
 
   return (
     <div className="mb-6">

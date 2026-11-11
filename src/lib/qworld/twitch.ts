@@ -53,13 +53,20 @@ export const streamers: Record<string, string> = {
   zorakwar: "Zorak",
 };
 
+// extra highlighted streams (radomsko lan), twitch logins
+export const highlightedStreamers = ["badsebitv", "badsebitv2"];
+
+export const isHighlightedStream = (stream: TwitchStream): boolean =>
+  highlightedStreamers.includes(stream.user_login.toLowerCase());
+
 export const isFeaturedStream = (stream: TwitchStream): boolean =>
   stream.user_login in streamers;
 
-// keeps the existing order within each group
+// highlighted, then featured, then the rest; keeps the existing order within each group
 export const featuredFirst = (streams: TwitchStream[]): TwitchStream[] => [
-  ...streams.filter(isFeaturedStream),
-  ...streams.filter((s) => !isFeaturedStream(s)),
+  ...streams.filter(isHighlightedStream),
+  ...streams.filter((s) => !isHighlightedStream(s) && isFeaturedStream(s)),
+  ...streams.filter((s) => !isHighlightedStream(s) && !isFeaturedStream(s)),
 ];
 
 // in-game name of the streamer
@@ -80,8 +87,10 @@ if (import.meta.vitest) {
       stream("vikpe"),
       stream("unknown_b"),
       stream("bps__"),
+      stream("badsebitv2"),
     ];
     expect(featuredFirst(streams).map((s) => s.user_login)).toEqual([
+      "badsebitv2",
       "vikpe",
       "bps__",
       "unknown_a",

@@ -14,6 +14,7 @@ import {
   useServerFilters,
   useShowSettings,
 } from "@/stores/settings";
+import { RadomskoToggle } from "./radomsko-toggle";
 import { ShowServerScoresToggle } from "./show-server-scores-toggle";
 
 export const SettingsDrawer = () => {
@@ -99,8 +100,9 @@ export const ServerSettings = () => {
 
           {/* larger screens have the toggle in the site navigation */}
           {"/" === location.pathname && (
-            <div className="xl:hidden -mx-2 -mt-2 mb-4">
+            <div className="xl:hidden flex flex-wrap items-center -mx-2 -mt-2 mb-4">
               <ShowServerScoresToggle />
+              <RadomskoToggle />
             </div>
           )}
 

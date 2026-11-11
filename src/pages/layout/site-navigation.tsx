@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { RadomskoToggle } from "@/features/servers/components/radomsko-toggle";
 import { SettingsToggleButton } from "@/features/servers/components/server-filters";
 import { ShowServerScoresToggle } from "@/features/servers/components/show-server-scores-toggle";
 import { isBot } from "@/lib/qworld/server";
@@ -60,8 +61,9 @@ export default function SiteNavigation() {
         <PageSettings />
       </div>
       {"/" === location.pathname && (
-        <div className="hidden xl:block ml-2">
+        <div className="hidden xl:flex items-center ml-2">
           <ShowServerScoresToggle />
+          <RadomskoToggle />
         </div>
       )}
     </div>
