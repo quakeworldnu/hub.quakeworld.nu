@@ -5,11 +5,14 @@ import type { Lastscores as LastscoresEntry } from "@/lib/qworld/lastscores";
 import { useLastscores } from "@/lib/qworld/queries";
 import { LastscoresScoreboard } from "./lastscores-scoreboard";
 
+// address: api lookup, connectAddress: links (demo download/stream)
 export const Lastscores = ({
   address,
+  connectAddress = address,
   onClose,
 }: {
   address: string;
+  connectAddress?: string;
   onClose: () => void;
 }) => {
   const { data, isLoading, isSuccess, isError } = useLastscores(address);
@@ -71,7 +74,7 @@ export const Lastscores = ({
                     key={index}
                     lastscores={lastscores}
                     showAllScores={showAllScores}
-                    address={address}
+                    address={connectAddress}
                   />
                 ))}
               </tbody>

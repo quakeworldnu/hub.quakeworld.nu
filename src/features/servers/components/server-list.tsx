@@ -395,8 +395,11 @@ const ActionMenu = ({ server }: { server: Server }) => {
   useEventListener("keydown", (e) => "Escape" === e.key && setIsOpen(false));
 
   const actions = [
-    { label: "Join", href: `qw://${server.address}/` },
-    { label: "Spectate", href: `qw://${server.address}/observe` },
+    { label: "Join", href: `qw://${server.meta.connectAddress}/` },
+    {
+      label: "Spectate",
+      href: `qw://${server.meta.connectAddress}/observe`,
+    },
     ...(server.qtv_stream
       ? [
           { label: "QTV", href: `qw://${server.qtv_stream.url}/qtvplay` },

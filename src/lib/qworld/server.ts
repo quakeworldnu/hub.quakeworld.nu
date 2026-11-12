@@ -1,5 +1,5 @@
 import { type GeoByIp, geoByIpOrEmpty } from "./geo";
-import { isRadomskoHost, radomskoGeo } from "./radomsko";
+import { isRadomskoHost, radomskoGeo, toRadomskoAddress } from "./radomsko";
 import { isQwleagueOfficial } from "./server-utils";
 import type {
   Bot,
@@ -19,6 +19,10 @@ export const isGameServer = (server: { server_type: string }): boolean =>
 
 // v1 game server => hub server (v1 game server + meta)
 export const toServer = (gameServer: GameServer, geo: GeoByIp): Server => {
+  const isRadomsko = isRadomskoHost(
+    gameServer.info.hostname,
+    gameServer.info.hostport,
+  );
   const server: GameServer = {
     ...gameServer,
     players: gameServer.players.filter(
@@ -28,7 +32,19 @@ export const toServer = (gameServer: GameServer, geo: GeoByIp): Server => {
       (s) => !isBot(s) && s.name.ascii !== "[ServeMe]",
     ),
   };
-  return { ...server, meta: toMeta(server, serverGeo(server, geo)) };
+  // lan servers: hostname instead of ip in links (qtv)
+  if (isRadomsko && server.qtv_stream) {
+    server.qtv_stream = {
+      ...server.qtv_stream,
+      url: toRadomskoAddress(server.qtv_stream.url, server.ip),
+    };
+  }
+
+  const meta = toMeta(server, serverGeo(server, geo));
+  const connectAddress = isRadomsko
+    ? toRadomskoAddress(server.address, server.ip)
+    : server.address;
+  return { ...server, meta: { ...meta, connectAddress } };
 };
 
 const serverGeo = (server: GameServer, geo: GeoByIp): Geo => {
@@ -41,7 +57,10 @@ const serverGeo = (server: GameServer, geo: GeoByIp): Geo => {
 const toInt = (value: string | undefined): number =>
   Number.parseInt(value ?? "0", 10) || 0;
 
-const toMeta = (server: GameServer, geo: Geo): ServerMeta => {
+const toMeta = (
+  server: GameServer,
+  geo: Geo,
+): Omit<ServerMeta, "connectAddress"> => {
   const { info } = server;
   const mode = server.game_mod ?? server.player_mode ?? gamedirMode(info);
   const statusText = info.status ?? "";

@@ -102,6 +102,7 @@ export type ServerMeta = {
   time: { total: number; elapsed: number; remaining: number };
   geo: Geo;
   hostport: string;
+  connectAddress: string; // for links/clipboard (address, or hostname for e.g. lan servers)
   addressTitle: string;
   spectatorText: string;
   matchtag: string;

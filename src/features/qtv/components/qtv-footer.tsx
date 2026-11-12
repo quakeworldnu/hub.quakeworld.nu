@@ -72,7 +72,7 @@ export function QtvPlayerFooter() {
           </button>
           <div className="hidden sm:flex gap-3 h-6 md:h-8 text-xs">
             <SecondaryButton
-              href={`qw://${server.address}/`}
+              href={`qw://${server.meta.connectAddress}/`}
               className="flex items-center px-2"
               title="Join as player"
             >
@@ -81,7 +81,7 @@ export function QtvPlayerFooter() {
             </SecondaryButton>
 
             <SecondaryButton
-              href={`qw://${server.address}/observe`}
+              href={`qw://${server.meta.connectAddress}/observe`}
               count={server.spectators.length}
               title="Join as spectator"
             >

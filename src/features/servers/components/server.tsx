@@ -54,7 +54,7 @@ const ServerHeader = (props: { server: ServerType }) => {
         />
         <div className="hidden sm:flex">
           <JoinButtonEl
-            href={`qw://${server.address}/`}
+            href={`qw://${server.meta.connectAddress}/`}
             className="flex items-center px-5 text-lg rounded-lg"
             title="Join as player"
           >
@@ -117,6 +117,7 @@ export const ServerBody = (props: {
     return (
       <Lastscores
         address={server.address}
+        connectAddress={server.meta.connectAddress}
         onClose={() => setView(VIEWS.Scoreboard)}
       />
     );
@@ -217,7 +218,7 @@ export const SpectatorButtons = (props: { server: ServerType }) => {
       {freeSpectatorSlots(server) > 0 && (
         <div className="hidden sm:block sm:grow">
           <SecondaryButton
-            href={`qw://${server.address}/observe`}
+            href={`qw://${server.meta.connectAddress}/observe`}
             count={server.spectators.length}
             title="Join as spectator"
           >
@@ -335,7 +336,7 @@ const ServerInfoDetails = (props: {
             {server.info.hostname || server.meta.addressTitle}
           </div>
           <CopyAddressButton
-            address={server.address}
+            address={server.meta.connectAddress}
             className="-ml-1.5 mt-0.5"
           />
         </div>
