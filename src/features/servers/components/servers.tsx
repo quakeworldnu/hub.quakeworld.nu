@@ -35,11 +35,11 @@ export default function Servers() {
 
   if ("list" === presentation) {
     return (
-      <div className="mb-6 flex flex-col lg:flex-row gap-6 items-start">
-        <div className="w-full lg:w-auto lg:flex-1 min-w-0">
+      <div className="mb-6 flex flex-col xl:flex-row gap-6 items-start">
+        <div className="w-full xl:w-auto xl:flex-1 min-w-0">
           <ServerList servers={servers} preview={preview} />
         </div>
-        <div className="w-full lg:w-auto lg:shrink-0 lg:min-w-[240px] lg:max-w-[33%]">
+        <div className="hidden xl:block shrink-0 min-w-[240px] max-w-[33%]">
           <ClientList servers={servers} preview={preview} />
         </div>
         <ServerPreviewPortal preview={preview} servers={servers} />
