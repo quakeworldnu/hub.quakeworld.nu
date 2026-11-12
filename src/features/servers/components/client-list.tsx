@@ -58,10 +58,7 @@ export const ClientList = ({
       <div className="px-2 py-1.5 text-xs text-gray-400 border-b border-b-slate-700">
         Clients ({clients.length})
       </div>
-      <div
-        className="max-w-full overflow-x-auto"
-        onScroll={preview.hide}
-      >
+      <div className="max-w-full overflow-x-auto" onScroll={preview.hide}>
         {clients.map(({ name, status, server }, index) => (
           <div
             key={`${server.address}-${status}-${name.unicode}-${index}`}
