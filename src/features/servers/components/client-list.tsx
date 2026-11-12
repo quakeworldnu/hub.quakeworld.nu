@@ -59,7 +59,7 @@ export const ClientList = ({
         Clients ({clients.length})
       </div>
       <div
-        className="max-w-full max-h-[80vh] overflow-auto"
+        className="max-w-full overflow-x-auto"
         onScroll={preview.hide}
       >
         {clients.map(({ name, status, server }, index) => (
