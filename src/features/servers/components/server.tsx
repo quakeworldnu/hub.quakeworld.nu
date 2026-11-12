@@ -3,6 +3,7 @@ import { Mapshot } from "@/components/scoreboard/mapshot";
 import { Matchtag } from "@/components/scoreboard/matchtag";
 import { QWLeagueBanner } from "@/components/scoreboard/qwleague-banner";
 import { Scoreboard } from "@/components/scoreboard/scoreboard";
+import { CopyAddressButton } from "@/components/server/copy-address-button";
 import { ServerAddress } from "@/components/server/server-address";
 import ServerStreams from "@/components/streams/server-streams";
 import { PrimaryButton, SecondaryButton } from "@/components/ui/buttons";
@@ -317,39 +318,6 @@ const ServerVersion = React.memo((props: { server: ServerType }) => {
   );
 });
 
-// ghost button, copies the address to the clipboard
-const CopyAddressButton = (props: { address: string }) => {
-  const { address } = props;
-  const [isCopied, setIsCopied] = useState(false);
-
-  function onClick() {
-    navigator.clipboard.writeText(address);
-    setIsCopied(true);
-    setTimeout(() => setIsCopied(false), 1500);
-  }
-
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      title="Copy IP to clipboard"
-      className="flex items-center gap-1.5 -ml-1.5 mt-0.5 px-1.5 py-0.5 rounded font-mono text-xs text-gray-400 hover:text-white hover:bg-white/10 cursor-pointer"
-    >
-      {address}
-      {isCopied ? (
-        <span className="text-green-400 font-sans">Copied</span>
-      ) : (
-        <img
-          src="https://hub.quakeworld.nu/assets/img/icons/content_paste.svg"
-          width="12"
-          alt=""
-          className="app-icon inline"
-        />
-      )}
-    </button>
-  );
-};
-
 const ServerInfoDetails = (props: {
   server: ServerType;
   onClose: () => void;
@@ -366,7 +334,10 @@ const ServerInfoDetails = (props: {
           <div className="font-bold break-all">
             {server.info.hostname || server.meta.addressTitle}
           </div>
-          <CopyAddressButton address={server.address} />
+          <CopyAddressButton
+            address={server.address}
+            className="-ml-1.5 mt-0.5"
+          />
         </div>
         <button
           type="button"

@@ -38,15 +38,30 @@ export async function fetchServer(address: string): Promise<Server> {
   return toServer(gameServer, geo);
 }
 
-export async function fetchServers(): Promise<Server[]> {
+// all = every game server, active = with players, empty = without players
+export type ServerListShow = "all" | "active" | "empty";
+
+const serverListParams: Record<ServerListShow, string> = {
+  all: "",
+  active: "&min_players=1",
+  empty: "&max_players=0",
+};
+
+export async function fetchServers(
+  show: ServerListShow = "active",
+): Promise<Server[]> {
   const [gameServers, geo] = await Promise.all([
-    get<GameServer[]>("servers?server_type=game&min_clients=1"),
+    get<GameServer[]>(`servers?server_type=game${serverListParams[show]}`),
     fetchGeo(),
   ]);
 
-  const servers: Server[] = gameServers
-    .map((s) => toServer(s, geo))
-    .filter((s: Server) => s.players.length + s.spectators.length > 0);
+  let servers: Server[] = gameServers.map((s) => toServer(s, geo));
+
+  // ignored players (e.g. h1.nu) are removed in toServer
+  if ("active" === show) {
+    servers = servers.filter((s) => s.players.length > 0);
+  }
+
   servers.sort(compareServers);
   return servers;
 }

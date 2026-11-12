@@ -4,6 +4,7 @@ import {
   fetchServer,
   fetchServers,
   fetchTwitchStreams,
+  type ServerListShow,
 } from "./api";
 import type { Server, TwitchStream } from "./types";
 
@@ -29,10 +30,13 @@ function pollingOptions(polling?: Polling) {
 const noServers: Server[] = [];
 const noStreams: TwitchStream[] = [];
 
-export function useServers(polling?: Polling): Server[] {
+export function useServers(
+  polling?: Polling,
+  show: ServerListShow = "active",
+): Server[] {
   const { data } = useQuery({
-    queryKey: ["qworld", "servers"],
-    queryFn: fetchServers,
+    queryKey: ["qworld", "servers", show],
+    queryFn: () => fetchServers(show),
     ...pollingOptions(polling),
   });
   return data ?? noServers;

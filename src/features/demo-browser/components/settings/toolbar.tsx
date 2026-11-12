@@ -6,6 +6,7 @@ import {
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import clsx from "clsx";
+import { normalizeLowerTrim, SearchInput } from "@/components/ui/search-input";
 import { useGameSettings } from "@/features/demo-browser/providers/browser-settings";
 import { useGames } from "@/features/demo-browser/providers/games";
 import { DisplayModeBar } from "./display-mode-bar";
@@ -14,7 +15,6 @@ import { GlobalShowScoresToggle } from "./global-show-scores-toggle";
 import { Pagination } from "./pagination";
 import { QwleagueToggle } from "./qwleague-toggle";
 import { RadomskoToggle } from "./radomsko-toggle";
-import { normalizeLowerTrim, SearchInput } from "./search-input";
 import { Timeframe } from "./timeframe";
 
 export const Toolbar = () => {

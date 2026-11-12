@@ -1,17 +1,51 @@
+import { useMemo } from "react";
 import {
   isRadomskoServer,
   useRadomskoFilter,
 } from "@/features/servers/hooks/use-radomsko-filter";
+import { useServerListShow } from "@/features/servers/hooks/use-server-list-show";
+import { useServerPresentation } from "@/features/servers/hooks/use-server-presentation";
 import { useServers } from "@/lib/qworld/queries";
 import { useFilteredServers } from "@/lib/qworld/server-hooks";
+import { searchServers } from "@/lib/qworld/server-search";
+import { useServerSearch } from "@/stores/settings";
+import { ClientList } from "./client-list";
 import { Server } from "./server";
+import { ServerList } from "./server-list";
+import { ServerPreviewPortal, useServerPreview } from "./server-preview";
 
 export default function Servers() {
-  const filteredServers = useFilteredServers();
+  const [show] = useServerListShow();
+  const [presentation] = useServerPresentation();
+  const preview = useServerPreview();
+  // "active" is polled by <ServerPoller />, other lists poll their own query
+  useServers(
+    "active" === show ? undefined : { interval: 5000, refetchOnFocus: true },
+    show,
+  );
+  const filteredServers = useFilteredServers(show);
   const [onlyRadomsko] = useRadomskoFilter();
-  const servers = onlyRadomsko
-    ? filteredServers.filter(isRadomskoServer)
-    : filteredServers;
+  const search = useServerSearch();
+  const servers = useMemo(() => {
+    const result = onlyRadomsko
+      ? filteredServers.filter(isRadomskoServer)
+      : filteredServers;
+    return searchServers(result, search);
+  }, [filteredServers, onlyRadomsko, search]);
+
+  if ("list" === presentation) {
+    return (
+      <div className="mb-6 flex flex-col lg:flex-row gap-6 items-start">
+        <div className="w-full lg:w-auto lg:flex-1 min-w-0">
+          <ServerList servers={servers} preview={preview} />
+        </div>
+        <div className="w-full lg:w-auto lg:shrink-0 lg:min-w-[240px] lg:max-w-[33%]">
+          <ClientList servers={servers} preview={preview} />
+        </div>
+        <ServerPreviewPortal preview={preview} servers={servers} />
+      </div>
+    );
+  }
 
   return (
     <div className="mb-6">

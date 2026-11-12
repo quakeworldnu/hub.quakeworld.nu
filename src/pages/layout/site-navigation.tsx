@@ -1,28 +1,11 @@
 import clsx from "clsx";
-import { RadomskoToggle } from "@/features/servers/components/radomsko-toggle";
-import { SettingsToggleButton } from "@/features/servers/components/server-filters";
-import { ShowServerScoresToggle } from "@/features/servers/components/show-server-scores-toggle";
-import { isBot } from "@/lib/qworld/server";
 import { useFilteredServers } from "@/lib/qworld/server-hooks";
-import { totalSpectatorCount } from "@/lib/qworld/server-utils";
 
 export default function SiteNavigation() {
   const servers = useFilteredServers();
 
   const serverCount = servers.length;
-  let playerCount = 0;
-  let spectatorCount = 0;
-  let qtvCount = 0;
-
-  for (let i = 0; i < serverCount; i++) {
-    const server = servers[i];
-    playerCount += server.players.filter((p) => !isBot(p)).length;
-    spectatorCount += totalSpectatorCount(server);
-
-    if (server.qtv_stream) {
-      qtvCount++;
-    }
-  }
+  const qtvCount = servers.filter((s) => s.qtv_stream).length;
 
   const pageLinks = [
     {
@@ -34,11 +17,6 @@ export default function SiteNavigation() {
       title: "QTV",
       description: qtvCount,
       url: "/qtv/",
-    },
-    {
-      title: "Players",
-      description: `${playerCount} players, ${spectatorCount} spectators`,
-      url: "/players/",
     },
     {
       title: "Demos / Recent games",
@@ -58,31 +36,10 @@ export default function SiteNavigation() {
             url={p.url}
           />
         ))}
-        <PageSettings />
       </div>
-      {"/" === location.pathname && (
-        <div className="hidden xl:flex items-center ml-2">
-          <ShowServerScoresToggle />
-          <RadomskoToggle />
-        </div>
-      )}
     </div>
   );
 }
-
-const PageSettings = () => {
-  const path = location.pathname;
-
-  if (["/", "/players/"].includes(path)) {
-    return (
-      <span className="ml-auto sm:ml-4">
-        <SettingsToggleButton />
-      </span>
-    );
-  }
-
-  return null;
-};
 
 const NavLink = ({
   title,

@@ -9,11 +9,13 @@ import {
 type Settings = {
   showSettings: boolean;
   serverFilters: ServerFilters;
+  serverSearch: string; // freetext, not persisted
 };
 
 let settings: Settings = {
   showSettings: false,
   serverFilters: getInitialServerFilters(),
+  serverSearch: "",
 };
 const listeners = new Set<() => void>();
 
@@ -46,4 +48,12 @@ export function setShowSettings(showSettings: boolean) {
 export function setServerFilters(serverFilters: ServerFilters) {
   localStorageSet("serverFilters", Object.assign({}, serverFilters));
   update({ serverFilters });
+}
+
+export function useServerSearch(): string {
+  return useSyncExternalStore(subscribe, () => settings.serverSearch);
+}
+
+export function setServerSearch(serverSearch: string) {
+  update({ serverSearch });
 }

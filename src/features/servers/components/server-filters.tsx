@@ -14,7 +14,6 @@ import {
   useServerFilters,
   useShowSettings,
 } from "@/stores/settings";
-import { RadomskoToggle } from "./radomsko-toggle";
 import { ShowServerScoresToggle } from "./show-server-scores-toggle";
 
 export const SettingsDrawer = () => {
@@ -29,7 +28,7 @@ export const SettingsDrawer = () => {
   return (
     <dialog
       ref={ref}
-      aria-label="Server filters"
+      aria-label="Additional filters"
       className="app-drawer"
       onClose={onClose}
       onClick={lightDismissFallback}
@@ -84,7 +83,7 @@ export const ServerSettings = () => {
       <div>
         <div className="space-y-4" id="SettingsForm">
           <div className="flex justify-between items-center border-b border-b-slate-700 pb-2">
-            <div className="font-bold">Server filters</div>
+            <div className="font-bold">Additional filters</div>
             <button
               type="button"
               onClick={onClose}
@@ -98,13 +97,9 @@ export const ServerSettings = () => {
             </button>
           </div>
 
-          {/* larger screens have the toggle in the site navigation */}
-          {"/" === location.pathname && (
-            <div className="xl:hidden flex flex-wrap items-center -mx-2 -mt-2 mb-4">
-              <ShowServerScoresToggle />
-              <RadomskoToggle />
-            </div>
-          )}
+          <div className="-mx-2 -mt-2 mb-2">
+            <ShowServerScoresToggle />
+          </div>
 
           <div className="text-sm">
             <Checkbox
@@ -202,7 +197,7 @@ export const SettingsToggleButton = () => {
       type="button"
       onClick={showSettings}
       className={clsx(
-        "flex items-center px-1.5 py-1 ml-auto rounded text-gray-300 text-xs border",
+        "flex items-center px-1.5 py-1 rounded text-gray-300 text-xs border",
         {
           "bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-slate-200 border-slate-700 hover:border-slate-500":
             !hasModifiedFilters,
@@ -210,7 +205,7 @@ export const SettingsToggleButton = () => {
             hasModifiedFilters,
         },
       )}
-      title="Server filters"
+      title="Additional filters"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -224,7 +219,7 @@ export const SettingsToggleButton = () => {
           fill="currentColor"
         />
       </svg>
-      <span className="ml-1 hidden sm:inline">Filters</span>
+      <span className="ml-1 hidden sm:inline">Additional filters</span>
     </button>
   );
 };

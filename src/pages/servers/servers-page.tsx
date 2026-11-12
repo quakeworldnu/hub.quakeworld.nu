@@ -6,6 +6,7 @@ import {
   QWLeagueBanner,
 } from "@/features/qwleague/components/qwleague";
 import { ScheduledGames } from "@/features/scheduled-games/components/scheduled-games";
+import { ServerToolbar } from "@/features/servers/components/server-toolbar";
 import Servers, { ServerPoller } from "@/features/servers/components/servers";
 import { KoFiGoal } from "@/features/support-goal/components/ko-fi-goal";
 import { SiteFooter } from "@/pages/layout/site-footer";
@@ -20,6 +21,7 @@ export const ServersPage = () => {
       <QWLeagueBanner stats={qwleagueStats} className="mb-4 3xl:hidden" />
       <div className="3xl:flex 3xl:gap-x-8 4xl:gap-x-10">
         <div className="grow">
+          <ServerToolbar />
           <Servers />
         </div>
 
