@@ -6,7 +6,8 @@ import { Scoreboard } from "@/components/scoreboard/scoreboard";
 import { ServerAddress } from "@/components/server/server-address";
 import ServerStreams from "@/components/streams/server-streams";
 import { PrimaryButton, SecondaryButton } from "@/components/ui/buttons";
-import { QuakeText } from "@/components/ui/quake-text";
+import { Dialog } from "@/components/ui/dialog";
+import { QuakeText, quakeStringToHtml } from "@/components/ui/quake-text";
 import { useShowServerScores } from "@/features/servers/hooks/use-show-server-scores";
 import {
   freePlayerSlots,
@@ -263,7 +264,7 @@ const ServerFooter = (props: { server: ServerType }) => {
         <div className="flex items-center text-xs justify-between">
           <ServerAddress server={server} />
 
-          {server.info.ktxver && <KtxVersion version={server.info.ktxver} />}
+          <ServerVersion server={server} />
 
           {server.qtv_stream && (
             <SecondaryButton
@@ -280,19 +281,221 @@ const ServerFooter = (props: { server: ServerType }) => {
   );
 };
 
-const KtxVersion = React.memo((props: { version: string }) => {
-  const { version } = props;
-  const label = `KTX ${version}`;
+const truncate = (text: string, maxLength: number): string =>
+  text.length > maxLength ? `${text.substring(0, maxLength - 1)}…` : text;
+
+// "KTX 1.42" or the server's *version, opens a dialog with all serverinfo
+const ServerVersion = React.memo((props: { server: ServerType }) => {
+  const { server } = props;
+  const [isOpen, setIsOpen] = useState(false);
+  const { ktxver, "*version": version } = server.info;
+  const label = ktxver ? `KTX ${ktxver}` : (version ?? "");
+
+  if (!label) {
+    return null;
+  }
 
   return (
-    <div
-      className="hidden sm:block text-right w-20 overflow-hidden whitespace-nowrap text-ellipsis text-white/40"
-      title={label}
-    >
-      {label}
-    </div>
+    <>
+      <button
+        type="button"
+        className="text-right whitespace-nowrap shrink-0 ml-2 text-white/40 hover:text-white cursor-pointer"
+        title={`${label} (show server info)`}
+        onClick={() => setIsOpen(true)}
+      >
+        {truncate(label, 16)}
+      </button>
+      <Dialog
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+        label="Server info"
+        className="animate-contentShow fixed left-[50%] top-[50%] m-0 w-full max-w-4xl max-h-[85vh] translate-x-[-50%] translate-y-[-50%] border border-slate-700 bg-slate-900 text-gray-300 p-5 shadow-lg sm:rounded-lg overflow-auto backdrop:bg-black/80"
+      >
+        <ServerInfoDetails server={server} onClose={() => setIsOpen(false)} />
+      </Dialog>
+    </>
   );
 });
+
+// ghost button, copies the address to the clipboard
+const CopyAddressButton = (props: { address: string }) => {
+  const { address } = props;
+  const [isCopied, setIsCopied] = useState(false);
+
+  function onClick() {
+    navigator.clipboard.writeText(address);
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 1500);
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      title="Copy IP to clipboard"
+      className="flex items-center gap-1.5 -ml-1.5 mt-0.5 px-1.5 py-0.5 rounded font-mono text-xs text-gray-400 hover:text-white hover:bg-white/10 cursor-pointer"
+    >
+      {address}
+      {isCopied ? (
+        <span className="text-green-400 font-sans">Copied</span>
+      ) : (
+        <img
+          src="https://hub.quakeworld.nu/assets/img/icons/content_paste.svg"
+          width="12"
+          alt=""
+          className="app-icon inline"
+        />
+      )}
+    </button>
+  );
+};
+
+const ServerInfoDetails = (props: {
+  server: ServerType;
+  onClose: () => void;
+}) => {
+  const { server, onClose } = props;
+  const entries = Object.entries(server.info).sort(([a], [b]) =>
+    a.localeCompare(b),
+  );
+
+  return (
+    <div className="text-sm">
+      <div className="flex justify-between items-center gap-4 border-b border-b-slate-700 pb-2 mb-3">
+        <div className="min-w-0">
+          <div className="font-bold break-all">
+            {server.info.hostname || server.meta.addressTitle}
+          </div>
+          <CopyAddressButton address={server.address} />
+        </div>
+        <button
+          type="button"
+          onClick={onClose}
+          className="p-1.5 bg-slate-700 hover:bg-slate-600 rounded-full shrink-0"
+          title="Close"
+        >
+          <img
+            src="https://hub.quakeworld.nu/assets/img/icons/close.svg"
+            width={12}
+            height={12}
+            alt="Close"
+          />
+        </button>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <ServerInfoClients server={server} />
+        <table className="w-full text-xs self-start">
+          <tbody>
+            {entries.map(([key, value]) => (
+              <tr key={key} className="odd:bg-white/5">
+                <td className="py-1 px-2 font-mono text-gray-400 align-top whitespace-nowrap">
+                  {key}
+                </td>
+                <td className="py-1 px-2 font-mono break-all">{value}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+// players (highest frags first) and spectators, time = minutes on the server
+const ServerInfoClients = (props: { server: ServerType }) => {
+  const { server } = props;
+  const players = [...server.players].sort((a, b) => b.frags - a.frags);
+  const showTeams = players.some((p) => p.team.ascii.length > 0);
+  const th = "py-1 px-2 font-normal text-gray-400 text-left";
+  const td = "py-1 px-2";
+
+  return (
+    <div className="self-start space-y-4 text-xs">
+      {server.info.map && (
+        <div className="aspect-video rounded overflow-hidden border border-slate-700">
+          <Mapshot map={server.info.map}>
+            <div className="flex items-end h-full p-2 bg-linear-to-t from-black/70 to-transparent to-50%">
+              <span className="font-bold text-sm text-white text-shadow-md">
+                {server.info.map}
+              </span>
+            </div>
+          </Mapshot>
+        </div>
+      )}
+      <table className="w-full">
+        <thead>
+          <tr className="border-b border-b-slate-700">
+            <th className={th}>Player ({players.length})</th>
+            {showTeams && <th className={th}>Team</th>}
+            <th className={`${th} text-right!`}>Frags</th>
+            <th className={`${th} text-right!`}>Ping</th>
+            <th className={`${th} text-right!`}>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          {players.map((p) => (
+            <tr key={p.user_id} className="odd:bg-white/5">
+              <td className={td}>
+                <QuakeText
+                  tag="span"
+                  text={quakeStringToHtml(p.name)}
+                  className="font-mono"
+                />
+                {p.bot && <span className="ml-1 text-gray-500">(bot)</span>}
+              </td>
+              {showTeams && (
+                <td className={td}>
+                  <QuakeText
+                    tag="span"
+                    text={quakeStringToHtml(p.team)}
+                    className="font-mono"
+                  />
+                </td>
+              )}
+              <td className={`${td} text-right`}>{p.frags}</td>
+              <td className={`${td} text-right text-gray-400`}>{p.ping}</td>
+              <td className={`${td} text-right text-gray-400`}>{p.time}m</td>
+            </tr>
+          ))}
+          {0 === players.length && (
+            <tr>
+              <td className={`${td} text-gray-500`} colSpan={5}>
+                No players
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+
+      {server.spectators.length > 0 && (
+        <table className="w-full">
+          <thead>
+            <tr className="border-b border-b-slate-700">
+              <th className={th}>Spectator ({server.spectators.length})</th>
+              <th className={`${th} text-right!`}>Ping</th>
+              <th className={`${th} text-right!`}>Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            {server.spectators.map((s) => (
+              <tr key={s.name.unicode} className="odd:bg-white/5">
+                <td className={td}>
+                  <QuakeText
+                    tag="span"
+                    text={quakeStringToHtml(s.name)}
+                    className="font-mono"
+                  />
+                </td>
+                <td className={`${td} text-right text-gray-400`}>{s.ping}</td>
+                <td className={`${td} text-right text-gray-400`}>{s.time}m</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
+};
 
 // memo: unchanged servers keep their object identity between polls (rtk query structural sharing)
 export const Server = React.memo((props: { server: ServerType }) => {
