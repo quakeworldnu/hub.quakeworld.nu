@@ -8,6 +8,7 @@ import { useServerPresentation } from "@/features/servers/hooks/use-server-prese
 import { useServers } from "@/lib/qworld/queries";
 import { useFilteredServers } from "@/lib/qworld/server-hooks";
 import { searchServers } from "@/lib/qworld/server-search";
+import { useStunPings } from "@/lib/qworld/stun-ping";
 import { useServerSearch } from "@/stores/settings";
 import { ClientList } from "./client-list";
 import { Server } from "./server";
@@ -32,11 +33,13 @@ export default function Servers() {
       : filteredServers;
     return searchServers(result, search);
   }, [filteredServers, onlyRadomsko, search]);
+  // ping column (list) and grid cards, once per ip
+  useStunPings(servers);
 
   if ("list" === presentation) {
     return (
       <div className="mb-6 flex flex-col xl:flex-row gap-6 items-start">
-        <div className="w-full xl:w-auto xl:flex-1 min-w-0">
+        <div className="w-full xl:w-auto xl:flex-1 min-w-0 overflow-x-clip">
           <ServerList servers={servers} preview={preview} />
         </div>
         <div className="hidden xl:block shrink-0 min-w-[240px] max-w-[33%]">

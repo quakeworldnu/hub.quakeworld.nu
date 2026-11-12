@@ -9,7 +9,7 @@ export const ServerAddress = (props: { server: ServerType }) => {
 
   return (
     <div
-      className="server-address flex items-center cursor-pointer text-gray-400"
+      className="server-address flex items-center min-w-0 cursor-pointer text-gray-400"
       onClick={() => navigator.clipboard.writeText(server.meta.hostport)}
       title="Copy IP to clipboard"
     >
@@ -18,7 +18,7 @@ export const ServerAddress = (props: { server: ServerType }) => {
         src="https://hub.quakeworld.nu/assets/img/icons/content_paste.svg"
         width="12"
         alt=""
-        className="app-icon ml-1 inline"
+        className="app-icon ml-1 inline shrink-0"
       />
     </div>
   );
@@ -29,15 +29,15 @@ export const ServerAddressTitle = React.memo(
     const { cc, title } = props;
 
     return (
-      <div className="flex items-center max-w-[260px] truncate">
+      <div className="flex items-center min-w-0 max-w-[260px]" title={title}>
         {cc && (
           <img
             src={getFlagUrl(cc)}
             alt={cc}
-            className="inline h-3 w-auto mr-1.5 mb-px"
+            className="inline h-3 w-auto mr-1.5 mb-px shrink-0"
           />
         )}
-        {title}
+        <span className="truncate">{title}</span>
       </div>
     );
   },

@@ -8,6 +8,7 @@ import { ServerAddress } from "@/components/server/server-address";
 import ServerStreams from "@/components/streams/server-streams";
 import { PrimaryButton, SecondaryButton } from "@/components/ui/buttons";
 import { Dialog } from "@/components/ui/dialog";
+import { PingIndicator } from "@/components/ui/ping-indicator";
 import { QuakeText, quakeStringToHtml } from "@/components/ui/quake-text";
 import { useShowServerScores } from "@/features/servers/hooks/use-show-server-scores";
 import {
@@ -18,6 +19,7 @@ import {
   scoreboardPlayers,
   scoreboardTeams,
 } from "@/lib/qworld/server-utils";
+import { useStunPing } from "@/lib/qworld/stun-ping";
 import type { Server as ServerType } from "@/lib/qworld/types";
 import { Lastscores } from "./lastscores";
 
@@ -263,10 +265,14 @@ const ServerFooter = (props: { server: ServerType }) => {
       <SpectatorButtons server={server} />
 
       <div className="w-full">
-        <div className="flex items-center text-xs justify-between">
+        <div className="flex items-center gap-2 text-xs justify-between">
           <ServerAddress server={server} />
 
-          <ServerVersion server={server} />
+          {/* never wraps, the address is truncated instead */}
+          <div className="flex items-center gap-3 shrink-0 whitespace-nowrap">
+            <ServerVersion server={server} />
+            <ServerPing ip={server.ip} />
+          </div>
 
           {server.qtv_stream && (
             <SecondaryButton
@@ -285,6 +291,21 @@ const ServerFooter = (props: { server: ServerType }) => {
 
 const truncate = (text: string, maxLength: number): string =>
   text.length > maxLength ? `${text.substring(0, maxLength - 1)}…` : text;
+
+// browser => server ping (stun), hidden on mobile (not measured there)
+const ServerPing = (props: { ip: string }) => {
+  const ping = useStunPing(props.ip);
+
+  if (null === ping) {
+    return null;
+  }
+
+  return (
+    <span title="Round trip time from your browser (STUN)">
+      <PingIndicator ms={ping} showUnit className="hidden md:inline-flex" />
+    </span>
+  );
+};
 
 // "KTX 1.42" or the server's *version, opens a dialog with all serverinfo
 const ServerVersion = React.memo((props: { server: ServerType }) => {

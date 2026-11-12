@@ -19,6 +19,7 @@ import {
 } from "usehooks-ts";
 import { useCopyToClipboard } from "@/components/server/copy-address-button";
 import { FontAwesomeIcon } from "@/components/ui/icon";
+import { PingIndicator } from "@/components/ui/ping-indicator";
 import { QuakeText, quakeStringToHtml } from "@/components/ui/quake-text";
 import { isBot } from "@/lib/qworld/server";
 import {
@@ -26,6 +27,7 @@ import {
   statusText,
   totalSpectatorCount,
 } from "@/lib/qworld/server-utils";
+import { getStunPing, useStunPings } from "@/lib/qworld/stun-ping";
 import type { Server } from "@/lib/qworld/types";
 import { getFlagUrl } from "@/utils/flags";
 import type { ServerPreviewState } from "./server-preview";
@@ -37,7 +39,8 @@ type SortKey =
   | "status"
   | "playerNames"
   | "players"
-  | "spectators";
+  | "spectators"
+  | "ping";
 type SortDirection = "asc" | "desc";
 type Sort = { key: SortKey; direction: SortDirection } | null;
 
@@ -58,7 +61,7 @@ const columns: Column[] = [
   {
     key: "hostname",
     label: "Hostname",
-    className: "",
+    className: "w-[35%]",
     defaultDirection: "asc",
     value: (s) => s.meta.addressTitle.toLowerCase(),
   },
@@ -86,7 +89,7 @@ const columns: Column[] = [
   {
     key: "playerNames",
     label: "Players",
-    className: "hidden lg:table-cell",
+    className: "hidden lg:table-cell w-[30%]",
     defaultDirection: "asc",
     value: (s) =>
       s.players
@@ -109,7 +112,27 @@ const columns: Column[] = [
     defaultDirection: "desc",
     value: totalSpectatorCount,
   },
+  {
+    key: "ping",
+    label: "Ping (ms)",
+    className: "hidden md:table-cell text-right w-20",
+    defaultDirection: "asc",
+    value: (s) => {
+      const ping = pingValue(getStunPing(s.ip));
+      return typeof ping === "number" ? ping : "";
+    },
+  },
 ];
+
+// rtt in ms, null = no reply, "pending" = measuring, undefined = not supported
+type Ping = number | null | "pending" | undefined;
+
+const pingValue = (result: ReturnType<typeof getStunPing>): Ping => {
+  if (!result) {
+    return undefined;
+  }
+  return "pending" === result.status ? "pending" : result.rtt;
+};
 
 // empty values (e.g. no players) last regardless of direction, ties keep the original order
 export function sortServers(servers: Server[], sort: Sort): Server[] {
@@ -172,9 +195,11 @@ export const ServerList = ({
   preview: ServerPreviewState;
 }) => {
   const [sort, setSort] = useLocalStorage<Sort>("serversListSort", defaultSort);
+  // pings arrive in the background, re-sort when they do
+  const pingVersion = useStunPings(servers);
   const sortedServers = useMemo(
     () => sortServers(servers, sort),
-    [servers, sort],
+    [servers, sort, pingVersion],
   );
 
   return (
@@ -197,6 +222,7 @@ export const ServerList = ({
           <ServerRow
             key={server.address}
             server={server}
+            ping={pingValue(getStunPing(server.ip))}
             onPreview={preview.show}
             onLeave={preview.scheduleHide}
             onHidePreview={preview.hide}
@@ -253,13 +279,14 @@ const SortableHeader = ({
 // memo: unchanged servers keep their object identity between polls
 type ServerRowProps = {
   server: Server;
+  ping: Ping;
   onPreview: (address: string, e: MouseEvent<HTMLElement>) => void;
   onLeave: () => void;
   onHidePreview: () => void;
 };
 
 const ServerRow = React.memo((props: ServerRowProps) => {
-  const { server, onPreview, onLeave, onHidePreview } = props;
+  const { server, ping, onPreview, onLeave, onHidePreview } = props;
   const map = server.info.map ?? "";
   const cc = qwleagueCountryCode(server.info.hostname) || server.meta.geo.cc;
   const playerCount = server.players.length;
@@ -271,7 +298,7 @@ const ServerRow = React.memo((props: ServerRowProps) => {
       onMouseEnter={(e) => onPreview(server.address, e)}
       onMouseLeave={onLeave}
     >
-      <td className="px-2 py-1">
+      <td className="px-2 py-1 max-w-0">
         <HostnameButton server={server} cc={cc} />
       </td>
       <td className="px-2 py-1 whitespace-nowrap text-gray-300">{map}</td>
@@ -286,7 +313,7 @@ const ServerRow = React.memo((props: ServerRowProps) => {
           ? server.meta.status.description
           : server.meta.status.name}
       </td>
-      <td className="px-2 py-1 hidden lg:table-cell">
+      <td className="px-2 py-1 hidden lg:table-cell max-w-0">
         <PlayerNames server={server} />
       </td>
       <td
@@ -306,6 +333,20 @@ const ServerRow = React.memo((props: ServerRowProps) => {
       >
         {totalSpectatorCount(server)}
       </td>
+      <td
+        className="px-2 py-1 hidden md:table-cell text-right whitespace-nowrap text-xs"
+        title={
+          undefined === ping
+            ? "Ping not available for this server"
+            : "Round trip time from your browser (STUN)"
+        }
+      >
+        {typeof ping === "number" && <PingIndicator ms={ping} />}
+        {"pending" === ping && <span className="text-gray-500">…</span>}
+        {(null === ping || undefined === ping) && (
+          <span className="text-gray-600">–</span>
+        )}
+      </td>
       {/* no preview while using the menu (it would cover the dropdown) */}
       <td className="px-2 py-1 text-right" onMouseEnter={onHidePreview}>
         <ActionMenu server={server} />
@@ -323,7 +364,7 @@ const HostnameButton = ({ server, cc }: { server: Server; cc: string }) => {
       type="button"
       onClick={() => copy(server.meta.hostport)}
       title={`Copy ${server.meta.hostport} to clipboard`}
-      className="flex items-center max-w-[360px] text-left cursor-pointer hover:text-white"
+      className="flex items-center max-w-[min(100%,360px)] text-left cursor-pointer hover:text-white"
     >
       {cc && (
         <img
@@ -374,7 +415,10 @@ const PlayerNames = ({ server }: { server: Server }) => {
   const title = botCount > 0 ? `${names} + ${botText}` : names;
 
   return (
-    <div title={title} className="flex items-center max-w-80 text-xs">
+    <div
+      title={title}
+      className="flex items-center max-w-[min(100%,320px)] text-xs"
+    >
       <QuakeText
         text={html}
         className="truncate whitespace-nowrap min-w-0 text-gray-300"
