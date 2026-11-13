@@ -14,6 +14,7 @@ import {
   useServerFilters,
   useShowSettings,
 } from "@/stores/settings";
+import { ShowServerPingToggle } from "./show-server-ping-toggle";
 import { ShowServerScoresToggle } from "./show-server-scores-toggle";
 
 export const SettingsDrawer = () => {
@@ -99,6 +100,7 @@ export const ServerSettings = () => {
 
           <div className="-mx-2 -mt-2 mb-2">
             <ShowServerScoresToggle />
+            <ShowServerPingToggle />
           </div>
 
           <div className="text-sm">

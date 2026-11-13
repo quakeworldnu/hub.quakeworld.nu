@@ -21,6 +21,7 @@ import { useCopyToClipboard } from "@/components/server/copy-address-button";
 import { FontAwesomeIcon } from "@/components/ui/icon";
 import { PingIndicator } from "@/components/ui/ping-indicator";
 import { QuakeText, quakeStringToHtml } from "@/components/ui/quake-text";
+import { useShowServerPing } from "@/features/servers/hooks/use-show-server-ping";
 import { isBot } from "@/lib/qworld/server";
 import {
   qwleagueCountryCode,
@@ -195,23 +196,32 @@ export const ServerList = ({
   preview: ServerPreviewState;
 }) => {
   const [sort, setSort] = useLocalStorage<Sort>("serversListSort", defaultSort);
+  // ping column is opt-in (additional filters), a stored sort by ping is
+  // kept but not applied while hidden
+  const [showPing] = useShowServerPing();
+  const visibleColumns = showPing
+    ? columns
+    : columns.filter((c) => "ping" !== c.key);
+  const activeSort = !showPing && "ping" === sort?.key ? defaultSort : sort;
   // pings arrive in the background, re-sort when they do
-  const pingVersion = useStunPings(servers);
+  const pingVersion = useStunPings(servers, showPing);
   const sortedServers = useMemo(
-    () => sortServers(servers, sort),
-    [servers, sort, pingVersion],
+    () => sortServers(servers, activeSort),
+    [servers, activeSort, pingVersion],
   );
 
   return (
     <table className="w-full text-sm">
       <thead className="text-xs text-gray-400 text-left">
         <tr className="border-b border-b-slate-700">
-          {columns.map((column) => (
+          {visibleColumns.map((column) => (
             <SortableHeader
               key={column.key}
               column={column}
-              direction={sort?.key === column.key ? sort.direction : null}
-              onClick={() => setSort(nextSort(sort, column))}
+              direction={
+                activeSort?.key === column.key ? activeSort.direction : null
+              }
+              onClick={() => setSort(nextSort(activeSort, column))}
             />
           ))}
           <th className="w-12" />
@@ -222,7 +232,8 @@ export const ServerList = ({
           <ServerRow
             key={server.address}
             server={server}
-            ping={pingValue(getStunPing(server.ip))}
+            ping={showPing ? pingValue(getStunPing(server.ip)) : undefined}
+            showPing={showPing}
             onPreview={preview.show}
             onLeave={preview.scheduleHide}
             onHidePreview={preview.hide}
@@ -280,13 +291,14 @@ const SortableHeader = ({
 type ServerRowProps = {
   server: Server;
   ping: Ping;
+  showPing: boolean;
   onPreview: (address: string, e: MouseEvent<HTMLElement>) => void;
   onLeave: () => void;
   onHidePreview: () => void;
 };
 
 const ServerRow = React.memo((props: ServerRowProps) => {
-  const { server, ping, onPreview, onLeave, onHidePreview } = props;
+  const { server, ping, showPing, onPreview, onLeave, onHidePreview } = props;
   const map = server.info.map ?? "";
   const cc = qwleagueCountryCode(server.info.hostname) || server.meta.geo.cc;
   const playerCount = server.players.length;
@@ -333,20 +345,22 @@ const ServerRow = React.memo((props: ServerRowProps) => {
       >
         {totalSpectatorCount(server)}
       </td>
-      <td
-        className="px-2 py-1 hidden md:table-cell text-right whitespace-nowrap text-xs"
-        title={
-          undefined === ping
-            ? "Ping not available for this server"
-            : "Round trip time from your browser (STUN)"
-        }
-      >
-        {typeof ping === "number" && <PingIndicator ms={ping} />}
-        {"pending" === ping && <span className="text-gray-500">…</span>}
-        {(null === ping || undefined === ping) && (
-          <span className="text-gray-600">–</span>
-        )}
-      </td>
+      {showPing && (
+        <td
+          className="px-2 py-1 hidden md:table-cell text-right whitespace-nowrap text-xs"
+          title={
+            undefined === ping
+              ? "Ping not available for this server"
+              : "Round trip time from your browser (STUN)"
+          }
+        >
+          {typeof ping === "number" && <PingIndicator ms={ping} />}
+          {"pending" === ping && <span className="text-gray-500">…</span>}
+          {(null === ping || undefined === ping) && (
+            <span className="text-gray-600">–</span>
+          )}
+        </td>
+      )}
       {/* no preview while using the menu (it would cover the dropdown) */}
       <td className="px-2 py-1 text-right" onMouseEnter={onHidePreview}>
         <ActionMenu server={server} />

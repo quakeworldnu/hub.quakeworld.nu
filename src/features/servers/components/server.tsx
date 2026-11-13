@@ -10,6 +10,7 @@ import { PrimaryButton, SecondaryButton } from "@/components/ui/buttons";
 import { Dialog } from "@/components/ui/dialog";
 import { PingIndicator } from "@/components/ui/ping-indicator";
 import { QuakeText, quakeStringToHtml } from "@/components/ui/quake-text";
+import { useShowServerPing } from "@/features/servers/hooks/use-show-server-ping";
 import { useShowServerScores } from "@/features/servers/hooks/use-show-server-scores";
 import {
   freePlayerSlots,
@@ -292,11 +293,12 @@ const ServerFooter = (props: { server: ServerType }) => {
 const truncate = (text: string, maxLength: number): string =>
   text.length > maxLength ? `${text.substring(0, maxLength - 1)}…` : text;
 
-// browser => server ping (stun), hidden on mobile (not measured there)
+// browser => server ping (stun), opt-in, hidden on mobile (not measured there)
 const ServerPing = (props: { ip: string }) => {
+  const [showPing] = useShowServerPing();
   const ping = useStunPing(props.ip);
 
-  if (null === ping) {
+  if (!showPing || null === ping) {
     return null;
   }
 

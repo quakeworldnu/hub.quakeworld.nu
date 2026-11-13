@@ -187,15 +187,16 @@ export function useStunPing(ip: string): number | null {
 // no pinging on mobile (ping column is hidden), same breakpoint as tailwind "md"
 const PING_MEDIA_QUERY = "(min-width: 768px)";
 
-// pings the given servers (once per ip), returns a version that changes on new results
-export function useStunPings(servers: Server[]): number {
-  const isEnabled = useMediaQuery(PING_MEDIA_QUERY);
+// pings the given servers (once per ip), returns a version that changes on new results.
+// nothing is measured unless enabled (opt-in: webrtc can expose local interface addresses)
+export function useStunPings(servers: Server[], isEnabled: boolean): number {
+  const isDesktop = useMediaQuery(PING_MEDIA_QUERY);
 
   useEffect(() => {
-    if (isEnabled) {
+    if (isEnabled && isDesktop) {
       requestStunPings(servers);
     }
-  }, [servers, isEnabled]);
+  }, [servers, isEnabled, isDesktop]);
 
   return useSyncExternalStore(subscribe, () => version);
 }

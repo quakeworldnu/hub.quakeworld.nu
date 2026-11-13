@@ -5,6 +5,7 @@ import {
 } from "@/features/servers/hooks/use-radomsko-filter";
 import { useServerListShow } from "@/features/servers/hooks/use-server-list-show";
 import { useServerPresentation } from "@/features/servers/hooks/use-server-presentation";
+import { useShowServerPing } from "@/features/servers/hooks/use-show-server-ping";
 import { useServers } from "@/lib/qworld/queries";
 import { useFilteredServers } from "@/lib/qworld/server-hooks";
 import { searchServers } from "@/lib/qworld/server-search";
@@ -33,8 +34,9 @@ export default function Servers() {
       : filteredServers;
     return searchServers(result, search);
   }, [filteredServers, onlyRadomsko, search]);
-  // ping column (list) and grid cards, once per ip
-  useStunPings(servers);
+  // ping column (list) and grid cards, once per ip (opt-in)
+  const [showPing] = useShowServerPing();
+  useStunPings(servers, showPing);
 
   if ("list" === presentation) {
     return (
