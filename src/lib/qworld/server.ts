@@ -142,13 +142,35 @@ const toAddressTitle = (
     .trim();
 };
 
+// hub clients: "hub" or "hub" + space + 1-2 chars, e.g. "hub P", "hub 4f"
+const isHubName = (name: string): boolean =>
+  /^hub( \S{1,2})?$/i.test(name.trim());
+
+// more than one hub (qtv) client => "hub (x)" (in place of the first one)
+export const collapseHubNames = (names: string[]): string[] => {
+  const hubCount = names.filter(isHubName).length;
+
+  if (hubCount <= 1) {
+    return names;
+  }
+
+  const firstHubIndex = names.findIndex(isHubName);
+  return names.flatMap((name, index) => {
+    if (index === firstHubIndex) {
+      return [`hub (${hubCount})`];
+    }
+    return isHubName(name) ? [] : [name];
+  });
+};
+
 const toSpectatorText = (server: GameServer): string => {
   const maxLength = 88;
   const more = "..";
   const qtvClientNames = server.qtv_stream?.client_names ?? [];
+  // hub clients only connect via qtv
   const names = server.spectators
     .map((s) => s.name.ascii)
-    .concat(qtvClientNames.map((n) => n.ascii))
+    .concat(collapseHubNames(qtvClientNames.map((n) => n.ascii)))
     .filter((n) => !n.includes("h1.nu"));
 
   const text = names.join(", ");
@@ -355,3 +377,32 @@ export const parseHostname = (address: string, hostname = ""): string => {
 
   return address;
 };
+
+if (import.meta.vitest) {
+  const { expect, test } = import.meta.vitest;
+
+  test("collapseHubNames", () => {
+    expect(collapseHubNames([])).toEqual([]);
+    // single hub client: unchanged
+    expect(collapseHubNames(["XantoM", "hub 4f"])).toEqual([
+      "XantoM",
+      "hub 4f",
+    ]);
+    // several: "hub (x)" in place of the first
+    expect(
+      collapseHubNames(["XantoM", "hub", "bps", "HUB a1", "hub zz"]),
+    ).toEqual(["XantoM", "hub (3)", "bps"]);
+    // qtv clients on play.qwlan.pl:28503
+    expect(collapseHubNames(["bps", "hub P", "hub I", "hub"])).toEqual([
+      "bps",
+      "hub (3)",
+    ]);
+    // not hub clients
+    expect(collapseHubNames(["hubert", "hub abc", "hub", "hubx"])).toEqual([
+      "hubert",
+      "hub abc",
+      "hub",
+      "hubx",
+    ]);
+  });
+}
