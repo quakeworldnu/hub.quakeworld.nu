@@ -1,7 +1,6 @@
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { SearchInput } from "@/components/ui/search-input";
 import { setServerSearch, useServerSearch } from "@/stores/settings";
-import { RadomskoToggle } from "./radomsko-toggle";
 import { SettingsToggleButton } from "./server-filters";
 import { ServerListShowBar } from "./server-list-show-bar";
 import { ServerPresentationBar } from "./server-presentation-bar";
@@ -19,7 +18,6 @@ export const ServerToolbar = () => {
         value={search}
         onChange={setServerSearch}
       />
-      <RadomskoToggle />
       <ServerListShowBar />
       <ServerPresentationBar />
       <SettingsToggleButton />

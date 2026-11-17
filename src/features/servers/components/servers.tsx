@@ -1,8 +1,4 @@
 import { useMemo } from "react";
-import {
-  isRadomskoServer,
-  useRadomskoFilter,
-} from "@/features/servers/hooks/use-radomsko-filter";
 import { useServerListShow } from "@/features/servers/hooks/use-server-list-show";
 import { useServerPresentation } from "@/features/servers/hooks/use-server-presentation";
 import { useShowServerPing } from "@/features/servers/hooks/use-show-server-ping";
@@ -26,14 +22,11 @@ export default function Servers() {
     show,
   );
   const filteredServers = useFilteredServers(show);
-  const [onlyRadomsko] = useRadomskoFilter();
   const search = useServerSearch();
-  const servers = useMemo(() => {
-    const result = onlyRadomsko
-      ? filteredServers.filter(isRadomskoServer)
-      : filteredServers;
-    return searchServers(result, search);
-  }, [filteredServers, onlyRadomsko, search]);
+  const servers = useMemo(
+    () => searchServers(filteredServers, search),
+    [filteredServers, search],
+  );
   // ping column (list) and grid cards, once per ip (opt-in)
   const [showPing] = useShowServerPing();
   useStunPings(servers, showPing);
