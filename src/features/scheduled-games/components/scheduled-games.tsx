@@ -1,146 +1,130 @@
+import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
-import { type ReactNode, useEffect, useState } from "react";
+import type { ReactNode } from "react";
+import { QWLeagueBanner } from "@/components/scoreboard/qwleague-banner";
 import { SecondaryButton } from "@/components/ui/buttons";
 import { Heading } from "@/components/ui/heading";
+import { QuakeText } from "@/components/ui/quake-text";
+import {
+  getScheduledGames,
+  SCHEDULER_URL,
+  type ScheduledGame,
+  type ScheduledTeam,
+} from "@/features/scheduled-games/api";
 
-const WEBSITE_URL = "https://scheduler.quake.world";
-const ENDPOINT =
-  "https://europe-west3-matchscheduler-dev.cloudfunctions.net/getScheduledGames?limit=10";
+export function ScheduledGames() {
+  const {
+    data: games = [],
+    isPending,
+    error,
+  } = useQuery({
+    queryKey: ["scheduledGames"],
+    queryFn: getScheduledGames,
+  });
 
-// scheduler.quake.world api (subset)
-type Team = { id: string; tag: string; logo_url: string };
-
-type Match = {
-  id: string;
-  teamA: Team;
-  teamB: Team;
-  gameType: string;
-  scheduledDateTime: string;
-};
-
-export function ScheduledGames({
-  status = "upcoming",
-  teamTag,
-}: {
-  status?: string;
-  teamTag?: string;
-}) {
-  const [games, setGames] = useState<Match[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    async function fetchGames() {
-      try {
-        setLoading(true);
-
-        const params = new URLSearchParams();
-        if (status) params.append("status", status);
-        if (teamTag) params.append("teamTag", teamTag);
-
-        const res = await fetch(`${ENDPOINT}?${params}`, {
-          signal: controller.signal,
-        });
-
-        if (!res.ok) throw new Error("Failed to fetch games");
-
-        const data = await res.json();
-        if (data.success) {
-          setGames(data.matches);
-        } else {
-          throw new Error("API returned failure");
-        }
-      } catch (err) {
-        if ((err as Error).name !== "AbortError") {
-          setError((err as Error).message);
-        }
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchGames();
-    return () => controller.abort();
-  }, [status, teamTag]);
-
-  if (loading) return <div className="text-sm text-gray-400">Loading…</div>;
-  if (error) return <div className="text-sm text-red-500">{error}</div>;
+  if (isPending) return <div className="text-sm text-gray-400">Loading…</div>;
+  if (error) return <div className="text-sm text-red-500">{error.message}</div>;
   if (!games.length) return null;
 
   return (
     <div>
       <div className="mb-2 flex items-center justify-between">
         <Heading text="Scheduled Games" icon="event" iconSize={20} />
-        <SecondaryButton className="px-2 text-sm" href={WEBSITE_URL}>
+        <SecondaryButton className="px-2 text-sm" href={SCHEDULER_URL}>
           View all
         </SecondaryButton>
       </div>
 
       <div className="flex flex-wrap gap-1.5">
-        {games.map((match) => (
-          <MatchCardCompact key={match.id} match={match} />
+        {games.map((game) => (
+          <MatchCardCompact key={game.id} game={game} />
         ))}
       </div>
     </div>
   );
 }
 
-function MatchCardCompact({ match }: { match: Match }) {
-  const h2hLink = `${WEBSITE_URL}/#/teams/${match.teamA.id}/h2h/${match.teamB.id}`;
-
+function MatchCardCompact({ game }: { game: ScheduledGame }) {
   return (
     <a
-      href={h2hLink}
-      className="p-3 rounded bg-muted/25 hover:bg-muted block w-full max-w-96"
+      href={game.url}
+      className="rounded overflow-hidden bg-muted/25 hover:bg-muted block w-full max-w-96"
     >
-      {/* Teams Row */}
-      <div className="flex items-center justify-center gap-0">
-        <img
-          src={match.teamA.logo_url}
-          className="size-8 object-cover shrink-0 mr-2"
-          alt={match.teamA.tag}
-        />
+      {game.source === "qwleague" && <QWLeagueBanner isLink={false} />}
 
-        <span className="text-sm font-semibold inline-block truncate">
-          {match.teamA.tag}
-        </span>
+      <div className="p-3">
+        {/* Teams Row */}
+        <div className="flex items-center justify-center gap-0">
+          <TeamLogo team={game.teamA} className="mr-2" />
+          <TeamTag team={game.teamA} />
 
-        <span className="text-sm text-muted-foreground font-medium mx-2">
-          vs
-        </span>
+          <span className="text-sm text-muted-foreground font-medium mx-2">
+            vs
+          </span>
 
-        <span className="text-sm font-semibold inline-block text-right truncate">
-          {match.teamB.tag}
-        </span>
+          <TeamTag team={game.teamB} className="text-right" />
+          <TeamLogo team={game.teamB} className="ml-2" />
+        </div>
 
-        <img
-          src={match.teamB.logo_url}
-          className="size-8 object-cover shrink-0 ml-2"
-          alt={match.teamB.tag}
-        />
-      </div>
-
-      <div className="flex items-center justify-center gap-3 mt-0.5">
-        <span
-          className={clsx("text-xs font-medium uppercase tracking-wide", {
-            "text-orange-400": match.gameType === "practice",
-            "text-green-600": match.gameType === "official",
-          })}
-        >
-          {match.gameType}
-        </span>
-        <span className="text-xs text-muted-foreground">
-          {iso8601_to_string(match.scheduledDateTime)}
-        </span>
+        <div className="flex items-center justify-center gap-3 mt-0.5">
+          <span
+            className={clsx("text-xs font-medium uppercase tracking-wide", {
+              "text-orange-400": game.gameType === "practice",
+              "text-green-600": game.gameType === "official",
+            })}
+          >
+            {game.gameType}
+          </span>
+          <span className="text-xs text-muted-foreground">
+            {formatScheduledAt(game.scheduledAt)}
+          </span>
+        </div>
       </div>
     </a>
   );
 }
 
-function iso8601_to_string(isoString: string): ReactNode {
-  const date = new Date(isoString); // parsed in local time automatically
+function TeamTag({
+  team,
+  className,
+}: {
+  team: ScheduledTeam;
+  className?: string;
+}) {
+  const classNames = clsx(
+    "text-sm font-semibold inline-block truncate",
+    className,
+  );
+
+  if (team.tagHtml) {
+    return <QuakeText tag="span" text={team.tagHtml} className={classNames} />;
+  }
+
+  return <span className={classNames}>{team.tag}</span>;
+}
+
+function TeamLogo({
+  team,
+  className,
+}: {
+  team: ScheduledTeam;
+  className?: string;
+}) {
+  if (!team.logoUrl) {
+    return <span className={clsx("size-8 shrink-0", className)} />;
+  }
+
+  return (
+    <img
+      src={team.logoUrl}
+      className={clsx("size-8 object-cover shrink-0", className)}
+      alt={team.tag}
+    />
+  );
+}
+
+function formatScheduledAt(timestamp: number): ReactNode {
+  const date = new Date(timestamp); // local time
   const now = new Date();
 
   const pad = (n: number) => n.toString().padStart(2, "0");
