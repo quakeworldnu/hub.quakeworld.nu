@@ -8,6 +8,10 @@ const SCHEDULER_ENDPOINT =
 export const QWLEAGUE_URL = "https://qwleague.com";
 const QWLEAGUE_ENDPOINT = `${QWLEAGUE_URL}/api/upcoming`;
 
+// disabled until qwleague.com gives us access: /api/upcoming does not allow
+// cross-origin requests and /api/v1/scheduled-games requires an api token
+const QWLEAGUE_ENABLED = false;
+
 const MAX_GAMES = 10;
 
 export type ScheduledTeam = {
@@ -166,7 +170,7 @@ export function mergeScheduledGames(
 export async function getScheduledGames(): Promise<ScheduledGame[]> {
   const [scheduler, qwleague] = await Promise.allSettled([
     fetchSchedulerGames(),
-    fetchQwleagueGames(),
+    QWLEAGUE_ENABLED ? fetchQwleagueGames() : Promise.resolve([]),
   ]);
 
   if (scheduler.status === "rejected" && qwleague.status === "rejected") {
