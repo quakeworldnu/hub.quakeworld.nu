@@ -6,11 +6,7 @@ const SCHEDULER_ENDPOINT =
   "https://europe-west3-matchscheduler-dev.cloudfunctions.net/getScheduledGames";
 
 export const QWLEAGUE_URL = "https://qwleague.com";
-const QWLEAGUE_ENDPOINT = `${QWLEAGUE_URL}/api/upcoming`;
-
-// disabled until qwleague.com gives us access: /api/upcoming does not allow
-// cross-origin requests and /api/v1/scheduled-games requires an api token
-const QWLEAGUE_ENABLED = false;
+const QWLEAGUE_ENDPOINT = `${QWLEAGUE_URL}/api/public/scheduled-games`;
 
 const MAX_GAMES = 10;
 
@@ -75,12 +71,13 @@ const fromSchedulerTeam = (team: SchedulerTeam): ScheduledTeam => ({
   logoUrl: team.logo_url,
 });
 
-// qwleague.com api (subset)
+// qwleague.com public api (subset). the public api does not expose clan ids,
+// tags or tournament slugs (yet): they are used once it does
 type QwleagueClan = {
-  id: number;
   name: string;
-  team: string; // quake text
-  emblem_updated_at: number | null;
+  id?: number;
+  team?: string; // quake text
+  emblem_updated_at?: number | null;
 };
 
 type QwleagueSide = {
@@ -88,10 +85,9 @@ type QwleagueSide = {
   player: { username?: string; name?: string } | null;
 };
 
-type QwleagueItem = {
+export type QwleagueItem = {
   type: string;
-  fixture_id: number | null;
-  tournament: { name: string; slug: string } | null;
+  tournament?: { name: string; slug?: string } | null;
   scheduled_at: number; // unix seconds
   status: string;
   side1: QwleagueSide | null;
@@ -104,19 +100,29 @@ async function fetchQwleagueGames(): Promise<ScheduledGame[]> {
 
   const data: { items: QwleagueItem[] } = await res.json();
 
-  return data.items
+  return fromQwleagueItems(data.items);
+}
+
+export function fromQwleagueItems(items: QwleagueItem[]): ScheduledGame[] {
+  return items
     .filter((item) => item.status === "upcoming")
-    .map((item) => ({
-      id: `qwleague-${item.fixture_id ?? `${item.type}-${item.scheduled_at}`}`,
-      source: "qwleague",
-      teamA: fromQwleagueSide(item.side1),
-      teamB: fromQwleagueSide(item.side2),
-      gameType: item.type === "prac" ? "practice" : item.type,
-      scheduledAt: item.scheduled_at * 1000,
-      url: item.tournament
-        ? `${QWLEAGUE_URL}/tournaments/${encodeURIComponent(item.tournament.slug)}`
-        : QWLEAGUE_URL,
-    }));
+    .map((item) => {
+      const teamA = fromQwleagueSide(item.side1);
+      const teamB = fromQwleagueSide(item.side2);
+      const slug = item.tournament?.slug;
+
+      return {
+        id: `qwleague-${item.type}-${item.scheduled_at}-${teamA.name}-${teamB.name}`,
+        source: "qwleague",
+        teamA,
+        teamB,
+        gameType: item.type === "prac" ? "practice" : item.type,
+        scheduledAt: item.scheduled_at * 1000,
+        url: slug
+          ? `${QWLEAGUE_URL}/tournaments/${encodeURIComponent(slug)}`
+          : QWLEAGUE_URL,
+      };
+    });
 }
 
 function fromQwleagueSide(side: QwleagueSide | null): ScheduledTeam {
@@ -127,17 +133,19 @@ function fromQwleagueSide(side: QwleagueSide | null): ScheduledTeam {
     return { name, tag: name };
   }
 
-  const { text, colors } = parseQuakeText(clan.team);
+  const team: ScheduledTeam = { name: clan.name, tag: clan.name };
 
-  return {
-    name: clan.name,
-    tag: text,
-    tagHtml: quakeTextToHtml(text, colors),
-    logoUrl:
-      clan.emblem_updated_at != null
-        ? `${QWLEAGUE_URL}/api/clans/${clan.id}/emblem?v=${clan.emblem_updated_at}`
-        : undefined,
-  };
+  if (clan.team) {
+    const { text, colors } = parseQuakeText(clan.team);
+    team.tag = text;
+    team.tagHtml = quakeTextToHtml(text, colors);
+  }
+
+  if (clan.id != null && clan.emblem_updated_at != null) {
+    team.logoUrl = `${QWLEAGUE_URL}/api/clans/${clan.id}/emblem?v=${clan.emblem_updated_at}`;
+  }
+
+  return team;
 }
 
 const normalize = (value: string) => value.trim().toLowerCase();
@@ -152,7 +160,8 @@ const isSameGame = (a: ScheduledGame, b: ScheduledGame) =>
   ((isSameTeam(a.teamA, b.teamA) && isSameTeam(a.teamB, b.teamB)) ||
     (isSameTeam(a.teamA, b.teamB) && isSameTeam(a.teamB, b.teamA)));
 
-// qwleague wins over the scheduler when both have the same game
+// qwleague wins over the scheduler when both have the same game, but borrows
+// the tags and logos it is missing from the scheduler
 export function mergeScheduledGames(
   scheduler: ScheduledGame[],
   qwleague: ScheduledGame[],
@@ -161,7 +170,29 @@ export function mergeScheduledGames(
     (game) => !qwleague.some((q) => isSameGame(game, q)),
   );
 
-  return [...qwleague, ...schedulerOnly]
+  const enriched = qwleague.map((game) => {
+    const match = scheduler.find((s) => isSameGame(s, game));
+    if (!match) return game;
+
+    const teams = [match.teamA, match.teamB];
+    const enrich = (team: ScheduledTeam): ScheduledTeam => {
+      const known = teams.find((t) => isSameTeam(t, team));
+      if (!known) return team;
+
+      const hasTag = team.tag !== team.name;
+
+      return {
+        ...team,
+        tag: hasTag ? team.tag : known.tag,
+        tagHtml: hasTag ? team.tagHtml : known.tagHtml,
+        logoUrl: team.logoUrl ?? known.logoUrl,
+      };
+    };
+
+    return { ...game, teamA: enrich(game.teamA), teamB: enrich(game.teamB) };
+  });
+
+  return [...enriched, ...schedulerOnly]
     .sort((a, b) => a.scheduledAt - b.scheduledAt)
     .slice(0, MAX_GAMES);
 }
@@ -170,7 +201,7 @@ export function mergeScheduledGames(
 export async function getScheduledGames(): Promise<ScheduledGame[]> {
   const [scheduler, qwleague] = await Promise.allSettled([
     fetchSchedulerGames(),
-    QWLEAGUE_ENABLED ? fetchQwleagueGames() : Promise.resolve([]),
+    fetchQwleagueGames(),
   ]);
 
   if (scheduler.status === "rejected" && qwleague.status === "rejected") {
