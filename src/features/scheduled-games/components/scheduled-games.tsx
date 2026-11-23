@@ -2,12 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
 import type { ReactNode } from "react";
 import { QWLeagueBanner } from "@/components/scoreboard/qwleague-banner";
-import { SecondaryButton } from "@/components/ui/buttons";
 import { Heading } from "@/components/ui/heading";
 import { QuakeText } from "@/components/ui/quake-text";
 import {
   getScheduledGames,
-  SCHEDULER_URL,
   type ScheduledGame,
   type ScheduledTeam,
 } from "@/features/scheduled-games/api";
@@ -28,11 +26,8 @@ export function ScheduledGames() {
 
   return (
     <div>
-      <div className="mb-2 flex items-center justify-between">
+      <div className="mb-2">
         <Heading text="Scheduled Games" icon="event" iconSize={20} />
-        <SecondaryButton className="px-2 text-sm" href={SCHEDULER_URL}>
-          View all
-        </SecondaryButton>
       </div>
 
       <div className="flex flex-wrap gap-1.5">

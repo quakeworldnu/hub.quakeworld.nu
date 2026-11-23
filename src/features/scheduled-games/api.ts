@@ -5,6 +5,16 @@ export const SCHEDULER_URL = "https://scheduler.quake.world";
 const SCHEDULER_ENDPOINT =
   "https://europe-west3-matchscheduler-dev.cloudfunctions.net/getScheduledGames";
 
+// public firestore collection, limited to the fields we need
+const SCHEDULER_TEAMS_ENDPOINT = `https://firestore.googleapis.com/v1/projects/matchscheduler-dev/databases/(default)/documents/teams?${new URLSearchParams(
+  [
+    ["pageSize", "300"],
+    ...["teamName", "teamTag", "status", "activeLogo.urls.medium"].map(
+      (field) => ["mask.fieldPaths", field],
+    ),
+  ],
+)}`;
+
 export const QWLEAGUE_URL = "https://qwleague.com";
 const QWLEAGUE_ENDPOINT = `${QWLEAGUE_URL}/api/public/scheduled-games`;
 
@@ -71,8 +81,58 @@ const fromSchedulerTeam = (team: SchedulerTeam): ScheduledTeam => ({
   logoUrl: team.logo_url,
 });
 
+// firestore document (subset)
+type SchedulerTeamDoc = {
+  fields?: {
+    teamName?: { stringValue?: string };
+    teamTag?: { stringValue?: string };
+    status?: { stringValue?: string };
+    activeLogo?: {
+      mapValue?: {
+        fields?: {
+          urls?: {
+            mapValue?: { fields?: { medium?: { stringValue?: string } } };
+          };
+        };
+      };
+    };
+  };
+};
+
+async function fetchSchedulerTeams(): Promise<ScheduledTeam[]> {
+  const res = await fetch(SCHEDULER_TEAMS_ENDPOINT);
+  if (!res.ok) throw new Error("Failed to fetch scheduler.quake.world teams");
+
+  const data: { documents?: SchedulerTeamDoc[] } = await res.json();
+
+  return fromSchedulerTeamDocs(data.documents ?? []);
+}
+
+// active teams first, so they win over archived teams with the same name
+export function fromSchedulerTeamDocs(
+  docs: SchedulerTeamDoc[],
+): ScheduledTeam[] {
+  const isActive = (doc: SchedulerTeamDoc) =>
+    doc.fields?.status?.stringValue === "active";
+
+  return docs
+    .filter((doc) => doc.fields?.teamName?.stringValue)
+    .sort((a, b) => Number(isActive(b)) - Number(isActive(a)))
+    .map(({ fields }) => {
+      const name = fields?.teamName?.stringValue ?? "";
+
+      return {
+        name,
+        tag: fields?.teamTag?.stringValue || name,
+        logoUrl:
+          fields?.activeLogo?.mapValue?.fields?.urls?.mapValue?.fields?.medium
+            ?.stringValue,
+      };
+    });
+}
+
 // qwleague.com public api (subset). the public api does not expose clan ids,
-// tags or tournament slugs (yet): they are used once it does
+// tags (yet): they are used once it does
 type QwleagueClan = {
   name: string;
   id?: number;
@@ -87,7 +147,7 @@ type QwleagueSide = {
 
 export type QwleagueItem = {
   type: string;
-  tournament?: { name: string; slug?: string } | null;
+  tournament?: { name: string } | null;
   scheduled_at: number; // unix seconds
   status: string;
   side1: QwleagueSide | null;
@@ -109,7 +169,7 @@ export function fromQwleagueItems(items: QwleagueItem[]): ScheduledGame[] {
     .map((item) => {
       const teamA = fromQwleagueSide(item.side1);
       const teamB = fromQwleagueSide(item.side2);
-      const slug = item.tournament?.slug;
+      const tournament = item.tournament?.name;
 
       return {
         id: `qwleague-${item.type}-${item.scheduled_at}-${teamA.name}-${teamB.name}`,
@@ -118,12 +178,21 @@ export function fromQwleagueItems(items: QwleagueItem[]): ScheduledGame[] {
         teamB,
         gameType: item.type === "prac" ? "practice" : item.type,
         scheduledAt: item.scheduled_at * 1000,
-        url: slug
-          ? `${QWLEAGUE_URL}/tournaments/${encodeURIComponent(slug)}`
+        url: tournament
+          ? `${QWLEAGUE_URL}/tournaments/${slugify(tournament)}`
           : QWLEAGUE_URL,
       };
     });
 }
+
+// "4on4 · Season 1" -> "4on4-season-1"
+export const slugify = (value: string) =>
+  value
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 
 function fromQwleagueSide(side: QwleagueSide | null): ScheduledTeam {
   const clan = side?.clan;
@@ -161,36 +230,40 @@ const isSameGame = (a: ScheduledGame, b: ScheduledGame) =>
     (isSameTeam(a.teamA, b.teamB) && isSameTeam(a.teamB, b.teamA)));
 
 // qwleague wins over the scheduler when both have the same game, but borrows
-// the tags and logos it is missing from the scheduler
+// the tags and logos it is missing from the scheduler teams
 export function mergeScheduledGames(
   scheduler: ScheduledGame[],
   qwleague: ScheduledGame[],
+  schedulerTeams: ScheduledTeam[] = [],
 ): ScheduledGame[] {
   const schedulerOnly = scheduler.filter(
     (game) => !qwleague.some((q) => isSameGame(game, q)),
   );
 
-  const enriched = qwleague.map((game) => {
-    const match = scheduler.find((s) => isSameGame(s, game));
-    if (!match) return game;
+  const teams = [
+    ...scheduler.flatMap((game) => [game.teamA, game.teamB]),
+    ...schedulerTeams,
+  ];
 
-    const teams = [match.teamA, match.teamB];
-    const enrich = (team: ScheduledTeam): ScheduledTeam => {
-      const known = teams.find((t) => isSameTeam(t, team));
-      if (!known) return team;
+  const enrich = (team: ScheduledTeam): ScheduledTeam => {
+    const known = teams.find((t) => isSameTeam(t, team));
+    if (!known) return team;
 
-      const hasTag = team.tag !== team.name;
+    const hasTag = team.tag !== team.name;
 
-      return {
-        ...team,
-        tag: hasTag ? team.tag : known.tag,
-        tagHtml: hasTag ? team.tagHtml : known.tagHtml,
-        logoUrl: team.logoUrl ?? known.logoUrl,
-      };
+    return {
+      ...team,
+      tag: hasTag ? team.tag : known.tag,
+      tagHtml: hasTag ? team.tagHtml : known.tagHtml,
+      logoUrl: team.logoUrl ?? known.logoUrl,
     };
+  };
 
-    return { ...game, teamA: enrich(game.teamA), teamB: enrich(game.teamB) };
-  });
+  const enriched = qwleague.map((game) => ({
+    ...game,
+    teamA: enrich(game.teamA),
+    teamB: enrich(game.teamB),
+  }));
 
   return [...enriched, ...schedulerOnly]
     .sort((a, b) => a.scheduledAt - b.scheduledAt)
@@ -208,8 +281,17 @@ export async function getScheduledGames(): Promise<ScheduledGame[]> {
     throw scheduler.reason;
   }
 
-  return mergeScheduledGames(
-    scheduler.status === "fulfilled" ? scheduler.value : [],
-    qwleague.status === "fulfilled" ? qwleague.value : [],
+  const schedulerGames =
+    scheduler.status === "fulfilled" ? scheduler.value : [];
+  const qwleagueGames = qwleague.status === "fulfilled" ? qwleague.value : [];
+
+  // only needed when qwleague games lack logos, and never worth failing for
+  const isMissingLogos = qwleagueGames.some(
+    (game) => !game.teamA.logoUrl || !game.teamB.logoUrl,
   );
+  const schedulerTeams = isMissingLogos
+    ? await fetchSchedulerTeams().catch(() => [])
+    : [];
+
+  return mergeScheduledGames(schedulerGames, qwleagueGames, schedulerTeams);
 }
