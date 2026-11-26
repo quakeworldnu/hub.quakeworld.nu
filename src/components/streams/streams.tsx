@@ -4,7 +4,7 @@ import { useTwitchStreams } from "@/lib/qworld/queries";
 import {
   featuredFirst,
   isHighlightedStream,
-  streamClientName,
+  streamDisplayName,
   streamUrl,
 } from "@/lib/qworld/twitch";
 import type { TwitchStream } from "@/lib/qworld/types";
@@ -45,7 +45,7 @@ const StreamListItem = ({ stream }: { stream: TwitchStream }) => {
       >
         <div className="flex items-center gap-1.5">
           <img src={getFlagUrl("pl")} alt="PL" className="h-3 w-auto" />
-          <strong>{streamClientName(stream)}</strong>
+          <strong>{streamDisplayName(stream)}</strong>
           <span>({viewer_count})</span>
           <span className="ml-auto px-1 rounded bg-red-600 text-white! font-bold text-[10px] uppercase">
             Radomsko
@@ -63,7 +63,7 @@ const StreamListItem = ({ stream }: { stream: TwitchStream }) => {
   return (
     <Fragment>
       <a href={streamUrl(stream)} className="inline-block ml-1.5" title={title}>
-        {streamClientName(stream)}
+        {streamDisplayName(stream)}
         <span>
           ({viewer_count}){" "}
           {title && <span>- {title.substring(0, maxLength)}</span>}

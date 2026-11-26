@@ -73,6 +73,13 @@ export const featuredFirst = (streams: TwitchStream[]): TwitchStream[] => [
 export const streamClientName = (stream: TwitchStream): string =>
   streamers[stream.user_login] ?? stream.user_name;
 
+const displayNames: Record<string, string> = {
+  quakeworld: "QuakeWorld",
+};
+
+export const streamDisplayName = (stream: TwitchStream): string =>
+  displayNames[stream.user_login] ?? streamClientName(stream);
+
 export const streamUrl = (stream: TwitchStream): string =>
   `https://twitch.tv/${stream.user_login}`;
 
@@ -101,5 +108,12 @@ if (import.meta.vitest) {
   test("streamClientName", () => {
     expect(streamClientName(stream("vikpe", "vikpe"))).toBe("XantoM");
     expect(streamClientName(stream("unknown", "Unknown"))).toBe("Unknown");
+  });
+
+  test("streamDisplayName", () => {
+    expect(streamClientName(stream("quakeworld"))).toBe("[streambot]");
+    expect(streamDisplayName(stream("quakeworld"))).toBe("QuakeWorld");
+    expect(streamDisplayName(stream("vikpe"))).toBe("XantoM");
+    expect(streamDisplayName(stream("unknown", "Unknown"))).toBe("Unknown");
   });
 }
